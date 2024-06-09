@@ -5,11 +5,11 @@ export const BarItemBox = (child) => {
     }
 
     return child.isVisible;
-  }
+  };
 
   return Widget.Box({
     class_name: "bar_item_box_visible",
     child: child.component,
-    visible: computeVisible()
+    visible: computeVisible(),
   });
 };

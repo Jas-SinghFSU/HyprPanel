@@ -8,10 +8,14 @@
 @import "common";
 
 //modules - bar
+@import "bar/menu";
 @import "bar/audio";
+@import "bar/media";
+@import "bar/network";
 @import "bar/bluetooth";
 @import "bar/clock";
 @import "bar/workspace";
 @import "bar/window_title";
 @import "bar/systray";
+@import "bar/power";
 @import "bar/bar";

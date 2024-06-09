@@ -2,16 +2,14 @@
 
 .bar {
   background: $mantle;
-}
-
-.bar * {
-  font-weight: bold;
+  font-size: 1.15rem;
+  font-weight: 800;
 }
 
 .bar_item_box_visible {
   background: $surface0;
   border-radius: 8px;
-  padding: 1px 12px;
+  padding: 2px 12px;
   margin: 6px 3px;
 }
 

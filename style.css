@@ -232,6 +232,12 @@ spinner:checked {
   animation: spin 1s linear infinite;
 }
 
+.bar-menu_label {
+  color: #94e2d5;
+  margin-right: 20px;
+  font-size: 2rem;
+}
+
 .audio-volume-box .audio-volume-label {
   min-width: 3rem;
 }
@@ -253,7 +259,7 @@ spinner:checked {
 }
 
 .bar-volume_icon {
-  font-size: 17px;
+  font-size: 1.3rem;
   color: #fab387;
 }
 
@@ -261,8 +267,16 @@ spinner:checked {
   color: #fab387;
 }
 
+.media {
+  color: #a6e3a1;
+}
+
+.bar-network {
+  color: #cba6f7;
+}
+
 .bar-bt_icon {
-  font-size: 17px;
+  font-size: 1.3rem;
   color: #89dceb;
 }
 
@@ -328,18 +342,21 @@ spinner:checked {
   background-color: #b4befe;
 }
 
-.bar {
-  background: #181825;
+.bar-power_label {
+  color: #f38ba8;
+  margin-right: 2px;
 }
 
-.bar * {
-  font-weight: bold;
+.bar {
+  background: #181825;
+  font-size: 1.15rem;
+  font-weight: 800;
 }
 
 .bar_item_box_visible {
   background: #313244;
   border-radius: 8px;
-  padding: 1px 12px;
+  padding: 2px 12px;
   margin: 6px 3px;
 }
 

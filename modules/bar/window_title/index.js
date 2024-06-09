@@ -15,8 +15,10 @@ const filterTitle = (titleString) => {
     ["  ", "󰇄  Desktop"],
     ["(.*) Spotify Free", "󰓇  Spotify"],
     ["(.*)Spotify Premium", "󰓇  Spotify"],
+    ["Spotify", "󰓇  Spotify"],
     ["  ~", " Terminal"],
     ["(.*) - Obsidian(.*)", "󱓧  Obsidian"],
+    ["(.*)", `󰣆  ${titleString.charAt(0).toUpperCase() + titleString.slice(1)}`],
   ];
 
   const foundMatch = windowTitleMap.find((wt) =>
