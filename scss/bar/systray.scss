@@ -1,0 +1,26 @@
+@import "../colors";
+
+.systray button:not(:first-child) {
+  margin-left: 10px;
+}
+
+.systray-menu {
+  background: $mantle;
+}
+.systray-menu label {
+  font-weight: bold;
+  color: $lavender;
+}
+
+.systray-menu separator {
+  background-color: $surface1;
+}
+
+.systray-menu check:not(:checked) {
+  background-color: $surface0;
+  border: 1px solid $lavender;
+}
+
+.systray-menu check:checked {
+  background-color: $lavender;
+}

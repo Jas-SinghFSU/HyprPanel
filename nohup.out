@@ -1,0 +1,37 @@
+[2024-06-08 14:18:53.312] [info] Using configuration file /home/jaskir/.config/waybar/config
+[2024-06-08 14:18:53.313] [info] Unable to receive desktop appearance: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.Settings” on object at path /org/freedesktop/portal/desktop
+[2024-06-08 14:18:53.313] [info] Using CSS file /home/jaskir/.config/waybar/style.css
+[2024-06-08 14:18:53.316] [warning] persistent_workspaces is deprecated. Please change config to use persistent-workspaces.
+[2024-06-08 14:18:53.316] [info] Hyprland IPC starting
+[2024-06-08 14:18:53.317] [info] Loading persistent workspaces from Waybar config
+[2024-06-08 14:18:53.317] [info] Loading persistent workspaces from Hyprland workspace rules
+[2024-06-08 14:18:53.320] [warning] module backlight: Disabling module "backlight", No backlight found
+[2024-06-08 14:18:53.321] [warning] No batteries.
+[2024-06-08 14:18:53.354] [warning] persistent_workspaces is deprecated. Please change config to use persistent-workspaces.
+[2024-06-08 14:18:53.355] [info] Loading persistent workspaces from Waybar config
+[2024-06-08 14:18:53.355] [info] Loading persistent workspaces from Hyprland workspace rules
+[2024-06-08 14:18:53.357] [warning] module backlight: Disabling module "backlight", No backlight found
+[2024-06-08 14:18:53.358] [warning] No batteries.
+[2024-06-08 14:18:53.361] [warning] persistent_workspaces is deprecated. Please change config to use persistent-workspaces.
+[2024-06-08 14:18:53.362] [info] Loading persistent workspaces from Waybar config
+[2024-06-08 14:18:53.362] [info] Loading persistent workspaces from Hyprland workspace rules
+[2024-06-08 14:18:53.363] [warning] module backlight: Disabling module "backlight", No backlight found
+[2024-06-08 14:18:53.365] [warning] No batteries.
+[2024-06-08 14:18:53.495] [error] Host: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: Method RegisterStatusNotifierHost is not implemented
+[2024-06-08 14:18:53.495] [error] Host: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: Method RegisterStatusNotifierHost is not implemented
+[2024-06-08 14:18:53.495] [error] Host: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: Method RegisterStatusNotifierHost is not implemented
+[2024-06-08 14:18:53.503] [info] Bar configured (width: 1440, height: 38) for output: DP-1
+[2024-06-08 14:18:53.503] [info] Bar configured (width: 1440, height: 38) for output: DP-2
+[2024-06-08 14:18:53.503] [info] Bar configured (width: 3840, height: 38) for output: DP-3
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.496: gtk_widget_set_accel_path: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.496: gtk_widget_add_accelerator: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.497: gtk_widget_set_accel_path: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.497: gtk_widget_add_accelerator: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.497: gtk_widget_set_accel_path: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed
+
+(waybar:4162481): Gtk-CRITICAL **: 14:19:32.497: gtk_widget_add_accelerator: assertion 'GTK_IS_ACCEL_GROUP (accel_group)' failed

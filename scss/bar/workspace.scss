@@ -1,0 +1,30 @@
+@import "../colors";
+
+.workspaces {
+  label {
+    font-size: 0px;
+    min-width: 12px;
+    min-height: 12px;
+    border-radius: 11px * .6;
+    margin: 0px 7px * .5;
+    transition: 300ms * .5;
+    background-color: $lavender;
+
+    &.occupied {
+      background-color: $maroon;
+      min-width: 12px;
+      min-height: 12px;
+    }
+
+    &.active {
+      background-color: $sky;
+      min-width: 30px;
+      min-height: 12px;
+    }
+  }
+}
+
+
+.workspaces label:not(:first-child) {
+  margin-left: 12px;
+}

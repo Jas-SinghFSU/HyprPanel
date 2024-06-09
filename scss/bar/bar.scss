@@ -1,0 +1,31 @@
+@import "../colors";
+
+.bar {
+  background: $mantle;
+}
+
+.bar * {
+  font-weight: bold;
+}
+
+.bar_item_box_visible {
+  background: $surface0;
+  border-radius: 8px;
+  padding: 1px 12px;
+  margin: 6px 3px;
+}
+
+.bar_item_box_hidden {
+  background: none;
+  border-radius: 0px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+.box-left {
+  margin-left: 25px;
+}
+
+.box-right {
+  margin-right: 25px;
+}

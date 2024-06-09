@@ -1,0 +1,17 @@
+* {
+  all: unset;
+  font-family: "JetBrains Mono Nerd Font";
+}
+
+//general
+@import "colors";
+@import "common";
+
+//modules - bar
+@import "bar/audio";
+@import "bar/bluetooth";
+@import "bar/clock";
+@import "bar/workspace";
+@import "bar/window_title";
+@import "bar/systray";
+@import "bar/bar";
