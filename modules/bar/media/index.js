@@ -2,6 +2,7 @@ const mpris = await Service.import("mpris");
 
 const Media = () => {
   const activePlayer = Variable(mpris.players[0]);
+
   mpris.connect("changed", (value) => {
     const statusOrder = {
       Playing: 1,
@@ -22,12 +23,31 @@ const Media = () => {
     }
   });
 
-  const label = Utils.watch("", mpris, "player-changed", () => {
+  const getIconForPlayer = (playerName) => {
+    const windowTitleMap = [
+      ["Mozilla Firefox", "󰈹"],
+      ["Microsoft Edge", "󰇩"],
+      ["(.*)Discord(.*)", ""],
+      ["Plex", "󰚺  Plex"],
+      ["(.*) Spotify Free", "󰓇"],
+      ["(.*)Spotify Premium", "󰓇"],
+      ["Spotify", "󰓇"],
+      ["(.*)", "󰝚"],
+    ];
+
+    const foundMatch = windowTitleMap.find((wt) =>
+      RegExp(wt[0]).test(playerName),
+    );
+
+    return foundMatch ? foundMatch[1] : "󰝚";
+  };
+
+  const label = Utils.watch("󰎇 Nothing is playing 󰎇", mpris, "player-changed", () => {
     if (activePlayer.value) {
-      const { track_artists, track_title } = activePlayer.value;
-      return `󰝚  ${track_title} - ${track_artists.join(", ")} 󰝚`;
+      const { track_title, identity } = activePlayer.value;
+      return `${getIconForPlayer(identity)}  ${track_title}`;
     } else {
-      return "Nothing is playing";
+      return "󰎇 Nothing is playing 󰎇";
     }
   });
 
@@ -39,7 +59,12 @@ const Media = () => {
         on_primary_click: () => mpris.getPlayer("")?.playPause(),
         on_scroll_up: () => mpris.getPlayer("")?.next(),
         on_scroll_down: () => mpris.getPlayer("")?.previous(),
-        child: Widget.Label({ label }),
+        child: Widget.Label({
+          label,
+          truncate: 'end',
+          wrap: true,
+          maxWidthChars: 30,
+        }),
       }),
     }),
     isVisible: false,

@@ -232,6 +232,46 @@ spinner:checked {
   animation: spin 1s linear infinite;
 }
 
+.widget-button {
+  background: #11111b;
+  opacity: 1;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 3px solid;
+  border-color: #11111b;
+  transition: border-color 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
+.widget-button:hover {
+  border: 3px solid;
+  border-color: #b4befe;
+  transition: border-color 0.3s ease-in-out;
+}
+.widget-button:focus, .widget-button:active {
+  border: 3px solid;
+  border-color: #b4befe;
+}
+.widget-button image {
+  border-radius: 26.68px;
+  min-width: 1.2em;
+  min-height: 1.2em;
+  font-size: 4em;
+}
+.widget-button label {
+  margin-top: 12px;
+}
+.widget-button:focus image, .widget-button:active image {
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in-out;
+}
+.widget-button:focus label, .widget-button:active label {
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in-out;
+}
+
 .bar-menu_label {
   color: #94e2d5;
   margin-right: 20px;
@@ -268,6 +308,7 @@ spinner:checked {
 }
 
 .media {
+  font-size: 1rem;
   color: #a6e3a1;
 }
 
@@ -313,7 +354,7 @@ spinner:checked {
 }
 
 .window_title {
-  color: #f9e2af;
+  color: #f5c2e7;
 }
 
 .systray button:not(:first-child) {
@@ -373,6 +414,99 @@ spinner:checked {
 
 .box-right {
   margin-right: 25px;
+}
+
+window#powermenu,
+window#verification {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+window#verification .verification {
+  margin: 12px;
+  border: 3px solid #45475a;
+  background-color: #1e1e2e;
+  color: #9278b6;
+  border-radius: 11px;
+  padding: 20px;
+  padding: 16.8px;
+  min-width: 300px;
+  min-height: 100px;
+}
+window#verification .verification .text-box {
+  margin-bottom: 12px;
+}
+window#verification .verification .text-box .title {
+  font-size: 1.6em;
+}
+window#verification .verification .text-box .desc {
+  color: rgba(146, 120, 182, 0.9);
+  font-size: 1.1em;
+}
+
+window#powermenu .powermenu {
+  margin: 12px;
+  border: 3px solid #45475a;
+  background-color: #1e1e2e;
+  color: #9278b6;
+  border-radius: 11px;
+  padding: 20px;
+}
+window#powermenu .powermenu.line {
+  padding: 16.8px;
+}
+window#powermenu .powermenu.box {
+  padding: 22.4px;
+}
+
+.widget-button:hover.powermenu-button-shutdown {
+  border-color: #f38ba8;
+}
+.widget-button:hover.powermenu-button-logout {
+  border-color: #a6e3a1;
+}
+.widget-button:hover.powermenu-button-sleep {
+  border-color: #89dceb;
+}
+.widget-button:hover.powermenu-button-reboot {
+  border-color: #fab387;
+}
+.widget-button:focus.powermenu-button-shutdown, .widget-button:active.powermenu-button-shutdown {
+  border-color: rgba(243, 139, 168, 0.5);
+}
+.widget-button:focus.powermenu-button-logout, .widget-button:active.powermenu-button-logout {
+  border-color: rgba(166, 227, 161, 0.5);
+}
+.widget-button:focus.powermenu-button-sleep, .widget-button:active.powermenu-button-sleep {
+  border-color: rgba(137, 220, 235, 0.5);
+}
+.widget-button:focus.powermenu-button-reboot, .widget-button:active.powermenu-button-reboot {
+  border-color: rgba(250, 179, 135, 0.5);
+}
+
+.system-button_icon.shutdown {
+  color: #f38ba8;
+}
+.system-button_icon.logout {
+  color: #a6e3a1;
+}
+.system-button_icon.reboot {
+  color: #fab387;
+}
+.system-button_icon.sleep {
+  color: #89dceb;
+}
+
+.system-button_label.shutdown {
+  color: #f38ba8;
+}
+.system-button_label.logout {
+  color: #a6e3a1;
+}
+.system-button_label.reboot {
+  color: #fab387;
+}
+.system-button_label.sleep {
+  color: #89dceb;
 }
 
 /*# sourceMappingURL=style.css.map */

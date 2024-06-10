@@ -1,0 +1,53 @@
+$popover-padding: 7px * 1.6;
+$padding: 7px;
+$spacing: 12px;
+$radius: 11px;
+
+.widget-button {
+  background: $crust;
+  opacity: 1;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 10px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 3px solid;
+  border-color: $crust;
+  transition: border-color .3s ease-in-out;
+  transition: opacity .3s ease-in-out;
+
+  &:hover {
+    border: 3px solid;
+    border-color: $lavender;
+    transition: border-color .3s ease-in-out;
+  }
+
+  &:focus,
+  &:active {
+    border: 3px solid;
+    border-color: $lavender;
+  }
+
+  image {
+    border-radius: $radius + ($popover-padding * 1.4);
+    min-width: 1.2em;
+    min-height: 1.2em;
+    font-size: 4em;
+  }
+
+  label {
+    margin-top: $spacing;
+  }
+
+  &:focus,
+  &:active {
+    image {
+      opacity: .3;
+  transition: opacity .3s ease-in-out;
+    }
+    label {
+      opacity: .3;
+  transition: opacity .3s ease-in-out;
+    }
+  }
+}

@@ -1,0 +1,105 @@
+@import "../colors";
+
+window#powermenu,
+window#verification {
+    // the fraction has to be more than hyprland ignorealpha
+    background-color: rgba(0, 0, 0, .4);
+}
+
+$popover-padding: 7px * 1.6;
+$padding: 7px;
+$spacing: 12px;
+$radius: 11px;
+
+window#verification .verification {
+    @include floating-widget;
+    padding: 7px * 1.6 * 1.5;
+    min-width: 300px;
+    min-height: 100px;
+
+    .text-box {
+        margin-bottom: $spacing;
+
+        .title {
+            font-size: 1.6em;
+        }
+
+        .desc {
+            color: transparentize($primary_fg, 0.1);
+            font-size: 1.1em;
+        }
+    }
+}
+
+window#powermenu .powermenu {
+    @include floating-widget;
+    &.line {
+        padding: $popover-padding * 1.5;
+    }
+
+    &.box {
+        padding: $popover-padding * 2;
+    }
+}
+
+.widget-button {
+    &:hover {
+        &.powermenu-button-shutdown {
+            border-color: $red;
+        }
+        &.powermenu-button-logout {
+            border-color: $green;
+        }
+        &.powermenu-button-sleep {
+            border-color: $sky;
+        }
+        &.powermenu-button-reboot {
+            border-color: $peach;
+        }
+    }
+
+    &:focus,
+    &:active {
+        &.powermenu-button-shutdown {
+            border-color: rgba($red, .5);
+        }
+        &.powermenu-button-logout {
+            border-color: rgba($green, .5);
+        }
+        &.powermenu-button-sleep {
+            border-color: rgba($sky, .5);
+        }
+        &.powermenu-button-reboot {
+            border-color: rgba($peach, .5);
+        }
+    }
+}
+.system-button_icon {
+    &.shutdown {
+        color: $red;
+    }
+    &.logout {
+        color: $green;
+    }
+    &.reboot {
+        color: $peach;
+    }
+    &.sleep {
+        color: $sky;
+    }
+}
+
+.system-button_label {
+    &.shutdown {
+        color: $red;
+    }
+    &.logout {
+        color: $green;
+    }
+    &.reboot {
+        color: $peach;
+    }
+    &.sleep {
+        color: $sky;
+    }
+}
