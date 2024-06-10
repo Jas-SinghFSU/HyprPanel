@@ -27,12 +27,6 @@ const Workspaces = (monitor = -1, wsMap = {}, ws = 8) => {
             label: `${i}`,
             setup: (self) =>
               self.hook(hyprland, () => {
-                // console.log(`currentMonitor: ${monitor}`);
-                console.log(i);
-                console.log(JSON.stringify(hyprland.getWorkspace(i), null, 2));
-                if (hyprland.getWorkspace(i)) {
-                  // console.log(`currentMonitor: ${monitor}`);
-                }
                 self.toggleClassName(
                   "active",
                   hyprland.active.workspace.id === i,

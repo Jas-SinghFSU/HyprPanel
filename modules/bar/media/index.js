@@ -42,14 +42,22 @@ const Media = () => {
     return foundMatch ? foundMatch[1] : "󰝚";
   };
 
-  const label = Utils.watch("󰎇 Nothing is playing 󰎇", mpris, "player-changed", () => {
-    if (activePlayer.value) {
-      const { track_title, identity } = activePlayer.value;
-      return `${getIconForPlayer(identity)}  ${track_title}`;
-    } else {
-      return "󰎇 Nothing is playing 󰎇";
-    }
-  });
+  const songIcon = Variable("");
+
+  const label = Utils.watch(
+    "󰎇 No media playing 󰎇",
+    mpris,
+    "player-changed",
+    () => {
+      if (activePlayer.value) {
+        const { track_title, identity } = activePlayer.value;
+        songIcon.value = getIconForPlayer(identity);
+        return track_title.length === 0 ? `  No media playing...` : `  ${track_title}`;
+      } else {
+        return "󰎇 No media playing 󰎇";
+      }
+    },
+  );
 
   return {
     component: Widget.Box({
@@ -59,11 +67,20 @@ const Media = () => {
         on_primary_click: () => mpris.getPlayer("")?.playPause(),
         on_scroll_up: () => mpris.getPlayer("")?.next(),
         on_scroll_down: () => mpris.getPlayer("")?.previous(),
-        child: Widget.Label({
-          label,
-          truncate: 'end',
-          wrap: true,
-          maxWidthChars: 30,
+        child: Widget.Box({
+          children: [
+            Widget.Label({
+              class_name: "bar-media_icon",
+              label: songIcon.bind("value"),
+              maxWidthChars: 30,
+            }),
+            Widget.Label({
+              label,
+              truncate: "end",
+              wrap: true,
+              maxWidthChars: 30,
+            }),
+          ],
         }),
       }),
     }),

@@ -15,7 +15,8 @@ window#verification .verification {
     @include floating-widget;
     padding: 7px * 1.6 * 1.5;
     min-width: 300px;
-    min-height: 100px;
+    min-height: 80px;
+    font-size: 1.3em;
 
     .text-box {
         margin-bottom: $spacing;
@@ -28,6 +29,65 @@ window#verification .verification {
             color: transparentize($primary_fg, 0.1);
             font-size: 1.1em;
         }
+    }
+
+    .verification-button {
+        background: $crust;
+        padding: 10px 0px;
+        margin: 5px 25px;
+        border: 2px solid;
+        border-color: $crust;
+        border-radius: $radius;
+        opacity: 1;
+        transition: border-color 0.2s ease-in-out;
+        transition: opacity .3s ease-in-out;
+
+        &:hover {
+            &.bar-verification_yes{
+                border-color: $green;
+                transition: border-color 0.2s ease-in-out;
+            }
+            &.bar-verification_no {
+                border-color: $red;
+                transition: border-color 0.2s ease-in-out;
+            }
+        }
+        &:focus {
+            &.bar-verification_yes{
+                border-color: $green;
+                transition: border-color 0.2s ease-in-out;
+            }
+            &.bar-verification_no {
+                border-color: $red;
+                transition: border-color 0.2s ease-in-out;
+            }
+        }
+
+        &:active {
+            &.bar-verification_yes {
+                border-color: rgba($green, 0.4);
+                transition: border-color 0.2s ease-in-out;
+            }
+            &.bar-verification_no {
+                border-color: rgba($red, 0.4);
+                transition: border-color 0.2s ease-in-out;
+            }
+
+            image {
+                opacity: .3;
+                transition: opacity .3s ease-in-out;
+            }
+            label {
+                opacity: .3;
+                transition: opacity .3s ease-in-out;
+            }
+        }
+    }
+    .bar-verification_no label {
+        color: $red;
+    }
+    .bar-verification_yes label {
+        color: $green;
     }
 }
 

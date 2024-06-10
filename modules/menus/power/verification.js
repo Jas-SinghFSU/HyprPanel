@@ -30,14 +30,12 @@ export default () =>
           homogeneous: true,
           children: [
             Widget.Button({
+              class_name: "verification-button bar-verification_no",
               child: Widget.Label("No"),
               on_clicked: () => App.toggleWindow("verification"),
-              setup: (self) =>
-                self.hook(App, (_, name, visible) => {
-                  if (name === "verification" && visible) self.grab_focus();
-                }),
             }),
             Widget.Button({
+              class_name: "verification-button bar-verification_yes",
               child: Widget.Label("Yes"),
               on_clicked: powermenu.exec,
             }),

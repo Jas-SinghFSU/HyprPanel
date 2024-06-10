@@ -2,8 +2,7 @@ export const Power = () => {
   return {
     component: Widget.Box({
       child: Widget.Button({
-        class_name: "powermenu",
-        on_clicked: () => App.toggleWindow("powermenu"),
+        class_name: "bar-powermenu",
         child: Widget.Label({
           class_name: "bar-power_label",
           label: "⏻",
@@ -11,5 +10,8 @@ export const Power = () => {
       }),
     }),
     isVisible: true,
+    props: {
+      on_clicked: () => App.toggleWindow("powermenu"),
+    },
   };
 };

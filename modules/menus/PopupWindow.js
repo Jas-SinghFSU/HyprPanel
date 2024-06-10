@@ -127,7 +127,7 @@ export default ({
     name,
     class_names: [name, "popup-window"],
     setup: w => w.keybind("Escape", () => App.closeWindow(name)),
-    visible: true,
+    visible: false,
     keymode: "on-demand",
     exclusivity,
     layer: "top",

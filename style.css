@@ -312,6 +312,11 @@ spinner:checked {
   color: #a6e3a1;
 }
 
+.bar-media_icon {
+  font-size: 1.3rem;
+  color: #a6e3a1;
+}
+
 .bar-network {
   color: #cba6f7;
 }
@@ -430,7 +435,8 @@ window#verification .verification {
   padding: 20px;
   padding: 16.8px;
   min-width: 300px;
-  min-height: 100px;
+  min-height: 80px;
+  font-size: 1.3em;
 }
 window#verification .verification .text-box {
   margin-bottom: 12px;
@@ -441,6 +447,55 @@ window#verification .verification .text-box .title {
 window#verification .verification .text-box .desc {
   color: rgba(146, 120, 182, 0.9);
   font-size: 1.1em;
+}
+window#verification .verification .verification-button {
+  background: #11111b;
+  padding: 10px 0px;
+  margin: 5px 25px;
+  border: 2px solid;
+  border-color: #11111b;
+  border-radius: 11px;
+  opacity: 1;
+  transition: border-color 0.2s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
+window#verification .verification .verification-button:hover.bar-verification_yes {
+  border-color: #a6e3a1;
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:hover.bar-verification_no {
+  border-color: #f38ba8;
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:focus.bar-verification_yes {
+  border-color: #a6e3a1;
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:focus.bar-verification_no {
+  border-color: #f38ba8;
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:active.bar-verification_yes {
+  border-color: rgba(166, 227, 161, 0.4);
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:active.bar-verification_no {
+  border-color: rgba(243, 139, 168, 0.4);
+  transition: border-color 0.2s ease-in-out;
+}
+window#verification .verification .verification-button:active image {
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in-out;
+}
+window#verification .verification .verification-button:active label {
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in-out;
+}
+window#verification .verification .bar-verification_no label {
+  color: #f38ba8;
+}
+window#verification .verification .bar-verification_yes label {
+  color: #a6e3a1;
 }
 
 window#powermenu .powermenu {

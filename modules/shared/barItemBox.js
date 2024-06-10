@@ -7,9 +7,10 @@ export const BarItemBox = (child) => {
     return child.isVisible;
   };
 
-  return Widget.Box({
+  return Widget.Button({
     class_name: "bar_item_box_visible",
     child: child.component,
     visible: computeVisible(),
+    ...child.props
   });
 };
