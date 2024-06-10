@@ -19,7 +19,7 @@ export default () =>
             }),
             Widget.Label({
               class_name: "desc",
-              label: "Are you sure?",
+              label: powermenu.bind("title").as(p => `Are you sure you want to ${p.toLowerCase()}?`),
             }),
           ],
         }),
@@ -30,14 +30,14 @@ export default () =>
           homogeneous: true,
           children: [
             Widget.Button({
-              class_name: "verification-button bar-verification_no",
-              child: Widget.Label("No"),
-              on_clicked: () => App.toggleWindow("verification"),
-            }),
-            Widget.Button({
               class_name: "verification-button bar-verification_yes",
               child: Widget.Label("Yes"),
               on_clicked: powermenu.exec,
+            }),
+            Widget.Button({
+              class_name: "verification-button bar-verification_no",
+              child: Widget.Label("No"),
+              on_clicked: () => App.toggleWindow("verification"),
             }),
           ],
         }),

@@ -23,11 +23,15 @@ window#verification .verification {
 
         .title {
             font-size: 1.6em;
+            color: $maroon;
+            margin-bottom: 10px;
         }
 
         .desc {
-            color: transparentize($primary_fg, 0.1);
+            color: $lavender;
             font-size: 1.1em;
+            margin-bottom: 10px;
+            padding: 15px 30px;
         }
     }
 
@@ -103,6 +107,11 @@ window#powermenu .powermenu {
 }
 
 .widget-button {
+    border-color: $crust;
+    opacity: 1;
+    transition: border-color 0.2s ease-in-out;
+    transition: opacity .3s ease-in-out;
+
     &:hover {
         &.powermenu-button-shutdown {
             border-color: $red;
@@ -117,9 +126,20 @@ window#powermenu .powermenu {
             border-color: $peach;
         }
     }
-
-    &:focus,
-    &:active {
+    &:focus {
+        &.powermenu-button-shutdown {
+            border-color: $red;
+        }
+        &.powermenu-button-logout {
+            border-color: $green;
+        }
+        &.powermenu-button-sleep {
+            border-color: $sky;
+        }
+        &.powermenu-button-reboot {
+            border-color: $peach;
+        }
+    } &:active {
         &.powermenu-button-shutdown {
             border-color: rgba($red, .5);
         }

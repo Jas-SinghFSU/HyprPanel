@@ -263,11 +263,11 @@ spinner:checked {
 .widget-button label {
   margin-top: 12px;
 }
-.widget-button:focus image, .widget-button:active image {
+.widget-button:active image {
   opacity: 0.3;
   transition: opacity 0.3s ease-in-out;
 }
-.widget-button:focus label, .widget-button:active label {
+.widget-button:active label {
   opacity: 0.3;
   transition: opacity 0.3s ease-in-out;
 }
@@ -443,10 +443,14 @@ window#verification .verification .text-box {
 }
 window#verification .verification .text-box .title {
   font-size: 1.6em;
+  color: #eba0ac;
+  margin-bottom: 10px;
 }
 window#verification .verification .text-box .desc {
-  color: rgba(146, 120, 182, 0.9);
+  color: #b4befe;
   font-size: 1.1em;
+  margin-bottom: 10px;
+  padding: 15px 30px;
 }
 window#verification .verification .verification-button {
   background: #11111b;
@@ -513,6 +517,12 @@ window#powermenu .powermenu.box {
   padding: 22.4px;
 }
 
+.widget-button {
+  border-color: #11111b;
+  opacity: 1;
+  transition: border-color 0.2s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+}
 .widget-button:hover.powermenu-button-shutdown {
   border-color: #f38ba8;
 }
@@ -525,16 +535,28 @@ window#powermenu .powermenu.box {
 .widget-button:hover.powermenu-button-reboot {
   border-color: #fab387;
 }
-.widget-button:focus.powermenu-button-shutdown, .widget-button:active.powermenu-button-shutdown {
+.widget-button:focus.powermenu-button-shutdown {
+  border-color: #f38ba8;
+}
+.widget-button:focus.powermenu-button-logout {
+  border-color: #a6e3a1;
+}
+.widget-button:focus.powermenu-button-sleep {
+  border-color: #89dceb;
+}
+.widget-button:focus.powermenu-button-reboot {
+  border-color: #fab387;
+}
+.widget-button:active.powermenu-button-shutdown {
   border-color: rgba(243, 139, 168, 0.5);
 }
-.widget-button:focus.powermenu-button-logout, .widget-button:active.powermenu-button-logout {
+.widget-button:active.powermenu-button-logout {
   border-color: rgba(166, 227, 161, 0.5);
 }
-.widget-button:focus.powermenu-button-sleep, .widget-button:active.powermenu-button-sleep {
+.widget-button:active.powermenu-button-sleep {
   border-color: rgba(137, 220, 235, 0.5);
 }
-.widget-button:focus.powermenu-button-reboot, .widget-button:active.powermenu-button-reboot {
+.widget-button:active.powermenu-button-reboot {
   border-color: rgba(250, 179, 135, 0.5);
 }
 

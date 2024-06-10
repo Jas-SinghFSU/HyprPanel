@@ -39,15 +39,14 @@ $radius: 11px;
     margin-top: $spacing;
   }
 
-  &:focus,
   &:active {
     image {
       opacity: .3;
-  transition: opacity .3s ease-in-out;
+      transition: opacity .3s ease-in-out;
     }
     label {
       opacity: .3;
-  transition: opacity .3s ease-in-out;
+      transition: opacity .3s ease-in-out;
     }
   }
 }
