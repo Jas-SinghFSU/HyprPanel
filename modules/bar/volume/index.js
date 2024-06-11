@@ -1,4 +1,7 @@
+const hyprland = await Service.import("hyprland");
 const audio = await Service.import("audio");
+
+import { globalMousePos } from "../../../globals.js";
 
 const Volume = () => {
   const icons = {
@@ -36,7 +39,16 @@ const Volume = () => {
     }),
     isVisible: true,
     props: {
-      // on_primary_click: (a,b) => App.toggleWindow("audiomenu"),
+    on_primary_click: (a, b, c, d) => {
+      const monX = hyprland.monitors[hyprland.active.monitor.id].x;
+      const monY = hyprland.monitors[hyprland.active.monitor.id].y;
+
+      const cursorPos = Utils.exec("hyprctl cursorpos").split(", ").map(Number);
+      cursorPos[0] = cursorPos[0] - monX;
+      cursorPos[1] = cursorPos[1] - monY;
+      globalMousePos.value = cursorPos;
+      App.toggleWindow("audiomenu");
+    },
     },
   };
 };

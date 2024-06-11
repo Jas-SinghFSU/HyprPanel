@@ -588,7 +588,8 @@ window#powermenu .powermenu.box {
 
 .audiomenu-items {
   background: #181825;
-  border: 1px solid #89dceb;
+  border: 2px solid #fab387;
+  border-radius: 11px;
   min-width: 200px;
   min-height: 300px;
 }
