@@ -35,6 +35,9 @@ const Volume = () => {
       children: [volIcn, volPct],
     }),
     isVisible: true,
+    props: {
+      // on_primary_click: (a,b) => App.toggleWindow("audiomenu"),
+    },
   };
 };
 

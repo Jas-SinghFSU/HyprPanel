@@ -8,7 +8,7 @@ const SysButton = (action, label) =>
     on_clicked: () => powermenu.action(action),
     child: Widget.Box({
       vertical: true,
-      class_name: "system-button widget-button",
+      class_name: "system-button widget-box",
       children: [
         Widget.Icon({
           class_name: `system-button_icon ${action}`,

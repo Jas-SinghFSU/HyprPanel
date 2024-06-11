@@ -3,7 +3,7 @@
 @mixin floating-widget {
     // box-shadow: 0 0 5px 0 $shadow-color;
     margin: max($spacing, 8px);
-    border: 3px solid $surface1;
+    border: 2px solid $surface0;
     background-color: $base;
     color: $primary_fg;
     border-radius: 11px;

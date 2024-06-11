@@ -1,0 +1,13 @@
+@import "../colors";
+
+.audiomenu-items {
+    background: $mantle;
+    border: 1px solid $sky;
+    min-width: 200px;
+    min-height: 300px;
+}
+
+.click-me {
+    background: $lavender;
+    margin: 140px 0px;
+}

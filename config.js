@@ -26,6 +26,7 @@ const workspaceMonitorMap = {
   1: [6,7],
   2: [1,2,3,8,9,10],
 }
+
 export default {
   style: `${App.configDir}/style.css`,
   closeWindowDelay: {
