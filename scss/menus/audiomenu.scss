@@ -2,13 +2,50 @@
 
 .audiomenu-items {
     background: $mantle;
-    border: 2px solid $peach;
-    border-radius: 11px;
-    min-width: 200px;
-    min-height: 300px;
+    border: .15rem solid $peach;
+    border-radius: .7rem;
+    min-width: 30rem;
+    min-height: 200px;
+}
+
+.audiomenu-items-container {
+    margin: .5rem 1rem;
 }
 
 .click-me {
     background: $lavender;
     margin: 140px 0px;
+}
+
+.audiomenu-dropdown-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.audiomenu-separator {
+    min-height: .1rem;
+    margin: .6rem 0rem;
+    background: $surface1;
+}
+
+.audiomenu-active {
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin: 0rem .5rem;
+    margin-bottom: 1rem;
+}
+
+.audiomenu-active-slider {
+    margin-left: 1rem;
+    margin-right: 1.5rem;
+}
+
+.audiomenu-active-slider * {
+    background: $peach;
+    background-color: $peach;
+    min-height: 1.3rem;
+    border-radius: .6rem;
+}
+.audiomenu-slider-container {
+    margin-bottom: 1.5rem;
 }

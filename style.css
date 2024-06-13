@@ -588,15 +588,53 @@ window#powermenu .powermenu.box {
 
 .audiomenu-items {
   background: #181825;
-  border: 2px solid #fab387;
-  border-radius: 11px;
-  min-width: 200px;
-  min-height: 300px;
+  border: 0.15rem solid #fab387;
+  border-radius: 0.7rem;
+  min-width: 30rem;
+  min-height: 200px;
+}
+
+.audiomenu-items-container {
+  margin: 0.5rem 1rem;
 }
 
 .click-me {
   background: #b4befe;
   margin: 140px 0px;
+}
+
+.audiomenu-dropdown-label {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.audiomenu-separator {
+  min-height: 0.1rem;
+  margin: 0.6rem 0rem;
+  background: #45475a;
+}
+
+.audiomenu-active {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin: 0rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.audiomenu-active-slider {
+  margin-left: 1rem;
+  margin-right: 1.5rem;
+}
+
+.audiomenu-active-slider * {
+  background: #fab387;
+  background-color: #fab387;
+  min-height: 1.3rem;
+  border-radius: 0.6rem;
+}
+
+.audiomenu-slider-container {
+  margin-bottom: 1.5rem;
 }
 
 /*# sourceMappingURL=style.css.map */
