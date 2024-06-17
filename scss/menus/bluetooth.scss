@@ -1,0 +1,43 @@
+@import "../colors";
+
+.menu-dropdown-label.bluetooth {
+    color: $sky;
+}
+
+.menu-label.bluetooth {
+    color: $sky;
+}
+
+.menu-button-isactive.bluetooth {
+    color: $sky;
+}
+
+.menu-button.bluetooth {
+     &:hover {
+        color: $sky;
+    }
+}
+
+.menu-items {
+    min-width: 300px;
+}
+
+.menu-icon-button {
+    font-size: 1.2rem;
+    min-width: 2rem;
+    &:hover {
+        color: $sky;
+    }
+}
+
+.menu-icon-button.delete {
+    margin-left: 0.5rem;
+}
+
+.menu-icon-button-label {
+    font-size: 1.3rem;
+}
+
+.menu-button-name.status {
+    margin-left: 2.1rem;
+}

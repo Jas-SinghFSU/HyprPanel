@@ -2,23 +2,15 @@ const audio = await Service.import("audio");
 import DropdownMenu from "../DropdownMenu.js";
 
 export default () => {
-  const playbackDevices = Variable(audio.speakers);
-  const inputDevices = Variable(audio.microphones);
-
-  audio.connect("changed", (aVal) => {
-    playbackDevices.value = aVal.speakers;
-    inputDevices.value = aVal.microphones;
-  });
-
   const renderPlaybacks = (playbackDevices) => {
     return playbackDevices.map((device) => {
       if (device.description === "Dummy Output") {
         return Widget.Box({
-          class_name: `audiomenu-playback-button not-found`,
+          class_name: "menu-unfound-button playback",
           child: Widget.Box({
             children: [
               Widget.Label({
-                class_name: "audiomenu-playback-button-icon",
+                class_name: "menu-button-name playback",
                 label: "No playback devices found...",
               }),
             ],
@@ -26,25 +18,51 @@ export default () => {
         });
       }
       return Widget.Button({
-        class_name: `audiomenu-button playback ${device}`,
+        class_name: `menu-button audio playback ${device}`,
+        cursor: "pointer",
+        on_primary_click: () => (audio.speaker = device),
         child: Widget.Box({
           children: [
-            Widget.Label({
-              class_name: "audiomenu-button-icon playback",
-              label: "o",
+            Widget.Box({
+              hpack: "start",
+              children: [
+                Widget.Label({
+                  truncate: "end",
+                  wrap: true,
+                  class_name: audio.speaker
+                    .bind("description")
+                    .as((v) =>
+                      device.description === v
+                        ? "menu-button-icon active playback"
+                        : "menu-button-icon playback",
+                    ),
+                  label: "",
+                }),
+                Widget.Label({
+                  class_name: audio.speaker
+                    .bind("description")
+                    .as((v) =>
+                      device.description === v
+                        ? "menu-button-name active playback"
+                        : "menu-button-name playback",
+                    ),
+                  truncate: "end",
+                  wrap: true,
+                  label: device.description,
+                }),
+              ],
             }),
-            Widget.Label({
-              class_name: "audiomenu-button-name playback",
-              truncate: "end",
+            Widget.Box({
+              hpack: "end",
               expand: true,
-              wrap: true,
-              label: device.description,
-            }),
-            Widget.Label({
-              class_name: "audiomenu-button-isactive playback",
-              label: audio.speaker
-                .bind("description")
-                .as((v) => (device.description === v ? " y" : "")),
+              children: [
+                Widget.Label({
+                  class_name: "menu-button-isactive audio playback",
+                  label: audio.speaker
+                    .bind("description")
+                    .as((v) => (device.description === v ? " " : "")),
+                }),
+              ],
             }),
           ],
         }),
@@ -56,11 +74,11 @@ export default () => {
     if (!inputDevices.length) {
       return [
         Widget.Box({
-          class_name: `audiomenu-inputs-button not-found`,
+          class_name: `menu-unfound-button input`,
           child: Widget.Box({
             children: [
               Widget.Label({
-                class_name: "audiomenu-inputs-button-icon",
+                class_name: "menu-button-name input",
                 label: "No input devices found...",
               }),
             ],
@@ -70,25 +88,51 @@ export default () => {
     }
     return inputDevices.map((device) => {
       return Widget.Button({
-        class_name: `audiomenu-button input ${device}`,
+        cursor: "pointer",
+        on_primary_click: () => (audio.microphone = device),
+        class_name: `menu-button audio input ${device}`,
         child: Widget.Box({
           children: [
-            Widget.Label({
-              class_name: "audiomenu-button-icon input",
-              label: "/",
+            Widget.Box({
+              hpack: "start",
+              children: [
+                Widget.Label({
+                  class_name: audio.microphone
+                    .bind("description")
+                    .as((v) =>
+                      device.description === v
+                        ? "menu-button-icon active input"
+                        : "menu-button-icon input",
+                    ),
+                  label: "",
+                }),
+                Widget.Label({
+                  truncate: "end",
+                  wrap: true,
+                  class_name: audio.microphone
+                    .bind("description")
+                    .as((v) =>
+                      device.description === v
+                        ? "menu-button-name active input"
+                        : "menu-button-name input",
+                    ),
+                  label: device.description,
+                }),
+              ],
             }),
-            Widget.Label({
-              class_name: "audiomenu-button-name input",
-              label: device.description,
-            }),
-            Widget.Label({
-              class_name: "audiomenu-button-isactive input",
-              truncate: "end",
+            Widget.Box({
+              hpack: "end",
               expand: true,
-              wrap: true,
-              label: audio.microphone
-                .bind("description")
-                .as((v) => (device.description === v ? " y" : "")),
+              children: [
+                Widget.Label({
+                  class_name: "menu-button-isactive audio input",
+                  truncate: "end",
+                  wrap: true,
+                  label: audio.microphone
+                    .bind("description")
+                    .as((v) => (device.description === v ? " " : "")),
+                }),
+              ],
             }),
           ],
         }),
@@ -99,32 +143,32 @@ export default () => {
   const renderActivePlayback = () => {
     return [
       Widget.Label({
-        class_name: "audiomenu-active playback",
+        class_name: "menu-active playback",
         truncate: "end",
         expand: true,
         wrap: true,
         label: audio.bind("speaker").as((v) => v.description || ""),
       }),
       Widget.Box({
-        class_name: "audiomenu-slider-container playback",
+        class_name: "menu-slider-container playback",
         children: [
           Widget.Label({
-            class_name: "audiomenu-active-icon playback",
+            class_name: "menu-active-icon playback",
             label: audio.speaker
               .bind("volume")
-              .as((v) => `${v === 0 ? "m" : "a"}`),
+              .as((v) => `${v === 0 ? "󰖁" : "󰕾"}`),
           }),
           Widget.Slider({
-            value: audio.speaker.bind("volume").as((v) => v * 100),
-            class_name: "audiomenu-active-slider playback",
+            value: audio["speaker"].bind("volume"),
+            class_name: "menu-active-slider menu-slider playback",
             draw_value: false,
             hexpand: true,
             min: 0,
-            max: 100,
-            onChange: ({ value }) => (audio.speaker.volume = value / 100),
+            max: 1,
+            onChange: ({ value }) => (audio.speaker.volume = value),
           }),
           Widget.Label({
-            class_name: "audiomenu-active-percentage playback",
+            class_name: "menu-active-percentage playback",
             label: audio.speaker
               .bind("volume")
               .as((v) => `${Math.floor(v * 100)}%`),
@@ -137,31 +181,31 @@ export default () => {
   const renderActiveInput = () => {
     return [
       Widget.Label({
-        class_name: "audiomenu-active input",
+        class_name: "menu-active input",
         truncate: "end",
         wrap: true,
         label: audio.bind("microphone").as((v) => v.description || ""),
       }),
       Widget.Box({
-        class_name: "audiomenu-slider-container input",
+        class_name: "menu-slider-container input",
         children: [
           Widget.Label({
-            class_name: "audiomenu-active-icon input",
+            class_name: "menu-active-icon input",
             label: audio.microphone
               .bind("volume")
-              .as((v) => `${v === 0 ? "m" : "a"}`),
+              .as((v) => `${v === 0 ? "󰍭" : "󰍬"}`),
           }),
           Widget.Slider({
-            value: audio.microphone.bind("volume").as((v) => v * 100),
-            class_name: "audiomenu-active-slider inputs",
+            value: audio.microphone.bind("volume").as((v) => v),
+            class_name: "menu-active-slider menu-slider inputs",
             draw_value: false,
             hexpand: true,
             min: 0,
-            max: 100,
-            onChange: ({ value }) => (audio.microphone.volume = value / 100),
+            max: 1,
+            onChange: ({ value }) => (audio.microphone.volume = value),
           }),
           Widget.Label({
-            class_name: "audiomenu-active-percentage input",
+            class_name: "menu-active-percentage input",
             label: audio.microphone
               .bind("volume")
               .as((v) => `${Math.floor(v * 100)}%`),
@@ -175,61 +219,69 @@ export default () => {
     name: "audiomenu",
     transition: "crossfade",
     child: Widget.Box({
-      class_name: "audiomenu-items",
+      class_name: "menu-items",
       child: Widget.Box({
         vertical: true,
-        class_name: "audiomenu-items-container",
+        class_name: "menu-items-container",
         children: [
           Widget.Box({
-            class_name: "audiomenu-dropdown-label-container",
+            class_name: "menu-dropdown-label-container",
             hpack: "start",
             children: [
               Widget.Label({
-                class_name: "audiomenu-dropdown-label",
-                label: "Audio Devices",
+                class_name: "menu-dropdown-label audio",
+                label: "Audio",
               }),
             ],
           }),
           Widget.Separator({
-            class_name: "audiomenu-separator",
+            class_name: "menu-separator",
           }),
           Widget.Box({
-            class_name: "audiomenu-active-container playback",
+            class_name: "menu-active-container playback",
             vertical: true,
             children: renderActivePlayback(),
           }),
           Widget.Box({
-            class_name: "audiomenu-active-container input",
+            class_name: "menu-active-container input",
             vertical: true,
             children: renderActiveInput(),
           }),
+          Widget.Separator({
+            class_name: "menu-separator",
+          }),
           Widget.Box({
-            class_name: "audiomenu-label-container playback",
+            class_name: "menu-container playback",
             vertical: true,
-            hpack: "start",
             children: [
-              Widget.Label({
-                class_name: "audiomenu-label playback",
-                label: "Playback Devices",
-                hpack: "start",
+              Widget.Box({
+                class_name: "menu-label-container",
+                child: Widget.Label({
+                  class_name: "menu-label audio playback",
+                  label: "Playback Devices",
+                  hpack: "start",
+                }),
               }),
               Widget.Box({
                 vertical: true,
-                children: audio
-                  .bind("speakers")
-                  .as((v) => renderPlaybacks(v)),
+                children: audio.bind("speakers").as((v) => renderPlaybacks(v)),
               }),
             ],
           }),
+          Widget.Separator({
+            class_name: "menu-separator",
+          }),
           Widget.Box({
-            class_name: "audiomenu-label-container input",
-            hpack: "start",
+            class_name: "menu-container input",
             vertical: true,
             children: [
-              Widget.Label({
-                class_name: "audiomenu-label input",
-                hpack: "start",
-                label: "Input Devices",
+              Widget.Box({
+                class_name: "menu-label-container",
+                child: Widget.Label({
+                  class_name: "menu-label audio input",
+                  hpack: "start",
+                  label: "Input Devices",
+                }),
               }),
               Widget.Box({
                 vertical: true,

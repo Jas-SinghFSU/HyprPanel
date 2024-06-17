@@ -1,51 +1,32 @@
 @import "../colors";
 
-.audiomenu-items {
-    background: $mantle;
-    border: .15rem solid $peach;
-    border-radius: .7rem;
-    min-width: 30rem;
-    min-height: 200px;
+.menu-dropdown-label.audio {
+    color: $peach;
 }
 
-.audiomenu-items-container {
-    margin: .5rem 1rem;
+.menu-label.audio {
+    color: $peach;
 }
 
-.click-me {
-    background: $lavender;
-    margin: 140px 0px;
+.menu-button-isactive.audio {
+    color: $peach;
 }
 
-.audiomenu-dropdown-label {
-    font-size: 1.5rem;
-    font-weight: bold;
+.menu-active-slider {
+    trough {
+        highlight,
+        progress {
+            background: $peach;
+        }
+    }
 }
 
-.audiomenu-separator {
-    min-height: .1rem;
-    margin: .6rem 0rem;
-    background: $surface1;
+.menu-button.audio {
+     &:hover {
+        color: $peach;
+    }
 }
 
-.audiomenu-active {
-    font-size: 1.15rem;
-    font-weight: bold;
-    margin: 0rem .5rem;
-    margin-bottom: 1rem;
-}
-
-.audiomenu-active-slider {
-    margin-left: 1rem;
-    margin-right: 1.5rem;
-}
-
-.audiomenu-active-slider * {
-    background: $peach;
-    background-color: $peach;
-    min-height: 1.3rem;
-    border-radius: .6rem;
-}
-.audiomenu-slider-container {
-    margin-bottom: 1.5rem;
+.menu-items {
+    min-width: 25rem;
 }

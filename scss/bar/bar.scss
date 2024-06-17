@@ -11,6 +11,10 @@
   border-radius: 8px;
   padding: 2px 12px;
   margin: 6px 3px;
+
+  &:hover {
+    background: $surface1;
+  }
 }
 
 .bar_item_box_hidden {

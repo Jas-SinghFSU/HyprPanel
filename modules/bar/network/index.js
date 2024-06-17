@@ -1,5 +1,7 @@
 const network = await Service.import("network");
 
+import { globalMousePos } from "../../../globals.js";
+
 const Network = () => {
   const wifiIndicator = [
     Widget.Icon({
@@ -26,6 +28,17 @@ const Network = () => {
         .as((w) => (w === "wired" ? wiredIndicator : wifiIndicator)),
     }),
     isVisible: true,
+    props: {
+      on_primary_click: (_, event) => {
+        console.log(JSON.stringify(network, null, 2));
+        const clickPos = event.get_root_coords();
+        const coords = [clickPos[1], clickPos[2]];
+
+        globalMousePos.value = coords;
+
+        App.toggleWindow("networkmenu");
+      },
+    },
   };
 };
 

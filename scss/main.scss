@@ -1,6 +1,8 @@
 * {
   all: unset;
   font-family: "JetBrains Mono Nerd Font";
+  font-size: 1.15rem;
+  font-weight: bold;
 }
 
 //general
@@ -23,5 +25,8 @@
 @import "bar/bar";
 
 //modules - menus
-@import "menus/powermenu";
+@import "menus/menu";
+@import "menus/power";
 @import "menus/audiomenu";
+@import "menus/network";
+@import "menus/bluetooth";

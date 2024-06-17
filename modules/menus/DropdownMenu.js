@@ -10,14 +10,9 @@ export const Padding = (name) =>
   });
 
 const moveBoxToCursor = (self, minWidth, minHeight, child) => {
-  function getAllMethods(object) {
-    return Object.getOwnPropertyNames(object).filter(function (property) {
-      return typeof object[property] == "function";
-    });
-  }
   globalMousePos.connect("changed", ({ value }) => {
-    console.log(child.get_allocated_height());
-    console.log(child.get_allocated_width());
+    // console.log(child.get_allocated_height());
+    // console.log(child.get_allocated_width());
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
 
@@ -50,7 +45,7 @@ export default ({
   child,
   layout = "center",
   transition,
-  minWidth = 400,
+  minWidth = 375,
   minHeight = 200,
   exclusivity = "ignore",
   ...props
@@ -66,8 +61,12 @@ export default ({
     anchor: ["top", "bottom", "right", "left"],
     child: Widget.EventBox({
       on_primary_click: () => App.closeWindow(name),
+      on_secondary_click: () => App.closeWindow(name),
       child: Widget.EventBox({
         on_primary_click: () => {
+          return true;
+        },
+        on_secondary_click: () => {
           return true;
         },
         setup: (self) => {
