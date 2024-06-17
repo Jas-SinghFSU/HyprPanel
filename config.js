@@ -2,6 +2,7 @@ import { exec } from "resource:///com/github/Aylur/ags/utils.js";
 import { Bar, BarAlt } from "./modules/bar/bar.js";
 import DirectoryMonitorService from "./directoryMonitorService.js";
 import MenuWindows from "./modules/menus/main.js";
+import Notifications from "./modules/notifications/index.js";
 
 const applyScss = () => {
   // Compile scss
@@ -39,6 +40,7 @@ export default {
 App.config({
   windows: [
     ...MenuWindows,
+    Notifications(),
     BarAlt(0, workspaceMonitorMap),
     BarAlt(1, workspaceMonitorMap),
     Bar(2, workspaceMonitorMap),

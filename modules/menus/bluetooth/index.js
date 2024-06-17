@@ -2,10 +2,6 @@ const bluetooth = await Service.import("bluetooth");
 import DropdownMenu from "../DropdownMenu.js";
 
 export default () => {
-  bluetooth.connect("changed", (value) => {
-    // console.log(JSON.stringify(value, null, 2));
-  });
-
   const connectedDevices = (btDevices) => {
     const noDevices = () => {
       return Widget.Box({
@@ -69,9 +65,11 @@ export default () => {
                         label: dev.paired ? "" : "",
                       }),
                       on_primary_click: () =>
-                        Utils.execAsync(
+                        Utils.execAsync([
+                          "bash",
+                          "-c",
                           `bluetoothctl ${dev.paired ? "unpair" : "pair"} ${dev.address}`,
-                        ).catch((err) =>
+                        ]).catch((err) =>
                           console.error(
                             `bluetoothctl ${dev.paired ? "unpair" : "pair"} ${dev.address}`,
                             err,
@@ -87,9 +85,11 @@ export default () => {
                         label: dev.connected ? "󱘖" : "",
                       }),
                       on_primary_click: () =>
-                        Utils.execAsync(
+                        Utils.execAsync([
+                          "bash",
+                          "-c",
                           `bluetoothctl ${dev.connected ? "disconnect" : "connect"} ${dev.address}`,
-                        ).catch((err) =>
+                        ]).catch((err) =>
                           console.error(
                             `bluetoothctl ${dev.connected ? "disconnect" : "connect"} ${dev.address}`,
                             err,
@@ -104,9 +104,11 @@ export default () => {
                         label: dev.trusted ? "" : "󱖡",
                       }),
                       on_primary_click: () =>
-                        Utils.execAsync(
+                        Utils.execAsync([
+                          "bash",
+                          "-c",
                           `bluetoothctl ${dev.trusted ? "untrust" : "trust"} ${dev.address}`,
-                        ).catch((err) =>
+                        ]).catch((err) =>
                           console.error(
                             `bluetoothctl ${dev.trusted ? "untrust" : "trust"} ${dev.address}`,
                             err,
@@ -121,9 +123,11 @@ export default () => {
                         label: "󰆴",
                       }),
                       on_primary_click: () =>
-                        Utils.execAsync(
+                        Utils.execAsync([
+                          "bash",
+                          "-c",
                           `bluetoothctl remove ${dev.address}`,
-                        ).catch((err) =>
+                        ]).catch((err) =>
                           console.error("Bluetooth Remove", err),
                         ),
                     }),
@@ -139,77 +143,110 @@ export default () => {
     return btDevices.length === 0 ? noDevices() : deviceList();
   };
 
-  const renderDevices = (btDevices) => {
-    return btDevices
-      .filter(
-        (device) =>
-          device.name !== null &&
-          !bluetooth.connected_devices.find(
-            (dev) => dev.address === device.address,
-          ),
-      )
-      .map((device) => {
-        return Widget.Button({
-          class_name: `menu-button bluetooth ${device}`,
-          on_primary_click: () => {
-            Utils.execAsync(`bluetoothctl connect ${device.address}`).catch(
-              (err) =>
-                console.error(`bluetoothctl connect ${device.address}`, err),
-            );
-            Utils.execAsync(`bluetoothctl pair ${device.address}`).catch(
-              (err) =>
-                console.error(`bluetoothctl pair ${device.address}`, err),
-            );
-          },
-          child: Widget.Box({
-            children: [
+  const renderDevices = () => {
+    return Widget.Box({
+      class_name: "search-devices-container",
+      vertical: true,
+      setup: (self) =>
+        self.hook(bluetooth, () => {
+          const availableDevices = bluetooth.devices.filter(
+            (device) =>
+              device.name !== null &&
+              !bluetooth.connected_devices.find(
+                (dev) => dev.address === device.address,
+              ),
+          );
+
+          if (availableDevices.length === 0) {
+            return (self.children = [
               Widget.Box({
-                hpack: "start",
+                class_name: "empty-bt-devices-container dim",
+                vertical: true,
                 children: [
-                  Widget.Icon({
-                    class_name: bluetooth
-                      .bind("connected_devices")
-                      .as((btDevices) =>
-                        btDevices.find((cd) => cd.alias === device.alias)
-                          ? "menu-button-icon active bluetooth"
-                          : "menu-button-icon bluetooth",
-                      ),
-                    icon: `${device["icon-name"]}-symbolic`,
+                  Widget.Label({
+                    hexpand: true,
+                    label: "No devices currently found",
                   }),
                   Widget.Label({
-                    class_name: bluetooth
-                      .bind("connected_devices")
-                      .as((btDevices) =>
-                        btDevices.find((cd) => cd.alias === device.alias)
-                          ? "menu-button-name active bluetooth"
-                          : "menu-button-name bluetooth",
-                      ),
-                    truncate: "end",
-                    wrap: true,
-                    label: device.alias,
+                    hexpand: true,
+                    label: "Press '󰑐' to search",
                   }),
                 ],
               }),
-              Widget.Box({
-                hpack: "end",
-                expand: true,
-                children: [
-                  Widget.Label({
-                    class_name: "menu-button-isactive bluetooth",
-                    label: bluetooth
-                      .bind("connected_devices")
-                      .as((btDevices) =>
-                        btDevices.find((cd) => cd.alias === device.alias)
-                          ? " "
-                          : "",
-                      ),
-                  }),
-                ],
-              }),
-            ],
-          }),
-        });
-      });
+            ]);
+          }
+          return (self.children = bluetooth.devices
+            .filter(
+              (device) =>
+                device.name !== null &&
+                !bluetooth.connected_devices.find(
+                  (dev) => dev.address === device.address,
+                ),
+            )
+            .map((device) => {
+              return Widget.Button({
+                hexpand: true,
+                class_name: `menu-button bluetooth ${device}`,
+                on_primary_click: () => {
+                  Utils.execAsync([
+                    "bash",
+                    "-c",
+                    `bluetoothctl pair ${device.address}`,
+                  ]).catch((err) => {
+                    console.error(
+                      `bluetoothctl pair ${device.address}`,
+                      err,
+                    );
+
+                    setTimeout(() => {
+                      Utils.execAsync([
+                        "bash",
+                        "-c",
+                        `bluetoothctl connect ${device.address}`,
+                      ]).catch((err) =>
+                        console.error(
+                          `bluetoothctl connect ${device.address}`,
+                          err,
+                        ),
+                      );
+                    }, 2000);
+                  });
+                },
+                child: Widget.Box({
+                  children: [
+                    Widget.Box({
+                      hpack: "start",
+                      children: [
+                        Widget.Icon({
+                          class_name: "menu-button-icon bluetooth",
+                          icon: `${device["icon-name"]}-symbolic`,
+                        }),
+                        Widget.Label({
+                          hexpand: true,
+                          class_name: "menu-button-name bluetooth",
+                          truncate: "end",
+                          wrap: true,
+                          label: device.alias,
+                        }),
+                      ],
+                    }),
+                    Widget.Box({
+                      hpack: "end",
+                      children: device.connecting
+                        ? [
+                            Widget.Label({
+                              class_name: "bluetooth-isconnecting",
+                              label: "󰲼",
+                            }),
+                          ]
+                        : [],
+                    }),
+                  ],
+                }),
+              });
+            }));
+        }),
+    });
   };
 
   const bluetoothOnModule = () => {
@@ -250,25 +287,26 @@ export default () => {
                       hpack: "end",
                       child: Widget.Button({
                         class_name: "menu-icon-button",
-                        on_primary_click: () =>
-                          Utils.execAsync(
+                        on_primary_click: () => {
+                          Utils.notify("Yoyo");
+                          Utils.execAsync([
+                            "bash",
+                            "-c",
                             "bluetoothctl --timeout 120 scan on",
-                          ).catch((err) =>
+                          ]).catch((err) =>
                             console.error(
                               "bluetoothctl --timeout 120 scan on",
                               err,
                             ),
-                          ),
+                          );
+                        },
                         child: Widget.Icon("view-refresh-symbolic"),
                       }),
                     }),
                   ],
                 }),
                 Widget.Box({
-                  vertical: true,
-                  children: bluetooth
-                    .bind("devices")
-                    .as((v) => renderDevices(v)),
+                  child: renderDevices(),
                 }),
               ],
             }),
@@ -300,7 +338,7 @@ export default () => {
   return DropdownMenu({
     name: "bluetoothmenu",
     transition: "crossfade",
-    minWidth: 325,
+    minWidth: 350,
     child: Widget.Box({
       class_name: "menu-items",
       child: Widget.Box({
@@ -323,16 +361,13 @@ export default () => {
                 hpack: "end",
                 child: Widget.Switch({
                   class_name: "menu-switch bluetooth",
-                  active: bluetooth.enabled,
-                  setup: (self) => {
-                    bluetooth.connect("changed", ({ enabled }) => {
-                      self.set_property("active", enabled);
-                    });
-                  },
+                  active: bluetooth.bind("enabled"),
                   on_activate: ({ active }) =>
-                    Utils.execAsync(
+                    Utils.execAsync([
+                      "bash",
+                      "-c",
                       `bluetoothctl power ${active ? "on" : "off"}`,
-                    ).catch((err) =>
+                    ]).catch((err) =>
                       console.error(
                         `bluetoothctl power ${active ? "on" : "off"}`,
                         err,

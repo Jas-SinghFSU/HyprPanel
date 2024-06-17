@@ -11,8 +11,6 @@ export const Padding = (name) =>
 
 const moveBoxToCursor = (self, minWidth, minHeight, child) => {
   globalMousePos.connect("changed", ({ value }) => {
-    // console.log(child.get_allocated_height());
-    // console.log(child.get_allocated_width());
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
 

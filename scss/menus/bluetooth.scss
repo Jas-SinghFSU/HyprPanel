@@ -19,7 +19,7 @@
 }
 
 .menu-items {
-    min-width: 300px;
+    min-width: 350px;
 }
 
 .menu-icon-button {
@@ -40,4 +40,16 @@
 
 .menu-button-name.status {
     margin-left: 2.1rem;
+}
+
+.search-devices-container {
+    min-height: 8rem;
+}
+
+.empty-bt-devices-container {
+    margin-top: 2rem;
+}
+
+.bluetooth-isconnecting {
+    color: $sky;
 }
