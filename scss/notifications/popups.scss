@@ -8,10 +8,10 @@
   color: $text;
   background: $mantle;
   margin-right: 0.5rem;
-  border: 0.15rem solid $lavender;
+  border: 0.2rem solid $lavender;
   min-width: 25rem;
   min-height: 6rem;
-  border-radius: 0.8rem;
+  border-radius: 0.4rem;
   &:first-child {
     margin-top: 3.5rem;
   }
@@ -29,10 +29,10 @@
   margin: 0.5rem 0.75rem;
   min-width: 4rem;
   min-height: 4rem;
-  border-radius: 0.7rem;
+  border-radius: 0.4rem;
 }
 .notification-card-image {
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   min-width: 3rem;
   min-height: 3rem;
   padding: 1rem 1rem;
@@ -45,19 +45,16 @@
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  // margin: 0.2rem 0rem;
   margin-right: 1rem;
 }
 
 .notification-card-appname-label {
-  // margin-top: 0.4rem;
   font-size: 0.9rem;
   color: $pink;
 }
 
 .notification-card-header-label {
   font-size: 1.15rem;
-  // margin-bottom: 0.25rem;
   color: $lavender;
 }
 

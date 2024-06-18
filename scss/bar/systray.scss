@@ -1,7 +1,7 @@
 @import "../colors";
 
 .systray button:not(:first-child) {
-  margin-left: 10px;
+  margin-left: 0.75rem;
 }
 
 .systray-menu {
@@ -9,7 +9,7 @@
 }
 .systray-menu label {
   font-weight: bold;
-  color: $lavender;
+  color: $text;
 }
 
 .systray-menu separator {

@@ -71,7 +71,7 @@ export default ({
           moveBoxToCursor(self, minWidth, minHeight);
         },
         child: Widget.Box({
-          css: "padding: 1px;",
+          css: "padding: 1px; margin: -1px;",
           child: Widget.Revealer({
             revealChild: false,
             setup: (self) =>
@@ -79,7 +79,7 @@ export default ({
                 if (wname === name) self.reveal_child = visible;
               }),
             transition: "crossfade",
-            transitionDuration: 500,
+            transitionDuration: 350,
             child: Widget.Box({
               class_name: "dropdown-menu-container",
               can_focus: true,

@@ -1,11 +1,10 @@
 @import "../colors";
 
 @mixin floating-widget {
-    // box-shadow: 0 0 5px 0 $shadow-color;
     margin: max($spacing, 8px);
-    border: 2px solid $surface0;
+    border: 0.2rem solid $surface0;
     background-color: $base;
     color: $primary_fg;
-    border-radius: 11px;
-    padding: 20px;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
 }

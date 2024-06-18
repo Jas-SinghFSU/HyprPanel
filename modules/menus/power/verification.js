@@ -15,7 +15,7 @@ export default () =>
           children: [
             Widget.Label({
               class_name: "title",
-              label: powermenu.bind("title"),
+              label: powermenu.bind("title").as(t => t.toUpperCase()),
             }),
             Widget.Label({
               class_name: "desc",

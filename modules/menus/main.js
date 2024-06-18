@@ -3,5 +3,6 @@ import Verification from "./power/verification.js";
 import AudioMenu from "./audio/index.js";
 import NetworkMenu from "./network/index.js";
 import BluetoothMenu from "./bluetooth/index.js";
+import MediaMenu from "./media/index.js";
 
-export default [PowerMenu(), Verification(), AudioMenu(), NetworkMenu(), BluetoothMenu()];
+export default [PowerMenu(), Verification(), AudioMenu(), NetworkMenu(), BluetoothMenu(), MediaMenu()];

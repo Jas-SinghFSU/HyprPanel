@@ -276,28 +276,8 @@ spinner:checked {
 
 .bar-menu_label {
   color: #94e2d5;
-  margin-right: 20px;
+  margin-right: 1.5rem;
   font-size: 2rem;
-}
-
-.audio-volume-box .audio-volume-label {
-  min-width: 3rem;
-}
-
-.mixer-item {
-  margin: 5px 0px;
-}
-.mixer-item .mixer-item-volume {
-  margin: 0px 8px;
-}
-.mixer-item .mixer-item-title {
-  margin: 0px 8px;
-}
-.mixer-item .mixer-item-slider {
-  margin: 8px;
-}
-.mixer-item image {
-  font-size: 40px;
 }
 
 .bar-volume_icon {
@@ -348,27 +328,27 @@ spinner:checked {
 }
 
 .workspaces label {
-  font-size: 0px;
-  min-width: 12px;
-  min-height: 12px;
-  border-radius: 6.6px;
-  margin: 0px 3.5px;
+  font-size: 0rem;
+  min-width: 0.9rem;
+  min-height: 0.9rem;
+  border-radius: 1.14rem;
+  margin: 0rem 0.25rem;
   transition: 150ms;
-  background-color: #b4befe;
+  background-color: #cba6f7;
 }
 .workspaces label.occupied {
-  background-color: #eba0ac;
-  min-width: 12px;
-  min-height: 12px;
+  background-color: #f9e2af;
+  min-width: 0.9rem;
+  min-height: 0.9rem;
 }
 .workspaces label.active {
   background-color: #89dceb;
-  min-width: 30px;
-  min-height: 12px;
+  min-width: 2.2rem;
+  min-height: 0.9rem;
 }
 
 .workspaces label:not(:first-child) {
-  margin-left: 12px;
+  margin-left: 0.9rem;
 }
 
 .window_title {
@@ -376,7 +356,7 @@ spinner:checked {
 }
 
 .systray button:not(:first-child) {
-  margin-left: 10px;
+  margin-left: 0.75rem;
 }
 
 .systray-menu {
@@ -385,7 +365,7 @@ spinner:checked {
 
 .systray-menu label {
   font-weight: bold;
-  color: #b4befe;
+  color: #cdd6f4;
 }
 
 .systray-menu separator {
@@ -403,20 +383,18 @@ spinner:checked {
 
 .bar-power_label {
   color: #f38ba8;
-  margin-right: 2px;
+  margin-right: 0.2rem;
 }
 
 .bar {
   background: #181825;
-  font-size: 1.15rem;
-  font-weight: 800;
 }
 
 .bar_item_box_visible {
   background: #313244;
-  border-radius: 8px;
-  padding: 2px 12px;
-  margin: 6px 3px;
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.9rem;
+  margin: 0.5rem 0.25rem;
 }
 .bar_item_box_visible:hover {
   background: #45475a;
@@ -424,17 +402,17 @@ spinner:checked {
 
 .bar_item_box_hidden {
   background: none;
-  border-radius: 0px;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
+  border-radius: 0rem;
+  padding: 0rem 0rem 0rem 0rem;
+  margin: 0rem 0rem 0rem 0rem;
 }
 
 .box-left {
-  margin-left: 25px;
+  margin-left: 1.9rem;
 }
 
 .box-right {
-  margin-right: 25px;
+  margin-right: 1.9rem;
 }
 
 .menu-slider trough {
@@ -499,7 +477,7 @@ spinner:checked {
 .menu-items {
   background: #181825;
   border: 0.25rem solid #313244;
-  border-radius: 0.7rem;
+  border-radius: 0.5rem;
   min-width: 375px;
   color: #cdd6f4;
 }
@@ -603,37 +581,37 @@ window#verification {
 
 window#verification .verification {
   margin: 12px;
-  border: 2px solid #313244;
+  border: 0.2rem solid #313244;
   background-color: #1e1e2e;
   color: #9278b6;
-  border-radius: 11px;
-  padding: 20px;
-  padding: 16.8px;
-  min-width: 300px;
-  min-height: 80px;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  padding: 1.2rem;
+  min-width: 20rem;
+  min-height: 8rem;
   font-size: 1.3em;
 }
 window#verification .verification .text-box {
-  margin-bottom: 12px;
+  margin-bottom: 0.4rem;
 }
 window#verification .verification .text-box .title {
   font-size: 1.6em;
   color: #eba0ac;
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
 }
 window#verification .verification .text-box .desc {
   color: #b4befe;
   font-size: 1.1em;
-  margin-bottom: 10px;
-  padding: 15px 30px;
+  margin-bottom: 0.75rem;
+  padding: 1.15rem 2.25rem;
 }
 window#verification .verification .verification-button {
   background: #11111b;
-  padding: 10px 0px;
-  margin: 5px 25px;
-  border: 2px solid;
+  padding: 0.75rem 0rem;
+  margin: 0.4rem 1.9rem;
+  border: 0.2rem solid;
   border-color: #11111b;
-  border-radius: 11px;
+  border-radius: 0.4rem;
   opacity: 1;
   transition: border-color 0.2s ease-in-out;
   transition: opacity 0.3s ease-in-out;
@@ -679,17 +657,17 @@ window#verification .verification .bar-verification_yes label {
 
 window#powermenu .powermenu {
   margin: 12px;
-  border: 2px solid #313244;
+  border: 0.2rem solid #313244;
   background-color: #1e1e2e;
   color: #9278b6;
-  border-radius: 11px;
-  padding: 20px;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
 }
 window#powermenu .powermenu.line {
-  padding: 16.8px;
+  padding: 1.44rem;
 }
 window#powermenu .powermenu.box {
-  padding: 22.4px;
+  padding: 1.92rem;
 }
 
 .widget-button {
@@ -838,10 +816,10 @@ window#powermenu .powermenu.box {
   color: #cdd6f4;
   background: #181825;
   margin-right: 0.5rem;
-  border: 0.15rem solid #b4befe;
+  border: 0.2rem solid #b4befe;
   min-width: 25rem;
   min-height: 6rem;
-  border-radius: 0.8rem;
+  border-radius: 0.4rem;
 }
 .notification-card:first-child {
   margin-top: 3.5rem;
@@ -858,11 +836,11 @@ window#powermenu .powermenu.box {
   margin: 0.5rem 0.75rem;
   min-width: 4rem;
   min-height: 4rem;
-  border-radius: 0.7rem;
+  border-radius: 0.4rem;
 }
 
 .notification-card-image {
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   min-width: 3rem;
   min-height: 3rem;
   padding: 1rem 1rem;

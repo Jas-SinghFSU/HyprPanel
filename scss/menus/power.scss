@@ -6,42 +6,39 @@ window#verification {
     background-color: rgba(0, 0, 0, .4);
 }
 
-$popover-padding: 7px * 1.6;
-$padding: 7px;
-$spacing: 12px;
-$radius: 11px;
+$popover-padding: 0.6rem * 1.6;
 
 window#verification .verification {
     @include floating-widget;
-    padding: 7px * 1.6 * 1.5;
-    min-width: 300px;
-    min-height: 80px;
+    padding: 0.5rem * 1.6 * 1.5;
+    min-width: 20rem;
+    min-height: 8rem;
     font-size: 1.3em;
 
     .text-box {
-        margin-bottom: $spacing;
+        margin-bottom: 0.4rem;
 
         .title {
             font-size: 1.6em;
             color: $maroon;
-            margin-bottom: 10px;
+            margin-bottom: 0.75rem;
         }
 
         .desc {
             color: $lavender;
             font-size: 1.1em;
-            margin-bottom: 10px;
-            padding: 15px 30px;
+            margin-bottom: 0.75rem;
+            padding: 1.15rem 2.25rem;
         }
     }
 
     .verification-button {
         background: $crust;
-        padding: 10px 0px;
-        margin: 5px 25px;
-        border: 2px solid;
+        padding: 0.75rem 0rem;
+        margin: 0.4rem 1.9rem;
+        border: 0.2rem solid;
         border-color: $crust;
-        border-radius: $radius;
+        border-radius: 0.4rem;
         opacity: 1;
         transition: border-color 0.2s ease-in-out;
         transition: opacity .3s ease-in-out;

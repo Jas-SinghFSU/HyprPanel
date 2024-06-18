@@ -2,15 +2,13 @@
 
 .bar {
   background: $mantle;
-  font-size: 1.15rem;
-  font-weight: 800;
 }
 
 .bar_item_box_visible {
   background: $surface0;
-  border-radius: 8px;
-  padding: 2px 12px;
-  margin: 6px 3px;
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.9rem;
+  margin: 0.5rem 0.25rem;
 
   &:hover {
     background: $surface1;
@@ -19,15 +17,15 @@
 
 .bar_item_box_hidden {
   background: none;
-  border-radius: 0px;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
+  border-radius: 0rem;
+  padding: 0rem 0rem 0rem 0rem;
+  margin: 0rem 0rem 0rem 0rem;
 }
 
 .box-left {
-  margin-left: 25px;
+  margin-left: 1.9rem;
 }
 
 .box-right {
-  margin-right: 25px;
+  margin-right: 1.9rem;
 }

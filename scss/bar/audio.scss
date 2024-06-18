@@ -1,31 +1,5 @@
 @import '../colors';
 
-.audio-volume-box {
-  .audio-volume-label {
-    min-width: 3rem;
-  }
-}
-
-.mixer-item {
-  margin: 5px 0px;
-
-  .mixer-item-volume {
-    margin: 0px 8px;
-  }
-
-  .mixer-item-title {
-    margin: 0px 8px;
-  }
-
-  .mixer-item-slider {
-    margin: 8px;
-  }
-
-  image {
-    font-size: 40px;
-  }
-}
-
 .bar-volume_icon {
   font-size: 1.3rem;
   color: $peach;

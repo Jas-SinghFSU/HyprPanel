@@ -86,6 +86,16 @@ const Media = () => {
     }),
     isVisible: false,
     name: "media",
+    props: {
+      on_primary_click: (_, event) => {
+        const clickPos = event.get_root_coords();
+        const coords = [clickPos[1], clickPos[2]];
+
+        globalMousePos.value = coords;
+
+        App.toggleWindow("mediamenu");
+      },
+    },
   };
 };
 
