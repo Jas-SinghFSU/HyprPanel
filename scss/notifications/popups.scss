@@ -1,14 +1,23 @@
 @import "../colors";
 
+.notifications-window {
+  margin-top: 3.5rem;
+}
+
 .notification-card {
   color: $text;
   background: $mantle;
-  margin-top: 0.5rem;
   margin-right: 0.5rem;
   border: 0.15rem solid $lavender;
-  min-width: 32rem;
-  min-height: 7rem;
+  min-width: 25rem;
+  min-height: 6rem;
   border-radius: 0.8rem;
+  &:first-child {
+    margin-top: 3.5rem;
+  }
+  &:not(:first-child) {
+    margin-top: 1.5rem;
+  }
 }
 
 .notification-card-container {
@@ -17,18 +26,17 @@
 
 
 .notification-card-image-container {
-  margin: 1.5rem 0.75rem;
+  margin: 0.5rem 0.75rem;
   min-width: 4rem;
   min-height: 4rem;
-  // border: 0.15rem solid $surface2;
   border-radius: 0.7rem;
 }
 .notification-card-image {
-  min-width: 4rem;
-  min-height: 4rem;
-  // padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  padding: 1rem 1rem;
   margin: 0.5rem 0rem;
-  margin-left: 0.5rem;
   background-size: contain;
   background-repeat:  no-repeat;
 }
@@ -37,19 +45,19 @@
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  margin: 0.2rem 0rem;
+  // margin: 0.2rem 0rem;
   margin-right: 1rem;
 }
 
 .notification-card-appname-label {
-  margin-top: 0.4rem;
+  // margin-top: 0.4rem;
   font-size: 0.9rem;
   color: $pink;
 }
 
 .notification-card-header-label {
   font-size: 1.15rem;
-  margin-bottom: 0.25rem;
+  // margin-bottom: 0.25rem;
   color: $lavender;
 }
 

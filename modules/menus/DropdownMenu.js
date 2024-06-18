@@ -9,7 +9,7 @@ export const Padding = (name) =>
     setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
   });
 
-const moveBoxToCursor = (self, minWidth, minHeight, child) => {
+const moveBoxToCursor = (self, minWidth, minHeight) => {
   globalMousePos.connect("changed", ({ value }) => {
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
@@ -56,7 +56,7 @@ export default ({
     keymode: "on-demand",
     exclusivity,
     layer: "top",
-    anchor: ["top", "bottom", "right", "left"],
+    anchor: ["top"],
     child: Widget.EventBox({
       on_primary_click: () => App.closeWindow(name),
       on_secondary_click: () => App.closeWindow(name),
@@ -68,12 +68,24 @@ export default ({
           return true;
         },
         setup: (self) => {
-          moveBoxToCursor(self, minWidth, minHeight, child);
+          moveBoxToCursor(self, minWidth, minHeight);
         },
         child: Widget.Box({
-          class_name: "dropdown-menu-container",
-          can_focus: true,
-          children: [Padding(name), child],
+          css: "padding: 1px;",
+          child: Widget.Revealer({
+            revealChild: false,
+            setup: (self) =>
+              self.hook(App, (_, wname, visible) => {
+                if (wname === name) self.reveal_child = visible;
+              }),
+            transition: "crossfade",
+            transitionDuration: 500,
+            child: Widget.Box({
+              class_name: "dropdown-menu-container",
+              can_focus: true,
+              children: [Padding(name), child],
+            }),
+          }),
         }),
       }),
     }),

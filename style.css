@@ -826,27 +826,28 @@ window#powermenu .powermenu.box {
   margin-left: 2.1rem;
 }
 
-.search-devices-container {
-  min-height: 8rem;
-}
-
-.empty-bt-devices-container {
-  margin-top: 2rem;
-}
-
 .bluetooth-isconnecting {
   color: #89dceb;
+}
+
+.notifications-window {
+  margin-top: 3.5rem;
 }
 
 .notification-card {
   color: #cdd6f4;
   background: #181825;
-  margin-top: 0.5rem;
   margin-right: 0.5rem;
   border: 0.15rem solid #b4befe;
-  min-width: 32rem;
-  min-height: 7rem;
+  min-width: 25rem;
+  min-height: 6rem;
   border-radius: 0.8rem;
+}
+.notification-card:first-child {
+  margin-top: 3.5rem;
+}
+.notification-card:not(:first-child) {
+  margin-top: 1.5rem;
 }
 
 .notification-card-container {
@@ -854,17 +855,18 @@ window#powermenu .powermenu.box {
 }
 
 .notification-card-image-container {
-  margin: 1.5rem 0.75rem;
+  margin: 0.5rem 0.75rem;
   min-width: 4rem;
   min-height: 4rem;
   border-radius: 0.7rem;
 }
 
 .notification-card-image {
-  min-width: 4rem;
-  min-height: 4rem;
+  border-radius: 0.5rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  padding: 1rem 1rem;
   margin: 0.5rem 0rem;
-  margin-left: 0.5rem;
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -873,19 +875,16 @@ window#powermenu .powermenu.box {
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  margin: 0.2rem 0rem;
   margin-right: 1rem;
 }
 
 .notification-card-appname-label {
-  margin-top: 0.4rem;
   font-size: 0.9rem;
   color: #f5c2e7;
 }
 
 .notification-card-header-label {
   font-size: 1.15rem;
-  margin-bottom: 0.25rem;
   color: #b4befe;
 }
 

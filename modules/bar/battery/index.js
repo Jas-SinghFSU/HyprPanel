@@ -17,7 +17,7 @@ const BatteryLabel = () => {
       class_name: "battery",
       visible: battery.bind("available"),
       children: [
-        Widget.Icon({ icon }),
+        // Widget.Icon({ icon }),
         Widget.LevelBar({
           widthRequest: 20,
           vpack: "center",

@@ -28,15 +28,6 @@ const workspaceMonitorMap = {
   2: [1,2,3,8,9,10],
 }
 
-export default {
-  style: `${App.configDir}/style.css`,
-  closeWindowDelay: {
-    sideright: 350,
-    launcher: 350,
-    bar0: 350,
-  },
-};
-
 App.config({
   windows: [
     ...MenuWindows,
@@ -45,4 +36,10 @@ App.config({
     BarAlt(1, workspaceMonitorMap),
     Bar(2, workspaceMonitorMap),
   ],
+  style: `${App.configDir}/style.css`,
+  closeWindowDelay: {
+    sideright: 350,
+    launcher: 350,
+    bar0: 350,
+  },
 });

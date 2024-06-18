@@ -288,7 +288,6 @@ export default () => {
                       child: Widget.Button({
                         class_name: "menu-icon-button",
                         on_primary_click: () => {
-                          Utils.notify("Yoyo");
                           Utils.execAsync([
                             "bash",
                             "-c",
