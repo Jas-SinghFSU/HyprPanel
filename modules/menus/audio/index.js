@@ -2,6 +2,9 @@ const audio = await Service.import("audio");
 import DropdownMenu from "../DropdownMenu.js";
 
 export default () => {
+  audio.connect("changed", val => {
+    // console.log(JSON.stringify(val, null, 2));
+  })
   const renderPlaybacks = (playbackDevices) => {
     return playbackDevices.map((device) => {
       if (device.description === "Dummy Output") {

@@ -7,7 +7,8 @@ import { Volume } from "./volume/index.js";
 import { Network } from "./network/index.js";
 import { Bluetooth } from "./bluetooth/index.js";
 import { BatteryLabel } from "./battery/index.js";
-import { Clock } from "./clock/index.js"; import { SysTray } from "./systray/index.js";
+import { Clock } from "./clock/index.js"; 
+import { SysTray } from "./systray/index.js";
 import { Power } from "./power/index.js";
 
 import { BarItemBox } from "../shared/barItemBox.js";

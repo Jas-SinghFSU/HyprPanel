@@ -9,7 +9,7 @@ export const Padding = (name) =>
     setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
   });
 
-const moveBoxToCursor = (self, minWidth, minHeight) => {
+const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
   globalMousePos.connect("changed", ({ value }) => {
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
@@ -19,7 +19,8 @@ const moveBoxToCursor = (self, minWidth, minHeight) => {
       [monWidth, monHeight] = [monHeight, monWidth];
     }
 
-    let marginRight = monWidth - value[0] - minWidth / 2;
+    let marginRight = monWidth - minWidth / 2;
+    marginRight = fixed ? marginRight - monWidth / 2 : marginRight - value[0];
     let marginLeft = monWidth - minWidth - marginRight;
 
     if (marginRight < 0) {
@@ -46,6 +47,7 @@ export default ({
   minWidth = 375,
   minHeight = 200,
   exclusivity = "ignore",
+  fixed = false,
   ...props
 }) =>
   Widget.Window({
@@ -68,7 +70,7 @@ export default ({
           return true;
         },
         setup: (self) => {
-          moveBoxToCursor(self, minWidth, minHeight);
+          moveBoxToCursor(self, minWidth, minHeight, fixed);
         },
         child: Widget.Box({
           css: "padding: 1px; margin: -1px;",

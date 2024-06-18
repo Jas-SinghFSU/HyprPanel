@@ -5,10 +5,12 @@ export default () => {
   return DropdownMenu({
     name: "mediamenu",
     transition: "crossfade",
+    fixed: true,
     child: Widget.Box({
       class_name: "menu-items",
       child: Widget.Box({
         vertical: true,
+        hexpand: true,
         class_name: "menu-items-container",
         children: [
           Widget.Box({

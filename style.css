@@ -281,7 +281,7 @@ spinner:checked {
 }
 
 .bar-volume_icon {
-  font-size: 1.3rem;
+  font-size: 1.3em;
   color: #fab387;
 }
 
@@ -295,7 +295,7 @@ spinner:checked {
 }
 
 .bar-media_icon {
-  font-size: 1.3rem;
+  font-size: 1.2em;
   color: #a6e3a1;
 }
 
@@ -304,7 +304,7 @@ spinner:checked {
 }
 
 .bar-bt_icon {
-  font-size: 1.3rem;
+  font-size: 1.2em;
   color: #89dceb;
 }
 
@@ -329,8 +329,8 @@ spinner:checked {
 
 .workspaces label {
   font-size: 0rem;
-  min-width: 0.9rem;
-  min-height: 0.9rem;
+  min-width: 1rem;
+  min-height: 1rem;
   border-radius: 1.14rem;
   margin: 0rem 0.25rem;
   transition: 150ms;
@@ -338,13 +338,13 @@ spinner:checked {
 }
 .workspaces label.occupied {
   background-color: #f9e2af;
-  min-width: 0.9rem;
-  min-height: 0.9rem;
+  min-width: 1rem;
+  min-height: 1rem;
 }
 .workspaces label.active {
   background-color: #89dceb;
   min-width: 2.2rem;
-  min-height: 0.9rem;
+  min-height: 1rem;
 }
 
 .workspaces label:not(:first-child) {
@@ -379,6 +379,10 @@ spinner:checked {
 
 .systray-menu check:checked {
   background-color: #b4befe;
+}
+
+.systray-icon {
+  font-size: 1.3em;
 }
 
 .bar-power_label {

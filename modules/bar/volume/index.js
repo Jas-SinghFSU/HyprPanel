@@ -12,17 +12,22 @@ const Volume = () => {
   };
 
   const getIcon = () => {
-    const icon = audio.speaker.is_muted
-      ? 0
-      : [101, 66, 34, 1, 0].find(
-          (threshold) => threshold <= audio.speaker.volume * 100,
-        );
+    const icon = Utils.merge(
+      [audio.speaker.bind("is_muted"), audio.speaker.bind("volume")],
+      (isMuted, vol) => {
+        return isMuted
+          ? 0
+          : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100);
+      },
+    );
 
-    return icons[icon];
+    console.log(icon);
+
+    return icon.as((i) => icons[i]);
   };
 
   const volIcn = Widget.Label({
-    label: audio.speaker.bind("volume").as(() => getIcon()),
+    label: getIcon(),
     class_name: "bar-volume_icon",
   });
 

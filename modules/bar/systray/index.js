@@ -13,8 +13,8 @@ const SysTray = () => {
       return Widget.Button({
         cursor: "pointer",
         child: Widget.Icon({
+          class_name: "systray-icon",
           icon: item.bind("icon"),
-          size: 18,
         }),
         on_primary_click: (_, event) => item.activate(event),
         on_secondary_click: (_, event) => item.openMenu(event),
