@@ -15,6 +15,7 @@ export default () => {
       class_name: "notification-card-container",
       setup: (self) => {
         self.hook(notifs, () => {
+          console.log(JSON.stringify(notifs.popups, null, 2));
           if (notifs.dnd) {
             return;
           }
@@ -25,10 +26,10 @@ export default () => {
                 Widget.Box({
                   class_name: "notification-card-image-container",
                   hpack: "center",
-                  vexpand: true,
+                  vexpand: false,
                   child: Widget.Box({
                     hpack: "center",
-                    vexpand: true,
+                    vexpand: false,
                     class_name: "notification-card-image",
                     css: `background-image: url("${notif.image}")`,
                   }),
@@ -40,13 +41,7 @@ export default () => {
           };
 
           return (self.children = notifs.popups.map((notif, index) => {
-            return Widget.Button({
-              on_primary_click: () => { 
-                notifs.CloseNotification(notif.id);
-              },
-              on_secondary_click: () => { 
-                notifs.CloseNotification(notif.id);
-              },
+            return Widget.Box({
               child: Widget.Box({
                 class_name: "notification-card",
                 children: [
@@ -80,6 +75,29 @@ export default () => {
                             label: notif["body"],
                           }),
                         ],
+                      }),
+                      Widget.Box({
+                        class_name: "notification-card-actions",
+                        children: notif.actions.map((action) => {
+                          return Widget.Button({
+                            class_name: "notification-action-buttons",
+                            on_primary_click: () => {
+                              console.log(`clicked: ${action.id}`);
+                              notif.invoke(action.id);
+                            },
+                            child: Widget.Box({
+                              children: [
+                                Widget.Label({
+                                  hpack: "center",
+                                  hexpand: true,
+                                  class_name:
+                                    "notification-action-buttons-label",
+                                  label: action.label,
+                                }),
+                              ],
+                            }),
+                          });
+                        }),
                       }),
                       Widget.Box({
                         class_name: "notification-card-appname",

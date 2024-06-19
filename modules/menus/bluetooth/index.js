@@ -122,14 +122,16 @@ export default () => {
                         class_name: "menu-icon-button-label delete bluetooth",
                         label: "󰆴",
                       }),
-                      on_primary_click: () =>
+                      on_primary_click: () => {
+                        // dev.setConnection(false);
                         Utils.execAsync([
                           "bash",
                           "-c",
                           `bluetoothctl remove ${dev.address}`,
                         ]).catch((err) =>
                           console.error("Bluetooth Remove", err),
-                        ),
+                        );
+                      },
                     }),
                   ],
                 }),
@@ -188,29 +190,7 @@ export default () => {
                 hexpand: true,
                 class_name: `menu-button bluetooth ${device}`,
                 on_primary_click: () => {
-                  Utils.execAsync([
-                    "bash",
-                    "-c",
-                    `bluetoothctl pair ${device.address}`,
-                  ]).catch((err) => {
-                    console.error(
-                      `bluetoothctl pair ${device.address}`,
-                      err,
-                    );
-
-                    setTimeout(() => {
-                      Utils.execAsync([
-                        "bash",
-                        "-c",
-                        `bluetoothctl connect ${device.address}`,
-                      ]).catch((err) =>
-                        console.error(
-                          `bluetoothctl connect ${device.address}`,
-                          err,
-                        ),
-                      );
-                    }, 2000);
-                  });
+                    device.setConnection(true);
                 },
                 child: Widget.Box({
                   children: [
@@ -253,16 +233,6 @@ export default () => {
     return Widget.Box({
       vertical: true,
       children: [
-        Widget.Box({
-          class_name: "menu-active-container bluetooth",
-          vertical: true,
-          // children: renderActivePlayback(),
-        }),
-        Widget.Box({
-          class_name: "menu-active-container bluetooth",
-          vertical: true,
-          // children: renderActiveInput(),
-        }),
         Widget.Separator({
           class_name: "menu-separator",
         }),

@@ -23,10 +23,10 @@ DirectoryMonitorService.connect("changed", () => applyScss());
 applyScss();
 
 const workspaceMonitorMap = {
-  0: [4,5],
-  1: [6,7],
-  2: [1,2,3,8,9,10],
-}
+  0: [4, 5],
+  1: [6, 7],
+  2: [1, 2, 3, 8, 9, 10],
+};
 
 App.config({
   windows: [
@@ -42,4 +42,17 @@ App.config({
     launcher: 350,
     bar0: 350,
   },
+  onConfigParsed: () =>
+    Utils.subprocess(
+      [
+        "python3",
+        `${App.configDir}/services/bluetooth.py`,
+      ],
+
+      // callback when the program outputs something to stdout
+      (output) => console.info(output),
+
+      // callback on error
+      (err) => console.info(err),
+    ),
 });

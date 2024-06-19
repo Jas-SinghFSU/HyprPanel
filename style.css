@@ -837,18 +837,18 @@ window#powermenu .powermenu.box {
 }
 
 .notification-card-image-container {
-  margin: 0.5rem 0.75rem;
+  margin: 0.75rem 0.75rem;
   min-width: 4rem;
   min-height: 4rem;
   border-radius: 0.4rem;
 }
 
 .notification-card-image {
+  border: 0.2rem solid #1e1e2e;
   border-radius: 0.4rem;
   min-width: 3rem;
   min-height: 3rem;
   padding: 1rem 1rem;
-  margin: 0.5rem 0rem;
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -867,11 +867,29 @@ window#powermenu .powermenu.box {
 
 .notification-card-header-label {
   font-size: 1.15rem;
+  margin-bottom: 0.5rem;
   color: #b4befe;
 }
 
 .notification-card-body-label {
   font-size: 1rem;
+  font-weight: 600;
+}
+
+.notification-card-actions {
+  margin: 1rem 0rem;
+}
+
+.notification-action-buttons {
+  color: #181825;
+  background: #b4befe;
+  margin-right: 2rem;
+  min-width: 5rem;
+  min-height: 2rem;
+  border-radius: 0.4rem;
+}
+.notification-action-buttons:hover {
+  background: #f5c2e7;
 }
 
 /*# sourceMappingURL=style.css.map */
