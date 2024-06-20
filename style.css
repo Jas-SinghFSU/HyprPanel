@@ -812,28 +812,26 @@ window#powermenu .powermenu.box {
   color: #89dceb;
 }
 
-.notifications-window {
+.notification-card-container {
   margin-top: 3.5rem;
 }
 
 .notification-card {
   color: #cdd6f4;
   background: #181825;
-  margin-right: 0.5rem;
-  border: 0.2rem solid #b4befe;
-  min-width: 25rem;
+  margin-right: 0.4rem;
+  border: 0.15rem solid #313244;
+  min-width: 28rem;
   min-height: 6rem;
   border-radius: 0.4rem;
 }
-.notification-card:first-child {
-  margin-top: 3.5rem;
-}
 .notification-card:not(:first-child) {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .notification-card-container {
   padding: 1px;
+  padding-bottom: 309px;
 }
 
 .notification-card-image-container {
@@ -850,13 +848,14 @@ window#powermenu .powermenu.box {
   padding: 1rem 1rem;
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .notification-card-content {
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  margin-right: 1rem;
+  margin-right: 0rem;
 }
 
 .notification-card-appname-label {
@@ -889,6 +888,24 @@ window#powermenu .powermenu.box {
 }
 .notification-action-buttons:hover {
   background: #f5c2e7;
+}
+
+.notification-icon {
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+}
+
+.close-notification-button {
+  background: #f38ba8;
+  color: #11111b;
+  min-width: 2.5rem;
+  border-radius: 0rem 0.35rem 0.35rem 0rem;
+}
+.close-notification-button label {
+  font-size: 1.7rem;
+}
+.close-notification-button:hover {
+  background: #eba0ac;
 }
 
 /*# sourceMappingURL=style.css.map */
