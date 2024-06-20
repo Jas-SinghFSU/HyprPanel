@@ -10,6 +10,11 @@ const Media = () => {
       Stopped: 3,
     };
 
+    if (value.players.length === 0) {
+      activePlayer.value = mpris.players[0];
+      return;
+    }
+
     const isPlaying = value.players.find(
       (p) => p["play-back-status"] === "Playing",
     );
@@ -44,20 +49,18 @@ const Media = () => {
 
   const songIcon = Variable("");
 
-  const label = Utils.watch(
-    "󰎇 No media playing 󰎇",
-    mpris,
-    "player-changed",
-    () => {
-      if (activePlayer.value) {
-        const { track_title, identity } = activePlayer.value;
-        songIcon.value = getIconForPlayer(identity);
-        return track_title.length === 0 ? `  No media playing...` : `  ${track_title}`;
-      } else {
-        return "󰎇 No media playing 󰎇";
-      }
-    },
-  );
+  const label = Utils.watch("󰎇 No media playing 󰎇", mpris, "changed", () => {
+    if (activePlayer.value) {
+      const { track_title, identity } = activePlayer.value;
+      songIcon.value = getIconForPlayer(identity);
+      return track_title.length === 0
+        ? `  No media playing...`
+        : `  ${track_title}`;
+    } else {
+      songIcon.value = "";
+      return "󰎇 No media playing 󰎇";
+    }
+  });
 
   return {
     component: Widget.Box({
