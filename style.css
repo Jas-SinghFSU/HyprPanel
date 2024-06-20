@@ -844,7 +844,6 @@ window#powermenu .powermenu.box {
 }
 
 .notification-card-image {
-  border: 0.2rem solid #1e1e2e;
   border-radius: 0.4rem;
   min-width: 3rem;
   min-height: 3rem;

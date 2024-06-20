@@ -84,17 +84,7 @@ export default () => {
                           "menu-icon-button-label disconnect bluetooth",
                         label: dev.connected ? "󱘖" : "",
                       }),
-                      on_primary_click: () =>
-                        Utils.execAsync([
-                          "bash",
-                          "-c",
-                          `bluetoothctl ${dev.connected ? "disconnect" : "connect"} ${dev.address}`,
-                        ]).catch((err) =>
-                          console.error(
-                            `bluetoothctl ${dev.connected ? "disconnect" : "connect"} ${dev.address}`,
-                            err,
-                          ),
-                        ),
+                      on_primary_click: () => dev.setConnection(false),
                     }),
                     Widget.Button({
                       class_name: "menu-icon-button untrust bluetooth",
@@ -123,7 +113,6 @@ export default () => {
                         label: "󰆴",
                       }),
                       on_primary_click: () => {
-                        // dev.setConnection(false);
                         Utils.execAsync([
                           "bash",
                           "-c",
@@ -190,7 +179,7 @@ export default () => {
                 hexpand: true,
                 class_name: `menu-button bluetooth ${device}`,
                 on_primary_click: () => {
-                    device.setConnection(true);
+                  device.setConnection(true);
                 },
                 child: Widget.Box({
                   children: [

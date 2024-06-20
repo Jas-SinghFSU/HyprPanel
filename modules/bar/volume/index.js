@@ -21,8 +21,6 @@ const Volume = () => {
       },
     );
 
-    console.log(icon);
-
     return icon.as((i) => icons[i]);
   };
 
