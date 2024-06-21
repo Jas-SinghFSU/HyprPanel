@@ -14,6 +14,7 @@ export default () => {
     child: Widget.Box({
       class_name: "notification-card-container",
       vertical: true,
+      hexpand: true,
       setup: (self) => {
         self.hook(notifs, () => {
           if (notifs.dnd) {
@@ -46,18 +47,22 @@ export default () => {
               return [
                 Widget.Box({
                   class_name: "notification-card-actions",
-                  hpack: "start",
+                  hexpand: true,
+                  vpack: "end",
                   children: notif.actions.map((action) => {
                     return Widget.Button({
+                      hexpand: true,
                       class_name: "notification-action-buttons",
                       on_primary_click: () => {
                         notif.invoke(action.id);
                       },
                       child: Widget.Box({
                         hpack: "center",
+                        hexpand: true,
                         children: [
                           Widget.Label({
                             class_name: "notification-action-buttons-label",
+                            hexpand: true,
                             label: action.label,
                           }),
                         ],
@@ -101,29 +106,35 @@ export default () => {
             });
           };
 
-          return (self.children = notifs.popups.map((notif, index) => {
-            // FIX: Bottom part of notification gets cut of... need to find and fix culprit
+          return (self.children = notifs.popups.map((notif) => {
             return Widget.Box({
               class_name: "notification-card",
               vpack: "start",
+              hexpand: true,
               children: [
                 ...imageContainer(notif),
                 Widget.Box({
                   vpack: "start",
                   vertical: true,
-                  class_name: "notification-card-content",
+                  hexpand: true,
+                  class_name: `notification-card-content ${notif.image === undefined ? "noimg" : ""}`,
                   children: [
                     Widget.Box({
                       vertical: false,
+                      hexpand: true,
                       children: [
                         Widget.Box({
                           class_name: "notification-card-header",
+                          hexpand: true,
                           vpack: "start",
                           children: [
                             Widget.Label({
                               class_name: "notification-card-header-label",
+                              hpack: "start",
+                              hexpand: true,
                               vexpand: true,
-                              max_width_chars: 21,
+                              max_width_chars:
+                                notif.image === undefined ? 29 : 21,
                               truncate: "end",
                               wrap: true,
                               label: notif["summary"],
@@ -140,6 +151,7 @@ export default () => {
                     }),
                     Widget.Box({
                       vpack: "start",
+                      hexpand: true,
                       class_name: "notification-card-body",
                       children: [
                         Widget.Label({
@@ -149,7 +161,7 @@ export default () => {
                           justification: "left",
                           truncate: "end",
                           lines: 2,
-                          max_width_chars: 25,
+                          max_width_chars: notif.image === undefined ? 35 : 28,
                           wrap: true,
                           class_name: "notification-card-body-label",
                           label: notif["body"],

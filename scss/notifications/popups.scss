@@ -19,14 +19,11 @@
 
 .notification-card-container {
   padding: 1px;
-  padding-bottom: 309px;
 }
 
 
 .notification-card-image-container {
   margin: 0.75rem 0.75rem;
-  min-width: 4rem;
-  min-height: 4rem;
   border-radius: 0.4rem;
 }
 .notification-card-image {
@@ -43,7 +40,12 @@
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  margin-right: 0rem;
+  margin-right: 1rem;
+}
+
+.notification-card-content.noimg {
+  margin-left: 1.5rem;
+  margin-top: .2rem;
 }
 
 .notification-card-appname-label {
@@ -63,17 +65,21 @@
 }
 
 .notification-card-actions {
-  margin: 1rem 0rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .notification-action-buttons {
-  color: $mantle;
-  background: $lavender;
-  margin-right: 2rem;
-  min-width: 5rem;
+  color: $lavender;
+  background: $surface0;
+  min-width: 6rem;
   min-height: 2rem;
-  border-radius: 0.4rem;
-  
+  border-radius: 0.2rem;
+
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
+
   &:hover {
     background: $pink;
   }
@@ -89,7 +95,7 @@
   color: $crust;
   min-width: 2.5rem;
   border-radius: 0rem 0.35rem 0.35rem 0rem;
-  
+
   label {
     font-size: 1.7rem;
   }

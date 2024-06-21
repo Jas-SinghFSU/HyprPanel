@@ -831,13 +831,10 @@ window#powermenu .powermenu.box {
 
 .notification-card-container {
   padding: 1px;
-  padding-bottom: 309px;
 }
 
 .notification-card-image-container {
   margin: 0.75rem 0.75rem;
-  min-width: 4rem;
-  min-height: 4rem;
   border-radius: 0.4rem;
 }
 
@@ -855,7 +852,12 @@ window#powermenu .powermenu.box {
   min-width: 3.5rem;
   min-height: 3.5rem;
   padding: 0.6rem 0.6rem;
-  margin-right: 0rem;
+  margin-right: 1rem;
+}
+
+.notification-card-content.noimg {
+  margin-left: 1.5rem;
+  margin-top: 0.2rem;
 }
 
 .notification-card-appname-label {
@@ -875,16 +877,19 @@ window#powermenu .powermenu.box {
 }
 
 .notification-card-actions {
-  margin: 1rem 0rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .notification-action-buttons {
-  color: #181825;
-  background: #b4befe;
-  margin-right: 2rem;
-  min-width: 5rem;
+  color: #b4befe;
+  background: #313244;
+  min-width: 6rem;
   min-height: 2rem;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
+}
+.notification-action-buttons:not(:last-child) {
+  margin-right: 2rem;
 }
 .notification-action-buttons:hover {
   background: #f5c2e7;
