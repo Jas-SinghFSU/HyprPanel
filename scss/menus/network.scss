@@ -1,0 +1,32 @@
+@import "../colors";
+
+.menu-dropdown-label.network {
+    color: $mauve;
+}
+
+.network-element-item-ethernet.multi {
+    margin-bottom: 0.5rem;
+}
+
+.menu-label.network {
+    color: $mauve;
+}
+
+.network-element-items-container * {
+    font-size: 1.1rem;
+}
+
+.network-element-item {
+    &:not(:last-child) {
+        margin-bottom: 0.5rem;
+    }
+
+    &:hover {
+        color: $mauve;
+    }
+}
+
+.menu-button-icon.network {
+    color: $overlay2;
+}
+

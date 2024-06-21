@@ -768,6 +768,33 @@ window#powermenu .powermenu.box {
   min-width: 25rem;
 }
 
+.menu-dropdown-label.network {
+  color: #cba6f7;
+}
+
+.network-element-item-ethernet.multi {
+  margin-bottom: 0.5rem;
+}
+
+.menu-label.network {
+  color: #cba6f7;
+}
+
+.network-element-items-container * {
+  font-size: 1.1rem;
+}
+
+.network-element-item:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+.network-element-item:hover {
+  color: #cba6f7;
+}
+
+.menu-button-icon.network {
+  color: #9399b2;
+}
+
 .menu-dropdown-label.bluetooth {
   color: #89dceb;
 }
