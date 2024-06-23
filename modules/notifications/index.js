@@ -134,7 +134,7 @@ export default () => {
                               hexpand: true,
                               vexpand: true,
                               max_width_chars:
-                                notif.image === undefined ? 29 : 21,
+                                notif.image === undefined ? 27 : 20,
                               truncate: "end",
                               wrap: true,
                               label: notif["summary"],

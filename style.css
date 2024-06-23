@@ -776,6 +776,10 @@ window#powermenu .powermenu.box {
   margin-bottom: 0.5rem;
 }
 
+.menu-button-name.status.network {
+  margin-left: 2.5rem;
+}
+
 .menu-label.network {
   color: #cba6f7;
 }
@@ -793,6 +797,55 @@ window#powermenu .powermenu.box {
 
 .menu-button-icon.network {
   color: #9399b2;
+}
+
+.network-password-input {
+  border-radius: 0.4rem;
+  background: #11111b;
+  padding: 0.4rem;
+  margin-left: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.menu-icon-button.refresh.network {
+  margin-bottom: 1rem;
+}
+.menu-icon-button.refresh.network:hover {
+  color: #cba6f7;
+}
+
+.network-password-input-close {
+  margin-left: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+.network-password-input-close:hover {
+  color: #89dceb;
+}
+.network-password-input-close label {
+  font-size: 1.35rem;
+}
+
+.menu-icon-button.network.disconnect {
+  margin-bottom: 1.4rem;
+  margin-right: 0.5rem;
+}
+.menu-icon-button.network.disconnect:hover {
+  color: #cba6f7;
+}
+.menu-icon-button.network.disconnect label {
+  font-size: 1.2rem;
+}
+
+.menu-icon-button.network.forget {
+  margin-bottom: 1.4rem;
+  margin-right: 0.5rem;
+}
+.menu-icon-button.network.forget:hover {
+  color: #cba6f7;
+}
+.menu-icon-button.network.forget label {
+  font-size: 1.5rem;
 }
 
 .menu-dropdown-label.bluetooth {
@@ -919,7 +972,7 @@ window#powermenu .powermenu.box {
   margin-right: 2rem;
 }
 .notification-action-buttons:hover {
-  background: #f5c2e7;
+  background: #45475a;
 }
 
 .notification-icon {

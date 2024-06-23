@@ -7,8 +7,7 @@
   color: $text;
   background: $mantle;
   margin-right: 0.4rem;
-  border: 0.15rem solid $surface0;
-  min-width: 28rem;
+  border: 0.15rem solid $surface0; min-width: 28rem;
   min-height: 6rem;
   border-radius: 0.4rem;
 
@@ -81,7 +80,7 @@
   }
 
   &:hover {
-    background: $pink;
+    background: $surface1;
   }
 }
 

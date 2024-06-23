@@ -8,6 +8,10 @@
     margin-bottom: 0.5rem;
 }
 
+.menu-button-name.status.network {
+    margin-left: 2.5rem;
+}
+
 .menu-label.network {
     color: $mauve;
 }
@@ -30,3 +34,58 @@
     color: $overlay2;
 }
 
+.network-password-input {
+    border-radius: 0.4rem;
+    background: $crust;
+    padding: 0.4rem;
+    margin-left: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.menu-icon-button.refresh.network {
+    margin-bottom: 1rem;
+
+    &:hover {
+        color: $mauve;
+    }
+}
+
+.network-password-input-close {
+    margin-left: 0.75rem;
+    margin-bottom: 0.6rem;
+
+    &:hover {
+        color: $sky;
+    }
+
+    label {
+        font-size: 1.35rem;
+    }
+}
+
+.menu-icon-button.network.disconnect {
+    margin-bottom: 1.4rem;
+    margin-right: 0.5rem;
+
+    &:hover {
+        color: $mauve;
+    }
+
+    label {
+        font-size: 1.2rem;
+    }
+}
+
+.menu-icon-button.network.forget {
+    margin-bottom: 1.4rem;
+    margin-right: 0.5rem;
+
+    &:hover {
+        color: $mauve;
+    }
+
+    label {
+        font-size: 1.5rem;
+    }
+}
