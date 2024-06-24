@@ -1,0 +1,13 @@
+@import "../colors";
+
+.notification-card-container.menu {
+    min-width: 30rem;
+    min-height: 50rem;
+    background: $mantle;
+    border: 0.25rem solid $surface0; 
+    border-radius: 0.4rem;
+}
+
+.notification-menu-content {
+    margin: 40rem;
+}

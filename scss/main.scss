@@ -21,6 +21,7 @@
 @import "bar/workspace";
 @import "bar/window_title";
 @import "bar/systray";
+@import "bar/notifications";
 @import "bar/power";
 @import "bar/bar";
 
@@ -31,6 +32,7 @@
 @import "menus/network";
 @import "menus/bluetooth";
 @import "menus/media";
+@import "menus/notifications";
 
 //notifications
 @import "notifications/popups";

@@ -388,6 +388,13 @@ spinner:checked {
   font-size: 1.3em;
 }
 
+.bar-notifications-label {
+  color: #f9e2af;
+  font-size: 1.3em;
+  min-width: 1em;
+  margin-right: 0.15em;
+}
+
 .bar-power_label {
   color: #f38ba8;
   margin-top: 0.2rem;
@@ -1030,6 +1037,18 @@ image {
   background: #6c7086;
   box-shadow: none;
 }
+.notification-card-container.menu {
+  min-width: 30rem;
+  min-height: 50rem;
+  background: #181825;
+  border: 0.25rem solid #313244;
+  border-radius: 0.4rem;
+}
+
+.notification-menu-content {
+  margin: 40rem;
+}
+
 .notification-card-container {
   margin-top: 3.5rem;
 }

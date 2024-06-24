@@ -2,7 +2,7 @@ import { Menu } from "./menu/index.js";
 import { Workspaces } from "./workspaces/index.js";
 import { ClientTitle } from "./window_title/index.js";
 import { Media } from "./media/index.js";
-import { Notification } from "./notification/index.js";
+import { Notifications } from "./notifications/index.js";
 import { Volume } from "./volume/index.js";
 import { Network } from "./network/index.js";
 import { Bluetooth } from "./bluetooth/index.js";
@@ -53,6 +53,7 @@ const Right = () => {
       BarItemBox(BatteryLabel()),
       BarItemBox(SysTray()),
       BarItemBox(Clock()),
+      BarItemBox(Notifications()),
       BarItemBox(Power()),
     ],
   });
