@@ -26,17 +26,20 @@ const Volume = () => {
   };
 
   const volIcn = Widget.Label({
+    vpack: "center",
     label: getIcon(),
     class_name: "bar-volume_icon",
   });
 
   const volPct = Widget.Label({
-    label: audio.speaker.bind("volume").as((v) => ` ${Math.floor(v * 100)}%`),
+    vpack: "center",
+    label: audio.speaker.bind("volume").as((v) => `  ${Math.floor(v * 100)}%`),
     class_name: "bar-volume_percentage",
   });
 
   return {
     component: Widget.Box({
+      vpack: "center",
       class_name: "volume",
       children: [volIcn, volPct],
     }),

@@ -2,17 +2,17 @@ const hyprland = await Service.import("hyprland");
 
 const filterTitle = (windowtitle) => {
   const windowTitleMap = [
-    ["kitty", "󰄛  Kitty Terminal"],
-    ["firefox", "󰈹  Firefox"],
-    ["microsoft-edge", "󰇩  Edge"],
-    ["discord", "  Discord"],
-    ["org.kde.dolphin", "  Dolphin"],
-    ["plex", "󰚺  Plex"],
-    ["steam", "  Steam"],
-    ["", "󰇄  Desktop"],
-    ["spotify", "󰓇  Spotify"],
-    ["obsidian", "󱓧  Obsidian"],
-    ["(.+)", `󰣆  ${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
+    ["kitty", "󰄛   Kitty Terminal"],
+    ["firefox", "󰈹   Firefox"],
+    ["microsoft-edge", "󰇩   Edge"],
+    ["discord", "    Discord"],
+    ["org.kde.dolphin", "   Dolphin"],
+    ["plex", "󰚺   Plex"],
+    ["steam", "   Steam"],
+    ["", "󰇄   Desktop"],
+    ["spotify", "󰓇   Spotify"],
+    ["obsidian", "󱓧   Obsidian"],
+    ["(.+)", `󰣆   ${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
   ];
 
   const foundMatch = windowTitleMap.find((wt) =>

@@ -3,9 +3,9 @@ export const Power = () => {
     component: Widget.Box({
       child: Widget.Button({
         class_name: "bar-powermenu",
-        child: Widget.Label({
+        child: Widget.Icon({
           class_name: "bar-power_label",
-          label: "⏻",
+          icon: "system-shutdown-symbolic",
         }),
       }),
     }),

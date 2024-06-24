@@ -31,14 +31,14 @@ const Media = () => {
 
   const getIconForPlayer = (playerName) => {
     const windowTitleMap = [
-      ["Mozilla Firefox", "󰈹"],
-      ["Microsoft Edge", "󰇩"],
-      ["(.*)Discord(.*)", ""],
-      ["Plex", "󰚺  Plex"],
-      ["(.*) Spotify Free", "󰓇"],
-      ["(.*)Spotify Premium", "󰓇"],
-      ["Spotify", "󰓇"],
-      ["(.*)", "󰝚"],
+      ["Mozilla Firefox", "󰈹 "],
+      ["Microsoft Edge", "󰇩 "],
+      ["(.*)Discord(.*)", " "],
+      ["Plex", "󰚺 "],
+      ["(.*) Spotify Free", "󰓇 "],
+      ["(.*)Spotify Premium", "󰓇 "],
+      ["Spotify", "󰓇 "],
+      ["(.*)", "󰝚 "],
     ];
 
     const foundMatch = windowTitleMap.find((wt) =>

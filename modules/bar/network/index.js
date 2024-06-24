@@ -17,12 +17,13 @@ const Network = () => {
 
   const wiredIndicator = [
     Widget.Label({
-      label: network.bind("wired").as(() => "󰈀 Wired"),
+      label: network.bind("wired").as(() => "󰈀  Wired"),
     }),
   ];
 
   return {
     component: Widget.Box({
+      vpack: "center",
       class_name: "bar-network",
       children: network
         .bind("primary")

@@ -1,8 +1,8 @@
 * {
   all: unset;
-  font-family: "JetBrains Mono Nerd Font";
-  font-size: 1.15rem;
-  font-weight: bold;
+  font-family: "Ubuntu";
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 menu {
@@ -304,7 +304,7 @@ spinner:checked {
 }
 
 .bar-bt_icon {
-  font-size: 1.2em;
+  font-size: 1.15em;
   color: #89dceb;
 }
 
@@ -387,7 +387,7 @@ spinner:checked {
 
 .bar-power_label {
   color: #f38ba8;
-  margin-right: 0.2rem;
+  margin-top: 0.2rem;
 }
 
 .bar {
@@ -896,7 +896,7 @@ window#powermenu .powermenu.box {
 }
 
 .media-indicator-container {
-  min-width: 41rem;
+  min-width: 40rem;
   min-height: 10rem;
   background: #181825;
   border: 0.25rem solid #313244;
