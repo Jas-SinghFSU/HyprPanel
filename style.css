@@ -896,7 +896,7 @@ window#powermenu .powermenu.box {
 }
 
 .media-indicator-container {
-  min-width: 40rem;
+  min-width: 41rem;
   min-height: 10rem;
   background: #181825;
   border: 0.25rem solid #313244;
@@ -912,8 +912,8 @@ window#powermenu .powermenu.box {
   border: 0.25rem solid #313244;
   background-color: #313244;
   border-radius: 0.25rem;
-  min-width: 11rem;
-  min-height: 11rem;
+  min-width: 10rem;
+  min-height: 10rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1000,7 +1000,7 @@ image {
 .menu-slider.media.progress {
   margin-top: 1rem;
   min-height: 2rem;
-  min-width: 17rem;
+  min-width: 15rem;
 }
 .menu-slider.media.progress trough {
   background: #1e1e2e;

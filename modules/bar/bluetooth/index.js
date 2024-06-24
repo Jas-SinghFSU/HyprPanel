@@ -1,4 +1,5 @@
 const bluetooth = await Service.import('bluetooth')
+import { closeAllMenus } from "../bar.js";
 
 const Bluetooth = () => {
   const btIcon = Widget.Label({
@@ -24,6 +25,7 @@ const Bluetooth = () => {
 
         globalMousePos.value = coords;
 
+        closeAllMenus();
         App.toggleWindow("bluetoothmenu");
       },
     },

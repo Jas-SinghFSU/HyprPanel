@@ -1,4 +1,5 @@
 const audio = await Service.import("audio");
+import { closeAllMenus } from "../bar.js";
 
 import { globalMousePos } from "../../../globals.js";
 
@@ -47,6 +48,7 @@ const Volume = () => {
 
         globalMousePos.value = coords;
 
+        closeAllMenus();
         App.toggleWindow("audiomenu");
       },
     },

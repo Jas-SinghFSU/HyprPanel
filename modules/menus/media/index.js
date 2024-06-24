@@ -254,8 +254,11 @@ export default () => {
                                 vpack: "center",
                                 setup: (self) => {
                                   function update() {
+                                    const curHour = Math.floor(
+                                      curPlayer.position / 3600,
+                                    );
                                     const curMin = Math.floor(
-                                      curPlayer.position / 60,
+                                      (curPlayer.position % 3600) / 60,
                                     );
                                     const curSec = Math.floor(
                                       curPlayer.position % 60,
@@ -265,7 +268,14 @@ export default () => {
                                       typeof curPlayer.position === "number" &&
                                       curPlayer.position >= 0
                                     ) {
-                                      self.label = `${curMin < 10 ? "0" + curMin : curMin}:${curSec < 10 ? "0" + curSec : curSec}`;
+                                      // WARN: These nested ternaries are absolutely disgusting lol
+                                      self.label = `${
+                                        curHour > 0
+                                          ? (curHour < 10
+                                              ? "0" + curHour
+                                              : curHour) + ":"
+                                          : ""
+                                      }${curMin < 10 ? "0" + curMin : curMin}:${curSec < 10 ? "0" + curSec : curSec}`;
                                     } else {
                                       self.label = `00:00`;
                                     }

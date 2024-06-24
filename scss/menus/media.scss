@@ -1,7 +1,7 @@
 @import "../colors";
 
 .media-indicator-container {
-  min-width: 40rem;
+  min-width: 41rem;
   min-height: 10rem;
   background: $mantle;
   border: 0.25rem solid $surface0; 
@@ -17,8 +17,8 @@
   border: 0.25rem solid $surface0; 
   background-color: $surface0;
   border-radius: 0.25rem;
-  min-width: 11rem;
-  min-height: 11rem;
+  min-width: 10rem;
+  min-height: 10rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -113,7 +113,7 @@ image {
 .menu-slider.media.progress {
   margin-top: 1rem;
   min-height: 2rem;
-  min-width: 17rem;
+  min-width: 15rem;
 
   trough {
     background: $base;

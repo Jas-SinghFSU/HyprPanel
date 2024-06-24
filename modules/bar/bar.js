@@ -13,6 +13,13 @@ import { Power } from "./power/index.js";
 
 import { BarItemBox } from "../shared/barItemBox.js";
 
+const closeAllMenus = () => {
+  App.closeWindow("bluetoothmenu");
+  App.closeWindow("audiomenu");
+  App.closeWindow("networkmenu");
+  App.closeWindow("mediamenu");
+}
+
 // layout of the bar
 const Left = (monitor, wsMap) => {
   return Widget.Box({
@@ -114,4 +121,4 @@ const BarAlt = (monitor = 0, wsMap) => {
   });
 };
 
-export { Bar, BarAlt };
+export { Bar, BarAlt, closeAllMenus };

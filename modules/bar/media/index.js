@@ -1,4 +1,5 @@
 const mpris = await Service.import("mpris");
+import { closeAllMenus } from "../bar.js";
 
 const Media = () => {
   const activePlayer = Variable(mpris.players[0]);
@@ -96,6 +97,7 @@ const Media = () => {
 
         globalMousePos.value = coords;
 
+        closeAllMenus();
         App.toggleWindow("mediamenu");
       },
     },

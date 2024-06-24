@@ -1,5 +1,5 @@
 const date = Variable("", {
-  poll: [1000, 'date "+󰃭 %a %b %d  %I:%M:%S %p"'],
+  poll: [1000, 'date "+󰃭 %a %b %d  󱑍 %I:%M:%S %p"'],
 });
 
 const Clock = () => {

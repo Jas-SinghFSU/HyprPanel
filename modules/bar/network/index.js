@@ -1,4 +1,5 @@
 const network = await Service.import("network");
+import { closeAllMenus } from "../bar.js";
 
 import { globalMousePos } from "../../../globals.js";
 
@@ -35,6 +36,7 @@ const Network = () => {
 
         globalMousePos.value = coords;
 
+        closeAllMenus();
         App.toggleWindow("networkmenu");
       },
     },
