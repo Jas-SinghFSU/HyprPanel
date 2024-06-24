@@ -328,27 +328,30 @@ spinner:checked {
 }
 
 .workspaces label {
-  font-size: 0rem;
-  min-width: 1rem;
-  min-height: 1rem;
+  font-size: 0.2em;
+  min-width: 5em;
+  min-height: 5em;
   border-radius: 1.14rem;
   margin: 0rem 0.25rem;
   transition: 150ms;
   background-color: #cba6f7;
+  color: #cba6f7;
 }
 .workspaces label.occupied {
   background-color: #f9e2af;
-  min-width: 1rem;
-  min-height: 1rem;
+  color: #f9e2af;
+  min-width: 5em;
+  min-height: 5em;
 }
 .workspaces label.active {
+  color: #89dceb;
   background-color: #89dceb;
-  min-width: 2.2rem;
-  min-height: 1rem;
+  min-width: 11em;
+  min-height: 5em;
 }
 
 .workspaces label:not(:first-child) {
-  margin-left: 0.9rem;
+  margin-left: 4.5em;
 }
 
 .window_title {
@@ -494,13 +497,13 @@ spinner:checked {
 }
 
 .menu-dropdown-label {
-  font-size: 1.5rem;
+  font-size: 1.3em;
   font-weight: bold;
   color: #cdd6f4;
 }
 
 .menu-active {
-  font-size: 1.15rem;
+  font-size: 0.95em;
   font-weight: bold;
   margin: 0rem 0.5rem;
   margin-bottom: 0.5rem;
@@ -509,13 +512,13 @@ spinner:checked {
 
 .menu-active-icon {
   color: #7f849c;
-  font-size: 1.7rem;
+  font-size: 1.5em;
   font-weight: bold;
   margin-right: 0.7rem;
 }
 
 .menu-active-percentage {
-  font-size: 1.1rem;
+  font-size: 1em;
   margin-left: 0.5rem;
   font-weight: bold;
 }
@@ -526,8 +529,8 @@ spinner:checked {
 }
 
 .menu-active-slider * {
-  min-height: 1.3rem;
-  border-radius: 0.7rem;
+  min-height: 1.1em;
+  border-radius: 0.2em;
 }
 
 .menu-slider-container {
@@ -536,14 +539,14 @@ spinner:checked {
 
 .menu-label {
   color: #cdd6f4;
-  font-size: 1.3rem;
+  font-size: 1.1em;
   font-weight: bold;
 }
 
 .menu-label-dim {
   color: #6c7086;
   margin-right: 1rem;
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: bold;
 }
 
@@ -560,18 +563,18 @@ spinner:checked {
 }
 
 .menu-button {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.4em;
 }
 
 .menu-button-name {
-  font-size: 1.1rem;
+  font-size: 0.95em;
   font-weight: bold;
   margin-left: 1rem;
   margin-right: 1.2rem;
 }
 
 .menu-button-icon {
-  font-size: 1.3rem;
+  font-size: 1.3em;
   font-weight: bold;
   color: #6c7086;
   margin-right: 0.5rem;
@@ -788,11 +791,11 @@ window#powermenu .powermenu.box {
 }
 
 .network-element-items-container * {
-  font-size: 1.1rem;
+  font-size: 0.95em;
 }
 
 .network-element-item:not(:last-child) {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4em;
 }
 .network-element-item:hover {
   color: #cba6f7;
@@ -808,7 +811,7 @@ window#powermenu .powermenu.box {
   padding: 0.4rem;
   margin-left: 2.5rem;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.85em;
 }
 
 .menu-icon-button.refresh.network {
@@ -826,7 +829,7 @@ window#powermenu .powermenu.box {
   color: #89dceb;
 }
 .network-password-input-close label {
-  font-size: 1.35rem;
+  font-size: 1.45em;
 }
 
 .menu-icon-button.network.disconnect {
@@ -848,7 +851,7 @@ window#powermenu .powermenu.box {
   color: #cba6f7;
 }
 .menu-icon-button.network.forget label {
-  font-size: 1.5rem;
+  font-size: 1.35em;
 }
 
 .menu-dropdown-label.bluetooth {
@@ -909,11 +912,11 @@ window#powermenu .powermenu.box {
 }
 
 .media-indicator-current-album-cover {
-  border: 0.25rem solid #313244;
+  border: 0.2em solid #313244;
   background-color: #313244;
-  border-radius: 0.25rem;
-  min-width: 10rem;
-  min-height: 10rem;
+  border-radius: 0.25em;
+  min-width: 8.3em;
+  min-height: 8.3em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -933,17 +936,17 @@ window#powermenu .powermenu.box {
 
 .media-indicator-current-song-name-label {
   color: #b4befe;
-  font-size: 1.65rem;
+  font-size: 1.4em;
 }
 
 .media-indicator-current-song-author-label {
   color: #94e2d5;
-  font-size: 1.1rem;
+  font-size: 1em;
 }
 
 .media-indicator-current-song-album-label {
   color: #f5c2e7;
-  font-size: 1.1rem;
+  font-size: 1em;
 }
 
 .media-indicator-current-controls {
@@ -957,7 +960,7 @@ window#powermenu .powermenu.box {
 
 .media-indicator-time {
   color: #9399b2;
-  font-size: 0.9rem;
+  font-size: 0.8em;
   font-weight: 800;
   margin-top: 0.9rem;
 }
@@ -971,8 +974,8 @@ window#powermenu .powermenu.box {
 .media-indicator-control-button {
   background: #b4befe;
   color: #11111b;
-  min-height: 2.1rem;
-  min-width: 2.4rem;
+  min-height: 1.8em;
+  min-width: 2em;
   border-radius: 0.2rem;
 }
 .media-indicator-control-button tooltip {
@@ -994,13 +997,13 @@ window#powermenu .powermenu.box {
 }
 
 image {
-  font-size: 1.5rem;
+  font-size: 1.3em;
 }
 
 .menu-slider.media.progress {
   margin-top: 1rem;
-  min-height: 2rem;
-  min-width: 15rem;
+  min-height: 2em;
+  min-width: 15em;
 }
 .menu-slider.media.progress trough {
   background: #1e1e2e;

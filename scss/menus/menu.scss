@@ -108,13 +108,13 @@
 }
 
 .menu-dropdown-label {
-    font-size: 1.5rem;
+    font-size: 1.3em;
     font-weight: bold;
     color: $text;
 }
 
 .menu-active {
-    font-size: 1.15rem;
+    font-size: 0.95em;
     font-weight: bold;
     margin: 0rem .5rem;
     margin-bottom: 0.5rem;
@@ -123,13 +123,13 @@
 
 .menu-active-icon {
     color: $overlay1;
-    font-size: 1.7rem;
+    font-size: 1.5em;
     font-weight: bold;
     margin-right: 0.7rem;
 }
 
 .menu-active-percentage {
-    font-size: 1.1rem;
+    font-size: 1em;
     margin-left: 0.5rem;
     font-weight: bold;
 }
@@ -140,8 +140,8 @@
 }
 
 .menu-active-slider * {
-    min-height: 1.3rem;
-    border-radius: .7rem;
+    min-height: 1.1em;
+    border-radius: .2em;
 }
 .menu-slider-container {
     margin-bottom: .7rem;
@@ -149,14 +149,14 @@
 
 .menu-label {
     color: $text;
-    font-size: 1.3rem;
+    font-size: 1.1em;
     font-weight: bold;
 }
 
 .menu-label-dim {
     color: $overlay0;
     margin-right: 1rem;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: bold;
 }
 
@@ -174,18 +174,18 @@
 }
 
 .menu-button {
-    margin-bottom: .4rem;
+    margin-bottom: .4em;
 }
 
 .menu-button-name {
-    font-size: 1.1rem;
+    font-size: 0.95em;
     font-weight: bold;
     margin-left: 1rem;
     margin-right: 1.2rem;
 }
 
 .menu-button-icon {
-    font-size: 1.3rem;
+    font-size: 1.3em;
     font-weight: bold;
     color: $overlay0;
     margin-right: .5rem;

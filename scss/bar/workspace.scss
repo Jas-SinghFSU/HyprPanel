@@ -2,29 +2,32 @@
 
 .workspaces {
   label {
-    font-size: 0rem;
-    min-width: 1rem;
-    min-height: 1rem;
+    font-size: 0.2em;
+    min-width: 5em;
+    min-height: 5em;
     border-radius: 1.9rem * .6;
     margin: 0rem 0.5rem * .5;
     transition: 300ms * .5;
     background-color: $mauve;
+    color: $mauve;
 
     &.occupied {
       background-color: $yellow;
-      min-width: 1rem;
-      min-height: 1rem;
+      color: $yellow;
+      min-width: 5em;
+      min-height: 5em;
     }
 
     &.active {
+      color: $sky;
       background-color: $sky;
-      min-width: 2.2rem;
-      min-height: 1rem;
+      min-width: 11em;
+      min-height: 5em;
     }
   }
 }
 
 
 .workspaces label:not(:first-child) {
-  margin-left: 0.9rem;
+  margin-left: 4.5em;
 }

@@ -131,6 +131,8 @@ export default () => {
       });
     };
 
+    console.log(JSON.stringify(btDevices, null, 2));
+
     return btDevices.length === 0 ? noDevices() : deviceList();
   };
 

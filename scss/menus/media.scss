@@ -14,11 +14,11 @@
 }
 
 .media-indicator-current-album-cover {
-  border: 0.25rem solid $surface0; 
+  border: 0.2em solid $surface0; 
   background-color: $surface0;
-  border-radius: 0.25rem;
-  min-width: 10rem;
-  min-height: 10rem;
+  border-radius: 0.25em;
+  min-width: 8.3em;
+  min-height: 8.3em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -38,17 +38,17 @@
 
 .media-indicator-current-song-name-label {
   color: $lavender;
-  font-size: 1.65rem;
+  font-size: 1.4em;
 }
 
 .media-indicator-current-song-author-label {
   color: $teal;
-  font-size: 1.1rem;
+  font-size: 1em;
 }
 
 .media-indicator-current-song-album-label {
   color: $pink;
-  font-size: 1.1rem;
+  font-size: 1em;
 }
 
 .media-indicator-current-controls {
@@ -62,7 +62,7 @@
 
 .media-indicator-time {
   color: $overlay2;
-  font-size: 0.9rem;
+  font-size: 0.8em;
   font-weight: 800;
   margin-top: 0.9rem;
 
@@ -78,8 +78,8 @@
 .media-indicator-control-button {
   background: $lavender;
   color: $crust;
-  min-height: 2.1rem;
-  min-width: 2.4rem;
+  min-height: 1.8em;
+  min-width: 2em;
   border-radius: 0.2rem;
 
   tooltip {
@@ -107,13 +107,13 @@
 }
 
 image {
-  font-size: 1.5rem;
+  font-size: 1.3em;
 }
 
 .menu-slider.media.progress {
   margin-top: 1rem;
-  min-height: 2rem;
-  min-width: 15rem;
+  min-height: 2em;
+  min-width: 15em;
 
   trough {
     background: $base;

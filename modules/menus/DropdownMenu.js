@@ -30,7 +30,7 @@ const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
       marginRight = 13;
       marginLeft = monWidth - minWidth - 13;
     }
-    const marginTop = 43;
+    const marginTop = 40;
     const marginBottom = monHeight + minHeight - marginTop;
     self.set_margin_left(marginLeft);
     self.set_margin_right(marginRight);
