@@ -15,7 +15,7 @@ const PopupRevealer = (
     Widget.Revealer({
         transition,
         child: Widget.Box({
-            class_name: "window-content",
+            class_name: `window-content ${name}`,
             child,
         }),
         transitionDuration: 200,

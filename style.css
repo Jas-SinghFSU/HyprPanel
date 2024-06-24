@@ -1038,15 +1038,32 @@ image {
   box-shadow: none;
 }
 .notification-card-container.menu {
-  min-width: 30rem;
-  min-height: 50rem;
-  background: #181825;
-  border: 0.25rem solid #313244;
-  border-radius: 0.4rem;
+  min-width: 28em;
+  min-height: 15em;
+  background: #1e1e2e;
+  border: 0.2em solid #313244;
+  border-radius: 0.4em;
 }
 
-.notification-menu-content {
-  margin: 40rem;
+.window-content.notificationsmenu {
+  margin-top: -0.4em;
+  margin-right: 0.6em;
+}
+
+.notification-card.menu {
+  border: 0em;
+  border-bottom: 0.25em solid #313244;
+  border-radius: 0em;
+  margin: 0rem;
+}
+.notification-card.menu:first-child {
+  border-top: 0rem;
+}
+.notification-card.menu:last-child {
+  border-bottom: 0rem;
+}
+.notification-card.menu:not(:first-child) {
+  margin: 0rem;
 }
 
 .notification-card-container {

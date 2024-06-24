@@ -1,13 +1,36 @@
 @import "../colors";
 
 .notification-card-container.menu {
-    min-width: 30rem;
-    min-height: 50rem;
-    background: $mantle;
-    border: 0.25rem solid $surface0; 
-    border-radius: 0.4rem;
+  min-width: 28em;
+  min-height: 15em;
+  background: $base;
+  border: 0.2em solid $surface0; 
+  border-radius: 0.4em;
+}
+.notification-card-container-scroll.menu {
+  // background-color: $pink;
 }
 
-.notification-menu-content {
-    margin: 40rem;
+.window-content.notificationsmenu {
+  margin-top: -0.4em;
+  margin-right: 0.6em;
+}
+
+.notification-card.menu {
+  border: 0em;
+  border-bottom: 0.25em solid $surface0;
+  border-radius: 0em;
+  margin: 0rem;
+
+  &:first-child {
+    border-top: 0rem;
+  }
+
+  &:last-child {
+    border-bottom: 0rem;
+  }
+
+  &:not(:first-child) {
+    margin: 0rem;
+  }
 }
