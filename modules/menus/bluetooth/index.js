@@ -317,21 +317,33 @@ export default () => {
               Widget.Box({
                 hexpand: true,
                 hpack: "end",
-                child: Widget.Switch({
-                  class_name: "menu-switch bluetooth",
-                  active: bluetooth.bind("enabled"),
-                  on_activate: ({ active }) =>
-                    Utils.execAsync([
-                      "bash",
-                      "-c",
-                      `bluetoothctl power ${active ? "on" : "off"}`,
-                    ]).catch((err) =>
-                      console.error(
+                children: [
+                  // NOTE: Do we want to add this back to restart bluetooth service if it every hangs?
+                  // Widget.Button({
+                  //   class_name: "menu-icon-button restart-bluetooth-service",
+                  //   tooltip_text: "Restart Bluetooth Service",
+                  //   on_primary_click: () => Utils.execAsync('systemctl restart bluetooth'),
+                  //   child: Widget.Label({
+                  //     class_name: "menu-icon-button-label",
+                  //     label: "󱄌"
+                  //   })
+                  // }),
+                  Widget.Switch({
+                    class_name: "menu-switch bluetooth",
+                    active: bluetooth.bind("enabled"),
+                    on_activate: ({ active }) =>
+                      Utils.execAsync([
+                        "bash",
+                        "-c",
                         `bluetoothctl power ${active ? "on" : "off"}`,
-                        err,
+                      ]).catch((err) =>
+                        console.error(
+                          `bluetoothctl power ${active ? "on" : "off"}`,
+                          err,
+                        ),
                       ),
-                    ),
-                }),
+                  }),
+                ],
               }),
             ],
           }),

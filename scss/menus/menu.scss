@@ -1,13 +1,12 @@
 .menu-slider {
-    // @include unset($rec: true);
-
     trough {
         background: $base;
+        border-radius: 0.3rem;
 
         highlight,
         progress {
             background: $peach;
-            border-radius: 0.7rem;
+            border-radius: 0.3rem;
         }
     }
 
@@ -17,7 +16,7 @@
         min-height: 1.6rem;
         min-width: 1.6rem;
         border: 0rem solid transparent;
-        border-radius: 0.7rem;
+        border-radius: 0.3rem;
     }
 
     &:hover {
@@ -30,23 +29,11 @@
             box-shadow: none;
         }
     }
-
-    &:disabled {
-
-        highlight,
-        progress {
-        }
-    }
-
-    trough:focus {
-
-        slider {
-        }
-    }
 }
 
 .menu-switch {
     background-color: $surface0;
+        border-radius: 0.3rem;
 
     &:checked {
         background: $sky;
@@ -56,7 +43,7 @@
         highlight,
         progress {
             background-color: $peach;
-            border-radius: 0.7rem;
+            border-radius: 0.3rem;
         }
     }
 
@@ -66,7 +53,7 @@
         min-height: 1.2rem;
         min-width: 1.2rem;
         border: 0rem solid transparent;
-        border-radius: 0.7rem;
+        border-radius: 0.3rem;
         margin: 0.1rem 0.2rem;
     }
 

@@ -30,7 +30,7 @@ const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
       marginRight = 13;
       marginLeft = monWidth - minWidth - 13;
     }
-    const marginTop = 40;
+    const marginTop = 43;
     const marginBottom = monHeight + minHeight - marginTop;
     self.set_margin_left(marginLeft);
     self.set_margin_right(marginRight);
@@ -58,7 +58,7 @@ export default ({
     keymode: "on-demand",
     exclusivity,
     layer: "top",
-    anchor: ["top"],
+    anchor: ["top", "left"],
     child: Widget.EventBox({
       on_primary_click: () => App.closeWindow(name),
       on_secondary_click: () => App.closeWindow(name),

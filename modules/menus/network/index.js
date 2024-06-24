@@ -2,10 +2,6 @@ const network = await Service.import("network");
 import DropdownMenu from "../DropdownMenu.js";
 
 export default () => {
-  network.connect("changed", (value) => {
-    // console.log(JSON.stringify(value, null, 2));
-  });
-
   const pendingAuth = Variable("");
 
   return DropdownMenu({

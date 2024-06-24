@@ -291,12 +291,12 @@ spinner:checked {
 
 .media {
   font-size: 1rem;
-  color: #a6e3a1;
+  color: #b4befe;
 }
 
 .bar-media_icon {
   font-size: 1.2em;
-  color: #a6e3a1;
+  color: #b4befe;
 }
 
 .bar-network {
@@ -421,11 +421,12 @@ spinner:checked {
 
 .menu-slider trough {
   background: #1e1e2e;
+  border-radius: 0.3rem;
 }
 .menu-slider trough highlight,
 .menu-slider trough progress {
   background: #fab387;
-  border-radius: 0.7rem;
+  border-radius: 0.3rem;
 }
 .menu-slider slider {
   box-shadow: none;
@@ -433,7 +434,7 @@ spinner:checked {
   min-height: 1.6rem;
   min-width: 1.6rem;
   border: 0rem solid transparent;
-  border-radius: 0.7rem;
+  border-radius: 0.3rem;
 }
 .menu-slider:hover trough {
   background: #313244;
@@ -442,8 +443,10 @@ spinner:checked {
   background: #6c7086;
   box-shadow: none;
 }
+
 .menu-switch {
   background-color: #313244;
+  border-radius: 0.3rem;
 }
 .menu-switch:checked {
   background: #89dceb;
@@ -451,7 +454,7 @@ spinner:checked {
 .menu-switch trough highlight,
 .menu-switch trough progress {
   background-color: #fab387;
-  border-radius: 0.7rem;
+  border-radius: 0.3rem;
 }
 .menu-switch slider {
   box-shadow: none;
@@ -459,7 +462,7 @@ spinner:checked {
   min-height: 1.2rem;
   min-width: 1.2rem;
   border: 0rem solid transparent;
-  border-radius: 0.7rem;
+  border-radius: 0.3rem;
   margin: 0.1rem 0.2rem;
 }
 .menu-switch:hover trough {
@@ -892,6 +895,138 @@ window#powermenu .powermenu.box {
   color: #89dceb;
 }
 
+.media-indicator-container {
+  min-width: 40rem;
+  min-height: 10rem;
+  background: #181825;
+  border: 0.25rem solid #313244;
+  border-radius: 0.4rem;
+}
+
+.media-indicator-items {
+  margin: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+.media-indicator-current-album-cover {
+  border: 0.25rem solid #313244;
+  background-color: #313244;
+  border-radius: 0.25rem;
+  min-width: 11rem;
+  min-height: 11rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.media-indicator-right-section {
+  margin-left: 2rem;
+}
+
+.media-indicator-current-song-name {
+  margin-bottom: 0.75rem;
+}
+
+.media-indicator-current-song-author {
+  margin-bottom: 0.5rem;
+}
+
+.media-indicator-current-song-name-label {
+  color: #b4befe;
+  font-size: 1.65rem;
+}
+
+.media-indicator-current-song-author-label {
+  color: #94e2d5;
+  font-size: 1.1rem;
+}
+
+.media-indicator-current-song-album-label {
+  color: #f5c2e7;
+  font-size: 1.1rem;
+}
+
+.media-indicator-current-controls {
+  margin-top: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.media-indicator-control {
+  margin: 0rem 0.5rem;
+}
+
+.media-indicator-time {
+  color: #9399b2;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-top: 0.9rem;
+}
+.media-indicator-time.total {
+  margin-left: 1.2rem;
+}
+.media-indicator-time.current {
+  margin-right: 1.2rem;
+}
+
+.media-indicator-control-button {
+  background: #b4befe;
+  color: #11111b;
+  min-height: 2.1rem;
+  min-width: 2.4rem;
+  border-radius: 0.2rem;
+}
+.media-indicator-control-button tooltip {
+  min-width: 10rem;
+  min-height: 10rem;
+  background: red;
+}
+.media-indicator-control-button.disabled {
+  background: #313244;
+}
+.media-indicator-control-button.enabled {
+  background: #b4befe;
+}
+.media-indicator-control-button.enabled:hover {
+  background: #f5c2e7;
+}
+.media-indicator-control-button.enabled.active {
+  background: #f5c2e7;
+}
+
+image {
+  font-size: 1.5rem;
+}
+
+.menu-slider.media.progress {
+  margin-top: 1rem;
+  min-height: 2rem;
+  min-width: 17rem;
+}
+.menu-slider.media.progress trough {
+  background: #1e1e2e;
+  border-radius: 0.3rem;
+}
+.menu-slider.media.progress trough highlight,
+.menu-slider.media.progress trough progress {
+  min-height: 1rem;
+  background: #f5c2e7;
+  border-radius: 0.3rem;
+}
+.menu-slider.media.progress slider {
+  box-shadow: none;
+  background-color: transparent;
+  min-height: 1.2rem;
+  min-width: 1.2rem;
+  border: 0rem solid transparent;
+  border-radius: 0.3rem;
+}
+.menu-slider.media.progress:hover trough {
+  background: #313244;
+}
+.menu-slider.media.progress:hover slider {
+  background: #6c7086;
+  box-shadow: none;
+}
 .notification-card-container {
   margin-top: 3.5rem;
 }
