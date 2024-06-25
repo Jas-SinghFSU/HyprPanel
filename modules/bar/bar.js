@@ -52,8 +52,8 @@ const Right = () => {
       BarItemBox(Bluetooth()),
       BarItemBox(BatteryLabel()),
       BarItemBox(SysTray()),
-      BarItemBox(Clock()),
       BarItemBox(Notifications()),
+      BarItemBox(Clock()),
       BarItemBox(Power()),
     ],
   });

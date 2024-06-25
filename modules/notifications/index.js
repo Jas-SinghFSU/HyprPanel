@@ -9,7 +9,6 @@ export default () => {
     class_name: "notifications-window",
     layer: "top",
     anchor: ["top", "right"],
-    monitor: 2,
     exclusivity: "ignore",
     child: Widget.Box({
       class_name: "notification-card-container",

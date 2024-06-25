@@ -1057,6 +1057,8 @@ image {
 
 .notification-menu-controls {
   margin: 0em 1em;
+  margin-top: 0.6em;
+  margin-bottom: 0.4em;
 }
 
 .notification-card.menu {
@@ -1071,11 +1073,16 @@ image {
 
 .menu-label.notifications {
   color: #b4befe;
-  margin: 0.9em 0.5em;
-  margin-bottom: 0.7em;
+  margin: 0em;
 }
 
 .menu-separator.notifications {
+  background-color: #313244;
+  margin: 0em 1em;
+}
+
+.menu-separator.notification-controls {
+  min-width: 0.1em;
   background-color: #313244;
   margin: 0em 1em;
 }
@@ -1085,16 +1092,15 @@ image {
 }
 
 .clear-notifications-button {
-  margin-right: 1em;
-  margin-top: 0.4em;
+  margin-right: 0.3em;
 }
 .clear-notifications-button:hover label {
   color: #eba0ac;
 }
 
 .clear-notifications-label {
-  color: #b4befe;
-  font-size: 0.9em;
+  color: #f38ba8;
+  font-size: 1.5em;
 }
 
 .top-right-event-box_top * {

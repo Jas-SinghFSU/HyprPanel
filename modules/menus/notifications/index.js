@@ -50,30 +50,36 @@ export default () => {
                         notifs.dnd = !active;
                       },
                     }),
+                    Widget.Box({
+                      children: notifs.bind("notifications").as((n) => {
+                        if (n.length > 0) {
+                          return [
+                            Widget.Separator({
+                              hpack: "center",
+                              vexpand: true,
+                              vertical: true,
+                              class_name:
+                                "menu-separator notification-controls",
+                            }),
+                            Widget.Button({
+                              class_name: "clear-notifications-button",
+                              on_primary_click: () => notifs.clear(),
+                              child: Widget.Label({
+                                class_name: "clear-notifications-label",
+                                label: "",
+                              }),
+                            }),
+                          ];
+                        }
+                        return [];
+                      }),
+                    }),
                   ],
                 }),
               ],
             }),
             Widget.Separator({
               class_name: "menu-separator notifications",
-            }),
-            Widget.Box({
-              hpack: "end",
-              children: notifs.bind("notifications").as((n) => {
-                if (n.length > 0) {
-                  return [
-                    Widget.Button({
-                      class_name: "clear-notifications-button",
-                      on_primary_click: () => notifs.clear(),
-                      child: Widget.Label({
-                        class_name: "clear-notifications-label",
-                        label: "clear",
-                      }),
-                    }),
-                  ];
-                }
-                return [];
-              }),
             }),
             Widget.Box({
               class_name: "menu-content-container notifications",

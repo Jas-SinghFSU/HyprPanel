@@ -19,6 +19,8 @@
 
 .notification-menu-controls {
   margin: 0em 1em;
+  margin-top: 0.6em;
+  margin-bottom: 0.4em;
 }
 
 .notification-card.menu {
@@ -33,23 +35,28 @@
 
 .menu-label.notifications {
   color: $lavender;
-  margin: 0.9em 0.5em;
-  margin-bottom: 0.7em;
+  margin: 0em;
 }
 
 .menu-separator.notifications {
   background-color: $surface0;
   margin: 0em 1em;
 }
+
+.menu-separator.notification-controls {
+  min-width: 0.1em;
+  background-color: $surface0;
+  margin: 0em 1em;
+}
+
 .menu-switch.notifications:checked {
-    &:checked {
-        background: $lavender;
-    }
+  &:checked {
+    background: $lavender;
+  }
 }
 
 .clear-notifications-button {
-  margin-right: 1em;
-  margin-top: 0.4em;
+  margin-right: 0.3em;
 
   &:hover label {
     color: $maroon;
@@ -57,8 +64,8 @@
 }
 
 .clear-notifications-label {
-  color: $lavender;
-  font-size: 0.9em;
+  color: $red;
+  font-size: 1.5em;
 }
 
 .top-right-event-box_top *{
