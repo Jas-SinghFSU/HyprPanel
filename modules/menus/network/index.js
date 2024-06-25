@@ -40,7 +40,6 @@ export default () => {
             vertical: true,
             setup: (self) => {
               self.hook(network, () => {
-                // console.log(JSON.stringify(network, null, 2));
                 self.hook(pendingAuth, () => {
                   let sortedNetworks = [];
 

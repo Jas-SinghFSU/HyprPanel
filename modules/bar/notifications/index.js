@@ -1,9 +1,6 @@
 const notifs = await Service.import("notifications");
 
 export const Notifications = () => {
-  notifs.connect("changed", () => {
-    console.log(JSON.stringify(notifs, null, 2));
-  });
   return {
     component: Widget.Box({
       hpack: "start",

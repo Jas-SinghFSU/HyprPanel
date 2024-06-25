@@ -3,8 +3,8 @@
 .workspaces {
   label {
     font-size: 0.2em;
-    min-width: 5em;
-    min-height: 5em;
+    min-width: 4.5em;
+    min-height: 4.5em;
     border-radius: 1.9rem * .6;
     margin: 0rem 0.5rem * .5;
     transition: 300ms * .5;
@@ -14,15 +14,15 @@
     &.occupied {
       background-color: $yellow;
       color: $yellow;
-      min-width: 5em;
-      min-height: 5em;
+      min-width: 4.5em;
+      min-height: 4.5em;
     }
 
     &.active {
       color: $sky;
       background-color: $sky;
       min-width: 11em;
-      min-height: 5em;
+      min-height: 4.5em;
     }
   }
 }

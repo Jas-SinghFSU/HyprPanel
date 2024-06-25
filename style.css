@@ -1,6 +1,6 @@
 * {
   all: unset;
-  font-family: "Ubuntu";
+  font-family: "Ubuntu Nerd Font";
   font-size: 1.2rem;
   font-weight: 600;
 }
@@ -329,8 +329,8 @@ spinner:checked {
 
 .workspaces label {
   font-size: 0.2em;
-  min-width: 5em;
-  min-height: 5em;
+  min-width: 4.5em;
+  min-height: 4.5em;
   border-radius: 1.14rem;
   margin: 0rem 0.25rem;
   transition: 150ms;
@@ -340,14 +340,14 @@ spinner:checked {
 .workspaces label.occupied {
   background-color: #f9e2af;
   color: #f9e2af;
-  min-width: 5em;
-  min-height: 5em;
+  min-width: 4.5em;
+  min-height: 4.5em;
 }
 .workspaces label.active {
   color: #89dceb;
   background-color: #89dceb;
   min-width: 11em;
-  min-height: 5em;
+  min-height: 4.5em;
 }
 
 .workspaces label:not(:first-child) {
@@ -612,13 +612,13 @@ window#verification .verification .text-box {
   margin-bottom: 0.4rem;
 }
 window#verification .verification .text-box .title {
-  font-size: 1.6em;
+  font-size: 1.5em;
   color: #eba0ac;
   margin-bottom: 0.75rem;
 }
 window#verification .verification .text-box .desc {
   color: #b4befe;
-  font-size: 1.1em;
+  font-size: 1em;
   margin-bottom: 0.75rem;
   padding: 1.15rem 2.25rem;
 }
@@ -1038,32 +1038,68 @@ image {
   box-shadow: none;
 }
 .notification-card-container.menu {
-  min-width: 28em;
-  min-height: 15em;
-  background: #1e1e2e;
+  margin-top: 0em;
+  min-width: 26em;
+  min-height: 6em;
+  background: #181825;
   border: 0.2em solid #313244;
   border-radius: 0.4em;
 }
 
-.window-content.notificationsmenu {
-  margin-top: -0.4em;
-  margin-right: 0.6em;
+.window-content.notificationsmenu-window {
+  margin-right: 0.5em;
+}
+
+.menu-content-container.notifications {
+  margin: 1em;
+  min-height: 4em;
+}
+
+.notification-menu-controls {
+  margin: 0em 1em;
 }
 
 .notification-card.menu {
-  border: 0em;
-  border-bottom: 0.25em solid #313244;
-  border-radius: 0em;
-  margin: 0rem;
+  background: #11111b;
+  border: 0.1em solid #313244;
+  margin: 0em;
 }
-.notification-card.menu:first-child {
-  border-top: 0rem;
+
+.menu-label-container.notifications {
+  margin: 0em 0em;
 }
-.notification-card.menu:last-child {
-  border-bottom: 0rem;
+
+.menu-label.notifications {
+  color: #b4befe;
+  margin: 0.9em 0.5em;
+  margin-bottom: 0.7em;
 }
-.notification-card.menu:not(:first-child) {
-  margin: 0rem;
+
+.menu-separator.notifications {
+  background-color: #313244;
+  margin: 0em 1em;
+}
+
+.menu-switch.notifications:checked:checked {
+  background: #b4befe;
+}
+
+.clear-notifications-button {
+  margin-right: 1em;
+  margin-top: 0.4em;
+}
+.clear-notifications-button:hover label {
+  color: #eba0ac;
+}
+
+.clear-notifications-label {
+  color: #b4befe;
+  font-size: 0.9em;
+}
+
+.top-right-event-box_top * {
+  min-height: 0em;
+  margin-top: 2.5em;
 }
 
 .notification-card-container {
@@ -1073,14 +1109,14 @@ image {
 .notification-card {
   color: #cdd6f4;
   background: #181825;
-  margin-right: 0.4rem;
-  border: 0.15rem solid #313244;
-  min-width: 28rem;
+  margin-right: 0.45em;
+  border: 0.15em solid #313244;
+  min-width: 23.5em;
   min-height: 6rem;
-  border-radius: 0.4rem;
+  border-radius: 0.3em;
 }
 .notification-card:not(:first-child) {
-  margin-top: 1rem;
+  margin-top: 0.85em;
 }
 
 .notification-card-container {
@@ -1088,59 +1124,54 @@ image {
 }
 
 .notification-card-image-container {
-  margin: 0.75rem 0.75rem;
-  border-radius: 0.4rem;
+  margin: 0.65em 0.65em;
+  border-radius: 0.4em;
 }
 
 .notification-card-image {
-  border-radius: 0.4rem;
-  min-width: 3rem;
-  min-height: 3rem;
-  padding: 1rem 1rem;
+  border-radius: 0.4em;
+  min-width: 2.5em;
+  min-height: 2.5em;
+  padding: 0.85em 0.85em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .notification-card-content {
-  min-width: 3.5rem;
-  min-height: 3.5rem;
-  padding: 0.6rem 0.6rem;
+  min-width: 2.9em;
+  min-height: 2.9em;
+  padding: 0.5em 0.5em;
   margin-right: 1rem;
 }
 
 .notification-card-content.noimg {
-  margin-left: 1.5rem;
-  margin-top: 0.2rem;
-}
-
-.notification-card-appname-label {
-  font-size: 0.9rem;
-  color: #f5c2e7;
+  margin-left: 1.3em;
+  margin-top: 0.15em;
 }
 
 .notification-card-header-label {
-  font-size: 1.15rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.95em;
+  margin-bottom: 0.5em;
   color: #b4befe;
 }
 
 .notification-card-body-label {
-  font-size: 1rem;
+  font-size: 0.84em;
   font-weight: 600;
 }
 
 .notification-card-actions {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.95em;
+  margin-bottom: 0.4em;
 }
 
 .notification-action-buttons {
   color: #b4befe;
   background: #313244;
-  min-width: 6rem;
-  min-height: 2rem;
-  border-radius: 0.2rem;
+  min-width: 4em;
+  min-height: 1.65em;
+  border-radius: 0.2em;
 }
 .notification-action-buttons:not(:last-child) {
   margin-right: 2rem;
@@ -1150,18 +1181,18 @@ image {
 }
 
 .notification-icon {
-  margin-bottom: 0.6rem;
-  font-size: 1.5rem;
+  margin-bottom: 0.4em;
+  font-size: 1.3em;
 }
 
 .close-notification-button {
   background: #f38ba8;
   color: #11111b;
-  min-width: 2.5rem;
-  border-radius: 0rem 0.35rem 0.35rem 0rem;
+  min-width: 2.1em;
+  border-radius: 0rem 0.35em 0.35em 0em;
 }
 .close-notification-button label {
-  font-size: 1.7rem;
+  font-size: 1.5em;
 }
 .close-notification-button:hover {
   background: #eba0ac;

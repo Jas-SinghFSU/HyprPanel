@@ -9,9 +9,9 @@ const filterTitle = (windowtitle) => {
     ["org.kde.dolphin", "   Dolphin"],
     ["plex", "󰚺   Plex"],
     ["steam", "   Steam"],
-    ["", "󰇄   Desktop"],
     ["spotify", "󰓇   Spotify"],
     ["obsidian", "󱓧   Obsidian"],
+    ["^$", "󰇄   Desktop"],
     ["(.+)", `󰣆   ${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
   ];
 

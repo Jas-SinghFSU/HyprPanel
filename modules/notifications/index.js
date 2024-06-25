@@ -17,10 +17,6 @@ export default () => {
       hexpand: true,
       setup: (self) => {
         self.hook(notifs, () => {
-          if (notifs.dnd) {
-            return [];
-          }
-
           const imageContainer = (notif) => {
             if (notif.image !== undefined) {
               return [

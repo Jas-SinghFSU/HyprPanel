@@ -1,36 +1,67 @@
 @import "../colors";
 
 .notification-card-container.menu {
-  min-width: 28em;
-  min-height: 15em;
-  background: $base;
-  border: 0.2em solid $surface0; 
-  border-radius: 0.4em;
-}
-.notification-card-container-scroll.menu {
-  // background-color: $pink;
+  margin-top: 0em;
+  min-width: 26em;
+  min-height: 6em;
+  background: $mantle;
+  border: 0.2em solid $surface0; border-radius: 0.4em;
 }
 
-.window-content.notificationsmenu {
-  margin-top: -0.4em;
-  margin-right: 0.6em;
+.window-content.notificationsmenu-window {
+  margin-right: 0.50em;
+}
+
+.menu-content-container.notifications {
+  margin: 1em;
+  min-height: 4em;
+}
+
+.notification-menu-controls {
+  margin: 0em 1em;
 }
 
 .notification-card.menu {
-  border: 0em;
-  border-bottom: 0.25em solid $surface0;
-  border-radius: 0em;
-  margin: 0rem;
+  background: $crust;
+  border: 0.1em solid $surface0;
+  margin: 0em;
+}
 
-  &:first-child {
-    border-top: 0rem;
-  }
+.menu-label-container.notifications {
+  margin: 0em 0em;
+}
 
-  &:last-child {
-    border-bottom: 0rem;
-  }
+.menu-label.notifications {
+  color: $lavender;
+  margin: 0.9em 0.5em;
+  margin-bottom: 0.7em;
+}
 
-  &:not(:first-child) {
-    margin: 0rem;
+.menu-separator.notifications {
+  background-color: $surface0;
+  margin: 0em 1em;
+}
+.menu-switch.notifications:checked {
+    &:checked {
+        background: $lavender;
+    }
+}
+
+.clear-notifications-button {
+  margin-right: 1em;
+  margin-top: 0.4em;
+
+  &:hover label {
+    color: $maroon;
   }
+}
+
+.clear-notifications-label {
+  color: $lavender;
+  font-size: 0.9em;
+}
+
+.top-right-event-box_top *{
+  min-height: 0em;
+  margin-top: 2.5em;
 }

@@ -70,22 +70,12 @@
 
     &:active {
         background-color: $sky;
-        highlight,
-        progress {
-        }
     }
 
     &:disabled {
-
-        highlight,
-        progress {
-        }
     }
 
     trough:focus {
-
-        slider {
-        }
     }
 }
 
