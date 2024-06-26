@@ -8,7 +8,6 @@ export const Padding = (name) =>
     child: Widget.Box(),
     setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
   });
-
 const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
   globalMousePos.connect("changed", ({ value }) => {
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
@@ -73,6 +72,7 @@ export default ({
           moveBoxToCursor(self, minWidth, minHeight, fixed);
         },
         child: Widget.Box({
+          class_name: "dropdown-menu-container",
           css: "padding: 1px; margin: -1px;",
           child: Widget.Revealer({
             revealChild: false,

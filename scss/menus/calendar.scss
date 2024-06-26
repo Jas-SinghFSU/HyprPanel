@@ -1,0 +1,49 @@
+@import "../colors";
+
+.calendar-content-container {
+  margin-top: 0em;
+  min-width: 16em;
+  min-height: 6em;
+  background: $mantle;
+  border: 0.13em solid $surface0; border-radius: 0.4em;
+}
+
+.window-content.calendarmenu-window {
+  margin-right: 0.50em;
+}
+
+.calendar-content-items {
+  margin: 1em;
+}
+
+.calendar-menu-calendar {
+  all: unset;
+  padding: 1em;
+  color: $text;
+
+  &:selected {
+    box-shadow: inset 0 -0.4em 0 0 $pink,
+      inset 0 -0.2em 0 0 $mantle,
+      inset 0 0 0 0.01em $mantle;
+    color: $pink;
+    border-radius: 0em;
+  }
+
+  &.header {
+    background-color: transparent;
+    color: $teal;
+  }
+
+  &.highlight {
+    border: 2em solid $pink;
+    background-color: transparent;
+    color: $pink;
+  }
+
+  &:indeterminate {
+    color: $surface2;
+  }
+
+  font-size: 1.1em;
+  padding: 0.2em;
+}

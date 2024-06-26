@@ -63,6 +63,7 @@ export default () => {
                             }),
                             Widget.Button({
                               class_name: "clear-notifications-button",
+                              tooltip_text: "Clear Notifications",
                               on_primary_click: () => notifs.clear(),
                               child: Widget.Label({
                                 class_name: "clear-notifications-label",

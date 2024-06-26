@@ -5,5 +5,6 @@ import NetworkMenu from "./network/index.js";
 import BluetoothMenu from "./bluetooth/index.js";
 import MediaMenu from "./media/index.js";
 import NotificationsMenu from "./notifications/index.js";
+import CalendarMenu from "./calendar/index.js";
 
-export default [PowerMenu(), Verification(), AudioMenu(), NetworkMenu(), BluetoothMenu(), MediaMenu(), NotificationsMenu()];
+export default [PowerMenu(), Verification(), AudioMenu(), NetworkMenu(), BluetoothMenu(), MediaMenu(), NotificationsMenu(), CalendarMenu()];

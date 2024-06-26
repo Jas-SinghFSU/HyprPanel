@@ -4,7 +4,7 @@
   min-width: 40rem;
   min-height: 10rem;
   background: $mantle;
-  border: 0.25rem solid $surface0; 
+  border: 0.13em solid $surface0; 
   border-radius: 0.4rem;
 }
 
@@ -82,12 +82,6 @@
   min-width: 2em;
   border-radius: 0.2rem;
 
-  tooltip {
-    min-width: 10rem;
-    min-height: 10rem;
-    background: red;
-  }
-
   &.disabled {
     background: $surface0;
   }
@@ -122,7 +116,7 @@ image {
     highlight,
     progress {
       min-height: 1rem;
-      background: $pink;
+      background: $lavender;
       border-radius: 0.3rem;
     }
   }

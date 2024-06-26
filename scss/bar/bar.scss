@@ -5,8 +5,8 @@
 }
 
 .bar_item_box_visible {
-  background: $surface0;
-  border-radius: 0.35rem;
+  background: transparentize($surface0, 0.2);
+  border-radius: 0.35em;
   padding: 0.2rem 0.9rem;
   margin: 0.5rem 0.25rem;
 

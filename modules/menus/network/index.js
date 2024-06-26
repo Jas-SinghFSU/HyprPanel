@@ -398,6 +398,18 @@ export default () => {
                           });
                       }
 
+                      if (sortedNetworks.length <= 0) {
+                        return self.children = [
+                          Widget.Label({
+                            class_name: "not-found-label dim",
+                            expand: true,
+                            hpack: "center",
+                            vpack: "center",
+                            label: "No Wifi Networks Found"
+                          })
+                        ]
+                      }
+
                       return (self.children = sortedNetworks.map((accPoint) => {
                         return Widget.Box({
                           vertical: true,

@@ -9,6 +9,9 @@ const Clock = () => {
       label: date.bind(),
     }),
     isVisible: true,
+    props: {
+      on_primary_click: () => App.toggleWindow("calendarmenu"),
+    },
   };
 };
 

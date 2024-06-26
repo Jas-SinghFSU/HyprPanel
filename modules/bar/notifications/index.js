@@ -10,7 +10,7 @@ export const Notifications = () => {
         hexpand: true,
         class_name: "bar-notifications",
         child: Widget.Label({
-          hpack: "start",
+          hpack: "center",
           hexpand: true,
           class_name: "bar-notifications-label",
           setup: (self) => {

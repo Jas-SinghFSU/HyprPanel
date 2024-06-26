@@ -8,8 +8,8 @@
     border-radius: 1.9rem * .6;
     margin: 0rem 0.5rem * .5;
     transition: 300ms * .5;
-    background-color: $mauve;
-    color: $mauve;
+    background-color: $sky;
+    color: $sky;
 
     &.occupied {
       background-color: $yellow;
@@ -19,8 +19,8 @@
     }
 
     &.active {
-      color: $sky;
-      background-color: $sky;
+      color: $lavender;
+      background-color: $lavender;
       min-width: 11em;
       min-height: 4.5em;
     }
