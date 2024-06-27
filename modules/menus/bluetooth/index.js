@@ -5,7 +5,7 @@ export default () => {
   const connectedDevices = (btDevices) => {
     const noDevices = () => {
       return Widget.Box({
-        hpack: "start",
+        hpack: "center",
         hexpand: true,
         child: Widget.Label({
           class_name: "dim",

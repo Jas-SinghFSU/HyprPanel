@@ -1,12 +1,13 @@
 @import "../colors";
 
 .bar {
-  background: $mantle;
+  background: $crust;
 }
 
 .bar_item_box_visible {
-  background: transparentize($surface0, 0.2);
+  background-color: $base2;
   border-radius: 0.35em;
+  // border: 0.15em solid $surface0;
   padding: 0.2rem 0.9rem;
   margin: 0.5rem 0.25rem;
 

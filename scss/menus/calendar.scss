@@ -2,9 +2,9 @@
 
 .calendar-content-container {
   margin-top: 0em;
-  min-width: 16em;
+  min-width: 27em;
   min-height: 6em;
-  background: $mantle;
+  background: $crust;
   border: 0.13em solid $surface0; border-radius: 0.4em;
 }
 
@@ -12,19 +12,30 @@
   margin-right: 0.50em;
 }
 
-.calendar-content-items {
-  margin: 1em;
+.calendar-menu-item-container {
+  border-radius: 0.4em;
+  margin-bottom: 1.35em;
+  background: $base;
 }
 
-.calendar-menu-calendar {
-  all: unset;
-  padding: 1em;
+.calendar-content-items {
+  margin: 1.35em;
+}
+
+.calendar-container-box {
+  margin: 0.75em;
+  margin-bottom: 0em;
+}
+
+.calendar-menu-widget {
+  margin-top: 2em;
+  border-radius: 0.4em;
   color: $text;
 
   &:selected {
-    box-shadow: inset 0 -0.4em 0 0 $pink,
-      inset 0 -0.2em 0 0 $mantle,
-      inset 0 0 0 0.01em $mantle;
+    box-shadow: inset 0 -0.5em 0 0 $pink,
+      inset -0.4em -0.3em 0 0 $base,
+      inset 0.4em 0 0 0.01em $base;
     color: $pink;
     border-radius: 0em;
   }
@@ -33,17 +44,122 @@
     background-color: transparent;
     color: $teal;
   }
-
+  &.button {
+    color: $text;
+    font-weight: 900;
+    font-size: 900em;
+  }
+  &:hover {
+    color: $pink;
+  }
   &.highlight {
     border: 2em solid $pink;
     background-color: transparent;
     color: $pink;
   }
-
   &:indeterminate {
     color: $surface2;
   }
 
   font-size: 1.1em;
-  padding: 0.2em;
+  padding: 0.35em;
 }
+
+.clock-content-items {
+  min-height: 6em;
+
+  .clock-content-time {
+    font-size: 4em;
+    color: $pink;
+  }
+  .clock-content-period {
+    font-size: 1.75em;
+    margin-bottom: 0.7em;
+    margin-right: -0.875em;
+    color: $teal;
+  }
+}
+
+.calendar-menu-item-container.weather {
+  margin-bottom: 0em;
+}
+
+.weather-container-box {
+  color: $red;
+  margin: 1.5em;
+  min-width: 3em;
+  // min-height: 10em;
+
+  .calendar-menu-weather.today.icon {
+    image {
+      color: $pink;
+      font-size: 5em;
+      // margin-right: 0.3em;
+    }
+  }
+
+  .calendar-menu-weather.today.temp.label {
+    color: $text;
+    margin-left: 0.2em;
+    font-size: 2.5em;
+  }
+
+  .calendar-menu-weather.today.condition.label {
+    color: $teal;
+    font-size: 1.75em;
+    margin-left: -1.4em;
+  }
+  
+  // .calendar-menu-weather.today.condition.label.weather-color.red {
+  //   color: $red;
+  // }
+  // .calendar-menu-weather.today.condition.label.weather-color.orange {
+  //   color: $orange;
+  // }
+  // .calendar-menu-weather.today.condition.label.weather-color.lavender {
+  //   color: $lavender;
+  // }
+  // .calendar-menu-weather.today.condition.label.weather-color.blue {
+  //   color: $blue;
+  // }
+  // .calendar-menu-weather.today.condition.label.weather-color.sky {
+  //   color: $sky;
+  // }
+
+  .calendar-menu-weather.today.temp.label.icon.weather-color.red {
+    color: $red;
+  }
+  .calendar-menu-weather.today.temp.label.icon.weather-color.orange {
+    color: $orange;
+  }
+  .calendar-menu-weather.today.temp.label.icon.weather-color.lavender {
+    color: $lavender;
+  }
+  .calendar-menu-weather.today.temp.label.icon.weather-color.blue {
+    color: $blue;
+  }
+  .calendar-menu-weather.today.temp.label.icon.weather-color.sky {
+    color: $sky;
+  }
+}
+
+.calendar-menu-weather.today.stats.container {
+  // margin-left: 2.2em;
+  color: $pink;
+
+  .weather.label {
+    margin-left: 0.35em;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
