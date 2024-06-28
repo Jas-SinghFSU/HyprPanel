@@ -1190,21 +1190,25 @@ image {
 .weather-container-box {
   color: #f38ba8;
   margin: 1.5em;
+  margin-top: 2.5em;
   min-width: 3em;
 }
 .weather-container-box .calendar-menu-weather.today.icon image {
   color: #f5c2e7;
-  font-size: 5em;
+  font-size: 6em;
 }
 .weather-container-box .calendar-menu-weather.today.temp.label {
   color: #cdd6f4;
   margin-left: 0.2em;
   font-size: 2.5em;
 }
+.weather-container-box .calendar-menu-weather.today.temp.label.icon {
+  font-size: 2.5em;
+}
 .weather-container-box .calendar-menu-weather.today.condition.label {
   color: #94e2d5;
-  font-size: 1.75em;
-  margin-left: -1.4em;
+  font-size: 1.5em;
+  margin-bottom: 0.4em;
 }
 .weather-container-box .calendar-menu-weather.today.temp.label.icon.weather-color.red {
   color: #f38ba8;
@@ -1223,10 +1227,29 @@ image {
 }
 
 .calendar-menu-weather.today.stats.container {
+  margin-bottom: 0.75em;
   color: #f5c2e7;
 }
 .calendar-menu-weather.today.stats.container .weather.label {
   margin-left: 0.35em;
+}
+
+.menu-separator.weather {
+  margin: 1.5em 0em;
+}
+
+.hourly-weather-time {
+  color: #f5c2e7;
+  margin-bottom: 0.5em;
+}
+
+.hourly-weather-icon {
+  color: #f5c2e7;
+  margin-bottom: 0.5em;
+}
+
+.hourly-weather-temp {
+  color: #f5c2e7;
 }
 
 .notification-card-container {
