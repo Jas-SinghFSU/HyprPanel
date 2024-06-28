@@ -1,7 +1,7 @@
 @import "../colors";
 
 .notification-card-container.menu {
-  margin-top: 0em;
+  margin: 0em;
   min-width: 26em;
   min-height: 6em;
   background: $crust;
@@ -13,19 +13,22 @@
 }
 
 .menu-content-container.notifications {
-  margin: 1em;
+  margin: 1.35em;
   min-height: 4em;
 }
 
 .notification-menu-controls {
-  margin: 0em 1em;
-  margin-top: 0.6em;
-  margin-bottom: 0.4em;
+  background: $base;
+  margin: 1em 1.3em;
+  margin-bottom: 0em;
+  border-radius: 0.4em;
+  padding: 0em 0.5em;
 }
 
 .notification-card.menu {
   background: $base;
-  border: 0.1em solid $surface0;
+  border: 0.15em solid $base;
+  border-radius: 0.4em;
   margin: 0em;
 }
 
@@ -35,12 +38,6 @@
 
 .menu-label.notifications {
   color: $lavender;
-  margin: 0em;
-}
-
-.menu-separator.notifications {
-  background-color: $surface0;
-  margin: 0em 1em;
 }
 
 .menu-separator.notification-controls {

@@ -10,30 +10,33 @@ const period = Variable("", {
   poll: [1000, 'date "+%p"'],
 });
 const defaultWeather = {
+  location: {
+    localtime_epoch: 1719471600,
+  },
   current: {
     temp_f: 0,
     wind_mph: 0,
     condition: {
       text: "Clear",
     },
-    forecast: {
-      forecastday: [
-        {
-          day: {
-            daily_chance_of_rain: 0,
-          },
-          hour: [
-            {
-              time_epoch: 1719471600,
-              temp_f: 0,
-              condition: {
-                text: "Clear",
-              },
-            },
-          ],
+  },
+  forecast: {
+    forecastday: [
+      {
+        day: {
+          daily_chance_of_rain: 0,
         },
-      ],
-    },
+        hour: [
+          {
+            time_epoch: 1719471600,
+            temp_f: 0,
+            condition: {
+              text: "Clear",
+            },
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -336,7 +339,7 @@ const WeatherWidget = () => {
                           );
 
                         return icons.weather[
-                          weatherAtEpoch.condition.text
+                          weatherAtEpoch?.condition.text
                             .trim()
                             .toLowerCase()
                             .replaceAll(" ", "_")
@@ -356,7 +359,7 @@ const WeatherWidget = () => {
                             (h) => h.time_epoch === nextEpoch,
                           );
 
-                        return `${Math.ceil(weatherAtEpoch.temp_f)}° F`;
+                        return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temp_f) : "-"}° F`;
                       }),
                     }),
                   ],

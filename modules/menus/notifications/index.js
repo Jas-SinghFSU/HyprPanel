@@ -13,17 +13,18 @@ export default () => {
     child: Widget.Box({
       class_name: "notification-menu-content",
       css: "padding: 1px; margin: -1px;",
+      hexpand: true,
       vexpand: false,
       children: [
         Widget.Box({
           class_name: "notification-card-container menu",
-          spacing: 0,
           vertical: true,
           hexpand: false,
           vexpand: false,
           children: [
             Widget.Box({
               class_name: "notification-menu-controls",
+              expand: false,
               vertical: false,
               children: [
                 Widget.Box({
@@ -79,13 +80,10 @@ export default () => {
                 }),
               ],
             }),
-            Widget.Separator({
-              class_name: "menu-separator notifications",
-            }),
             Widget.Box({
               class_name: "menu-content-container notifications",
               hpack: "center",
-              expand: false,
+              vexpand: false,
               spacing: 0,
               vertical: true,
               setup: (self) => {
@@ -206,7 +204,7 @@ export default () => {
                     return Widget.Box({
                       class_name: "notification-card menu",
                       vpack: "center",
-                      hexpand: false,
+                      hexpand: true,
                       children: [
                         ...imageContainer(notif),
                         Widget.Box({
