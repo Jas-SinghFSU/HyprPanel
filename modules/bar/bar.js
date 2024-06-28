@@ -18,6 +18,7 @@ const closeAllMenus = () => {
   App.closeWindow("audiomenu");
   App.closeWindow("networkmenu");
   App.closeWindow("mediamenu");
+  App.closeWindow("calendarmenu");
 }
 
 // layout of the bar

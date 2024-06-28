@@ -1,3 +1,5 @@
+import { closeAllMenus } from "../bar.js";
+
 const date = Variable("", {
   poll: [1000, 'date "+󰃭  %a %b %d    %I:%M:%S %p"'],
 });
@@ -10,7 +12,10 @@ const Clock = () => {
     }),
     isVisible: true,
     props: {
-      on_primary_click: () => App.toggleWindow("calendarmenu"),
+      on_primary_click: () => {
+        closeAllMenus();
+        App.toggleWindow("calendarmenu");
+      },
     },
   };
 };

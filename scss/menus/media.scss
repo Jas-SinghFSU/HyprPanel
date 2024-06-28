@@ -1,7 +1,7 @@
 @import "../colors";
 
 .media-indicator-container {
-  min-width: 40rem;
+  min-width: 35rem;
   min-height: 10rem;
   background: $mantle;
   border: 0.13em solid $surface0; 
@@ -17,15 +17,11 @@
   border: 0.2em solid $surface0; 
   background-color: $surface0;
   border-radius: 0.25em;
-  min-width: 8.3em;
-  min-height: 8.3em;
+  min-width: 8.5em;
+  min-height: 8.5em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-.media-indicator-right-section {
-  margin-left: 2rem;
 }
 
 .media-indicator-current-song-name {
@@ -38,7 +34,7 @@
 
 .media-indicator-current-song-name-label {
   color: $lavender;
-  font-size: 1.4em;
+  font-size: 1.35em;
 }
 
 .media-indicator-current-song-author-label {
@@ -58,21 +54,6 @@
 
 .media-indicator-control {
   margin: 0rem 0.5rem;
-}
-
-.media-indicator-time {
-  color: $overlay2;
-  font-size: 0.8em;
-  font-weight: 800;
-  margin-top: 0.9rem;
-
-  &.total {
-    margin-left: 1.2rem;
-  }
-
-  &.current {
-    margin-right: 1.2rem;
-  }
 }
 
 .media-indicator-control-button {
@@ -107,7 +88,7 @@ image {
 .menu-slider.media.progress {
   margin-top: 1rem;
   min-height: 2em;
-  min-width: 15em;
+  min-width: 12em;
 
   trough {
     background: $base;

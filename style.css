@@ -346,7 +346,7 @@ spinner:checked {
 .workspaces label.active {
   color: #f5c2e7;
   background-color: #f5c2e7;
-  min-width: 11em;
+  min-width: 14em;
   min-height: 4.5em;
 }
 
@@ -916,7 +916,7 @@ window#powermenu .powermenu.box {
 }
 
 .media-indicator-container {
-  min-width: 40rem;
+  min-width: 35rem;
   min-height: 10rem;
   background: #181825;
   border: 0.13em solid #313244;
@@ -932,15 +932,11 @@ window#powermenu .powermenu.box {
   border: 0.2em solid #313244;
   background-color: #313244;
   border-radius: 0.25em;
-  min-width: 8.3em;
-  min-height: 8.3em;
+  min-width: 8.5em;
+  min-height: 8.5em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-.media-indicator-right-section {
-  margin-left: 2rem;
 }
 
 .media-indicator-current-song-name {
@@ -953,7 +949,7 @@ window#powermenu .powermenu.box {
 
 .media-indicator-current-song-name-label {
   color: #b4befe;
-  font-size: 1.4em;
+  font-size: 1.35em;
 }
 
 .media-indicator-current-song-author-label {
@@ -973,19 +969,6 @@ window#powermenu .powermenu.box {
 
 .media-indicator-control {
   margin: 0rem 0.5rem;
-}
-
-.media-indicator-time {
-  color: #9399b2;
-  font-size: 0.8em;
-  font-weight: 800;
-  margin-top: 0.9rem;
-}
-.media-indicator-time.total {
-  margin-left: 1.2rem;
-}
-.media-indicator-time.current {
-  margin-right: 1.2rem;
 }
 
 .media-indicator-control-button {
@@ -1015,7 +998,7 @@ image {
 .menu-slider.media.progress {
   margin-top: 1rem;
   min-height: 2em;
-  min-width: 15em;
+  min-width: 12em;
 }
 .menu-slider.media.progress trough {
   background: #1e1e2e;
@@ -1046,7 +1029,7 @@ image {
   margin-top: 0em;
   min-width: 26em;
   min-height: 6em;
-  background: #181825;
+  background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.4em;
 }
@@ -1067,7 +1050,7 @@ image {
 }
 
 .notification-card.menu {
-  background: #11111b;
+  background: #1e1e2e;
   border: 0.1em solid #313244;
   margin: 0em;
 }
