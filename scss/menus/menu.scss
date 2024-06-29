@@ -1,7 +1,7 @@
 .menu-slider {
     trough {
-        background: $base;
         border-radius: 0.3rem;
+        background: $surface0;
 
         highlight,
         progress {
@@ -13,8 +13,8 @@
     slider {
         box-shadow: none;
         background-color: transparent;
-        min-height: 1.6rem;
-        min-width: 1.6rem;
+        min-height: 0.6rem;
+        min-width: 0.6rem;
         border: 0rem solid transparent;
         border-radius: 0.3rem;
     }
@@ -33,7 +33,7 @@
 
 .menu-switch {
     background-color: $surface0;
-        border-radius: 0.3rem;
+    border-radius: 0.3rem;
 
     &:checked {
         background: $sky;
@@ -90,41 +90,95 @@ tooltip label {
 }
 
 .menu-items {
-    background: $mantle;
+    background: $crust;
     border: .13em solid $surface0;
     border-radius: .5rem;
-    min-width: 375px;
+    min-width: 400px;
     color: $text;
 }
 
 .menu-items-container {
-    margin: 1rem 1.5rem;
+    border-radius: 0.4em;
+    min-width: 400px;
 }
 
-.menu-dropdown-label {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: $text;
+.menu-section-container {
+    .menu-label {
+        color: $text;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    .menu-label-container {
+        background: $base;
+        border-radius: 0.4em;
+        border-bottom-left-radius: 0em;
+        border-bottom-right-radius: 0em;
+        margin: 0em 1.35em ;
+        min-height: 2em;
+    }
+
+    margin: 1.35em 0em;
+
+    &.volume {
+        margin-bottom: 0em;
+    }
+
+    &.input {
+        margin-top: 0em;
+    }
+
+    .menu-items-section {
+        background: $base;
+        border-radius: 0.4em;
+        border-top-left-radius: 0em;
+        border-top-right-radius: 0em;
+        padding: 0.9em;
+        margin: 0em 1.35em;
+
+        &.selected {
+            margin-bottom: 0em;
+        }
+        &.input {
+            margin-top: 0em;
+        }
+    }
 }
 
 .menu-active {
-    font-size: 0.95em;
+    font-size: 0.9em;
     font-weight: bold;
-    margin: 0rem .5rem;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
+    margin: 0rem 1em;
+    margin-bottom: 0.9em;
 }
 
-.menu-active-icon {
-    color: $overlay1;
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-right: 0.7rem;
+.menu-active-container {
+    &:first-child {
+        margin-bottom: 0.5em;
+    }
+}
+
+.menu-active-button {
+    padding: 0.1em;
+    margin-bottom: -0.2em;
+    .menu-active-icon {
+        color: $overlay1;
+        font-size: 1.4em;
+        font-weight: bold;
+
+    }
+
+    &.muted image {
+        color: $maroon;
+    }
+    &:hover image {
+        color: $maroon;
+    }
 }
 
 .menu-active-percentage {
-    font-size: 1em;
-    margin-left: 0.5rem;
+    font-size: 0.9em;
+    min-width: 2.5em;
     font-weight: bold;
 }
 
@@ -134,17 +188,11 @@ tooltip label {
 }
 
 .menu-active-slider * {
-    min-height: 1.1em;
+    min-height: 0.85em;
     border-radius: .2em;
 }
 .menu-slider-container {
     margin-bottom: .7rem;
-}
-
-.menu-label {
-    color: $text;
-    font-size: 1.1em;
-    font-weight: bold;
 }
 
 .menu-label-dim {
@@ -163,8 +211,9 @@ tooltip label {
     }
 }
 
-.menu-label-container {
-    margin-bottom: 1.3rem;
+.menu-dropdown-label-container {
+    background: $base;
+    border-radius: 0.4em;
 }
 
 .menu-button {
@@ -194,6 +243,6 @@ tooltip label {
 }
 
 .top-right-event-box_top *{
-  min-height: 0em;
-  margin-top: 2.5em;
+    min-height: 0em;
+    margin-top: 2.5em;
 }

@@ -43,7 +43,7 @@ export default ({
   child,
   layout = "center",
   transition,
-  minWidth = 375,
+  minWidth = 400,
   minHeight = 200,
   exclusivity = "ignore",
   fixed = false,

@@ -52,29 +52,23 @@ export default () => {
                       },
                     }),
                     Widget.Box({
-                      children: notifs.bind("notifications").as((n) => {
-                        if (n.length > 0) {
-                          return [
-                            Widget.Separator({
-                              hpack: "center",
-                              vexpand: true,
-                              vertical: true,
-                              class_name:
-                                "menu-separator notification-controls",
-                            }),
-                            Widget.Button({
-                              class_name: "clear-notifications-button",
-                              tooltip_text: "Clear Notifications",
-                              on_primary_click: () => notifs.clear(),
-                              child: Widget.Label({
-                                class_name: "clear-notifications-label",
-                                label: "",
-                              }),
-                            }),
-                          ];
-                        }
-                        return [];
-                      }),
+                      children: [
+                        Widget.Separator({
+                          hpack: "center",
+                          vexpand: true,
+                          vertical: true,
+                          class_name: "menu-separator notification-controls",
+                        }),
+                        Widget.Button({
+                          class_name: "clear-notifications-button",
+                          tooltip_text: "Clear Notifications",
+                          on_primary_click: () => notifs.clear(),
+                          child: Widget.Label({
+                            class_name: "clear-notifications-label",
+                            label: "",
+                          }),
+                        }),
+                      ],
                     }),
                   ],
                 }),

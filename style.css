@@ -282,11 +282,11 @@ spinner:checked {
 
 .bar-volume_icon {
   font-size: 1.3em;
-  color: #fab387;
+  color: #eba0ac;
 }
 
 .bar-volume_percentage {
-  color: #fab387;
+  color: #eba0ac;
 }
 
 .media {
@@ -329,8 +329,8 @@ spinner:checked {
 
 .workspaces label {
   font-size: 0.2em;
-  min-width: 4.5em;
-  min-height: 4.5em;
+  min-width: 4em;
+  min-height: 4em;
   border-radius: 1.14rem;
   margin: 0rem 0.25rem;
   transition: 150ms;
@@ -340,14 +340,14 @@ spinner:checked {
 .workspaces label.occupied {
   background-color: #f9e2af;
   color: #f9e2af;
-  min-width: 4.5em;
-  min-height: 4.5em;
+  min-width: 4em;
+  min-height: 4em;
 }
 .workspaces label.active {
   color: #f5c2e7;
   background-color: #f5c2e7;
-  min-width: 14em;
-  min-height: 4.5em;
+  min-width: 12em;
+  min-height: 4em;
 }
 
 .workspaces label:not(:first-child) {
@@ -429,8 +429,8 @@ spinner:checked {
 }
 
 .menu-slider trough {
-  background: #1e1e2e;
   border-radius: 0.3rem;
+  background: #313244;
 }
 .menu-slider trough highlight,
 .menu-slider trough progress {
@@ -440,8 +440,8 @@ spinner:checked {
 .menu-slider slider {
   box-shadow: none;
   background-color: transparent;
-  min-height: 1.6rem;
-  min-width: 1.6rem;
+  min-height: 0.6rem;
+  min-width: 0.6rem;
   border: 0rem solid transparent;
   border-radius: 0.3rem;
 }
@@ -495,41 +495,85 @@ tooltip label {
 }
 
 .menu-items {
-  background: #181825;
+  background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.5rem;
-  min-width: 375px;
+  min-width: 400px;
   color: #cdd6f4;
 }
 
 .menu-items-container {
-  margin: 1rem 1.5rem;
+  border-radius: 0.4em;
+  min-width: 400px;
 }
 
-.menu-dropdown-label {
-  font-size: 1.3em;
-  font-weight: bold;
+.menu-section-container {
+  margin: 1.35em 0em;
+}
+.menu-section-container .menu-label {
   color: #cdd6f4;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.menu-section-container .menu-label-container {
+  background: #1e1e2e;
+  border-radius: 0.4em;
+  border-bottom-left-radius: 0em;
+  border-bottom-right-radius: 0em;
+  margin: 0em 1.35em;
+  min-height: 2em;
+}
+.menu-section-container.volume {
+  margin-bottom: 0em;
+}
+.menu-section-container.input {
+  margin-top: 0em;
+}
+.menu-section-container .menu-items-section {
+  background: #1e1e2e;
+  border-radius: 0.4em;
+  border-top-left-radius: 0em;
+  border-top-right-radius: 0em;
+  padding: 0.9em;
+  margin: 0em 1.35em;
+}
+.menu-section-container .menu-items-section.selected {
+  margin-bottom: 0em;
+}
+.menu-section-container .menu-items-section.input {
+  margin-top: 0em;
 }
 
 .menu-active {
-  font-size: 0.95em;
+  font-size: 0.9em;
   font-weight: bold;
-  margin: 0rem 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  margin: 0rem 1em;
+  margin-bottom: 0.9em;
 }
 
-.menu-active-icon {
+.menu-active-container:first-child {
+  margin-bottom: 0.5em;
+}
+
+.menu-active-button {
+  padding: 0.1em;
+  margin-bottom: -0.2em;
+}
+.menu-active-button .menu-active-icon {
   color: #7f849c;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: bold;
-  margin-right: 0.7rem;
+}
+.menu-active-button.muted image {
+  color: #eba0ac;
+}
+.menu-active-button:hover image {
+  color: #eba0ac;
 }
 
 .menu-active-percentage {
-  font-size: 1em;
-  margin-left: 0.5rem;
+  font-size: 0.9em;
+  min-width: 2.5em;
   font-weight: bold;
 }
 
@@ -539,18 +583,12 @@ tooltip label {
 }
 
 .menu-active-slider * {
-  min-height: 1.1em;
+  min-height: 0.85em;
   border-radius: 0.2em;
 }
 
 .menu-slider-container {
   margin-bottom: 0.7rem;
-}
-
-.menu-label {
-  color: #cdd6f4;
-  font-size: 1.1em;
-  font-weight: bold;
 }
 
 .menu-label-dim {
@@ -568,8 +606,9 @@ tooltip label {
   color: #585b70;
 }
 
-.menu-label-container {
-  margin-bottom: 1.3rem;
+.menu-dropdown-label-container {
+  background: #1e1e2e;
+  border-radius: 0.4em;
 }
 
 .menu-button {
@@ -767,28 +806,24 @@ window#powermenu .powermenu.box {
 }
 
 .menu-dropdown-label.audio {
-  color: #fab387;
+  color: #eba0ac;
 }
 
 .menu-label.audio {
-  color: #fab387;
+  color: #eba0ac;
 }
 
 .menu-button-isactive.audio {
-  color: #fab387;
+  color: #eba0ac;
 }
 
 .menu-active-slider trough highlight,
 .menu-active-slider trough progress {
-  background: #fab387;
+  background: #eba0ac;
 }
 
 .menu-button.audio:hover {
-  color: #fab387;
-}
-
-.menu-items {
-  min-width: 25rem;
+  color: #eba0ac;
 }
 
 .menu-dropdown-label.network {
@@ -1026,7 +1061,7 @@ image {
   box-shadow: none;
 }
 .notification-card-container.menu {
-  margin-top: 0em;
+  margin: 0em;
   min-width: 26em;
   min-height: 6em;
   background: #11111b;
@@ -1039,34 +1074,33 @@ image {
 }
 
 .menu-content-container.notifications {
-  margin: 1em;
+  margin: 1.35em;
   min-height: 4em;
 }
 
 .notification-menu-controls {
-  margin: 0em 1em;
-  margin-top: 0.6em;
-  margin-bottom: 0.4em;
+  background: #1e1e2e;
+  margin: 1em 1.3em;
+  margin-bottom: 0em;
+  border-radius: 0.4em;
+  padding: 0.4em 0.75em;
 }
 
 .notification-card.menu {
   background: #1e1e2e;
-  border: 0.1em solid #313244;
+  border: 0.15em solid #1e1e2e;
+  border-radius: 0.4em;
   margin: 0em;
 }
 
 .menu-label-container.notifications {
-  margin: 0em 0em;
+  margin: 0em;
+  padding: 0em;
 }
 
 .menu-label.notifications {
-  color: #b4befe;
   margin: 0em;
-}
-
-.menu-separator.notifications {
-  background-color: #313244;
-  margin: 0em 1em;
+  color: #b4befe;
 }
 
 .menu-separator.notification-controls {

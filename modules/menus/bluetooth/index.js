@@ -222,9 +222,6 @@ export default () => {
     return Widget.Box({
       vertical: true,
       children: [
-        Widget.Separator({
-          class_name: "menu-separator",
-        }),
         Widget.Box({
           class_name: "menu-container bluetooth",
           children: [
@@ -346,9 +343,6 @@ export default () => {
                 ],
               }),
             ],
-          }),
-          Widget.Separator({
-            class_name: "menu-separator",
           }),
           Widget.Box({
             vertical: true,

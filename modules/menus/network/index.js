@@ -24,9 +24,6 @@ export default () => {
               }),
             ],
           }),
-          Widget.Separator({
-            class_name: "menu-separator",
-          }),
           Widget.Box({
             class_name: "menu-label-container network",
             child: Widget.Label({
@@ -238,9 +235,6 @@ export default () => {
                 });
               });
             },
-          }),
-          Widget.Separator({
-            class_name: "menu-separator",
           }),
           Widget.Box({
             children: [

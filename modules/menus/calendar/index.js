@@ -137,7 +137,9 @@ const WeatherWidget = () => {
             `curl "https://api.weatherapi.com/v1/forecast.json?key=${keyRing.weatherapi}&q=93722&days=1&aqi=no&alerts=no"`,
           )
             .then((res) => {
-              theWeather.value = JSON.parse(res);
+              if (typeof res === "string") {
+                theWeather.value = JSON.parse(res);
+              }
             })
             .catch((err) => {
               console.error(`Failed to fetch weather: ${err}`);
@@ -294,7 +296,7 @@ const WeatherWidget = () => {
                    * the hours left in the day are less than 4 (aka spilling into the next day),
                    * then rewind to contain the prediction within the current day.
                    */
-                  if (curHour > 20) {
+                  if (curHour > 19) {
                     const hoursToRewind = curHour - 19;
                     nextEpoch =
                       3600 * hoursFromNow +

@@ -1,32 +1,29 @@
 @import "../colors";
 
 .menu-dropdown-label.audio {
-    color: $peach;
+    color: $maroon;
 }
 
 .menu-label.audio {
-    color: $peach;
+    color: $maroon;
 }
 
 .menu-button-isactive.audio {
-    color: $peach;
+    color: $maroon;
 }
 
 .menu-active-slider {
     trough {
         highlight,
         progress {
-            background: $peach;
+            background: $maroon;
         }
     }
 }
 
 .menu-button.audio {
      &:hover {
-        color: $peach;
+        color: $maroon;
     }
 }
 
-.menu-items {
-    min-width: 25rem;
-}

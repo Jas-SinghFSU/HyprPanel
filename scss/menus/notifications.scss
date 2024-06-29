@@ -22,7 +22,7 @@
   margin: 1em 1.3em;
   margin-bottom: 0em;
   border-radius: 0.4em;
-  padding: 0em 0.5em;
+  padding: 0.4em 0.75em;
 }
 
 .notification-card.menu {
@@ -33,10 +33,12 @@
 }
 
 .menu-label-container.notifications {
-  margin: 0em 0em;
+  margin: 0em;
+  padding: 0em;
 }
 
 .menu-label.notifications {
+  margin: 0em;
   color: $lavender;
 }
 

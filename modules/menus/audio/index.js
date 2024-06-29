@@ -19,7 +19,6 @@ export default () => {
       }
       return Widget.Button({
         class_name: `menu-button audio playback ${device}`,
-        cursor: "pointer",
         on_primary_click: () => (audio.speaker = device),
         child: Widget.Box({
           children: [
@@ -70,6 +69,32 @@ export default () => {
     });
   };
 
+  const getIcon = (audioVol, isMuted) => {
+    const speakerIcons = {
+      101: "audio-volume-overamplified-symbolic",
+      66: "audio-volume-high-symbolic",
+      34: "audio-volume-medium-symbolic",
+      1: "audio-volume-low-symbolic",
+      0: "audio-volume-muted-symbolic",
+    };
+
+    const inputIcons = {
+      66: "microphone-sensitivity-high-symbolic",
+      34: "microphone-sensitivity-medium-symbolic",
+      1: "microphone-sensitivity-low-symbolic",
+      0: "microphone-disabled-symbolic",
+    };
+
+    const icon = isMuted
+      ? 0
+      : [101, 66, 34, 1, 0].find((threshold) => threshold <= audioVol * 100);
+
+    return {
+      spkr: speakerIcons[icon],
+      mic: inputIcons[icon],
+    };
+  };
+
   const renderInputDevices = (inputDevices) => {
     if (!inputDevices.length) {
       return [
@@ -88,7 +113,6 @@ export default () => {
     }
     return inputDevices.map((device) => {
       return Widget.Button({
-        cursor: "pointer",
         on_primary_click: () => (audio.microphone = device),
         class_name: `menu-button audio input ${device}`,
         child: Widget.Box({
@@ -142,32 +166,57 @@ export default () => {
 
   const renderActivePlayback = () => {
     return [
-      Widget.Label({
-        class_name: "menu-active playback",
-        truncate: "end",
-        expand: true,
-        wrap: true,
-        label: audio.bind("speaker").as((v) => v.description || ""),
-      }),
       Widget.Box({
         class_name: "menu-slider-container playback",
         children: [
-          Widget.Label({
-            class_name: "menu-active-icon playback",
-            label: audio.speaker
-              .bind("volume")
-              .as((v) => `${v === 0 ? "󰖁" : "󰕾"}`),
+          Widget.Button({
+            vexpand: false,
+            vpack: "end",
+            setup: (self) => {
+              self.hook(audio, () => {
+                const spkr = audio.speaker;
+                const className = `menu-active-button playback ${spkr.is_muted ? "muted" : ""}`;
+                return (self.class_name = className);
+              });
+            },
+            on_primary_click: () =>
+              (audio.speaker.is_muted = !audio.speaker.is_muted),
+            child: Widget.Icon({
+              class_name: "menu-active-icon playback",
+              setup: (self) => {
+                self.hook(audio, () => {
+                  self.icon = getIcon(
+                    audio.speaker.volume,
+                    audio.speaker.is_muted,
+                  )["spkr"];
+                });
+              },
+            }),
           }),
-          Widget.Slider({
-            value: audio["speaker"].bind("volume"),
-            class_name: "menu-active-slider menu-slider playback",
-            draw_value: false,
-            hexpand: true,
-            min: 0,
-            max: 1,
-            onChange: ({ value }) => (audio.speaker.volume = value),
+          Widget.Box({
+            vertical: true,
+            children: [
+              Widget.Label({
+                class_name: "menu-active playback",
+                hpack: "start",
+                truncate: "end",
+                expand: true,
+                wrap: true,
+                label: audio.bind("speaker").as((v) => v.description || ""),
+              }),
+              Widget.Slider({
+                value: audio["speaker"].bind("volume"),
+                class_name: "menu-active-slider menu-slider playback",
+                draw_value: false,
+                hexpand: true,
+                min: 0,
+                max: 1,
+                onChange: ({ value }) => (audio.speaker.volume = value),
+              }),
+            ],
           }),
           Widget.Label({
+            vpack: "end",
             class_name: "menu-active-percentage playback",
             label: audio.speaker
               .bind("volume")
@@ -180,32 +229,57 @@ export default () => {
 
   const renderActiveInput = () => {
     return [
-      Widget.Label({
-        class_name: "menu-active input",
-        truncate: "end",
-        wrap: true,
-        label: audio.bind("microphone").as((v) => v.description || ""),
-      }),
       Widget.Box({
         class_name: "menu-slider-container input",
         children: [
-          Widget.Label({
-            class_name: "menu-active-icon input",
-            label: audio.microphone
-              .bind("volume")
-              .as((v) => `${v === 0 ? "󰍭" : "󰍬"}`),
+          Widget.Button({
+            vexpand: false,
+            vpack: "end",
+            setup: (self) => {
+              self.hook(audio, () => {
+                const mic = audio.microphone;
+                const className = `menu-active-button input ${mic.is_muted ? "muted" : ""}`;
+                return (self.class_name = className);
+              });
+            },
+            on_primary_click: () =>
+              (audio.microphone.is_muted = !audio.microphone.is_muted),
+            child: Widget.Icon({
+              class_name: "menu-active-icon input",
+              setup: (self) => {
+                self.hook(audio, () => {
+                  self.icon = getIcon(
+                    audio.microphone.volume,
+                    audio.microphone.is_muted,
+                  )["mic"];
+                });
+              },
+            }),
           }),
-          Widget.Slider({
-            value: audio.microphone.bind("volume").as((v) => v),
-            class_name: "menu-active-slider menu-slider inputs",
-            draw_value: false,
-            hexpand: true,
-            min: 0,
-            max: 1,
-            onChange: ({ value }) => (audio.microphone.volume = value),
+          Widget.Box({
+            vertical: true,
+            children: [
+              Widget.Label({
+                class_name: "menu-active input",
+                hpack: "start",
+                truncate: "end",
+                wrap: true,
+                label: audio.bind("microphone").as((v) => v.description || ""),
+              }),
+              Widget.Slider({
+                value: audio.microphone.bind("volume").as((v) => v),
+                class_name: "menu-active-slider menu-slider inputs",
+                draw_value: false,
+                hexpand: true,
+                min: 0,
+                max: 1,
+                onChange: ({ value }) => (audio.microphone.volume = value),
+              }),
+            ],
           }),
           Widget.Label({
             class_name: "menu-active-percentage input",
+            vpack: "end",
             label: audio.microphone
               .bind("volume")
               .as((v) => `${Math.floor(v * 100)}%`),
@@ -220,74 +294,111 @@ export default () => {
     transition: "crossfade",
     child: Widget.Box({
       class_name: "menu-items",
+      hpack: "fill",
+      hexpand: true,
       child: Widget.Box({
         vertical: true,
+        hpack: "fill",
+        hexpand: true,
         class_name: "menu-items-container",
         children: [
           Widget.Box({
-            class_name: "menu-dropdown-label-container",
-            hpack: "start",
-            children: [
-              Widget.Label({
-                class_name: "menu-dropdown-label audio",
-                label: "Audio",
-              }),
-            ],
-          }),
-          Widget.Separator({
-            class_name: "menu-separator",
-          }),
-          Widget.Box({
-            class_name: "menu-active-container playback",
-            vertical: true,
-            children: renderActivePlayback(),
-          }),
-          Widget.Box({
-            class_name: "menu-active-container input",
-            vertical: true,
-            children: renderActiveInput(),
-          }),
-          Widget.Separator({
-            class_name: "menu-separator",
-          }),
-          Widget.Box({
-            class_name: "menu-container playback",
+            class_name: "menu-section-container volume",
             vertical: true,
             children: [
               Widget.Box({
-                class_name: "menu-label-container",
+                class_name: "menu-label-container volume",
+                hpack: "fill",
                 child: Widget.Label({
-                  class_name: "menu-label audio playback",
-                  label: "Playback Devices",
-                  hpack: "start",
+                  class_name: "menu-label audio volume",
+                  hexpand: true,
+                  hpack: "center",
+                  label: "Volume",
                 }),
               }),
               Widget.Box({
+                class_name: "menu-items-section selected",
                 vertical: true,
-                children: audio.bind("speakers").as((v) => renderPlaybacks(v)),
+                children: [
+                  Widget.Box({
+                    class_name: "menu-active-container playback",
+                    vertical: true,
+                    children: renderActivePlayback(),
+                  }),
+                  Widget.Box({
+                    class_name: "menu-active-container input",
+                    vertical: true,
+                    children: renderActiveInput(),
+                  }),
+                ],
               }),
             ],
           }),
-          Widget.Separator({
-            class_name: "menu-separator",
-          }),
           Widget.Box({
-            class_name: "menu-container input",
+            class_name: "menu-section-container playback",
             vertical: true,
             children: [
               Widget.Box({
-                class_name: "menu-label-container",
+                class_name: "menu-label-container playback",
+                hpack: "fill",
                 child: Widget.Label({
-                  class_name: "menu-label audio input",
-                  hpack: "start",
+                  class_name: "menu-label audio playback",
+                  hexpand: true,
+                  hpack: "center",
+                  label: "Playback Devices",
+                }),
+              }),
+              Widget.Box({
+                class_name: "menu-items-section playback",
+                vertical: true,
+                children: [
+                  Widget.Box({
+                    class_name: "menu-container playback",
+                    vertical: true,
+                    children: [
+                      Widget.Box({
+                        vertical: true,
+                        children: audio
+                          .bind("speakers")
+                          .as((v) => renderPlaybacks(v)),
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          }),
+          Widget.Box({
+            class_name: "menu-section-container input",
+            vertical: true,
+            children: [
+              Widget.Box({
+                class_name: "menu-label-container playback",
+                hpack: "fill",
+                child: Widget.Label({
+                  class_name: "menu-label audio playback",
+                  hexpand: true,
+                  hpack: "center",
                   label: "Input Devices",
                 }),
               }),
               Widget.Box({
+                class_name: "menu-items-section input",
                 vertical: true,
-                children: audio
-                  .bind("microphones")
-                  .as((v) => renderInputDevices(v)),
+                children: [
+                  Widget.Box({
+                    class_name: "menu-container input",
+                    vertical: true,
+                    children: [
+                      Widget.Box({
+                        vertical: true,
+                        children: audio
+                          .bind("microphones")
+                          .as((v) => renderInputDevices(v)),
+                      }),
+                    ],
+                  }),
+                ],
               }),
             ],
           }),
