@@ -32,6 +32,15 @@
   margin: 0em;
 }
 
+.notification-card-content-container {
+  &:first-child {
+    margin-top: 0.5em;
+  }
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
+}
+
 .menu-label-container.notifications {
   margin: 0em;
   padding: 0em;

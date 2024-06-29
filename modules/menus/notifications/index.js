@@ -196,70 +196,77 @@ export default () => {
 
                   return (self.children = sortedNotifications.map((notif) => {
                     return Widget.Box({
-                      class_name: "notification-card menu",
-                      vpack: "center",
-                      hexpand: true,
+                      class_name: "notification-card-content-container",
                       children: [
-                        ...imageContainer(notif),
                         Widget.Box({
+                          class_name: "notification-card menu",
                           vpack: "center",
-                          vertical: true,
                           hexpand: true,
-                          class_name: `notification-card-content ${notif.image === undefined ? "noimg" : " menu"}`,
                           children: [
+                            ...imageContainer(notif),
                             Widget.Box({
-                              vertical: false,
+                              vpack: "center",
+                              vertical: true,
                               hexpand: true,
+                              class_name: `notification-card-content ${notif.image === undefined ? "noimg" : " menu"}`,
                               children: [
                                 Widget.Box({
-                                  class_name: "notification-card-header menu",
+                                  vertical: false,
                                   hexpand: true,
-                                  vpack: "start",
                                   children: [
-                                    Widget.Label({
+                                    Widget.Box({
                                       class_name:
-                                        "notification-card-header-label menu",
-                                      hpack: "start",
+                                        "notification-card-header menu",
                                       hexpand: true,
-                                      vexpand: true,
-                                      max_width_chars:
-                                        notif.image === undefined ? 27 : 20,
-                                      truncate: "end",
-                                      wrap: true,
-                                      label: notif["summary"],
+                                      vpack: "start",
+                                      children: [
+                                        Widget.Label({
+                                          class_name:
+                                            "notification-card-header-label menu",
+                                          hpack: "start",
+                                          hexpand: true,
+                                          vexpand: true,
+                                          max_width_chars:
+                                            notif.image === undefined ? 27 : 20,
+                                          truncate: "end",
+                                          wrap: true,
+                                          label: notif["summary"],
+                                        }),
+                                      ],
+                                    }),
+                                    Widget.Box({
+                                      class_name:
+                                        "notification-card-header menu",
+                                      hexpand: true,
+                                      hpack: "end",
+                                      children: [NotificationIcon(notif)],
                                     }),
                                   ],
                                 }),
                                 Widget.Box({
-                                  class_name: "notification-card-header menu",
+                                  vpack: "start",
                                   hexpand: true,
-                                  hpack: "end",
-                                  children: [NotificationIcon(notif)],
+                                  class_name: "notification-card-body menu",
+                                  children: [
+                                    Widget.Label({
+                                      hexpand: true,
+                                      use_markup: true,
+                                      xalign: 0,
+                                      justification: "left",
+                                      truncate: "end",
+                                      lines: 2,
+                                      max_width_chars:
+                                        notif.image === undefined ? 35 : 28,
+                                      wrap: true,
+                                      class_name:
+                                        "notification-card-body-label menu",
+                                      label: notif["body"],
+                                    }),
+                                  ],
                                 }),
+                                ...actionsContainer(notif),
                               ],
                             }),
-                            Widget.Box({
-                              vpack: "start",
-                              hexpand: true,
-                              class_name: "notification-card-body menu",
-                              children: [
-                                Widget.Label({
-                                  hexpand: true,
-                                  use_markup: true,
-                                  xalign: 0,
-                                  justification: "left",
-                                  truncate: "end",
-                                  lines: 2,
-                                  max_width_chars:
-                                    notif.image === undefined ? 35 : 28,
-                                  wrap: true,
-                                  class_name:
-                                    "notification-card-body-label menu",
-                                  label: notif["body"],
-                                }),
-                              ],
-                            }),
-                            ...actionsContainer(notif),
                           ],
                         }),
                         Widget.Button({

@@ -103,6 +103,8 @@ tooltip label {
 }
 
 .menu-section-container {
+    margin: 1.35em 0em;
+
     .menu-label {
         color: $text;
         font-size: 1.1em;
@@ -118,14 +120,16 @@ tooltip label {
         min-height: 2em;
     }
 
-    margin: 1.35em 0em;
-
-    &.volume {
+    &:first-child {
         margin-bottom: 0em;
     }
 
-    &.input {
+    &:last-child {
         margin-top: 0em;
+    }
+
+    &:nth-child(2) {
+        margin-top: 1.35em;
     }
 
     .menu-items-section {
@@ -135,13 +139,6 @@ tooltip label {
         border-top-right-radius: 0em;
         padding: 0.9em;
         margin: 0em 1.35em;
-
-        &.selected {
-            margin-bottom: 0em;
-        }
-        &.input {
-            margin-top: 0em;
-        }
     }
 }
 
@@ -232,6 +229,10 @@ tooltip label {
     font-weight: bold;
     color: $overlay0;
     margin-right: .5rem;
+
+    &.active {
+        color: $maroon;
+    }
 }
 
 .menu-item-box {

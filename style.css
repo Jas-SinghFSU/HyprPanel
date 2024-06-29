@@ -523,11 +523,14 @@ tooltip label {
   margin: 0em 1.35em;
   min-height: 2em;
 }
-.menu-section-container.volume {
+.menu-section-container:first-child {
   margin-bottom: 0em;
 }
-.menu-section-container.input {
+.menu-section-container:last-child {
   margin-top: 0em;
+}
+.menu-section-container:nth-child(2) {
+  margin-top: 1.35em;
 }
 .menu-section-container .menu-items-section {
   background: #1e1e2e;
@@ -536,12 +539,6 @@ tooltip label {
   border-top-right-radius: 0em;
   padding: 0.9em;
   margin: 0em 1.35em;
-}
-.menu-section-container .menu-items-section.selected {
-  margin-bottom: 0em;
-}
-.menu-section-container .menu-items-section.input {
-  margin-top: 0em;
 }
 
 .menu-active {
@@ -627,6 +624,9 @@ tooltip label {
   font-weight: bold;
   color: #6c7086;
   margin-right: 0.5rem;
+}
+.menu-button-icon.active {
+  color: #eba0ac;
 }
 
 .menu-item-box {
@@ -826,84 +826,30 @@ window#powermenu .powermenu.box {
   color: #eba0ac;
 }
 
-.menu-dropdown-label.network {
+.menu-items-container.network .menu-items-section {
+  padding-bottom: 1.5em;
+}
+.menu-items-container.network .menu-label {
   color: #cba6f7;
 }
-
-.network-element-item-ethernet.multi {
-  margin-bottom: 0.5rem;
-}
-
-.menu-button-name.status.network {
-  margin-left: 2.5rem;
-}
-
-.menu-label.network {
+.menu-items-container.network .network-ethernet-icon {
+  font-size: 1.3em;
   color: #cba6f7;
 }
-
-.network-element-items-container * {
-  font-size: 0.95em;
+.menu-items-container.network .connection-container {
+  margin-left: 1em;
 }
-
-.network-element-item:not(:last-child) {
-  margin-bottom: 0.4em;
+.menu-items-container.network .connection-status {
+  font-size: 0.9em;
 }
-.network-element-item:hover {
+.menu-items-container.network .menu-section-container.wifi .menu-items-section {
+  min-height: 5em;
+}
+.menu-items-container.network .network-element-item:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+.menu-items-container.network .network-element-item:hover {
   color: #cba6f7;
-}
-
-.menu-button-icon.network {
-  color: #9399b2;
-}
-
-.network-password-input {
-  border-radius: 0.4rem;
-  background: #11111b;
-  padding: 0.4rem;
-  margin-left: 2.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.85em;
-}
-
-.menu-icon-button.refresh.network {
-  margin-bottom: 1rem;
-}
-.menu-icon-button.refresh.network:hover {
-  color: #cba6f7;
-}
-
-.network-password-input-close {
-  margin-left: 0.75rem;
-  margin-bottom: 0.6rem;
-}
-.network-password-input-close:hover {
-  color: #89dceb;
-}
-.network-password-input-close label {
-  font-size: 1.45em;
-}
-
-.menu-icon-button.network.disconnect {
-  margin-bottom: 1.4rem;
-  margin-right: 0.5rem;
-}
-.menu-icon-button.network.disconnect:hover {
-  color: #cba6f7;
-}
-.menu-icon-button.network.disconnect label {
-  font-size: 1.2rem;
-}
-
-.menu-icon-button.network.forget {
-  margin-bottom: 1.4rem;
-  margin-right: 0.5rem;
-}
-.menu-icon-button.network.forget:hover {
-  color: #cba6f7;
-}
-.menu-icon-button.network.forget label {
-  font-size: 1.35em;
 }
 
 .menu-dropdown-label.bluetooth {
@@ -1091,6 +1037,13 @@ image {
   border: 0.15em solid #1e1e2e;
   border-radius: 0.4em;
   margin: 0em;
+}
+
+.notification-card-content-container:first-child {
+  margin-top: 0.5em;
+}
+.notification-card-content-container:not(:last-child) {
+  margin-bottom: 1em;
 }
 
 .menu-label-container.notifications {
