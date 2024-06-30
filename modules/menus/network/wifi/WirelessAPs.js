@@ -72,7 +72,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                 on_primary_click: () => {
                   connecting.value = ap.bssid;
                   Utils.execAsync(`nmcli device wifi connect ${ap.bssid}`)
-                    .then((res) => {
+                    .then(() => {
                       connecting.value = "";
                       staging.value = {};
                     })
@@ -96,7 +96,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                       hexpand: true,
                       children: [
                         Widget.Icon({
-                          class_name: "network-ethernet-icon",
+                          class_name: `network-icon wifi ${ap.ssid === network.wifi.ssid ? "active" : ""}`,
                           icon: `${ap["iconName"]}`,
                         }),
                         Widget.Box({

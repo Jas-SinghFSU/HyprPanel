@@ -826,14 +826,22 @@ window#powermenu .powermenu.box {
   color: #eba0ac;
 }
 
+.menu-items-container.network {
+  font-size: 1.3em;
+}
 .menu-items-container.network .menu-items-section {
   padding-bottom: 1.5em;
 }
 .menu-items-container.network .menu-label {
   color: #cba6f7;
 }
-.menu-items-container.network .network-ethernet-icon {
+.menu-items-container.network .network-icon {
   font-size: 1.3em;
+  min-width: 1em;
+  min-height: 1em;
+  color: #7f849c;
+}
+.menu-items-container.network .network-icon.active {
   color: #cba6f7;
 }
 .menu-items-container.network .connection-container {
@@ -843,7 +851,7 @@ window#powermenu .powermenu.box {
   font-size: 0.9em;
 }
 .menu-items-container.network .menu-section-container.wifi .menu-items-section {
-  min-height: 5em;
+  min-height: 3em;
 }
 .menu-items-container.network .network-element-item:not(:last-child) {
   margin-bottom: 0.5em;

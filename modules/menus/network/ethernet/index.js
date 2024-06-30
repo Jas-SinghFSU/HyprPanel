@@ -29,7 +29,7 @@ const Ethernet = () => {
                   hpack: "start",
                   children: [
                     Widget.Icon({
-                      class_name: "network-ethernet-icon",
+                      class_name: `network-icon ethernet ${network.wired.state === "activated" ? "active" : ""}`,
                       tooltip_text: wired.internet,
                       icon: `${wired["icon_name"]}`,
                     }),

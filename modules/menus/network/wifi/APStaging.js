@@ -1,5 +1,6 @@
 const renderWapStaging = (self, network, staging, connecting) => {
   Utils.merge([network.bind("wifi"), staging.bind("value")], () => {
+    console.log(JSON.stringify(network, null, 2));
     if (!Object.keys(staging.value).length) {
       return (self.child = Widget.Box());
     }
@@ -13,7 +14,7 @@ const renderWapStaging = (self, network, staging, connecting) => {
           hexpand: true,
           children: [
             Widget.Icon({
-              class_name: "network-ethernet-icon",
+              class_name: `network-icon wifi `,
               icon: `${staging.value.iconName}`,
             }),
             Widget.Box({

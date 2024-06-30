@@ -1,6 +1,7 @@
 @import "../colors";
 
 .menu-items-container.network {
+    font-size: 1.3em;
     .menu-items-section {
         padding-bottom: 1.5em;
     }
@@ -8,9 +9,16 @@
         color: $mauve;
     }
 
-    .network-ethernet-icon {
+    .network-icon {
         font-size: 1.3em;
-        color: $mauve;
+        min-width: 1em;
+        min-height: 1em;
+        
+        color: $overlay1;
+
+        &.active {
+            color: $mauve;
+        }
     }
 
     .connection-container {
@@ -21,7 +29,7 @@
     }
     .menu-section-container.wifi {
         .menu-items-section {
-            min-height: 5em;
+            min-height: 3em;
         }
     }
 
