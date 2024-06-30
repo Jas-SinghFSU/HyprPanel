@@ -1,5 +1,5 @@
 const audio = await Service.import("audio");
-import { getIcon } from './utils.js';
+import { getIcon } from '../utils.js';
 
 const renderActiveInput = () => {
   return [
