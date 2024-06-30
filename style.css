@@ -497,7 +497,7 @@ tooltip label {
 .menu-items {
   background: #11111b;
   border: 0.13em solid #313244;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   min-width: 400px;
   color: #cdd6f4;
 }
@@ -848,8 +848,36 @@ window#powermenu .powermenu.box {
 .menu-items-container.network .network-element-item:not(:last-child) {
   margin-bottom: 0.5em;
 }
+.menu-items-container.network .network-element-item.staging {
+  margin-bottom: 0.5em;
+}
 .menu-items-container.network .network-element-item:hover {
   color: #cba6f7;
+}
+.menu-items-container.network .spinner.wap {
+  color: #cba6f7;
+}
+.menu-items-container.network .network-password-input-container {
+  background: #181825;
+  border-radius: 0.4em;
+  margin: 0em 2em;
+  margin-top: 0.75em;
+  padding: 0.5em;
+}
+.menu-items-container.network .close-network-password-input-button {
+  padding: 0em 0.5em;
+}
+.menu-items-container.network .close-network-password-input-button:hover image {
+  color: #eba0ac;
+}
+.menu-items-container.network .menu-icon-button.network.disconnect {
+  margin-bottom: 0.4em;
+}
+.menu-items-container.network .menu-icon-button.network.disconnect label {
+  font-size: 1.3em;
+}
+.menu-items-container.network .menu-icon-button.network.disconnect:hover {
+  color: #eba0ac;
 }
 
 .menu-dropdown-label.bluetooth {
@@ -1012,7 +1040,7 @@ image {
   min-height: 6em;
   background: #11111b;
   border: 0.13em solid #313244;
-  border-radius: 0.4em;
+  border-radius: 0.7em;
 }
 
 .window-content.notificationsmenu-window {
@@ -1084,7 +1112,7 @@ image {
   min-height: 6em;
   background: #11111b;
   border: 0.13em solid #313244;
-  border-radius: 0.4em;
+  border-radius: 0.7em;
 }
 
 .window-content.calendarmenu-window {

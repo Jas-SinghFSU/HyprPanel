@@ -31,8 +31,41 @@
             margin-bottom: 0.5em;
         }
 
+        &.staging {
+            margin-bottom: 0.5em;
+        }
+
         &:hover {
             color: $mauve;
+        }
+    }
+
+    .spinner.wap {
+        color: $mauve;
+    }
+
+    .network-password-input-container {
+        background: $mantle;
+        border-radius: 0.4em;
+        margin: 0em 2em;
+        margin-top: 0.75em;
+        padding: 0.5em;
+    }
+
+    .close-network-password-input-button {
+        padding: 0em 0.5em;
+        &:hover image { 
+            color: $maroon;
+        }
+    }
+
+    .menu-icon-button.network.disconnect {
+        margin-bottom: 0.4em;
+        label {
+            font-size: 1.3em;
+        }
+        &:hover { 
+            color: $maroon;
         }
     }
 }

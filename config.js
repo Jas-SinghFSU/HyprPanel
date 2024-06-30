@@ -42,17 +42,5 @@ App.config({
     launcher: 350,
     bar0: 350,
   },
-  onConfigParsed: () =>
-    Utils.subprocess(
-      [
-        "python3",
-        `${App.configDir}/services/bluetooth.py`,
-      ],
-
-      // callback when the program outputs something to stdout
-      (output) => console.info(output),
-
-      // callback on error
-      (err) => console.info(err),
-    ),
+  onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
 });

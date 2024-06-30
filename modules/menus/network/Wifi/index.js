@@ -2,7 +2,8 @@ const network = await Service.import("network");
 import { renderWAPs } from "./WirelessAPs.js";
 import { renderWapStaging } from "./APStaging.js";
 
-const Staging = Variable("none");
+const Staging = Variable({});
+const Connecting = Variable("");
 
 const Wifi = () => {
   return Widget.Box({
@@ -26,14 +27,14 @@ const Wifi = () => {
           Widget.Box({
             class_name: "wap-staging",
             setup: (self) => {
-              renderWapStaging(self, Staging);
+              renderWapStaging(self, network, Staging, Connecting);
             },
           }),
           Widget.Box({
             class_name: "available-waps",
             vertical: true,
             setup: (self) => {
-                renderWAPs(self, network);
+              renderWAPs(self, network, Staging, Connecting);
             },
           }),
         ],
