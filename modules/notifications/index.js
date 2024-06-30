@@ -16,8 +16,11 @@ export default () => {
       hexpand: true,
       setup: (self) => {
         self.hook(notifs, () => {
+          const notifHasImg = (notif) => {
+            return notif.image !== undefined && notif.image.length;
+          };
           const imageContainer = (notif) => {
-            if (notif.image !== undefined) {
+            if (notifHasImg(notif)) {
               return [
                 Widget.Box({
                   class_name: "notification-card-image-container",
@@ -112,7 +115,7 @@ export default () => {
                   vpack: "start",
                   vertical: true,
                   hexpand: true,
-                  class_name: `notification-card-content ${notif.image === undefined ? "noimg" : ""}`,
+                  class_name: `notification-card-content ${!notifHasImg(notif) ? "noimg" : ""}`,
                   children: [
                     Widget.Box({
                       vertical: false,
@@ -128,8 +131,7 @@ export default () => {
                               hpack: "start",
                               hexpand: true,
                               vexpand: true,
-                              max_width_chars:
-                                notif.image === undefined ? 27 : 20,
+                              max_width_chars: !notifHasImg(notif) ? 27 : 20,
                               truncate: "end",
                               wrap: true,
                               label: notif["summary"],
@@ -156,7 +158,7 @@ export default () => {
                           justification: "left",
                           truncate: "end",
                           lines: 2,
-                          max_width_chars: notif.image === undefined ? 35 : 28,
+                          max_width_chars: !notifHasImg(notif) ? 35 : 28,
                           wrap: true,
                           class_name: "notification-card-body-label",
                           label: notif["body"],

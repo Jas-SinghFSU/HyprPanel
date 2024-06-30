@@ -39,6 +39,13 @@ const renderWAPs = (self, network, staging, connecting) => {
           return wap.bssid === staging.value.bssid;
         };
 
+        const isDisconnecting = (wap) => {
+          if (wap.ssid === network.wifi.ssid) {
+            return network.wifi.state.toLowerCase() === "deactivating";
+          }
+          return false;
+        };
+
         const filteredWAPs = WAPs.filter(
           (ap) => ap.ssid !== "Unknown" && !isInStaging(ap),
         ).sort((a, b) => {
@@ -83,6 +90,11 @@ const renderWAPs = (self, network, staging, connecting) => {
                           .includes("secrets were required, but not provided")
                       ) {
                         staging.value = ap;
+                      } else {
+                        Utils.notify({
+                          summary: "Network",
+                          body: err,
+                        });
                       }
                       connecting.value = "";
                     });
@@ -128,7 +140,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                     Widget.Revealer({
                       hpack: "end",
                       vpack: "start",
-                      reveal_child: ap.bssid === connecting.value,
+                      reveal_child: ap.bssid === connecting.value || isDisconnecting(ap),
                       child: Widget.Spinner({
                         vpack: "start",
                         class_name: "spinner wap",
@@ -154,11 +166,14 @@ const renderWAPs = (self, network, staging, connecting) => {
 
                             Utils.execAsync(
                               `nmcli connection delete ${connectionId} "${ap.ssid}"`,
-                            ).catch((err) =>
-                              console.error(
-                                `Error while forgetting "${ap.ssid}": ${err}`,
-                              ),
-                            );
+                            )
+                              .then(() => (connecting.value = ""))
+                              .catch((err) => {
+                                connecting.value = "";
+                                console.error(
+                                  `Error while forgetting "${ap.ssid}": ${err}`,
+                                );
+                              });
                           },
                         );
                       },

@@ -14,7 +14,7 @@ const renderWapStaging = (self, network, staging, connecting) => {
           hexpand: true,
           children: [
             Widget.Icon({
-              class_name: `network-icon wifi `,
+              class_name: `network-icon wifi`,
               icon: `${staging.value.iconName}`,
             }),
             Widget.Box({
@@ -63,6 +63,10 @@ const renderWapStaging = (self, network, staging, connecting) => {
                     console.error(
                       `Failed to connect to wifi: ${staging.value.ssid}... ${err}`,
                     );
+                    Utils.notify({
+                      summary: "Network",
+                      body: err,
+                    });
                   })
                   .then(() => {
                     connecting.value = "";

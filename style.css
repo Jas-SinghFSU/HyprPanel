@@ -660,11 +660,11 @@ window#verification .verification .text-box {
 }
 window#verification .verification .text-box .title {
   font-size: 1.5em;
-  color: #eba0ac;
+  color: #b4befe;
   margin-bottom: 0.5em;
 }
 window#verification .verification .text-box .desc {
-  color: #b4befe;
+  color: #cdd6f4;
   font-size: 1em;
   margin-bottom: 0.55em;
   padding: 1em 3em;
@@ -1044,7 +1044,7 @@ image {
 }
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 26em;
+  min-width: 28.6em;
   min-height: 6em;
   background: #11111b;
   border: 0.13em solid #313244;
@@ -1352,6 +1352,10 @@ image {
 }
 .close-notification-button:hover {
   background: #eba0ac;
+}
+
+.spacer {
+  margin-bottom: 0.75em;
 }
 
 /*# sourceMappingURL=style.css.map */
