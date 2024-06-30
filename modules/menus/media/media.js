@@ -13,9 +13,6 @@ const Media = () => {
         vertical: false,
         child: Widget.Box({
           class_name: "menu-content",
-          // children: [
-          //   Bar(),
-          // ],
           setup: (self) => {
             let curPlayer = media.players[0];
             self.hook(media, () => {

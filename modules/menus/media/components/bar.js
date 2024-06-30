@@ -14,9 +14,6 @@ const Bar = (curPlayer) => {
             (curPlayer.position = value * curPlayer.length),
           setup: (self) => {
             const update = () => {
-              const value = curPlayer.position / curPlayer.length;
-              console.log(`[value]: ${value}`);
-              console.log(self.value);
               if (
                 typeof curPlayer.position === "number" &&
                 curPlayer.position > 0

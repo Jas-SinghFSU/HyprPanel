@@ -29,7 +29,7 @@ const devices = (bluetooth, self) => {
         }
 
         if (b.connected || b.paired) {
-          return -1;
+          return 1;
         }
 
         return b.name - a.name;
