@@ -1,47 +1,91 @@
 @import "../colors";
 
-.menu-dropdown-label.bluetooth {
-    color: $sky;
-}
+.menu-items-container.bluetooth {
+    font-size: 1.3em;
+    .menu-section-container {
+        margin: 1.35em 0em;
+    }
 
-.menu-label.bluetooth {
-    color: $sky;
-}
+    .menu-label-container {
+        .menu-label {
+            color: $sky;
+        }
 
-.menu-button-isactive.bluetooth {
-    color: $sky;
-}
+        .controls-container {
+            margin: 0.5em 1em;
+        }
+    }
 
-.menu-button.bluetooth {
-     &:hover {
+
+    .menu-items-section {
+        min-height: 20em;
+        font-size: 1em;
+    }
+
+    button  {
+        margin-right: 0.5em;
+        &.search {
+            @keyframes spin {
+            to { -gtk-icon-transform: rotate(1turn); }
+            }
+
+            image.spinning {
+                animation-name: spin;
+                animation-duration: 1s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+            }
+            image {
+                color: $text;
+            }
+            &:hover image {
+                color: $sky;
+            }
+            font-size: 0.8em;
+            margin-bottom: 0em;
+        }
+        &:hover {
+            color: $sky;
+        }
+    }
+
+    .bluetooth-element-item {
+            margin-bottom: 0.5em;
+            // background: $teal;
+        &:hover {
+            color: $sky;
+        }
+
+        image {
+            // background: $red;
+            margin-right: 0em;
+            margin-top: 0.0em;
+            min-height: 1em;
+            min-width: 1em;
+
+            &.active {
+                color: $sky;
+            }
+        }
+
+        label {
+            // background: $yellow;
+            font-size: 1em;
+        }
+
+        .connection-status {
+            font-size: 0.9em;
+            margin-left: 0.8em;
+        }
+    }
+
+    spinner {
+        min-height: 1.3em;
+        min-width: 1.3em;
         color: $sky;
     }
-}
 
-.menu-items {
-    min-width: 350px;
-}
-
-.menu-icon-button {
-    font-size: 1.2rem;
-    min-width: 2rem;
-    &:hover {
-        color: $sky;
+    .menu-separator {
+        margin: 0em 1em;
     }
-}
-
-.menu-icon-button.delete {
-    margin-left: 0.5rem;
-}
-
-.menu-icon-button-label {
-    font-size: 1.3rem;
-}
-
-.menu-button-name.status {
-    margin-left: 2.1rem;
-}
-
-.bluetooth-isconnecting {
-    color: $sky;
 }

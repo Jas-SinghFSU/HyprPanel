@@ -1,6 +1,5 @@
 const renderWapStaging = (self, network, staging, connecting) => {
   Utils.merge([network.bind("wifi"), staging.bind("value")], () => {
-    console.log(JSON.stringify(network, null, 2));
     if (!Object.keys(staging.value).length) {
       return (self.child = Widget.Box());
     }

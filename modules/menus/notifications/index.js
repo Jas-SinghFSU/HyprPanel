@@ -82,8 +82,6 @@ export default () => {
               vertical: true,
               setup: (self) => {
                 self.hook(notifs, () => {
-                  console.log(JSON.stringify(notifs, null, 2));
-
                   const notifHasImg = (notif) => {
                     return notif.image !== undefined && notif.image.length;
                   };

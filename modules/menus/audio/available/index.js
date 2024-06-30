@@ -16,7 +16,7 @@ const availableDevices = () => {
             child: Widget.Label({
               class_name: "menu-label audio playback",
               hexpand: true,
-              hpack: "center",
+              hpack: "start",
               label: "Playback Devices",
             }),
           }),
@@ -50,7 +50,7 @@ const availableDevices = () => {
             child: Widget.Label({
               class_name: "menu-label audio playback",
               hexpand: true,
-              hpack: "center",
+              hpack: "start",
               label: "Input Devices",
             }),
           }),

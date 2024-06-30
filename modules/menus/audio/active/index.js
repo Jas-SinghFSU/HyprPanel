@@ -12,7 +12,7 @@ const activeDevices = () => {
         child: Widget.Label({
           class_name: "menu-label audio volume",
           hexpand: true,
-          hpack: "center",
+          hpack: "start",
           label: "Volume",
         }),
       }),

@@ -16,7 +16,7 @@ const Wifi = () => {
         child: Widget.Label({
           class_name: "menu-label",
           hexpand: true,
-          hpack: "center",
+          hpack: "start",
           label: "Wi-Fi",
         }),
       }),

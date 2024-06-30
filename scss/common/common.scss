@@ -1,3 +1,5 @@
+@import "../colors";
+
 menu {
   margin: 6px;
   padding: 6px;
@@ -201,8 +203,8 @@ tooltip {
 }
 
 tooltip.background {
-  background-color: $primary_bg;
-  color: $default_fg;
+  background-color: $crust;
+  color: $text;
   border-radius: 6px;
 }
 

@@ -207,8 +207,8 @@ tooltip {
 }
 
 tooltip.background {
-  background-color: #0e0e1e;
-  color: #CDD6F4;
+  background-color: #11111b;
+  color: #cdd6f4;
   border-radius: 6px;
 }
 
@@ -633,9 +633,18 @@ tooltip label {
   margin-bottom: 0.5rem;
 }
 
+.dropdown-menu-container {
+  min-height: 10em;
+}
+
 .top-right-event-box_top * {
   min-height: 0em;
   margin-top: 2.5em;
+}
+
+.menu-label {
+  margin: 0.5em 1em;
+  color: #89dceb;
 }
 
 window#powermenu,
@@ -851,7 +860,7 @@ window#powermenu .powermenu.box {
   font-size: 0.9em;
 }
 .menu-items-container.network .menu-section-container.wifi .menu-items-section {
-  min-height: 3em;
+  min-height: 12em;
 }
 .menu-items-container.network .network-element-item:not(:last-child) {
   margin-bottom: 0.5em;
@@ -888,48 +897,78 @@ window#powermenu .powermenu.box {
   color: #eba0ac;
 }
 
-.menu-dropdown-label.bluetooth {
+.menu-items-container.bluetooth {
+  font-size: 1.3em;
+}
+.menu-items-container.bluetooth .menu-section-container {
+  margin: 1.35em 0em;
+}
+.menu-items-container.bluetooth .menu-label-container .menu-label {
   color: #89dceb;
 }
-
-.menu-label.bluetooth {
+.menu-items-container.bluetooth .menu-label-container .controls-container {
+  margin: 0.5em 1em;
+}
+.menu-items-container.bluetooth .menu-items-section {
+  min-height: 20em;
+  font-size: 1em;
+}
+.menu-items-container.bluetooth button {
+  margin-right: 0.5em;
+}
+.menu-items-container.bluetooth button.search {
+  font-size: 0.8em;
+  margin-bottom: 0em;
+}
+@keyframes spin {
+  to {
+    -gtk-icon-transform: rotate(1turn);
+  }
+}
+.menu-items-container.bluetooth button.search image.spinning {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.menu-items-container.bluetooth button.search image {
+  color: #cdd6f4;
+}
+.menu-items-container.bluetooth button.search:hover image {
   color: #89dceb;
 }
-
-.menu-button-isactive.bluetooth {
+.menu-items-container.bluetooth button:hover {
   color: #89dceb;
 }
-
-.menu-button.bluetooth:hover {
+.menu-items-container.bluetooth .bluetooth-element-item {
+  margin-bottom: 0.5em;
+}
+.menu-items-container.bluetooth .bluetooth-element-item:hover {
   color: #89dceb;
 }
-
-.menu-items {
-  min-width: 350px;
+.menu-items-container.bluetooth .bluetooth-element-item image {
+  margin-right: 0em;
+  margin-top: 0em;
+  min-height: 1em;
+  min-width: 1em;
 }
-
-.menu-icon-button {
-  font-size: 1.2rem;
-  min-width: 2rem;
-}
-.menu-icon-button:hover {
+.menu-items-container.bluetooth .bluetooth-element-item image.active {
   color: #89dceb;
 }
-
-.menu-icon-button.delete {
-  margin-left: 0.5rem;
+.menu-items-container.bluetooth .bluetooth-element-item label {
+  font-size: 1em;
 }
-
-.menu-icon-button-label {
-  font-size: 1.3rem;
+.menu-items-container.bluetooth .bluetooth-element-item .connection-status {
+  font-size: 0.9em;
+  margin-left: 0.8em;
 }
-
-.menu-button-name.status {
-  margin-left: 2.1rem;
-}
-
-.bluetooth-isconnecting {
+.menu-items-container.bluetooth spinner {
+  min-height: 1.3em;
+  min-width: 1.3em;
   color: #89dceb;
+}
+.menu-items-container.bluetooth .menu-separator {
+  margin: 0em 1em;
 }
 
 .media-indicator-container {

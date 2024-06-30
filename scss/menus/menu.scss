@@ -239,11 +239,14 @@ tooltip label {
     margin-bottom: 0.5rem;
 }
 .dropdown-menu-container {
-    // margin: 1.5em;
-    // box-shadow: 0 0 0.6em $mantle;
+    min-height: 10em;
 }
 
 .top-right-event-box_top *{
     min-height: 0em;
     margin-top: 2.5em;
+}
+.menu-label {
+    margin: 0.5em 1em;
+    color: $sky;
 }
