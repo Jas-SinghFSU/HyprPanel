@@ -2,11 +2,12 @@ const notifs = await Service.import("notifications");
 import icons from "../icons/index.js";
 
 export default () => {
-  notifs.popupTimeout = 5000;
+  notifs.popupTimeout = 7000;
 
   return Widget.Window({
     name: "notifications-window",
     class_name: "notifications-window",
+    monitor: 2,
     layer: "top",
     anchor: ["top", "right"],
     exclusivity: "ignore",

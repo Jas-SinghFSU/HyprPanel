@@ -1,4 +1,3 @@
-const bluetooth = await Service.import("bluetooth");
 import DropdownMenu from "../DropdownMenu.js";
 import { Devices } from "./devices/index.js";
 

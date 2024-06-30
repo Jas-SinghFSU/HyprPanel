@@ -12,9 +12,10 @@ html, body {
   background-color: $primary_bg;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
+// scrollbar {
+//   background-color: red;
+//   min-width: 5em;
+// }
 
 .code {
   background: $light-background;

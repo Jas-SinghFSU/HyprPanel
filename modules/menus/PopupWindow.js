@@ -75,6 +75,10 @@ const Layout = (name, child, transition) => ({
           hexpand: false,
           vertical: true,
         },
+        Padding(name, {
+          vexpand: false,
+          className: "top-right-event-box_top",
+        }),
         PopupRevealer(name, child, transition),
         Padding(name),
       ),

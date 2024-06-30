@@ -960,7 +960,7 @@ window#powermenu .powermenu.box {
 }
 .menu-items-container.bluetooth .bluetooth-element-item .connection-status {
   font-size: 0.9em;
-  margin-left: 0.8em;
+  margin-left: 1em;
 }
 .menu-items-container.bluetooth spinner {
   min-height: 1.3em;
@@ -971,22 +971,18 @@ window#powermenu .powermenu.box {
   margin: 0em 1em;
 }
 
-.media-indicator-container {
-  min-width: 35rem;
-  min-height: 10rem;
-  background: #181825;
-  border: 0.13em solid #313244;
-  border-radius: 0.4rem;
+.menu-items-container.media {
+  min-width: 36.5em;
+  min-height: 18em;
 }
-
-.media-indicator-items {
+.menu-items-container.media .menu-section-container {
+  margin: 1.3em 0em;
+}
+.menu-items-container.media .media-indicator-items {
   margin: 1rem;
   margin-bottom: 1.3rem;
 }
-
-.media-indicator-current-album-cover {
-  border: 0.2em solid #313244;
-  background-color: #313244;
+.menu-items-container.media .media-indicator-current-album-cover {
   border-radius: 0.25em;
   min-width: 8.5em;
   min-height: 8.5em;
@@ -994,93 +990,72 @@ window#powermenu .powermenu.box {
   background-repeat: no-repeat;
   background-position: center;
 }
-
-.media-indicator-current-song-name {
+.menu-items-container.media .media-indicator-right-section {
+  margin-left: 2em;
+}
+.menu-items-container.media .media-indicator-current-song-name {
   margin-bottom: 0.75rem;
 }
-
-.media-indicator-current-song-author {
+.menu-items-container.media .media-indicator-current-song-author {
   margin-bottom: 0.5rem;
 }
-
-.media-indicator-current-song-name-label {
+.menu-items-container.media .media-indicator-current-song-name-label {
   color: #b4befe;
   font-size: 1.35em;
 }
-
-.media-indicator-current-song-author-label {
+.menu-items-container.media .media-indicator-current-song-author-label {
   color: #94e2d5;
   font-size: 1em;
 }
-
-.media-indicator-current-song-album-label {
+.menu-items-container.media .media-indicator-current-song-album-label {
   color: #f5c2e7;
   font-size: 1em;
 }
-
-.media-indicator-current-controls {
+.menu-items-container.media .media-indicator-current-controls {
   margin-top: 1.5rem;
   margin-bottom: 0.2rem;
 }
-
-.media-indicator-control {
+.menu-items-container.media .media-indicator-control {
   margin: 0rem 0.5rem;
 }
-
-.media-indicator-control-button {
+.menu-items-container.media .media-indicator-control-button {
   background: #b4befe;
   color: #11111b;
   min-height: 1.8em;
   min-width: 2em;
   border-radius: 0.2rem;
 }
-.media-indicator-control-button.disabled {
+.menu-items-container.media .media-indicator-control-button.disabled {
   background: #313244;
 }
-.media-indicator-control-button.enabled {
+.menu-items-container.media .media-indicator-control-button.enabled {
   background: #b4befe;
 }
-.media-indicator-control-button.enabled:hover {
+.menu-items-container.media .media-indicator-control-button.enabled:hover {
   background: #f5c2e7;
 }
-.media-indicator-control-button.enabled.active {
+.menu-items-container.media .media-indicator-control-button.enabled.active {
   background: #f5c2e7;
 }
-
-image {
-  font-size: 1.3em;
+.menu-items-container.media image {
+  font-size: 1.1em;
 }
-
-.menu-slider.media.progress {
+.menu-items-container.media .menu-slider.media.progress {
   margin-top: 1rem;
-  min-height: 2em;
-  min-width: 12em;
 }
-.menu-slider.media.progress trough {
-  background: #1e1e2e;
+.menu-items-container.media .menu-slider.media.progress trough {
+  background: #313244;
   border-radius: 0.3rem;
 }
-.menu-slider.media.progress trough highlight,
-.menu-slider.media.progress trough progress {
+.menu-items-container.media .menu-slider.media.progress trough highlight,
+.menu-items-container.media .menu-slider.media.progress trough progress {
   min-height: 1rem;
   background: #b4befe;
-  border-radius: 0.3rem;
 }
-.menu-slider.media.progress slider {
-  box-shadow: none;
-  background-color: transparent;
-  min-height: 1.2rem;
-  min-width: 1.2rem;
-  border: 0rem solid transparent;
-  border-radius: 0.3rem;
+.menu-items-container.media .menu-slider.media.progress:hover trough {
+  background: #45475a;
 }
-.menu-slider.media.progress:hover trough {
-  background: #313244;
-}
-.menu-slider.media.progress:hover slider {
-  background: #6c7086;
-  box-shadow: none;
-}
+
 .notification-card-container.menu {
   margin: 0em;
   min-width: 28.6em;

@@ -1,137 +1,110 @@
 @import "../colors";
 
-.media-indicator-container {
-  min-width: 35rem;
-  min-height: 10rem;
-  background: $mantle;
-  border: 0.13em solid $surface0; 
-  border-radius: 0.4rem;
-}
+.menu-items-container.media {
+  min-width: 36.5em;
+  min-height: 18em;
 
-.media-indicator-items {
-  margin: 1rem;
-  margin-bottom: 1.3rem;
-}
-
-.media-indicator-current-album-cover {
-  border: 0.2em solid $surface0; 
-  background-color: $surface0;
-  border-radius: 0.25em;
-  min-width: 8.5em;
-  min-height: 8.5em;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.media-indicator-current-song-name {
-  margin-bottom: 0.75rem;
-}
-
-.media-indicator-current-song-author {
-  margin-bottom: 0.5rem;
-}
-
-.media-indicator-current-song-name-label {
-  color: $lavender;
-  font-size: 1.35em;
-}
-
-.media-indicator-current-song-author-label {
-  color: $teal;
-  font-size: 1em;
-}
-
-.media-indicator-current-song-album-label {
-  color: $pink;
-  font-size: 1em;
-}
-
-.media-indicator-current-controls {
-  margin-top: 1.5rem;
-  margin-bottom: 0.2rem;
-}
-
-.media-indicator-control {
-  margin: 0rem 0.5rem;
-}
-
-.media-indicator-control-button {
-  background: $lavender;
-  color: $crust;
-  min-height: 1.8em;
-  min-width: 2em;
-  border-radius: 0.2rem;
-
-  &.disabled {
-    background: $surface0;
+  .menu-section-container {
+    margin: 1.3em 0em;
   }
 
-  &.enabled {
+  .media-indicator-items {
+    margin: 1rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .media-indicator-current-album-cover {
+    border-radius: 0.25em;
+    min-width: 8.5em;
+    min-height: 8.5em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .media-indicator-right-section {
+    margin-left: 2em;
+  }
+
+  .media-indicator-current-song-name {
+    margin-bottom: 0.75rem;
+  }
+
+  .media-indicator-current-song-author {
+    margin-bottom: 0.5rem;
+  }
+
+  .media-indicator-current-song-name-label {
+    color: $lavender;
+    font-size: 1.35em;
+  }
+
+  .media-indicator-current-song-author-label {
+    color: $teal;
+    font-size: 1em;
+  }
+
+  .media-indicator-current-song-album-label {
+    color: $pink;
+    font-size: 1em;
+  }
+
+  .media-indicator-current-controls {
+    margin-top: 1.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .media-indicator-control {
+    margin: 0rem 0.5rem;
+  }
+
+  .media-indicator-control-button {
     background: $lavender;
-    
-    &:hover {
-      background: $pink;
-    }
+    color: $crust;
+    min-height: 1.8em;
+    min-width: 2em;
+    border-radius: 0.2rem;
 
-    &.active {
-      background: $pink;
-    }
-  }
-
-}
-
-image {
-  font-size: 1.3em;
-}
-
-.menu-slider.media.progress {
-  margin-top: 1rem;
-  min-height: 2em;
-  min-width: 12em;
-
-  trough {
-    background: $base;
-    border-radius: 0.3rem;
-
-    highlight,
-    progress {
-      min-height: 1rem;
-      background: $lavender;
-      border-radius: 0.3rem;
-    }
-  }
-
-  slider {
-    box-shadow: none;
-    background-color: transparent;
-    min-height: 1.2rem;
-    min-width: 1.2rem;
-    border: 0rem solid transparent;
-    border-radius: 0.3rem;
-  }
-
-  &:hover {
-    trough {
+    &.disabled {
       background: $surface0;
     }
 
-    slider {
-      background: $overlay0;
-      box-shadow: none;
+    &.enabled {
+      background: $lavender;
+
+      &:hover {
+        background: $pink;
+      }
+
+      &.active {
+        background: $pink;
+      }
     }
+
   }
 
-  &:disabled {
-
-    highlight,
-    progress {
-    }
+  image {
+    font-size: 1.1em;
   }
 
-  trough:focus {
+  .menu-slider.media.progress {
+    margin-top: 1rem;
 
-    slider {
+    trough {
+      background: $surface0;
+      border-radius: 0.3rem;
+
+      highlight,
+      progress {
+        min-height: 1rem;
+        background: $lavender;
+      }
+    }
+
+    &:hover {
+      trough {
+        background: $surface1;
+      }
     }
   }
 }
