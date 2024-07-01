@@ -637,14 +637,14 @@ tooltip label {
   min-height: 10em;
 }
 
-.top-right-event-box_top * {
-  min-height: 0em;
-  margin-top: 2.5em;
-}
-
 .menu-label {
   margin: 0.5em 1em;
   color: #89dceb;
+}
+
+.event-top-padding * {
+  min-height: 0em;
+  margin-top: 2.8em;
 }
 
 window#powermenu,
@@ -885,7 +885,7 @@ window#powermenu .powermenu.box {
   padding: 0em 0.5em;
 }
 .menu-items-container.network .close-network-password-input-button:hover image {
-  color: #eba0ac;
+  color: #cba6f7;
 }
 .menu-items-container.network .menu-icon-button.network.disconnect {
   margin-bottom: 0.4em;
@@ -894,7 +894,7 @@ window#powermenu .powermenu.box {
   font-size: 1.3em;
 }
 .menu-items-container.network .menu-icon-button.network.disconnect:hover {
-  color: #eba0ac;
+  color: #cba6f7;
 }
 
 .menu-items-container.bluetooth {

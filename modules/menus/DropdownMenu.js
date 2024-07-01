@@ -33,11 +33,10 @@ const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
       marginRight = 13;
       marginLeft = monWidth - minWidth - 13;
     }
-    const marginTop = 40;
+    const marginTop = 45;
     const marginBottom = monHeight + minHeight - marginTop;
     self.set_margin_left(marginLeft);
     self.set_margin_right(marginRight);
-    self.set_margin_top(marginTop);
     self.set_margin_bottom(marginBottom);
   });
 };
@@ -63,36 +62,54 @@ export default ({
     layer: "top",
     anchor: ["top", "left"],
     child: Widget.EventBox({
+      class_name: "parent-event",
       on_primary_click: () => App.closeWindow(name),
       on_secondary_click: () => App.closeWindow(name),
-      child: Widget.EventBox({
-        on_primary_click: () => {
-          return true;
-        },
-        on_secondary_click: () => {
-          return true;
-        },
-        setup: (self) => {
-          moveBoxToCursor(self, minWidth, minHeight, fixed);
-        },
-        child: Widget.Box({
-          class_name: "dropdown-menu-container",
-          css: "padding: 1px; margin: -1px;",
-          child: Widget.Revealer({
-            revealChild: false,
-            setup: (self) =>
-              self.hook(App, (_, wname, visible) => {
-                if (wname === name) self.reveal_child = visible;
-              }),
-            transition: "crossfade",
-            transitionDuration: 350,
+      child: Widget.Box({
+        vertical: true,
+        children: [
+          Widget.EventBox({
+            class_name: "event-top-padding",
+            hexpand: true,
+            vexpand: false,
+            can_focus: false,
+            child: Widget.Box(),
+            setup: (w) => {
+              w.on("button-press-event", () => App.toggleWindow(name));
+              w.set_margin_top(1);
+            },
+          }),
+          Widget.EventBox({
+            class_name: "menu-event-box",
+            on_primary_click: () => {
+              return true;
+            },
+            on_secondary_click: () => {
+              return true;
+            },
+            setup: (self) => {
+              moveBoxToCursor(self, minWidth, minHeight, fixed);
+            },
             child: Widget.Box({
               class_name: "dropdown-menu-container",
-              can_focus: true,
-              children: [child],
+              css: "padding: 1px; margin: -1px;",
+              child: Widget.Revealer({
+                revealChild: false,
+                setup: (self) =>
+                  self.hook(App, (_, wname, visible) => {
+                    if (wname === name) self.reveal_child = visible;
+                  }),
+                transition: "crossfade",
+                transitionDuration: 350,
+                child: Widget.Box({
+                  class_name: "dropdown-menu-container",
+                  can_focus: true,
+                  children: [child],
+                }),
+              }),
             }),
           }),
-        }),
+        ],
       }),
     }),
     ...props,

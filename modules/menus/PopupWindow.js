@@ -60,7 +60,7 @@ const Layout = (name, child, transition) => ({
         },
         Padding(name, {
           vexpand: false,
-          className: "top-right-event-box_top",
+          className: "event-top-padding",
         }),
         PopupRevealer(name, child, transition),
         Padding(name),
@@ -77,7 +77,7 @@ const Layout = (name, child, transition) => ({
         },
         Padding(name, {
           vexpand: false,
-          className: "top-right-event-box_top",
+          className: "event-top-padding",
         }),
         PopupRevealer(name, child, transition),
         Padding(name),

@@ -242,11 +242,12 @@ tooltip label {
     min-height: 10em;
 }
 
-.top-right-event-box_top *{
-    min-height: 0em;
-    margin-top: 2.5em;
-}
 .menu-label {
     margin: 0.5em 1em;
     color: $sky;
+}
+
+.event-top-padding * {
+    min-height: 0em;
+    margin-top: 2.8em;
 }

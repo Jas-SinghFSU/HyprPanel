@@ -65,6 +65,7 @@ const renderWapStaging = (self, network, staging, connecting) => {
                     Utils.notify({
                       summary: "Network",
                       body: err,
+                      timeout: 5000,
                     });
                   })
                   .then(() => {

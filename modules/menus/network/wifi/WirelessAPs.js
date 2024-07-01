@@ -77,6 +77,10 @@ const renderWAPs = (self, network, staging, connecting) => {
             children: [
               Widget.Button({
                 on_primary_click: () => {
+                  if (ap.bssid === connecting.value || ap.active) {
+                    return;
+                  }
+
                   connecting.value = ap.bssid;
                   Utils.execAsync(`nmcli device wifi connect ${ap.bssid}`)
                     .then(() => {
@@ -94,6 +98,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                         Utils.notify({
                           summary: "Network",
                           body: err,
+                          timeout: 5000,
                         });
                       }
                       connecting.value = "";
