@@ -41,7 +41,7 @@ const Ethernet = () => {
                         hpack: "start",
                         truncate: "end",
                         wrap: true,
-                        label: `Ethernet Connection ${typeof wired.speed === "number" ? `(${wired.speed / 1000} Gbps)` : ""}`,
+                        label: `Ethernet Connection ${wired.state !== "unknown" && typeof wired?.speed === "number" ? `(${wired?.speed / 1000} Gbps)` : ""}`,
                       }),
                       Widget.Label({
                         hpack: "start",

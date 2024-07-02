@@ -11,7 +11,7 @@ const Network = () => {
     Widget.Label({
       label: network.wifi
         .bind("ssid")
-        .as((ssid) => (ssid ? ` ${ssid}` : " Unknown")),
+        .as((ssid) => (ssid ? `  ${ssid}` : " --").substring(0, 7)),
     }),
   ];
 

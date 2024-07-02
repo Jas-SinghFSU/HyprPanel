@@ -1,7 +1,7 @@
 * {
   all: unset;
   font-family: "Ubuntu Nerd Font";
-  font-size: 1.175rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -428,6 +428,13 @@ spinner:checked {
   margin-right: 1.9rem;
 }
 
+.bar .battery label {
+  color: #f9e2af;
+}
+.bar .battery image {
+  color: #f9e2af;
+}
+
 .menu-slider trough {
   border-radius: 0.3rem;
   background: #313244;
@@ -498,13 +505,13 @@ tooltip label {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7rem;
-  min-width: 400px;
+  min-width: 250px;
   color: #cdd6f4;
 }
 
 .menu-items-container {
   border-radius: 0.4em;
-  min-width: 400px;
+  min-width: 250px;
 }
 
 .menu-section-container {
@@ -1071,14 +1078,13 @@ window#powermenu .powermenu.box {
 
 .menu-content-container.notifications {
   margin: 1.35em;
-  margin-bottom: 0em;
   min-height: 4em;
 }
 
 .notification-menu-controls {
   background: #1e1e2e;
   margin: 1em 1.3em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0em;
   border-radius: 0.4em;
   padding: 0.4em 0.75em;
 }
@@ -1090,7 +1096,10 @@ window#powermenu .powermenu.box {
   margin: 0em;
 }
 
-.notification-card-content-container {
+.notification-card-content-container:first-child {
+  margin-top: 0.5em;
+}
+.notification-card-content-container:not(:last-child) {
   margin-bottom: 1em;
 }
 
@@ -1268,6 +1277,35 @@ window#powermenu .powermenu.box {
 
 .hourly-weather-temp {
   color: #f5c2e7;
+}
+
+.menu-items-container.energy .menu-label {
+  color: #f9e2af;
+}
+.menu-items-container.energy .power-profile-item {
+  margin-bottom: 0.5em;
+}
+.menu-items-container.energy .power-profile-item label {
+  margin-left: 1em;
+}
+.menu-items-container.energy .power-profile-item image {
+  font-size: 1.3em;
+  min-width: 1em;
+  min-height: 1em;
+  color: #7f849c;
+}
+.menu-items-container.energy .power-profile-item:hover label {
+  color: #f9e2af;
+}
+.menu-items-container.energy .power-profile-item.active image {
+  color: #f9e2af;
+}
+.menu-items-container.energy .menu-active-slider.brightness trough highlight,
+.menu-items-container.energy .menu-active-slider.brightness trough progress {
+  background: #f9e2af;
+}
+.menu-items-container.energy .brightness-container {
+  padding-bottom: 1em;
 }
 
 .notification-card-container {

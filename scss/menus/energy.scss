@@ -1,0 +1,47 @@
+@import "../colors";
+
+.menu-items-container.energy {
+    .menu-label {
+        color: $yellow;
+    }
+
+    .power-profile-item {
+        margin-bottom: 0.5em;
+
+        label {
+            margin-left: 1em;
+        }
+
+        image {
+            font-size: 1.3em;
+            min-width: 1em;
+            min-height: 1em;
+
+            color: $overlay1;
+        }
+
+        &:hover {
+            label {
+                color: $yellow;
+            }
+        }
+
+        &.active {
+            image {
+                color: $yellow;
+            }
+        }
+    }
+    .menu-active-slider.brightness {
+        trough {
+            highlight,
+            progress {
+                background: $yellow;
+            }
+        }
+    }
+
+    .brightness-container {
+        padding-bottom: 1em;
+    }
+}

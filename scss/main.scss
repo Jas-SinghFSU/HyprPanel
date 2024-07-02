@@ -24,6 +24,7 @@
 @import "bar/notifications";
 @import "bar/power";
 @import "bar/bar";
+@import "bar/battery";
 
 //modules - menus
 @import "menus/menu";
@@ -34,6 +35,7 @@
 @import "menus/media";
 @import "menus/notifications";
 @import "menus/calendar";
+@import "menus/energy";
 
 //notifications
 @import "notifications/popups";

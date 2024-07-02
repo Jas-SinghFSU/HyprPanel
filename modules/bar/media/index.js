@@ -50,7 +50,7 @@ const Media = () => {
 
   const songIcon = Variable("");
 
-  const label = Utils.watch("󰎇 No media playing 󰎇", mpris, "changed", () => {
+  const label = Utils.watch("󰎇 Media 󰎇", mpris, "changed", () => {
     if (activePlayer.value) {
       const { track_title, identity } = activePlayer.value;
       songIcon.value = getIconForPlayer(identity);
@@ -59,7 +59,7 @@ const Media = () => {
         : `  ${track_title}`;
     } else {
       songIcon.value = "";
-      return "󰎇 No media playing 󰎇";
+      return "󰎇 Media 󰎇";
     }
   });
 

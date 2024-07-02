@@ -1,0 +1,12 @@
+@import '../colors';
+
+.bar {
+  .battery {
+    label {
+      color: $yellow;
+    }
+    image {
+      color: $yellow;
+    }
+  }
+}
