@@ -1,5 +1,5 @@
 import { exec } from "resource:///com/github/Aylur/ags/utils.js";
-import { Bar, BarAlt } from "./modules/bar/bar.js";
+import { Bar, BarAlt } from "./modules/bar/index.js";
 import DirectoryMonitorService from "./directoryMonitorService.js";
 import MenuWindows from "./modules/menus/main.js";
 import Notifications from "./modules/notifications/index.js";

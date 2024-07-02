@@ -10,18 +10,22 @@ const Bar = (curPlayer) => {
           tooltip_text: "yoyo",
           class_name: "menu-slider media progress",
           draw_value: false,
-          on_change: ({ value }) =>
-            (curPlayer.position = value * curPlayer.length),
+          on_change: ({ value }) => {
+            return (curPlayer.position = value * curPlayer.length);
+          },
           setup: (self) => {
             const update = () => {
               if (
                 typeof curPlayer.position === "number" &&
-                curPlayer.position > 0
+                curPlayer.position > 0 &&
+                typeof curPlayer.length === "number" &&
+                curPlayer.length > 0
               ) {
                 const value = curPlayer.position / curPlayer.length;
                 self.value = value > 0 ? value : 0;
+              } else {
+                self.value = 0;
               }
-              return 0;
             };
             self.hook(curPlayer, update);
             self.hook(curPlayer, update, "position");

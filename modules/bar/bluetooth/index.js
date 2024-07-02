@@ -1,5 +1,5 @@
 const bluetooth = await Service.import('bluetooth')
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 const Bluetooth = () => {
   const btIcon = Widget.Label({

@@ -1,5 +1,5 @@
 const network = await Service.import("network");
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 import { globalMousePos } from "../../../globals.js";
 

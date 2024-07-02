@@ -1,5 +1,5 @@
 const audio = await Service.import("audio");
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 import { globalMousePos } from "../../../globals.js";
 

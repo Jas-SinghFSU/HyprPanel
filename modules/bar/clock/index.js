@@ -1,4 +1,4 @@
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 const date = Variable("", {
   poll: [1000, 'date "+󰃭  %a %b %d    %I:%M:%S %p"'],

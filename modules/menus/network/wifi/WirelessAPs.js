@@ -29,7 +29,9 @@ const renderWAPs = (self, network, staging, connecting) => {
     Utils.merge(
       [network.bind("wifi"), staging.bind("value"), connecting.bind("value")],
       () => {
-        const WAPs = network.wifi.access_points;
+        // Sometimes the network service will yield a "this._device is undefined" when 
+        // trying to access the "access_points" property. So we must check if it exists.
+        const WAPs = Object.hasOwnProperty.call(network.wifi, "access_points") ? network.wifi.access_points : [];
 
         const isInStaging = (wap) => {
           if (Object.keys(staging.value).length === 0) {

@@ -1,7 +1,7 @@
 * {
   all: unset;
   font-family: "Ubuntu Nerd Font";
-  font-size: 1.1rem;
+  font-size: 1.175rem;
   font-weight: 600;
 }
 
@@ -461,8 +461,9 @@ spinner:checked {
 }
 
 .menu-switch {
+  font-size: 1.3rem;
   background-color: #313244;
-  border-radius: 0.3rem;
+  border-radius: 0.2em;
 }
 .menu-switch:checked {
   background: #89dceb;
@@ -470,16 +471,16 @@ spinner:checked {
 .menu-switch trough highlight,
 .menu-switch trough progress {
   background-color: #fab387;
-  border-radius: 0.3rem;
+  border-radius: 0.3em;
 }
 .menu-switch slider {
   box-shadow: none;
   background-color: #6c7086;
-  min-height: 1.2rem;
-  min-width: 1.2rem;
-  border: 0rem solid transparent;
-  border-radius: 0.3rem;
-  margin: 0.1rem 0.2rem;
+  min-height: 1em;
+  min-width: 1em;
+  border: 0em solid transparent;
+  border-radius: 0.2em;
+  margin: 0.1em 0.15em;
 }
 .menu-switch:hover trough {
   background: #313244;
@@ -505,13 +506,13 @@ tooltip label {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7rem;
-  min-width: 250px;
+  min-width: 400px;
   color: #cdd6f4;
 }
 
 .menu-items-container {
   border-radius: 0.4em;
-  min-width: 250px;
+  min-width: 400px;
 }
 
 .menu-section-container {
@@ -1078,13 +1079,14 @@ window#powermenu .powermenu.box {
 
 .menu-content-container.notifications {
   margin: 1.35em;
+  margin-bottom: 0em;
   min-height: 4em;
 }
 
 .notification-menu-controls {
   background: #1e1e2e;
   margin: 1em 1.3em;
-  margin-bottom: 0em;
+  margin-bottom: 0.5em;
   border-radius: 0.4em;
   padding: 0.4em 0.75em;
 }
@@ -1092,14 +1094,13 @@ window#powermenu .powermenu.box {
 .notification-card.menu {
   background: #1e1e2e;
   border: 0.15em solid #1e1e2e;
-  border-radius: 0.4em;
+  border-radius: 0em;
+  border-bottom-left-radius: 0.4em;
+  border-top-left-radius: 0.4em;
   margin: 0em;
 }
 
-.notification-card-content-container:first-child {
-  margin-top: 0.5em;
-}
-.notification-card-content-container:not(:last-child) {
+.notification-card-content-container {
   margin-bottom: 1em;
 }
 
@@ -1306,6 +1307,18 @@ window#powermenu .powermenu.box {
 }
 .menu-items-container.energy .brightness-container {
   padding-bottom: 1em;
+}
+.menu-items-container.energy .brightness-slider-icon {
+  font-size: 1.4em;
+  min-width: 1em;
+  min-height: 1em;
+  color: #9399b2;
+}
+.menu-items-container.energy .brightness-slider-label {
+  font-size: 0.9em;
+  min-width: 2.5em;
+  font-weight: bold;
+  margin-bottom: 0.2em;
 }
 
 .notification-card-container {

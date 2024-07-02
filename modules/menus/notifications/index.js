@@ -188,7 +188,7 @@ export default () => {
                   if (notifs.notifications.length <= 0) {
                     return (self.children = [
                       Widget.Box({
-                        vpack: "center",
+                        vpack: "start",
                         hpack: "center",
                         expand: true,
                         child: Widget.Label({

@@ -39,7 +39,7 @@ const Media = () => {
                   AlbumCover(curPlayer),
                   Widget.Box({
                     class_name: "media-indicator-right-section",
-                    hpack: "center",
+                    hpack: "fill",
                     hexpand: true,
                     vertical: true,
                     children: [

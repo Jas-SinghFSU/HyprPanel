@@ -1,5 +1,5 @@
 const mpris = await Service.import("mpris");
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 const Media = () => {
   const activePlayer = Variable(mpris.players[0]);

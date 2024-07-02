@@ -1,5 +1,5 @@
 const battery = await Service.import("battery");
-import { closeAllMenus } from "../bar.js";
+import { closeAllMenus } from "../index.js";
 
 const BatteryLabel = () => {
   const isVis = Variable(battery.available);
