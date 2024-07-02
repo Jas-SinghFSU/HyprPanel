@@ -17,12 +17,15 @@ const BatteryLabel = () => {
       class_name: "battery",
       visible: battery.bind("available"),
       children: [
-        // Widget.Icon({ icon }),
-        Widget.LevelBar({
-          widthRequest: 20,
-          vpack: "center",
-          value,
-        }),
+        Widget.Icon({ icon }),
+        Widget.Label({
+          label: battery.bind("percent").as((p) => (`${p}%`)),
+        })
+        // Widget.LevelBar({
+        //   widthRequest: 20,
+        //   vpack: "center",
+        //   value,
+        // }),
       ],
     }),
     isVis,
