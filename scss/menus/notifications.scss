@@ -30,7 +30,9 @@
 .notification-card.menu {
   background: $base;
   border: 0.15em solid $base;
-  border-radius: 0.4em;
+  border-radius: 0em;
+  border-bottom-left-radius: 0.4em;
+  border-top-left-radius: 0.4em;
   margin: 0em;
 }
 
