@@ -1071,13 +1071,14 @@ window#powermenu .powermenu.box {
 
 .menu-content-container.notifications {
   margin: 1.35em;
+  margin-bottom: 0em;
   min-height: 4em;
 }
 
 .notification-menu-controls {
   background: #1e1e2e;
   margin: 1em 1.3em;
-  margin-bottom: 0em;
+  margin-bottom: 0.5em;
   border-radius: 0.4em;
   padding: 0.4em 0.75em;
 }
@@ -1089,10 +1090,7 @@ window#powermenu .powermenu.box {
   margin: 0em;
 }
 
-.notification-card-content-container:first-child {
-  margin-top: 0.5em;
-}
-.notification-card-content-container:not(:last-child) {
+.notification-card-content-container {
   margin-bottom: 1em;
 }
 

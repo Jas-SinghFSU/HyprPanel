@@ -37,7 +37,6 @@ const Center = () => {
     spacing: 5,
     children: [
       BarItemBox(Media()),
-      // BarItemBox(Notification())
     ],
   });
 };
