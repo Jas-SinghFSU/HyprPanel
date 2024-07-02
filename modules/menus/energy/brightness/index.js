@@ -25,10 +25,14 @@ const Brightness = () => {
           class_name: "brightness-container",
           children: [
             Widget.Icon({
+              vexpand: true,
+              vpack: "center",
               class_name: "brightness-slider-icon",
               icon: icons.brightness.screen,
             }),
             Widget.Slider({
+              vpack: "center",
+              vexpand: true,
               value: brightness.bind("screen_value"),
               class_name: "menu-active-slider menu-slider brightness",
               draw_value: false,
@@ -38,6 +42,8 @@ const Brightness = () => {
               onChange: ({ value }) => (brightness.screen_value = value),
             }),
             Widget.Label({
+              vpack: "center",
+              vexpand: true,
               class_name: "brightness-slider-label",
               label: brightness
                 .bind("screen_value")

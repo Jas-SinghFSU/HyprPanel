@@ -44,4 +44,17 @@
     .brightness-container {
         padding-bottom: 1em;
     }
+
+    .brightness-slider-icon {
+        font-size: 1.4em;
+        min-width: 1em;
+        min-height: 1em;
+    }
+
+    .brightness-slider-label {
+        font-size: 0.9em;
+        min-width: 2.5em;
+        font-weight: bold;
+        margin-bottom: 0.2em;
+    }
 }
