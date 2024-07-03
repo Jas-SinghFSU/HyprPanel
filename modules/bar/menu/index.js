@@ -1,4 +1,4 @@
-import { exec } from "resource:///com/github/Aylur/ags/utils.js";
+import { closeAllMenus } from "../index.js";
 
 const Menu = () => {
   return {
@@ -10,7 +10,15 @@ const Menu = () => {
     }),
     isVisible: true,
     props: {
-      on_primary_click: () => exec("/home/jaskir/.config/hypr/scripts/rofi.sh"),
+      on_primary_click: (_, event) => {
+        const clickPos = event.get_root_coords();
+        const coords = [clickPos[1], clickPos[2]];
+
+        globalMousePos.value = coords;
+
+        closeAllMenus();
+        App.toggleWindow("dashboardmenu");
+      },
     },
   };
 };

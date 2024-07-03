@@ -92,6 +92,10 @@ const Layout = (name, child, transition) => ({
           hexpand: false,
           vertical: true,
         },
+        Padding(name, {
+          vexpand: false,
+          className: "event-top-padding",
+        }),
         PopupRevealer(name, child, transition),
         Padding(name),
       ),

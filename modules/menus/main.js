@@ -7,6 +7,8 @@ import MediaMenu from "./media/index.js";
 import NotificationsMenu from "./notifications/index.js";
 import CalendarMenu from "./calendar/index.js";
 import EnergyMenu from "./energy/index.js";
+import DashboardMenu from "./dashboard/index.js";
+
 export default [
   PowerMenu(),
   Verification(),
@@ -17,4 +19,5 @@ export default [
   NotificationsMenu(),
   CalendarMenu(),
   EnergyMenu(),
+  DashboardMenu(),
 ];

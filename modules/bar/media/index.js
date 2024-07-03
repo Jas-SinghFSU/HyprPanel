@@ -66,11 +66,8 @@ const Media = () => {
   return {
     component: Widget.Box({
       visible: false,
-      child: Widget.Button({
+      child: Widget.Box({
         class_name: "media",
-        on_primary_click: () => mpris.getPlayer("")?.playPause(),
-        on_scroll_up: () => mpris.getPlayer("")?.next(),
-        on_scroll_down: () => mpris.getPlayer("")?.previous(),
         child: Widget.Box({
           children: [
             Widget.Label({
@@ -91,6 +88,8 @@ const Media = () => {
     isVisible: false,
     name: "media",
     props: {
+      on_scroll_up: () => mpris.getPlayer("")?.next(),
+      on_scroll_down: () => mpris.getPlayer("")?.previous(),
       on_primary_click: (_, event) => {
         const clickPos = event.get_root_coords();
         const coords = [clickPos[1], clickPos[2]];
