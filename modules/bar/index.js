@@ -27,7 +27,7 @@ const Left = (monitor, wsMap) => {
     class_name: "box-left",
     hpack: "start",
     spacing: 5,
-    children: [Menu(), BarItemBox(Workspaces(monitor, wsMap, 10)), BarItemBox(ClientTitle())],
+    children: [BarItemBox(Menu()), BarItemBox(Workspaces(monitor, wsMap, 10)), BarItemBox(ClientTitle())],
   });
 };
 
@@ -64,7 +64,7 @@ const LeftAlt = (monitor, wsMap) => {
     class_name: "box-left",
     hpack: "start",
     spacing: 5,
-    children: [Menu(), BarItemBox(Workspaces(monitor, wsMap)), BarItemBox(ClientTitle())],
+    children: [BarItemBox(Menu()), BarItemBox(Workspaces(monitor, wsMap)), BarItemBox(ClientTitle())],
   });
 };
 
@@ -74,7 +74,6 @@ const CenterAlt = () => {
     spacing: 5,
     children: [
       BarItemBox(Media()),
-      // BarItemBox(Notification())
     ],
   });
 };

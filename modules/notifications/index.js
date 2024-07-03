@@ -1,8 +1,12 @@
 const notifs = await Service.import("notifications");
+import GLib from "gi://GLib";
 import icons from "../icons/index.js";
 
 export default () => {
   notifs.popupTimeout = 7000;
+
+  const time = (time, format = "%I:%M %p") =>
+    GLib.DateTime.new_from_unix_local(time).format(format);
 
   return Widget.Window({
     name: "notifications-window",
@@ -124,7 +128,13 @@ export default () => {
                       children: [
                         Widget.Box({
                           class_name: "notification-card-header",
+                          hpack: "start",
+                          children: [NotificationIcon(notif)],
+                        }),
+                        Widget.Box({
+                          class_name: "notification-card-header",
                           hexpand: true,
+                          hpack: "start",
                           vpack: "start",
                           children: [
                             Widget.Label({
@@ -132,7 +142,7 @@ export default () => {
                               hpack: "start",
                               hexpand: true,
                               vexpand: true,
-                              max_width_chars: !notifHasImg(notif) ? 27 : 20,
+                              max_width_chars: !notifHasImg(notif) ? 30 : 23,
                               truncate: "end",
                               wrap: true,
                               label: notif["summary"],
@@ -140,10 +150,15 @@ export default () => {
                           ],
                         }),
                         Widget.Box({
-                          class_name: "notification-card-header",
-                          hexpand: true,
+                          class_name: "notification-card-header menu",
                           hpack: "end",
-                          children: [NotificationIcon(notif)],
+                          vpack: "start",
+                          hexpand: true,
+                          child: Widget.Label({
+                            vexpand: true,
+                            class_name: "notification-time",
+                            label: time(notif.time),
+                          }),
                         }),
                       ],
                     }),

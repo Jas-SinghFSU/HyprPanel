@@ -1,9 +1,11 @@
 import PopupWindow from "../PopupWindow.js";
 const notifs = await Service.import("notifications");
 import icons from "../../icons/index.js";
+import GLib from "gi://GLib";
 
 export default () => {
-  notifs.popupTimeout = 5000;
+  const time = (time, format = "%I:%M %p") =>
+    GLib.DateTime.new_from_unix_local(time).format(format);
 
   return PopupWindow({
     name: "notificationsmenu",
@@ -141,9 +143,11 @@ export default () => {
                       ];
                     }
 
-                    return [Widget.Box({
-                      class_name: "spacer"
-                    })];
+                    return [
+                      Widget.Box({
+                        class_name: "spacer",
+                      }),
+                    ];
                   };
 
                   const NotificationIcon = ({
@@ -222,6 +226,12 @@ export default () => {
                                     Widget.Box({
                                       class_name:
                                         "notification-card-header menu",
+                                      hpack: "start",
+                                      children: [NotificationIcon(notif)],
+                                    }),
+                                    Widget.Box({
+                                      class_name:
+                                        "notification-card-header menu",
                                       hexpand: true,
                                       vpack: "start",
                                       children: [
@@ -232,8 +242,8 @@ export default () => {
                                           hexpand: true,
                                           vexpand: true,
                                           max_width_chars: !notifHasImg(notif)
-                                            ? 27
-                                            : 20,
+                                            ? 34
+                                            : 26,
                                           truncate: "end",
                                           wrap: true,
                                           label: notif["summary"],
@@ -243,9 +253,14 @@ export default () => {
                                     Widget.Box({
                                       class_name:
                                         "notification-card-header menu",
-                                      hexpand: true,
                                       hpack: "end",
-                                      children: [NotificationIcon(notif)],
+                                      vpack: "start",
+                                      hexpand: true,
+                                      child: Widget.Label({
+                                        vexpand: true,
+                                        class_name: "notification-time",
+                                        label: time(notif.time),
+                                      }),
                                     }),
                                   ],
                                 }),

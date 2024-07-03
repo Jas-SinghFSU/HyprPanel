@@ -7,70 +7,70 @@
   background: $crust;
   border: 0.13em solid $surface0;
   border-radius: 0.7em;
-}
+  margin-right: 0.45em;
 
-.window-content.notificationsmenu-window {
-  margin-right: 0.50em;
-}
+  .window-content.notificationsmenu-window {
+    margin-right: 0.50em;
+  }
 
-.menu-content-container.notifications {
-  margin: 1.35em;
-  margin-bottom: 0em;
-  min-height: 4em;
-}
+  .menu-content-container.notifications {
+    margin: 1.35em;
+    margin-bottom: 0em;
+    min-height: 4em;
+  }
 
-.notification-menu-controls {
-  background: $base;
-  margin: 1em 1.3em;
-  margin-bottom: 0.5em;
-  border-radius: 0.4em;
-  padding: 0.4em 0.75em;
-}
+  .notification-menu-controls {
+    background: $base;
+    margin: 1em 1.3em;
+    margin-bottom: 0.5em;
+    border-radius: 0.4em;
+    padding: 0.4em 0.75em;
+  }
 
-.notification-card.menu {
-  background: $base;
-  border: 0.15em solid $base;
-  border-radius: 0em;
-  border-bottom-left-radius: 0.4em;
-  border-top-left-radius: 0.4em;
-  margin: 0em;
-}
+  .notification-card.menu {
+    background: $base;
+    border: 0.15em solid $base;
+    border-radius: 0em;
+    border-bottom-left-radius: 0.4em;
+    border-top-left-radius: 0.4em;
+    margin: 0em;
+  }
 
-.notification-card-content-container {
+  .notification-card-content-container {
     margin-bottom: 1em;
-}
+  }
+  .notification-card-content {
+    margin-bottom: 0.25em;
+  }
 
-.menu-label-container.notifications {
-  margin: 0em;
-  padding: 0em;
-}
+  .menu-label.notifications {
+    margin: 0em;
+    color: $lavender;
+  }
 
-.menu-label.notifications {
-  margin: 0em;
-  color: $lavender;
-}
+  .menu-separator.notification-controls {
+    min-width: 0.1em;
+    background-color: $surface0;
+    margin: 0em 1em;
+  }
 
-.menu-separator.notification-controls {
-  min-width: 0.1em;
-  background-color: $surface0;
-  margin: 0em 1em;
-}
+  .menu-switch.notifications:checked {
+    &:checked {
+      background: $lavender;
+    }
+  }
 
-.menu-switch.notifications:checked {
-  &:checked {
-    background: $lavender;
+  .clear-notifications-button {
+    margin-right: 0.3em;
+
+    &:hover label {
+      color: $maroon;
+    }
+  }
+
+  .clear-notifications-label {
+    color: $red;
+    font-size: 1.5em;
   }
 }
 
-.clear-notifications-button {
-  margin-right: 0.3em;
-
-  &:hover label {
-    color: $maroon;
-  }
-}
-
-.clear-notifications-label {
-  color: $red;
-  font-size: 1.5em;
-}

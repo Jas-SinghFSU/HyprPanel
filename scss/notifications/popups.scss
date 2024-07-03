@@ -7,10 +7,10 @@
   color: $text;
   background: $mantle;
   margin-right: 0.45em;
-  border: 0.15em solid $surface0; 
-  min-width: 23.5em;
+  border: 0.15em solid transparentize($surface0, 0.5); 
+  min-width: 26em;
   min-height: 6rem;
-  border-radius: 0.3em;
+  border-radius: 0.6em;
 
   &:not(:first-child) {
     margin-top: 0.85em;
@@ -28,8 +28,8 @@
 }
 .notification-card-image {
   border-radius: 0.4em;
-  min-width: 2.5em;
-  min-height: 2.5em;
+  min-width: 1.5em;
+  min-height: 1.5em;
   padding: 0.85em 0.85em;
   background-size: contain;
   background-repeat: no-repeat;
@@ -40,11 +40,12 @@
   min-width: 2.9em;
   min-height: 2.9em;
   padding: 0.5em 0.5em;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .notification-card-content.noimg {
-  margin-left: 1.3em;
+  margin-left: 0.5em;
   margin-top: .15em;
 }
 
@@ -56,11 +57,12 @@
 
 .notification-card-body-label {
   font-size: 0.84em;
+  margin-bottom: 1em;
   font-weight: 600;
 }
 
 .notification-card-actions {
-  margin-top: 0.95em;
+  margin-top: 0.25em;
   margin-bottom: 0.4em;
 }
 
@@ -85,6 +87,11 @@
   font-size: 1.3em;
 }
 
+.notification-time {
+  font-size: 0.85em;
+  color: $overlay1;
+}
+
 .close-notification-button {
   background: $red;
   color: $crust;
@@ -98,8 +105,4 @@
   &:hover {
     background: $maroon;
   }
-}
-
-.spacer {
-  margin-bottom: 0.75em;
 }

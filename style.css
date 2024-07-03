@@ -276,8 +276,7 @@ spinner:checked {
 
 .bar-menu_label {
   color: #94e2d5;
-  margin-right: 1.5rem;
-  font-size: 2rem;
+  font-size: 1.3em;
 }
 
 .bar-volume_icon {
@@ -992,8 +991,8 @@ window#powermenu .powermenu.box {
 }
 .menu-items-container.media .media-indicator-current-album-cover {
   border-radius: 0.25em;
-  min-width: 8.5em;
-  min-height: 8.5em;
+  min-width: 9.5em;
+  min-height: 9.5em;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -1071,27 +1070,24 @@ window#powermenu .powermenu.box {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7em;
+  margin-right: 0.45em;
 }
-
-.window-content.notificationsmenu-window {
+.notification-card-container.menu .window-content.notificationsmenu-window {
   margin-right: 0.5em;
 }
-
-.menu-content-container.notifications {
+.notification-card-container.menu .menu-content-container.notifications {
   margin: 1.35em;
   margin-bottom: 0em;
   min-height: 4em;
 }
-
-.notification-menu-controls {
+.notification-card-container.menu .notification-menu-controls {
   background: #1e1e2e;
   margin: 1em 1.3em;
   margin-bottom: 0.5em;
   border-radius: 0.4em;
   padding: 0.4em 0.75em;
 }
-
-.notification-card.menu {
+.notification-card-container.menu .notification-card.menu {
   background: #1e1e2e;
   border: 0.15em solid #1e1e2e;
   border-radius: 0em;
@@ -1099,39 +1095,31 @@ window#powermenu .powermenu.box {
   border-top-left-radius: 0.4em;
   margin: 0em;
 }
-
-.notification-card-content-container {
+.notification-card-container.menu .notification-card-content-container {
   margin-bottom: 1em;
 }
-
-.menu-label-container.notifications {
-  margin: 0em;
-  padding: 0em;
+.notification-card-container.menu .notification-card-content {
+  margin-bottom: 0.25em;
 }
-
-.menu-label.notifications {
+.notification-card-container.menu .menu-label.notifications {
   margin: 0em;
   color: #b4befe;
 }
-
-.menu-separator.notification-controls {
+.notification-card-container.menu .menu-separator.notification-controls {
   min-width: 0.1em;
   background-color: #313244;
   margin: 0em 1em;
 }
-
-.menu-switch.notifications:checked:checked {
+.notification-card-container.menu .menu-switch.notifications:checked:checked {
   background: #b4befe;
 }
-
-.clear-notifications-button {
+.notification-card-container.menu .clear-notifications-button {
   margin-right: 0.3em;
 }
-.clear-notifications-button:hover label {
+.notification-card-container.menu .clear-notifications-button:hover label {
   color: #eba0ac;
 }
-
-.clear-notifications-label {
+.notification-card-container.menu .clear-notifications-label {
   color: #f38ba8;
   font-size: 1.5em;
 }
@@ -1329,10 +1317,10 @@ window#powermenu .powermenu.box {
   color: #cdd6f4;
   background: #181825;
   margin-right: 0.45em;
-  border: 0.15em solid #313244;
-  min-width: 23.5em;
+  border: 0.15em solid rgba(49, 50, 68, 0.5);
+  min-width: 26em;
   min-height: 6rem;
-  border-radius: 0.3em;
+  border-radius: 0.6em;
 }
 .notification-card:not(:first-child) {
   margin-top: 0.85em;
@@ -1349,8 +1337,8 @@ window#powermenu .powermenu.box {
 
 .notification-card-image {
   border-radius: 0.4em;
-  min-width: 2.5em;
-  min-height: 2.5em;
+  min-width: 1.5em;
+  min-height: 1.5em;
   padding: 0.85em 0.85em;
   background-size: contain;
   background-repeat: no-repeat;
@@ -1361,11 +1349,12 @@ window#powermenu .powermenu.box {
   min-width: 2.9em;
   min-height: 2.9em;
   padding: 0.5em 0.5em;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .notification-card-content.noimg {
-  margin-left: 1.3em;
+  margin-left: 0.5em;
   margin-top: 0.15em;
 }
 
@@ -1377,11 +1366,12 @@ window#powermenu .powermenu.box {
 
 .notification-card-body-label {
   font-size: 0.84em;
+  margin-bottom: 1em;
   font-weight: 600;
 }
 
 .notification-card-actions {
-  margin-top: 0.95em;
+  margin-top: 0.25em;
   margin-bottom: 0.4em;
 }
 
@@ -1404,6 +1394,11 @@ window#powermenu .powermenu.box {
   font-size: 1.3em;
 }
 
+.notification-time {
+  font-size: 0.85em;
+  color: #7f849c;
+}
+
 .close-notification-button {
   background: #f38ba8;
   color: #11111b;
@@ -1415,10 +1410,6 @@ window#powermenu .powermenu.box {
 }
 .close-notification-button:hover {
   background: #eba0ac;
-}
-
-.spacer {
-  margin-bottom: 0.75em;
 }
 
 /*# sourceMappingURL=style.css.map */
