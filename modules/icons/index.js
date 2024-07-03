@@ -146,6 +146,7 @@ export default {
     sunny: "weather-clear-symbolic",
     clear: "weather-clear-night-symbolic",
     partly_cloudy: "weather-few-clouds-symbolic",
+    partly_cloudy_night: "weather-few-clouds-night-symbolic",
     cloudy: "weather-overcast-symbolic",
     overcast: "weather-overcast-symbolic",
     mist: "weather-overcast-symbolic",

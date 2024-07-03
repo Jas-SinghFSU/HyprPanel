@@ -98,12 +98,15 @@ const WeatherWidget = () => {
                     Widget.Icon({
                       class_name: "calendar-menu-weather today icon",
                       icon: theWeather.bind("value").as((v) => {
-                        return icons.weather[
-                          v.current.condition.text
+                        let iconQuery = v.current.condition.text
                             .trim()
                             .toLowerCase()
                             .replaceAll(" ", "_")
-                        ];
+
+                        if (!v.current.isDay && iconQuery === "partly_cloudy") {
+                          iconQuery = "partly_cloudy_night";
+                        }
+                        return icons.weather[iconQuery];
                       }),
                     }),
                   ],
@@ -275,12 +278,16 @@ const WeatherWidget = () => {
                             (h) => h.time_epoch === nextEpoch,
                           );
 
-                        return icons.weather[
-                          weatherAtEpoch?.condition.text
+                        let iconQuery = weatherAtEpoch?.condition.text
                             .trim()
                             .toLowerCase()
                             .replaceAll(" ", "_")
-                        ];
+
+                        if (!weatherAtEpoch?.isDay && iconQuery === "partly_cloudy") {
+                          iconQuery = "partly_cloudy_night";
+                        }
+
+                        return icons.weather[iconQuery];
                       }),
                     }),
                     Widget.Label({
