@@ -34,7 +34,7 @@ const Media = () => {
                 )[0];
               }
 
-              if (curPlayer && curPlayer.play_back_status !== "Stopped") {
+              if (media.players.length && curPlayer && curPlayer.play_back_status !== "Stopped") {
                 return (self.children = [
                   AlbumCover(curPlayer),
                   Widget.Box({
