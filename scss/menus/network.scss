@@ -9,6 +9,14 @@
         color: $mauve;
     }
 
+    .menu-icon-button.network {
+        margin: 1em;
+
+        &:hover {
+            color: $mauve;
+        }
+    }
+
     .network-icon {
         font-size: 1.3em;
         min-width: 1em;

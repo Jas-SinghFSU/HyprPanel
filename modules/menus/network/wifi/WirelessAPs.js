@@ -30,8 +30,24 @@ const renderWAPs = (self, network, staging, connecting) => {
       [network.bind("wifi"), staging.bind("value"), connecting.bind("value")],
       () => {
         // Sometimes the network service will yield a "this._device is undefined" when 
-        // trying to access the "access_points" property. So we must check if it exists.
-        const WAPs = Object.hasOwnProperty.call(network.wifi, "access_points") ? network.wifi.access_points : [];
+        // trying to access the "access_points" property. So we must validate that
+        // it's not 'undefined'
+        let WAPs = network.wifi["access_points"] !== undefined
+          ? network.wifi["access-points"]
+          : [];
+
+        const dedupeWAPs = () => {
+          const dedupMap = {};
+          WAPs.forEach((item) => {
+            if (!Object.hasOwnProperty.call(dedupMap, item.ssid)) {
+              dedupMap[item.ssid] = item;
+            }
+          })
+
+          return Object.keys(dedupMap).map(itm => dedupMap[itm]);
+        }
+
+        WAPs = dedupeWAPs();
 
         const isInStaging = (wap) => {
           if (Object.keys(staging.value).length === 0) {
@@ -49,7 +65,9 @@ const renderWAPs = (self, network, staging, connecting) => {
         };
 
         const filteredWAPs = WAPs.filter(
-          (ap) => ap.ssid !== "Unknown" && !isInStaging(ap),
+          (ap) => {
+            return ap.ssid !== "Unknown" && !isInStaging(ap)
+          },
         ).sort((a, b) => {
           if (network.wifi.ssid === a.ssid) {
             return -1;
@@ -136,7 +154,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                                 class_name: "connection-status dim",
                                 label:
                                   WifiStatusMap[
-                                    network.wifi.state.toLowerCase()
+                                  network.wifi.state.toLowerCase()
                                   ],
                               }),
                             }),

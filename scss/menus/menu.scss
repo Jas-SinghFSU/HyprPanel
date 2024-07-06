@@ -94,13 +94,13 @@ tooltip label {
     background: $crust;
     border: .13em solid $surface0;
     border-radius: .7rem;
-    min-width: 400px;
+    min-width: 275px;
     color: $text;
 }
 
 .menu-items-container {
     border-radius: 0.4em;
-    min-width: 400px;
+    min-width: 275px;
 }
 
 .menu-section-container {
@@ -251,4 +251,15 @@ tooltip label {
 .event-top-padding * {
     min-height: 0em;
     margin-top: 2.8em;
+}
+
+@keyframes spin {
+to { -gtk-icon-transform: rotate(1turn); }
+}
+
+image.spinning {
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
