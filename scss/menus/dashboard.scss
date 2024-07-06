@@ -1,0 +1,64 @@
+@import "../colors";
+
+.dashboard-content-items {
+    min-width: 30em;
+    background: $crust;
+    border: 0.13em solid $surface0;
+    border-radius: 0.7em;
+
+    .dashboard-card {
+        background: $base;
+        margin: 1.3em;
+        border-radius: 0.4em;
+        padding: 1.5em;
+    }
+
+    .profile-picture-container {
+        .profile-picture {
+            font-size: 10em;
+        }
+        .profile-name {
+            font-size: 1.5em;
+            color: $pink;
+            margin-top: 0.75em;
+        }
+    }
+
+    .power-menu-container {
+        margin-left: 0em;
+
+        .dashboard-button {
+            min-width: 2.5em;
+            min-height: 2.5em;
+            border-radius: 0.4em;
+
+            &:not(:last-child) {
+                margin-bottom: 1em;
+            }
+
+            image {
+                color: $base;
+                font-size: 1.5em;
+            }
+
+            &.shutdown {
+                background: $red;
+            }
+            &.restart {
+                background: $peach;
+            }
+            &.lock {
+                background: $green;
+            }
+            &.sleep {
+                background: $sky;
+            }
+
+            &:hover {
+                background: $mauve;
+            }
+
+        }
+    }
+
+}
