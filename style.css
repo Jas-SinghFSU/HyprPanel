@@ -654,6 +654,18 @@ tooltip label {
   margin-top: 2.8em;
 }
 
+@keyframes spin {
+  to {
+    -gtk-icon-transform: rotate(1turn);
+  }
+}
+image.spinning {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
 window#powermenu,
 window#verification {
   background-color: rgba(0, 0, 0, 0.4);
@@ -851,6 +863,12 @@ window#powermenu .powermenu.box {
 .menu-items-container.network .menu-label {
   color: #cba6f7;
 }
+.menu-items-container.network .menu-icon-button.network {
+  margin: 1em;
+}
+.menu-items-container.network .menu-icon-button.network:hover {
+  color: #cba6f7;
+}
 .menu-items-container.network .network-icon {
   font-size: 1.3em;
   min-width: 1em;
@@ -926,17 +944,6 @@ window#powermenu .powermenu.box {
 .menu-items-container.bluetooth button.search {
   font-size: 0.8em;
   margin-bottom: 0em;
-}
-@keyframes spin {
-  to {
-    -gtk-icon-transform: rotate(1turn);
-  }
-}
-.menu-items-container.bluetooth button.search image.spinning {
-  animation-name: spin;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
 }
 .menu-items-container.bluetooth button.search image {
   color: #cdd6f4;
@@ -1306,6 +1313,205 @@ window#powermenu .powermenu.box {
   min-width: 2.5em;
   font-weight: bold;
   margin-bottom: 0.2em;
+}
+
+.dashboard-content-items {
+  min-width: 26.5em;
+  background: #11111b;
+  border: 0.13em solid #313244;
+  border-radius: 0.7em;
+}
+.dashboard-content-items button {
+  border-radius: 0.4em;
+}
+.dashboard-content-items .dashboard-card {
+  background: #1e1e2e;
+  margin: 1.3em;
+  border-radius: 0.4em;
+  padding: 1.5em;
+}
+.dashboard-content-items .profile-picture-container .profile-picture {
+  font-size: 7.5em;
+}
+.dashboard-content-items .profile-picture-container .profile-name {
+  font-size: 1.5em;
+  color: #f5c2e7;
+  margin-top: 0.75em;
+}
+.dashboard-content-items .power-menu-container {
+  margin-left: 0em;
+}
+.dashboard-content-items .power-menu-container .dashboard-button {
+  min-width: 3em;
+  min-height: 2.5em;
+}
+.dashboard-content-items .power-menu-container .dashboard-button:not(:last-child) {
+  margin-bottom: 0.75em;
+}
+.dashboard-content-items .power-menu-container .dashboard-button image {
+  color: #1e1e2e;
+  font-size: 1.5em;
+}
+.dashboard-content-items .power-menu-container .dashboard-button.shutdown {
+  background: #f38ba8;
+}
+.dashboard-content-items .power-menu-container .dashboard-button.restart {
+  background: #fab387;
+}
+.dashboard-content-items .power-menu-container .dashboard-button.lock {
+  background: #a6e3a1;
+}
+.dashboard-content-items .power-menu-container .dashboard-button.sleep {
+  background: #89dceb;
+}
+.dashboard-content-items .power-menu-container .dashboard-button:hover {
+  background: #cba6f7;
+}
+.dashboard-content-items .shortcuts-container .dashboard-card {
+  padding: 1.5em;
+}
+.dashboard-content-items .shortcuts-container .dashboard-card button {
+  min-height: 2.5em;
+  min-width: 2.5em;
+}
+.dashboard-content-items .shortcuts-container .card-button-left-section {
+  margin-right: 1.5em;
+}
+.dashboard-content-items .shortcuts-container .top-button {
+  margin-bottom: 1.5em;
+}
+.dashboard-content-items .shortcuts-container .container {
+  margin-top: 0em;
+}
+.dashboard-content-items .shortcuts-container .container.most-used {
+  margin-right: 0em;
+}
+.dashboard-content-items .shortcuts-container .container button {
+  background: #b4befe;
+  color: #1e1e2e;
+  min-height: 3em;
+}
+.dashboard-content-items .shortcuts-container .container button label {
+  font-size: 1.5em;
+}
+.dashboard-content-items .shortcuts-container .container button.record.active {
+  background: #f38ba8;
+}
+.dashboard-content-items .shortcuts-container .container button:hover {
+  background: #f5c2e7;
+}
+.dashboard-content-items .controls-container.dashboard-card {
+  margin-top: 0em;
+}
+.dashboard-content-items .controls-container button {
+  background: #f38ba8;
+  padding: 0em;
+  min-height: 3em;
+}
+.dashboard-content-items .controls-container button label {
+  color: #1e1e2e;
+  font-size: 1.6em;
+}
+.dashboard-content-items .controls-container button:not(:last-child) {
+  margin-right: 1em;
+}
+.dashboard-content-items .controls-container button.wifi {
+  background: #cba6f7;
+}
+.dashboard-content-items .controls-container button.bluetooth {
+  background: #89dceb;
+}
+.dashboard-content-items .controls-container button.notifications {
+  background: #f9e2af;
+}
+.dashboard-content-items .controls-container button.playback {
+  background: #eba0ac;
+}
+.dashboard-content-items .controls-container button.input {
+  background: #f5c2e7;
+}
+.dashboard-content-items .controls-container button:hover {
+  background: #585b70;
+}
+.dashboard-content-items .controls-container button.disabled {
+  background: #585b70;
+}
+.dashboard-content-items .controls-container button.disabled.wifi:hover {
+  background: #cba6f7;
+}
+.dashboard-content-items .controls-container button.disabled.bluetooth:hover {
+  background: #89dceb;
+}
+.dashboard-content-items .controls-container button.disabled.notifications:hover {
+  background: #f9e2af;
+}
+.dashboard-content-items .controls-container button.disabled.playback:hover {
+  background: #eba0ac;
+}
+.dashboard-content-items .controls-container button.disabled.input:hover {
+  background: #f5c2e7;
+}
+.dashboard-content-items .stats-container {
+  margin-top: 0em;
+}
+.dashboard-content-items .stats-container .stat label {
+  margin-right: 1em;
+  font-size: 1.5em;
+}
+.dashboard-content-items .stats-container .stat.cpu label {
+  color: #eba0ac;
+}
+.dashboard-content-items .stats-container .stat.ram label {
+  color: #f9e2af;
+}
+.dashboard-content-items .stats-container .stat.gpu label {
+  color: #a6e3a1;
+}
+.dashboard-content-items .stats-container .stat.storage label {
+  color: #f5c2e7;
+}
+.dashboard-content-items .stats-container .stat .stats-bar levelbar * {
+  transition: 200ms;
+}
+.dashboard-content-items .stats-container .stat .stats-bar trough {
+  min-height: 1.2em;
+}
+.dashboard-content-items .stats-container .stat .stats-bar block {
+  border-radius: 0.4em;
+}
+.dashboard-content-items .stats-container .stat .stats-bar block.empty {
+  background: #45475a;
+}
+.dashboard-content-items .stats-container .stat .stats-bar block.filled {
+  padding-left: 0.85em;
+}
+.dashboard-content-items .stats-container .stat.cpu .stats-bar block.filled {
+  background: #eba0ac;
+}
+.dashboard-content-items .stats-container .stat.ram .stats-bar block.filled {
+  background: #f9e2af;
+}
+.dashboard-content-items .stats-container .stat.gpu .stats-bar block.filled {
+  background: #a6e3a1;
+}
+.dashboard-content-items .stats-container .stat.storage .stats-bar block.filled {
+  background: #f5c2e7;
+}
+.dashboard-content-items .stats-container .stat-value {
+  margin-bottom: 0.75em;
+  font-size: 0.9em;
+}
+.dashboard-content-items .stats-container .stat-value.cpu {
+  color: #eba0ac;
+}
+.dashboard-content-items .stats-container .stat-value.ram {
+  color: #f9e2af;
+}
+.dashboard-content-items .stats-container .stat-value.gpu {
+  color: #a6e3a1;
+}
+.dashboard-content-items .stats-container .stat-value.storage {
+  color: #f5c2e7;
 }
 
 .notification-card-container {

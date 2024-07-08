@@ -29,12 +29,14 @@ const renderWAPs = (self, network, staging, connecting) => {
     Utils.merge(
       [network.bind("wifi"), staging.bind("value"), connecting.bind("value")],
       () => {
-        // Sometimes the network service will yield a "this._device is undefined" when 
+        // Sometimes the network service will yield a "this._device is undefined" when
         // trying to access the "access_points" property. So we must validate that
         // it's not 'undefined'
-        let WAPs = network.wifi["access_points"] !== undefined
-          ? network.wifi["access-points"]
-          : [];
+        let WAPs =
+          Object.hasOwnProperty.call(network.wifi, "access_points") &&
+          network.wifi["access_points"] !== undefined
+            ? network.wifi["access-points"]
+            : [];
 
         const dedupeWAPs = () => {
           const dedupMap = {};
@@ -42,10 +44,10 @@ const renderWAPs = (self, network, staging, connecting) => {
             if (!Object.hasOwnProperty.call(dedupMap, item.ssid)) {
               dedupMap[item.ssid] = item;
             }
-          })
+          });
 
-          return Object.keys(dedupMap).map(itm => dedupMap[itm]);
-        }
+          return Object.keys(dedupMap).map((itm) => dedupMap[itm]);
+        };
 
         WAPs = dedupeWAPs();
 
@@ -64,11 +66,9 @@ const renderWAPs = (self, network, staging, connecting) => {
           return false;
         };
 
-        const filteredWAPs = WAPs.filter(
-          (ap) => {
-            return ap.ssid !== "Unknown" && !isInStaging(ap)
-          },
-        ).sort((a, b) => {
+        const filteredWAPs = WAPs.filter((ap) => {
+          return ap.ssid !== "Unknown" && !isInStaging(ap);
+        }).sort((a, b) => {
           if (network.wifi.ssid === a.ssid) {
             return -1;
           }
@@ -154,7 +154,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                                 class_name: "connection-status dim",
                                 label:
                                   WifiStatusMap[
-                                  network.wifi.state.toLowerCase()
+                                    network.wifi.state.toLowerCase()
                                   ],
                               }),
                             }),
@@ -165,7 +165,8 @@ const renderWAPs = (self, network, staging, connecting) => {
                     Widget.Revealer({
                       hpack: "end",
                       vpack: "start",
-                      reveal_child: ap.bssid === connecting.value || isDisconnecting(ap),
+                      reveal_child:
+                        ap.bssid === connecting.value || isDisconnecting(ap),
                       child: Widget.Spinner({
                         vpack: "start",
                         class_name: "spinner wap",

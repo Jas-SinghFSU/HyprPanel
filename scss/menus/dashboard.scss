@@ -1,10 +1,14 @@
 @import "../colors";
 
 .dashboard-content-items {
-    min-width: 30em;
+    min-width: 26.5em;
     background: $crust;
     border: 0.13em solid $surface0;
     border-radius: 0.7em;
+
+    button {
+        border-radius: 0.4em;
+    }
 
     .dashboard-card {
         background: $base;
@@ -15,7 +19,7 @@
 
     .profile-picture-container {
         .profile-picture {
-            font-size: 10em;
+            font-size: 7.5em;
         }
         .profile-name {
             font-size: 1.5em;
@@ -28,12 +32,11 @@
         margin-left: 0em;
 
         .dashboard-button {
-            min-width: 2.5em;
+            min-width: 3em;
             min-height: 2.5em;
-            border-radius: 0.4em;
 
             &:not(:last-child) {
-                margin-bottom: 1em;
+                margin-bottom: 0.75em;
             }
 
             image {
@@ -61,4 +64,189 @@
         }
     }
 
+    .shortcuts-container {
+        .dashboard-card {
+            padding: 1.5em;
+            button {
+                min-height: 2.5em;
+                min-width: 2.5em;
+            }
+        }
+
+        .card-button-left-section {
+            margin-right: 1.5em;
+        }
+
+        .top-button {
+            margin-bottom: 1.5em;
+        }
+
+        .container {
+            margin-top: 0em;
+
+            &.most-used {
+                margin-right: 0em;
+            }
+
+            button {
+                background: $lavender;
+                color: $base;
+                min-height: 3em;
+
+
+                label {
+                    font-size: 1.5em;
+                }
+
+                &.record.active {
+                    background: $red;
+                }
+
+                &:hover {
+                    background: $pink;
+                }
+            }
+        }
+    }
+
+    .controls-container {
+        &.dashboard-card {
+            margin-top: 0em;
+            // padding: 1em;
+        }
+
+        button {
+            background: $red;
+            padding: 0em;
+            min-height: 3em;
+
+            label {
+                color: $base;
+                font-size: 1.6em;
+            }
+
+            &:not(:last-child) {
+                margin-right: 1em;
+            }
+            
+            &.wifi {
+                background: $mauve;
+            }
+            &.bluetooth {
+                background: $sky;
+            }
+            &.notifications {
+                background: $yellow;
+            }
+            &.playback {
+                background: $maroon;
+            }
+            &.input {
+                background: $pink;
+            }
+            &:hover {
+                background: $surface2;
+            }
+            &.disabled {
+                background: $surface2;
+                &.wifi:hover {
+                    background: $mauve;
+                }
+                &.bluetooth:hover {
+                    background: $sky;
+                }
+                &.notifications:hover {
+                    background: $yellow;
+                }
+                &.playback:hover {
+                    background: $maroon;
+                }
+                &.input:hover {
+                    background: $pink;
+                }
+            }
+        }
+    }
+
+    .stats-container {
+        margin-top: 0em;
+
+        .stat {
+            label {
+                margin-right: 1em;
+                font-size: 1.5em;
+            }
+
+            &.cpu label{
+                color: $maroon;
+            }
+            &.ram label{
+                color: $yellow;
+            }
+            &.gpu label{
+                color: $green;
+            }
+            &.storage label{
+                color: $pink;
+            }
+
+            .stats-bar {
+                levelbar * {
+                    transition: 200ms;
+                }
+
+                trough {
+                    min-height: 1.2em;
+                }
+
+                block {
+                    border-radius: 0.4em;
+
+                    &.empty {
+                        background: $surface1;
+                    }
+
+                    &.filled {
+                        padding-left: 0.85em;
+                    }
+                }
+            }
+
+            &.cpu .stats-bar block.filled {
+                background: $maroon;
+            }
+
+            &.ram .stats-bar block.filled {
+                background: $yellow;
+            }
+
+            &.gpu .stats-bar block.filled {
+                background: $green;
+            }
+
+            &.storage .stats-bar block.filled {
+                background: $pink;
+            }
+        }
+
+        .stat-value {
+            margin-bottom: 0.75em;
+            font-size: 0.9em;
+            &.cpu {
+                color: $maroon;
+            }
+
+            &.ram {
+                color: $yellow;
+            }
+
+            &.gpu {
+                color: $green;
+            }
+
+            &.storage {
+                color: $pink;
+            }
+        }
+    }
 }
