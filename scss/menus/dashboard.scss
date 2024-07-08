@@ -100,6 +100,10 @@
 
                 &.record.active {
                     background: $red;
+
+                    &:hover {
+                        background: $green;
+                    }
                 }
 
                 &:hover {
@@ -196,7 +200,7 @@
                 }
 
                 trough {
-                    min-height: 1.2em;
+                    min-height: 1.05em;
                 }
 
                 block {

@@ -123,7 +123,13 @@ export default () => {
                               hexpand: true,
                               class_name: "notification-action-buttons menu",
                               on_primary_click: () => {
-                                notif.invoke(action.id);
+                                if (action.id.includes("scriptAction:-")) {
+                                  Utils.execAsync(
+                                    `${action.id.replace("scriptAction:-", "")}`,
+                                  ).catch((err) => console.error(err));
+                                } else {
+                                  notif.invoke(action.id);
+                                }
                               },
                               child: Widget.Box({
                                 hpack: "center",

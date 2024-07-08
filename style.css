@@ -1397,6 +1397,9 @@ window#powermenu .powermenu.box {
 .dashboard-content-items .shortcuts-container .container button.record.active {
   background: #f38ba8;
 }
+.dashboard-content-items .shortcuts-container .container button.record.active:hover {
+  background: #a6e3a1;
+}
 .dashboard-content-items .shortcuts-container .container button:hover {
   background: #f5c2e7;
 }
@@ -1474,7 +1477,7 @@ window#powermenu .powermenu.box {
   transition: 200ms;
 }
 .dashboard-content-items .stats-container .stat .stats-bar trough {
-  min-height: 1.2em;
+  min-height: 1.05em;
 }
 .dashboard-content-items .stats-container .stat .stats-bar block {
   border-radius: 0.4em;

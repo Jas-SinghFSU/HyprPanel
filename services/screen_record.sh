@@ -1,9 +1,9 @@
 #!/bin/bash
 
-outputDir="$HOME/Videos"
+outputDir="$HOME/Videos/Screencasts"
 
 checkRecording() {
-    if pgrep -x "gpu-screen-recorder" > /dev/null; then
+    if pgrep -f "gpu-screen-recorder" > /dev/null; then
         return 0
     else
         return 1
@@ -16,38 +16,18 @@ startRecording() {
         exit 1
     fi
 
-    if [ -z "$2" ]; then
-        echo "Usage: $0 start {screen|window} [screen_name|window_id]"
-        exit 1
-    fi
+    target="$2"
 
-    mode="$2"
-    target="$3"
-
-    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mp4"
+    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mkv"
     outputPath="$outputDir/$outputFile"
     mkdir -p "$outputDir"
 
-    case "$mode" in
-        screen)
-            if [ -z "$target" ]; then
-                echo "Usage: $0 start screen [screen_name]"
-                exit 1
-            fi
-            gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
-            ;;
-        window)
-            if [ -z "$target" ]; then
-                echo "Usage: $0 start window [window_id]"
-                exit 1
-            fi
-            gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
-            ;;
-        *)
-            echo "Invalid mode. Use 'screen' or 'window'."
-            exit 1
-            ;;
-    esac
+    if [ -z "$target" ]; then
+        echo "Usage: $0 start screen [screen_name]"
+        exit 1
+    fi
+
+    gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
 
     echo "Recording started. Output will be saved to $outputPath"
 }
@@ -58,34 +38,33 @@ stopRecording() {
         exit 1
     fi
 
-    pkill -SIGINT gpu-screen-recorder
-    recentFile=$(ls -t "$outputDir"/recording_*.mp4 | head -n 1)
+    pkill -f gpu-screen-recorder
+    recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
     notify-send "Recording stopped" "Your recording has been saved." \
         -i video-x-generic \
         -a "Screen Recorder" \
         -t 10000 \
         -u normal \
-        --action="open_directory=xdg-open $outputDir" \
-        --action="play_recording=xdg-open $recentFile"
-    echo "Recording stopped. Output saved to $recentFile"
-}
+        --action="scriptAction:-dolphin $outputDir=Directory" \
+        --action="scriptAction:-xdg-open $recentFile=Play"
+        }
 
-case "$1" in
-    start)
-        startRecording "$@"
-        ;;
-    stop)
-        stopRecording
-        ;;
-    status)
-        if checkRecording; then
-            echo "A recording is in progress."
-        else
-            echo "No recording is in progress."
-        fi
-        ;;
-    *)
-        echo "Usage: $0 {start {screen|window} [screen_name|window_id]|stop|status}"
-        exit 1
-        ;;
-esac
+        case "$1" in
+            start)
+                startRecording "$@"
+                ;;
+            stop)
+                stopRecording
+                ;;
+            status)
+                if checkRecording; then
+                    echo "recording"
+                else
+                    echo "not recording"
+                fi
+                ;;
+            *)
+                echo "Usage: $0 {start [screen_name|window_id]|stop|status}"
+                exit 1
+                ;;
+        esac

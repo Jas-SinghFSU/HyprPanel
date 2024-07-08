@@ -9,7 +9,6 @@ import { Bluetooth } from "./bluetooth/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js"; 
 import { SysTray } from "./systray/index.js";
-import { Power } from "./power/index.js";
 
 import { BarItemBox } from "../shared/barItemBox.js";
 
@@ -52,9 +51,8 @@ const Right = () => {
       BarItemBox(Bluetooth()),
       BarItemBox(BatteryLabel()),
       BarItemBox(SysTray()),
-      BarItemBox(Notifications()),
       BarItemBox(Clock()),
-      BarItemBox(Power()),
+      BarItemBox(Notifications()),
     ],
   });
 };
@@ -86,7 +84,6 @@ const RightAlt = () => {
     children: [
       BarItemBox(Volume()),
       BarItemBox(Clock()),
-      BarItemBox(Power()),
     ],
   });
 };
