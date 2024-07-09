@@ -275,7 +275,7 @@ spinner:checked {
 }
 
 .bar-menu_label {
-  color: #94e2d5;
+  color: #f9e2af;
   font-size: 1.3em;
 }
 
@@ -337,8 +337,8 @@ spinner:checked {
   color: #89dceb;
 }
 .workspaces label.occupied {
-  background-color: #f9e2af;
-  color: #f9e2af;
+  background-color: #f2cdcd;
+  color: #f2cdcd;
   min-width: 4em;
   min-height: 4em;
 }
