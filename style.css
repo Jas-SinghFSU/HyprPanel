@@ -1096,6 +1096,7 @@ window#powermenu .powermenu.box {
 }
 .notification-card-container.menu .notification-card.menu {
   background: #1e1e2e;
+  min-width: 23.5em;
   border: 0.15em solid #1e1e2e;
   border-radius: 0em;
   border-bottom-left-radius: 0.4em;

@@ -140,6 +140,9 @@ export default () => {
                                     class_name:
                                       "notification-action-buttons-label menu",
                                     hexpand: true,
+                                    max_width_chars: 15,
+                                    truncate: "end",
+                                    wrap: true,
                                     label: action.label,
                                   }),
                                 ],

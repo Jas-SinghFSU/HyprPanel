@@ -157,8 +157,12 @@ const Shortcuts = () => {
             children: [
               Widget.Button({
                 class_name: "dashboard-button snapshot top-button",
-                on_primary_click: () =>
-                  handleClick("grimblast --notify copysave area"),
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  return Utils.execAsync(
+                    `${App.configDir}/services/snapshot.sh`,
+                  ).catch((err) => console.error(err));
+                },
                 child: Widget.Label({
                   class_name: "button-label",
                   label: "󰄀",
