@@ -127,6 +127,7 @@ export default () => {
                                   Utils.execAsync(
                                     `${action.id.replace("scriptAction:-", "")}`,
                                   ).catch((err) => console.error(err));
+                                  notifs.CloseNotification(notif.id);
                                 } else {
                                   notif.invoke(action.id);
                                 }

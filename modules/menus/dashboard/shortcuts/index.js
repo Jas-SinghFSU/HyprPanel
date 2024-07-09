@@ -25,6 +25,46 @@ const Shortcuts = () => {
       })
       .catch((err) => err);
   };
+
+  const recordingDropdown = Widget.Menu({
+    class_name: "dropdown recording",
+    hpack: "fill",
+    hexpand: true,
+    setup: (self) => {
+      self.hook(hyprland, () => {
+        const displays = hyprland.monitors.map((mon) => {
+          return Widget.MenuItem({
+            label: `Display ${mon.name}`,
+            on_activate: () => {
+              App.closeWindow("dashboardmenu");
+              Utils.execAsync(
+                `${App.configDir}/services/screen_record.sh start ${mon.name}`,
+              ).catch((err) => console.error(err));
+            },
+          });
+        });
+
+        const apps = hyprland.clients.map((clt) => {
+          return Widget.MenuItem({
+            label: `${clt.class.charAt(0).toUpperCase() + clt.class.slice(1)} (Workspace ${clt.workspace.name})`,
+            on_activate: () => {
+              App.closeWindow("dashboardmenu");
+              Utils.execAsync(
+                `${App.configDir}/services/screen_record.sh start ${clt.focusHistoryID}`,
+              ).catch((err) => console.error(err));
+            },
+          });
+        });
+
+        return (self.children = [
+          ...displays,
+          // Disabled since window recording isn't available on wayland
+          // ...apps
+        ]);
+      });
+    },
+  });
+
   return Widget.Box({
     class_name: "shortcuts-container",
     hpack: "fill",
@@ -130,16 +170,16 @@ const Shortcuts = () => {
                   .as((v) => `dashboard-button record ${v ? "active" : ""}`),
                 setup: (self) => {
                   self.hook(isRecording, () => {
-                    self.on_primary_click = () => {
-                      App.closeWindow("dashboardmenu");
+                    self.toggleClassName("hover", true);
+                    self.on_primary_click = (_, event) => {
                       if (isRecording.value === true) {
+                        App.closeWindow("dashboardmenu");
                         return Utils.execAsync(
                           `${App.configDir}/services/screen_record.sh stop`,
                         ).catch((err) => console.error(err));
+                      } else {
+                        recordingDropdown.popup_at_pointer(event);
                       }
-                      return Utils.execAsync(
-                        `${App.configDir}/services/screen_record.sh start ${hyprland.active.monitor.name}`,
-                      ).catch((err) => console.error(err));
                     };
                   });
                 },

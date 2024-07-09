@@ -1,3 +1,8 @@
+const network = await Service.import("network");
+const bluetooth = await Service.import("bluetooth");
+const notifications = await Service.import("notifications");
+const audio = await Service.import("audio");
+
 const Controls = () => {
   return Widget.Box({
     class_name: "dashboard-card controls-container",
@@ -7,37 +12,76 @@ const Controls = () => {
     children: [
       Widget.Button({
         expand: true,
-        class_name: "dashboard-button wifi",
+        setup: (self) => {
+          self.hook(network, () => {
+            return (self.class_name = `dashboard-button wifi ${!network.wifi.enabled ? "disabled" : ""}`);
+          });
+        },
+        on_primary_click: () => network.toggleWifi(),
         child: Widget.Label({
-          label: "󰤨",
+          setup: (self) => {
+            self.hook(network, () => {
+              return (self.label = network.wifi.enabled ? "󰤨" : "󰤭");
+            });
+          },
         }),
       }),
       Widget.Button({
         expand: true,
-        class_name: "dashboard-button bluetooth",
+        class_name: bluetooth
+          .bind("enabled")
+          .as(
+            (btOn) => `dashboard-button bluetooth ${!btOn ? "disabled" : ""}`,
+          ),
+        on_primary_click: () => bluetooth.toggle(),
         child: Widget.Label({
-          label: "󰂯",
+          label: bluetooth.bind("enabled").as((btOn) => (btOn ? "󰂯" : "󰂲")),
         }),
       }),
       Widget.Button({
         expand: true,
-        class_name: "dashboard-button notifications",
+        class_name: notifications
+          .bind("dnd")
+          .as(
+            (dnd) => `dashboard-button notifications ${dnd ? "disabled" : ""}`,
+          ),
+        on_primary_click: () => (notifications.dnd = !notifications.dnd),
         child: Widget.Label({
-          label: "󰂚",
+          label: notifications.bind("dnd").as((dnd) => (dnd ? "󰂛" : "󰂚")),
         }),
       }),
       Widget.Button({
         expand: true,
-        class_name: "dashboard-button playback",
+        on_primary_click: () =>
+          (audio.speaker.is_muted = !audio.speaker.is_muted),
+        setup: (self) => {
+          self.hook(audio, () => {
+            return (self.class_name = `dashboard-button playback ${audio.speaker.is_muted ? "disabled" : ""}`);
+          });
+        },
         child: Widget.Label({
-          label: "󰕾",
+          setup: (self) => {
+            self.hook(audio, () => {
+              return (self.label = audio.speaker.is_muted ? "󰖁" : "󰕾");
+            });
+          },
         }),
       }),
       Widget.Button({
         expand: true,
-        class_name: "dashboard-button input",
+        on_primary_click: () =>
+          (audio.microphone.is_muted = !audio.microphone.is_muted),
+        setup: (self) => {
+          self.hook(audio, () => {
+            return (self.class_name = `dashboard-button input ${audio.microphone.is_muted ? "disabled" : ""}`);
+          });
+        },
         child: Widget.Label({
-          label: "󰍬",
+          setup: (self) => {
+            self.hook(audio, () => {
+              return (self.label = audio.microphone.is_muted ? "󰍭" : "󰍬");
+            });
+          },
         }),
       }),
     ],

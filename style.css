@@ -362,7 +362,7 @@ spinner:checked {
 }
 
 .systray-menu {
-  background: #181825;
+  background: #11111b;
 }
 
 .systray-menu label {
@@ -1395,10 +1395,10 @@ window#powermenu .powermenu.box {
   font-size: 1.5em;
 }
 .dashboard-content-items .shortcuts-container .container button.record.active {
-  background: #f38ba8;
+  background: #a6e3a1;
 }
 .dashboard-content-items .shortcuts-container .container button.record.active:hover {
-  background: #a6e3a1;
+  background: #f38ba8;
 }
 .dashboard-content-items .shortcuts-container .container button:hover {
   background: #f5c2e7;
@@ -1517,6 +1517,10 @@ window#powermenu .powermenu.box {
   color: #f5c2e7;
 }
 
+.dropdown.recording {
+  color: red;
+  background-color: #11111b;
+}
 .notification-card-container {
   margin-top: 3.5rem;
 }

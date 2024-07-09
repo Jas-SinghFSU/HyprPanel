@@ -99,10 +99,10 @@
                 }
 
                 &.record.active {
-                    background: $red;
+                    background: $green;
 
                     &:hover {
-                        background: $green;
+                        background: $red;
                     }
                 }
 
@@ -116,7 +116,6 @@
     .controls-container {
         &.dashboard-card {
             margin-top: 0em;
-            // padding: 1em;
         }
 
         button {
@@ -252,5 +251,14 @@
                 color: $pink;
             }
         }
+    }
+}
+
+.dropdown.recording {
+    color: red;
+    background-color: $crust;
+
+    menuitem {
+
     }
 }
