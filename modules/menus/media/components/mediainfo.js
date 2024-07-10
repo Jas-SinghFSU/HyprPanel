@@ -19,7 +19,10 @@ const MediaInfo = (getPlayerInfo) => {
             setup: (self) => {
               self.hook(media, () => {
                 const curPlayer = getPlayerInfo();
-                return (self.label = curPlayer !== undefined ? curPlayer["track-title"] : "No media currently playing");
+                return (self.label =
+                  curPlayer !== undefined && curPlayer["track-title"].length
+                    ? curPlayer["track-title"]
+                    : "No Media Currently Playing");
               });
             },
           }),
@@ -37,7 +40,18 @@ const MediaInfo = (getPlayerInfo) => {
             setup: (self) => {
               self.hook(media, () => {
                 const curPlayer = getPlayerInfo();
-                return (self.label = curPlayer !== undefined ? curPlayer["track-artists"].join(', ') : "-----");
+
+                const makeArtistList = (trackArtists) => {
+                  if (trackArtists.length === 1 && !trackArtists[0].length) {
+                    return "-----";
+                  }
+
+                  return trackArtists.join(", ");
+                };
+                return (self.label =
+                  curPlayer !== undefined && curPlayer["track-artists"].length
+                    ? makeArtistList(curPlayer["track-artists"])
+                    : "-----");
               });
             },
           }),
@@ -55,7 +69,10 @@ const MediaInfo = (getPlayerInfo) => {
             setup: (self) => {
               self.hook(media, () => {
                 const curPlayer = getPlayerInfo();
-                return (self.label = curPlayer !== undefined ? curPlayer["track-album"] : "---");
+                return (self.label =
+                  curPlayer !== undefined && curPlayer["track-album"].length
+                    ? curPlayer["track-album"]
+                    : "---");
               });
             },
           }),

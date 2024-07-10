@@ -90,10 +90,11 @@
 
     trough {
       background: $surface2;
-      border-radius: 0.4em;
+      border-radius: 0.2em;
 
       highlight,
       progress {
+        border-radius: 0.2em;
         min-height: .85em;
         background: $lavender;
       }

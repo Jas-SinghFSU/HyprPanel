@@ -14,6 +14,9 @@ const Bar = (getPlayerInfo) => {
           draw_value: false,
           on_change: ({ value }) => {
             const foundPlayer = getPlayerInfo(media);
+            if (foundPlayer === undefined) {
+              return;
+            }
             return (foundPlayer.position = value * foundPlayer.length);
           },
           setup: (self) => {
@@ -32,7 +35,7 @@ const Bar = (getPlayerInfo) => {
             function updateTooltip() {
               const foundPlayer = getPlayerInfo(media);
               if (foundPlayer === undefined) {
-                return self.tooltip_text = '0:0'
+                return self.tooltip_text = '00:00'
               }
               const curHour = Math.floor(foundPlayer.position / 3600);
               const curMin = Math.floor((foundPlayer.position % 3600) / 60);

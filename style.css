@@ -1067,10 +1067,11 @@ window#powermenu .powermenu.box {
 }
 .menu-items-container.media .menu-slider.media.progress trough {
   background: #585b70;
-  border-radius: 0.4em;
+  border-radius: 0.2em;
 }
 .menu-items-container.media .menu-slider.media.progress trough highlight,
 .menu-items-container.media .menu-slider.media.progress trough progress {
+  border-radius: 0.2em;
   min-height: 0.85em;
   background: #b4befe;
 }
