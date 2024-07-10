@@ -131,7 +131,7 @@
             &:not(:last-child) {
                 margin-right: 1em;
             }
-            
+
             &.wifi {
                 background: $mauve;
             }
@@ -147,25 +147,40 @@
             &.input {
                 background: $pink;
             }
+            &.wifi:hover {
+                background: transparentize($mauve, 0.7);
+            }
+            &.bluetooth:hover {
+                background: transparentize($sky, 0.7);
+            }
+            &.notifications:hover {
+                background: transparentize($yellow, 0.7);
+            }
+            &.playback:hover {
+                background: transparentize($maroon, 0.7);
+            }
+            &.input:hover {
+                background: transparentize($pink, 0.7);
+            }
             &:hover {
-                background: $surface2;
+                background: $surface1;
             }
             &.disabled {
                 background: $surface2;
                 &.wifi:hover {
-                    background: $mauve;
+                    background: transparentize($mauve, 0.7);
                 }
                 &.bluetooth:hover {
-                    background: $sky;
+                    background: transparentize($sky, 0.7);
                 }
                 &.notifications:hover {
-                    background: $yellow;
+                    background: transparentize($yellow, 0.7);
                 }
                 &.playback:hover {
-                    background: $maroon;
+                    background: transparentize($maroon, 0.7);
                 }
                 &.input:hover {
-                    background: $pink;
+                    background: transparentize($pink, 0.7);
                 }
             }
         }

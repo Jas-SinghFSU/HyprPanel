@@ -10,10 +10,17 @@ $popover-padding: 0.6rem * 1.6;
 
 window#verification .verification {
     @include floating-widget;
+    background: $crust;
     padding: 0.35em * 1.6 * 1.5;
     min-width: 20em;
     min-height: 6em;
     font-size: 1.3em;
+
+    .verification-content {
+        background: $base;
+        border-radius: 0.4em;
+        padding: 1em;
+    }
 
     .text-box {
         margin-bottom: 0.3em;
@@ -33,45 +40,50 @@ window#verification .verification {
     }
 
     .verification-button {
-        background: $crust;
+        background: $base;
         padding: 0.7em 0em;
         margin: 0.4em 1.7em;
-        border: 0.15em solid;
-        border-color: $crust;
         border-radius: 0.3em;
         opacity: 1;
         transition: border-color 0.2s ease-in-out;
         transition: opacity .3s ease-in-out;
 
+        &.bar-verification_yes {
+            background-color: $green;
+        }
+        &.bar-verification_no {
+            background-color: $red;
+        }
+
         &:hover {
-            &.bar-verification_yes{
-                border-color: $green;
-                transition: border-color 0.2s ease-in-out;
+            &.bar-verification_yes {
+                background: $lavender;
+                transition: background-color 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                border-color: $red;
-                transition: border-color 0.2s ease-in-out;
+                background: $lavender;
+                transition: background-color 0.2s ease-in-out;
             }
         }
         &:focus {
             &.bar-verification_yes{
-                border-color: $green;
-                transition: border-color 0.2s ease-in-out;
+                background: $lavender;
+                transition: background 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                border-color: $red;
-                transition: border-color 0.2s ease-in-out;
+                background: $lavender;
+                transition: background 0.2s ease-in-out;
             }
         }
 
         &:active {
             &.bar-verification_yes {
-                border-color: rgba($green, 0.4);
-                transition: border-color 0.2s ease-in-out;
+                background: rgb($lavender, 0.4);
+                transition: background 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                border-color: rgba($red, 0.4);
-                transition: border-color 0.2s ease-in-out;
+                background: rgb($lavender, 0.4);
+                transition: background 0.2s ease-in-out;
             }
 
             image {
@@ -85,10 +97,10 @@ window#verification .verification {
         }
     }
     .bar-verification_no label {
-        color: $red;
+        color: $mantle;
     }
     .bar-verification_yes label {
-        color: $green;
+        color: $mantle;
     }
 }
 

@@ -1,4 +1,28 @@
-const MediaInfo = (curPlayer) => {
+const media = await Service.import("mpris");
+
+const MediaInfo = () => {
+  const curPlayer = Variable(media.players[0]);
+
+  media.connect("changed", () => {
+    const statusOrder = {
+      Playing: 1,
+      Paused: 2,
+      Stopped: 3,
+    };
+
+    const isPlaying = media.players.find(
+      (p) => p["play-back-status"] === "Playing",
+    );
+
+    if (isPlaying) {
+      curPlayer.value = media.players.sort(
+        (a, b) =>
+          statusOrder[a["play-back-status"]] -
+          statusOrder[b["play-back-status"]],
+      )[0];
+    }
+    console.log('changed');
+  });
   return Widget.Box({
     class_name: "media-indicator-current-media-info",
     hpack: "center",
@@ -11,10 +35,15 @@ const MediaInfo = (curPlayer) => {
         children: [
           Widget.Label({
             truncate: "end",
-            max_width_chars: 21,
+            max_width_chars: 35,
             wrap: true,
             class_name: "media-indicator-current-song-name-label",
-            label: curPlayer["track-title"],
+            setup: (self) => {
+              self.hook(curPlayer, () => {
+                console.log('did change')
+                return (self.label = curPlayer.value["track-title"]);
+              });
+            },
           }),
         ],
       }),
@@ -25,9 +54,14 @@ const MediaInfo = (curPlayer) => {
           Widget.Label({
             truncate: "end",
             wrap: true,
-            max_width_chars: 25,
+            max_width_chars: 35,
             class_name: "media-indicator-current-song-author-label",
-            label: curPlayer["track-artists"].join(", "),
+            setup: (self) => {
+              self.hook(curPlayer, () => {
+                console.log(JSON.stringify(curPlayer, null, 2));
+                return (self.label = curPlayer.value["track-title"]);
+              });
+            },
           }),
         ],
       }),
@@ -38,9 +72,13 @@ const MediaInfo = (curPlayer) => {
           Widget.Label({
             truncate: "end",
             wrap: true,
-            max_width_chars: 25,
+            max_width_chars: 40,
             class_name: "media-indicator-current-song-album-label",
-            label: curPlayer["track-album"],
+            setup: (self) => {
+              self.hook(curPlayer, () => {
+                return (self.label = curPlayer.value["track-album"]);
+              });
+            },
           }),
         ],
       }),

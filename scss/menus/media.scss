@@ -8,22 +8,19 @@
     margin: 1.3em 0em;
   }
 
-  .media-indicator-items {
-    margin: 1rem;
-    margin-bottom: 1.3rem;
+  .menu-items-section {
+    border-radius: 0.4em;
+    padding: 0em;
   }
 
-  .media-indicator-current-album-cover {
-    border-radius: 0.25em;
-    min-width: 9.5em;
-    min-height: 9.5em;
-    background-size: contain;
-    background-repeat: no-repeat;
+  .menu-content {
+    border-radius: 0.4em;
+    background-size: cover;
     background-position: center;
   }
 
-  .media-indicator-right-section {
-    margin-left: 2em;
+  .media-content {
+    margin: 1em;
   }
 
   .media-indicator-current-song-name {
@@ -66,7 +63,7 @@
     border-radius: 0.2rem;
 
     &.disabled {
-      background: $surface0;
+      background: $surface2;
     }
 
     &.enabled {
@@ -91,7 +88,7 @@
     margin-top: 1rem;
 
     trough {
-      background: $surface0;
+      background: $surface2;
       border-radius: 0.3rem;
 
       highlight,

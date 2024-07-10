@@ -1,4 +1,26 @@
-const Bar = (curPlayer) => {
+const media = await Service.import("mpris");
+
+const Bar = (getPlayerInfo) => {
+  media.connect("changed", () => {
+    const statusOrder = {
+      Playing: 1,
+      Paused: 2,
+      Stopped: 3,
+    };
+
+    const isPlaying = media.players.find(
+      (p) => p["play-back-status"] === "Playing",
+    );
+
+    if (isPlaying) {
+      curPlayer.value = media.players.sort(
+        (a, b) =>
+          statusOrder[a["play-back-status"]] -
+          statusOrder[b["play-back-status"]],
+      )[0];
+    }
+  });
+
   return Widget.Box({
     class_name: "media-indicator-current-progress-bar",
     hexpand: true,
@@ -11,34 +33,34 @@ const Bar = (curPlayer) => {
           class_name: "menu-slider media progress",
           draw_value: false,
           on_change: ({ value }) => {
-            return (curPlayer.position = value * curPlayer.length);
+            const foundPlayer = getPlayerInfo(media);
+            return (foundPlayer.position = value * foundPlayer.length);
           },
           setup: (self) => {
             const update = () => {
-              if (
-                typeof curPlayer.position === "number" &&
-                curPlayer.position > 0 &&
-                typeof curPlayer.length === "number" &&
-                curPlayer.length > 0
-              ) {
-                const value = curPlayer.position / curPlayer.length;
+              const foundPlayer = getPlayerInfo(media);
+              if (foundPlayer !== undefined) {
+                const value = foundPlayer.position / foundPlayer.length;
                 self.value = value > 0 ? value : 0;
               } else {
                 self.value = 0;
               }
             };
-            self.hook(curPlayer, update);
-            self.hook(curPlayer, update, "position");
+            self.hook(media, update);
             self.poll(1000, update);
 
             function updateTooltip() {
-              const curHour = Math.floor(curPlayer.position / 3600);
-              const curMin = Math.floor((curPlayer.position % 3600) / 60);
-              const curSec = Math.floor(curPlayer.position % 60);
+              const foundPlayer = getPlayerInfo(media);
+              if (foundPlayer === undefined) {
+                return self.tooltip_text = '0:0'
+              }
+              const curHour = Math.floor(foundPlayer.position / 3600);
+              const curMin = Math.floor((foundPlayer.position % 3600) / 60);
+              const curSec = Math.floor(foundPlayer.position % 60);
 
               if (
-                typeof curPlayer.position === "number" &&
-                curPlayer.position >= 0
+                typeof foundPlayer.position === "number" &&
+                foundPlayer.position >= 0
               ) {
                 // WARN: These nested ternaries are absolutely disgusting lol
                 self.tooltip_text = `${
@@ -51,7 +73,7 @@ const Bar = (curPlayer) => {
               }
             }
             self.poll(1000, updateTooltip);
-            self.hook(curPlayer, updateTooltip);
+            self.hook(media, updateTooltip);
           },
         }),
       }),

@@ -80,6 +80,7 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
+                tooltip_text: "Microsoft Edge",
                 class_name: "dashboard-button edge top-button",
                 on_primary_click: () => handleClick("microsoft-edge-stable"),
                 child: Widget.Label({
@@ -88,6 +89,7 @@ const Shortcuts = () => {
                 }),
               }),
               Widget.Button({
+                tooltip_text: "Spotify",
                 class_name: "dashboard-button spotify",
                 on_primary_click: () => handleClick("spotify-launcher"),
                 child: Widget.Label({
@@ -102,6 +104,7 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
+                tooltip_text: "Discord",
                 class_name: "dashboard-button discord top-button",
                 on_primary_click: () => handleClick("discord"),
                 child: Widget.Label({
@@ -110,6 +113,7 @@ const Shortcuts = () => {
                 }),
               }),
               Widget.Button({
+                tooltip_text: "Search Apps",
                 class_name: "dashboard-button search",
                 on_primary_click: () => handleClick("rofi -show drun"),
                 child: Widget.Label({
@@ -131,6 +135,7 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
+                tooltip_text: "Color Picker",
                 class_name: "dashboard-button colorpicker top-button",
                 on_primary_click: () => handleClick("hyprpicker -a"),
                 child: Widget.Label({
@@ -139,6 +144,7 @@ const Shortcuts = () => {
                 }),
               }),
               Widget.Button({
+                tooltip_text: "Hyprland Settings",
                 class_name: "dashboard-button settings",
                 on_primary_click: () =>
                   handleClick(
@@ -156,6 +162,7 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
+                tooltip_text: "Screenshot",
                 class_name: "dashboard-button snapshot top-button",
                 on_primary_click: () => {
                   App.closeWindow("dashboardmenu");
@@ -169,6 +176,7 @@ const Shortcuts = () => {
                 }),
               }),
               Widget.Button({
+                tooltip_text: "Record Screen",
                 class_name: isRecording
                   .bind("value")
                   .as((v) => `dashboard-button record ${v ? "active" : ""}`),

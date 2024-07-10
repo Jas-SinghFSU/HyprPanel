@@ -678,10 +678,16 @@ window#verification .verification {
   color: #9278b6;
   border-radius: 0.5rem;
   padding: 1.5rem;
+  background: #11111b;
   padding: 0.84em;
   min-width: 20em;
   min-height: 6em;
   font-size: 1.3em;
+}
+window#verification .verification .verification-content {
+  background: #1e1e2e;
+  border-radius: 0.4em;
+  padding: 1em;
 }
 window#verification .verification .text-box {
   margin-bottom: 0.3em;
@@ -698,39 +704,43 @@ window#verification .verification .text-box .desc {
   padding: 1em 3em;
 }
 window#verification .verification .verification-button {
-  background: #11111b;
+  background: #1e1e2e;
   padding: 0.7em 0em;
   margin: 0.4em 1.7em;
-  border: 0.15em solid;
-  border-color: #11111b;
   border-radius: 0.3em;
   opacity: 1;
   transition: border-color 0.2s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
+window#verification .verification .verification-button.bar-verification_yes {
+  background-color: #a6e3a1;
+}
+window#verification .verification .verification-button.bar-verification_no {
+  background-color: #f38ba8;
+}
 window#verification .verification .verification-button:hover.bar-verification_yes {
-  border-color: #a6e3a1;
-  transition: border-color 0.2s ease-in-out;
+  background: #b4befe;
+  transition: background-color 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:hover.bar-verification_no {
-  border-color: #f38ba8;
-  transition: border-color 0.2s ease-in-out;
+  background: #b4befe;
+  transition: background-color 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:focus.bar-verification_yes {
-  border-color: #a6e3a1;
-  transition: border-color 0.2s ease-in-out;
+  background: #b4befe;
+  transition: background 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:focus.bar-verification_no {
-  border-color: #f38ba8;
-  transition: border-color 0.2s ease-in-out;
+  background: #b4befe;
+  transition: background 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:active.bar-verification_yes {
-  border-color: rgba(166, 227, 161, 0.4);
-  transition: border-color 0.2s ease-in-out;
+  background: rgba(180, 190, 254, 0.4);
+  transition: background 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:active.bar-verification_no {
-  border-color: rgba(243, 139, 168, 0.4);
-  transition: border-color 0.2s ease-in-out;
+  background: rgba(180, 190, 254, 0.4);
+  transition: background 0.2s ease-in-out;
 }
 window#verification .verification .verification-button:active image {
   opacity: 0.3;
@@ -741,10 +751,10 @@ window#verification .verification .verification-button:active label {
   transition: opacity 0.3s ease-in-out;
 }
 window#verification .verification .bar-verification_no label {
-  color: #f38ba8;
+  color: #181825;
 }
 window#verification .verification .bar-verification_yes label {
-  color: #a6e3a1;
+  color: #181825;
 }
 
 window#powermenu .powermenu {
@@ -992,20 +1002,17 @@ window#powermenu .powermenu.box {
 .menu-items-container.media .menu-section-container {
   margin: 1.3em 0em;
 }
-.menu-items-container.media .media-indicator-items {
-  margin: 1rem;
-  margin-bottom: 1.3rem;
+.menu-items-container.media .menu-items-section {
+  border-radius: 0.4em;
+  padding: 0em;
 }
-.menu-items-container.media .media-indicator-current-album-cover {
-  border-radius: 0.25em;
-  min-width: 9.5em;
-  min-height: 9.5em;
-  background-size: contain;
-  background-repeat: no-repeat;
+.menu-items-container.media .menu-content {
+  border-radius: 0.4em;
+  background-size: cover;
   background-position: center;
 }
-.menu-items-container.media .media-indicator-right-section {
-  margin-left: 2em;
+.menu-items-container.media .media-content {
+  margin: 1em;
 }
 .menu-items-container.media .media-indicator-current-song-name {
   margin-bottom: 0.75rem;
@@ -1040,7 +1047,7 @@ window#powermenu .powermenu.box {
   border-radius: 0.2rem;
 }
 .menu-items-container.media .media-indicator-control-button.disabled {
-  background: #313244;
+  background: #585b70;
 }
 .menu-items-container.media .media-indicator-control-button.enabled {
   background: #b4befe;
@@ -1058,7 +1065,7 @@ window#powermenu .powermenu.box {
   margin-top: 1rem;
 }
 .menu-items-container.media .menu-slider.media.progress trough {
-  background: #313244;
+  background: #585b70;
   border-radius: 0.3rem;
 }
 .menu-items-container.media .menu-slider.media.progress trough highlight,
@@ -1434,26 +1441,41 @@ window#powermenu .powermenu.box {
 .dashboard-content-items .controls-container button.input {
   background: #f5c2e7;
 }
+.dashboard-content-items .controls-container button.wifi:hover {
+  background: rgba(203, 166, 247, 0.3);
+}
+.dashboard-content-items .controls-container button.bluetooth:hover {
+  background: rgba(137, 220, 235, 0.3);
+}
+.dashboard-content-items .controls-container button.notifications:hover {
+  background: rgba(249, 226, 175, 0.3);
+}
+.dashboard-content-items .controls-container button.playback:hover {
+  background: rgba(235, 160, 172, 0.3);
+}
+.dashboard-content-items .controls-container button.input:hover {
+  background: rgba(245, 194, 231, 0.3);
+}
 .dashboard-content-items .controls-container button:hover {
-  background: #585b70;
+  background: #45475a;
 }
 .dashboard-content-items .controls-container button.disabled {
   background: #585b70;
 }
 .dashboard-content-items .controls-container button.disabled.wifi:hover {
-  background: #cba6f7;
+  background: rgba(203, 166, 247, 0.3);
 }
 .dashboard-content-items .controls-container button.disabled.bluetooth:hover {
-  background: #89dceb;
+  background: rgba(137, 220, 235, 0.3);
 }
 .dashboard-content-items .controls-container button.disabled.notifications:hover {
-  background: #f9e2af;
+  background: rgba(249, 226, 175, 0.3);
 }
 .dashboard-content-items .controls-container button.disabled.playback:hover {
-  background: #eba0ac;
+  background: rgba(235, 160, 172, 0.3);
 }
 .dashboard-content-items .controls-container button.disabled.input:hover {
-  background: #f5c2e7;
+  background: rgba(245, 194, 231, 0.3);
 }
 .dashboard-content-items .stats-container {
   margin-top: 0em;
