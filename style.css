@@ -1018,7 +1018,7 @@ window#powermenu .powermenu.box {
   margin-bottom: 0.75rem;
 }
 .menu-items-container.media .media-indicator-current-song-author {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 .menu-items-container.media .media-indicator-current-song-name-label {
   color: #b4befe;
@@ -1034,9 +1034,9 @@ window#powermenu .powermenu.box {
 }
 .menu-items-container.media .media-indicator-current-controls {
   margin-top: 1.5rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
 }
-.menu-items-container.media .media-indicator-control {
+.menu-items-container.media .media-indicator-control-button {
   margin: 0rem 0.5rem;
 }
 .menu-items-container.media .media-indicator-control-button {
@@ -1062,15 +1062,16 @@ window#powermenu .powermenu.box {
   font-size: 1.1em;
 }
 .menu-items-container.media .menu-slider.media.progress {
-  margin-top: 1rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 .menu-items-container.media .menu-slider.media.progress trough {
   background: #585b70;
-  border-radius: 0.3rem;
+  border-radius: 0.4em;
 }
 .menu-items-container.media .menu-slider.media.progress trough highlight,
 .menu-items-container.media .menu-slider.media.progress trough progress {
-  min-height: 1rem;
+  min-height: 0.85em;
   background: #b4befe;
 }
 .menu-items-container.media .menu-slider.media.progress:hover trough {

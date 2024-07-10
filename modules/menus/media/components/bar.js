@@ -1,26 +1,6 @@
 const media = await Service.import("mpris");
 
 const Bar = (getPlayerInfo) => {
-  media.connect("changed", () => {
-    const statusOrder = {
-      Playing: 1,
-      Paused: 2,
-      Stopped: 3,
-    };
-
-    const isPlaying = media.players.find(
-      (p) => p["play-back-status"] === "Playing",
-    );
-
-    if (isPlaying) {
-      curPlayer.value = media.players.sort(
-        (a, b) =>
-          statusOrder[a["play-back-status"]] -
-          statusOrder[b["play-back-status"]],
-      )[0];
-    }
-  });
-
   return Widget.Box({
     class_name: "media-indicator-current-progress-bar",
     hexpand: true,
@@ -29,7 +9,7 @@ const Bar = (getPlayerInfo) => {
         hexpand: true,
         child: Widget.Slider({
           hexpand: true,
-          tooltip_text: "yoyo",
+          tooltip_text: "--",
           class_name: "menu-slider media progress",
           draw_value: false,
           on_change: ({ value }) => {

@@ -26,9 +26,9 @@ const Media = () => {
     }
   });
 
-  const getPlayerInfo = (plyr) => {
-    return plyr.players.find(p => p.name === curPlayer.value)
-  }
+  const getPlayerInfo = () => {
+    return media.players.find((p) => p.name === curPlayer.value);
+  };
 
   return Widget.Box({
     class_name: "menu-section-container",
@@ -46,30 +46,24 @@ const Media = () => {
                 hpack: "fill",
                 hexpand: true,
                 vertical: true,
-                children: [MediaInfo(), Controls(), Bar(getPlayerInfo)],
+                children: [
+                  MediaInfo(getPlayerInfo),
+                  Controls(getPlayerInfo),
+                  Bar(getPlayerInfo),
+                ],
               }),
             }),
           ],
           setup: (self) => {
             self.hook(media, () => {
-              self.css = `background-image: linear-gradient(
+              const curPlayer = getPlayerInfo();
+              if (curPlayer !== undefined) {
+                self.css = `background-image: linear-gradient(
                   rgba(30, 30, 46, 0.85),
                   rgba(30, 30, 46, 0.9),
-                  #1e1e2e 40em), url("${getPlayerInfo(media).track_cover_url}");
+                  #1e1e2e 40em), url("${curPlayer.track_cover_url}");
                    `;
-
-              //   return (self.children = [
-              //     Widget.Box({
-              //       class_name: "media-indicator-none",
-              //       hpack: "center",
-              //       hexpand: true,
-              //       vpack: "center",
-              //       child: Widget.Label({
-              //         class_name: "media-indicator-none-label dim",
-              //         label: "No Media Is Currently Playing",
-              //       }),
-              //     }),
-              //   ]);
+              }
             });
           },
         }),

@@ -1,31 +1,7 @@
 import icons from "../../../icons/index.js";
 const media = await Service.import("mpris");
 
-const Controls = () => {
-  const curPlayer = Variable(media.players[0]);
-
-  media.connect("changed", () => {
-    const statusOrder = {
-      Playing: 1,
-      Paused: 2,
-      Stopped: 3,
-    };
-
-    const isPlaying = media.players.find(
-      (p) => p["play-back-status"] === "Playing",
-    );
-
-    if (isPlaying) {
-      curPlayer.value = media.players.sort(
-        (a, b) =>
-          statusOrder[a["play-back-status"]] -
-          statusOrder[b["play-back-status"]],
-      )[0];
-    }
-  });
-  if (curPlayer.value === undefined) {
-    return Widget.Box();
-  }
+const Controls = (getPlayerInfo) => {
   const isLoopActive = (player) => {
     return player["loop-status"] !== null &&
       ["track", "playlist"].includes(player["loop-status"].toLowerCase())
@@ -52,40 +28,85 @@ const Controls = () => {
             children: [
               Widget.Button({
                 hpack: "center",
-                tooltip_text:
-                  curPlayer.value.shuffle_status !== null
-                    ? curPlayer.value.shuffle_status
-                      ? "Shuffling"
-                      : "Not Shuffling"
-                    : null,
                 hasTooltip: true,
-                on_primary_click: () => curPlayer.value.shuffle(),
-                class_name: `media-indicator-control-button shuffle ${isShuffleActive(curPlayer.value)} ${curPlayer.value.shuffle_status !== null ? "enabled" : "disabled"}`,
+                setup: (self) => {
+                  self.hook(media, () => {
+                    const foundPlayer = getPlayerInfo();
+                    if (foundPlayer === undefined) {
+                      self.tooltip_text = "Unavailable";
+                      self.class_name =
+                        "media-indicator-control-button shuffle disabled";
+                      return;
+                    }
+
+                    self.tooltip_text =
+                      foundPlayer.shuffle_status !== null
+                        ? foundPlayer.shuffle_status
+                          ? "Shuffling"
+                          : "Not Shuffling"
+                        : null;
+                    self.on_primary_click = () => foundPlayer.shuffle();
+                    self.class_name = `media-indicator-control-button shuffle ${isShuffleActive(foundPlayer)} ${foundPlayer.shuffle_status !== null ? "enabled" : "disabled"}`;
+                  });
+                },
                 child: Widget.Icon(icons.mpris.shuffle["enabled"]),
               }),
             ],
           }),
           Widget.Box({
-            class_name: `media-indicator-control prev ${curPlayer.value.can_go_prev}`,
             children: [
               Widget.Button({
                 hpack: "center",
-                on_primary_click: () => curPlayer.value.previous(),
-                class_name: `media-indicator-control-button prev ${curPlayer.value.can_go_prev ? "enabled" : "disabled"}`,
                 child: Widget.Icon(icons.mpris.prev),
+                setup: (self) => {
+                  self.hook(media, () => {
+                    const foundPlayer = getPlayerInfo();
+                    if (foundPlayer === undefined) {
+                      self.class_name =
+                        "media-indicator-control-button prev disabled";
+                      return;
+                    }
+
+                    self.on_primary_click = () => foundPlayer.previous();
+                    self.class_name = `media-indicator-control-button prev ${foundPlayer.can_go_prev !== null && foundPlayer.can_go_prev ? "enabled" : "disabled"}`;
+                  });
+                },
               }),
             ],
           }),
           Widget.Box({
-            class_name: "media-indicator-control play",
             children: [
               Widget.Button({
                 hpack: "center",
-                on_primary_click: () => curPlayer.value.playPause(),
-                class_name: `media-indicator-control-button play ${curPlayer.value.can_play ? "enabled" : "disabled"}`,
-                child: Widget.Icon(
-                  icons.mpris[curPlayer.value.play_back_status.toLowerCase()],
-                ),
+                setup: (self) => {
+                  self.hook(media, () => {
+                    const foundPlayer = getPlayerInfo();
+                    if (foundPlayer === undefined) {
+                      self.class_name =
+                        "media-indicator-control-button play disabled";
+                      return;
+                    }
+
+                    self.on_primary_click = () => foundPlayer.playPause();
+                    self.class_name = `media-indicator-control-button play ${foundPlayer.can_play !== null ? "enabled" : "disabled"}`;
+                  });
+                },
+                child: Widget.Icon({
+                  icon: Utils.watch(
+                    icons.mpris.paused,
+                    media,
+                    "changed",
+                    () => {
+                      const foundPlayer = getPlayerInfo();
+                      if (foundPlayer === undefined) {
+                        return icons.mpris["paused"];
+                      }
+                      return icons.mpris[
+                        foundPlayer.play_back_status.toLowerCase()
+                      ];
+                    },
+                  ),
+                }),
               }),
             ],
           }),
@@ -94,9 +115,20 @@ const Controls = () => {
             children: [
               Widget.Button({
                 hpack: "center",
-                on_primary_click: () => curPlayer.value.next(),
-                class_name: `media-indicator-control-button next ${curPlayer.value.can_go_next ? "enabled" : "disabled"}`,
                 child: Widget.Icon(icons.mpris.next),
+                setup: (self) => {
+                  self.hook(media, () => {
+                    const foundPlayer = getPlayerInfo();
+                    if (foundPlayer === undefined) {
+                      self.class_name =
+                        "media-indicator-control-button next disabled";
+                      return;
+                    }
+
+                    self.on_primary_click = () => foundPlayer.next();
+                    self.class_name = `media-indicator-control-button next ${foundPlayer.can_go_next !== null && foundPlayer.can_go_next ? "enabled" : "disabled"}`;
+                  });
+                },
               }),
             ],
           }),
@@ -105,18 +137,44 @@ const Controls = () => {
             children: [
               Widget.Button({
                 hpack: "center",
-                tooltip_text:
-                  curPlayer.value.loop_status !== null
-                    ? `Looping: ${curPlayer.value.loop_status}`
-                    : null,
-                hasTooltip: true,
-                on_primary_click: () => curPlayer.value.loop(),
-                class_name: `media-indicator-control-button loop ${isLoopActive(curPlayer.value)} ${curPlayer.value.loop_status !== null ? "enabled" : "disabled"}`,
-                child: Widget.Icon(
-                  curPlayer.value.loop_status === null
-                    ? icons.mpris.loop["none"]
-                    : icons.mpris.loop[curPlayer.value.loop_status?.toLowerCase()],
-                ),
+                setup: (self) => {
+                  self.hook(media, () => {
+                    const foundPlayer = getPlayerInfo();
+                    if (foundPlayer === undefined) {
+                      self.tooltip_text = "Unavailable";
+                      self.class_name =
+                        "media-indicator-control-button shuffle disabled";
+                      return;
+                    }
+
+                    self.tooltip_text =
+                      foundPlayer.loop_status !== null
+                        ? foundPlayer.loop_status
+                          ? "Shuffling"
+                          : "Not Shuffling"
+                        : null;
+                    self.on_primary_click = () => foundPlayer.loop();
+                    self.class_name = `media-indicator-control-button loop ${isLoopActive(foundPlayer)} ${foundPlayer.loop_status !== null ? "enabled" : "disabled"}`;
+                  });
+                },
+                child: Widget.Icon({
+                  setup: (self) => {
+                    self.hook(media, () => {
+                      const foundPlayer = getPlayerInfo();
+                      if (foundPlayer === undefined) {
+                        self.icon = icons.mpris.loop["none"];
+                        return;
+                      }
+
+                      self.icon =
+                        foundPlayer.loop_status === null
+                          ? icons.mpris.loop["none"]
+                          : icons.mpris.loop[
+                              foundPlayer.loop_status?.toLowerCase()
+                            ];
+                    });
+                  },
+                }),
               }),
             ],
           }),
