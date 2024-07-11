@@ -3,7 +3,7 @@
 .notification-card-container.menu {
   margin: 0em;
   min-width: 28.6em;
-  min-height: 6em;
+  min-height: 49.5em;
   background: $crust;
   border: 0.13em solid $surface0;
   border-radius: 0.7em;
@@ -75,3 +75,17 @@
   }
 }
 
+.notification-label-container {
+  margin-bottom: 8em;
+
+  label {
+    color: $surface0;
+  }
+
+  .bell {
+    font-size: 10em;
+  }
+  .message {
+    font-size: 1.5em;
+  }
+}

@@ -1056,7 +1056,7 @@ window#powermenu .powermenu.box {
   background: #f5c2e7;
 }
 .menu-items-container.media .media-indicator-control-button.enabled.active {
-  background: #f5c2e7;
+  background: #a6e3a1;
 }
 .menu-items-container.media image {
   font-size: 1.1em;
@@ -1082,7 +1082,7 @@ window#powermenu .powermenu.box {
 .notification-card-container.menu {
   margin: 0em;
   min-width: 28.6em;
-  min-height: 6em;
+  min-height: 49.5em;
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7em;
@@ -1138,6 +1138,19 @@ window#powermenu .powermenu.box {
 }
 .notification-card-container.menu .clear-notifications-label {
   color: #f38ba8;
+  font-size: 1.5em;
+}
+
+.notification-label-container {
+  margin-bottom: 8em;
+}
+.notification-label-container label {
+  color: #313244;
+}
+.notification-label-container .bell {
+  font-size: 10em;
+}
+.notification-label-container .message {
   font-size: 1.5em;
 }
 

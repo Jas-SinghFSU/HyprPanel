@@ -79,7 +79,7 @@ export default () => {
             Widget.Box({
               class_name: "menu-content-container notifications",
               hpack: "center",
-              vexpand: false,
+              vexpand: true,
               spacing: 0,
               vertical: true,
               setup: (self) => {
@@ -202,12 +202,26 @@ export default () => {
                   if (notifs.notifications.length <= 0) {
                     return (self.children = [
                       Widget.Box({
-                        vpack: "start",
+                        class_name: "notification-label-container",
+                        vpack: "fill",
                         hpack: "center",
                         expand: true,
-                        child: Widget.Label({
-                          class_name: "placehold-label dim",
-                          label: "You're all caught up :)",
+                        child: Widget.Box({
+                          vpack: "center",
+                          vertical: true,
+                          expand: true,
+                          children: [
+                            Widget.Label({
+                              vpack: "center",
+                              class_name: "placeholder-label dim bell",
+                              label: "󰂚",
+                            }),
+                            Widget.Label({
+                              vpack: "start",
+                              class_name: "placehold-label dim message",
+                              label: "You're all caught up :)",
+                            }),
+                          ],
                         }),
                       }),
                     ]);
@@ -219,8 +233,9 @@ export default () => {
                       children: [
                         Widget.Box({
                           class_name: "notification-card menu",
-                          vpack: "center",
+                          vpack: "start",
                           hexpand: true,
+                          vexpand: false,
                           children: [
                             ...imageContainer(notif),
                             Widget.Box({
