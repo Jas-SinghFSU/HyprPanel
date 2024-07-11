@@ -18,6 +18,8 @@
     }
 
     .profile-picture-container {
+        margin-right: 0.65em;
+        margin-bottom: 0.65em;
         .profile-picture {
             font-size: 7.5em;
         }
@@ -30,6 +32,7 @@
 
     .power-menu-container {
         margin-left: 0em;
+        margin-bottom: 0.65em;
 
         .dashboard-button {
             min-width: 3em;
@@ -83,9 +86,13 @@
 
         .container {
             margin-top: 0em;
+            margin-bottom: 0.65em;
 
             &.most-used {
                 margin-right: 0em;
+            }
+            &.utilities {
+                margin-left: 0.65em;
             }
 
             button {
@@ -114,6 +121,7 @@
     }
 
     .controls-container {
+        margin-bottom: 0.65em;
         &.dashboard-card {
             margin-top: 0em;
         }
@@ -182,6 +190,51 @@
                 &.input:hover {
                     background: transparentize($pink, 0.7);
                 }
+            }
+        }
+    }
+
+    .directories-container {
+        &.dashboard-card {
+            margin-top: 0em;
+            margin-bottom: 0.65em;
+            padding-left: 1.5em;
+            padding-right: 0em;
+        }
+
+        .directory-link {
+            padding: 0.5em 0em;
+            min-width: 9em;
+
+            &:last-child {
+                margin-bottom: 0em;
+            }
+
+            label {
+                font-size: 1.3em;
+            }
+
+            &.documents {
+                color: $teal;
+            }
+            &.downloads {
+                color: $pink;
+            }
+            &.home {
+                color: $lavender;
+            }
+            &.pictures {
+                color: $mauve;
+            }
+            &.videos {
+                color: $yellow;
+            }
+            &.projects {
+                color: $maroon;
+            }
+
+            &:hover {
+                color: $green;
             }
         }
     }

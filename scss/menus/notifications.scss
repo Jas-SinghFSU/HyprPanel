@@ -3,7 +3,7 @@
 .notification-card-container.menu {
   margin: 0em;
   min-width: 28.6em;
-  min-height: 49.5em;
+  min-height: 48em;
   background: $crust;
   border: 0.13em solid $surface0;
   border-radius: 0.7em;
@@ -38,7 +38,10 @@
   }
 
   .notification-card-content-container {
-    margin-bottom: 1em;
+    margin-bottom: 0.65em;
+    &:last-child {
+      margin-bottom: 1.3em;
+    }
   }
   .notification-card-content {
     margin-bottom: 0.25em;

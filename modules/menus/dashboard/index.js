@@ -3,6 +3,7 @@ import { Profile } from "./profile/index.js";
 import { Shortcuts } from "./shortcuts/index.js";
 import { Controls } from "./controls/index.js";
 import { Stats } from "./stats/index.js";
+import { Directories } from "./directories/index.js";
 
 export default () => {
   return PopupWindow({
@@ -26,6 +27,7 @@ export default () => {
                 Profile(),
                 Shortcuts(),
                 Controls(),
+                Directories(),
                 Stats(),
               ],
             }),

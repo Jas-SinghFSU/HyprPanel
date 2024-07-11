@@ -3,7 +3,7 @@ import icons from "../../../icons/index.js";
 
 const EnergyProfiles = () => {
   return Widget.Box({
-    class_name: "menu-section-container",
+    class_name: "menu-section-container energy",
     vertical: true,
     children: [
       Widget.Box({

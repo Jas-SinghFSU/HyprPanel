@@ -214,7 +214,7 @@ export default () => {
                             Widget.Label({
                               vpack: "center",
                               class_name: "placeholder-label dim bell",
-                              label: "󰂚",
+                              label: notifs.bind("dnd").as(dnd => dnd ? "󰂛" : "󰂚"),
                             }),
                             Widget.Label({
                               vpack: "start",
