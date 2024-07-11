@@ -104,6 +104,11 @@
                 color: $base;
                 min-height: 3em;
 
+                &.discord {
+                    label {
+                        margin-right: 0.15em;
+                    }
+                }
 
                 label {
                     font-size: 1.5em;

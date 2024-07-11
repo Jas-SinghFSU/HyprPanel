@@ -108,6 +108,7 @@ const Shortcuts = () => {
                 class_name: "dashboard-button discord top-button",
                 on_primary_click: () => handleClick("discord"),
                 child: Widget.Label({
+                  hpack: "center",
                   class_name: "button-label",
                   label: "",
                 }),

@@ -1470,6 +1470,9 @@ window#powermenu .powermenu.box {
   color: #1e1e2e;
   min-height: 3em;
 }
+.dashboard-content-items .shortcuts-container .container button.discord label {
+  margin-right: 0.15em;
+}
 .dashboard-content-items .shortcuts-container .container button label {
   font-size: 1.5em;
 }
