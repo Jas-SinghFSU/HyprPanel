@@ -1,7 +1,11 @@
 @import "../colors";
 
+.window-content.dashboardmenu-window {
+    margin-left: 0.50em;
+}
+
 .dashboard-content-items {
-    min-width: 26.5em;
+    min-width: 28.5em;
     background: $crust;
     border: 0.13em solid $surface0;
     border-radius: 0.7em;
@@ -234,7 +238,7 @@
             }
 
             &:hover {
-                color: $green;
+                opacity: 0.5;
             }
         }
     }

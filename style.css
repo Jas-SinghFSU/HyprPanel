@@ -1242,7 +1242,7 @@ window#powermenu .powermenu.box {
 }
 
 .clock-content-items {
-  min-height: 6em;
+  min-height: 8em;
 }
 .clock-content-items .clock-content-time {
   font-size: 4em;
@@ -1250,7 +1250,7 @@ window#powermenu .powermenu.box {
 }
 .clock-content-items .clock-content-period {
   font-size: 1.75em;
-  margin-bottom: 0.7em;
+  margin-bottom: 1.3em;
   margin-right: -0.875em;
   color: #94e2d5;
 }
@@ -1373,8 +1373,12 @@ window#powermenu .powermenu.box {
   margin-bottom: 0.2em;
 }
 
+.window-content.dashboardmenu-window {
+  margin-left: 0.5em;
+}
+
 .dashboard-content-items {
-  min-width: 26.5em;
+  min-width: 28.5em;
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7em;
@@ -1574,7 +1578,7 @@ window#powermenu .powermenu.box {
   color: #eba0ac;
 }
 .dashboard-content-items .directories-container .directory-link:hover {
-  color: #a6e3a1;
+  opacity: 0.5;
 }
 .dashboard-content-items .stats-container {
   margin-top: 0em;

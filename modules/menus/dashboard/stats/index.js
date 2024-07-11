@@ -130,16 +130,30 @@ const Stats = () => {
             hexpand: true,
             vpack: "center",
             children: [
-              Widget.Label({
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
                 label: "",
               }),
-              Widget.LevelBar({
-                class_name: "stats-bar",
-                hexpand: true,
-                vpack: "center",
-                bar_mode: "continuous",
-                max_value: 1,
-                value: cpu.bind("value"),
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
+                child: Widget.LevelBar({
+                  class_name: "stats-bar",
+                  hexpand: true,
+                  vpack: "center",
+                  bar_mode: "continuous",
+                  max_value: 1,
+                  value: cpu.bind("value"),
+                }),
               }),
             ],
           }),
@@ -158,14 +172,28 @@ const Stats = () => {
             vpack: "center",
             hexpand: true,
             children: [
-              Widget.Label({
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
                 label: "",
               }),
-              Widget.LevelBar({
-                class_name: "stats-bar",
-                hexpand: true,
-                vpack: "center",
-                value: ram.bind("value").as((v) => v.percentage),
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
+                child: Widget.LevelBar({
+                  class_name: "stats-bar",
+                  hexpand: true,
+                  vpack: "center",
+                  value: ram.bind("value").as((v) => v.percentage),
+                }),
               }),
             ],
           }),
@@ -184,14 +212,28 @@ const Stats = () => {
             hexpand: true,
             vpack: "center",
             children: [
-              Widget.Label({
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
                 label: "󰢮",
               }),
-              Widget.LevelBar({
-                class_name: "stats-bar",
-                hexpand: true,
-                vpack: "center",
-                value: gpu.bind("value"),
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
+                child: Widget.LevelBar({
+                  class_name: "stats-bar",
+                  hexpand: true,
+                  vpack: "center",
+                  value: gpu.bind("value"),
+                }),
               }),
             ],
           }),
@@ -210,14 +252,28 @@ const Stats = () => {
             hexpand: true,
             vpack: "center",
             children: [
-              Widget.Label({
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
                 label: "󰋊",
               }),
-              Widget.LevelBar({
-                class_name: "stats-bar",
-                hexpand: true,
-                vpack: "center",
-                value: storage.bind("value").as((v) => v.percentage),
+              Widget.Button({
+                on_primary_click: () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync('bash -c "kitty -e btop"').catch(
+                    (err) => `Failed to open btop: ${err}`,
+                  );
+                },
+                child: Widget.LevelBar({
+                  class_name: "stats-bar",
+                  hexpand: true,
+                  vpack: "center",
+                  value: storage.bind("value").as((v) => v.percentage),
+                }),
               }),
             ],
           }),
