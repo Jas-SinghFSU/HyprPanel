@@ -32,8 +32,15 @@
 }
 .menu-section-container.playback {
     margin-top: 0em;
-    margin-bottom: 0.65em;
+    margin-bottom: 1.35em;
 }
 .menu-section-container.input {
     margin-top: 0em;
+}
+
+.menu-label-container.input {
+    border-radius: 0em;
+}
+.menu-items-section.playback {
+    border-radius: 0em;
 }

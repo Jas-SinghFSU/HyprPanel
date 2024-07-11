@@ -38,17 +38,11 @@ const availableDevices = () => {
               }),
             ],
           }),
-        ],
-      }),
-      Widget.Box({
-        class_name: "menu-section-container input",
-        vertical: true,
-        children: [
           Widget.Box({
-            class_name: "menu-label-container playback",
+            class_name: "menu-label-container input",
             hpack: "fill",
             child: Widget.Label({
-              class_name: "menu-label audio playback",
+              class_name: "menu-label audio input",
               hexpand: true,
               hpack: "start",
               label: "Input Devices",

@@ -40,14 +40,12 @@
     }
 
     .bluetooth-element-item {
-            margin-bottom: 0.5em;
-            // background: $teal;
+            margin-bottom: 0.7em;
         &:hover {
             color: $sky;
         }
 
         image {
-            // background: $red;
             margin-right: 0em;
             margin-top: 0.0em;
             min-height: 1em;
@@ -59,7 +57,6 @@
         }
 
         label {
-            // background: $yellow;
             font-size: 1em;
         }
 

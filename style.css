@@ -878,11 +878,19 @@ window#powermenu .powermenu.box {
 
 .menu-section-container.playback {
   margin-top: 0em;
-  margin-bottom: 0.65em;
+  margin-bottom: 1.35em;
 }
 
 .menu-section-container.input {
   margin-top: 0em;
+}
+
+.menu-label-container.input {
+  border-radius: 0em;
+}
+
+.menu-items-section.playback {
+  border-radius: 0em;
 }
 
 .menu-items-container.network {
@@ -989,7 +997,7 @@ window#powermenu .powermenu.box {
   color: #89dceb;
 }
 .menu-items-container.bluetooth .bluetooth-element-item {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.7em;
 }
 .menu-items-container.bluetooth .bluetooth-element-item:hover {
   color: #89dceb;
