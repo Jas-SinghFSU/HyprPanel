@@ -27,14 +27,13 @@ const renderWAPs = (self, network, staging, connecting) => {
   };
   self.hook(network, () => {
     Utils.merge(
-      [network.bind("wifi"), staging.bind("value"), connecting.bind("value")],
+      [staging.bind("value"), connecting.bind("value")],
       () => {
         // Sometimes the network service will yield a "this._device is undefined" when
         // trying to access the "access_points" property. So we must validate that
         // it's not 'undefined'
         let WAPs =
-          Object.hasOwnProperty.call(network.wifi, "access_points") &&
-          network.wifi["access_points"] !== undefined
+          network.wifi._device !== undefined
             ? network.wifi["access-points"]
             : [];
 
@@ -154,7 +153,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                                 class_name: "connection-status dim",
                                 label:
                                   WifiStatusMap[
-                                    network.wifi.state.toLowerCase()
+                                  network.wifi.state.toLowerCase()
                                   ],
                               }),
                             }),
@@ -166,7 +165,7 @@ const renderWAPs = (self, network, staging, connecting) => {
                       hpack: "end",
                       vpack: "start",
                       reveal_child:
-                        ap.bssid === connecting.value || isDisconnecting(ap),
+                      ap.bssid === connecting.value || isDisconnecting(ap),
                       child: Widget.Spinner({
                         vpack: "start",
                         class_name: "spinner wap",
@@ -179,7 +178,6 @@ const renderWAPs = (self, network, staging, connecting) => {
                 vpack: "start",
                 reveal_child: ap.bssid !== connecting.value && ap.active,
                 child: Widget.Button({
-                  vpack: "start",
                   tooltip_text: "Delete/Forget Network",
                   class_name: "menu-icon-button network disconnect",
                   on_primary_click: () => {
@@ -205,7 +203,9 @@ const renderWAPs = (self, network, staging, connecting) => {
                       },
                     );
                   },
-                  child: Widget.Label("󰚃"),
+                  child: Widget.Label({
+                    label: "󰚃"
+                  }),
                 }),
               }),
             ],

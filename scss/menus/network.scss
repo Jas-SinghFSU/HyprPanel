@@ -77,9 +77,11 @@
     }
 
     .menu-icon-button.network.disconnect {
-        margin-bottom: 0.4em;
+        margin: 0em;
+        margin-top: -0.2em;
+        margin-left: 1em;
         label {
-            font-size: 1.3em;
+            font-size: 1.4em;
         }
         &:hover { 
             color: $mauve;
