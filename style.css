@@ -523,7 +523,7 @@ tooltip label {
 }
 
 .menu-section-container {
-  margin: 1.35em 0em;
+  margin: 1em 0em;
 }
 .menu-section-container .menu-label {
   color: #cdd6f4;
@@ -535,7 +535,7 @@ tooltip label {
   border-radius: 0.4em;
   border-bottom-left-radius: 0em;
   border-bottom-right-radius: 0em;
-  margin: 0em 1.35em;
+  margin: 0em 1em;
   min-height: 2em;
 }
 .menu-section-container:first-child {
@@ -545,7 +545,7 @@ tooltip label {
   margin-top: 0em;
 }
 .menu-section-container:nth-child(2) {
-  margin-top: 1.35em;
+  margin-top: 1em;
 }
 .menu-section-container .menu-items-section {
   background: #1e1e2e;
@@ -553,7 +553,7 @@ tooltip label {
   border-top-left-radius: 0em;
   border-top-right-radius: 0em;
   padding: 0.9em;
-  margin: 0em 1.35em;
+  margin: 0em 1em;
 }
 
 .menu-active {
@@ -878,7 +878,7 @@ window#powermenu .powermenu.box {
 
 .menu-section-container.playback {
   margin-top: 0em;
-  margin-bottom: 1.35em;
+  margin-bottom: 1em;
 }
 
 .menu-section-container.input {
@@ -968,7 +968,7 @@ window#powermenu .powermenu.box {
   font-size: 1.3em;
 }
 .menu-items-container.bluetooth .menu-section-container {
-  margin: 1.35em 0em;
+  margin: 1em 0em;
 }
 .menu-items-container.bluetooth .menu-label-container .menu-label {
   color: #89dceb;
@@ -1032,7 +1032,7 @@ window#powermenu .powermenu.box {
   min-height: 18em;
 }
 .menu-items-container.media .menu-section-container {
-  margin: 1.3em 0em;
+  margin: 1em 0em;
 }
 .menu-items-container.media .menu-items-section {
   border-radius: 0.4em;
@@ -1113,7 +1113,7 @@ window#powermenu .powermenu.box {
 
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 28.6em;
+  min-width: 30.5em;
   min-height: 48em;
   background: #11111b;
   border: 0.13em solid #313244;
@@ -1124,20 +1124,20 @@ window#powermenu .powermenu.box {
   margin-right: 0.5em;
 }
 .notification-card-container.menu .menu-content-container.notifications {
-  margin: 1.35em;
+  margin: 1em;
   margin-bottom: 0em;
   min-height: 4em;
 }
 .notification-card-container.menu .notification-menu-controls {
   background: #1e1e2e;
-  margin: 1em 1.3em;
+  margin: 1em 1em;
   margin-bottom: 0.5em;
   border-radius: 0.4em;
   padding: 0.4em 0.75em;
 }
 .notification-card-container.menu .notification-card.menu {
   background: #1e1e2e;
-  min-width: 23.5em;
+  min-width: 26.2em;
   border: 0.15em solid #1e1e2e;
   border-radius: 0em;
   border-bottom-left-radius: 0.4em;
@@ -1148,7 +1148,7 @@ window#powermenu .powermenu.box {
   margin-bottom: 0.65em;
 }
 .notification-card-container.menu .notification-card-content-container:last-child {
-  margin-bottom: 1.3em;
+  margin-bottom: 1em;
 }
 .notification-card-container.menu .notification-card-content {
   margin-bottom: 0.25em;
@@ -1187,6 +1187,19 @@ window#powermenu .powermenu.box {
 }
 .notification-label-container .message {
   font-size: 1.5em;
+}
+
+.close-notification-button.menu {
+  background: #f38ba8;
+  color: #11111b;
+  min-width: 2.1em;
+  border-radius: 0rem 0.35em 0.35em 0em;
+}
+.close-notification-button.menu label {
+  font-size: 1.5em;
+}
+.close-notification-button.menu:hover {
+  background: #eba0ac;
 }
 
 .calendar-content-container {
@@ -1258,7 +1271,7 @@ window#powermenu .powermenu.box {
 }
 .clock-content-items .clock-content-period {
   font-size: 1.75em;
-  margin-bottom: 1.3em;
+  margin-bottom: 1.35em;
   margin-right: -0.875em;
   color: #94e2d5;
 }
@@ -1740,6 +1753,8 @@ window#powermenu .powermenu.box {
 
 .notification-icon {
   margin-bottom: 0.4em;
+  min-width: 1em;
+  min-height: 1em;
   font-size: 1.3em;
 }
 

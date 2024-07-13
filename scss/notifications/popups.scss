@@ -21,7 +21,6 @@
   padding: 1px;
 }
 
-
 .notification-card-image-container {
   margin: 0.65em 0.65em;
   border-radius: 0.4em;
@@ -84,6 +83,8 @@
 
 .notification-icon {
   margin-bottom: 0.4em;
+  min-width: 1em;
+  min-height: 1em;
   font-size: 1.3em;
 }
 

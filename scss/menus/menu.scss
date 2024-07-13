@@ -104,7 +104,7 @@ tooltip label {
 }
 
 .menu-section-container {
-    margin: 1.35em 0em;
+    margin: 1em 0em;
 
     .menu-label {
         color: $text;
@@ -117,7 +117,7 @@ tooltip label {
         border-radius: 0.4em;
         border-bottom-left-radius: 0em;
         border-bottom-right-radius: 0em;
-        margin: 0em 1.35em ;
+        margin: 0em 1em ;
         min-height: 2em;
     }
 
@@ -130,7 +130,7 @@ tooltip label {
     }
 
     &:nth-child(2) {
-        margin-top: 1.35em;
+        margin-top: 1em;
     }
 
     .menu-items-section {
@@ -139,7 +139,7 @@ tooltip label {
         border-top-left-radius: 0em;
         border-top-right-radius: 0em;
         padding: 0.9em;
-        margin: 0em 1.35em;
+        margin: 0em 1em;
     }
 }
 

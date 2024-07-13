@@ -2,7 +2,7 @@
 
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 28.6em;
+  min-width: 30.5em;
   min-height: 48em;
   background: $crust;
   border: 0.13em solid $surface0;
@@ -14,14 +14,14 @@
   }
 
   .menu-content-container.notifications {
-    margin: 1.35em;
+    margin: 1em;
     margin-bottom: 0em;
     min-height: 4em;
   }
 
   .notification-menu-controls {
     background: $base;
-    margin: 1em 1.3em;
+    margin: 1em 1em;
     margin-bottom: 0.5em;
     border-radius: 0.4em;
     padding: 0.4em 0.75em;
@@ -29,7 +29,7 @@
 
   .notification-card.menu {
     background: $base;
-    min-width: 23.5em;
+    min-width: 26.2em;
     border: 0.15em solid $base;
     border-radius: 0em;
     border-bottom-left-radius: 0.4em;
@@ -40,7 +40,7 @@
   .notification-card-content-container {
     margin-bottom: 0.65em;
     &:last-child {
-      margin-bottom: 1.3em;
+      margin-bottom: 1em;
     }
   }
   .notification-card-content {
@@ -90,5 +90,20 @@
   }
   .message {
     font-size: 1.5em;
+  }
+}
+
+.close-notification-button.menu {
+  background: $red;
+  color: $crust;
+  min-width: 2.1em;
+  border-radius: 0rem 0.35em 0.35em 0em;
+
+  label {
+    font-size: 1.5em;
+  }
+
+  &:hover {
+    background: $maroon;
   }
 }
