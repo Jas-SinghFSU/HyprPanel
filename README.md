@@ -6,6 +6,7 @@ bluez-utils
 grimblast
 gpu-screen-recorder
 hyprpicker
+btop
 nmcli
 networkmanager
 dart-sass
