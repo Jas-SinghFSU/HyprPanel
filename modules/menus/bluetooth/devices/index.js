@@ -10,7 +10,6 @@ const Devices = () => {
       label(bluetooth),
       Widget.Scrollable({
         class_name: "menu-items-section",
-        // vertical: true,
         hscroll: 'never',
         vscroll: 'always',
         child: Widget.Box({

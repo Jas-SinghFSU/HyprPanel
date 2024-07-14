@@ -79,9 +79,10 @@ const devices = (bluetooth, self) => {
                   Widget.Box({
                     hexpand: true,
                     hpack: "start",
+                    class_name: "menu-button-container",
                     children: [
                       Widget.Icon({
-                        vpack: "start",
+                        vpack: "center",
                         class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""}`,
                         icon: `${device["icon-name"]}-symbolic`,
                       }),
