@@ -1,7 +1,7 @@
 * {
   all: unset;
   font-family: "Ubuntu Nerd Font";
-  font-size: 1.175rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
@@ -1217,9 +1217,6 @@ window#powermenu .powermenu.box {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7em;
-}
-
-.window-content.calendarmenu-window {
   margin-right: 0.5em;
 }
 
@@ -1402,11 +1399,8 @@ window#powermenu .powermenu.box {
   margin-bottom: 0.2em;
 }
 
-.window-content.dashboardmenu-window {
-  margin-left: 0.5em;
-}
-
 .dashboard-content-items {
+  margin-left: 0.5em;
   min-width: 28.5em;
   background: #11111b;
   border: 0.13em solid #313244;

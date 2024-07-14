@@ -1,4 +1,3 @@
-const network = await Service.import("network");
 import DropdownMenu from "../DropdownMenu.js";
 import { Ethernet } from "./ethernet/index.js";
 import { Wifi } from "./wifi/index.js";

@@ -1,11 +1,9 @@
-import PopupWindow from "../PopupWindow.js";
+import DropdownMenu from "../DropdownMenu.js";
 import { Media } from "./media.js";
 
 export default () => {
-  return PopupWindow({
+  return DropdownMenu({
     name: "mediamenu",
-    layout: "top-center",
-    visible: false,
     transition: "crossfade",
     child: Widget.Box({
       class_name: "menu-items",

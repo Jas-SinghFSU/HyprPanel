@@ -1,4 +1,4 @@
-import { closeAllMenus } from "../index.js";
+import { openMenu } from "../utils.js";
 
 const Menu = () => {
   return {
@@ -10,14 +10,8 @@ const Menu = () => {
     }),
     isVisible: true,
     props: {
-      on_primary_click: (_, event) => {
-        const clickPos = event.get_root_coords();
-        const coords = [clickPos[1], clickPos[2]];
-
-        globalMousePos.value = coords;
-
-        closeAllMenus();
-        App.toggleWindow("dashboardmenu");
+      on_primary_click: (clicked, event) => {
+        openMenu(clicked, event, "dashboardmenu");
       },
     },
   };

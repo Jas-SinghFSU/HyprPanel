@@ -1,3 +1,5 @@
+import { openMenu } from "../utils.js";
+
 const notifs = await Service.import("notifications");
 
 export const Notifications = () => {
@@ -29,7 +31,9 @@ export const Notifications = () => {
     }),
     isVisible: true,
     props: {
-      on_primary_click: () => App.toggleWindow("notificationsmenu"),
+      on_primary_click: (clicked, event) => {
+        openMenu(clicked, event, "notificationsmenu");
+      },
     },
   };
 };

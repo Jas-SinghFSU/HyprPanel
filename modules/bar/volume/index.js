@@ -1,5 +1,5 @@
 const audio = await Service.import("audio");
-import { closeAllMenus } from "../index.js";
+import { openMenu } from "../utils.js";
 
 import { globalMousePos } from "../../../globals.js";
 
@@ -45,14 +45,8 @@ const Volume = () => {
     }),
     isVisible: true,
     props: {
-      on_primary_click: (_, event) => {
-        const clickPos = event.get_root_coords();
-        const coords = [clickPos[1], clickPos[2]];
-
-        globalMousePos.value = coords;
-
-        closeAllMenus();
-        App.toggleWindow("audiomenu");
+      on_primary_click: (clicked, event) => {
+        openMenu(clicked, event, "audiomenu");
       },
     },
   };
