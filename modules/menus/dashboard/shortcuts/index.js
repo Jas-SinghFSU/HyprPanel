@@ -168,12 +168,8 @@ const Shortcuts = () => {
               Widget.Button({
                 tooltip_text: "Screenshot",
                 class_name: "dashboard-button snapshot top-button",
-                on_primary_click: () => {
-                  App.closeWindow("dashboardmenu");
-                  return Utils.execAsync(
-                    `${App.configDir}/services/snapshot.sh`,
-                  ).catch((err) => console.error(err));
-                },
+                on_primary_click: () =>
+                  handleClick(`${App.configDir}/services/snapshot.sh`),
                 child: Widget.Label({
                   class_name: "button-label",
                   label: "󰄀",

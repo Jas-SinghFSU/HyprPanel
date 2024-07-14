@@ -1,4 +1,8 @@
+import GLib from "gi://GLib";
+
 const Directories = () => {
+  const homeDir = GLib.get_home_dir();
+
   return Widget.Box({
     class_name: "dashboard-card directories-container",
     vpack: "fill",
@@ -16,7 +20,7 @@ const Directories = () => {
             class_name: "directory-link downloads",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin Downloads").catch(
+              Utils.execAsync(`dolphin ${homeDir}/Downloads`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
@@ -31,7 +35,7 @@ const Directories = () => {
             class_name: "directory-link videos",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin Videos").catch(
+              Utils.execAsync(`dolphin ${homeDir}/Videos`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
@@ -46,7 +50,7 @@ const Directories = () => {
             class_name: "directory-link projects",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin Projects").catch(
+              Utils.execAsync(`dolphin ${homeDir}/Projects`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
@@ -68,7 +72,7 @@ const Directories = () => {
             class_name: "directory-link documents",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin Documents").catch(
+              Utils.execAsync(`dolphin ${homeDir}/Documents`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
@@ -83,7 +87,7 @@ const Directories = () => {
             class_name: "directory-link pictures",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin Pictures").catch(
+              Utils.execAsync(`dolphin ${homeDir}/Pictures`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
@@ -98,7 +102,7 @@ const Directories = () => {
             class_name: "directory-link home",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
-              Utils.execAsync("dolphin ").catch(
+              Utils.execAsync(`dolphin ${homeDir}/`).catch(
                 (err) => `Failed to open Dolphin: ${err}`,
               );
             },
