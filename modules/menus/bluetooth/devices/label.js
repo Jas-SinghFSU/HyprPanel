@@ -14,7 +14,7 @@ const label = (bluetooth) => {
     children: [
       Widget.Label({
         class_name: "menu-label",
-        vpack: "start",
+        vpack: "center",
         hpack: "start",
         label: "Bluetooth",
       }),

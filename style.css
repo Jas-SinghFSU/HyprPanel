@@ -289,7 +289,6 @@ spinner:checked {
 }
 
 .media {
-  font-size: 1rem;
   color: #b4befe;
 }
 
@@ -468,7 +467,7 @@ spinner:checked {
 }
 
 .menu-switch {
-  font-size: 1.3rem;
+  font-size: 1.3em;
   background-color: #313244;
   border-radius: 0.2em;
 }
@@ -630,7 +629,7 @@ tooltip label {
 .menu-button-name {
   font-size: 0.95em;
   font-weight: bold;
-  margin-left: 1rem;
+  margin-left: 0.5em;
   margin-right: 1.2rem;
 }
 
@@ -955,10 +954,12 @@ window#powermenu .powermenu.box {
   color: #cba6f7;
 }
 .menu-items-container.network .menu-icon-button.network.disconnect {
-  margin-bottom: 0.4em;
+  margin: 0em;
+  margin-top: -0.2em;
+  margin-left: 1em;
 }
 .menu-items-container.network .menu-icon-button.network.disconnect label {
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 .menu-items-container.network .menu-icon-button.network.disconnect:hover {
   color: #cba6f7;
@@ -997,7 +998,7 @@ window#powermenu .powermenu.box {
   color: #89dceb;
 }
 .menu-items-container.bluetooth .bluetooth-element-item {
-  margin-bottom: 0.7em;
+  margin-bottom: 0.4em;
 }
 .menu-items-container.bluetooth .bluetooth-element-item:hover {
   color: #89dceb;
@@ -1014,9 +1015,15 @@ window#powermenu .powermenu.box {
 .menu-items-container.bluetooth .bluetooth-element-item label {
   font-size: 1em;
 }
+.menu-items-container.bluetooth .bluetooth-element-item .menu-button-icon {
+  font-size: 1.5em;
+}
+.menu-items-container.bluetooth .bluetooth-element-item .menu-button-icon.active {
+  color: #89dceb;
+}
 .menu-items-container.bluetooth .bluetooth-element-item .connection-status {
   font-size: 0.9em;
-  margin-left: 1em;
+  margin-left: 0.6rem;
 }
 .menu-items-container.bluetooth spinner {
   min-height: 1.3em;
@@ -1028,8 +1035,8 @@ window#powermenu .powermenu.box {
 }
 
 .menu-items-container.media {
-  min-width: 36.5em;
-  min-height: 18em;
+  min-width: 30.5em;
+  min-height: 15em;
 }
 .menu-items-container.media .menu-section-container {
   margin: 1em 0em;

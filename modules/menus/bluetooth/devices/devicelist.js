@@ -1,4 +1,5 @@
 import { connectedControls } from "./connectedControls.js";
+import { getBluetoothIcon } from "../utils.js";
 
 const devices = (bluetooth, self) => {
   return self.hook(bluetooth, () => {
@@ -81,13 +82,14 @@ const devices = (bluetooth, self) => {
                     hpack: "start",
                     class_name: "menu-button-container",
                     children: [
-                      Widget.Icon({
-                        vpack: "center",
+                      Widget.Label({
+                        vpack: "start",
                         class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""}`,
-                        icon: `${device["icon-name"]}-symbolic`,
+                        label: getBluetoothIcon(`${device["icon-name"]}-symbolic`),
                       }),
                       Widget.Box({
                         vertical: true,
+                        vpack: "center",
                         children: [
                           Widget.Label({
                             vpack: "center",

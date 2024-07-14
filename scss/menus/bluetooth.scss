@@ -40,7 +40,7 @@
     }
 
     .bluetooth-element-item {
-            margin-bottom: 0.7em;
+        margin-bottom: 0.4em;
         &:hover {
             color: $sky;
         }
@@ -60,9 +60,17 @@
             font-size: 1em;
         }
 
+        .menu-button-icon {
+            font-size: 1.5em;
+
+            &.active {
+                color: $sky;
+            }
+        }
+
         .connection-status {
             font-size: 0.9em;
-            margin-left: 1rem;
+            margin-left: 0.6rem;
         }
     }
 

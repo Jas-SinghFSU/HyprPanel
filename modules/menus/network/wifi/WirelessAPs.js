@@ -26,6 +26,7 @@ const renderWAPs = (self, network, staging, connecting) => {
     failed: "Connection Failed",
   };
   self.hook(network, () => {
+    console.log(JSON.stringify(network, null, 2));
     Utils.merge(
       [staging.bind("value"), connecting.bind("value")],
       () => {
