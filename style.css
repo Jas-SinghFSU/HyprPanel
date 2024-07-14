@@ -512,14 +512,14 @@ tooltip label {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7rem;
-  min-width: 20em;
+  min-width: 18em;
   color: #cdd6f4;
 }
 
 .menu-items-container {
   border-radius: 0.4em;
   font-size: 1.3em;
-  min-width: 20em;
+  min-width: 18em;
 }
 
 .menu-section-container {
@@ -1036,7 +1036,7 @@ window#powermenu .powermenu.box {
 }
 
 .menu-items-container.media {
-  min-width: 25em;
+  min-width: 23em;
   min-height: 10em;
 }
 .menu-items-container.media .menu-section-container {

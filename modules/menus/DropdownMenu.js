@@ -44,6 +44,16 @@ const moveBoxToCursor = (self, fixed) => {
   });
 };
 
+// NOTE: We make the window visible for 2 seconds (on startup) so the child
+// elements can allocat their proper dimensions.
+// Otherwise the width that we rely on for menu positioning is set improperly
+// for the first time we open a menu of each type.
+const initRender = Variable(true);
+
+setTimeout(() => {
+  initRender.value = false;
+}, 2000);
+
 export default ({
   name,
   child,
@@ -57,7 +67,7 @@ export default ({
     name,
     class_names: [name, "dropdown-menu"],
     setup: (w) => w.keybind("Escape", () => App.closeWindow(name)),
-    visible: true,
+    visible: initRender.bind("value"),
     keymode: "on-demand",
     exclusivity,
     layer: "top",
@@ -67,10 +77,11 @@ export default ({
       on_primary_click: () => App.closeWindow(name),
       on_secondary_click: () => App.closeWindow(name),
       child: Widget.Box({
+        class_name: "top-eb",
         vertical: true,
         children: [
           Widget.EventBox({
-            class_name: "event-top-padding",
+            class_name: "mid-eb event-top-padding",
             hexpand: true,
             vexpand: false,
             can_focus: false,
@@ -81,7 +92,7 @@ export default ({
             },
           }),
           Widget.EventBox({
-            class_name: "menu-event-box",
+            class_name: "in-eb menu-event-box",
             on_primary_click: () => {
               return true;
             },

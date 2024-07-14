@@ -15,15 +15,18 @@ const Shortcuts = () => {
   });
   const handleClick = (action, resolver) => {
     App.closeWindow("dashboardmenu");
-    Utils.execAsync(action)
-      .then((res) => {
-        if (typeof resolver === "function") {
-          return resolver(res);
-        }
 
-        return res;
-      })
-      .catch((err) => err);
+    setTimeout(() => {
+      Utils.execAsync(action)
+        .then((res) => {
+          if (typeof resolver === "function") {
+            return resolver(res);
+          }
+
+          return res;
+        })
+        .catch((err) => err);
+    }, 250);
   };
 
   const recordingDropdown = Widget.Menu({
