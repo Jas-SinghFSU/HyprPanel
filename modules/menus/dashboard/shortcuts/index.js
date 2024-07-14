@@ -13,7 +13,7 @@ const Shortcuts = () => {
       },
     ],
   });
-  const handleClick = (action, resolver) => {
+  const handleClick = (action, resolver, tOut = 250) => {
     App.closeWindow("dashboardmenu");
 
     setTimeout(() => {
@@ -26,7 +26,7 @@ const Shortcuts = () => {
           return res;
         })
         .catch((err) => err);
-    }, 250);
+    }, tOut);
   };
 
   const recordingDropdown = Widget.Menu({
@@ -141,7 +141,7 @@ const Shortcuts = () => {
               Widget.Button({
                 tooltip_text: "Color Picker",
                 class_name: "dashboard-button colorpicker top-button",
-                on_primary_click: () => handleClick("hyprpicker -a"),
+                on_primary_click: () => handleClick("hyprpicker -a", {}, 500),
                 child: Widget.Label({
                   class_name: "button-label",
                   label: "",
