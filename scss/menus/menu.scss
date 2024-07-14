@@ -94,13 +94,14 @@ tooltip label {
     background: $crust;
     border: .13em solid $surface0;
     border-radius: .7rem;
-    min-width: 400px;
+    min-width: 20em;
     color: $text;
 }
 
 .menu-items-container {
     border-radius: 0.4em;
-    min-width: 400px;
+    font-size: 1.3em;
+    min-width: 20em;
 }
 
 .menu-section-container {

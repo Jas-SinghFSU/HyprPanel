@@ -9,11 +9,14 @@ export const Padding = (name) =>
     setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
   });
 
-const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
+const moveBoxToCursor = (self, fixed) => {
   if (fixed) {
     return;
   }
+
   globalMousePos.connect("changed", ({ value }) => {
+    const currentWidth = self.child.get_allocation().width;
+
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
 
@@ -22,19 +25,19 @@ const moveBoxToCursor = (self, minWidth, minHeight, fixed) => {
       [monWidth, monHeight] = [monHeight, monWidth];
     }
 
-    let marginRight = monWidth - minWidth / 2;
+    let marginRight = monWidth - currentWidth / 2;
     marginRight = fixed ? marginRight - monWidth / 2 : marginRight - value[0];
-    let marginLeft = monWidth - minWidth - marginRight;
+    let marginLeft = monWidth - currentWidth - marginRight;
 
     if (marginRight < 0) {
       marginRight = 13;
-      marginLeft = monWidth - minWidth - 13;
+      marginLeft = monWidth - currentWidth - 13;
     } else if (marginRight < 13) {
       marginRight = 13;
-      marginLeft = monWidth - minWidth - 13;
+      marginLeft = monWidth - currentWidth - 13;
     }
     const marginTop = 45;
-    const marginBottom = monHeight + minHeight - marginTop;
+    const marginBottom = monHeight - marginTop;
     self.set_margin_left(marginLeft);
     self.set_margin_right(marginRight);
     self.set_margin_bottom(marginBottom);
@@ -46,8 +49,6 @@ export default ({
   child,
   layout = "center",
   transition,
-  minWidth = 400,
-  minHeight = 200,
   exclusivity = "ignore",
   fixed = false,
   ...props
@@ -56,7 +57,7 @@ export default ({
     name,
     class_names: [name, "dropdown-menu"],
     setup: (w) => w.keybind("Escape", () => App.closeWindow(name)),
-    visible: false,
+    visible: true,
     keymode: "on-demand",
     exclusivity,
     layer: "top",
@@ -88,7 +89,7 @@ export default ({
               return true;
             },
             setup: (self) => {
-              moveBoxToCursor(self, minWidth, minHeight, fixed);
+              moveBoxToCursor(self, fixed);
             },
             child: Widget.Box({
               class_name: "dropdown-menu-container",

@@ -512,13 +512,14 @@ tooltip label {
   background: #11111b;
   border: 0.13em solid #313244;
   border-radius: 0.7rem;
-  min-width: 400px;
+  min-width: 20em;
   color: #cdd6f4;
 }
 
 .menu-items-container {
   border-radius: 0.4em;
-  min-width: 400px;
+  font-size: 1.3em;
+  min-width: 20em;
 }
 
 .menu-section-container {
@@ -1035,8 +1036,8 @@ window#powermenu .powermenu.box {
 }
 
 .menu-items-container.media {
-  min-width: 30.5em;
-  min-height: 15em;
+  min-width: 25em;
+  min-height: 10em;
 }
 .menu-items-container.media .menu-section-container {
   margin: 1em 0em;
@@ -1082,7 +1083,7 @@ window#powermenu .powermenu.box {
   background: #b4befe;
   color: #11111b;
   min-height: 1.8em;
-  min-width: 2em;
+  min-width: 2.5em;
   border-radius: 0.2rem;
 }
 .menu-items-container.media .media-indicator-control-button.disabled {
