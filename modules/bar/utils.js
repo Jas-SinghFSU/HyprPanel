@@ -1,9 +1,19 @@
 export const closeAllMenus = () => {
-  App.closeWindow("bluetoothmenu");
-  App.closeWindow("audiomenu");
-  App.closeWindow("networkmenu");
-  App.closeWindow("mediamenu");
-  App.closeWindow("calendarmenu");
+  const menuWindows = App.windows
+    .filter((w) => {
+      if (w.name) {
+        return /.*menu/.test(w.name);
+      }
+
+      return false;
+    })
+    .map((w) => w.name);
+
+  menuWindows.forEach((w) => {
+    if (w) {
+      App.closeWindow(w);
+    }
+  });
 };
 
 export const openMenu = (clicked, event, window) => {
@@ -12,8 +22,8 @@ export const openMenu = (clicked, event, window) => {
    * to the center of the button clicked. We don't want the menu to spawn
    * offcenter dependending on which edge of the button you click on.
    * -------------
-   * To fix this, we take the x coordinate of the click within the icon's bounds.
-   * So if you click the left edge of a 100width button then the x axis will be 0
+   * To fix this, we take the x coordinate of the click within the button's bounds.
+   * If you click the left edge of a 100 width button, then the x axis will be 0
    * and if you click the right edge then the x axis will be 100.
    * -------------
    * Then we divide the width of the button by 2 to get the center of the button and then get
