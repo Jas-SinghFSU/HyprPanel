@@ -1,49 +1,81 @@
 const hyprland = await Service.import("hyprland");
+import options from "options";
+
+const { workspaces, monitorSpecific } = options.bar.workspaces;
 
 function range(length, start = 1) {
   return Array.from({ length }, (_, i) => i + start);
 }
 
-const Workspaces = (monitor = -1, wsMap = {}, ws = 8) => {
-  const getWorkspacesForMonitor = (curWs) => {
-    if (
-      Object.keys(wsMap)
-        .map((mn) => Number(mn))
-        .includes(monitor)
-    ) {
-      return wsMap[monitor].includes(curWs);
-    }
-    return true;
+const Workspaces = (monitor = -1, ws = 8) => {
+  const getWorkspacesForMonitor = (curWs, wsRules) => {
+    const monitorMap = {};
+    hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
+
+    const currentMonitorName = monitorMap[monitor];
+    return wsRules[currentMonitorName].includes(curWs);
   };
+
+  const getWorkspaceRules = () => {
+    try {
+      const rules = Utils.exec("hyprctl workspacerules -j");
+
+      const workspaceRules = {};
+
+      JSON.parse(rules).forEach((rule, index) => {
+        if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
+          workspaceRules[rule.monitor].push(index + 1);
+        } else {
+          workspaceRules[rule.monitor] = [index + 1];
+        }
+      });
+
+      return workspaceRules;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
     component: Widget.Box({
       class_name: "workspaces",
-      children: range(ws || 8)
-        .filter((i) => getWorkspacesForMonitor(i))
-        .map((i) => {
-          return Widget.Label({
-            attribute: i,
-            vpack: "center",
-            label: `${i}`,
-            setup: (self) =>
-              self.hook(hyprland, () => {
-                self.toggleClassName(
-                  "active",
-                  hyprland.active.workspace.id === i,
-                );
-                self.toggleClassName(
-                  "occupied",
-                  (hyprland.getWorkspace(i)?.windows || 0) > 0,
-                );
+      children: Utils.merge(
+        [workspaces.bind(), monitorSpecific.bind()],
+        (workspaces, monitorSpecific) => {
+          return range(workspaces || 8)
+            .filter((i) => {
+              if (!monitorSpecific) {
+                return true;
+              }
+              const workspaceRules = getWorkspaceRules();
+              return getWorkspacesForMonitor(i, workspaceRules);
+            })
+            .map((i) => {
+              return Widget.Label({
+                attribute: i,
+                vpack: "center",
+                label: `${i}`,
+                setup: (self) =>
+                  self.hook(hyprland, () => {
+                    self.toggleClassName(
+                      "active",
+                      hyprland.active.workspace.id === i,
+                    );
+                    self.toggleClassName(
+                      "occupied",
+                      (hyprland.getWorkspace(i)?.windows || 0) > 0,
+                    );
 
-                const isCurrentMonitor =
-                  monitor !== -1 &&
-                  hyprland.getWorkspace(i)?.monitorID !== monitor;
+                    const isCurrentMonitor =
+                      monitor !== -1 &&
+                      hyprland.getWorkspace(i)?.monitorID !== monitor;
 
-                self.toggleClassName("hidden", isCurrentMonitor);
-              }),
-          });
-        }),
+                    self.toggleClassName("hidden", isCurrentMonitor);
+                  }),
+              });
+            });
+        },
+      ),
       setup: (box) => {
         if (ws === 0) {
           box.hook(hyprland.active.workspace, () =>

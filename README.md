@@ -1,16 +1,15 @@
-Requirements: 
+
+# Starter Config
+
+if suggestions don't work, first make sure
+you have TypeScript LSP working in your editor
+
+if you do not want typechecking only suggestions
+
+```json
+// tsconfig.json
+"checkJs": false
 ```
-pipewire
-bluez
-bluez-utils
-grimblast
-gpu-screen-recorder
-hyprpicker
-btop
-nmcli
-networkmanager
-dart-sass
-brightnessctl
-python
-python-gpustat
-```
+
+types are symlinked to:
+/usr/share/com.github.Aylur.ags/types

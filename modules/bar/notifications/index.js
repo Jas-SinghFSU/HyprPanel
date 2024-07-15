@@ -6,14 +6,11 @@ export const Notifications = () => {
   return {
     component: Widget.Box({
       hpack: "start",
-      hexpand: true,
-      child: Widget.Button({
+      child: Widget.Box({
         hpack: "start",
-        hexpand: true,
         class_name: "bar-notifications",
         child: Widget.Label({
           hpack: "center",
-          hexpand: true,
           class_name: "bar-notifications-label",
           setup: (self) => {
             self.hook(notifs, () => {

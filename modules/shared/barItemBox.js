@@ -3,7 +3,6 @@ export const BarItemBox = (child) => {
     if (Object.hasOwnProperty.call(child, "isVis")) {
       return child.isVis.bind("value");
     }
-
     return child.isVisible;
   };
 
