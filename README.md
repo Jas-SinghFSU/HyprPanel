@@ -1,15 +1,23 @@
-
-# Starter Config
-
-if suggestions don't work, first make sure
-you have TypeScript LSP working in your editor
-
-if you do not want typechecking only suggestions
-
-```json
-// tsconfig.json
-"checkJs": false
+Requirements:
+Bun (may require sudo)
+```sh
+curl -fsSL https://bun.sh/install | bash && \
+  ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 
-types are symlinked to:
-/usr/share/com.github.Aylur.ags/types
+```
+pipewire
+bluez
+bluez-utils
+grimblast
+gpu-screen-recorder
+hyprpicker
+btop
+nmcli
+networkmanager
+dart-sass
+brightnessctl
+python
+python-gpustat
+
+```

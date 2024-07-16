@@ -31,7 +31,6 @@ const widget = {
   bluetooth: () => WidgetContainer(Bluetooth()),
   clock: () => WidgetContainer(Clock()),
   systray: () => WidgetContainer(SysTray()),
-  // expander: () => Widget.Box({ expand: true }),
 };
 
 export const Bar = (monitor: number) => {
@@ -51,7 +50,7 @@ export const Bar = (monitor: number) => {
         setup: self => {
           self.children = start.value.map(w => widget[w](monitor));
           self.hook(start, (self) => {
-          self.children = start.value.map(w => widget[w](monitor));
+            self.children = start.value.map(w => widget[w](monitor));
           })
         },
       }),
