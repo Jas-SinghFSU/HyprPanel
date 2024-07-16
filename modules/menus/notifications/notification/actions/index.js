@@ -10,11 +10,13 @@ const Actions = (notif, notifs) => {
           class_name: "notification-action-buttons menu",
           on_primary_click: () => {
             if (action.id.includes("scriptAction:-")) {
+              App.closeWindow("notificationsmenu");
               Utils.execAsync(
                 `${action.id.replace("scriptAction:-", "")}`,
               ).catch((err) => console.error(err));
               notifs.CloseNotification(notif.id);
             } else {
+              App.closeWindow("notificationsmenu");
               notif.invoke(action.id);
             }
           },

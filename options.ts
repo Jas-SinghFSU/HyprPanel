@@ -36,6 +36,19 @@ const colors = {
 const options = mkOptions(OPTIONS, {
     autotheme: opt(false),
     theme: {
+        notification: {
+            background: opt(colors.base),
+            actions: {
+                background: opt(colors.surface0),
+                hover: opt(colors.surface1),
+                text: opt(colors.mantle),
+            },
+            label: opt(colors.lavender),
+            date: opt(colors.overlay1),
+            text: opt(colors.text),
+            labelicon: opt(colors.lavender),
+            close: opt(colors.red)
+        },
         bar: {
             transparent: opt(false),
             background: opt(colors.mantle),
@@ -108,8 +121,7 @@ const options = mkOptions(OPTIONS, {
                 switch: {
                     enabled: opt(colors.lavender),
                     disabled: opt(colors.surface0),
-                    button: opt(colors.overlay0)
-
+                    puck: opt(colors.overlay0)
                 },
                 buttons: {
                     default: opt(colors.lavender),
@@ -132,18 +144,6 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.surface2),
                     backgroundhover: opt(colors.surface1),
                     puck: opt(colors.overlay0)
-                },
-                notifications: {
-                    background: opt(colors.base),
-                    actions: {
-                        background: opt(colors.surface0),
-                        hover: opt(colors.surface1),
-                        text: opt(colors.mantle),
-                    },
-                    label: opt(colors.lavender),
-                    date: opt(colors.overlay1),
-                    text: opt(colors.text),
-                    labelicon: opt(colors.lavender)
                 },
                 dropdownmenu: {
                     background: opt(colors.crust),
@@ -252,6 +252,12 @@ const options = mkOptions(OPTIONS, {
                         label: opt(colors.sky),
                         text: opt(colors.text),
                         status: opt(colors.overlay0),
+                        switch_divider: opt(colors.surface1),
+                        switch: {
+                            enabled: opt(colors.sky),
+                            disabled: opt(colors.surface0),
+                            puck: opt(colors.overlay0)
+                        },
                         listitems: {
                             passive: opt(colors.text),
                             active: opt(colors.sky)
@@ -325,9 +331,156 @@ const options = mkOptions(OPTIONS, {
                             }
                         },
                     },
+                    dashboard: {
+                        card: opt(colors.base),
+                        background: opt(colors.crust),
+                        border: opt(colors.surface0),
+                        profile: {
+                            card: opt(colors.base),
+                            name: opt(colors.pink)
+                        },
+                        powermenu: {
+                            shutdown: opt(colors.red),
+                            restart: opt(colors.peach),
+                            logout: opt(colors.green),
+                            sleep: opt(colors.sky),
+                            confirmation: {
+                                card: opt(colors.base),
+                                background: opt(colors.crust),
+                                border: opt(colors.surface0),
+                                label: opt(colors.green),
+                                body: opt(colors.text),
+                                confirm: opt(colors.green),
+                                deny: opt(colors.red),
+                            }
+                        },
+                        shortcuts_left: {
+                            shortcut1: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut2: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut3: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut4: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                        },
+                        shortcuts_right: {
+                            shortcut1: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut2: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut3: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                            shortcut4: {
+                                background: opt(colors.lavender),
+                                hover: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                        },
+                        controls: {
+                            wifi: {
+                                background: opt(colors.mauve),
+                                text: opt(colors.crust),
+                            },
+                            bluetooth: {
+                                background: opt(colors.sky),
+                                text: opt(colors.crust),
+                            },
+                            notifications: {
+                                background: opt(colors.yellow),
+                                text: opt(colors.crust),
+                            },
+                            volume: {
+                                background: opt(colors.maroon),
+                                text: opt(colors.crust),
+                            },
+                            input: {
+                                background: opt(colors.pink),
+                                text: opt(colors.crust),
+                            },
+                        },
+                        directories: {
+                            left: {
+                                top: {
+                                    color: opt(colors.pink),
+                                },
+                                middle: {
+                                    color: opt(colors.yellow),
+                                },
+                                bottom: {
+                                    color: opt(colors.maroon),
+                                },
+                            },
+                            right: {
+                                top: {
+                                    color: opt(colors.teal),
+                                },
+                                middle: {
+                                    color: opt(colors.mauve),
+                                },
+                                bottom: {
+                                    color: opt(colors.lavender),
+                                },
+                            }
+                        },
+                        monitors: {
+                            cpu: {
+                                icon: opt(colors.maroon),
+                                bar: opt(colors.maroon),
+                                label: opt(colors.maroon),
+                            },
+                            ram: {
+                                icon: opt(colors.yellow),
+                                bar: opt(colors.yellow),
+                                label: opt(colors.yellow),
+                            },
+                            gpu: {
+                                icon: opt(colors.green),
+                                bar: opt(colors.green),
+                                label: opt(colors.green),
+                            },
+                            disk: {
+                                icon: opt(colors.pink),
+                                bar: opt(colors.pink),
+                                label: opt(colors.pink),
+                            },
+                        }
+                    },
                     notifications: {
-                        background: opt(colors.base2),
-                        text: opt(colors.lavender)
+                        background: opt(colors.mantle),
+                        card: opt(colors.base),
+                        border: opt(colors.surface0),
+                        switch_divider: opt(colors.surface1),
+                        switch: {
+                            enabled: opt(colors.lavender),
+                            disabled: opt(colors.surface0),
+                            puck: opt(colors.overlay0)
+                        },
+                        clear: {
+                            background: opt(colors.red),
+                            font: opt(colors.crust)
+                        }
                     },
                 }
             }
@@ -341,8 +494,6 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         position: opt<"top" | "bottom">("top"),
-        corners: opt(true),
-        transparent: opt(false),
         layout: {
             start: opt<Array<import("modules/bar/Bar").BarWidget>>([
                 "dashboard",
@@ -362,38 +513,36 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         launcher: {
-            icon: {
-                colored: opt(true),
-                icon: opt(icon(distro.logo, icons.ui.search)),
-            },
-            label: {
-                colored: opt(false),
-                label: opt(" Applications"),
-            },
-            action: opt(() => App.toggleWindow("launcher")),
-        },
-        date: {
-            format: opt("%H:%M - %A %e."),
-            action: opt(() => App.toggleWindow("datemenu")),
-        },
-        battery: {
-            bar: opt<"hidden" | "regular" | "whole">("regular"),
-            charging: opt("#00D787"),
-            percentage: opt(true),
-            blocks: opt(7),
-            low: opt(30),
+            icon: opt(icon(distro.logo, icons.ui.search)),
         },
         workspaces: {
+            show_icons: opt(false),
+            icons: {
+                available: opt(""),
+                active: opt(""),
+                occupied: opt(""),
+            },
             workspaces: opt(7),
             monitorSpecific: opt(true),
         },
-        taskbar: {
-            iconSize: opt(0),
-            monochrome: opt(true),
-            exclusive: opt(false),
+        media: {
+            icon: opt(true),
+            label: opt(true),
         },
-        messages: {
-            action: opt(() => App.toggleWindow("datemenu")),
+        volume: {
+            label: opt(true),
+        },
+        network: {
+            status: {
+                show: opt(true),
+                type: opt<"status" | "connection">("connection"),
+            },
+        },
+        bluetooth: {
+            status: opt(true),
+        },
+        battery: {
+            show_label: opt(true),
         },
         systray: {
             ignore: opt([
@@ -401,16 +550,16 @@ const options = mkOptions(OPTIONS, {
                 "spotify-client",
             ]),
         },
-        media: {
-            monochrome: opt(true),
-            preferred: opt("spotify"),
-            direction: opt<"left" | "right">("right"),
-            format: opt("{artists} - {title}"),
-            length: opt(40),
+        clock: {
+            icons: {
+                clock: opt(true),
+                calendar: opt(true),
+            },
+            format: opt("%H:%M - %A %e."),
+            action: opt(() => App.toggleWindow("datemenu")),
         },
-        powermenu: {
-            monochrome: opt(false),
-            action: opt(() => App.toggleWindow("powermenu")),
+        notifications: {
+            show_total: opt(false)
         },
     },
 
