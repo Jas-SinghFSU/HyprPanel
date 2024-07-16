@@ -217,7 +217,13 @@ const options = mkOptions(OPTIONS, {
                             active: opt(colors.maroon),
                             hover: opt(colors.maroon)
                         },
-                        slider: {
+                        audio_slider: {
+                            primary: opt(colors.maroon),
+                            background: opt(colors.surface2),
+                            backgroundhover: opt(colors.surface1),
+                            puck: opt(colors.overlay0)
+                        },
+                        input_slider: {
                             primary: opt(colors.maroon),
                             background: opt(colors.surface2),
                             backgroundhover: opt(colors.surface1),
@@ -399,6 +405,7 @@ const options = mkOptions(OPTIONS, {
                             },
                         },
                         controls: {
+                            disabled: (colors.surface2),
                             wifi: {
                                 background: opt(colors.mauve),
                                 text: opt(colors.crust),
@@ -556,11 +563,177 @@ const options = mkOptions(OPTIONS, {
                 calendar: opt(true),
             },
             format: opt("%H:%M - %A %e."),
-            action: opt(() => App.toggleWindow("datemenu")),
         },
         notifications: {
             show_total: opt(false)
         },
+    },
+
+    menus: {
+        border: {
+            enabled: opt(true),
+            size: opt(""),
+            outer_gap: opt(""),
+            inner_gap: opt(""),
+            radius: opt(""),
+            card_radius: opt(""),
+        },
+        dashboard: {
+            modules: opt([
+                "powermenu",
+                "shortcuts",
+                "controls",
+                "directories",
+                "monitor",
+            ]),
+            order: {
+                primary: opt([
+                    "powermenu",
+                    "shortcuts",
+                    "controls",
+                    "directories",
+                    "monitor",
+                ]),
+                powermenu: opt([
+                    "avatar",
+                    "powermenu",
+                ]),
+                monitor: opt([
+                    "cpu",
+                    "ram",
+                    "gpu",
+                    "disk",
+                ])
+            },
+            powermenu: {
+                sleep: opt("systemctl suspend"),
+                reboot: opt("systemctl reboot"),
+                logout: opt("pkill Hyprland"),
+                shutdown: opt("shutdown now"),
+                avatar: {
+                    image: opt<string>,
+                    name: opt<"system" | string>("system"),
+                },
+            },
+            shortcuts: {
+                left: {
+                    shortcut1: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut2: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut3: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut4: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                },
+                right: {
+                    shortcut1: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut2: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut3: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                    shortcut4: {
+                        icon: opt(""),
+                        command: opt("")
+                    },
+                }
+            },
+            directories: {
+                left: {
+                    directory1: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                    directory2: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                    directory3: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                },
+                right: {
+                    directory1: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                    directory2: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                    directory3: {
+                        label: opt(""),
+                        command: opt("")
+                    },
+                }
+            },
+        },
+        volume: {
+            order: opt([
+                "volume",
+                "devices",
+            ])
+        },
+        network: {
+            order: opt([
+                "ethernet",
+                "wifi",
+            ]),
+            status: opt(true),
+        },
+        bluetooth: {
+            status: opt(true),
+        },
+        battery: {
+            modules: opt([
+                "brightness",
+                "powerprofile"
+            ]),
+            order: opt([
+                "brightness",
+                "powerprofile"
+            ])
+        },
+        clock: {
+            modules: opt([
+                "clock",
+                "calendar",
+                "weather"
+            ]),
+            order: opt([
+                "clock",
+                "calendar",
+                "weather"
+            ]),
+            time: {
+                military: opt(false),
+                seconds: opt(true)
+            },
+            weather: {
+                hourly: opt(true),
+                interval: opt(60_000),
+                unit: opt<"metric" | "imperial" | "standard">("metric"),
+                key: opt<string>(
+                    JSON.parse(Utils.readFile(`${App.configDir}/.weather`) || "{}")?.key || "",
+                ),
+            }
+        }
     },
 
     overview: {
@@ -576,25 +749,6 @@ const options = mkOptions(OPTIONS, {
         shutdown: opt("shutdown now"),
         layout: opt<"line" | "box">("line"),
         labels: opt(true),
-    },
-
-    quicksettings: {
-        avatar: {
-            image: opt(`/var/lib/AccountsService/icons/${Utils.USER}`),
-            size: opt(70),
-            name: opt("Linux User")
-        },
-    },
-
-    calendarmenu: {
-        position: opt<"left" | "center" | "right">("center"),
-        weather: {
-            interval: opt(60_000),
-            unit: opt<"metric" | "imperial" | "standard">("metric"),
-            key: opt<string>(
-                JSON.parse(Utils.readFile(`${App.configDir}/.weather`) || "{}")?.key || "",
-            ),
-        },
     },
 
     osd: {
