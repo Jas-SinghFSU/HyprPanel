@@ -572,7 +572,7 @@ tooltip label {
   margin-bottom: -0.2em;
 }
 .menu-active-button .menu-active-icon {
-  color: #7f849c;
+  color: #9399b2;
   font-size: 1.4em;
   font-weight: bold;
 }
@@ -1754,6 +1754,7 @@ window#powermenu .powermenu.box {
 }
 
 .notification-icon {
+  color: #b4befe;
   margin-bottom: 0.4em;
   min-width: 1em;
   min-height: 1em;
