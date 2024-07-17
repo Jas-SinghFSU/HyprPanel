@@ -53,6 +53,7 @@ const BatteryLabel = () => {
       },
     }),
     isVis,
+    boxClass: "battery",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "energymenu");

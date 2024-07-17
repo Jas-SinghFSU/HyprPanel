@@ -1,0 +1,7 @@
+@import "../colors";
+
+.bar-notifications-label {
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
+  font-size: 1.3em;
+  min-width: 1em;
+}

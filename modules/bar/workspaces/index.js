@@ -89,6 +89,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
       },
     }),
     isVisible: true,
+    boxClass: "workspaces",
   };
 };
 export { Workspaces };

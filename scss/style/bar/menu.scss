@@ -1,0 +1,7 @@
+@import "../colors";
+@import '../../variables';
+
+.bar-menu_label {
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-icon);
+  font-size: 1.3em;
+}

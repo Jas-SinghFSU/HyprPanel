@@ -1,0 +1,10 @@
+@import "../colors";
+@import '../../variables';
+
+.bar-network-label {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-network-text);
+}
+
+.bar-network-icon {
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon);
+}

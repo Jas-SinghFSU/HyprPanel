@@ -9,6 +9,7 @@ const Menu = () => {
       }),
     }),
     isVisible: true,
+    boxClass: "dashboard",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "dashboardmenu");

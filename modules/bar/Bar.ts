@@ -1,4 +1,3 @@
-const network = await Service.import("network");
 import { Menu } from "./menu/index.js";
 import { Workspaces } from "./workspaces/index.js";
 import { ClientTitle } from "./window_title/index.js";

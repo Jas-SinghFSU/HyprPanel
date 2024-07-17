@@ -1,0 +1,20 @@
+@import '../colors';
+@import '../../variables';
+
+.bar {
+  .battery {
+    label {
+      color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-battery-text);
+    }
+    image {
+      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-battery-icon);
+    }
+  }
+}
+
+.menu-section-container.brightness {
+  margin-bottom: 0em;
+}
+.menu-section-container.energy {
+  margin-top: 0.5em;
+}

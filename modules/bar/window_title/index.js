@@ -29,6 +29,7 @@ const ClientTitle = () => {
       label: hyprland.active.bind("client").as((v) => filterTitle(v)),
     }),
     isVisible: true,
+    boxClass: "windowtitle",
   };
 };
 

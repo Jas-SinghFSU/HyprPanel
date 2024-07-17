@@ -1,0 +1,34 @@
+@import "../colors";
+@import '../../variables';
+
+.workspaces {
+  label {
+    font-size: 0.2em;
+    min-width: 4em;
+    min-height: 4em;
+    border-radius: 1.9rem * .6;
+    margin: 0rem 0.5rem * .5;
+    transition: 300ms * .5;
+    background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
+
+    &.occupied {
+      background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
+      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
+      min-width: 4em;
+      min-height: 4em;
+    }
+
+    &.active {
+      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
+      background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
+      min-width: 12em;
+      min-height: 4em;
+    }
+  }
+}
+
+
+.workspaces label:not(:first-child) {
+  margin-left: 4.5em;
+}

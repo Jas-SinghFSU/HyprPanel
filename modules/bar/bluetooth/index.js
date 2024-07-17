@@ -18,6 +18,7 @@ const Bluetooth = () => {
       children: [btIcon, btText],
     }),
     isVisible: true,
+    boxClass: "bluetooth",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "bluetoothmenu");

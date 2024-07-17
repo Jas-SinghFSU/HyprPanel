@@ -51,56 +51,80 @@ const options = mkOptions(OPTIONS, {
         },
         bar: {
             transparent: opt(false),
-            background: opt(colors.mantle),
+            background: opt(colors.crust),
             buttons: {
-                monochrome: opt(true),
+                monochrome: opt(false),
                 background: opt(colors.base2),
                 hover: opt(colors.surface1),
                 text: opt(colors.lavender),
+                icon: opt(colors.lavender),
                 dashboard: {
                     background: opt(colors.base2),
-                    text: opt(colors.yellow)
+                    hover: opt(colors.surface1),
+                    icon: opt(colors.yellow)
                 },
                 workspaces: {
                     background: opt(colors.base2),
+                    hover: opt(colors.surface1),
                     available: opt(colors.sky),
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
-                    text: opt(colors.pink)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.pink),
+                    icon: opt(colors.pink)
                 },
                 media: {
                     background: opt(colors.base2),
-                    text: opt(colors.lavender)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.lavender),
+                    icon: opt(colors.lavender)
                 },
                 volume: {
                     background: opt(colors.base2),
-                    text: opt(colors.maroon)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.maroon),
+                    icon: opt(colors.maroon),
                 },
                 network: {
                     background: opt(colors.base2),
-                    text: opt(colors.mauve)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.mauve),
+                    icon: opt(colors.mauve),
                 },
                 bluetooth: {
                     background: opt(colors.base2),
-                    text: opt(colors.sky)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.sky),
+                    icon: opt(colors.sky),
                 },
                 systray: {
                     background: opt(colors.base2),
+                    hover: opt(colors.surface1),
+                },
+                power: {
+                    background: opt(colors.base2),
+                    hover: opt(colors.surface1),
+                    icon: opt(colors.red),
                 },
                 battery: {
                     background: opt(colors.base2),
-                    text: opt(colors.yellow)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.yellow),
+                    icon: opt(colors.yellow),
                 },
                 clock: {
                     background: opt(colors.base2),
-                    text: opt(colors.pink)
+                    hover: opt(colors.surface1),
+                    text: opt(colors.pink),
+                    icon: opt(colors.pink),
                 },
                 notifications: {
                     background: opt(colors.base2),
-                    text: opt(colors.lavender)
+                    hover: opt(colors.surface1),
+                    icon: opt(colors.lavender),
                 },
             },
             menus: {
@@ -161,39 +185,33 @@ const options = mkOptions(OPTIONS, {
                         album: opt(colors.base2),
                         buttons: {
                             inactive: {
-                                global: opt(false),
                                 background: opt(colors.surface2),
                                 text: opt(colors.crust)
                             },
                             shuffle: {
-                                global: opt(false),
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
                                 active: opt(colors.pink),
                                 text: opt(colors.crust)
                             },
                             previous: {
-                                global: opt(false),
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
                                 text: opt(colors.crust)
                             },
                             playpause: {
-                                global: opt(false),
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
                                 text: opt(colors.crust)
 
                             },
                             next: {
-                                global: opt(false),
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
                                 text: opt(colors.crust)
 
                             },
                             loop: {
-                                global: opt(false),
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
                                 active: opt(colors.pink),
@@ -202,7 +220,6 @@ const options = mkOptions(OPTIONS, {
                             }
                         },
                         slider: {
-                            global: opt(false),
                             primary: opt(colors.pink),
                             background: opt(colors.surface2),
                             backgroundhover: opt(colors.surface1),
@@ -211,42 +228,34 @@ const options = mkOptions(OPTIONS, {
                     },
                     volume: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         label: {
-                            global: opt(false),
                             color: opt(colors.maroon),
                         },
                         text: opt(colors.text),
                         listitems: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             active: opt(colors.maroon)
                         },
                         icons: {
-                            global: opt(false),
                             passive: opt(colors.overlay2),
                             active: opt(colors.maroon),
                             hover: opt(colors.maroon)
                         },
                         audio_slider: {
-                            global: opt(false),
                             primary: opt(colors.maroon),
                             background: opt(colors.surface2),
                             backgroundhover: opt(colors.surface1),
                             puck: opt(colors.overlay0)
                         },
                         input_slider: {
-                            global: opt(false),
                             primary: opt(colors.maroon),
                             background: opt(colors.surface2),
                             backgroundhover: opt(colors.surface1),
@@ -255,93 +264,75 @@ const options = mkOptions(OPTIONS, {
                     },
                     network: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         label: {
-                            global: opt(false),
                             color: opt(colors.mauve),
                         },
                         text: opt(colors.text),
                         status: {
-                            global: opt(false),
                             color: opt(colors.overlay0),
                         },
                         listitems: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             active: opt(colors.mauve)
                         },
                         icons: {
-                            global: opt(false),
                             passive: opt(colors.overlay2),
                             active: opt(colors.mauve),
                             hover: opt(colors.mauve)
                         },
                         iconbuttons: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             hover: opt(colors.mauve)
                         },
                     },
                     bluetooth: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         label: {
-                            global: opt(false),
                             color: opt(colors.sky),
                         },
                         text: opt(colors.text),
                         status: opt(colors.overlay0),
                         switch_divider: opt(colors.surface1),
                         switch: {
-                            global: opt(false),
                             enabled: opt(colors.sky),
                             disabled: opt(colors.surface0),
                             puck: opt(colors.overlay0)
                         },
                         listitems: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             active: opt(colors.sky)
                         },
                         icons: {
-                            global: opt(false),
                             passive: opt(colors.overlay2),
                             active: opt(colors.sky),
                             hover: opt(colors.sky)
                         },
                         iconbuttons: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             hover: opt(colors.sky)
                         },
                     },
                     systray: {
                         background: {
-                            global: opt(false),
                             color: opt(colors.base2),
                         },
                         dropdownmenu: {
-                            global: opt(false),
                             background: opt(colors.crust),
                             text: opt(colors.text),
                             divider: opt(colors.base)
@@ -349,29 +340,23 @@ const options = mkOptions(OPTIONS, {
                     },
                     battery: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         label: {
-                            global: opt(false),
                             color: opt(colors.yellow),
                         },
                         text: opt(colors.text),
                         listitems: {
-                            global: opt(false),
                             passive: opt(colors.text),
                             active: opt(colors.yellow)
                         },
                         icons: {
-                            global: opt(false),
                             passive: opt(colors.overlay2),
                             active: opt(colors.yellow),
                             hover: opt(colors.yellow)
@@ -379,15 +364,12 @@ const options = mkOptions(OPTIONS, {
                     },
                     clock: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         text: opt(colors.text),
@@ -423,24 +405,19 @@ const options = mkOptions(OPTIONS, {
                     },
                     dashboard: {
                         card: {
-                            global: opt(false),
                             color: opt(colors.base),
                         },
                         background: {
-                            global: opt(false),
                             color: opt(colors.crust),
                         },
                         border: {
-                            global: opt(false),
                             color: opt(colors.surface0),
                         },
                         profile: {
-                            global: opt(false),
                             card: opt(colors.base),
                             name: opt(colors.pink)
                         },
                         powermenu: {
-                            global: opt(false),
                             shutdown: opt(colors.red),
                             restart: opt(colors.peach),
                             logout: opt(colors.green),
@@ -456,7 +433,6 @@ const options = mkOptions(OPTIONS, {
                             }
                         },
                         shortcuts_left: {
-                            global: opt(false),
                             shortcut1: {
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
@@ -479,7 +455,6 @@ const options = mkOptions(OPTIONS, {
                             },
                         },
                         shortcuts_right: {
-                            global: opt(false),
                             shortcut1: {
                                 background: opt(colors.lavender),
                                 hover: opt(colors.pink),
@@ -572,7 +547,6 @@ const options = mkOptions(OPTIONS, {
                         }
                     },
                     notifications: {
-                        global: opt(false),
                         background: opt(colors.mantle),
                         card: opt(colors.base),
                         border: opt(colors.surface0),

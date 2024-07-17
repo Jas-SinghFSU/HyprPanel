@@ -1,0 +1,22 @@
+@import '../colors';
+@import '../../variables';
+
+.bar-bt_icon {
+  font-size: 1.15em;
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon);
+}
+
+.bar-bt_label {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
+}
+
+.bluetooth-disabled-menu {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: $surface2;
+  margin: 6rem 0rem;
+}
+
+.menu-button-isactive {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
+}

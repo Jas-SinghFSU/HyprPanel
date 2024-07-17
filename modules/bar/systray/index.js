@@ -29,6 +29,7 @@ const SysTray = () => {
       children: items,
     }),
     isVisible: true,
+    boxClass: "systray",
     isVis,
   };
 };

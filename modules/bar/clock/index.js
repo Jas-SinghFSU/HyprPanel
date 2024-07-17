@@ -11,6 +11,7 @@ const Clock = () => {
       label: date.bind(),
     }),
     isVisible: true,
+    boxClass: "clock",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "calendarmenu");

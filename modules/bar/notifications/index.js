@@ -27,6 +27,7 @@ export const Notifications = () => {
       }),
     }),
     isVisible: true,
+    boxClass: "notifications",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "notificationsmenu");

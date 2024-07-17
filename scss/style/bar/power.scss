@@ -1,0 +1,7 @@
+@import "../colors";
+@import '../../variables';
+
+.bar-power_label {
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-power-icon);
+  margin-top: 0.2rem;
+}

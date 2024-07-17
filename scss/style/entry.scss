@@ -1,0 +1,43 @@
+@import '/tmp/ags/hyprpanel/variables.scss';
+* {
+  all: unset;
+  font-family: "Ubuntu Nerd Font";
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+//general
+@import "../scss/colors";
+@import "../scss/common/common.scss";
+@import "../scss/common/floating-widget.scss";
+@import "../scss/common/widget-button.scss";
+
+//modules - bar
+@import "bar/menu";
+@import "bar/audio";
+@import "bar/media";
+@import "bar/network";
+@import "bar/bluetooth";
+@import "bar/clock";
+@import "bar/workspace";
+@import "bar/window_title";
+@import "bar/systray";
+@import "bar/notifications";
+@import "bar/power";
+@import "bar/bar";
+@import "bar/battery";
+
+//modules - menus
+@import "menus/menu";
+@import "menus/power";
+@import "menus/audiomenu";
+@import "menus/network";
+@import "menus/bluetooth";
+@import "menus/media";
+@import "menus/notifications";
+@import "menus/calendar";
+@import "menus/energy";
+@import "menus/dashboard";
+
+//notifications
+@import "notifications/popups";

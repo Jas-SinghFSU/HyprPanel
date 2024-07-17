@@ -1,0 +1,11 @@
+@import '../colors';
+@import '../../variables';
+
+.bar-volume_icon {
+  font-size: 1.3em;
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
+}
+
+.bar-volume_percentage {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
+}

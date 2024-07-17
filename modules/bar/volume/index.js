@@ -44,6 +44,7 @@ const Volume = () => {
       children: [volIcn, volPct],
     }),
     isVisible: true,
+    boxClass: "volume",
     props: {
       on_primary_click: (clicked, event) => {
         openMenu(clicked, event, "audiomenu");

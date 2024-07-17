@@ -86,6 +86,7 @@ const Media = () => {
       }),
     }),
     isVisible: false,
+    boxClass: "media",
     name: "media",
     props: {
       on_scroll_up: () => mpris.getPlayer("")?.next(),

@@ -10,6 +10,7 @@ export const Power = () => {
       }),
     }),
     isVisible: true,
+    boxClass: "power",
     props: {
       on_clicked: () => App.toggleWindow("powermenu"),
     },
