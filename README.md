@@ -6,7 +6,8 @@ curl -fsSL https://bun.sh/install | bash && \
   ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 AGS: https://github.com/Aylur/ags
-A weatherapi key in a file at Documents/Keys/keyList.js
+
+A [weatherapi](https://www.weatherapi.com/) key in a file at Documents/Keys/keyList.js
 Create an object like so 
 ```js
 export const keyring = {
