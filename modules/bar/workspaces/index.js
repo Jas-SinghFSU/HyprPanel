@@ -9,7 +9,7 @@ function range(length, start = 1) {
 
 const Workspaces = (monitor = -1, ws = 8) => {
   const getWorkspacesForMonitor = (curWs, wsRules) => {
-    if (!wsRules || !wsRules.length) {
+    if (!wsRules || !Object.keys(wsRules).length) {
       return true;
     }
 

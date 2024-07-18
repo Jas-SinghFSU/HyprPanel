@@ -133,7 +133,7 @@ const options = mkOptions(OPTIONS, {
                 cards: opt(colors.base),
                 border: opt(colors.surface0),
                 text: opt(colors.text),
-                dimtext: opt(colors.text),
+                dimtext: opt(colors.surface2),
                 label: opt(colors.lavender),
                 listitems: {
                     passive: opt(colors.text),
@@ -386,6 +386,7 @@ const options = mkOptions(OPTIONS, {
                             yearmonth: opt(colors.teal),
                             weekdays: opt(colors.pink),
                             paginator: opt(colors.pink),
+                            currentday: opt(colors.pink),
                             days: opt(colors.text),
                             contextdays: opt(colors.surface2),
                         },
