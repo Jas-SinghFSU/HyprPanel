@@ -9,6 +9,10 @@ function range(length, start = 1) {
 
 const Workspaces = (monitor = -1, ws = 8) => {
   const getWorkspacesForMonitor = (curWs, wsRules) => {
+    if (!wsRules || !wsRules.length) {
+      return true;
+    }
+
     const monitorMap = {};
     hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
 
