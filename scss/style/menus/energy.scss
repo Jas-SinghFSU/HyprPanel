@@ -1,8 +1,9 @@
 @import "../colors";
+@import '../../variables';
 
 .menu-items-container.energy {
     .menu-label {
-        color: $yellow;
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
     }
 
     .power-profile-item {
@@ -16,19 +17,18 @@
             font-size: 1.3em;
             min-width: 1em;
             min-height: 1em;
-
-            color: $overlay1;
+            color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
         }
 
         &:hover {
             label {
-                color: $yellow;
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
         }
 
         &.active {
             image {
-                color: $yellow;
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
         }
     }
@@ -36,7 +36,7 @@
         trough {
             highlight,
             progress {
-                background: $yellow;
+                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
             }
         }
     }
@@ -57,5 +57,26 @@
         min-width: 2.5em;
         font-weight: bold;
         margin-bottom: 0.2em;
+    }
+
+    .menu-slider.brightness {
+        trough {
+            background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-battery-slider-background);
+
+            highlight,
+            progress {
+                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
+            }
+        }
+
+        &:hover {
+            trough {
+                background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-battery-slider-backgroundhover);
+            }
+
+            slider {
+                background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-battery-slider-puck);
+            }
+        }
     }
 }

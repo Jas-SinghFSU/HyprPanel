@@ -49,12 +49,12 @@ const devices = (bluetooth, self) => {
         hpack: "center",
         children: [
           Widget.Label({
-            class_name: "dim",
+            class_name: "no-bluetooth-devices dim",
             hexpand: true,
             label: "No devices currently found",
           }),
           Widget.Label({
-            class_name: "dim",
+            class_name: "search-bluetooth-label dim",
             hexpand: true,
             label: "Press '󰑐' to search",
           }),

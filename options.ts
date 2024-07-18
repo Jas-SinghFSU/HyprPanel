@@ -244,6 +244,10 @@ const options = mkOptions(OPTIONS, {
                             active: opt(colors.maroon)
                         },
                         iconbutton: {
+                            passive: opt(colors.text),
+                            active: opt(colors.maroon),
+                        },
+                        icons: {
                             passive: opt(colors.overlay2),
                             active: opt(colors.maroon),
                         },
@@ -287,7 +291,7 @@ const options = mkOptions(OPTIONS, {
                         },
                         iconbuttons: {
                             passive: opt(colors.text),
-                            hover: opt(colors.mauve)
+                            active: opt(colors.mauve)
                         },
                     },
                     bluetooth: {
@@ -319,9 +323,9 @@ const options = mkOptions(OPTIONS, {
                             passive: opt(colors.text),
                             active: opt(colors.sky),
                         },
-                        iconbuttons: {
+                        iconbutton: {
                             passive: opt(colors.text),
-                            hover: opt(colors.sky)
+                            active: opt(colors.sky)
                         },
                     },
                     systray: {
@@ -355,6 +359,12 @@ const options = mkOptions(OPTIONS, {
                         icons: {
                             passive: opt(colors.overlay2),
                             active: opt(colors.yellow),
+                        },
+                        slider: {
+                            primary: opt(colors.lavender),
+                            background: opt(colors.surface2),
+                            backgroundhover: opt(colors.surface1),
+                            puck: opt(colors.overlay0)
                         },
                     },
                     clock: {
@@ -573,6 +583,7 @@ const options = mkOptions(OPTIONS, {
                 "volume",
                 "network",
                 "bluetooth",
+                "battery",
                 "systray",
                 "clock",
                 "notifications"

@@ -20,6 +20,18 @@ const moveBoxToCursor = (self, fixed) => {
     let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
     let monHeight = hyprland.monitors[hyprland.active.monitor.id].height;
 
+    // If GDK Scaling is applied, then get divide width by scaling
+    // to get the proper coordinates.
+    // Ex: On a 2860px wide monitor... if scaling is set to 2, then the right
+    // end of the monitor is the 1430th pixel.
+    const gdkScale = Utils.exec('bash -c "echo $GDK_SCALE"');
+
+    if (/^\d+(.\d+)?$/.test(gdkScale)) {
+      const scale = parseFloat(gdkScale);
+      monWidth = monWidth / scale;
+      monHeight = monHeight / scale;
+    }
+
     // If monitor is vertical (transform = 1 || 3) swap height and width
     if (hyprland.monitors[hyprland.active.monitor.id].transform % 2 !== 0) {
       [monWidth, monHeight] = [monHeight, monWidth];

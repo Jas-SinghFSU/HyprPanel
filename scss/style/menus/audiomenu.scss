@@ -13,12 +13,43 @@
     color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-volume-icons-active);
 }
 
-.menu-active-slider {
+.menu-slider.playback {
     trough {
+        background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-volume-audio_slider-background);
 
         highlight,
         progress {
-            background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-media-slider-primary);
+            background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-volume-audio_slider-primary);
+        }
+    }
+
+    &:hover {
+        trough {
+            background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-volume-audio_slider-backgroundhover);
+        }
+
+        slider {
+            background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-volume-audio_slider-puck);
+        }
+    }
+}
+.menu-slider.inputs {
+    trough {
+        background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-volume-input_slider-background);
+
+        highlight,
+        progress {
+            background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-volume-input_slider-primary);
+        }
+    }
+
+    &:hover {
+        trough {
+            background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-volume-input_slider-backgroundhover);
+        }
+
+        slider {
+            background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-volume-input_slider-puck);
         }
     }
 }
@@ -26,28 +57,28 @@
 .menu-active-button {
     .menu-active-icon.playback,
     .menu-active-icon.input {
-        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbuttons-active);
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
         opacity: 1;
     }
 
     &.muted {
         .menu-active-icon.playback,
         .menu-active-icon.input {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbuttons-passive);
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
             opacity: 1;
         }
     }
     &:hover {
         .menu-active-icon.playback,
         .menu-active-icon.input {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbuttons-passive);
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
             opacity: 0.3;
         }
     }
     &.muted:hover {
         .menu-active-icon.playback,
         .menu-active-icon.input {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbuttons-active);
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
             opacity: 1;
         }
     }
