@@ -10,7 +10,7 @@ AGS: https://github.com/Aylur/ags
 A [weatherapi](https://www.weatherapi.com/) key in a file at Documents/Keys/keyList.js
 Create an object like so 
 ```js
-export const keyring = {
+export const keyRing = {
   weatherapi: "your_weatherapi_key"
 }
 ```
