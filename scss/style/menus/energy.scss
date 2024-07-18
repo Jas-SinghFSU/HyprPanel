@@ -32,14 +32,6 @@
             }
         }
     }
-    .menu-active-slider.brightness {
-        trough {
-            highlight,
-            progress {
-                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
-            }
-        }
-    }
 
     .brightness-container {
         padding-bottom: 1em;

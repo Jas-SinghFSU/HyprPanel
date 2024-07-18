@@ -361,7 +361,7 @@ const options = mkOptions(OPTIONS, {
                             active: opt(colors.yellow),
                         },
                         slider: {
-                            primary: opt(colors.lavender),
+                            primary: opt(colors.yellow),
                             background: opt(colors.surface2),
                             backgroundhover: opt(colors.surface1),
                             puck: opt(colors.overlay0)
