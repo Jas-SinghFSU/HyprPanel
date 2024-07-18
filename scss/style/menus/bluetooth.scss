@@ -2,13 +2,14 @@
 
 .menu-items-container.bluetooth {
     font-size: 1.3em;
+
     .menu-section-container {
         margin: 1em 0em;
     }
 
     .menu-label-container {
         .menu-label {
-            color: $sky;
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-bluetooth-label-color);
         }
 
         .controls-container {
@@ -22,27 +23,42 @@
         font-size: 1em;
     }
 
-    button  {
+    button {
         margin-right: 0.5em;
+
         &.search {
             image {
-                color: $text;
+                color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-bluetooth-iconbuttons-passive);
             }
+
             &:hover image {
-                color: $sky;
+                color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbuttons-active);
             }
+
             font-size: 0.8em;
             margin-bottom: 0em;
         }
+
         &:hover {
-            color: $sky;
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbuttons-active);
+        }
+    }
+
+    .menu-icon-button.bluetooth {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-bluetooth-iconbuttons-passive);
+
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbuttons-active);
         }
     }
 
     .bluetooth-element-item {
         margin-bottom: 0.4em;
+
         &:hover {
-            color: $sky;
+            .menu-button-icon, .menu-button-name {
+                color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbuttons-active);
+            }
         }
 
         image {
@@ -52,35 +68,65 @@
             min-width: 1em;
 
             &.active {
-                color: $sky;
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
             }
         }
 
         label {
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
             font-size: 1em;
         }
 
         .menu-button-icon {
             font-size: 1.5em;
+            color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-bluetooth-icons-passive);
 
             &.active {
-                color: $sky;
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
             }
         }
 
         .connection-status {
             font-size: 0.9em;
             margin-left: 0.6rem;
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
+            opacity: 0.4;
         }
     }
 
     spinner {
         min-height: 1.3em;
         min-width: 1.3em;
-        color: $sky;
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbuttons-active);
     }
 
     .menu-separator {
         margin: 0em 1em;
+    }
+
+    .menu-switch.bluetooth {
+        background-color: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-bluetooth-switch-disabled);
+
+        &:checked {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
+        }
+
+        slider {
+            background-color: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
+        }
+
+        &:hover {
+            trough {
+                background: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-bluetooth-switch-disabled);
+            }
+
+            slider {
+                background: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
+            }
+        }
+
+        &:active {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
+        }
     }
 }

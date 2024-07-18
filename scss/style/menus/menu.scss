@@ -161,7 +161,6 @@ tooltip label {
     padding: 0.1em;
     margin-bottom: -0.2em;
     .menu-active-icon {
-        color: $overlay2;
         font-size: 1.4em;
         font-weight: bold;
 
@@ -201,9 +200,6 @@ tooltip label {
     font-weight: bold;
 }
 
-.dim {
-    color: $overlay0;
-}
 .menu-icon-button {
     &:hover {
         color: $surface2;
@@ -229,12 +225,7 @@ tooltip label {
 .menu-button-icon {
     font-size: 1.3em;
     font-weight: bold;
-    color: $overlay0;
     margin-right: .5rem;
-
-    &.active {
-        color: $maroon;
-    }
 }
 
 .menu-item-box {

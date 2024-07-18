@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import { exec } from "resource:///com/github/Aylur/ags/utils.js";
 import { type Opt } from "lib/option"
 import options from "options"
 import { bash, dependencies } from "lib/utils"
@@ -53,10 +52,9 @@ async function resetCss() {
 
         const imports = [vars].map(f => `@import '${f}';`)
 
-        console.log(variables());
         await Utils.writeFile(variables().join("\n"), vars)
 
-        let mainScss = await Utils.readFile(localScss);
+        let mainScss = Utils.readFile(localScss);
         mainScss = `${imports}\n${mainScss}`;
 
         await Utils.writeFile(mainScss, scss)

@@ -133,14 +133,15 @@ const options = mkOptions(OPTIONS, {
                 cards: opt(colors.base),
                 border: opt(colors.surface0),
                 text: opt(colors.text),
+                dimtext: opt(colors.text),
                 label: opt(colors.lavender),
                 listitems: {
                     passive: opt(colors.text),
                     active: opt(colors.lavender)
                 },
                 icons: {
-                    passive: opt(colors.overlay2),
-                    active: opt(colors.lavender)
+                    passive: opt(colors.surface2),
+                    active: opt(colors.lavender),
                 },
                 switch: {
                     enabled: opt(colors.lavender),
@@ -149,8 +150,11 @@ const options = mkOptions(OPTIONS, {
                 },
                 buttons: {
                     default: opt(colors.lavender),
-                    hover: opt(colors.pink),
                     text: opt(colors.crust)
+                },
+                iconbuttons: {
+                    passive: opt(colors.text),
+                    active: opt(colors.lavender)
                 },
                 dashboard: {
                     background: opt(colors.base2),
@@ -190,30 +194,25 @@ const options = mkOptions(OPTIONS, {
                             },
                             shuffle: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 active: opt(colors.pink),
                                 text: opt(colors.crust)
                             },
                             previous: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust)
                             },
                             playpause: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust)
 
                             },
                             next: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust)
 
                             },
                             loop: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 active: opt(colors.pink),
                                 text: opt(colors.crust)
 
@@ -244,10 +243,9 @@ const options = mkOptions(OPTIONS, {
                             passive: opt(colors.text),
                             active: opt(colors.maroon)
                         },
-                        icons: {
+                        iconbutton: {
                             passive: opt(colors.overlay2),
                             active: opt(colors.maroon),
-                            hover: opt(colors.maroon)
                         },
                         audio_slider: {
                             primary: opt(colors.maroon),
@@ -286,7 +284,6 @@ const options = mkOptions(OPTIONS, {
                         icons: {
                             passive: opt(colors.overlay2),
                             active: opt(colors.mauve),
-                            hover: opt(colors.mauve)
                         },
                         iconbuttons: {
                             passive: opt(colors.text),
@@ -319,9 +316,8 @@ const options = mkOptions(OPTIONS, {
                             active: opt(colors.sky)
                         },
                         icons: {
-                            passive: opt(colors.overlay2),
+                            passive: opt(colors.text),
                             active: opt(colors.sky),
-                            hover: opt(colors.sky)
                         },
                         iconbuttons: {
                             passive: opt(colors.text),
@@ -359,7 +355,6 @@ const options = mkOptions(OPTIONS, {
                         icons: {
                             passive: opt(colors.overlay2),
                             active: opt(colors.yellow),
-                            hover: opt(colors.yellow)
                         },
                     },
                     clock: {
@@ -435,44 +430,36 @@ const options = mkOptions(OPTIONS, {
                         shortcuts_left: {
                             shortcut1: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut2: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut3: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut4: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                         },
                         shortcuts_right: {
                             shortcut1: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut2: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut3: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                             shortcut4: {
                                 background: opt(colors.lavender),
-                                hover: opt(colors.pink),
                                 text: opt(colors.crust),
                             },
                         },
