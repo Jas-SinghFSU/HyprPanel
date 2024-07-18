@@ -24,6 +24,10 @@
             label {
                 color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
+
+            image {
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+            }
         }
 
         &.active {
