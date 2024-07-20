@@ -32,17 +32,17 @@
   }
 
   .media-indicator-current-song-name-label {
-    color: $lavender;
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-song);
     font-size: 1.35em;
   }
 
   .media-indicator-current-song-author-label {
-    color: $teal;
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-artist);
     font-size: 1em;
   }
 
   .media-indicator-current-song-album-label {
-    color: $pink;
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-album);
     font-size: 1em;
   }
 
@@ -56,25 +56,29 @@
   }
 
   .media-indicator-control-button {
-    background: $lavender;
-    color: $crust;
+    background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background);
+    color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-media-buttons-text);
     min-height: 1.8em;
     min-width: 2.5em;
     border-radius: 0.2rem;
 
     &.disabled {
-      background: $surface2;
+      background: if($bar-menus-monochrome, $bar-menus-buttons-disabled, $bar-menus-menu-media-buttons-inactive);
     }
 
     &.enabled {
-      background: $lavender;
+      background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background);
 
       &:hover {
-        background: $pink;
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background), 0.5);
       }
 
       &.active {
-        background: $green;
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-enabled);
+
+        &:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-enabled), 0.5);
+        }
       }
     }
 
@@ -89,20 +93,20 @@
     margin-bottom: 1em;
 
     trough {
-      background: $surface2;
+      background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-media-slider-background);
       border-radius: 0.2em;
 
       highlight,
       progress {
         border-radius: 0.2em;
         min-height: .85em;
-        background: $pink;
+        background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-media-slider-primary);
       }
     }
 
     &:hover {
       trough {
-        background: $surface1;
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-media-slider-backgroundhover), 0.3);
       }
     }
   }

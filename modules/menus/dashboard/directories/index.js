@@ -17,7 +17,7 @@ const Directories = () => {
           Widget.Button({
             hpack: "start",
             expand: true,
-            class_name: "directory-link downloads",
+            class_name: "directory-link left top",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/Downloads`).catch(
@@ -32,7 +32,7 @@ const Directories = () => {
           Widget.Button({
             expand: true,
             hpack: "start",
-            class_name: "directory-link videos",
+            class_name: "directory-link left middle",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/Videos`).catch(
@@ -47,7 +47,7 @@ const Directories = () => {
           Widget.Button({
             expand: true,
             hpack: "start",
-            class_name: "directory-link projects",
+            class_name: "directory-link left bottom",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/Projects`).catch(
@@ -69,7 +69,7 @@ const Directories = () => {
           Widget.Button({
             hpack: "start",
             expand: true,
-            class_name: "directory-link documents",
+            class_name: "directory-link right top",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/Documents`).catch(
@@ -84,7 +84,7 @@ const Directories = () => {
           Widget.Button({
             expand: true,
             hpack: "start",
-            class_name: "directory-link pictures",
+            class_name: "directory-link right middle",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/Pictures`).catch(
@@ -99,7 +99,7 @@ const Directories = () => {
           Widget.Button({
             expand: true,
             hpack: "start",
-            class_name: "directory-link home",
+            class_name: "directory-link right bottom",
             on_primary_click: () => {
               App.closeWindow("dashboardmenu");
               Utils.execAsync(`dolphin ${homeDir}/`).catch(

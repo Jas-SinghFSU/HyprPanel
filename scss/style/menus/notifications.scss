@@ -1,11 +1,12 @@
 @import "../colors";
+@import '../../variables';
 
 .notification-card-container.menu {
   margin: 0em;
   min-width: 30.5em;
   min-height: 48em;
   background: $crust;
-  border: 0.13em solid $surface0;
+  border: 0.13em solid $notification-border;
   border-radius: 0.7em;
   margin-right: 0.45em;
 
@@ -20,7 +21,7 @@
   }
 
   .notification-menu-controls {
-    background: $base;
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-notifications-card);
     margin: 1em 1em;
     margin-bottom: 0.5em;
     border-radius: 0.4em;
@@ -28,9 +29,9 @@
   }
 
   .notification-card.menu {
-    background: $base;
+    background: $notification-background;
     min-width: 26.2em;
-    border: 0.15em solid $base;
+    border: 0.15em solid $notification-border;
     border-radius: 0em;
     border-bottom-left-radius: 0.4em;
     border-top-left-radius: 0.4em;
@@ -49,18 +50,38 @@
 
   .menu-label.notifications {
     margin: 0em;
-    color: $lavender;
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-notifications-label);
   }
 
   .menu-separator.notification-controls {
     min-width: 0.1em;
-    background-color: $surface0;
+    background-color: if($bar-menus-monochrome, $bar-menus-dropdownmenu-divider, $bar-menus-menu-notifications-switch_divider);
     margin: 0em 1em;
   }
 
-  .menu-switch.notifications:checked {
+  .menu-switch.notifications {
+    background-color: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-notifications-switch-disabled);
+
     &:checked {
-      background: $lavender;
+      background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-notifications-switch-enabled);
+    }
+
+    slider {
+      background-color: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-notifications-switch-puck);
+    }
+
+    &:hover {
+      trough {
+        background: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-notifications-switch-disabled);
+      }
+
+      slider {
+        background: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-notifications-switch-puck);
+      }
+    }
+
+    &:active {
+      background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-notifications-switch-enabled);
     }
   }
 
@@ -68,12 +89,12 @@
     margin-right: 0.3em;
 
     &:hover label {
-      color: $maroon;
+      color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear), 0.5);
     }
   }
 
   .clear-notifications-label {
-    color: $red;
+    color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear);
     font-size: 1.5em;
   }
 }
@@ -82,7 +103,7 @@
   margin-bottom: 8em;
 
   label {
-    color: $surface0;
+    color: if($bar-menus-monochrome, $bar-menus-feinttext, $bar-menus-menu-notifications-no_notifications_label);
   }
 
   .bell {
@@ -94,8 +115,8 @@
 }
 
 .close-notification-button.menu {
-  background: $red;
-  color: $crust;
+  background: $notification-close_button-background;
+  color: $notification-close_button-label;
   min-width: 2.1em;
   border-radius: 0rem 0.35em 0.35em 0em;
 
@@ -104,6 +125,6 @@
   }
 
   &:hover {
-    background: $maroon;
+    background: transparentize($notification-close_button-background ,0.5);
   }
 }

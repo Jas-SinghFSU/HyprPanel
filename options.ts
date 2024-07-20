@@ -37,17 +37,21 @@ const options = mkOptions(OPTIONS, {
     autotheme: opt(false),
     theme: {
         notification: {
-            background: opt(colors.base),
+            background: opt(colors.mantle),
             actions: {
                 background: opt(colors.surface0),
                 hover: opt(colors.surface1),
                 text: opt(colors.mantle),
             },
             label: opt(colors.lavender),
-            date: opt(colors.overlay1),
+            border: opt(colors.surface0),
+            time: opt(colors.overlay1),
             text: opt(colors.text),
             labelicon: opt(colors.lavender),
-            close: opt(colors.red)
+            close_button: {
+                background: opt(colors.red),
+                label: opt(colors.crust)
+            }
         },
         bar: {
             transparent: opt(false),
@@ -134,6 +138,7 @@ const options = mkOptions(OPTIONS, {
                 border: opt(colors.surface0),
                 text: opt(colors.text),
                 dimtext: opt(colors.surface2),
+                feinttext: opt(colors.surface0),
                 label: opt(colors.lavender),
                 listitems: {
                     passive: opt(colors.text),
@@ -150,6 +155,8 @@ const options = mkOptions(OPTIONS, {
                 },
                 buttons: {
                     default: opt(colors.lavender),
+                    active: opt(colors.pink),
+                    disabled: opt(colors.surface2),
                     text: opt(colors.crust)
                 },
                 iconbuttons: {
@@ -166,7 +173,10 @@ const options = mkOptions(OPTIONS, {
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
                 },
-                progressbar: opt(colors.lavender),
+                progressbar: {
+                    foreground: opt(colors.lavender),
+                    background: opt(colors.surface1),
+                },
                 slider: {
                     primary: opt(colors.lavender),
                     background: opt(colors.surface2),
@@ -184,39 +194,14 @@ const options = mkOptions(OPTIONS, {
                 },
                 menu: {
                     media: {
-                        song: opt(colors.base2),
-                        artist: opt(colors.base2),
-                        album: opt(colors.base2),
+                        song: opt(colors.lavender),
+                        artist: opt(colors.teal),
+                        album: opt(colors.pink),
                         buttons: {
-                            inactive: {
-                                background: opt(colors.surface2),
-                                text: opt(colors.crust)
-                            },
-                            shuffle: {
-                                background: opt(colors.lavender),
-                                active: opt(colors.pink),
-                                text: opt(colors.crust)
-                            },
-                            previous: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust)
-                            },
-                            playpause: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust)
-
-                            },
-                            next: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust)
-
-                            },
-                            loop: {
-                                background: opt(colors.lavender),
-                                active: opt(colors.pink),
-                                text: opt(colors.crust)
-
-                            }
+                            inactive: opt(colors.surface2),
+                            enabled: opt(colors.teal),
+                            background: opt(colors.lavender),
+                            text: opt(colors.crust),
                         },
                         slider: {
                             primary: opt(colors.pink),
@@ -438,44 +423,13 @@ const options = mkOptions(OPTIONS, {
                                 deny: opt(colors.red),
                             }
                         },
-                        shortcuts_left: {
-                            shortcut1: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut2: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut3: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut4: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                        },
-                        shortcuts_right: {
-                            shortcut1: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut2: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut3: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
-                            shortcut4: {
-                                background: opt(colors.lavender),
-                                text: opt(colors.crust),
-                            },
+                        shortcuts: {
+                            background: opt(colors.lavender),
+                            text: opt(colors.crust),
+                            recording: opt(colors.green)
                         },
                         controls: {
-                            disabled: (colors.surface2),
+                            disabled: opt(colors.surface2),
                             wifi: {
                                 background: opt(colors.mauve),
                                 text: opt(colors.crust),
@@ -522,6 +476,7 @@ const options = mkOptions(OPTIONS, {
                             }
                         },
                         monitors: {
+                            bar_background: opt(colors.surface1),
                             cpu: {
                                 icon: opt(colors.maroon),
                                 bar: opt(colors.maroon),
@@ -542,22 +497,21 @@ const options = mkOptions(OPTIONS, {
                                 bar: opt(colors.pink),
                                 label: opt(colors.pink),
                             },
-                        }
+                        },
                     },
                     notifications: {
+                        label: opt(colors.lavender),
+                        no_notifications_label: opt(colors.surface0),
                         background: opt(colors.mantle),
                         card: opt(colors.base),
                         border: opt(colors.surface0),
                         switch_divider: opt(colors.surface1),
+                        clear: opt(colors.red),
                         switch: {
                             enabled: opt(colors.lavender),
                             disabled: opt(colors.surface0),
                             puck: opt(colors.overlay0)
                         },
-                        clear: {
-                            background: opt(colors.red),
-                            font: opt(colors.crust)
-                        }
                     },
                 }
             }

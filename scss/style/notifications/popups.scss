@@ -4,10 +4,10 @@
 }
 
 .notification-card {
-  color: $text;
-  background: $mantle;
+  color: $notification-text;
+  background: $notification-background;
   margin-right: 0.45em;
-  border: 0.15em solid transparentize($surface0, 0.5); 
+  border: 0.15em solid transparentize($notification-border, 0.5); 
   min-width: 26em;
   min-height: 6rem;
   border-radius: 0.6em;
@@ -66,8 +66,8 @@
 }
 
 .notification-action-buttons {
-  color: $lavender;
-  background: $surface0;
+  color: $notification-actions-text;
+  background: $notification-actions-background;
   min-width: 4em;
   min-height: 1.65em;
   border-radius: 0.2em;
@@ -77,12 +77,12 @@
   }
 
   &:hover {
-    background: $surface1;
+    background: $notification-actions-hover;
   }
 }
 
 .notification-icon {
-  color: $lavender;
+  color: $notification-labelicon;
   margin-bottom: 0.4em;
   min-width: 1em;
   min-height: 1em;
@@ -91,12 +91,12 @@
 
 .notification-time {
   font-size: 0.85em;
-  color: $overlay1;
+  color: $notification-time;
 }
 
 .close-notification-button {
-  background: $red;
-  color: $crust;
+  background: $notification-close_button-background;
+  color: $notification-close_button-label;
   min-width: 2.1em;
   border-radius: 0rem 0.35em 0.35em 0em;
 
@@ -105,6 +105,6 @@
   }
 
   &:hover {
-    background: $maroon;
+    background: transparentize($notification-close_button-background, 0.5);
   }
 }
