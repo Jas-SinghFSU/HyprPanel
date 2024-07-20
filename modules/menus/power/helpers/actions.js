@@ -1,9 +1,5 @@
-const powerOptions = {
-  sleep: "systemctl suspend",
-  reboot: "systemctl reboot",
-  logout: "pkill Hyprland",
-  shutdown: "shutdown now",
-};
+import options from "options";
+const { sleep, reboot, logout, shutdown } = options.menus.dashboard.powermenu;
 
 class PowerMenu extends Service {
   static {
@@ -26,10 +22,10 @@ class PowerMenu extends Service {
 
   action(action) {
     [this.#cmd, this.#title] = {
-      sleep: [powerOptions.sleep, "Sleep"],
-      reboot: [powerOptions.reboot, "Reboot"],
-      logout: [powerOptions.logout, "Log Out"],
-      shutdown: [powerOptions.shutdown, "Shutdown"],
+      sleep: [sleep.value, "Sleep"],
+      reboot: [reboot.value, "Reboot"],
+      logout: [logout.value, "Log Out"],
+      shutdown: [shutdown.value, "Shutdown"],
     }[action];
 
     this.notify("cmd");

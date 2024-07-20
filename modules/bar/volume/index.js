@@ -1,7 +1,8 @@
 const audio = await Service.import("audio");
 import { openMenu } from "../utils.js";
+import options from "options";
 
-import { globalMousePos } from "../../../globals.js";
+import { globalMousePos } from "globals.js";
 
 const Volume = () => {
   const icons = {
@@ -41,7 +42,12 @@ const Volume = () => {
     component: Widget.Box({
       vpack: "center",
       class_name: "volume",
-      children: [volIcn, volPct],
+      children: options.bar.volume.label.bind("value").as((showLabel) => {
+        if (showLabel) {
+          return [volIcn, volPct];
+        }
+        return [volIcn];
+      }),
     }),
     isVisible: true,
     boxClass: "volume",

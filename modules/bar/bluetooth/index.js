@@ -1,4 +1,5 @@
 const bluetooth = await Service.import('bluetooth')
+import options from "options";
 import { openMenu } from "../utils.js";
 
 const Bluetooth = () => {
@@ -8,7 +9,13 @@ const Bluetooth = () => {
   });
 
   const btText = Widget.Label({
-    label: bluetooth.bind("enabled").as((v) => v ? " On" : " Off"),
+    label: Utils.merge([bluetooth.bind("enabled"), options.bar.bluetooth.label.bind("value")], (btEnabled, showLabel) => {
+      if (showLabel) {
+        return btEnabled ? " On" : " Off"
+      }
+      return "";
+
+    }),
     class_name: "bar-bt_label",
   });
 

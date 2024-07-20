@@ -1,4 +1,7 @@
 import { openMenu } from "../utils.js";
+import options from "options";
+
+const { show_total } = options.bar.notifications;
 
 const notifs = await Service.import("notifications");
 
@@ -9,21 +12,27 @@ export const Notifications = () => {
       child: Widget.Box({
         hpack: "start",
         class_name: "bar-notifications",
-        child: Widget.Label({
-          hpack: "center",
-          class_name: "bar-notifications-label",
-          setup: (self) => {
-            self.hook(notifs, () => {
-              if (notifs.dnd) {
-                return (self.label = "󰂛");
-              } else if (notifs.notifications.length > 0) {
-                return (self.label = "󱅫");
-              } else {
-                return (self.label = "󰂚");
-              }
+        children: Utils.merge(
+          [notifs.bind("notifications"), notifs.bind("dnd"), show_total.bind("value")],
+          (notif, dnd, showTotal) => {
+            const notifIcon = Widget.Label({
+              hpack: "center",
+              class_name: "bar-notifications-label",
+              label: dnd ? "󰂛" : notif.length > 0 ? "󱅫" : "󰂚",
             });
+
+            const notifLabel = Widget.Label({
+              hpack: "center",
+              class_name: "bar-notifications-total",
+              label: notif.length.toString(),
+            });
+
+            if (showTotal) {
+              return [notifIcon, notifLabel];
+            }
+            return [notifIcon];
           },
-        }),
+        ),
       }),
     }),
     isVisible: true,

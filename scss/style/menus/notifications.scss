@@ -5,8 +5,8 @@
   margin: 0em;
   min-width: 30.5em;
   min-height: 48em;
-  background: $crust;
-  border: 0.13em solid $notification-border;
+  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
+  border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
   border-radius: 0.7em;
   margin-right: 0.45em;
 

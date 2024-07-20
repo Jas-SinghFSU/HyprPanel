@@ -5,3 +5,8 @@
   font-size: 1.3em;
   min-width: 1em;
 }
+
+.bar-notifications-total {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-notifications-total);
+  margin-left: 0.4em;
+}

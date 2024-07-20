@@ -1,7 +1,4 @@
 import { opt, mkOptions } from "lib/option"
-import { distro } from "lib/variables"
-import { icon } from "lib/utils"
-import icons from "lib/icons"
 
 const colors = {
     "rosewater": "#f5e0dc",
@@ -36,6 +33,11 @@ const colors = {
 const options = mkOptions(OPTIONS, {
     autotheme: opt(false),
     theme: {
+        font: {
+            size: opt("1.2rem"),
+            name: opt("Ubuntu Nerd Font"),
+            weight: opt(600),
+        },
         notification: {
             background: opt(colors.mantle),
             actions: {
@@ -129,13 +131,19 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     icon: opt(colors.lavender),
+                    total: opt(colors.lavender)
                 },
             },
             menus: {
                 monochrome: opt(true),
                 background: opt(colors.crust),
                 cards: opt(colors.base),
-                border: opt(colors.surface0),
+                border: {
+                    size: opt("0.13 em"),
+                    radius: opt("0.7em"),
+                    card_radius: opt("0.4em"),
+                    color: opt(colors.surface0)
+                },
                 text: opt(colors.text),
                 dimtext: opt(colors.surface2),
                 feinttext: opt(colors.surface0),
@@ -197,6 +205,12 @@ const options = mkOptions(OPTIONS, {
                         song: opt(colors.lavender),
                         artist: opt(colors.teal),
                         album: opt(colors.pink),
+                        background: {
+                            color: opt(colors.crust),
+                        },
+                        border: {
+                            color: opt(colors.surface0),
+                        },
                         buttons: {
                             inactive: opt(colors.surface2),
                             enabled: opt(colors.teal),
@@ -305,7 +319,7 @@ const options = mkOptions(OPTIONS, {
                             active: opt(colors.sky)
                         },
                         icons: {
-                            passive: opt(colors.text),
+                            passive: opt(colors.overlay2),
                             active: opt(colors.sky),
                         },
                         iconbutton: {
@@ -502,7 +516,7 @@ const options = mkOptions(OPTIONS, {
                     notifications: {
                         label: opt(colors.lavender),
                         no_notifications_label: opt(colors.surface0),
-                        background: opt(colors.mantle),
+                        background: opt(colors.crust),
                         card: opt(colors.base),
                         border: opt(colors.surface0),
                         switch_divider: opt(colors.surface1),
@@ -518,13 +532,7 @@ const options = mkOptions(OPTIONS, {
         }
     },
 
-    font: {
-        size: opt(13),
-        name: opt("Ubuntu Nerd Font"),
-    },
-
     bar: {
-        position: opt<"top" | "bottom">("top"),
         layout: {
             start: opt<Array<import("modules/bar/Bar").BarWidget>>([
                 "dashboard",
@@ -545,7 +553,7 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         launcher: {
-            icon: opt(icon(distro.logo, icons.ui.search)),
+            icon: opt("󰣇"),
         },
         workspaces: {
             show_icons: opt(false),
@@ -557,21 +565,14 @@ const options = mkOptions(OPTIONS, {
             workspaces: opt(7),
             monitorSpecific: opt(true),
         },
-        media: {
-            icon: opt(true),
-            label: opt(true),
-        },
         volume: {
             label: opt(true),
         },
         network: {
-            status: {
-                show: opt(true),
-                type: opt<"status" | "connection">("connection"),
-            },
+            label: opt(true),
         },
         bluetooth: {
-            status: opt(true),
+            label: opt(true),
         },
         battery: {
             show_label: opt(true),
@@ -583,11 +584,7 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         clock: {
-            icons: {
-                clock: opt(true),
-                calendar: opt(true),
-            },
-            format: opt("%H:%M - %A %e."),
+            format: opt("󰃭  %a %b %d    %I:%M:%S %p"),
         },
         notifications: {
             show_total: opt(false)
@@ -595,86 +592,55 @@ const options = mkOptions(OPTIONS, {
     },
 
     menus: {
-        border: {
-            enabled: opt(true),
-            size: opt(""),
-            outer_gap: opt(""),
-            inner_gap: opt(""),
-            radius: opt(""),
-            card_radius: opt(""),
-        },
         dashboard: {
-            modules: opt([
-                "powermenu",
-                "shortcuts",
-                "controls",
-                "directories",
-                "monitor",
-            ]),
-            order: {
-                primary: opt([
-                    "powermenu",
-                    "shortcuts",
-                    "controls",
-                    "directories",
-                    "monitor",
-                ]),
-                powermenu: opt([
-                    "avatar",
-                    "powermenu",
-                ]),
-                monitor: opt([
-                    "cpu",
-                    "ram",
-                    "gpu",
-                    "disk",
-                ])
-            },
             powermenu: {
                 sleep: opt("systemctl suspend"),
                 reboot: opt("systemctl reboot"),
                 logout: opt("pkill Hyprland"),
                 shutdown: opt("shutdown now"),
                 avatar: {
-                    image: opt<string>,
+                    image: opt("/home/jaskir/Pictures/Icons/900-900-max_catppuccin-mocha_hald8_GaussianRBF_lum1_shape96_near16.png"),
                     name: opt<"system" | string>("system"),
                 },
             },
             shortcuts: {
                 left: {
                     shortcut1: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt("󰇩"),
+                        tooltip: opt("Microsoft Edge"),
+                        command: opt("microsoft-edge-stable")
                     },
                     shortcut2: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt(""),
+                        tooltip: opt("Spotify"),
+                        command: opt("spotify-launcher")
                     },
                     shortcut3: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt(""),
+                        tooltip: opt("Discord"),
+                        command: opt("discord")
                     },
                     shortcut4: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt(""),
+                        tooltip: opt("Search Apps"),
+                        command: opt("rofi -show drun")
                     },
                 },
                 right: {
                     shortcut1: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt(""),
+                        tooltip: opt("Color Picker"),
+                        command: opt("hyprpicker -a")
                     },
                     shortcut2: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt("󰒓"),
+                        tooltip: opt("Hyprland Config"),
+                        command: opt("bash -c \"kitty -e nvim $HOME/.config/hypr/hyprland.conf\"")
                     },
                     shortcut3: {
-                        icon: opt(""),
-                        command: opt("")
-                    },
-                    shortcut4: {
-                        icon: opt(""),
-                        command: opt("")
+                        icon: opt("󰄀"),
+                        tooltip: opt("Screenshot"),
+                        command: opt("./services/snapshot.sh")
                     },
                 }
             },
@@ -709,43 +675,16 @@ const options = mkOptions(OPTIONS, {
                 }
             },
         },
-        volume: {
-            order: opt([
-                "volume",
-                "devices",
-            ])
-        },
         network: {
-            order: opt([
-                "ethernet",
-                "wifi",
-            ]),
             status: opt(true),
         },
         bluetooth: {
             status: opt(true),
         },
         battery: {
-            modules: opt([
-                "brightness",
-                "powerprofile"
-            ]),
-            order: opt([
-                "brightness",
-                "powerprofile"
-            ])
+            percentage: opt(true)
         },
         clock: {
-            modules: opt([
-                "clock",
-                "calendar",
-                "weather"
-            ]),
-            order: opt([
-                "clock",
-                "calendar",
-                "weather"
-            ]),
             time: {
                 military: opt(false),
                 seconds: opt(true)
@@ -765,15 +704,6 @@ const options = mkOptions(OPTIONS, {
         scale: opt(9),
         workspaces: opt(7),
         monochromeIcon: opt(true),
-    },
-
-    powermenu: {
-        sleep: opt("systemctl suspend"),
-        reboot: opt("systemctl reboot"),
-        logout: opt("pkill Hyprland"),
-        shutdown: opt("shutdown now"),
-        layout: opt<"line" | "box">("line"),
-        labels: opt(true),
     },
 
     osd: {

@@ -1,11 +1,14 @@
 import icons from "../../../icons/index.js";
 import powermenu from "../../power/helpers/actions.js";
 
+import options from "options";
+const { image, name } = options.menus.dashboard.powermenu.avatar;
+
 const Profile = () => {
   const handleClick = (action) => {
     App.closeWindow("dashboardmenu");
     return powermenu.action(action);
-  }
+  };
 
   return Widget.Box({
     class_name: "profiles-container",
@@ -20,12 +23,17 @@ const Profile = () => {
           Widget.Icon({
             hpack: "center",
             class_name: "profile-picture",
-            icon: `${App.configDir}/assets/21210205.png`,
+            icon: image.bind("value"),
           }),
           Widget.Label({
             hpack: "center",
             class_name: "profile-name",
-            label: "Jaskir Linux",
+            label: name.bind("value").as((v) => {
+              if (v === "system") {
+                return Utils.exec("bash -c whoami");
+              }
+              return v;
+            }),
           }),
         ],
       }),

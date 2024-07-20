@@ -1,6 +1,10 @@
 @import "../colors";
 @import '../../variables';
 
+.menu-items.energy {
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
+}
 .menu-items-container.energy {
     .menu-label {
         color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);

@@ -37,7 +37,7 @@ function extractVariables(theme: any, prefix: string = ""): string[] {
 }
 
 const variables = () => [
-    ...extractVariables(options.theme)
+    ...extractVariables(options.theme),
 ];
 
 async function resetCss() {

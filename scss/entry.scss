@@ -1,9 +1,9 @@
 @import '/home/jaskir/.config/ags/scss/variables.scss';
 * {
   all: unset;
-  font-family: "Ubuntu Nerd Font";
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-family: $font-name;
+  font-size: $font-size;
+  font-weight: $font-weight;
 }
 
 //general

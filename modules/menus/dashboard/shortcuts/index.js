@@ -1,4 +1,7 @@
 const hyprland = await Service.import("hyprland");
+import options from "options";
+
+const { left, right } = options.menus.dashboard.shortcuts;
 
 const Shortcuts = () => {
   const isRecording = Variable(false, {
@@ -83,21 +86,25 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
-                tooltip_text: "Microsoft Edge",
-                class_name: "dashboard-button edge top-button",
-                on_primary_click: () => handleClick("microsoft-edge-stable"),
+                tooltip_text: left.shortcut1.tooltip.bind("value"),
+                class_name: "dashboard-button top-button",
+                on_primary_click: left.shortcut1.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "󰇩",
+                  label: left.shortcut1.icon.bind("value"),
                 }),
               }),
               Widget.Button({
-                tooltip_text: "Spotify",
-                class_name: "dashboard-button spotify",
-                on_primary_click: () => handleClick("spotify-launcher"),
+                tooltip_text: left.shortcut2.tooltip.bind("value"),
+                class_name: "dashboard-button",
+                on_primary_click: left.shortcut2.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "",
+                  label: left.shortcut2.icon.bind("value"),
                 }),
               }),
             ],
@@ -107,22 +114,26 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
-                tooltip_text: "Discord",
-                class_name: "dashboard-button discord top-button",
-                on_primary_click: () => handleClick("discord"),
+                tooltip_text: left.shortcut3.tooltip.bind("value"),
+                class_name: "dashboard-button top-button",
+                on_primary_click: left.shortcut3.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   hpack: "center",
                   class_name: "button-label",
-                  label: "",
+                  label: left.shortcut3.icon.bind("value"),
                 }),
               }),
               Widget.Button({
-                tooltip_text: "Search Apps",
-                class_name: "dashboard-button search",
-                on_primary_click: () => handleClick("rofi -show drun"),
+                tooltip_text: left.shortcut4.tooltip.bind("value"),
+                class_name: "dashboard-button",
+                on_primary_click: left.shortcut4.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "",
+                  label: left.shortcut4.icon.bind("value"),
                 }),
               }),
             ],
@@ -139,24 +150,25 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
-                tooltip_text: "Color Picker",
-                class_name: "dashboard-button colorpicker top-button",
-                on_primary_click: () => handleClick("hyprpicker -a", {}, 500),
+                tooltip_text: right.shortcut1.tooltip.bind("value"),
+                class_name: "dashboard-button top-button",
+                on_primary_click: right.shortcut1.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "",
+                  label: right.shortcut1.icon.bind("value"),
                 }),
               }),
               Widget.Button({
-                tooltip_text: "Hyprland Settings",
-                class_name: "dashboard-button settings",
-                on_primary_click: () =>
-                  handleClick(
-                    'bash -c "kitty -e nvim $HOME/.config/hypr/hyprland.conf"',
-                  ),
+                tooltip_text: right.shortcut2.tooltip.bind("value"),
+                class_name: "dashboard-button",
+                on_primary_click: right.shortcut2.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "󰒓",
+                  label: right.shortcut2.icon.bind("value"),
                 }),
               }),
             ],
@@ -166,13 +178,14 @@ const Shortcuts = () => {
             hexpand: true,
             children: [
               Widget.Button({
-                tooltip_text: "Screenshot",
-                class_name: "dashboard-button snapshot top-button",
-                on_primary_click: () =>
-                  handleClick(`${App.configDir}/services/snapshot.sh`),
+                tooltip_text: right.shortcut3.tooltip.bind("value"),
+                class_name: "dashboard-button top-button",
+                on_primary_click: right.shortcut3.command
+                  .bind("value")
+                  .as((cmd) => () => handleClick(cmd)),
                 child: Widget.Label({
                   class_name: "button-label",
-                  label: "󰄀",
+                  label: right.shortcut3.icon.bind("value"),
                 }),
               }),
               Widget.Button({

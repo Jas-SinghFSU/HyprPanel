@@ -14,7 +14,6 @@ import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
 import options from "options";
 
 const { start, center, end } = options.bar.layout;
-const { transparent, position } = options.bar;
 
 export type BarWidget = keyof typeof widget;
 

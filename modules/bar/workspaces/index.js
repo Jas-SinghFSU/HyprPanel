@@ -58,8 +58,46 @@ const Workspaces = (monitor = -1, ws = 8) => {
               return Widget.Label({
                 attribute: i,
                 vpack: "center",
-                label: `${i}`,
-                setup: (self) =>
+                class_name: Utils.merge(
+                  [
+                    options.bar.workspaces.show_icons.bind("value"),
+                    options.bar.workspaces.icons.available.bind("value"),
+                    options.bar.workspaces.icons.active.bind("value"),
+                    options.bar.workspaces.icons.occupied.bind("value"),
+                  ],
+                  (show_icons) => {
+                    if (show_icons) {
+                      return `workspace-icon`;
+                    }
+                    return "";
+                  },
+                ),
+                label: Utils.merge(
+                  [
+                    options.bar.workspaces.show_icons.bind("value"),
+                    options.bar.workspaces.icons.available.bind("value"),
+                    options.bar.workspaces.icons.active.bind("value"),
+                    options.bar.workspaces.icons.occupied.bind("value"),
+                  ],
+                  (showIcons, available, active, occupied) => {
+                    if (showIcons) {
+                      if (hyprland.active.workspace.id === i) {
+                        return active;
+                      }
+                      if ((hyprland.getWorkspace(i)?.windows || 0) > 0) {
+                        return occupied;
+                      }
+                      if (
+                        monitor !== -1 &&
+                        hyprland.getWorkspace(i)?.monitorID !== monitor
+                      ) {
+                        return available;
+                      }
+                    }
+                    return `${i}`;
+                  },
+                ),
+                setup: (self) => {
                   self.hook(hyprland, () => {
                     self.toggleClassName(
                       "active",
@@ -69,13 +107,8 @@ const Workspaces = (monitor = -1, ws = 8) => {
                       "occupied",
                       (hyprland.getWorkspace(i)?.windows || 0) > 0,
                     );
-
-                    const isCurrentMonitor =
-                      monitor !== -1 &&
-                      hyprland.getWorkspace(i)?.monitorID !== monitor;
-
-                    self.toggleClassName("hidden", isCurrentMonitor);
-                  }),
+                  });
+                },
               });
             });
         },

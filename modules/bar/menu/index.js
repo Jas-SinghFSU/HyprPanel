@@ -1,11 +1,12 @@
 import { openMenu } from "../utils.js";
+import options from "options";
 
 const Menu = () => {
   return {
     component: Widget.Box({
       child: Widget.Label({
         class_name: "bar-menu_label",
-        label: "󰣇",
+        label: options.bar.launcher.icon.bind("value"),
       }),
     }),
     isVisible: true,

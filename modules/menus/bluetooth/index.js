@@ -6,7 +6,7 @@ export default () => {
     name: "bluetoothmenu",
     transition: "crossfade",
     child: Widget.Box({
-      class_name: "menu-items",
+      class_name: "menu-items bluetooth",
       hpack: "fill",
       hexpand: true,
       child: Widget.Box({

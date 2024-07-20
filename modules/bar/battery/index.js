@@ -4,9 +4,10 @@ import { openMenu } from "../utils.js";
 const BatteryLabel = () => {
   const isVis = Variable(battery.available);
 
-  const icon = battery
-    .bind("percent")
-    .as((p) => `battery-level-${Math.floor(p / 10) * 10}-symbolic`);
+  const icon = () =>
+    battery
+      .bind("percent")
+      .as((p) => `battery-level-${Math.floor(p / 10) * 10}-symbolic`);
 
   battery.connect("changed", ({ available }) => {
     isVis.value = available;
@@ -36,19 +37,22 @@ const BatteryLabel = () => {
       class_name: "battery",
       visible: battery.bind("available"),
       tooltip_text: battery.bind("time_remaining").as((t) => t.toString()),
-      children: [
-        Widget.Icon({ icon }),
-        Widget.Label({
-          label: battery.bind("percent").as((p) => ` ${p}%`),
-        }),
-      ],
       setup: (self) => {
         self.hook(battery, () => {
-          self.tooltip_text = generateTooltip(
-            battery.time_remaining,
-            battery.charging,
-            battery.charged,
-          );
+          if (battery.available) {
+            self.children = [
+              Widget.Icon({ icon: icon() }),
+              Widget.Label({
+                label: battery.bind("percent").as((p) => ` ${p}%`),
+              }),
+            ];
+
+            self.tooltip_text = generateTooltip(
+              battery.time_remaining,
+              battery.charging,
+              battery.charged,
+            );
+          }
         });
       },
     }),

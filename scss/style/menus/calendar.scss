@@ -6,7 +6,7 @@
   min-width: 27em;
   min-height: 6em;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-clock-background-color);
-  border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border, $bar-menus-menu-clock-border-color);
+  border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-clock-border-color);
   border-radius: 0.7em;
   margin-right: 0.5em;
 }

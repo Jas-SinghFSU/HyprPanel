@@ -1,4 +1,5 @@
 const network = await Service.import("network");
+import options from "options";
 import { openMenu } from "../utils.js";
 
 const Network = () => {
@@ -22,7 +23,15 @@ const Network = () => {
     }),
     Widget.Label({
       class_name: "bar-network-label",
-      label: network.bind("wired").as(() => "  Wired"),
+      label: Utils.merge(
+        [network.bind("wired"), options.bar.network.label.bind("value")],
+        (_, showLabel) => {
+          if (showLabel) {
+            return "  Wired";
+          }
+          return "";
+        },
+      ),
     }),
   ];
 

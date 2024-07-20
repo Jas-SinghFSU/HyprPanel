@@ -1,12 +1,19 @@
 @import "../colors";
 @import '../../variables';
 
+.menu-items.audio {
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-volume-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
+}
 .menu-dropdown-label.audio {
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-volume-label-color);
 }
 
 .menu-label.audio {
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-volume-label-color);
+}
+.menu-active.playback, .menu-active.input {
+    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-volume-text);
 }
 
 .menu-button-isactive.audio {

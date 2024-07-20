@@ -7,7 +7,7 @@ export default () => {
     name: "energymenu",
     transition: "crossfade",
     child: Widget.Box({
-      class_name: "menu-items",
+      class_name: "menu-items energy",
       hpack: "fill",
       hexpand: true,
       child: Widget.Box({

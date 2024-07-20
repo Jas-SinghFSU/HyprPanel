@@ -12,6 +12,10 @@
     background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
 
+    &:not(:first-child) {
+      margin-left: 4.5em;
+    }
+
     &.occupied {
       background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
       color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
@@ -25,10 +29,16 @@
       min-width: 12em;
       min-height: 4em;
     }
+
+    &.workspace-icon {
+      background-color: transparent;
+      min-width: 0em;
+      min-height: 0em;
+      border-radius: 0em;
+      margin: 0rem 1rem * .5;
+      transition: 300ms * .5;
+      font-size: 1.1em;
+    }
   }
-}
 
-
-.workspaces label:not(:first-child) {
-  margin-left: 4.5em;
 }

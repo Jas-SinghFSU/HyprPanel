@@ -1,6 +1,11 @@
 @import "../colors";
 @import '../../variables';
 
+.menu-items.network {
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
+}
+
 .menu-items-container.network {
     font-size: 1.3em;
     .menu-items-section {
@@ -90,9 +95,8 @@
     }
 
     .menu-icon-button.network.search {
-        label {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
-        }
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
+
         &:hover { 
             color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
         }

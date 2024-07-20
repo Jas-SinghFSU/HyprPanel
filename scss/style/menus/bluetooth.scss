@@ -1,6 +1,10 @@
 @import "../colors";
 @import '../../variables';
 
+.menu-items.bluetooth {
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-bluetooth-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-bluetooth-border-color);
+}
 .menu-items-container.bluetooth {
     font-size: 1.3em;
 

@@ -7,7 +7,7 @@ export default () => {
     name: "networkmenu",
     transition: "crossfade",
     child: Widget.Box({
-      class_name: "menu-items",
+      class_name: "menu-items network",
       child: Widget.Box({
         vertical: true,
         hexpand: true,
