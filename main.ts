@@ -3,6 +3,7 @@ import "scss/style"
 
 import { Bar } from "modules/bar/Bar"
 import MenuWindows from "./modules/menus/main.js";
+import SettingsDialog from "widget/settings/SettingsDialog"
 import Notifications from "./modules/notifications/index.js";
 import { forMonitors } from "lib/utils"
 
@@ -11,6 +12,7 @@ App.config({
   windows: [
     ...MenuWindows,
     Notifications(),
+    SettingsDialog(),
     ...forMonitors(Bar),
   ],
   closeWindowDelay: {

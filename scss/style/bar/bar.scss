@@ -10,7 +10,7 @@
 
 .bar_item_box_visible {
   background-color: $bar-buttons-background;
-  border-radius: 0.35em;
+  border-radius: $bar-buttons-radius;
   padding: 0.2rem 0.9rem;
   margin: 0.5rem 0.25rem;
 
@@ -58,12 +58,6 @@
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-notifications-background);
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-background);
-    }
-  }
-  &.power {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-power-background);
-    &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-power-background);
     }
   }
   &.systray {

@@ -2,6 +2,6 @@
 @import '../../variables';
 
 .bar-power_label {
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-power-icon);
+  color: $red;
   margin-top: 0.2rem;
 }

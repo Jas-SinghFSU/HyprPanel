@@ -7,7 +7,7 @@ export const BarItemBox = (child) => {
   };
 
   return Widget.Button({
-    class_name: "bar_item_box_visible",
+    class_name: `bar_item_box_visible ${Object.hasOwnProperty.call(child, "boxClass") ? child.boxClass : ""}`,
     child: child.component,
     visible: computeVisible(),
     ...child.props,

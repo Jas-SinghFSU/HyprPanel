@@ -31,7 +31,6 @@ const colors = {
 };
 
 const options = mkOptions(OPTIONS, {
-    autotheme: opt(false),
     theme: {
         font: {
             size: opt("1.2rem"),
@@ -59,6 +58,7 @@ const options = mkOptions(OPTIONS, {
             background: opt(colors.crust),
             buttons: {
                 monochrome: opt(false),
+                radius: opt("0.3em"),
                 background: opt(colors.base2),
                 hover: opt(colors.surface1),
                 text: opt(colors.lavender),
@@ -109,11 +109,6 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                 },
-                power: {
-                    background: opt(colors.base2),
-                    hover: opt(colors.surface1),
-                    icon: opt(colors.red),
-                },
                 battery: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
@@ -139,7 +134,7 @@ const options = mkOptions(OPTIONS, {
                 cards: opt(colors.base),
                 card_radius: opt("0.4em"),
                 border: {
-                    size: opt("0.13 em"),
+                    size: opt("0.13em"),
                     radius: opt("0.7em"),
                     color: opt(colors.surface0)
                 },
@@ -561,7 +556,7 @@ const options = mkOptions(OPTIONS, {
                 active: opt(""),
                 occupied: opt(""),
             },
-            workspaces: opt(7),
+            workspaces: opt(10),
             monitorSpecific: opt(true),
         },
         volume: {

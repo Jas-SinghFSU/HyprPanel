@@ -18,6 +18,7 @@ const Shortcuts = () => {
   });
   const handleClick = (action, resolver, tOut = 250) => {
     App.closeWindow("dashboardmenu");
+    App.toggleWindow("settings-dialog");
 
     setTimeout(() => {
       Utils.execAsync(action)
