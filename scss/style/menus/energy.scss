@@ -10,6 +10,15 @@
         color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
     }
 
+    .menu-label-container {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+    }
+
+
+    .menu-items-section {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+    }
+
     .power-profile-item {
         margin-bottom: 0.5em;
 

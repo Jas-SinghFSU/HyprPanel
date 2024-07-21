@@ -94,8 +94,8 @@ tooltip label {
 
 .menu-items {
     background: $crust;
-    border: .13em solid $surface0;
-    border-radius: .7rem;
+    border: $bar-menus-border-size solid $bar-menus-border-color;
+    border-radius: $bar-menus-border-radius;
     min-width: 18em;
     color: $text;
 }
@@ -117,7 +117,7 @@ tooltip label {
 
     .menu-label-container {
         background: $base;
-        border-radius: 0.4em;
+        border-radius: $bar-menus-card_radius;
         border-bottom-left-radius: 0em;
         border-bottom-right-radius: 0em;
         margin: 0em 1em ;
@@ -138,7 +138,7 @@ tooltip label {
 
     .menu-items-section {
         background: $base;
-        border-radius: 0.4em;
+        border-radius: $bar-menus-card_radius;
         border-top-left-radius: 0em;
         border-top-right-radius: 0em;
         padding: 0.9em;

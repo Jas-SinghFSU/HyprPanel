@@ -41,8 +41,7 @@ const options = mkOptions(OPTIONS, {
         notification: {
             background: opt(colors.mantle),
             actions: {
-                background: opt(colors.surface0),
-                hover: opt(colors.surface1),
+                background: opt(colors.lavender),
                 text: opt(colors.mantle),
             },
             label: opt(colors.lavender),
@@ -138,10 +137,10 @@ const options = mkOptions(OPTIONS, {
                 monochrome: opt(true),
                 background: opt(colors.crust),
                 cards: opt(colors.base),
+                card_radius: opt("0.4em"),
                 border: {
                     size: opt("0.13 em"),
                     radius: opt("0.7em"),
-                    card_radius: opt("0.4em"),
                     color: opt(colors.surface0)
                 },
                 text: opt(colors.text),
@@ -640,70 +639,53 @@ const options = mkOptions(OPTIONS, {
                     shortcut3: {
                         icon: opt("󰄀"),
                         tooltip: opt("Screenshot"),
-                        command: opt("./services/snapshot.sh")
+                        command: opt("bash -c \"$HOME/.config/ags/services/snapshot.sh\"")
                     },
                 }
             },
             directories: {
                 left: {
                     directory1: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󰉍 Downloads"),
+                        command: opt("bash -c \"dolphin $HOME/Downloads/\"")
                     },
                     directory2: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󰉏 Videos"),
+                        command: opt("bash -c \"dolphin $HOME/Videos/\"")
                     },
                     directory3: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󰚝 Projects"),
+                        command: opt("bash -c \"dolphin $HOME/Projects/\"")
                     },
                 },
                 right: {
                     directory1: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󱧶 Documents"),
+                        command: opt("bash -c \"dolphin $HOME/Documents/\"")
                     },
                     directory2: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󰉏 Pictures"),
+                        command: opt("bash -c \"dolphin $HOME/Pictures/\"")
                     },
                     directory3: {
-                        label: opt(""),
-                        command: opt("")
+                        label: opt("󱂵 Home"),
+                        command: opt("bash -c \"dolphin $HOME/\"")
                     },
                 }
             },
         },
-        network: {
-            status: opt(true),
-        },
-        bluetooth: {
-            status: opt(true),
-        },
-        battery: {
-            percentage: opt(true)
-        },
         clock: {
             time: {
                 military: opt(false),
-                seconds: opt(true)
             },
             weather: {
-                hourly: opt(true),
                 interval: opt(60_000),
-                unit: opt<"metric" | "imperial" | "standard">("metric"),
+                unit: opt<"metric" | "imperial">("metric"),
                 key: opt<string>(
-                    JSON.parse(Utils.readFile(`${App.configDir}/.weather`) || "{}")?.key || "",
+                    JSON.parse(Utils.readFile(`${App.configDir}/.weather.json`) || "{}")?.weather_api_key || "",
                 ),
             }
         }
-    },
-
-    overview: {
-        scale: opt(9),
-        workspaces: opt(7),
-        monochromeIcon: opt(true),
     },
 
     osd: {
@@ -724,10 +706,8 @@ const options = mkOptions(OPTIONS, {
 
     notifications: {
         position: opt<Array<"top" | "bottom" | "left" | "right">>(["top", "right"]),
-        blacklist: opt(["Spotify"]),
     },
 })
 
 globalThis["options"] = options
 export default options
-

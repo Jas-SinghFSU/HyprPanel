@@ -13,6 +13,7 @@
     }
 
     .menu-label-container {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
         .menu-label {
             color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-bluetooth-label-color);
         }
@@ -24,6 +25,7 @@
 
 
     .menu-items-section {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
         min-height: 20em;
         font-size: 1em;
     }

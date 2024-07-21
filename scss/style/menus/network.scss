@@ -118,4 +118,12 @@
         color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
         opacity: 0.5;
     }
+    .menu-label-container {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
+    }
+
+
+    .menu-items-section {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
+    }
 }

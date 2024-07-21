@@ -1,10 +1,13 @@
 const notifs = await Service.import("notifications");
+import options from "options";
 import { notifHasImg } from "../menus/notifications/utils.js";
 import { Image } from "./image/index.js";
 import { Action } from "./actions/index.js";
 import { Header } from "./header/index.js";
 import { Body } from "./body/index.js";
 import { CloseButton } from "./close/index.js";
+
+const { position } = options.notifications;
 
 export default () => {
   notifs.popupTimeout = 7000;
@@ -14,7 +17,7 @@ export default () => {
     class_name: "notifications-window",
     monitor: 2,
     layer: "top",
-    anchor: ["top", "right"],
+    anchor: position.bind("value"),
     exclusivity: "ignore",
     child: Widget.Box({
       class_name: "notification-card-container",

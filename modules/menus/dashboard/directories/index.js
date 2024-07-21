@@ -1,8 +1,9 @@
 import GLib from "gi://GLib";
+import options from "options";
+
+const { left, right } = options.menus.dashboard.directories;
 
 const Directories = () => {
-  const homeDir = GLib.get_home_dir();
-
   return Widget.Box({
     class_name: "dashboard-card directories-container",
     vpack: "fill",
@@ -18,45 +19,51 @@ const Directories = () => {
             hpack: "start",
             expand: true,
             class_name: "directory-link left top",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/Downloads`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: left.directory1.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󰉍 Downloads",
+              label: left.directory1.label.bind("value"),
             }),
           }),
           Widget.Button({
             expand: true,
             hpack: "start",
             class_name: "directory-link left middle",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/Videos`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: left.directory2.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󰉏 Videos",
+              label: left.directory2.label.bind("value"),
             }),
           }),
           Widget.Button({
             expand: true,
             hpack: "start",
             class_name: "directory-link left bottom",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/Projects`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: left.directory3.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󰚝 Projects",
+              label: left.directory3.label.bind("value"),
             }),
           }),
         ],
@@ -70,45 +77,51 @@ const Directories = () => {
             hpack: "start",
             expand: true,
             class_name: "directory-link right top",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/Documents`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: right.directory1.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󱧶 Documents",
+              label: right.directory1.label.bind("value"),
             }),
           }),
           Widget.Button({
             expand: true,
             hpack: "start",
             class_name: "directory-link right middle",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/Pictures`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: right.directory2.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󰉏 Pictures",
+              label: right.directory2.label.bind("value"),
             }),
           }),
           Widget.Button({
             expand: true,
             hpack: "start",
             class_name: "directory-link right bottom",
-            on_primary_click: () => {
-              App.closeWindow("dashboardmenu");
-              Utils.execAsync(`dolphin ${homeDir}/`).catch(
-                (err) => `Failed to open Dolphin: ${err}`,
-              );
-            },
+            on_primary_click: right.directory3.command
+              .bind("value")
+              .as((cmd) => {
+                return () => {
+                  App.closeWindow("dashboardmenu");
+                  Utils.execAsync(cmd);
+                };
+              }),
             child: Widget.Label({
               hpack: "start",
-              label: "󱂵 Home",
+              label: right.directory3.label.bind("value"),
             }),
           }),
         ],

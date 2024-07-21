@@ -132,6 +132,22 @@
 
 .menu-label-container.input {
     border-radius: 0em;
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
+}
+.menu-label-container.playback {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
+}
+.menu-items-section.input {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
+}
+.menu-items-section.playback {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
+}
+.menu-label-container.selected {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
+}
+.menu-items-section.selected {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-volume-card-color);
 }
 
 .menu-items-section.playback {

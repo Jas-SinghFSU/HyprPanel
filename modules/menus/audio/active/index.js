@@ -7,7 +7,7 @@ const activeDevices = () => {
     vertical: true,
     children: [
       Widget.Box({
-        class_name: "menu-label-container volume",
+        class_name: "menu-label-container volume selected",
         hpack: "fill",
         child: Widget.Label({
           class_name: "menu-label audio volume",

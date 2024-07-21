@@ -1,5 +1,8 @@
 const battery = await Service.import("battery");
 import { openMenu } from "../utils.js";
+import options from "options";
+
+const { show_label } = options.bar.battery;
 
 const BatteryLabel = () => {
   const isVis = Variable(battery.available);
@@ -37,16 +40,26 @@ const BatteryLabel = () => {
       class_name: "battery",
       visible: battery.bind("available"),
       tooltip_text: battery.bind("time_remaining").as((t) => t.toString()),
-      setup: (self) => {
-        self.hook(battery, () => {
-          if (battery.available) {
-            self.children = [
+      children: Utils.merge(
+        [battery.bind("available"), show_label.bind("value")],
+        (batAvail, showLabel) => {
+          if (batAvail && showLabel) {
+            return [
               Widget.Icon({ icon: icon() }),
               Widget.Label({
                 label: battery.bind("percent").as((p) => ` ${p}%`),
               }),
             ];
-
+          } else if (batAvail && !showLabel) {
+            return [Widget.Icon({ icon: icon() })];
+          } else {
+            return [];
+          }
+        },
+      ),
+      setup: (self) => {
+        self.hook(battery, () => {
+          if (battery.available) {
             self.tooltip_text = generateTooltip(
               battery.time_remaining,
               battery.charging,
