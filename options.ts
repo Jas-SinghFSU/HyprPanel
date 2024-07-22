@@ -165,16 +165,6 @@ const options = mkOptions(OPTIONS, {
                     passive: opt(colors.text),
                     active: opt(colors.lavender)
                 },
-                dashboard: {
-                    background: opt(colors.base2),
-                    text: opt(colors.yellow)
-                },
-                workspaces: {
-                    background: opt(colors.base2),
-                    available: opt(colors.sky),
-                    occupied: opt(colors.flamingo),
-                    active: opt(colors.pink),
-                },
                 progressbar: {
                     foreground: opt(colors.lavender),
                     background: opt(colors.surface1),
@@ -322,9 +312,6 @@ const options = mkOptions(OPTIONS, {
                         },
                     },
                     systray: {
-                        background: {
-                            color: opt(colors.base2),
-                        },
                         dropdownmenu: {
                             background: opt(colors.crust),
                             text: opt(colors.text),
