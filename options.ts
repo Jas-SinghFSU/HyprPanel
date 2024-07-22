@@ -400,7 +400,6 @@ const options = mkOptions(OPTIONS, {
                             color: opt(colors.surface0),
                         },
                         profile: {
-                            card: opt(colors.base),
                             name: opt(colors.pink)
                         },
                         powermenu: {
