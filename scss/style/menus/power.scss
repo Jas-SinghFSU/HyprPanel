@@ -1,4 +1,5 @@
 @import "../colors";
+@import '../../variables';
 
 window#powermenu,
 window#verification {
@@ -10,14 +11,14 @@ $popover-padding: 0.6rem * 1.6;
 
 window#verification .verification {
     @include floating-widget;
-    background: $crust;
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-powermenu-confirmation-background);
     padding: 0.35em * 1.6 * 1.5;
     min-width: 20em;
     min-height: 6em;
     font-size: 1.3em;
 
     .verification-content {
-        background: $base;
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-powermenu-confirmation-card);
         border-radius: 0.4em;
         padding: 1em;
     }
@@ -27,12 +28,12 @@ window#verification .verification {
 
         .title {
             font-size: 1.5em;
-            color: $lavender;
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-powermenu-confirmation-label);
             margin-bottom: 0.5em;
         }
 
         .desc {
-            color: $text;
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-dashboard-powermenu-confirmation-body);
             font-size: 1em;
             margin-bottom: 0.55em;
             padding: 1em 3em;
@@ -40,7 +41,7 @@ window#verification .verification {
     }
 
     .verification-button {
-        background: $base;
+        background: $bar-menus-buttons-default;
         padding: 0.7em 0em;
         margin: 0.4em 1.7em;
         border-radius: 0.3em;
@@ -49,40 +50,40 @@ window#verification .verification {
         transition: opacity .3s ease-in-out;
 
         &.bar-verification_yes {
-            background-color: $green;
+            background-color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-confirm);
         }
         &.bar-verification_no {
-            background-color: $red;
+            background-color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-deny);
         }
 
         &:hover {
             &.bar-verification_yes {
-                background: $lavender;
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-confirm), 0.6);
                 transition: background-color 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                background: $lavender;
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-deny), 0.6);
                 transition: background-color 0.2s ease-in-out;
             }
         }
         &:focus {
             &.bar-verification_yes{
-                background: $lavender;
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-confirm), 0.6);
                 transition: background 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                background: $lavender;
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-deny), 0.6);
                 transition: background 0.2s ease-in-out;
             }
         }
 
         &:active {
             &.bar-verification_yes {
-                background: rgb($lavender, 0.4);
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-confirm), 0.6);
                 transition: background 0.2s ease-in-out;
             }
             &.bar-verification_no {
-                background: rgb($lavender, 0.4);
+                background-color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-confirmation-deny), 0.6);
                 transition: background 0.2s ease-in-out;
             }
 
@@ -97,10 +98,10 @@ window#verification .verification {
         }
     }
     .bar-verification_no label {
-        color: $mantle;
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-powermenu-confirmation-button_text);
     }
     .bar-verification_yes label {
-        color: $mantle;
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-powermenu-confirmation-button_text);
     }
 }
 

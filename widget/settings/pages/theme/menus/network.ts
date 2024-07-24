@@ -7,7 +7,7 @@ export const NetworkMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page network",
+        class_name: "menu-theme-page network paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

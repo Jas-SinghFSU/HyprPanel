@@ -7,7 +7,7 @@ export const SystrayMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page systray",
+        class_name: "menu-theme-page systray paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

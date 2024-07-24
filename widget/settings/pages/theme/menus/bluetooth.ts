@@ -7,7 +7,7 @@ export const BluetoothMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page bluetooth",
+        class_name: "menu-theme-page bluetooth paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

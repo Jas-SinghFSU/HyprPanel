@@ -7,7 +7,7 @@ export const ClockMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page clock",
+        class_name: "menu-theme-page clock paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

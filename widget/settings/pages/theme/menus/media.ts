@@ -7,7 +7,7 @@ export const MediaMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page media",
+        class_name: "menu-theme-page media paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

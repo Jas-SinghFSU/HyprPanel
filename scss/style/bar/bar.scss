@@ -12,7 +12,7 @@
   background-color: $bar-buttons-background;
   border-radius: $bar-buttons-radius;
   padding: 0.2rem 0.9rem;
-  margin: 0.5rem 0.25rem;
+  margin: 0.5rem $bar-buttons-spacing;
 
   &:hover {
     background: $bar-buttons-hover;

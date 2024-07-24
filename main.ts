@@ -8,16 +8,16 @@ import Notifications from "./modules/notifications/index.js";
 import { forMonitors } from "lib/utils"
 
 App.config({
-  onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
-  windows: [
-    ...MenuWindows,
-    Notifications(),
-    SettingsDialog(),
-    ...forMonitors(Bar),
-  ],
-  closeWindowDelay: {
-    sideright: 350,
-    launcher: 350,
-    bar0: 350,
-  },
+    onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
+    windows: [
+        ...MenuWindows,
+        Notifications(),
+        SettingsDialog(),
+        ...forMonitors(Bar),
+    ],
+    closeWindowDelay: {
+        sideright: 350,
+        launcher: 350,
+        bar0: 350,
+    },
 })

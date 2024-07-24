@@ -11,13 +11,16 @@ const { position } = options.notifications;
 
 export default () => {
   notifs.popupTimeout = 7000;
+  const getPosition = (pos) => {
+    return pos.split(" ");
+  }
 
   return Widget.Window({
     name: "notifications-window",
     class_name: "notifications-window",
     monitor: 2,
     layer: "top",
-    anchor: position.bind("value"),
+    anchor: position.bind("value").as(v => getPosition(v)),
     exclusivity: "ignore",
     child: Widget.Box({
       class_name: "notification-card-container",

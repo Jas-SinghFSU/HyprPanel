@@ -5,15 +5,13 @@ import options from "options";
 
 export const DashboardMenuTheme = () => {
     return Widget.Scrollable({
-        vscroll: "automatic",
+        vscroll: "always",
         hscroll: "never",
-        class_name: "menu-theme-page dashboard",
+        class_name: "menu-theme-page dashboard paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,
             children: [
-                Header('Dashboard Menu Theme Settings'),
-
                 Header('Card'),
                 Option({ opt: options.theme.bar.menus.menu.dashboard.card.color, title: 'Card', type: 'color' }),
 
@@ -38,6 +36,7 @@ export const DashboardMenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.menu.dashboard.powermenu.confirmation.body, title: 'Confirmation Dialog Description', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.dashboard.powermenu.confirmation.confirm, title: 'Confirmation Dialog Confirm Button', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.dashboard.powermenu.confirmation.deny, title: 'Confirmation Dialog Cancel Button', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.powermenu.confirmation.button_text, title: 'Confirmation Dialog Button Text', type: 'color' }),
 
                 Header('Shortcuts'),
                 Option({ opt: options.theme.bar.menus.menu.dashboard.shortcuts.background, title: 'Primary', type: 'color' }),
@@ -58,12 +57,12 @@ export const DashboardMenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.menu.dashboard.controls.input.text, title: 'Input Button Text', type: 'color' }),
 
                 Header('Directories'),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.top, title: 'Directory: Left - Top', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.middle, title: 'Directory: Left - Middle', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.bottom, title: 'Directory: Left - Bottom', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.top, title: 'Directory: Right - Top', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.middle, title: 'Directory: Right - Middle', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.bottom, title: 'Directory: Right - Bottom', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.top.color, title: 'Directory: Left - Top', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.middle.color, title: 'Directory: Left - Middle', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.left.bottom.color, title: 'Directory: Left - Bottom', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.top.color, title: 'Directory: Right - Top', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.middle.color, title: 'Directory: Right - Middle', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.directories.right.bottom.color, title: 'Directory: Right - Bottom', type: 'color' }),
 
                 Header('System Stats'),
                 Option({ opt: options.theme.bar.menus.menu.dashboard.monitors.bar_background, title: 'Bar Background', type: 'color' }),

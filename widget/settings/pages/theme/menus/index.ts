@@ -7,7 +7,7 @@ export const MenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page",
+        class_name: "menu-theme-page paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

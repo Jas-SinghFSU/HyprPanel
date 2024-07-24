@@ -14,7 +14,7 @@
   }
 
   .menu-items-section {
-    border-radius: 0.4em;
+    border-radius: $bar-menus-card_radius;
     padding: 0em;
   }
 
@@ -107,6 +107,9 @@
         min-height: .85em;
         background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-media-slider-primary);
       }
+    }
+    slider {
+      background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-media-slider-puck);
     }
 
     &:hover {

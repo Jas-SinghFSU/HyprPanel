@@ -7,7 +7,7 @@ export const BatteryMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page battery",
+        class_name: "menu-theme-page battery paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

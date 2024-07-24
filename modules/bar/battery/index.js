@@ -2,7 +2,7 @@ const battery = await Service.import("battery");
 import { openMenu } from "../utils.js";
 import options from "options";
 
-const { show_label } = options.bar.battery;
+const { label: show_label } = options.bar.battery;
 
 const BatteryLabel = () => {
   const isVis = Variable(battery.available);

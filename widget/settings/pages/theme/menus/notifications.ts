@@ -7,7 +7,7 @@ export const NotificationsMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         hscroll: "never",
-        class_name: "menu-theme-page notifications",
+        class_name: "menu-theme-page notifications paged-container",
         vexpand: true,
         child: Widget.Box({
             vertical: true,

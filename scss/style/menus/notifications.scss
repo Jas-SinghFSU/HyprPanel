@@ -3,7 +3,7 @@
 
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 30.5em;
+  min-width: 30.6em;
   min-height: 48em;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
   border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
@@ -24,7 +24,7 @@
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-notifications-card);
     margin: 1em 1em;
     margin-bottom: 0.5em;
-    border-radius: 0.4em;
+    border-radius: $bar-menus-card_radius;
     padding: 0.4em 0.75em;
   }
 

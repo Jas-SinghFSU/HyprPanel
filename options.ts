@@ -58,6 +58,7 @@ const options = mkOptions(OPTIONS, {
             background: opt(colors.crust),
             buttons: {
                 monochrome: opt(false),
+                spacing: opt("0.25em"),
                 radius: opt("0.3em"),
                 background: opt(colors.base2),
                 hover: opt(colors.surface1),
@@ -129,7 +130,7 @@ const options = mkOptions(OPTIONS, {
                 },
             },
             menus: {
-                monochrome: opt(true),
+                monochrome: opt(false),
                 background: opt(colors.crust),
                 cards: opt(colors.base),
                 card_radius: opt("0.4em"),
@@ -163,7 +164,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 iconbuttons: {
                     passive: opt(colors.text),
-                    active: opt(colors.lavender)
+                    active: opt(colors.pink)
                 },
                 progressbar: {
                     foreground: opt(colors.lavender),
@@ -411,10 +412,11 @@ const options = mkOptions(OPTIONS, {
                                 card: opt(colors.base),
                                 background: opt(colors.crust),
                                 border: opt(colors.surface0),
-                                label: opt(colors.green),
+                                label: opt(colors.lavender),
                                 body: opt(colors.text),
                                 confirm: opt(colors.green),
                                 deny: opt(colors.red),
+                                button_text: opt(colors.crust),
                             }
                         },
                         shortcuts: {
@@ -513,25 +515,56 @@ const options = mkOptions(OPTIONS, {
     },
 
     bar: {
-        layout: {
-            start: opt<Array<import("modules/bar/Bar").BarWidget>>([
-                "dashboard",
-                "workspaces",
-                "windowtitle"
-            ]),
-            center: opt<Array<import("modules/bar/Bar").BarWidget>>([
-                "media"
-            ]),
-            end: opt<Array<import("modules/bar/Bar").BarWidget>>([
-                "volume",
-                "network",
-                "bluetooth",
-                "battery",
-                "systray",
-                "clock",
-                "notifications"
-            ]),
-        },
+        layouts: opt({
+            "0": {
+                left: [
+                    "dashboard",
+                    "workspaces",
+                    "windowtitle"
+                ],
+                middle: [
+                    "media"
+                ],
+                right: [
+                    "volume",
+                    "clock",
+                    "notifications"
+                ]
+            },
+            "1": {
+                left: [
+                    "dashboard",
+                    "workspaces",
+                    "windowtitle"
+                ],
+                middle: [
+                    "media"
+                ],
+                right: [
+                    "volume",
+                    "clock",
+                    "notifications"
+                ]
+            },
+            "2": {
+                left: [
+                    "dashboard",
+                    "workspaces",
+                    "windowtitle"
+                ],
+                middle: [
+                    "media"
+                ],
+                right: [
+                    "volume",
+                    "network",
+                    "bluetooth",
+                    "systray",
+                    "clock",
+                    "notifications"
+                ]
+            }
+        }),
         launcher: {
             icon: opt("󰣇"),
         },
@@ -555,7 +588,7 @@ const options = mkOptions(OPTIONS, {
             label: opt(true),
         },
         battery: {
-            show_label: opt(true),
+            label: opt(true),
         },
         systray: {
             ignore: opt([
@@ -612,11 +645,6 @@ const options = mkOptions(OPTIONS, {
                         tooltip: opt("Color Picker"),
                         command: opt("hyprpicker -a")
                     },
-                    shortcut2: {
-                        icon: opt("󰒓"),
-                        tooltip: opt("Hyprland Config"),
-                        command: opt("bash -c \"kitty -e nvim $HOME/.config/hypr/hyprland.conf\"")
-                    },
                     shortcut3: {
                         icon: opt("󰄀"),
                         tooltip: opt("Screenshot"),
@@ -660,8 +688,8 @@ const options = mkOptions(OPTIONS, {
                 military: opt(false),
             },
             weather: {
-                interval: opt(60_000),
-                unit: opt<"metric" | "imperial">("metric"),
+                interval: opt(60000),
+                unit: opt<"metric" | "imperial">("imperial"),
                 key: opt<string>(
                     JSON.parse(Utils.readFile(`${App.configDir}/.weather.json`) || "{}")?.weather_api_key || "",
                 ),
@@ -686,7 +714,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     notifications: {
-        position: opt<Array<"top" | "bottom" | "left" | "right">>(["top", "right"]),
+        position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
     },
 })
 

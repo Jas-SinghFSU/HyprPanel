@@ -1,7 +1,18 @@
 import RegularWindow from "widget/RegularWindow"
 import icons from "lib/icons"
 import options from "options"
-import { BarTheme } from "./pages/theme/bar/index"
+import { ThemesMenu } from "./pages/theme/index"
+import { SettingsMenu } from "./pages/config/index"
+
+type Page = "Configuration" | "Theming"
+
+const CurrentPage = Variable<Page>("Theming");
+
+const pagerMap: Page[] = [
+    "Configuration",
+    "Theming",
+]
+
 const Header = () => Widget.CenterBox({
     class_name: "header",
     start_widget: Widget.Button({
@@ -24,6 +35,41 @@ const Header = () => Widget.CenterBox({
     }),
 })
 
+const PageContainer = () => {
+    return Widget.Box({
+        hpack: "fill",
+        hexpand: true,
+        vertical: true,
+        children: CurrentPage.bind("value").as(v => {
+            return [
+                Widget.Box({
+                    class_name: "option-pages-container",
+                    hpack: "center",
+                    hexpand: true,
+                    children: pagerMap.map((page) => {
+                        return Widget.Button({
+                            xalign: 0,
+                            hpack: "center",
+                            class_name: `pager-button ${v === page ? 'active' : ''} category`,
+                            label: page,
+                            on_primary_click: () => CurrentPage.value = page
+                        })
+                    })
+                }),
+                Widget.Stack({
+                    vexpand: false,
+                    class_name: "themes-menu-stack",
+                    children: {
+                        "Configuration": SettingsMenu(),
+                        "Theming": ThemesMenu(),
+                    },
+                    shown: CurrentPage.bind("value")
+                })
+            ]
+        })
+    })
+}
+
 export default () => RegularWindow({
     name: "settings-dialog",
     class_name: "settings-dialog",
@@ -33,13 +79,13 @@ export default () => RegularWindow({
             win.hide()
             return true
         })
-        win.set_default_size(500, 600)
+        win.set_default_size(200, 300)
     },
     child: Widget.Box({
         vertical: true,
         children: [
             Header(),
-            BarTheme()
+            PageContainer()
         ],
     }),
 })
