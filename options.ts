@@ -516,21 +516,6 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         layouts: opt({
-            "0": {
-                left: [
-                    "dashboard",
-                    "workspaces",
-                    "windowtitle"
-                ],
-                middle: [
-                    "media"
-                ],
-                right: [
-                    "volume",
-                    "clock",
-                    "notifications"
-                ]
-            },
             "1": {
                 left: [
                     "dashboard",
@@ -547,6 +532,21 @@ const options = mkOptions(OPTIONS, {
                 ]
             },
             "2": {
+                left: [
+                    "dashboard",
+                    "workspaces",
+                    "windowtitle"
+                ],
+                middle: [
+                    "media"
+                ],
+                right: [
+                    "volume",
+                    "clock",
+                    "notifications"
+                ]
+            },
+            "0": {
                 left: [
                     "dashboard",
                     "workspaces",
