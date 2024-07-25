@@ -2,341 +2,376 @@
 @import '../../variables';
 
 .dashboard-content-items {
-    margin-left: 0.50em;
-    min-width: 28.5em;
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-background-color);
-    border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-dashboard-border-color);
-    border-radius: 0.7em;
+  margin-left: 0.50em;
+  min-width: 28.5em;
+  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-background-color);
+  border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-dashboard-border-color);
+  border-radius: $bar-menus-border-radius;
+
+  button {
+    border-radius: 0.4em;
+  }
+
+  .dashboard-card {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-card-color);
+    margin: 1.3em;
+    border-radius: $bar-menus-card_radius;
+    padding: 1.5em;
+  }
+
+  .profile-picture-container {
+    margin-right: 0.65em;
+    margin-bottom: 0.65em;
+
+    .profile-picture {
+      font-size: 7.5em;
+    }
+
+    .profile-name {
+      font-size: 1.5em;
+      color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-profile-name);
+      margin-top: 0.75em;
+    }
+  }
+
+  .power-menu-container {
+    margin-left: 0em;
+    margin-bottom: 0.65em;
+
+    .dashboard-button {
+      min-width: 3em;
+      min-height: 2.5em;
+
+      &:not(:last-child) {
+        margin-bottom: 0.75em;
+      }
+
+      image {
+        color: $base;
+        font-size: 1.5em;
+      }
+
+      &.shutdown {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-shutdown);
+      }
+
+      &.restart {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-restart);
+      }
+
+      &.lock {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-logout);
+      }
+
+      &.sleep {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-sleep);
+      }
+
+      &:hover {
+        &.shutdown {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-shutdown), 0.5);
+        }
+
+        &.restart {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-restart), 0.5);
+        }
+
+        &.lock {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-logout), 0.5);
+        }
+
+        &.sleep {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-sleep), 0.5);
+        }
+      }
+
+    }
+  }
+
+  .shortcuts-container {
+    .dashboard-card {
+      padding: 1.5em;
+
+      button {
+        min-height: 2.5em;
+        min-width: 2.5em;
+      }
+    }
+
+    .card-button-left-section {
+      margin-right: 1.5em;
+    }
+
+    .top-button {
+      margin-bottom: 1.5em;
+    }
+
+    .container {
+      margin-top: 0em;
+      margin-bottom: 0.65em;
+
+      &.most-used {
+        margin-right: 0em;
+      }
+
+      &.utilities {
+        margin-left: 0.65em;
+      }
+
+      button {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-background);
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
+        min-height: 3em;
+
+        &.discord {
+          label {
+            margin-right: 0.15em;
+          }
+        }
+
+        label {
+          font-size: 1.5em;
+        }
+
+        &.record.active {
+          background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording);
+
+          &:hover {
+            background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording), 0.5);
+          }
+        }
+
+        &:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-background), 0.5);
+        }
+      }
+    }
+  }
+
+  .controls-container {
+    margin-bottom: 0.65em;
+
+    &.dashboard-card {
+      margin-top: 0em;
+    }
 
     button {
-        border-radius: 0.4em;
+      padding: 0em;
+      min-height: 3em;
+
+      label {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-controls-wifi-text);
+        font-size: 1.6em;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1em;
+      }
+
+      &.wifi {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background);
+      }
+
+      &.bluetooth {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background);
+      }
+
+      &.notifications {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background);
+      }
+
+      &.playback {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background);
+      }
+
+      &.input {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background);
+      }
+
+      &.wifi:hover {
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background), 0.5);
+      }
+
+      &.bluetooth:hover {
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background), 0.5);
+      }
+
+      &.notifications:hover {
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background), 0.5);
+      }
+
+      &.playback:hover {
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background), 0.5);
+      }
+
+      &.input:hover {
+        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background), 0.5);
+      }
+
+      &.disabled {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-disabled, $bar-menus-menu-dashboard-controls-disabled);
+
+        &.wifi:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background), 0.5);
+        }
+
+        &.bluetooth:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background), 0.5);
+        }
+
+        &.notifications:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background), 0.5);
+        }
+
+        &.playback:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background), 0.5);
+        }
+
+        &.input:hover {
+          background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background), 0.5);
+        }
+      }
+    }
+  }
+
+  .directories-container {
+    &.dashboard-card {
+      margin-top: 0em;
+      margin-bottom: 0.65em;
+      padding-left: 1.5em;
+      padding-right: 0em;
     }
 
-    .dashboard-card {
-        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-card-color);
-        margin: 1.3em;
-        border-radius: 0.4em;
-        padding: 1.5em;
+    .directory-link {
+      padding: 0.5em 0em;
+      min-width: 9em;
+
+      &:last-child {
+        margin-bottom: 0em;
+      }
+
+      label {
+        font-size: 1.3em;
+      }
+
+      &.right.top {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-top-color);
+      }
+
+      &.right.middle {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-middle-color);
+      }
+
+      &.right.bottom {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-bottom-color);
+      }
+
+      &.left.top {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-top-color);
+      }
+
+      &.left.middle {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-middle-color);
+      }
+
+      &.left.bottom {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-bottom-color);
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .stats-container {
+    margin-top: 0em;
+
+    .stat {
+      label {
+        margin-right: 1em;
+        font-size: 1.5em;
+      }
+
+      &.cpu label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-cpu-icon);
+      }
+
+      &.ram label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-ram-icon);
+      }
+
+      &.gpu label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-gpu-icon);
+      }
+
+      &.storage label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-disk-icon);
+      }
+
+      .stats-bar {
+        levelbar * {
+          transition: 200ms;
+        }
+
+        trough {
+          min-height: 1.05em;
+        }
+
+        block {
+          border-radius: 0.4em;
+
+          &.empty {
+            background: if($bar-menus-monochrome, $bar-menus-progressbar-background, $bar-menus-menu-dashboard-monitors-bar_background);
+          }
+
+          &.filled {
+            padding-left: 0.85em;
+          }
+        }
+      }
+
+      &.cpu .stats-bar block.filled {
+        background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-cpu-bar);
+      }
+
+      &.ram .stats-bar block.filled {
+        background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-ram-bar);
+      }
+
+      &.gpu .stats-bar block.filled {
+        background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-gpu-bar);
+      }
+
+      &.storage .stats-bar block.filled {
+        background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-disk-bar);
+      }
     }
 
-    .profile-picture-container {
-        margin-right: 0.65em;
-        margin-bottom: 0.65em;
-        .profile-picture {
-            font-size: 7.5em;
-        }
-        .profile-name {
-            font-size: 1.5em;
-            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-profile-name);
-            margin-top: 0.75em;
-        }
+    .stat-value {
+      margin-bottom: 0.75em;
+      font-size: 0.9em;
+
+      &.cpu {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-cpu-label);
+      }
+
+      &.ram {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-ram-label);
+      }
+
+      &.gpu {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-gpu-label);
+      }
+
+      &.storage {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-disk-label);
+      }
     }
-
-    .power-menu-container {
-        margin-left: 0em;
-        margin-bottom: 0.65em;
-
-        .dashboard-button {
-            min-width: 3em;
-            min-height: 2.5em;
-
-            &:not(:last-child) {
-                margin-bottom: 0.75em;
-            }
-
-            image {
-                color: $base;
-                font-size: 1.5em;
-            }
-
-            &.shutdown {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-shutdown);
-            }
-            &.restart {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-restart);
-            }
-            &.lock {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-logout);
-            }
-            &.sleep {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-sleep);
-            }
-
-            &:hover {
-                &.shutdown {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-shutdown), 0.5);
-                }
-                &.restart {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-restart), 0.5);
-                }
-                &.lock {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-logout), 0.5);
-                }
-                &.sleep {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-powermenu-sleep), 0.5);
-                }
-            }
-
-        }
-    }
-
-    .shortcuts-container {
-        .dashboard-card {
-            padding: 1.5em;
-            button {
-                min-height: 2.5em;
-                min-width: 2.5em;
-            }
-        }
-
-        .card-button-left-section {
-            margin-right: 1.5em;
-        }
-
-        .top-button {
-            margin-bottom: 1.5em;
-        }
-
-        .container {
-            margin-top: 0em;
-            margin-bottom: 0.65em;
-
-            &.most-used {
-                margin-right: 0em;
-            }
-            &.utilities {
-                margin-left: 0.65em;
-            }
-
-            button {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-background);
-                color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
-                min-height: 3em;
-
-                &.discord {
-                    label {
-                        margin-right: 0.15em;
-                    }
-                }
-
-                label {
-                    font-size: 1.5em;
-                }
-
-                &.record.active {
-                    background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording);
-
-                    &:hover {
-                        background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording), 0.5);
-                    }
-                }
-
-                &:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-background), 0.5);
-                }
-            }
-        }
-    }
-
-    .controls-container {
-        margin-bottom: 0.65em;
-        &.dashboard-card {
-            margin-top: 0em;
-        }
-
-        button {
-            padding: 0em;
-            min-height: 3em;
-
-            label {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-controls-wifi-text);
-                font-size: 1.6em;
-            }
-
-            &:not(:last-child) {
-                margin-right: 1em;
-            }
-
-            &.wifi {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background);
-            }
-            &.bluetooth {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background);
-            }
-            &.notifications {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background);
-            }
-            &.playback {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background);
-            }
-            &.input {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background);
-            }
-            &.wifi:hover {
-                background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background), 0.5);
-            }
-            &.bluetooth:hover {
-                background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background), 0.5);
-            }
-            &.notifications:hover {
-                background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background), 0.5);
-            }
-            &.playback:hover {
-                background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background), 0.5);
-            }
-            &.input:hover {
-                background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background), 0.5);
-            }
-            &.disabled {
-                background: if($bar-menus-monochrome, $bar-menus-buttons-disabled, $bar-menus-menu-dashboard-controls-disabled);
-                &.wifi:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-wifi-background), 0.5);
-                }
-                &.bluetooth:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-bluetooth-background), 0.5);
-                }
-                &.notifications:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-notifications-background), 0.5);
-                }
-                &.playback:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-volume-background), 0.5);
-                }
-                &.input:hover {
-                    background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-controls-input-background), 0.5);
-                }
-            }
-        }
-    }
-
-    .directories-container {
-        &.dashboard-card {
-            margin-top: 0em;
-            margin-bottom: 0.65em;
-            padding-left: 1.5em;
-            padding-right: 0em;
-        }
-
-        .directory-link {
-            padding: 0.5em 0em;
-            min-width: 9em;
-
-            &:last-child {
-                margin-bottom: 0em;
-            }
-
-            label {
-                font-size: 1.3em;
-            }
-
-            &.right.top {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-top-color);
-            }
-            &.right.middle {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-middle-color);
-            }
-            &.right.bottom {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-right-bottom-color);
-            }
-            &.left.top {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-top-color);
-            }
-            &.left.middle {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-middle-color);
-            }
-            &.left.bottom {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-directories-left-bottom-color);
-            }
-
-            &:hover {
-                opacity: 0.5;
-            }
-        }
-    }
-
-    .stats-container {
-        margin-top: 0em;
-
-        .stat {
-            label {
-                margin-right: 1em;
-                font-size: 1.5em;
-            }
-
-            &.cpu label{
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-cpu-icon);
-            }
-            &.ram label{
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-ram-icon);
-            }
-            &.gpu label{
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-gpu-icon);
-            }
-            &.storage label{
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-disk-icon);
-            }
-
-            .stats-bar {
-                levelbar * {
-                    transition: 200ms;
-                }
-
-                trough {
-                    min-height: 1.05em;
-                }
-
-                block {
-                    border-radius: 0.4em;
-
-                    &.empty {
-                        background: if($bar-menus-monochrome, $bar-menus-progressbar-background, $bar-menus-menu-dashboard-monitors-bar_background);
-                    }
-
-                    &.filled {
-                        padding-left: 0.85em;
-                    }
-                }
-            }
-
-            &.cpu .stats-bar block.filled {
-                background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-cpu-bar);
-            }
-
-            &.ram .stats-bar block.filled {
-                background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-ram-bar);
-            }
-
-            &.gpu .stats-bar block.filled {
-                background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-gpu-bar);
-            }
-
-            &.storage .stats-bar block.filled {
-                background: if($bar-menus-monochrome, $bar-menus-progressbar-foreground, $bar-menus-menu-dashboard-monitors-disk-bar);
-            }
-        }
-
-        .stat-value {
-            margin-bottom: 0.75em;
-            font-size: 0.9em;
-            &.cpu {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-cpu-label);
-            }
-
-            &.ram {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-ram-label);
-            }
-
-            &.gpu {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-gpu-label);
-            }
-
-            &.storage {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-disk-label);
-            }
-        }
-    }
+  }
 }
 
 .dropdown.recording {
-    color: red;
-    background-color: if($bar-menus-monochrome, $bar-menus-dropdownmenu-background, $bar-menus-dropdownmenu-background);
+  color: red;
+  background-color: if($bar-menus-monochrome, $bar-menus-dropdownmenu-background, $bar-menus-dropdownmenu-background);
 }

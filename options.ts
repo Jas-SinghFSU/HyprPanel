@@ -164,7 +164,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 iconbuttons: {
                     passive: opt(colors.text),
-                    active: opt(colors.pink)
+                    active: opt(colors.lavender)
                 },
                 progressbar: {
                     foreground: opt(colors.lavender),

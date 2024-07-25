@@ -6,8 +6,8 @@
   min-width: 30.6em;
   min-height: 48em;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
-  border: 0.13em solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
-  border-radius: 0.7em;
+  border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
+  border-radius: $bar-menus-border-radius;
   margin-right: 0.45em;
 
   .window-content.notificationsmenu-window {
@@ -40,10 +40,12 @@
 
   .notification-card-content-container {
     margin-bottom: 0.65em;
+
     &:last-child {
       margin-bottom: 1em;
     }
   }
+
   .notification-card-content {
     margin-bottom: 0.25em;
   }
@@ -109,6 +111,7 @@
   .bell {
     font-size: 10em;
   }
+
   .message {
     font-size: 1.5em;
   }
@@ -125,6 +128,6 @@
   }
 
   &:hover {
-    background: transparentize($notification-close_button-background ,0.5);
+    background: transparentize($notification-close_button-background , 0.5);
   }
 }
