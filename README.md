@@ -1,5 +1,5 @@
 # HyprPanel
-A panel built for Hyprland with (Aylur's Gnome Shell)[https://github.com/Aylur/ags]
+A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/ags)
 
 ## Requirements
 Bun (may require sudo)
@@ -8,17 +8,6 @@ Bun (may require sudo)
 curl -fsSL https://bun.sh/install | bash && \
   ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
-AGS: https://github.com/Aylur/ags
-
-A [weatherapi](https://www.weatherapi.com/) key in a file at Documents/Keys/keyList.js
-Create an object like so 
-```js
-export const keyRing = {
-  weatherapi: "your_weatherapi_key"
-}
-```
-This API key approach is only temporary and won't be needed soon. 
-
 Additional dependencies:
 ```
 pipewire
@@ -28,13 +17,22 @@ grimblast
 gpu-screen-recorder
 hyprpicker
 btop
-nmcli
 networkmanager
 dart-sass
 brightnessctl
 python
 python-gpustat
 
+```
+
+Arch (pacman):
+```bash
+sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl python
+```
+
+Arch (AUR):
+```bash
+yay -S grimblast gpu-screen-recorder hyprpicker python-gpustat aylurs-gtk-shell-git
 ```
 
 ## Instructions
