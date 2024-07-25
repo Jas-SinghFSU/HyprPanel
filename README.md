@@ -1,6 +1,8 @@
 # HyprPanel
 A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/ags)
 
+> NOTE: This project is in the process of being migrated fully to TypeScript
+
 ## Requirements
 Bun
 
