@@ -41,7 +41,7 @@ const variables = () => [
 ];
 
 async function resetCss() {
-    if (!dependencies("sass", "fd"))
+    if (!dependencies("sass"))
         return
 
     try {
