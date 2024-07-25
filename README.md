@@ -37,6 +37,16 @@ yay -S grimblast gpu-screen-recorder hyprpicker python-gpustat aylurs-gtk-shell-
 
 ## Instructions
 
+Once everything is installed you can run the panel with the following command in your terminal:
+```bash
+ags
+```
+
+Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
+```bash
+exec-once = ags
+```
+
 The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with your Distro's logo) and then clicking the Gear icon;
 
 ### Specifying bar layouts per monitor
