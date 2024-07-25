@@ -3,6 +3,8 @@ A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/a
 
 > NOTE: This project is in the process of being migrated fully to TypeScript
 
+![HyprPanel](./assets/HyprPanel.png)
+
 ## Requirements
 Bun
 
