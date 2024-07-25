@@ -2,11 +2,11 @@
 A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/ags)
 
 ## Requirements
-Bun (may require sudo)
+Bun
 
 ```sh
 curl -fsSL https://bun.sh/install | bash && \
-  ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
+  sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 Additional dependencies:
 ```
