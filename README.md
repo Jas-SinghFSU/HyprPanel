@@ -26,12 +26,12 @@ dart-sass
 brightnessctl
 python
 python-gpustat
-
+gnome-bluetooth-3.0
 ```
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl python
+sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):
