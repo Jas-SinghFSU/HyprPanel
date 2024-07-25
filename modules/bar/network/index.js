@@ -14,7 +14,7 @@ const Network = () => {
                 [network.bind("wifi"), options.bar.network.label.bind("value")],
                 (wifi, showLabel) => {
                     if (showLabel) {
-                        return wifi.ssid ? wifi.ssid.substring(0, 7) : "  --";
+                        return wifi.ssid ? `  ${wifi.ssid.substring(0, 7)}` : "  --";
                     }
                     return "";
                 },
