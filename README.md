@@ -42,7 +42,7 @@ yay -S grimblast gpu-screen-recorder hyprpicker python-gpustat aylurs-gtk-shell-
 ## Instructions
 
 Once everything is installed you need to put the contents of this repo in `~/.config/ags`.
-If you already have something in `~/.confi/ags`, it's recommended that you back it up with:
+If you already have something in `~/.config/ags`, it's recommended that you back it up with:
 ```bash
 mv $HOME/.config/ags $HOME/.config/ags.bkup
 ```
