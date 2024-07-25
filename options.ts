@@ -697,6 +697,8 @@ const options = mkOptions(OPTIONS, {
         }
     },
 
+    terminal: opt("kitty"),
+
     osd: {
         progress: {
             vertical: opt(true),
