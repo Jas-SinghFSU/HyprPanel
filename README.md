@@ -1,12 +1,14 @@
 # HyprPanel
 A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/ags)
 
+> NOTE: This project is in the process of being migrated fully to TypeScript
+
 ## Requirements
-Bun (may require sudo)
+Bun
 
 ```sh
 curl -fsSL https://bun.sh/install | bash && \
-  ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
+  sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 Additional dependencies:
 ```
