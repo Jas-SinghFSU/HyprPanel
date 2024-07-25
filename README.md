@@ -1,5 +1,5 @@
 # HyprPanel
-A panel built for Hyprland with [Aylur's Gnome Shell](https://github.com/Aylur/ags)
+A panel built for Hyprland with [Aylur's Gtk Shell](https://github.com/Aylur/ags)
 
 > NOTE: This project is in the process of being migrated fully to TypeScript
 
