@@ -52,6 +52,8 @@ git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
   ln -s $(pwd)/HyprPanel $HOME/.config/ags
 ```
 
+Additionally, you need to ensure that you have a [Nerd Font](https://www.nerdfonts.com/font-downloads) installed for your icons to render properly.
+
 Afterwards you can run the panel with the following command in your terminal:
 ```bash
 ags
@@ -63,6 +65,8 @@ exec-once = ags
 ```
 
 The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with your Distro's logo) and then clicking the Gear icon;
+
+> NOTE: If your system is an language other than English the resource monitor in the dashboard may not work properly.
 
 ### Specifying bar layouts per monitor
 
