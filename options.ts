@@ -559,6 +559,7 @@ const options = mkOptions(OPTIONS, {
                     "volume",
                     "network",
                     "bluetooth",
+                    "battery",
                     "systray",
                     "clock",
                     "notifications"
