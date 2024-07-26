@@ -41,6 +41,7 @@ yay -S grimblast gpu-screen-recorder hyprpicker python-gpustat aylurs-gtk-shell-
 
 ## Instructions
 
+### AGS
 Once everything is installed you need to put the contents of this repo in `~/.config/ags`.
 If you already have something in `~/.config/ags`, it's recommended that you back it up with:
 ```bash
@@ -51,9 +52,10 @@ Otherwise you can use this command to install the panel:
 git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
   ln -s $(pwd)/HyprPanel $HOME/.config/ags
 ```
-
+### Nerd Fonts
 Additionally, you need to ensure that you have a [Nerd Font](https://www.nerdfonts.com/font-downloads) installed for your icons to render properly.
 
+### Launch the panel
 Afterwards you can run the panel with the following command in your terminal:
 ```bash
 ags
@@ -66,7 +68,7 @@ exec-once = ags
 
 The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with your Distro's logo) and then clicking the Gear icon;
 
-> NOTE: If your system is an language other than English the resource monitor in the dashboard may not work properly.
+> NOTE: If your system is in a language other than English, the resource monitor in the dashboard may not work properly.
 
 ### Specifying bar layouts per monitor
 
