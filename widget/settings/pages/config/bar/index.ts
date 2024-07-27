@@ -37,8 +37,8 @@ export const BarSettings = () => {
                 Header('Battery'),
                 Option({ opt: options.bar.battery.label, title: 'Show Battery Percentage', type: 'boolean' }),
 
-                Header('System Tray'),
-                // TODO: Figure out how to hand arrays
+                // Header('System Tray'),
+                // TODO: Figure out how to handle arrays
                 // Option({ opt: options.bar.systray.ignore, title: 'Ignore', subtitle: 'Comma separated string of apps to ignore in the tray', type: 'string' }),
 
                 Header('Clock'),
