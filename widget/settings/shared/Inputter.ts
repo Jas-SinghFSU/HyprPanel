@@ -1,25 +1,7 @@
 import { Opt } from "lib/option"
 import Gdk from "gi://Gdk"
 import icons from "lib/icons"
-
-export type RowProps<T> = {
-    opt: Opt<T>
-    title: string
-    note?: string
-    type?:
-    | "number"
-    | "color"
-    | "float"
-    | "object"
-    | "string"
-    | "enum"
-    | "boolean"
-    | "img"
-    | "font"
-    enums?: string[]
-    max?: number
-    min?: number
-}
+import { RowProps } from "lib/types/options"
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })

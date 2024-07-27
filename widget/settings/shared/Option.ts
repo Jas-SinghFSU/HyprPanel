@@ -1,8 +1,14 @@
 import { Label } from "./Label";
 import { Inputter } from "./Inputter";
 import icons from "lib/icons";
+import { RowProps } from "lib/types/options";
 
-export const Option = (props, className = '') => {
+type Option = {
+    title: string,
+    subtitle: string,
+
+}
+export const Option = <T>(props: RowProps<T>, className: string = '') => {
     return Widget.Box({
         class_name: "option-item",
         hexpand: true,
@@ -16,7 +22,7 @@ export const Option = (props, className = '') => {
             Inputter(props, className),
             Widget.Button({
                 vpack: "center",
-                class_name: "reset",
+                class_name: "reset-options",
                 child: Widget.Icon(icons.ui.refresh),
                 on_clicked: () => props.opt.reset(),
                 sensitive: props.opt.bind().as(v => v !== props.opt.initial),
