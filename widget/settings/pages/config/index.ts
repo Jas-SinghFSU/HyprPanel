@@ -2,13 +2,15 @@ import { BarGeneral } from "./general/index";
 import { BarSettings } from "./bar/index";
 import { ClockMenuSettings } from "./menus/clock";
 import { DashboardMenuSettings } from "./menus/dashboard";
+import { NotificationSettings } from "./notifications/index";
 
-type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu"
+type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu" | "Notifications";
 const CurrentPage = Variable<Page>("General");
 
 const pagerMap: Page[] = [
     "General",
     "Bar",
+    "Notifications",
     "Clock Menu",
     "Dashboard Menu",
 ]
@@ -37,6 +39,7 @@ export const SettingsMenu = () => {
                     children: {
                         "General": BarGeneral(),
                         "Bar": BarSettings(),
+                        "Notifications": NotificationSettings(),
                         "Clock Menu": ClockMenuSettings(),
                         "Dashboard Menu": DashboardMenuSettings(),
                     },

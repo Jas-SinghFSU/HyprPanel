@@ -719,6 +719,8 @@ const options = mkOptions(OPTIONS, {
 
     notifications: {
         position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
+        timeout: opt(7000),
+        cache_actions: opt(true),
     },
 })
 

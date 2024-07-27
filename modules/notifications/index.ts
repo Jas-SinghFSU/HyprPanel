@@ -8,10 +8,14 @@ import { Body } from "./body/index.js";
 import { CloseButton } from "./close/index.js";
 import { NotificationAnchor } from "lib/types/options";
 
-const { position } = options.notifications;
+const { position, timeout, cache_actions } = options.notifications;
 
 export default () => {
-    notifs.popupTimeout = 7000;
+    Utils.merge([timeout.bind("value"), cache_actions.bind("value")], (timeout, doCaching) => {
+        notifs.popupTimeout = timeout;
+        notifs.cacheActions = doCaching;
+    });
+
     const getPosition = (pos: NotificationAnchor): ("top" | "bottom" | "left" | "right")[] => {
         const positionMap: { [key: string]: ("top" | "bottom" | "left" | "right")[] } = {
             "top": ["top"],
