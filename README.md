@@ -22,9 +22,14 @@ btop
 networkmanager
 dart-sass
 brightnessctl
-python
-python-gpustat
 gnome-bluetooth-3.0
+```
+
+Optional Dependencies:
+```
+// Used for Tracking GPU Usage in your Dashboard (NVidia only)
+python
+ptyon-gpustat
 ```
 
 Arch (pacman):
