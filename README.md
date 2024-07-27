@@ -66,9 +66,15 @@ Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
 exec-once = ags
 ```
 
-The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with your Distro's logo) and then clicking the Gear icon;
-
 > NOTE: If your system is in a language other than English, the resource monitor in the dashboard may not work properly.
+
+## Configuration
+
+The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with the default - Arch - icon) and then clicking the Gear icon.
+
+### Size
+
+The panel is automatically scaled based on your font size in `Configuration > General`.
 
 ### Specifying bar layouts per monitor
 
