@@ -6,7 +6,7 @@ import { Hourly } from "./hourly/index.js";
 import { Weather } from "lib/types/weather.js";
 import { DEFAULT_WEATHER } from "lib/types/defaults/weather.js";
 
-const { key, interval } = options.menus.clock.weather;
+const { key, interval, location } = options.menus.clock.weather;
 
 const theWeather = Variable<Weather>(DEFAULT_WEATHER);
 
@@ -17,15 +17,20 @@ const WeatherWidget = () => {
             class_name: "weather-container-box",
             setup: (self) => {
                 Utils.merge(
-                    [key.bind("value"), interval.bind("value")],
-                    (weatherKey, weatherInterval) => {
+                    [key.bind("value"), interval.bind("value"), location.bind("value")],
+                    (weatherKey, weatherInterval, loc) => {
                         Utils.interval(weatherInterval, () => {
+                            const formattedLocation = loc.replace(" ", "%20");
                             Utils.execAsync(
-                                `curl "https://api.weatherapi.com/v1/forecast.json?key=${weatherKey}&q=93722&days=1&aqi=no&alerts=no"`,
+                                `curl "https://api.weatherapi.com/v1/forecast.json?key=${weatherKey}&q=${formattedLocation}&days=1&aqi=no&alerts=no"`,
                             )
                                 .then((res) => {
-                                    if (typeof res === "string") {
-                                        theWeather.value = JSON.parse(res);
+                                    try {
+                                        if (typeof res === "string") {
+                                            theWeather.value = JSON.parse(res);
+                                        }
+                                    } catch (error) {
+                                        console.error(`Failed to parse weather data: ${error}`);
                                     }
                                 })
                                 .catch((err) => {
