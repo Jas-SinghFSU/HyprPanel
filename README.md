@@ -145,3 +145,9 @@ Where each monitor is defined by its index (0, 1, 2 in this case) and each secti
 "systray"
 ```
 Since the text-box in the options dialog isn't sufficient, it is recommended that you create this JSON configuration in a text editor elsewhere and paste it into the layout text-box under Configuration > Bar > "Bar Layouts for Monitors".
+
+### Additional Configuration
+
+#### GPU Tracking
+
+If you have an NVidia GPU, you can track your GPU usage in your Dashboard by going to your `Settings > Configuration > Dashboard Menu > Track GPU` and turning it on.
