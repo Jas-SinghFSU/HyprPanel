@@ -691,6 +691,7 @@ const options = mkOptions(OPTIONS, {
             weather: {
                 interval: opt(60000),
                 unit: opt<"metric" | "imperial">("imperial"),
+                location: opt("Los Angeles"),
                 key: opt<string>(
                     JSON.parse(Utils.readFile(`${App.configDir}/.weather.json`) || "{}")?.weather_api_key || "",
                 ),
