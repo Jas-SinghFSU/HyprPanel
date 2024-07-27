@@ -10,13 +10,19 @@ const Bluetooth = () => {
     });
 
     const btText = Widget.Label({
-        label: Utils.merge([bluetooth.bind("enabled"), options.bar.bluetooth.label.bind("value")], (btEnabled, showLabel) => {
-            if (showLabel) {
-                return btEnabled ? " On" : " Off"
-            }
-            return "";
+        label: Utils.merge([
+            bluetooth.bind("enabled"),
+            bluetooth.bind("connected_devices"),
+            options.bar.bluetooth.label.bind("value")],
+            (btEnabled, btDevices, showLabel) => {
+                if (showLabel) {
+                    return btEnabled && btDevices.length ? ` Connected (${btDevices.length})`
+                        : btEnabled ? " On"
+                            : " Off"
+                }
+                return "";
 
-        }),
+            }),
         class_name: "bar-bt_label",
     });
 

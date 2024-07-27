@@ -14,7 +14,7 @@ const devices = (bluetooth: Bluetooth, self: Box<any, any>) => {
                 hpack: "center",
                 children: [
                     Widget.Label({
-                        class_name: "dim",
+                        class_name: "bluetooth-disabled dim",
                         hexpand: true,
                         label: "Bluetooth is disabled",
                     }),
