@@ -26,10 +26,19 @@ const WeatherWidget = () => {
                             )
                                 .then((res) => {
                                     try {
-                                        if (typeof res === "string") {
-                                            theWeather.value = JSON.parse(res);
+                                        if (typeof res !== "string") {
+                                            return theWeather.value = DEFAULT_WEATHER;
                                         }
+
+                                        const parsedWeather = JSON.parse(res);
+
+                                        if (Object.keys(parsedWeather).includes("error")) {
+                                            return theWeather.value = DEFAULT_WEATHER;
+                                        }
+
+                                        return theWeather.value = parsedWeather;
                                     } catch (error) {
+                                        theWeather.value = DEFAULT_WEATHER;
                                         console.error(`Failed to parse weather data: ${error}`);
                                     }
                                 })
