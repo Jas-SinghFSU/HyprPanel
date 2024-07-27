@@ -22,6 +22,9 @@ export const DashboardMenuSettings = () => {
                 Option({ opt: options.menus.dashboard.powermenu.logout, title: 'Logout Command', type: 'string' }),
                 Option({ opt: options.menus.dashboard.powermenu.sleep, title: 'Sleep Command', type: 'string' }),
 
+                Header('Resource Usage Metrics'),
+                Option({ opt: options.menus.dashboard.stats.enable_gpu, title: 'Track GPU', subtitle: 'NOTE: This is currently only available for NVidia GPUs and requires \'python-gpustat\'.', type: 'boolean' }),
+
                 Header('Shortcuts'),
                 Option({ opt: options.menus.dashboard.shortcuts.left.shortcut1.icon, title: 'Left - Shortcut 1 (Icon)', type: 'string' }),
                 Option({ opt: options.menus.dashboard.shortcuts.left.shortcut1.command, title: 'Left - Shortcut 1 (Command)', type: 'string' }),

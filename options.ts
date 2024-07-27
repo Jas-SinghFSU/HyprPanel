@@ -617,6 +617,9 @@ const options = mkOptions(OPTIONS, {
                     name: opt<"system" | string>("system"),
                 },
             },
+            stats: {
+                enable_gpu: opt(false),
+            },
             shortcuts: {
                 left: {
                     shortcut1: {
