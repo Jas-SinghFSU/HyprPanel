@@ -229,6 +229,9 @@ const Stats = () => {
                                             gpu.value = 0;
                                         }
                                     })
+                                    .catch((err) => {
+                                        console.error(`An error occurred while fetching GPU stats: ${err}`)
+                                    })
                             }
 
                             self.poll(2000, getGpuUsage)
