@@ -22,9 +22,11 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.icons.available, title: 'Workspace Available', type: 'string' }),
                 Option({ opt: options.bar.workspaces.icons.active, title: 'Workspace Active', type: 'string' }),
                 Option({ opt: options.bar.workspaces.icons.occupied, title: 'Workspace Occupied', type: 'string' }),
+                Option({ opt: options.bar.workspaces.spacing, title: 'Spacing', subtitle: 'Spacing between workspace icons', type: 'float' }),
                 Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
                 Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
                 Option({ opt: options.bar.workspaces.reverse_scroll, title: 'Invert Scroll', subtitle: 'Scrolling up will go to the previous workspace rather than the next.', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.scroll_speed, title: 'Scrolling Speed', type: 'number' }),
 
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),

@@ -577,8 +577,10 @@ const options = mkOptions(OPTIONS, {
                 occupied: opt(""),
             },
             workspaces: opt(10),
+            spacing: opt(1),
             monitorSpecific: opt(true),
             reverse_scroll: opt(false),
+            scroll_speed: opt(5),
         },
         volume: {
             label: opt(true),
