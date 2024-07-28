@@ -6,7 +6,7 @@ import { SettingsMenu } from "./pages/config/index"
 
 type Page = "Configuration" | "Theming"
 
-const CurrentPage = Variable<Page>("Theming");
+const CurrentPage = Variable<Page>("Configuration");
 
 const pagerMap: Page[] = [
     "Configuration",
