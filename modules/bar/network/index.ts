@@ -15,7 +15,7 @@ const Network = () => {
                 [network.bind("wifi"), options.bar.network.label.bind("value")],
                 (wifi, showLabel) => {
                     if (showLabel) {
-                        return wifi.ssid ? `  ${wifi.ssid.substring(0, 7)}` : "  --";
+                        return wifi.ssid ? `${wifi.ssid.substring(0, 7)}` : "--";
                     }
                     return "";
                 },
@@ -25,16 +25,16 @@ const Network = () => {
 
     const wiredIndicator = [
         Widget.Icon({
-            class_name: "bar-network-icon",
+            class_name: "bar-button-icon network",
             icon: network.wired.bind("icon_name"),
         }),
         Widget.Label({
-            class_name: "bar-network-label",
+            class_name: "bar-button-label network",
             label: Utils.merge(
                 [network.bind("wired"), options.bar.network.label.bind("value")],
                 (_, showLabel) => {
                     if (showLabel) {
-                        return "  Wired";
+                        return "Wired";
                     }
                     return "";
                 },

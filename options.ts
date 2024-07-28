@@ -60,6 +60,7 @@ const options = mkOptions(OPTIONS, {
             margin_sides: opt("0.5em"),
             border_radius: opt("0.4em"),
             outer_spacing: opt("1.6em"),
+            label_spacing: opt("0.5em"),
             transparent: opt(false),
             background: opt(colors.crust),
             buttons: {
@@ -92,25 +93,29 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.lavender),
-                    icon: opt(colors.lavender)
+                    icon: opt(colors.lavender),
+                    spacing: opt("0.5em"),
                 },
                 volume: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.maroon),
                     icon: opt(colors.maroon),
+                    spacing: opt("0.5em"),
                 },
                 network: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.mauve),
                     icon: opt(colors.mauve),
+                    spacing: opt("0.5em"),
                 },
                 bluetooth: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.sky),
                     icon: opt(colors.sky),
+                    spacing: opt("0.5em"),
                 },
                 systray: {
                     background: opt(colors.base2),
@@ -121,6 +126,7 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.yellow),
                     icon: opt(colors.yellow),
+                    spacing: opt("0.5em"),
                 },
                 clock: {
                     background: opt(colors.base2),
@@ -132,7 +138,8 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     icon: opt(colors.lavender),
-                    total: opt(colors.lavender)
+                    total: opt(colors.lavender),
+                    spacing: opt("0.5em"),
                 },
             },
             menus: {
