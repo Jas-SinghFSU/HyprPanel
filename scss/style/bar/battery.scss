@@ -3,10 +3,12 @@
 
 .bar {
   .battery {
-    label {
+    .bar-button-label.battery {
       color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-battery-text);
+      margin-left: $bar-buttons-battery-spacing;
     }
-    image {
+
+    .bar-button-icon.battery {
       color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-battery-icon);
     }
   }
@@ -15,6 +17,7 @@
 .menu-section-container.brightness {
   margin-bottom: 0em;
 }
+
 .menu-section-container.energy {
   margin-top: 0.5em;
 }

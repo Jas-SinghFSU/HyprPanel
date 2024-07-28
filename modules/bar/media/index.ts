@@ -56,8 +56,8 @@ const Media = () => {
             const { track_title, identity } = activePlayer.value;
             songIcon.value = getIconForPlayer(identity);
             return track_title.length === 0
-                ? `  No media playing...`
-                : `  ${track_title}`;
+                ? `No media playing...`
+                : `${track_title}`;
         } else {
             songIcon.value = "";
             return "󰎇 Media 󰎇";
@@ -72,11 +72,12 @@ const Media = () => {
                 child: Widget.Box({
                     children: [
                         Widget.Label({
-                            class_name: "bar-media_icon",
+                            class_name: "bar-button-icon media",
                             label: songIcon.bind("value"),
                             maxWidthChars: 30,
                         }),
                         Widget.Label({
+                            class_name: "bar-button-label media",
                             label,
                             truncate: "end",
                             wrap: true,

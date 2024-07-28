@@ -47,9 +47,13 @@ const BatteryLabel = () => {
                 (batAvail, showLabel) => {
                     if (batAvail && showLabel) {
                         return [
-                            Widget.Icon({ icon: icon() }),
+                            Widget.Icon({
+                                class_name: "bar-button-icon battery",
+                                icon: icon()
+                            }),
                             Widget.Label({
-                                label: battery.bind("percent").as((p) => ` ${Math.floor(p)}%`),
+                                class_name: "bar-button-label battery",
+                                label: battery.bind("percent").as((p) => `${Math.floor(p)}%`),
                             }),
                         ];
                     } else if (batAvail && !showLabel) {

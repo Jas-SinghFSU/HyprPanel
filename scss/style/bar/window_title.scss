@@ -1,6 +1,11 @@
 @import "../colors";
 @import '../../variables';
 
-.window_title {
+.bar-button-icon.windowtitle {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-icon);
+}
+
+.bar-button-label.windowtitle {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-text);
+  margin-left: $bar-buttons-windowtitle-spacing;
 }

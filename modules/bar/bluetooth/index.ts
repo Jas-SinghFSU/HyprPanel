@@ -6,30 +6,32 @@ import { openMenu } from "../utils.js";
 const Bluetooth = () => {
     const btIcon = Widget.Label({
         label: bluetooth.bind("enabled").as((v) => v ? "󰂯" : "󰂲"),
-        class_name: "bar-bt_icon",
+        class_name: "bar-button-icon bluetooth",
     });
 
     const btText = Widget.Label({
         label: Utils.merge([
             bluetooth.bind("enabled"),
             bluetooth.bind("connected_devices"),
-            options.bar.bluetooth.label.bind("value")],
-            (btEnabled, btDevices, showLabel) => {
-                if (showLabel) {
-                    return btEnabled && btDevices.length ? ` Connected (${btDevices.length})`
-                        : btEnabled ? " On"
-                            : " Off"
-                }
-                return "";
+        ],
+            (btEnabled, btDevices) => {
+                return btEnabled && btDevices.length ? ` Connected (${btDevices.length})`
+                    : btEnabled ? "On"
+                        : "Off"
 
             }),
-        class_name: "bar-bt_label",
+        class_name: "bar-button-label bluetooth",
     });
 
     return {
         component: Widget.Box({
             class_name: "volume",
-            children: [btIcon, btText],
+            children: options.bar.bluetooth.label.bind("value").as((showLabel) => {
+                if (showLabel) {
+                    return [btIcon, btText];
+                }
+                return [btIcon];
+            }),
         }),
         isVisible: true,
         boxClass: "bluetooth",
