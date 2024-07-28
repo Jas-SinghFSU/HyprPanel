@@ -2,10 +2,21 @@
 @import "../../variables";
 
 .bar {
-  background: if($bar-transparent, transparent, $bar-background);
 
   .transparent {
     background: transparent;
+  }
+
+  .bar-panel-container {
+    margin-top: if($bar-floating, $bar-margin_top, 0em);
+    margin-bottom: if($bar-floating, $bar-margin_bottom, 0em);
+    margin-left: if($bar-floating, $bar-margin_sides, 0em);
+    margin-right: if($bar-floating, $bar-margin_sides, 0em);
+  }
+
+  .bar-panel {
+    background: if($bar-transparent, transparent, $bar-background);
+    border-radius: if($bar-floating, $bar-border_radius, 0em);
   }
 }
 

@@ -54,6 +54,11 @@ const options = mkOptions(OPTIONS, {
             }
         },
         bar: {
+            floating: opt(false),
+            margin_top: opt("0.5em"),
+            margin_bottom: opt("0em"),
+            margin_sides: opt("0.5em"),
+            border_radius: opt("0.4em"),
             transparent: opt(false),
             background: opt(colors.crust),
             buttons: {
