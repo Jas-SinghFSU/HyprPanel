@@ -38,17 +38,24 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.reverse_scroll, title: 'Invert Scroll', subtitle: 'Scrolling up will go to the previous workspace rather than the next.', type: 'boolean' }),
                 Option({ opt: options.bar.workspaces.scroll_speed, title: 'Scrolling Speed', type: 'number' }),
 
+                Header('Window Titles'),
+                Option({ opt: options.theme.bar.buttons.windowtitle.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
+
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.volume.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 Header('Network'),
                 Option({ opt: options.bar.network.label, title: 'Show Network Name', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.network.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 Header('Bluetooth'),
                 Option({ opt: options.bar.bluetooth.label, title: 'Show Bluetooth Label', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.bluetooth.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 Header('Battery'),
                 Option({ opt: options.bar.battery.label, title: 'Show Battery Percentage', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.battery.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 // Header('System Tray'),
                 // TODO: Figure out how to handle arrays
@@ -57,8 +64,12 @@ export const BarSettings = () => {
                 Header('Clock'),
                 Option({ opt: options.bar.clock.format, title: 'Clock Format', type: 'string' }),
 
+                Header('Media'),
+                Option({ opt: options.theme.bar.buttons.media.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
+
                 Header('Notifications'),
                 Option({ opt: options.bar.notifications.show_total, title: 'Show Total # of notifications', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.notifications.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
             ]
         })
     })

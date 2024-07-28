@@ -87,7 +87,8 @@ const options = mkOptions(OPTIONS, {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.pink),
-                    icon: opt(colors.pink)
+                    icon: opt(colors.pink),
+                    spacing: opt("0.5em"),
                 },
                 media: {
                     background: opt(colors.base2),
