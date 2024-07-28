@@ -29,7 +29,7 @@ Optional Dependencies:
 ```
 // Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
-ptyon-gpustat
+python-gpustat
 ```
 
 Arch (pacman):
