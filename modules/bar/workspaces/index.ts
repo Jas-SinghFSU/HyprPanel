@@ -79,6 +79,34 @@ const Workspaces = (monitor = -1, ws = 8) => {
         hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
     }
 
+    function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+        let inThrottle: boolean;
+        return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => {
+                    inThrottle = false;
+                }, limit);
+            }
+        } as T;
+    }
+    const onScrollUpDebounced = throttle(() => {
+        if (reverse_scroll.value === true) {
+            goToPrevWS();
+        } else {
+            goToNextWS();
+        }
+    }, 55);
+
+    const onScrollDownDebounced = throttle(() => {
+        if (reverse_scroll.value === true) {
+            goToNextWS();
+        } else {
+            goToPrevWS();
+        }
+    }, 55);
+
     return {
         component: Widget.Box({
             class_name: "workspaces",
@@ -175,20 +203,11 @@ const Workspaces = (monitor = -1, ws = 8) => {
         boxClass: "workspaces",
         useBox: true,
         props: {
-
             on_scroll_up: () => {
-                if (reverse_scroll.value === true) {
-                    goToPrevWS();
-                } else {
-                    goToNextWS();
-                }
+                onScrollUpDebounced();
             },
             on_scroll_down: () => {
-                if (reverse_scroll.value === true) {
-                    goToNextWS();
-                } else {
-                    goToPrevWS();
-                }
+                onScrollDownDebounced()
             },
         }
     };
