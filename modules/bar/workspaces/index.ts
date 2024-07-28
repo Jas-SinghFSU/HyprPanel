@@ -43,6 +43,10 @@ const Workspaces = (monitor = -1, ws = 8) => {
     };
 
     const getCurrentMonitorWorkspaces = () => {
+        if (hyprland.monitors.length === 1) {
+            return Array.from({ length: workspaces.value }, (_, i) => i + 1);
+        }
+
         const monitorWorkspaces = getWorkspaceRules();
         const monitorMap = {};
         hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
