@@ -2,7 +2,7 @@ const hyprland = await Service.import("hyprland");
 import { WorkspaceRule, WorkspaceMap } from "lib/types/workspace";
 import options from "options";
 
-const { workspaces, monitorSpecific } = options.bar.workspaces;
+const { workspaces, monitorSpecific, reverse_scroll } = options.bar.workspaces;
 
 function range(length: number, start = 1) {
     return Array.from({ length }, (_, i) => i + start);
@@ -42,6 +42,43 @@ const Workspaces = (monitor = -1, ws = 8) => {
         }
     };
 
+    const getCurrentMonitorWorkspaces = () => {
+        const monitorWorkspaces = getWorkspaceRules();
+        const monitorMap = {};
+        hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
+
+        const currentMonitorName = monitorMap[monitor];
+
+        return monitorWorkspaces[currentMonitorName];
+    }
+    const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces());
+
+    workspaces.connect("changed", () => {
+        currentMonitorWorkspaces.value = getCurrentMonitorWorkspaces()
+    })
+
+    const goToNextWS = () => {
+        const curWorkspace = hyprland.active.workspace.id;
+        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
+        let nextIndex = indexOfWs + 1;
+        if (nextIndex >= currentMonitorWorkspaces.value.length) {
+            nextIndex = 0;
+        }
+
+        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
+    }
+
+    const goToPrevWS = () => {
+        const curWorkspace = hyprland.active.workspace.id;
+        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
+        let prevIndex = indexOfWs - 1;
+        if (prevIndex < 0) {
+            prevIndex = currentMonitorWorkspaces.value.length - 1;
+        }
+
+        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
+    }
+
     return {
         component: Widget.Box({
             class_name: "workspaces",
@@ -57,61 +94,67 @@ const Workspaces = (monitor = -1, ws = 8) => {
                             return getWorkspacesForMonitor(i, workspaceRules);
                         })
                         .map((i) => {
-                            return Widget.Label({
-                                attribute: i,
-                                vpack: "center",
-                                class_name: Utils.merge(
-                                    [
-                                        options.bar.workspaces.show_icons.bind("value"),
-                                        options.bar.workspaces.icons.available.bind("value"),
-                                        options.bar.workspaces.icons.active.bind("value"),
-                                        options.bar.workspaces.icons.occupied.bind("value"),
-                                        hyprland.active.workspace.bind("id")
-                                    ],
-                                    (show_icons) => {
-                                        if (show_icons) {
-                                            return `workspace-icon`;
-                                        }
-                                        return "";
-                                    },
-                                ),
-                                label: Utils.merge(
-                                    [
-                                        options.bar.workspaces.show_icons.bind("value"),
-                                        options.bar.workspaces.icons.available.bind("value"),
-                                        options.bar.workspaces.icons.active.bind("value"),
-                                        options.bar.workspaces.icons.occupied.bind("value"),
-                                        hyprland.active.workspace.bind("id")
-                                    ],
-                                    (showIcons, available, active, occupied, _) => {
-                                        if (showIcons) {
-                                            if (hyprland.active.workspace.id === i) {
-                                                return active;
-                                            }
-                                            if ((hyprland.getWorkspace(i)?.windows || 0) > 0) {
-                                                return occupied;
-                                            }
-                                            if (
-                                                monitor !== -1
-                                            ) {
-                                                return available;
-                                            }
-                                        }
-                                        return `${i}`;
-                                    },
-                                ),
-                                setup: (self) => {
-                                    self.hook(hyprland, () => {
-                                        self.toggleClassName(
-                                            "active",
-                                            hyprland.active.workspace.id === i,
-                                        );
-                                        self.toggleClassName(
-                                            "occupied",
-                                            (hyprland.getWorkspace(i)?.windows || 0) > 0,
-                                        );
-                                    });
+                            return Widget.Button({
+                                on_primary_click: () => {
+                                    hyprland.messageAsync(`dispatch workspace ${i}`)
+
                                 },
+                                child: Widget.Label({
+                                    attribute: i,
+                                    vpack: "center",
+                                    class_name: Utils.merge(
+                                        [
+                                            options.bar.workspaces.show_icons.bind("value"),
+                                            options.bar.workspaces.icons.available.bind("value"),
+                                            options.bar.workspaces.icons.active.bind("value"),
+                                            options.bar.workspaces.icons.occupied.bind("value"),
+                                            hyprland.active.workspace.bind("id")
+                                        ],
+                                        (show_icons) => {
+                                            if (show_icons) {
+                                                return `workspace-icon`;
+                                            }
+                                            return "";
+                                        },
+                                    ),
+                                    label: Utils.merge(
+                                        [
+                                            options.bar.workspaces.show_icons.bind("value"),
+                                            options.bar.workspaces.icons.available.bind("value"),
+                                            options.bar.workspaces.icons.active.bind("value"),
+                                            options.bar.workspaces.icons.occupied.bind("value"),
+                                            hyprland.active.workspace.bind("id")
+                                        ],
+                                        (showIcons, available, active, occupied, _) => {
+                                            if (showIcons) {
+                                                if (hyprland.active.workspace.id === i) {
+                                                    return active;
+                                                }
+                                                if ((hyprland.getWorkspace(i)?.windows || 0) > 0) {
+                                                    return occupied;
+                                                }
+                                                if (
+                                                    monitor !== -1
+                                                ) {
+                                                    return available;
+                                                }
+                                            }
+                                            return `${i}`;
+                                        },
+                                    ),
+                                    setup: (self) => {
+                                        self.hook(hyprland, () => {
+                                            self.toggleClassName(
+                                                "active",
+                                                hyprland.active.workspace.id === i,
+                                            );
+                                            self.toggleClassName(
+                                                "occupied",
+                                                (hyprland.getWorkspace(i)?.windows || 0) > 0,
+                                            );
+                                        });
+                                    },
+                                })
                             });
                         });
                 },
@@ -130,6 +173,24 @@ const Workspaces = (monitor = -1, ws = 8) => {
         }),
         isVisible: true,
         boxClass: "workspaces",
+        useBox: true,
+        props: {
+
+            on_scroll_up: () => {
+                if (reverse_scroll.value === true) {
+                    goToPrevWS();
+                } else {
+                    goToNextWS();
+                }
+            },
+            on_scroll_down: () => {
+                if (reverse_scroll.value === true) {
+                    goToNextWS();
+                } else {
+                    goToPrevWS();
+                }
+            },
+        }
     };
 };
 export { Workspaces };
