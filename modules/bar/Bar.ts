@@ -93,38 +93,42 @@ export const Bar = (monitor: number) => {
         visible: true,
         anchor: ["top", "left", "right"],
         exclusivity: "exclusive",
-        child: Widget.CenterBox({
-            css: 'padding: 1px',
-            startWidget: Widget.Box({
-                class_name: "box-left",
-                hexpand: true,
-                setup: self => {
-                    self.hook(layouts, (self) => {
-                        const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
-                        self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
-                    })
-                },
-            }),
-            centerWidget: Widget.Box({
-                class_name: "box-center",
-                hpack: "center",
-                setup: self => {
-                    self.hook(layouts, (self) => {
-                        const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
-                        self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
-                    })
-                },
-            }),
-            endWidget: Widget.Box({
-                class_name: "box-right",
-                hpack: "end",
-                setup: self => {
-                    self.hook(layouts, (self) => {
-                        const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
-                        self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
-                    })
-                },
-            }),
+        child: Widget.Box({
+            class_name: 'bar-panel-container',
+            child: Widget.CenterBox({
+                class_name: 'bar-panel',
+                css: 'padding: 1px',
+                startWidget: Widget.Box({
+                    class_name: "box-left",
+                    hexpand: true,
+                    setup: self => {
+                        self.hook(layouts, (self) => {
+                            const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
+                            self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
+                        })
+                    },
+                }),
+                centerWidget: Widget.Box({
+                    class_name: "box-center",
+                    hpack: "center",
+                    setup: self => {
+                        self.hook(layouts, (self) => {
+                            const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
+                            self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
+                        })
+                    },
+                }),
+                endWidget: Widget.Box({
+                    class_name: "box-right",
+                    hpack: "end",
+                    setup: self => {
+                        self.hook(layouts, (self) => {
+                            const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
+                            self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
+                        })
+                    },
+                }),
+            })
         })
     });
 };

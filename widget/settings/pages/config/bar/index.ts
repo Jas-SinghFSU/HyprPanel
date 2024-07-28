@@ -14,6 +14,13 @@ export const BarSettings = () => {
                 Header('Layouts'),
                 Option({ opt: options.bar.layouts, title: 'Bar Layouts for Monitors', subtitle: 'Please refer to the github README for instructions: https://github.com/Jas-SinghFSU/HyprPanel', type: 'object' }, 'bar-layout-input'),
 
+                Header('Spacing'),
+                Option({ opt: options.theme.bar.floating, title: 'Floating Bar', type: 'boolean' }),
+                Option({ opt: options.theme.bar.margin_top, title: 'Margin Top', subtitle: 'Only applies if floating is enabled', type: 'string' }),
+                Option({ opt: options.theme.bar.margin_bottom, title: 'Margin Bottom', subtitle: 'Only applies if floating is enabled', type: 'string' }),
+                Option({ opt: options.theme.bar.margin_sides, title: 'Margin Sides', subtitle: 'Only applies if floating is enabled', type: 'string' }),
+                Option({ opt: options.theme.bar.border_radius, title: 'Border Radius', subtitle: 'Only applies if floating is enabled', type: 'string' }),
+
                 Header('Dashboard'),
                 Option({ opt: options.bar.launcher.icon, title: 'Dashboard Menu Icon', type: 'string' }),
 
