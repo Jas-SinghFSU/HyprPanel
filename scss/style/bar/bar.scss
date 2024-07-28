@@ -3,6 +3,7 @@
 
 .bar {
   background: if($bar-transparent, transparent, $bar-background);
+
   .transparent {
     background: transparent;
   }
@@ -20,66 +21,87 @@
 
   &.battery {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-battery-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-battery-hover);
     }
   }
+
   &.bluetooth {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-bluetooth-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-bluetooth-hover);
     }
   }
+
   &.clock {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-clock-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover);
     }
   }
+
   &.media {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-media-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-media-hover);
     }
   }
+
   &.dashboard {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-dashboard-hover);
     }
   }
+
   &.network {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-network-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-network-hover);
     }
   }
+
   &.notifications {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-notifications-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-hover);
     }
   }
+
   &.systray {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-systray-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-systray-hover);
     }
   }
+
   &.volume {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-volume-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-volume-hover);
     }
   }
+
   &.windowtitle {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-windowtitle-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-windowtitle-hover);
     }
   }
+
   &.workspaces {
     background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-workspaces-background);
+
     &:hover {
       background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-workspaces-hover);
     }

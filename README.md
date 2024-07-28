@@ -65,6 +65,10 @@ ags
 ```
 
 Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
+
+### Notifications
+
+HyprPanel handles notifications through the AGS built-in notification service. If you're already using a notification daemon such as Dunst or Mako, you may have to stop them to prevent conflicts with HyprPanel.
 ```bash
 exec-once = ags
 ```

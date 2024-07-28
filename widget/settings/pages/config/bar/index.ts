@@ -24,6 +24,7 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.icons.occupied, title: 'Workspace Occupied', type: 'string' }),
                 Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
                 Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.reverse_scroll, title: 'Invert Scroll', subtitle: 'Scrolling up will go to the previous workspace rather than the next.', type: 'boolean' }),
 
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),

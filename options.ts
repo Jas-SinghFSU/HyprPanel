@@ -578,6 +578,7 @@ const options = mkOptions(OPTIONS, {
             },
             workspaces: opt(10),
             monitorSpecific: opt(true),
+            reverse_scroll: opt(false),
         },
         volume: {
             label: opt(true),
