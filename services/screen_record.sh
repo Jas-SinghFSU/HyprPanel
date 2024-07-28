@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 outputDir="$HOME/Videos/Screencasts"
 
 checkRecording() {
-    if pgrep -f "gpu-screen-recorder" > /dev/null; then
+    if pgrep -f "gpu-screen-recorder" >/dev/null; then
         return 0
     else
         return 1
@@ -47,24 +47,24 @@ stopRecording() {
         -u normal \
         --action="scriptAction:-dolphin $outputDir=Directory" \
         --action="scriptAction:-xdg-open $recentFile=Play"
-        }
+}
 
-        case "$1" in
-            start)
-                startRecording "$@"
-                ;;
-            stop)
-                stopRecording
-                ;;
-            status)
-                if checkRecording; then
-                    echo "recording"
-                else
-                    echo "not recording"
-                fi
-                ;;
-            *)
-                echo "Usage: $0 {start [screen_name|window_id]|stop|status}"
-                exit 1
-                ;;
-        esac
+case "$1" in
+start)
+    startRecording "$@"
+    ;;
+stop)
+    stopRecording
+    ;;
+status)
+    if checkRecording; then
+        echo "recording"
+    else
+        echo "not recording"
+    fi
+    ;;
+*)
+    echo "Usage: $0 {start [screen_name|window_id]|stop|status}"
+    exit 1
+    ;;
+esac
