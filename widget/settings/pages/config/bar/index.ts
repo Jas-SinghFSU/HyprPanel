@@ -15,7 +15,8 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.layouts, title: 'Bar Layouts for Monitors', subtitle: 'Please refer to the github README for instructions: https://github.com/Jas-SinghFSU/HyprPanel', type: 'object' }, 'bar-layout-input'),
 
                 Header('Spacing'),
-                Option({ opt: options.theme.bar.buttons.spacing, title: 'Button Spacing', type: 'string' }),
+                Option({ opt: options.theme.bar.outer_spacing, title: 'Outer Spacing', subtitle: 'Spacing on the outer left and right edges of the bar.', type: 'string' }),
+                Option({ opt: options.theme.bar.buttons.spacing, title: 'Button Spacing', subtitle: 'Spacing between the buttons in the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.radius, title: 'Button Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.floating, title: 'Floating Bar', type: 'boolean' }),
                 Option({ opt: options.theme.bar.margin_top, title: 'Margin Top', subtitle: 'Only applies if floating is enabled', type: 'string' }),

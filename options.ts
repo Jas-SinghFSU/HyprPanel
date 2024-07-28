@@ -59,6 +59,7 @@ const options = mkOptions(OPTIONS, {
             margin_bottom: opt("0em"),
             margin_sides: opt("0.5em"),
             border_radius: opt("0.4em"),
+            outer_spacing: opt("1.6em"),
             transparent: opt(false),
             background: opt(colors.crust),
             buttons: {
