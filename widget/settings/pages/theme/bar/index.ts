@@ -29,7 +29,6 @@ export const BarTheme = () => {
 
                 Header('Workspaces'),
                 Option({ opt: options.theme.bar.buttons.workspaces.background, title: 'Background', type: 'color' }),
-                Option({ opt: options.theme.bar.buttons.workspaces.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.available, title: 'Workspace Available Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.occupied, title: 'Workspace Occupied Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.active, title: 'Workspace Active Color', type: 'color' }),
