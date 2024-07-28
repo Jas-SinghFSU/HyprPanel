@@ -6,11 +6,11 @@ import { openMenu } from "../utils.js";
 const Network = () => {
     const wifiIndicator = [
         Widget.Icon({
-            class_name: "bar-network-icon",
+            class_name: "bar-button-icon network",
             icon: network.wifi.bind("icon_name"),
         }),
         Widget.Label({
-            class_name: "bar-network-label",
+            class_name: "bar-button-label network",
             label: Utils.merge(
                 [network.bind("wifi"), options.bar.network.label.bind("value")],
                 (wifi, showLabel) => {
