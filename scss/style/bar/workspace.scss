@@ -2,14 +2,6 @@
 @import '../../variables';
 
 .workspaces {
-  button {
-    margin: 0rem 0.5rem * .5;
-
-    &:not(:first-child) {
-      margin-left: 0.7em;
-    }
-  }
-
   label {
     font-size: 0.2em;
     min-width: 4em;
@@ -38,8 +30,8 @@
       min-width: 0em;
       min-height: 0em;
       border-radius: 0em;
-      font-size: 1.1em;
+      transition: 300ms * .5;
+      font-size: 1em;
     }
   }
-
 }

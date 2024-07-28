@@ -2,7 +2,7 @@ const hyprland = await Service.import("hyprland");
 import { WorkspaceRule, WorkspaceMap } from "lib/types/workspace";
 import options from "options";
 
-const { workspaces, monitorSpecific, reverse_scroll } = options.bar.workspaces;
+const { workspaces, monitorSpecific, reverse_scroll, scroll_speed, spacing } = options.bar.workspaces;
 
 function range(length: number, start = 1) {
     return Array.from({ length }, (_, i) => i + start);
@@ -43,6 +43,10 @@ const Workspaces = (monitor = -1, ws = 8) => {
     };
 
     const getCurrentMonitorWorkspaces = () => {
+        if (hyprland.monitors.length === 1) {
+            return Array.from({ length: workspaces.value }, (_, i) => i + 1);
+        }
+
         const monitorWorkspaces = getWorkspaceRules();
         const monitorMap = {};
         hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
@@ -79,6 +83,39 @@ const Workspaces = (monitor = -1, ws = 8) => {
         hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
     }
 
+    function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+        let inThrottle: boolean;
+        return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => {
+                    inThrottle = false;
+                }, limit);
+            }
+        } as T;
+    }
+
+    const createThrottledScrollHandlers = (scrollSpeed: number) => {
+        const throttledScrollUp = throttle(() => {
+            if (reverse_scroll.value === true) {
+                goToPrevWS();
+            } else {
+                goToNextWS();
+            }
+        }, 200 / scrollSpeed);
+
+        const throttledScrollDown = throttle(() => {
+            if (reverse_scroll.value === true) {
+                goToNextWS();
+            } else {
+                goToPrevWS();
+            }
+        }, 200 / scrollSpeed);
+
+        return { throttledScrollUp, throttledScrollDown };
+    }
+
     return {
         component: Widget.Box({
             class_name: "workspaces",
@@ -95,6 +132,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                         })
                         .map((i) => {
                             return Widget.Button({
+                                class_name: "workspace-button",
                                 on_primary_click: () => {
                                     hyprland.messageAsync(`dispatch workspace ${i}`)
 
@@ -102,6 +140,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                 child: Widget.Label({
                                     attribute: i,
                                     vpack: "center",
+                                    css: spacing.bind("value").as(sp => `margin: 0rem ${0.375 * sp}rem;`),
                                     class_name: Utils.merge(
                                         [
                                             options.bar.workspaces.show_icons.bind("value"),
@@ -173,23 +212,14 @@ const Workspaces = (monitor = -1, ws = 8) => {
         }),
         isVisible: true,
         boxClass: "workspaces",
-        useBox: true,
         props: {
-
-            on_scroll_up: () => {
-                if (reverse_scroll.value === true) {
-                    goToPrevWS();
-                } else {
-                    goToNextWS();
-                }
-            },
-            on_scroll_down: () => {
-                if (reverse_scroll.value === true) {
-                    goToNextWS();
-                } else {
-                    goToPrevWS();
-                }
-            },
+            setup: (self: any) => {
+                self.hook(scroll_speed, () => {
+                    const { throttledScrollUp, throttledScrollDown } = createThrottledScrollHandlers(scroll_speed.value);
+                    self.on_scroll_up = throttledScrollUp;
+                    self.on_scroll_down = throttledScrollDown;
+                });
+            }
         }
     };
 };
