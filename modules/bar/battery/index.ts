@@ -49,7 +49,7 @@ const BatteryLabel = () => {
                         return [
                             Widget.Icon({ icon: icon() }),
                             Widget.Label({
-                                label: battery.bind("percent").as((p) => ` ${p}%`),
+                                label: battery.bind("percent").as((p) => ` ${Math.floor(p)}%`),
                             }),
                         ];
                     } else if (batAvail && !showLabel) {
