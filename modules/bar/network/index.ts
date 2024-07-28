@@ -9,18 +9,22 @@ const Network = () => {
             class_name: "bar-button-icon network",
             icon: network.wifi.bind("icon_name"),
         }),
-        Widget.Label({
-            class_name: "bar-button-label network",
-            label: Utils.merge(
+        Widget.Box({
+            children: Utils.merge(
                 [network.bind("wifi"), options.bar.network.label.bind("value")],
                 (wifi, showLabel) => {
-                    if (showLabel) {
-                        return wifi.ssid ? `${wifi.ssid.substring(0, 7)}` : "--";
+                    if (!showLabel) {
+                        return [];
                     }
-                    return "";
+                    return [
+                        Widget.Label({
+                            class_name: "bar-button-label network",
+                            label: wifi.ssid ? `${wifi.ssid.substring(0, 7)}` : "--",
+                        }),
+                    ]
                 },
-            ),
-        }),
+            )
+        })
     ];
 
     const wiredIndicator = [
@@ -28,18 +32,22 @@ const Network = () => {
             class_name: "bar-button-icon network",
             icon: network.wired.bind("icon_name"),
         }),
-        Widget.Label({
-            class_name: "bar-button-label network",
-            label: Utils.merge(
+        Widget.Box({
+            children: Utils.merge(
                 [network.bind("wired"), options.bar.network.label.bind("value")],
                 (_, showLabel) => {
-                    if (showLabel) {
-                        return "Wired";
+                    if (!showLabel) {
+                        return [];
                     }
-                    return "";
+                    return [
+                        Widget.Label({
+                            class_name: "bar-button-label network",
+                            label: "Wired",
+                        }),
+                    ]
                 },
-            ),
-        }),
+            )
+        })
     ];
 
     return {
