@@ -14,12 +14,12 @@ export const OsdTheme = () => {
             children: [
                 Header('On Screen Display Settings'),
                 Option({ opt: options.theme.osd.bar_color, title: 'Bar', type: 'color' }),
-                Option({ opt: options.theme.osd.bar_overflow_color, title: 'Overflow', subtitle: 'Overflow color is for when the volume goes over a 100', type: 'color' }),
+                Option({ opt: options.theme.osd.bar_overflow_color, title: 'Bar Overflow', subtitle: 'Overflow color is for when the volume goes over a 100', type: 'color' }),
                 Option({ opt: options.theme.osd.bar_empty_color, title: 'Bar Background', type: 'color' }),
-                Option({ opt: options.theme.osd.bar_container, title: 'Bar Container Background', type: 'color' }),
-                Option({ opt: options.theme.osd.icon, title: 'Icon Background', type: 'color' }),
+                Option({ opt: options.theme.osd.bar_container, title: 'Bar Container', type: 'color' }),
+                Option({ opt: options.theme.osd.icon, title: 'Icon', type: 'color' }),
                 Option({ opt: options.theme.osd.icon_container, title: 'Icon Container', type: 'color' }),
-                Option({ opt: options.theme.osd.label, title: 'Value', type: 'color' }),
+                Option({ opt: options.theme.osd.label, title: 'Value Text', type: 'color' }),
             ]
         })
     })
