@@ -144,14 +144,23 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                     class_name: Utils.merge(
                                         [
                                             options.bar.workspaces.show_icons.bind("value"),
+                                            options.bar.workspaces.show_numbered.bind("value"),
+                                            options.bar.workspaces.numbered_active_indicator.bind("value"),
                                             options.bar.workspaces.icons.available.bind("value"),
                                             options.bar.workspaces.icons.active.bind("value"),
                                             options.bar.workspaces.icons.occupied.bind("value"),
                                             hyprland.active.workspace.bind("id")
                                         ],
-                                        (show_icons) => {
+                                        (show_icons, show_numbered, numbered_active_indicator) => {
                                             if (show_icons) {
                                                 return `workspace-icon`;
+                                            }
+                                            if (show_numbered) {
+                                                const numActiveInd = hyprland.active.workspace.id === i
+                                                    ? numbered_active_indicator
+                                                    : "";
+
+                                                return `workspace-number ${numActiveInd}`;
                                             }
                                             return "";
                                         },

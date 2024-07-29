@@ -33,5 +33,26 @@
       transition: 300ms * .5;
       font-size: 1em;
     }
+
+    &.workspace-number {
+      background-color: transparent;
+      min-width: 0em;
+      min-height: 0em;
+      border-radius: 0em;
+      transition: 0ms;
+      padding: 0em 0.2em;
+      font-size: 1.2em;
+    }
+
+    &.underline {
+      border-bottom: 0.1em solid $pink;
+    }
+
+    &.highlight {
+      color: $bar-buttons-workspaces-numbered_active_text_color;
+      border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+      background-color: $bar-buttons-workspaces-active;
+      padding: 0em 0.2em;
+    }
   }
 }

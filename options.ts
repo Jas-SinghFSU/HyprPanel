@@ -82,6 +82,8 @@ const options = mkOptions(OPTIONS, {
                     available: opt(colors.sky),
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
+                    numbered_active_highlight_border: opt("0.2em"),
+                    numbered_active_text_color: opt(colors.mantle),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
@@ -585,6 +587,8 @@ const options = mkOptions(OPTIONS, {
         },
         workspaces: {
             show_icons: opt(false),
+            show_numbered: opt(false),
+            numbered_active_indicator: opt<"underline" | "highlight">("underline"),
             icons: {
                 available: opt(""),
                 active: opt(""),
