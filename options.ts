@@ -53,6 +53,22 @@ const options = mkOptions(OPTIONS, {
                 label: opt(colors.crust)
             }
         },
+        osd: {
+            enable: opt(true),
+            orientation: opt<"horizontal" | "vertical">("vertical"),
+            bar_container: opt(colors.crust),
+            icon_container: opt(colors.lavender),
+            bar_color: opt(colors.lavender),
+            bar_empty_color: opt(colors.surface0),
+            bar_overflow_color: opt(colors.red),
+            icon: opt(colors.crust),
+            label: opt(colors.lavender),
+            monitor: opt(0),
+            active_monitor: opt(true),
+            radius: opt("0.4em"),
+            margins: opt("0px 5px 0px 0px"),
+            location: opt<"top left" | "top" | "top right" | "right" | "bottom right" | "bottom" | "bottom left" | "left">("right"),
+        },
         bar: {
             floating: opt(false),
             margin_top: opt("0.5em"),
@@ -724,22 +740,6 @@ const options = mkOptions(OPTIONS, {
     },
 
     terminal: opt("kitty"),
-
-    osd: {
-        progress: {
-            vertical: opt(true),
-            pack: {
-                h: opt<"start" | "center" | "end">("end"),
-                v: opt<"start" | "center" | "end">("center"),
-            },
-        },
-        microphone: {
-            pack: {
-                h: opt<"start" | "center" | "end">("center"),
-                v: opt<"start" | "center" | "end">("end"),
-            },
-        },
-    },
 
     notifications: {
         position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),

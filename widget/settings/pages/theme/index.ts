@@ -10,10 +10,12 @@ import { NetworkMenuTheme } from "./menus/network";
 import { NotificationsMenuTheme } from "./menus/notifications";
 import { SystrayMenuTheme } from "./menus/systray";
 import { VolumeMenuTheme } from "./menus/volume";
+import { OsdTheme } from "./osd/index";
 
 type Page = "General Settings"
     | "Bar"
     | "Notifications"
+    | "OSD"
     | "Battery Menu"
     | "Bluetooth Menu"
     | "Clock Menu"
@@ -30,6 +32,7 @@ const pagerMap: Page[] = [
     "General Settings",
     "Bar",
     "Notifications",
+    "OSD",
     "Battery Menu",
     "Bluetooth Menu",
     "Clock Menu",
@@ -74,6 +77,7 @@ export const ThemesMenu = () => {
                         "General Settings": MenuTheme(),
                         "Bar": BarTheme(),
                         "Notifications": NotificationsTheme(),
+                        "OSD": OsdTheme(),
                         "Battery Menu": BatteryMenuTheme(),
                         "Bluetooth Menu": BluetoothMenuTheme(),
                         "Clock Menu": ClockMenuTheme(),
