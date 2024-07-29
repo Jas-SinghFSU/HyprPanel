@@ -54,6 +54,8 @@ const options = mkOptions(OPTIONS, {
             }
         },
         osd: {
+            enable: opt(true),
+            orientation: opt<"horizontal" | "vertical">("vertical"),
             bar_container: opt(colors.crust),
             icon_container: opt(colors.lavender),
             bar_color: opt(colors.lavender),

@@ -1,22 +1,27 @@
 import { OSDAnchor } from "lib/types/options";
-import brightness from "services/Brightness"
 import options from "options";
+import brightness from "services/Brightness"
+import { OSDLabel } from "./label/index";
+import { OSDBar } from "./bar/index";
+import { OSDIcon } from "./icon/index";
 const hyprland = await Service.import("hyprland");
 const audio = await Service.import("audio")
 
 const {
+    enable,
+    orientation,
     location,
     active_monitor,
     monitor
 } = options.theme.osd;
 
-const curMonitor = Variable(0);
+const curMonitor = Variable(monitor.value);
 
 hyprland.active.connect("changed", () => {
     curMonitor.value = hyprland.active.monitor.id;
 })
 
-const DELAY = 3000
+const DELAY = 2500;
 
 const getPosition = (pos: OSDAnchor): ("top" | "bottom" | "left" | "right")[] => {
     const positionMap: { [key: string]: ("top" | "bottom" | "left" | "right")[] } = {
@@ -34,111 +39,51 @@ const getPosition = (pos: OSDAnchor): ("top" | "bottom" | "left" | "right")[] =>
 }
 const renderOSD = () => {
     let count = 0
+
+    const handleReveal = (self: any) => {
+        self.reveal_child = true
+        count++
+        Utils.timeout(DELAY, () => {
+            count--
+
+            if (count === 0)
+                self.reveal_child = false
+        })
+    }
+
     return Widget.Revealer({
         transition: "crossfade",
         reveal_child: false,
         setup: self => {
-            self.hook(audio.speaker, () => {
-                self.reveal_child = true
-                count++
-                Utils.timeout(DELAY, () => {
-                    count--
-
-                    if (count === 0)
-                        self.reveal_child = false
-                })
-            })
             self.hook(brightness, () => {
-                self.reveal_child = true
-                count++
-                Utils.timeout(DELAY, () => {
-                    count--
-
-                    if (count === 0)
-                        self.reveal_child = false
-                })
+                handleReveal(self);
             }, "notify::screen")
             self.hook(brightness, () => {
-                self.reveal_child = true
-                count++
-                Utils.timeout(DELAY, () => {
-                    count--
-
-                    if (count === 0)
-                        self.reveal_child = false
-                })
+                handleReveal(self);
             }, "notify::kbd")
+            self.hook(audio.speaker, () => {
+                handleReveal(self);
+            })
 
         },
         child: Widget.Box({
             class_name: "osd-container",
-            vertical: true,
-            children: [
-                Widget.Box({
-                    class_name: "osd-label-container",
-                    hexpand: true,
-                    child: Widget.Label({
-                        class_name: "osd-label",
-                        hexpand: true,
-                        hpack: "center",
-                        setup: self => {
-                            self.hook(audio, () => {
-                                self.toggleClassName("overflow", audio.speaker.volume > 1)
-                                self.label = `${Math.floor(audio.speaker.volume * 100)}`;
-                            })
-                            self.hook(brightness, () => {
-                                self.label = `${Math.floor(brightness.screen * 100)}`;
-                            }, "notify::screen")
-                            self.hook(brightness, () => {
-                                self.label = `${Math.floor(brightness.kbd * 100)}`;
-                            }, "notify::kbd")
-                        }
-                    })
-                }),
-                Widget.Box({
-                    class_name: "osd-bar-container",
-                    children: [
-                        Widget.LevelBar({
-                            class_name: "osd-bar",
-                            vertical: true,
-                            inverted: true,
-                            bar_mode: "continuous",
-                            setup: self => {
-                                self.hook(audio, () => {
-                                    self.toggleClassName("overflow", audio.speaker.volume > 1)
-                                    self.value = audio.speaker.volume <= 1 ? audio.speaker.volume : audio.speaker.volume - 1;
-                                })
-                                self.hook(brightness, () => {
-                                    self.value = brightness.screen;
-                                }, "notify::screen")
-                                self.hook(brightness, () => {
-                                    self.value = brightness.kbd;
-                                }, "notify::kbd")
-                            }
-                        })
+            vertical: orientation.bind("value").as(ort => ort === "vertical"),
+            children: orientation.bind("value").as(ort => {
+                if (ort === "vertical") {
+                    return [
+                        OSDLabel(ort),
+                        OSDBar(ort),
+                        OSDIcon(ort)
                     ]
-                }),
-                Widget.Box({
-                    class_name: "osd-icon-container",
-                    hexpand: true,
-                    child: Widget.Label({
-                        class_name: "osd-icon",
-                        hexpand: true,
-                        hpack: "center",
-                        setup: self => {
-                            self.hook(audio, () => {
-                                self.label = audio.speaker.is_muted ? "󰝟" : "󰕾";
-                            })
-                            self.hook(brightness, () => {
-                                self.label = "󱍖";
-                            }, "notify::screen")
-                            self.hook(brightness, () => {
-                                self.label = "󰥻";
-                            }, "notify::kbd")
-                        }
-                    })
-                })
-            ]
+                }
+
+                return [
+                    OSDIcon(ort),
+                    OSDBar(ort),
+                    OSDLabel(ort),
+                ]
+            })
         })
     })
 }
@@ -155,6 +100,7 @@ export default () => Widget.Window({
             return mon;
         }),
     name: `indicator`,
+    visible: enable.bind("value"),
     class_name: "indicator",
     layer: "overlay",
     anchor: location.bind("value").as(v => getPosition(v)),

@@ -8,12 +8,13 @@
 
   .osd-label-container {
     background: $osd-bar_container;
-    border-top-right-radius: $osd-radius;
-    border-top-left-radius: $osd-radius;
+
+    border-radius: if($osd-orientation =="vertical", $osd-radius $osd-radius 0em 0em, 0em $osd-radius $osd-radius 0em);
 
     .osd-label {
       font-size: 1em;
-      padding-top: 1em;
+      padding-top: if($osd-orientation =="vertical", 1em, 0em);
+      padding-right: if($osd-orientation =="horizontal", 1em, 0em);
       color: $osd-label;
 
       &.overflow {
@@ -24,12 +25,12 @@
 
   .osd-icon-container {
     background: $osd-icon_container;
-    border-bottom-right-radius: $osd-radius;
-    border-bottom-left-radius: $osd-radius;
+
+    border-radius: if($osd-orientation =="vertical", 0em 0em $osd-radius $osd-radius, $osd-radius 0em 0em $osd-radius );
 
     .osd-icon {
       font-size: 2em;
-      padding: 0.2em 0em;
+      padding: if($osd-orientation =="vertical", 0.2em 0em, 0em 0.2em);
       color: $osd-icon;
     }
   }
@@ -44,11 +45,12 @@
       }
 
       trough {
-        min-height: 10em;
+        min-height: if($osd-orientation =="vertical", 10em, 0);
+        min-width: if($osd-orientation =="horizontal", 10em, 0);
       }
 
       block {
-        border-radius: $osd-radius;
+        border-radius: $osd-radius/2;
 
         &.empty {
           background: $osd-bar_empty_color;

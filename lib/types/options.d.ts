@@ -23,3 +23,5 @@ export type RowProps<T> = {
     min?: number
     subtitle?: string
 }
+
+export type OSDOrientation = "horizontal" | "vertical";
