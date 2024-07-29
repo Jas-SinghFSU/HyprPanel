@@ -33,20 +33,20 @@ const Brightness = () => {
                         Widget.Slider({
                             vpack: "center",
                             vexpand: true,
-                            value: brightness.bind("screen_value"),
+                            value: brightness.bind("screen"),
                             class_name: "menu-active-slider menu-slider brightness",
                             draw_value: false,
                             hexpand: true,
                             min: 0,
                             max: 1,
-                            onChange: ({ value }) => (brightness.screen_value = value),
+                            onChange: ({ value }) => (brightness.screen = value),
                         }),
                         Widget.Label({
                             vpack: "center",
                             vexpand: true,
                             class_name: "brightness-slider-label",
                             label: brightness
-                                .bind("screen_value")
+                                .bind("screen")
                                 .as((b) => `${Math.floor(b * 100)}%`),
                         }),
                     ],

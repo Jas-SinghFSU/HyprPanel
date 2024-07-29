@@ -1,0 +1,77 @@
+@import "../colors";
+@import '../../variables';
+
+.indicator {
+  .osd-container {
+    margin: $osd-margins;
+  }
+
+  .osd-label-container {
+    background: $osd-bar_container;
+    border-top-right-radius: $osd-radius;
+    border-top-left-radius: $osd-radius;
+
+    .osd-label {
+      font-size: 1em;
+      padding-top: 1em;
+      color: $osd-label;
+
+      &.overflow {
+        color: $osd-bar_overflow_color;
+      }
+    }
+  }
+
+  .osd-icon-container {
+    background: $osd-icon_container;
+    border-bottom-right-radius: $osd-radius;
+    border-bottom-left-radius: $osd-radius;
+
+    .osd-icon {
+      font-size: 2em;
+      padding: 0.2em 0em;
+      color: $osd-icon;
+    }
+  }
+
+  .osd-bar-container {
+    padding: 1.25em;
+    background: $osd-bar_container;
+
+    .osd-bar {
+      levelbar * {
+        transition: 200ms;
+      }
+
+      trough {
+        min-height: 10em;
+      }
+
+      block {
+        border-radius: $osd-radius;
+
+        &.empty {
+          background: $osd-bar_empty_color;
+
+        }
+
+        &.filled {
+          background: $osd-bar_color;
+          padding: 0.45em;
+        }
+      }
+
+      &.overflow {
+        block {
+          &.empty {
+            background: $osd-bar_color;
+          }
+
+          &.filled {
+            background: $osd-bar_overflow_color;
+          }
+        }
+      }
+    }
+  }
+}
