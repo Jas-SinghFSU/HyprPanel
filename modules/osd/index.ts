@@ -87,10 +87,10 @@ const renderOSD = () => {
                                 self.label = `${Math.floor(audio.speaker.volume * 100)}`;
                             })
                             self.hook(brightness, () => {
-                                self.label = `${Math.floor(audio.speaker.volume * 100)}`;
+                                self.label = `${Math.floor(brightness.screen)}`;
                             }, "notify::screen")
                             self.hook(brightness, () => {
-                                self.label = `${Math.floor(audio.speaker.volume * 100)}`;
+                                self.label = `${Math.floor(brightness.kbd)}`;
                             }, "notify::kbd")
                         }
                     })
@@ -109,10 +109,10 @@ const renderOSD = () => {
                                     self.value = audio.speaker.volume <= 1 ? audio.speaker.volume : audio.speaker.volume - 1;
                                 })
                                 self.hook(brightness, () => {
-                                    self.value = audio.speaker.volume;
+                                    self.value = brightness.screen;
                                 }, "notify::screen")
                                 self.hook(brightness, () => {
-                                    self.value = audio.speaker.volume;
+                                    self.value = brightness.kbd;
                                 }, "notify::kbd")
                             }
                         })
@@ -130,10 +130,10 @@ const renderOSD = () => {
                                 self.label = audio.speaker.is_muted ? "󰝟" : "󰕾";
                             })
                             self.hook(brightness, () => {
-                                self.label = "󰕾";
+                                self.label = "󱍖";
                             }, "notify::screen")
                             self.hook(brightness, () => {
-                                self.label = "󰕾";
+                                self.label = "󰥻";
                             }, "notify::kbd")
                         }
                     })
