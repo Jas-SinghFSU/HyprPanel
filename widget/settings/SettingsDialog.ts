@@ -3,6 +3,7 @@ import icons from "lib/icons"
 import options from "options"
 import { ThemesMenu } from "./pages/theme/index"
 import { SettingsMenu } from "./pages/config/index"
+import "./side_effects";
 
 type Page = "Configuration" | "Theming"
 
