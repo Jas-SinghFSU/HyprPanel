@@ -1,3 +1,4 @@
+// <3 Aylur for this brightness service
 import { bash, dependencies, sh } from "lib/utils"
 
 if (!dependencies("brightnessctl"))
