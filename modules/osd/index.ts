@@ -87,10 +87,10 @@ const renderOSD = () => {
                                 self.label = `${Math.floor(audio.speaker.volume * 100)}`;
                             })
                             self.hook(brightness, () => {
-                                self.label = `${Math.floor(brightness.screen)}`;
+                                self.label = `${Math.floor(brightness.screen * 100)}`;
                             }, "notify::screen")
                             self.hook(brightness, () => {
-                                self.label = `${Math.floor(brightness.kbd)}`;
+                                self.label = `${Math.floor(brightness.kbd * 100)}`;
                             }, "notify::kbd")
                         }
                     })
