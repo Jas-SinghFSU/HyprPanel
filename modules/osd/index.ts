@@ -105,7 +105,8 @@ export default () => Widget.Window({
     layer: "overlay",
     anchor: location.bind("value").as(v => getPosition(v)),
     click_through: true,
-    child: Widget.Box({
+    child: Widget.Overlay({
+        passThrough: true,
         css: "padding: 1px;",
         expand: true,
         child: renderOSD(),
