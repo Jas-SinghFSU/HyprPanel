@@ -45,21 +45,20 @@ async function resetCss() {
         return
 
     try {
-        const vars = `${App.configDir}/scss/variables.scss`
+        const vars = `${TMP}/variables.scss`
         const css = `${TMP}/main.css`
-        const scss = `${App.configDir}/scss/entry.scss`
+        const scss = `${TMP}/entry.scss`
         const localScss = `${App.configDir}/scss/main.scss`;
 
-        const imports = [vars].map(f => `@import '${f}';`)
-
         await Utils.writeFile(variables().join("\n"), vars)
+        const imports = [vars].map(f => `@import '${f}';`)
 
         let mainScss = Utils.readFile(localScss);
         mainScss = `${imports}\n${mainScss}`;
 
         await Utils.writeFile(mainScss, scss)
 
-        await bash(`sass ${scss} ${css}`);
+        await bash(`sass --load-path=${App.configDir}/scss/ ${scss} ${css}`);
 
         App.applyCss(css, true);
     } catch (error) {
