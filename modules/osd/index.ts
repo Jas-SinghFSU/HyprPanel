@@ -23,6 +23,21 @@ hyprland.active.connect("changed", () => {
 
 const DELAY = 2500;
 
+let count = 0
+const handleReveal = (self: any, property: string) => {
+    if (!enable.value) {
+        return;
+    }
+    self[property] = true
+    count++
+    Utils.timeout(DELAY, () => {
+        count--
+
+        if (count === 0)
+            self[property] = false
+    })
+}
+
 const getPosition = (pos: OSDAnchor): ("top" | "bottom" | "left" | "right")[] => {
     const positionMap: { [key: string]: ("top" | "bottom" | "left" | "right")[] } = {
         "top": ["top"],
@@ -38,31 +53,20 @@ const getPosition = (pos: OSDAnchor): ("top" | "bottom" | "left" | "right")[] =>
     return positionMap[pos];
 }
 const renderOSD = () => {
-    let count = 0
 
-    const handleReveal = (self: any) => {
-        self.reveal_child = true
-        count++
-        Utils.timeout(DELAY, () => {
-            count--
-
-            if (count === 0)
-                self.reveal_child = false
-        })
-    }
 
     return Widget.Revealer({
         transition: "crossfade",
         reveal_child: false,
         setup: self => {
             self.hook(brightness, () => {
-                handleReveal(self);
+                handleReveal(self, "reveal_child");
             }, "notify::screen")
             self.hook(brightness, () => {
-                handleReveal(self);
+                handleReveal(self, "reveal_child");
             }, "notify::kbd")
             self.hook(audio.speaker, () => {
-                handleReveal(self);
+                handleReveal(self, "reveal_child");
             })
 
         },
@@ -100,7 +104,6 @@ export default () => Widget.Window({
             return mon;
         }),
     name: `indicator`,
-    visible: enable.bind("value"),
     class_name: "indicator",
     layer: "overlay",
     anchor: location.bind("value").as(v => getPosition(v)),
@@ -110,4 +113,19 @@ export default () => Widget.Window({
         expand: true,
         child: renderOSD(),
     }),
+    setup: self => {
+        self.hook(enable, () => {
+            handleReveal(self, "visible");
+        })
+        self.hook(brightness, () => {
+            handleReveal(self, "visible");
+        }, "notify::screen")
+        self.hook(brightness, () => {
+            handleReveal(self, "visible");
+        }, "notify::kbd")
+        self.hook(audio.speaker, () => {
+            handleReveal(self, "visible");
+        })
+
+    },
 })
