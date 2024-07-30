@@ -104,7 +104,6 @@ export default () => Widget.Window({
             return mon;
         }),
     name: `indicator`,
-    visible: enable.bind("value"),
     class_name: "indicator",
     layer: "overlay",
     anchor: location.bind("value").as(v => getPosition(v)),
@@ -115,6 +114,9 @@ export default () => Widget.Window({
         child: renderOSD(),
     }),
     setup: self => {
+        self.hook(enable, () => {
+            handleReveal(self, "visible");
+        })
         self.hook(brightness, () => {
             handleReveal(self, "visible");
         }, "notify::screen")
