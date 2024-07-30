@@ -67,7 +67,10 @@ const renderOSD = () => {
             }, "notify::kbd")
             self.hook(audio.speaker, () => {
                 handleReveal(self, "reveal_child");
-            })
+            }, "notify::volume")
+            self.hook(audio.speaker, () => {
+                handleReveal(self, "visible");
+            }, "notify::is-muted")
 
         },
         child: Widget.Box({
@@ -125,7 +128,10 @@ export default () => Widget.Window({
         }, "notify::kbd")
         self.hook(audio.speaker, () => {
             handleReveal(self, "visible");
-        })
+        }, "notify::volume")
+        self.hook(audio.speaker, () => {
+            handleReveal(self, "visible");
+        }, "notify::is-muted")
 
     },
 })
