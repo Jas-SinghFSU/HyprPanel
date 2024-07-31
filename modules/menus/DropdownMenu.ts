@@ -17,6 +17,7 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
     }
 
     globalMousePos.connect("changed", ({ value }) => {
+        const hyprScaling = hyprland.monitors[hyprland.active.monitor.id].scale;
         const currentWidth = self.child.get_allocation().width;
 
         let monWidth = hyprland.monitors[hyprland.active.monitor.id].width;
@@ -32,6 +33,9 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
             const scale = parseFloat(gdkScale);
             monWidth = monWidth / scale;
             monHeight = monHeight / scale;
+        } else {
+            monWidth = monWidth / hyprScaling;
+            monHeight = monHeight / hyprScaling;
         }
 
         // If monitor is vertical (transform = 1 || 3) swap height and width
