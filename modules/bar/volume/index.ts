@@ -35,7 +35,7 @@ const Volume = () => {
 
     const volPct = Widget.Label({
         vpack: "center",
-        label: audio.speaker.bind("volume").as((v) => `${Math.floor(v * 100)}%`),
+        label: audio.speaker.bind("volume").as((v) => `${Math.round(v * 100)}%`),
         class_name: "bar-button-label volume",
     });
 
