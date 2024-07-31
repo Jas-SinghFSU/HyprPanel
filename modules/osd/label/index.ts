@@ -15,14 +15,14 @@ export const OSDLabel = (ort: OSDOrientation) => {
             vpack: "center",
             setup: self => {
                 self.hook(brightness, () => {
-                    self.label = `${Math.floor(brightness.screen * 100)}`;
+                    self.label = `${Math.round(brightness.screen * 100)}`;
                 }, "notify::screen")
                 self.hook(brightness, () => {
-                    self.label = `${Math.floor(brightness.kbd * 100)}`;
+                    self.label = `${Math.round(brightness.kbd * 100)}`;
                 }, "notify::kbd")
                 self.hook(audio, () => {
                     self.toggleClassName("overflow", audio.speaker.volume > 1)
-                    self.label = `${Math.floor(audio.speaker.volume * 100)}`;
+                    self.label = `${Math.round(audio.speaker.volume * 100)}`;
                 })
             }
         })

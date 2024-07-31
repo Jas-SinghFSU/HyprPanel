@@ -41,7 +41,7 @@ class Brightness extends Service {
         if (percent > 1)
             percent = 1
 
-        sh(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(() => {
+        sh(`brightnessctl set ${Math.round(percent * 100)}% -q`).then(() => {
             this.#screen = percent
             this.changed("screen")
         })

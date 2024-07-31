@@ -47,7 +47,7 @@ const Brightness = () => {
                             class_name: "brightness-slider-label",
                             label: brightness
                                 .bind("screen")
-                                .as((b) => `${Math.floor(b * 100)}%`),
+                                .as((b) => `${Math.round(b * 100)}%`),
                         }),
                     ],
                 }),
