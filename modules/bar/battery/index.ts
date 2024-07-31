@@ -8,11 +8,14 @@ const { label: show_label } = options.bar.battery;
 
 const BatteryLabel = () => {
     const isVis = Variable(battery.available);
-
-    const icon = () =>
-        battery
-            .bind("percent")
-            .as((p) => `battery-level-${Math.floor(p / 10) * 10}-symbolic`);
+    
+    const batIcon = Utils.merge([battery.bind("percent"), battery.bind("charging"), battery.bind("charged")],
+        (batPercent: number, batCharging, batCharged) => {
+            if(batCharged)
+                return `battery-level-100-charged-symbolic`;
+            else
+                return `battery-level-${Math.floor(batPercent / 10) * 10}${batCharging ? '-charging' : ''}-symbolic`;
+    });
 
     battery.connect("changed", ({ available }) => {
         isVis.value = available;
@@ -49,7 +52,7 @@ const BatteryLabel = () => {
                         return [
                             Widget.Icon({
                                 class_name: "bar-button-icon battery",
-                                icon: icon()
+                                icon: batIcon
                             }),
                             Widget.Label({
                                 class_name: "bar-button-label battery",
@@ -57,7 +60,7 @@ const BatteryLabel = () => {
                             }),
                         ];
                     } else if (batAvail && !showLabel) {
-                        return [Widget.Icon({ icon: icon() })];
+                        return [Widget.Icon({ icon: batIcon })];
                     } else {
                         return [];
                     }
