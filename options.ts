@@ -620,6 +620,8 @@ const options = mkOptions(OPTIONS, {
             label: opt(true),
         },
         network: {
+            truncation: opt(true),
+            truncation_size: opt(7),
             label: opt(true),
         },
         bluetooth: {

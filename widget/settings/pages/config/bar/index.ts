@@ -51,6 +51,8 @@ export const BarSettings = () => {
 
                 Header('Network'),
                 Option({ opt: options.bar.network.label, title: 'Show Network Name', type: 'boolean' }),
+                Option({ opt: options.bar.network.truncation, title: 'Truncate Network Name', subtitle: 'Will truncate the network name to the specified size below.', type: 'boolean' }),
+                Option({ opt: options.bar.network.truncation_size, title: 'Truncation Size', type: 'number' }),
                 Option({ opt: options.theme.bar.buttons.network.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 Header('Bluetooth'),
