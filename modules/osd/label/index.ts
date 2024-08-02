@@ -20,10 +20,14 @@ export const OSDLabel = (ort: OSDOrientation) => {
                 self.hook(brightness, () => {
                     self.label = `${Math.round(brightness.kbd * 100)}`;
                 }, "notify::kbd")
-                self.hook(audio, () => {
+                self.hook(audio.microphone, () => {
+                    self.toggleClassName("overflow", audio.microphone.volume > 1)
+                    self.label = `${Math.round(audio.microphone.volume * 100)}`;
+                }, "notify::volume")
+                self.hook(audio.speaker, () => {
                     self.toggleClassName("overflow", audio.speaker.volume > 1)
                     self.label = `${Math.round(audio.speaker.volume * 100)}`;
-                })
+                }, "notify::volume")
             }
         })
     });

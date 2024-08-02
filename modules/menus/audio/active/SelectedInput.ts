@@ -38,7 +38,7 @@ const renderActiveInput = () => {
                             hpack: "start",
                             truncate: "end",
                             wrap: true,
-                            label: audio.bind("microphone").as((v) => v.description || ""),
+                            label: audio.bind("microphone").as((v) => v.description === null ? "No input device found..." : v.description),
                         }),
                         Widget.Slider({
                             value: audio.microphone.bind("volume").as((v) => v),
