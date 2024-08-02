@@ -65,12 +65,19 @@ const renderOSD = () => {
             self.hook(brightness, () => {
                 handleReveal(self, "reveal_child");
             }, "notify::kbd")
+            self.hook(audio.microphone, () => {
+                handleReveal(self, "reveal_child");
+            }, "notify::volume")
+            self.hook(audio.microphone, () => {
+                handleReveal(self, "reveal_child");
+            }, "notify::is-muted")
             self.hook(audio.speaker, () => {
                 handleReveal(self, "reveal_child");
             }, "notify::volume")
             self.hook(audio.speaker, () => {
-                handleReveal(self, "visible");
+                handleReveal(self, "reveal_child");
             }, "notify::is-muted")
+
 
         },
         child: Widget.Box({
@@ -126,12 +133,17 @@ export default () => Widget.Window({
         self.hook(brightness, () => {
             handleReveal(self, "visible");
         }, "notify::kbd")
+        self.hook(audio.microphone, () => {
+            handleReveal(self, "visible");
+        }, "notify::volume")
+        self.hook(audio.microphone, () => {
+            handleReveal(self, "visible");
+        }, "notify::is-muted")
         self.hook(audio.speaker, () => {
             handleReveal(self, "visible");
         }, "notify::volume")
         self.hook(audio.speaker, () => {
             handleReveal(self, "visible");
         }, "notify::is-muted")
-
     },
 })
