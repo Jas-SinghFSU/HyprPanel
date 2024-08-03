@@ -1,5 +1,3 @@
-@import "../colors";
-
 .bar-button-label.media {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-media-text);
   margin-left: $bar-buttons-media-spacing;
