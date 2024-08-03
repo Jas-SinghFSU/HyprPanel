@@ -5,6 +5,7 @@ import { TodayTemperature } from "./temperature/index.js";
 import { Hourly } from "./hourly/index.js";
 import { Weather } from "lib/types/weather.js";
 import { DEFAULT_WEATHER } from "lib/types/defaults/weather.js";
+import { exit } from "system";
 
 const { key, interval, location } = options.menus.clock.weather;
 
@@ -13,9 +14,13 @@ const theWeather = Variable<Weather>(DEFAULT_WEATHER);
 const WeatherWidget = () => {
     return Widget.Box({
         class_name: "calendar-menu-item-container weather",
+        visible: key.bind("value").as(k => !(!k)),
         child: Widget.Box({
             class_name: "weather-container-box",
             setup: (self) => {
+                if(key.bind("value").as(k => !k))
+                    return;
+                
                 Utils.merge(
                     [key.bind("value"), interval.bind("value"), location.bind("value")],
                     (weatherKey, weatherInterval, loc) => {
@@ -39,13 +44,14 @@ const WeatherWidget = () => {
                                         return theWeather.value = parsedWeather;
                                     } catch (error) {
                                         theWeather.value = DEFAULT_WEATHER;
-                                        console.warn(`Failed to parse weather data: ${error}`);
+                                        console.warn(`asgFailed to parse weather data: ${error}`);
                                     }
                                 })
                                 .catch((err) => {
-                                    console.error(`Failed to fetch weather: ${err}`);
+                                    console.error(`fdfdFailed to fetch weather: ${err}`);
                                     theWeather.value = DEFAULT_WEATHER;
                                 });
+                           
                         });
                     },
                 );
