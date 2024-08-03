@@ -1,5 +1,4 @@
 @import "../colors";
-@import '../../variables';
 
 .bar-button-label.network {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-network-text);

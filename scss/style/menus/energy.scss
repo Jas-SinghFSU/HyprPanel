@@ -1,91 +1,91 @@
 @import "../colors";
-@import '../../variables';
 
 .menu-items.energy {
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
-    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
+  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
+  border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
 }
+
 .menu-items-container.energy {
-    .menu-label {
-        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
+  .menu-label {
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
+  }
+
+  .menu-label-container {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+  }
+
+
+  .menu-items-section {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+  }
+
+  .power-profile-item {
+    margin-bottom: 0.5em;
+
+    label {
+      margin-left: 1em;
     }
 
-    .menu-label-container {
-        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+    image {
+      font-size: 1.3em;
+      min-width: 1em;
+      min-height: 1em;
+      color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
     }
 
+    &:hover {
+      label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
 
-    .menu-items-section {
-        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+      image {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
     }
 
-    .power-profile-item {
-        margin-bottom: 0.5em;
+    &.active {
+      image {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
+    }
+  }
 
-        label {
-            margin-left: 1em;
-        }
+  .brightness-container {
+    padding-bottom: 1em;
+  }
 
-        image {
-            font-size: 1.3em;
-            min-width: 1em;
-            min-height: 1em;
-            color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
-        }
+  .brightness-slider-icon {
+    font-size: 1.4em;
+    min-width: 1em;
+    min-height: 1em;
+    color: $overlay2;
+  }
 
-        &:hover {
-            label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
+  .brightness-slider-label {
+    font-size: 0.9em;
+    min-width: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+  }
 
-            image {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
-        }
+  .menu-slider.brightness {
+    trough {
+      background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-battery-slider-background);
 
-        &.active {
-            image {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
-        }
+      highlight,
+      progress {
+        background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
+      }
     }
 
-    .brightness-container {
-        padding-bottom: 1em;
+    &:hover {
+      trough {
+        background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-battery-slider-backgroundhover);
+      }
+
+      slider {
+        background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-battery-slider-puck);
+      }
     }
-
-    .brightness-slider-icon {
-        font-size: 1.4em;
-        min-width: 1em;
-        min-height: 1em;
-        color: $overlay2;
-    }
-
-    .brightness-slider-label {
-        font-size: 0.9em;
-        min-width: 2.5em;
-        font-weight: bold;
-        margin-bottom: 0.2em;
-    }
-
-    .menu-slider.brightness {
-        trough {
-            background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-battery-slider-background);
-
-            highlight,
-            progress {
-                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
-            }
-        }
-
-        &:hover {
-            trough {
-                background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-battery-slider-backgroundhover);
-            }
-
-            slider {
-                background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-battery-slider-puck);
-            }
-        }
-    }
+  }
 }

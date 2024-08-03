@@ -1,5 +1,4 @@
 @import "../colors";
-@import '../../variables';
 
 .menu-items.bluetooth {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-bluetooth-background-color);
