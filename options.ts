@@ -32,6 +32,7 @@ const colors = {
 
 const options = mkOptions(OPTIONS, {
     theme: {
+        matugen: opt(false),
         font: {
             size: opt("1.2rem"),
             name: opt("Ubuntu Nerd Font"),
