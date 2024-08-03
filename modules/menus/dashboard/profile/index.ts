@@ -28,7 +28,7 @@ const Profile = () => {
                         icon: image.bind("value").as(i => {
                             try {
                                 GdkPixbuf.Pixbuf.new_from_file(i)
-                                return i
+                                return i;
                             } catch {
                                 return "avatar-default-symbolic";
                             }
