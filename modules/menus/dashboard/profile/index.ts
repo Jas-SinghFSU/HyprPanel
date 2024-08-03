@@ -26,7 +26,7 @@ const Profile = () => {
                         hpack: "center",
                         class_name: "profile-picture",
                         icon: image.bind("value").as(i => {
-                            try{
+                            try {
                                 GdkPixbuf.Pixbuf.new_from_file(i)
                                 return i
                             } catch {
