@@ -32,6 +32,7 @@ export const Inputter = <T>({
     enums,
     max = 1000000,
     min = 0,
+    increment = 1
 }: RowProps<T>,
     className: string
 ) => {
@@ -43,7 +44,7 @@ export const Inputter = <T>({
                 case "number": return self.child = Widget.SpinButton({
                     setup(self) {
                         self.set_range(min, max)
-                        self.set_increments(1, 5)
+                        self.set_increments(1 * increment, 5 * increment)
                         self.on("value-changed", () => opt.value = self.value as T)
                         self.hook(opt, () => self.value = opt.value as number)
                     },
