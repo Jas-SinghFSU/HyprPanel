@@ -50,10 +50,10 @@ const WeatherWidget = () => {
                                     console.error(`Failed to fetch weather: ${err}`);
                                     theWeather.value = DEFAULT_WEATHER;
                                 });
-                           
                         });
                     },
                 );
+                
                 return (self.child = Widget.Box({
                     vertical: true,
                     hexpand: true,
