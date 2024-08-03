@@ -6,7 +6,7 @@ import options from "options";
 export const NotificationsTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
-        hscroll: "never",
+        hscroll: "automatic",
         class_name: "notifications-theme-page paged-container",
         vexpand: true,
         child: Widget.Box({

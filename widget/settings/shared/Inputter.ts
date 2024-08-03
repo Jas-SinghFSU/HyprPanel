@@ -2,6 +2,7 @@ import { Opt } from "lib/option"
 import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
+import { Variable } from "types/variable";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -34,33 +35,99 @@ export const Inputter = <T>({
     min = 0,
     increment = 1
 }: RowProps<T>,
-    className: string
+    className: string,
+    isUnsaved: Variable<boolean>
 ) => {
     return Widget.Box({
         class_name: "inputter-container",
         setup: self => {
 
             switch (type) {
-                case "number": return self.child = Widget.SpinButton({
-                    setup(self) {
-                        self.set_range(min, max)
-                        self.set_increments(1 * increment, 5 * increment)
-                        self.on("value-changed", () => opt.value = self.value as T)
-                        self.hook(opt, () => self.value = opt.value as number)
-                    },
-                })
+                case "number": return self.children = [
+                    Widget.Box({
+                        class_name: "unsaved-icon-container",
+                        child: isUnsaved.bind("value").as(unsvd => {
+                            if (unsvd) {
+                                return Widget.Icon({
+                                    class_name: "unsaved-icon",
+                                    icon: icons.ui.warning,
+                                    tooltipText: "Press 'Enter' to apply your changes."
+                                })
+                            }
+                            return Widget.Box();
+                        }),
+                    }),
+                    Widget.SpinButton({
+                        setup(self) {
+                            self.set_range(min, max)
+                            self.set_increments(1 * increment, 5 * increment)
+                            self.on("value-changed", () => {
+                                opt.value = self.value as T;
+                            })
+                            self.hook(opt, () => {
+                                self.value = opt.value as number;
+                                isUnsaved.value = Number(self.text) !== opt.value as number;
+                            })
+                            self.connect("key-release-event", () => {
+                                isUnsaved.value = Number(self.text) !== opt.value as number;
+                            })
+                        },
+                    })
+                ]
 
                 case "float":
-                case "object": return self.child = Widget.Entry({
-                    class_name: className,
-                    on_accept: self => opt.value = JSON.parse(self.text || ""),
-                    setup: self => self.hook(opt, () => self.text = JSON.stringify(opt.value)),
-                })
+                case "object": return self.children = [
+                    Widget.Box({
+                        class_name: "unsaved-icon-container",
+                        child: isUnsaved.bind("value").as(unsvd => {
+                            if (unsvd) {
+                                return Widget.Icon({
+                                    class_name: "unsaved-icon",
+                                    icon: icons.ui.warning,
+                                    tooltipText: "Press 'Enter' to apply your changes."
+                                })
+                            }
+                            return Widget.Box();
+                        }),
+                    }),
+                    Widget.Entry({
+                        class_name: className,
+                        on_change: self => isUnsaved.value = self.text !== JSON.stringify(opt.value),
+                        on_accept: self => opt.value = JSON.parse(self.text || ""),
+                        setup: self => self.hook(opt, () => {
+                            self.text = JSON.stringify(opt.value);
+                            isUnsaved.value = self.text !== JSON.stringify(opt.value);
+                        })
+                    })
+                ]
 
-                case "string": return self.child = Widget.Entry({
-                    on_accept: self => opt.value = self.text as T,
-                    setup: self => self.hook(opt, () => self.text = opt.value as string),
-                })
+
+                case "string": return self.children = [
+                    Widget.Box({
+                        class_name: "unsaved-icon-container",
+                        child: isUnsaved.bind("value").as(unsvd => {
+                            if (unsvd) {
+                                return Widget.Icon({
+                                    class_name: "unsaved-icon",
+                                    icon: icons.ui.warning,
+                                    tooltipText: "Press 'Enter' to apply your changes."
+                                })
+                            }
+                            return Widget.Box();
+                        }),
+                    }),
+                    Widget.Entry({
+                        class_name: isUnsaved.bind("value").as(unsaved => unsaved ? "unsaved" : ""),
+                        on_change: self => isUnsaved.value = self.text !== opt.value,
+                        on_accept: self => {
+                            opt.value = self.text as T;
+                        },
+                        setup: self => self.hook(opt, () => {
+                            isUnsaved.value = self.text !== opt.value;
+                            self.text = opt.value as string;
+                        }),
+                    })
+                ]
 
                 case "enum": return self.child = EnumSetter(opt as unknown as Opt<string>, enums!)
                 case "boolean": return self.child = Widget.Switch()

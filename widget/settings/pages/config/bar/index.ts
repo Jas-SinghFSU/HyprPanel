@@ -6,7 +6,7 @@ import options from "options";
 export const BarSettings = () => {
     return Widget.Scrollable({
         vscroll: "always",
-        hscroll: "never",
+        hscroll: "automatic",
         class_name: "menu-theme-page paged-container",
         child: Widget.Box({
             vertical: true,

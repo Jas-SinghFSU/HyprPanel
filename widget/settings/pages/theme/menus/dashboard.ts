@@ -6,7 +6,7 @@ import options from "options";
 export const DashboardMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "always",
-        hscroll: "never",
+        hscroll: "automatic",
         class_name: "menu-theme-page dashboard paged-container",
         vexpand: true,
         child: Widget.Box({
