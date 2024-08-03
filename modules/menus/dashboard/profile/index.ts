@@ -30,7 +30,7 @@ const Profile = () => {
                                 GdkPixbuf.Pixbuf.new_from_file(i)
                                 return i
                             } catch {
-                                return "avatar-default";
+                                return "avatar-default-symbolic";
                             }
                         }),
                     }),
