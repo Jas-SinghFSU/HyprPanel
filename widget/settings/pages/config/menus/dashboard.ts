@@ -7,7 +7,7 @@ export const DashboardMenuSettings = () => {
     return Widget.Scrollable({
         class_name: "bar-theme-page paged-container",
         vscroll: "always",
-        hscroll: "never",
+        hscroll: "automatic",
         vexpand: true,
         overlayScrolling: true,
         child: Widget.Box({

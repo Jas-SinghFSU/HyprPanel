@@ -3,60 +3,53 @@ const network = await Service.import("network");
 import options from "options";
 import { openMenu } from "../utils.js";
 
+const { label: networkLabel, truncation, truncation_size } = options.bar.network;
+
 const Network = () => {
-    const wifiIndicator = [
-        Widget.Icon({
-            class_name: "bar-button-icon network",
-            icon: network.wifi.bind("icon_name"),
-        }),
-        Widget.Box({
-            children: Utils.merge(
-                [network.bind("wifi"), options.bar.network.label.bind("value")],
-                (wifi, showLabel) => {
-                    if (!showLabel) {
-                        return [];
-                    }
-                    return [
-                        Widget.Label({
-                            class_name: "bar-button-label network",
-                            label: wifi.ssid ? `${wifi.ssid.substring(0, 7)}` : "--",
-                        }),
-                    ]
-                },
-            )
-        })
-    ];
-
-    const wiredIndicator = [
-        Widget.Icon({
-            class_name: "bar-button-icon network",
-            icon: network.wired.bind("icon_name"),
-        }),
-        Widget.Box({
-            children: Utils.merge(
-                [network.bind("wired"), options.bar.network.label.bind("value")],
-                (_, showLabel) => {
-                    if (!showLabel) {
-                        return [];
-                    }
-                    return [
-                        Widget.Label({
-                            class_name: "bar-button-label network",
-                            label: "Wired",
-                        }),
-                    ]
-                },
-            )
-        })
-    ];
-
     return {
         component: Widget.Box({
             vpack: "center",
             class_name: "bar-network",
-            children: network
-                .bind("primary")
-                .as((w) => (w === "wired" ? wiredIndicator : wifiIndicator)),
+            children: [
+                Widget.Icon({
+                    class_name: "bar-button-icon network",
+                    icon: Utils.merge([
+                        network.bind("primary"),
+                        network.bind("wifi"),
+                        network.bind("wired")
+                    ], (pmry, wfi, wrd) => {
+                        if (pmry === "wired") {
+                            return wrd.icon_name;
+                        }
+                        return wfi.icon_name;
+                    })
+                }),
+                Widget.Box({
+                    class_name: "bar-button-icon network",
+                    child: Utils.merge([
+                        network.bind("primary"),
+                        network.bind("wifi"),
+                        networkLabel.bind("value"),
+                        truncation.bind("value"),
+                        truncation_size.bind("value")
+                    ], (pmry, wfi, showLbl, trunc, tSize) => {
+                        if (!showLbl) {
+                            return Widget.Box();
+                        }
+                        if (pmry === "wired") {
+                            return Widget.Label({
+                                class_name: "bar-button-label network",
+                                label: "Wired".substring(0, tSize),
+                            })
+                        }
+                        return Widget.Label({
+                            class_name: "bar-button-label network",
+                            label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : "--",
+                        })
+
+                    })
+                }),
+            ]
         }),
         isVisible: true,
         boxClass: "network",

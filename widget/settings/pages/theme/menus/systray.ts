@@ -6,7 +6,7 @@ import options from "options";
 export const SystrayMenuTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
-        hscroll: "never",
+        hscroll: "automatic",
         class_name: "menu-theme-page systray paged-container",
         vexpand: true,
         child: Widget.Box({

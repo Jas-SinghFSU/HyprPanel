@@ -39,7 +39,7 @@ const WeatherWidget = () => {
                                         return theWeather.value = parsedWeather;
                                     } catch (error) {
                                         theWeather.value = DEFAULT_WEATHER;
-                                        console.error(`Failed to parse weather data: ${error}`);
+                                        console.warn(`Failed to parse weather data: ${error}`);
                                     }
                                 })
                                 .catch((err) => {
