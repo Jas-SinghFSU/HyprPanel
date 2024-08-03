@@ -43,18 +43,17 @@ const WeatherWidget = () => {
                                         return theWeather.value = parsedWeather;
                                     } catch (error) {
                                         theWeather.value = DEFAULT_WEATHER;
-                                        console.warn(`asgFailed to parse weather data: ${error}`);
+                                        console.warn(`Failed to parse weather data: ${error}`);
                                     }
                                 })
                                 .catch((err) => {
-                                    console.error(`fdfdFailed to fetch weather: ${err}`);
+                                    console.error(`Failed to fetch weather: ${err}`);
                                     theWeather.value = DEFAULT_WEATHER;
                                 });
                            
                         });
                     },
                 );
-
                 return (self.child = Widget.Box({
                     vertical: true,
                     hexpand: true,
