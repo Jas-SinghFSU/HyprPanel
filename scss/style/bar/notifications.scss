@@ -1,5 +1,3 @@
-@import "../colors";
-
 .bar-button-icon.notifications {
   color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
   font-size: 1.3em;
