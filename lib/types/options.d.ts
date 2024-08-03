@@ -22,6 +22,7 @@ export type RowProps<T> = {
     max?: number
     min?: number
     subtitle?: string
+    increments?: number[]
 }
 
 export type OSDOrientation = "horizontal" | "vertical";
