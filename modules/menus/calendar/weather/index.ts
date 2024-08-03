@@ -5,7 +5,6 @@ import { TodayTemperature } from "./temperature/index.js";
 import { Hourly } from "./hourly/index.js";
 import { Weather } from "lib/types/weather.js";
 import { DEFAULT_WEATHER } from "lib/types/defaults/weather.js";
-import { exit } from "system";
 
 const { key, interval, location } = options.menus.clock.weather;
 
