@@ -1,7 +1,7 @@
 import icons from "../../../icons/index.js";
 import powermenu from "../../power/helpers/actions.js";
 import { PowerOptions } from "lib/types/options.js";
-import GdkPixbuf from "types/@girs/gdkpixbuf-2.0/gdkpixbuf-2.0.js";
+import GdkPixbuf from "gi://GdkPixbuf";
 
 import options from "options";
 const { image, name } = options.menus.dashboard.powermenu.avatar;
