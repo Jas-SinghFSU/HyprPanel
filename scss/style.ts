@@ -1,8 +1,7 @@
-import GLib from "gi://GLib?version=2.0";
-import { type Opt } from "lib/option";
 import options from "options";
 import { bash, dependencies } from "lib/utils";
 import Wallpaper from "services/Wallpaper";
+import { MatugenColors } from "lib/types/options";
 
 const deps = [
     "font",
@@ -13,19 +12,17 @@ const deps = [
     "bar.battery.blocks",
 ];
 
-const $ = (name: string, value: string | Opt<any>) => `$${name}: ${value};`;
-
-// Function to generate matugen colors from the given image path
 async function generateMatugenColors() {
     const wallpaperPath = options.wallpaper.image.value;
     const contents = await bash(`matugen image ${wallpaperPath} --mode dark --json hex`);
     return JSON.parse(contents).colors.dark;
 }
 
-const replaceHexValues = (incomingHex, matugenColors) => {
+const replaceHexValues = (incomingHex: string, matugenColors: MatugenColors) => {
     if (!options.theme.matugen.value) {
         return incomingHex;
     }
+
     const matugenColorMap = {
         "rosewater": matugenColors.tertiary_fixed,
         "flamingo": matugenColors.tertiary_fixed,
@@ -95,9 +92,8 @@ const replaceHexValues = (incomingHex, matugenColors) => {
     return incomingHex;
 }
 
-// Function to extract variables from the theme object
-function extractVariables(theme, prefix = "", matugenColors) {
-    let result = [];
+function extractVariables(theme: typeof options.theme, prefix = "", matugenColors: MatugenColors) {
+    let result = [] as string[];
     for (let key in theme) {
         if (theme.hasOwnProperty(key)) {
             const value = theme[key];
@@ -121,12 +117,13 @@ function extractVariables(theme, prefix = "", matugenColors) {
     return result;
 }
 
-// Function to reset the CSS
 async function resetCss() {
     if (!dependencies("sass")) return;
 
     try {
         const matugenColors = await generateMatugenColors();
+        console.log(JSON.stringify(matugenColors, null, 2));
+
         const variables = [
             ...extractVariables(options.theme, '', matugenColors),
         ];
@@ -170,7 +167,6 @@ Wallpaper.connect("changed", () => {
     }
 })
 
-// Monitor for changes
 Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
 options.handler(deps, resetCss);
 await resetCss();
