@@ -19,7 +19,7 @@ const WeatherWidget = () => {
                 Utils.merge(
                     [key.bind("value"), interval.bind("value"), location.bind("value")],
                     (weatherKey, weatherInterval, loc) => {
-                        if(!weatherKey){
+                        if (!weatherKey) {
                             return theWeather.value = DEFAULT_WEATHER;
                         }
                         Utils.interval(weatherInterval, () => {
