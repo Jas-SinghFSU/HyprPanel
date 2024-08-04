@@ -1,6 +1,3 @@
-@import "../colors";
-@import '../../variables';
-
 .bar-button-icon.windowtitle {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-icon);
 }

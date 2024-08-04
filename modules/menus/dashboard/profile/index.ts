@@ -1,6 +1,7 @@
 import icons from "../../../icons/index.js";
 import powermenu from "../../power/helpers/actions.js";
 import { PowerOptions } from "lib/types/options.js";
+import GdkPixbuf from "types/@girs/gdkpixbuf-2.0/gdkpixbuf-2.0.js";
 
 import options from "options";
 const { image, name } = options.menus.dashboard.powermenu.avatar;
@@ -24,7 +25,14 @@ const Profile = () => {
                     Widget.Icon({
                         hpack: "center",
                         class_name: "profile-picture",
-                        icon: image.bind("value"),
+                        icon: image.bind("value").as(i => {
+                            try {
+                                GdkPixbuf.Pixbuf.new_from_file(i);
+                                return i;
+                            } catch {
+                                return "avatar-default-symbolic";
+                            }
+                        }),
                     }),
                     Widget.Label({
                         hpack: "center",
