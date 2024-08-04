@@ -34,8 +34,8 @@ class Wallpaper extends Service {
                 "--invert-y",
                 // `-o ${monitors.join(",")}`,
                 "--transition-type", "grow",
-                "--transition-duration", "1",
-                "--transition-fps", "60",
+                "--transition-duration", "1.5",
+                "--transition-fps", "30",
                 "--transition-pos", pos.replace(" ", ""),
                 WP,
             ]).then(() => {

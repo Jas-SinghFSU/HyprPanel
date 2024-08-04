@@ -81,13 +81,13 @@ export type MatugenColors = {
     "tertiary_fixed_dim": HexColor
 }
 type MatugenScheme =
-    | "scheme-content"
-    | "scheme-expressive"
-    | "scheme-fidelity"
-    | "scheme-fruit-salad"
-    | "scheme-monochrome"
-    | "scheme-neutral"
-    | "scheme-rainbow"
-    | "scheme-tonal-spot";
+    | "content"
+    | "expressive"
+    | "fidelity"
+    | "fruit-salad"
+    | "monochrome"
+    | "neutral"
+    | "rainbow"
+    | "tonal-spot";
 
 type MatugenTheme = "light" | "dark";

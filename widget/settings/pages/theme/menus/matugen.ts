@@ -20,14 +20,14 @@ export const Matugen = () => {
                     title: 'Matugen Scheme',
                     type: 'enum',
                     enums: [
-                        "scheme-content",
-                        "scheme-expressive",
-                        "scheme-fidelity",
-                        "scheme-fruit-salad",
-                        "scheme-monochrome",
-                        "scheme-neutral",
-                        "scheme-rainbow",
-                        "scheme-tonal-spot"
+                        "content",
+                        "expressive",
+                        "fidelity",
+                        "fruit-salad",
+                        "monochrome",
+                        "neutral",
+                        "rainbow",
+                        "tonal-spot"
                     ]
                 }),
                 Option({ opt: options.theme.matugen_settings.contrast, title: 'Contrast', subtitle: 'Range: -1 to 1 (Default: 0)', type: 'float' }),

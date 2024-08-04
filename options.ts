@@ -36,7 +36,7 @@ const options = mkOptions(OPTIONS, {
         matugen: opt(false),
         matugen_settings: {
             mode: opt<MatugenTheme>("dark"),
-            scheme_type: opt<MatugenScheme>("scheme-tonal-spot"),
+            scheme_type: opt<MatugenScheme>("tonal-spot"),
             contrast: opt(0.0),
         },
         font: {
