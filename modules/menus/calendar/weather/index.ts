@@ -19,6 +19,9 @@ const WeatherWidget = () => {
                 Utils.merge(
                     [key.bind("value"), interval.bind("value"), location.bind("value")],
                     (weatherKey, weatherInterval, loc) => {
+                        if (!weatherKey) {
+                            return theWeather.value = DEFAULT_WEATHER;
+                        }
                         Utils.interval(weatherInterval, () => {
                             const formattedLocation = loc.replace(" ", "%20");
                             Utils.execAsync(
@@ -49,7 +52,7 @@ const WeatherWidget = () => {
                         });
                     },
                 );
-
+                
                 return (self.child = Widget.Box({
                     vertical: true,
                     hexpand: true,
