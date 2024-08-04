@@ -1,6 +1,3 @@
-@import '../colors';
-@import '../../variables';
-
 .bar-button-icon.volume {
   font-size: 1.3em;
   color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
