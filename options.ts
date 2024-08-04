@@ -744,6 +744,10 @@ const options = mkOptions(OPTIONS, {
 
     terminal: opt("kitty"),
 
+    wallpaper: {
+        image: opt("$HOME/.config/background")
+    },
+
     notifications: {
         position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
         timeout: opt(7000),

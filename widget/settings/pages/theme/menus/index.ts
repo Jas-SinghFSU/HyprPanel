@@ -14,7 +14,8 @@ export const MenuTheme = () => {
             children: [
                 Header('General'),
                 Option({ opt: options.theme.bar.menus.monochrome, title: 'Use Global Colors', type: 'boolean' }),
-                Option({ opt: options.theme.matugen, title: 'Enable Matugen', type: 'boolean' }),
+                Option({ opt: options.wallpaper.image, title: 'Wallpaper', type: 'wallpaper' }),
+                Option({ opt: options.theme.matugen, title: 'Enable Matugen', subtitle: 'WARNING: THIS WILL REPLACE YOUR CURRENT COLOR SCHEME!!!', type: 'boolean' }),
                 Option({ opt: options.theme.bar.menus.background, title: 'Background Color', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.cards, title: 'Cards', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.card_radius, title: 'Card Radius', type: 'string' }),

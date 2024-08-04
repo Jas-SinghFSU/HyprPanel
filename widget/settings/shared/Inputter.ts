@@ -3,6 +3,7 @@ import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
+import Wallpaper from "services/Wallpaper";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -132,11 +133,18 @@ export const Inputter = <T>({
                 case "enum": return self.child = EnumSetter(opt as unknown as Opt<string>, enums!)
                 case "boolean": return self.child = Widget.Switch()
                     .on("notify::active", self => opt.value = self.active as T)
-                    .hook(opt, self => self.active = opt.value as boolean)
+                    .hook(opt, self => {
+                        self.active = opt.value as boolean
+                    })
 
                 case "img": return self.child = Widget.FileChooserButton({
                     class_name: "image-chooser",
                     on_file_set: ({ uri }) => { opt.value = uri!.replace("file://", "") as T },
+                })
+
+                case "wallpaper": return self.child = Widget.FileChooserButton({
+                    class_name: "image-chooser",
+                    on_file_set: ({ uri }) => { Wallpaper.set(uri!.replace("file://", "")) },
                 })
 
                 case "font": return self.child = Widget.FontButton({

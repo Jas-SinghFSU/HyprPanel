@@ -37,12 +37,25 @@ export class Opt<T = unknown> extends Variable<T> {
 
     reset() {
         if (this.persistent)
-            return
+            return;
 
+        console.log(this.value);
         if (JSON.stringify(this.value) !== JSON.stringify(this.initial)) {
+            this.value = this.initial
+            return this.id;
+        }
+    }
+
+    doResetColor() {
+        if (this.persistent)
+            return;
+
+        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(`${this.value}`);
+        if ((JSON.stringify(this.value) !== JSON.stringify(this.initial)) && isColor) {
             this.value = this.initial
             return this.id
         }
+        return;
     }
 }
 
@@ -65,13 +78,13 @@ function getOptions(object: object, path = ""): Opt[] {
     })
 }
 
-export function mkOptions<T extends object>(cacheFile: string, object: T) {
+export function mkOptions<T extends object>(cacheFile: string, object: T, confFile: string = "config.json") {
     for (const opt of getOptions(object))
         opt.init(cacheFile)
 
     Utils.ensureDirectory(cacheFile.split("/").slice(0, -1).join("/"))
 
-    const configFile = `${TMP}/config.json`
+    const configFile = `${TMP}/${confFile}`
     const values = getOptions(object).reduce((obj, { id, value }) => ({ [id]: value, ...obj }), {})
     Utils.writeFileSync(JSON.stringify(values, null, 2), configFile)
     Utils.monitorFile(configFile, () => {
@@ -98,11 +111,26 @@ export function mkOptions<T extends object>(cacheFile: string, object: T) {
             : await sleep().then(() => reset(list))
     }
 
+    async function resetTheme(
+        [opt, ...list] = getOptions(object),
+        id = opt?.doResetColor(),
+    ): Promise<Array<string>> {
+        if (!opt)
+            return sleep().then(() => [])
+
+        return id
+            ? [id, ...(await sleep(50).then(() => resetTheme(list)))]
+            : await sleep().then(() => resetTheme(list))
+    }
+
     return Object.assign(object, {
         configFile,
         array: () => getOptions(object),
         async reset() {
             return (await reset()).join("\n")
+        },
+        async resetTheme() {
+            return (await resetTheme()).join("\n")
         },
         handler(deps: string[], callback: () => void) {
             for (const opt of getOptions(object)) {

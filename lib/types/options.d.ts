@@ -17,6 +17,7 @@ export type RowProps<T> = {
     | "enum"
     | "boolean"
     | "img"
+    | "wallpaper"
     | "font"
     enums?: string[]
     max?: number
