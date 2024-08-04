@@ -143,8 +143,10 @@ export const Inputter = <T>({
                 })
 
                 case "wallpaper": return self.child = Widget.FileChooserButton({
-                    class_name: "image-chooser",
-                    on_file_set: ({ uri }) => { Wallpaper.set(uri!.replace("file://", "")) },
+                    on_file_set: ({ uri }) => {
+                        opt.value = uri!.replace("file://", "") as T;
+                        Wallpaper.set(uri!.replace("file://", ""));
+                    },
                 })
 
                 case "font": return self.child = Widget.FontButton({

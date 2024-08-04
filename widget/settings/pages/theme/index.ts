@@ -11,8 +11,10 @@ import { NotificationsMenuTheme } from "./menus/notifications";
 import { SystrayMenuTheme } from "./menus/systray";
 import { VolumeMenuTheme } from "./menus/volume";
 import { OsdTheme } from "./osd/index";
+import { Matugen } from "./menus/matugen";
 
 type Page = "General Settings"
+    | "Matugen Settings"
     | "Bar"
     | "Notifications"
     | "OSD"
@@ -30,6 +32,7 @@ const CurrentPage = Variable<Page>("General Settings");
 
 const pagerMap: Page[] = [
     "General Settings",
+    "Matugen Settings",
     "Bar",
     "Notifications",
     "OSD",
@@ -75,6 +78,7 @@ export const ThemesMenu = () => {
                     class_name: "themes-menu-stack",
                     children: {
                         "General Settings": MenuTheme(),
+                        "Matugen Settings": Matugen(),
                         "Bar": BarTheme(),
                         "Notifications": NotificationsTheme(),
                         "OSD": OsdTheme(),

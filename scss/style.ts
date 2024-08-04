@@ -2,6 +2,9 @@ import options from "options";
 import { bash, dependencies } from "lib/utils";
 import Wallpaper from "services/Wallpaper";
 import { MatugenColors } from "lib/types/options";
+import { initializeTrackers } from "./options_trackers";
+
+const { mode, scheme_type, contrast } = options.theme.matugen_settings;
 
 const deps = [
     "font",
@@ -13,9 +16,18 @@ const deps = [
 ];
 
 async function generateMatugenColors() {
-    const wallpaperPath = options.wallpaper.image.value;
-    const contents = await bash(`matugen image ${wallpaperPath} --mode dark --json hex`);
-    return JSON.parse(contents).colors.dark;
+    try {
+        const normalizedContrast = contrast.value > 1 ? 1
+            : contrast.value < -1 ? -1
+                : contrast.value
+        const wallpaperPath = options.wallpaper.image.value;
+        const contents = await bash(`matugen image ${wallpaperPath} -t ${scheme_type.value} --contrast ${normalizedContrast} --json hex`);
+
+        return JSON.parse(contents).colors[options.theme.matugen_settings.mode.value];
+    } catch (error) {
+        const errMsg = `An error occurred while generating matugen colors: ${error}`;
+        console.error(errMsg);
+    }
 }
 
 const replaceHexValues = (incomingHex: string, matugenColors: MatugenColors) => {
@@ -24,17 +36,17 @@ const replaceHexValues = (incomingHex: string, matugenColors: MatugenColors) => 
     }
 
     const matugenColorMap = {
-        "rosewater": matugenColors.tertiary_fixed,
-        "flamingo": matugenColors.tertiary_fixed,
+        "rosewater": matugenColors.tertiary,
+        "flamingo": matugenColors.tertiary,
         "pink": matugenColors.tertiary,
         "mauve": matugenColors.primary,
         "red": matugenColors.tertiary,
-        "maroon": matugenColors.tertiary_fixed,
+        "maroon": matugenColors.tertiary,
         "peach": matugenColors.tertiary,
         "yellow": matugenColors.tertiary,
         "green": matugenColors.primary,
-        "teal": matugenColors.primary_fixed_dim,
-        "sky": matugenColors.primary_fixed_dim,
+        "teal": matugenColors.primary,
+        "sky": matugenColors.primary,
         "sapphire": matugenColors.primary,
         "blue": matugenColors.primary,
         "lavender": matugenColors.primary,
@@ -82,7 +94,6 @@ const replaceHexValues = (incomingHex: string, matugenColors: MatugenColors) => 
         "mantle": "#181825",
         "crust": "#11111b"
     };
-
     for (let curColor of Object.keys(defaultColorMap)) {
         if (defaultColorMap[curColor] === incomingHex) {
             return matugenColorMap[curColor];
@@ -101,7 +112,7 @@ function extractVariables(theme: typeof options.theme, prefix = "", matugenColor
             const newPrefix = prefix ? `${prefix}-${key}` : key;
 
             const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
-            const replacedValue = isColor ? replaceHexValues(value.value, matugenColors) : value.value;
+            const replacedValue = isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
             if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
                 if (typeof value.value !== 'undefined') {
                     result.push(`$${newPrefix}: ${replacedValue};`);
@@ -122,7 +133,6 @@ async function resetCss() {
 
     try {
         const matugenColors = await generateMatugenColors();
-        console.log(JSON.stringify(matugenColors, null, 2));
 
         const variables = [
             ...extractVariables(options.theme, '', matugenColors),
@@ -155,17 +165,7 @@ async function resetCss() {
     }
 }
 
-options.theme.matugen.connect("changed", () => {
-    options.resetTheme();
-    resetCss();
-})
-
-Wallpaper.connect("changed", () => {
-    if (options.theme.matugen.value) {
-        options.resetTheme();
-        resetCss();
-    }
-})
+initializeTrackers(resetCss);
 
 Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
 options.handler(deps, resetCss);

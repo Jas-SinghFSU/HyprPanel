@@ -22,7 +22,7 @@ export type RowProps<T> = {
     enums?: string[]
     max?: number
     min?: number
-    subtitle?: string
+    subtitle?: string | VarType<any> | Opt,
     increment?: number
 }
 
@@ -80,3 +80,14 @@ export type MatugenColors = {
     "tertiary_fixed": HexColor,
     "tertiary_fixed_dim": HexColor
 }
+type MatugenScheme =
+    | "scheme-content"
+    | "scheme-expressive"
+    | "scheme-fidelity"
+    | "scheme-fruit-salad"
+    | "scheme-monochrome"
+    | "scheme-neutral"
+    | "scheme-rainbow"
+    | "scheme-tonal-spot";
+
+type MatugenTheme = "light" | "dark";

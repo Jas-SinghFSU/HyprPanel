@@ -12,6 +12,9 @@ window.settings-dialog {
   $border: none;
   $fg: $bar-menus-text;
 
+  .settings-dialog-box {
+    min-width: 75em;
+  }
 
   .header {
     background-color: $bar-menus-background;

@@ -39,7 +39,6 @@ export class Opt<T = unknown> extends Variable<T> {
         if (this.persistent)
             return;
 
-        console.log(this.value);
         if (JSON.stringify(this.value) !== JSON.stringify(this.initial)) {
             this.value = this.initial
             return this.id;

@@ -1,4 +1,5 @@
 import { opt, mkOptions } from "lib/option"
+import { MatugenScheme, MatugenTheme } from "lib/types/options";
 
 const colors = {
     "rosewater": "#f5e0dc",
@@ -33,6 +34,11 @@ const colors = {
 const options = mkOptions(OPTIONS, {
     theme: {
         matugen: opt(false),
+        matugen_settings: {
+            mode: opt<MatugenTheme>("dark"),
+            scheme_type: opt<MatugenScheme>("scheme-tonal-spot"),
+            contrast: opt(0.0),
+        },
         font: {
             size: opt("1.2rem"),
             name: opt("Ubuntu Nerd Font"),

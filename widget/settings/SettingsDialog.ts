@@ -83,6 +83,7 @@ export default () => RegularWindow({
         win.set_default_size(200, 300)
     },
     child: Widget.Box({
+        class_name: "settings-dialog-box",
         vertical: true,
         children: [
             Header(),

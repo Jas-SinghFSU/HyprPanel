@@ -32,7 +32,7 @@ class Wallpaper extends Service {
             sh([
                 "swww", "img",
                 "--invert-y",
-                `-o ${monitors.join(",")}`,
+                // `-o ${monitors.join(",")}`,
                 "--transition-type", "grow",
                 "--transition-duration", "1",
                 "--transition-fps", "60",
