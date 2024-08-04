@@ -40,7 +40,7 @@ const replaceHexValues = (incomingHex: string, matugenColors: MatugenColors) => 
         "pink": matugenColors.tertiary,
         "mauve": matugenColors.primary,
         "red": matugenColors.tertiary,
-        "maroon": matugenColors.tertiary,
+        "maroon": matugenColors.primary,
         "peach": matugenColors.tertiary,
         "yellow": matugenColors.secondary,
         "green": matugenColors.primary,
