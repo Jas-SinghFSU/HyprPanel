@@ -141,7 +141,7 @@ export const Inputter = <T>({
                         if (disabledBinding !== undefined && disabledBinding.value) {
                             return;
                         }
-                        if (self.active && dependencies !== undefined && dependencies.every(d => checkDependencies(d))) {
+                        if (self.active && dependencies !== undefined && !dependencies.every(d => checkDependencies(d))) {
                             self.active = false;
                             return;
                         }
