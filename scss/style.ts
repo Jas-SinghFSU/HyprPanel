@@ -48,9 +48,9 @@ async function resetCss() {
             ...extractVariables(options.theme, '', matugenColors),
         ];
 
-        const vars = `${App.configDir}/scss/variables.scss`;
-        const css = `${TMP}/main.css`;
-        const scss = `${App.configDir}/scss/entry.scss`;
+        const vars = `${TMP}/variables.scss`
+        const css = `${TMP}/main.css`
+        const scss = `${TMP}/entry.scss`
         const localScss = `${App.configDir}/scss/main.scss`;
 
         const themeVariables = variables;
@@ -65,7 +65,7 @@ async function resetCss() {
 
         await Utils.writeFile(mainScss, scss);
 
-        await bash(`sass ${scss} ${css}`);
+        await bash(`sass --load-path=${App.configDir}/scss/ ${scss} ${css}`);
 
         App.applyCss(css, true);
     } catch (error) {

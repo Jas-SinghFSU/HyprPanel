@@ -1,38 +1,36 @@
-@import "../colors";
-@import '../../variables';
-
 .menu-items.energy {
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
-    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
+  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
+  border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
 }
+
 .menu-items-container.energy {
-    .menu-label {
-        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
-    }
+  .menu-label {
+    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
+  }
 
-    .menu-label-container {
-        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
-    }
+  .menu-label-container {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+  }
 
 
-    .menu-items-section {
-        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
-    }
+  .menu-items-section {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
+  }
 
     .power-profile-item {
         color: if($bar-menus-monochrome, $bar-menus-listitems-passive, $bar-menus-menu-battery-listitems-passive);
         margin-bottom: 0.5em;
 
-        label {
-            margin-left: 1em;
-        }
+    label {
+      margin-left: 1em;
+    }
 
-        image {
-            font-size: 1.3em;
-            min-width: 1em;
-            min-height: 1em;
-            color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
-        }
+    image {
+      font-size: 1.3em;
+      min-width: 1em;
+      min-height: 1em;
+      color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
+    }
 
         &:hover {
           color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
@@ -40,10 +38,10 @@
                 color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
 
-            image {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
-        }
+      image {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
+    }
 
         &.active {
             color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
@@ -53,9 +51,9 @@
         }
     }
 
-    .brightness-container {
-        padding-bottom: 1em;
-    }
+  .brightness-container {
+    padding-bottom: 1em;
+  }
 
     .brightness-slider-icon {
         font-size: 1.4em;
@@ -72,24 +70,24 @@
         margin-bottom: 0.2em;
     }
 
-    .menu-slider.brightness {
-        trough {
-            background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-battery-slider-background);
+  .menu-slider.brightness {
+    trough {
+      background: if($bar-menus-monochrome, $bar-menus-slider-background, $bar-menus-menu-battery-slider-background);
 
-            highlight,
-            progress {
-                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
-            }
-        }
-
-        &:hover {
-            trough {
-                background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-battery-slider-backgroundhover);
-            }
-
-            slider {
-                background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-battery-slider-puck);
-            }
-        }
+      highlight,
+      progress {
+        background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-battery-slider-primary);
+      }
     }
+
+    &:hover {
+      trough {
+        background: if($bar-menus-monochrome, $bar-menus-slider-backgroundhover, $bar-menus-menu-battery-slider-backgroundhover);
+      }
+
+      slider {
+        background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-battery-slider-puck);
+      }
+    }
+  }
 }

@@ -1,5 +1,3 @@
-@import "../colors";
-
 .systray button:not(:first-child) {
   margin-left: 0.75rem;
 }
@@ -7,6 +5,7 @@
 .systray-menu {
   background: $crust;
 }
+
 .systray-menu label {
   font-weight: bold;
   color: $text;

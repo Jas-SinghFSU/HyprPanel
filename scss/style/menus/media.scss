@@ -1,6 +1,3 @@
-@import "../colors";
-@import '../../variables';
-
 .menu-items.media {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-media-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-media-border-color);

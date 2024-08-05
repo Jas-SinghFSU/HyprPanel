@@ -1,6 +1,3 @@
-@import "../colors";
-@import '../../variables';
-
 .clock {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
 }

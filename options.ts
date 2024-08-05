@@ -697,7 +697,7 @@ const options = mkOptions(OPTIONS, {
                 logout: opt("pkill Hyprland"),
                 shutdown: opt("shutdown now"),
                 avatar: {
-                    image: opt("/home/jaskir/Pictures/Icons/900-900-max_catppuccin-mocha_hald8_GaussianRBF_lum1_shape96_near16.png"),
+                    image: opt("avatar-default-symbolic"),
                     name: opt<"system" | string>("system"),
                 },
             },
