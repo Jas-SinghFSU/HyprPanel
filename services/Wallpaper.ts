@@ -1,17 +1,6 @@
 import { dependencies, sh } from "lib/utils"
 const hyprland = await Service.import("hyprland");
 
-export type Resolution = 1920 | 1366 | 3840
-export type Market =
-    | "random"
-    | "en-US"
-    | "ja-JP"
-    | "en-AU"
-    | "en-GB"
-    | "de-DE"
-    | "en-NZ"
-    | "en-CA"
-
 const WP = `${Utils.HOME}/.config/background`
 
 class Wallpaper extends Service {
@@ -61,7 +50,6 @@ class Wallpaper extends Service {
         if (!dependencies("swww"))
             return this
 
-        // gtk portal
         Utils.monitorFile(WP, () => {
             if (!this.#blockMonitor)
                 this.#wallpaper()
