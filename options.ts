@@ -411,8 +411,8 @@ const options = mkOptions(OPTIONS, {
                         },
                         text: opt(colors.text),
                         listitems: {
-                            passive: opt(colors.text),
-                            active: opt(secondary_colors.yellow)
+                            passive: opt(secondary_colors.text),
+                            active: opt(colors.yellow)
                         },
                         icons: {
                             passive: opt(colors.overlay2),

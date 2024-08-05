@@ -20,6 +20,7 @@
     }
 
     .power-profile-item {
+        color: if($bar-menus-monochrome, $bar-menus-listitems-passive, $bar-menus-menu-battery-listitems-passive);
         margin-bottom: 0.5em;
 
         label {
@@ -34,6 +35,7 @@
         }
 
         &:hover {
+          color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
             label {
                 color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
@@ -44,6 +46,7 @@
         }
 
         &.active {
+            color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
             image {
                 color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
             }
@@ -58,10 +61,11 @@
         font-size: 1.4em;
         min-width: 1em;
         min-height: 1em;
-        color: $overlay2;
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
     }
 
     .brightness-slider-label {
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-battery-text);
         font-size: 0.9em;
         min-width: 2.5em;
         font-weight: bold;
