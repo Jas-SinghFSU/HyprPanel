@@ -232,7 +232,7 @@ window.settings-dialog {
 
 .paged-container {
   .reset-options {
-    color: $bar-menus-iconbuttons-passive;
+    color: $bar-menus-text;
 
     image:disabled {
       color: $bar-menus-buttons-disabled;
@@ -240,7 +240,7 @@ window.settings-dialog {
 
     &:hover {
       image {
-        color: $bar-menus-buttons-active;
+        color: transparentize($bar-menus-text, 0.5);
       }
     }
   }

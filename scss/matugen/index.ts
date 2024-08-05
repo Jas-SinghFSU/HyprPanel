@@ -1,11 +1,15 @@
 import { defaultColorMap } from "lib/types/defaults/options";
 import { MatugenColors } from "lib/types/options";
 import { getMatugenVariations } from "./variations";
-import { bash } from "lib/utils";
+import { bash, dependencies } from "lib/utils";
 import options from "options";
 const { scheme_type, contrast } = options.theme.matugen_settings;
 
 export async function generateMatugenColors() {
+    if (!dependencies('matugen')) {
+        return;
+    }
+
     try {
         const normalizedContrast = contrast.value > 1 ? 1
             : contrast.value < -1 ? -1

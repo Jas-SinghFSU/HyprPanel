@@ -20,6 +20,8 @@ gpu-screen-recorder
 hyprpicker
 btop
 networkmanager
+matugen
+swww
 dart-sass
 brightnessctl
 gnome-bluetooth-3.0
@@ -34,12 +36,12 @@ python-gpustat
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl python gnome-bluetooth-3.0
+sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl swww python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):
 ```bash
-yay -S grimblast gpu-screen-recorder hyprpicker python-gpustat aylurs-gtk-shell-git
+yay -S grimblast gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
 ```
 
 ## Instructions
