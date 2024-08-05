@@ -1,4 +1,5 @@
 import { Opt } from "lib/option";
+import { Variable } from "types/variable";
 
 export type Unit = "imperial" | "metric";
 export type PowerOptions = "sleep" | "reboot" | "logout" | "shutdown";
@@ -22,6 +23,7 @@ export type RowProps<T> = {
     enums?: string[]
     max?: number
     min?: number
+    disabledBinding?: Variable<boolean>
     subtitle?: string | VarType<any> | Opt,
     increment?: number
 }
@@ -80,6 +82,7 @@ export type MatugenColors = {
     "tertiary_fixed": HexColor,
     "tertiary_fixed_dim": HexColor
 }
+
 type MatugenScheme =
     | "content"
     | "expressive"
@@ -89,5 +92,19 @@ type MatugenScheme =
     | "neutral"
     | "rainbow"
     | "tonal-spot";
+
+type MatugenVariation =
+    | "standard1"
+    | "standard2"
+    | "standard3"
+    | "monochrome1"
+    | "monochrome2"
+    | "monochrome3"
+    | "vibrant1"
+    | "vibrant2"
+    | "vibrant3"
+    | "vibrant_monochrome1"
+    | "vibrant_monochrome2"
+    | "vibrant_monochrome2"
 
 type MatugenTheme = "light" | "dark";

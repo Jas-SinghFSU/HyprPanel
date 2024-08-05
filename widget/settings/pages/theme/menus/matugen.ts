@@ -30,6 +30,25 @@ export const Matugen = () => {
                         "tonal-spot"
                     ]
                 }),
+                Option({
+                    opt: options.theme.matugen_settings.variation,
+                    title: 'Matugen Variation',
+                    type: 'enum',
+                    enums: [
+                        "standard1",
+                        "standard2",
+                        "standard3",
+                        "monochrome1",
+                        "monochrome2",
+                        "monochrome3",
+                        "vibrant1",
+                        "vibrant2",
+                        "vibrant3",
+                        "vibrant_monochrome1",
+                        "vibrant_monochrome2",
+                        "vibrant_monochrome2"
+                    ]
+                }),
                 Option({ opt: options.theme.matugen_settings.contrast, title: 'Contrast', subtitle: 'Range: -1 to 1 (Default: 0)', type: 'float' }),
             ]
         })

@@ -1,6 +1,7 @@
 import { opt, mkOptions } from "lib/option"
-import { MatugenScheme, MatugenTheme } from "lib/types/options";
+import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
+// WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 const colors = {
     "rosewater": "#f5e0dc",
     "flamingo": "#f2cdcd",
@@ -31,12 +32,30 @@ const colors = {
     "crust": "#11111b"
 };
 
+// WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
+const secondary_colors = {
+    pink: "#f5c2e6",
+    red: "#f38ba7",
+    mantle: "#181824",
+    surface0: "#313243",
+    overlay1: "#7f849b",
+    lavender: "#b4befd",
+    mauve: "#cba6f6",
+    green: "#a6e3a0",
+    sky: "#89dcea",
+    teal: "#94e2d4",
+    yellow: "#f9e2ad",
+    maroon: "#eba0ab",
+    crust: "#11111a",
+}
+
 const options = mkOptions(OPTIONS, {
     theme: {
         matugen: opt(false),
         matugen_settings: {
             mode: opt<MatugenTheme>("dark"),
             scheme_type: opt<MatugenScheme>("tonal-spot"),
+            variation: opt<MatugenVariation>("standard1"),
             contrast: opt(0.0),
         },
         font: {
@@ -45,18 +64,18 @@ const options = mkOptions(OPTIONS, {
             weight: opt(600),
         },
         notification: {
-            background: opt(colors.mantle),
+            background: opt(secondary_colors.mantle),
             actions: {
-                background: opt(colors.lavender),
+                background: opt(secondary_colors.lavender),
                 text: opt(colors.mantle),
             },
             label: opt(colors.lavender),
-            border: opt(colors.surface0),
-            time: opt(colors.overlay1),
+            border: opt(secondary_colors.surface0),
+            time: opt(secondary_colors.overlay1),
             text: opt(colors.text),
             labelicon: opt(colors.lavender),
             close_button: {
-                background: opt(colors.red),
+                background: opt(secondary_colors.red),
                 label: opt(colors.crust)
             }
         },
@@ -184,7 +203,7 @@ const options = mkOptions(OPTIONS, {
                 label: opt(colors.lavender),
                 listitems: {
                     passive: opt(colors.text),
-                    active: opt(colors.lavender)
+                    active: opt(secondary_colors.lavender)
                 },
                 icons: {
                     passive: opt(colors.surface2),
@@ -193,13 +212,13 @@ const options = mkOptions(OPTIONS, {
                 switch: {
                     enabled: opt(colors.lavender),
                     disabled: opt(colors.surface0),
-                    puck: opt(colors.overlay0)
+                    puck: opt(colors.subtext1)
                 },
                 buttons: {
                     default: opt(colors.lavender),
                     active: opt(colors.pink),
                     disabled: opt(colors.surface2),
-                    text: opt(colors.crust)
+                    text: opt(secondary_colors.mantle)
                 },
                 iconbuttons: {
                     passive: opt(colors.text),
@@ -226,9 +245,9 @@ const options = mkOptions(OPTIONS, {
                 },
                 menu: {
                     media: {
-                        song: opt(colors.lavender),
-                        artist: opt(colors.teal),
-                        album: opt(colors.pink),
+                        song: opt(secondary_colors.lavender),
+                        artist: opt(secondary_colors.teal),
+                        album: opt(secondary_colors.pink),
                         background: {
                             color: opt(colors.crust),
                         },
@@ -237,8 +256,8 @@ const options = mkOptions(OPTIONS, {
                         },
                         buttons: {
                             inactive: opt(colors.surface2),
-                            enabled: opt(colors.teal),
-                            background: opt(colors.lavender),
+                            enabled: opt(secondary_colors.teal),
+                            background: opt(secondary_colors.lavender),
                             text: opt(colors.crust),
                         },
                         slider: {
@@ -264,7 +283,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.text),
                         listitems: {
                             passive: opt(colors.text),
-                            active: opt(colors.maroon)
+                            active: opt(secondary_colors.maroon)
                         },
                         iconbutton: {
                             passive: opt(colors.text),
@@ -276,15 +295,15 @@ const options = mkOptions(OPTIONS, {
                         },
                         audio_slider: {
                             primary: opt(colors.maroon),
-                            background: opt(colors.surface2),
-                            backgroundhover: opt(colors.surface1),
-                            puck: opt(colors.overlay0)
+                            background: opt(colors.overlay0),
+                            backgroundhover: opt(colors.overlay2),
+                            puck: opt(colors.surface2)
                         },
                         input_slider: {
                             primary: opt(colors.maroon),
-                            background: opt(colors.surface2),
-                            backgroundhover: opt(colors.surface1),
-                            puck: opt(colors.overlay0)
+                            background: opt(colors.overlay0),
+                            backgroundhover: opt(colors.overlay2),
+                            puck: opt(colors.surface2)
                         }
                     },
                     network: {
@@ -306,7 +325,7 @@ const options = mkOptions(OPTIONS, {
                         },
                         listitems: {
                             passive: opt(colors.text),
-                            active: opt(colors.mauve)
+                            active: opt(secondary_colors.mauve)
                         },
                         icons: {
                             passive: opt(colors.overlay2),
@@ -336,11 +355,11 @@ const options = mkOptions(OPTIONS, {
                         switch: {
                             enabled: opt(colors.sky),
                             disabled: opt(colors.surface0),
-                            puck: opt(colors.overlay0)
+                            puck: opt(colors.subtext1)
                         },
                         listitems: {
                             passive: opt(colors.text),
-                            active: opt(colors.sky)
+                            active: opt(secondary_colors.sky)
                         },
                         icons: {
                             passive: opt(colors.overlay2),
@@ -374,7 +393,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.text),
                         listitems: {
                             passive: opt(colors.text),
-                            active: opt(colors.yellow)
+                            active: opt(secondary_colors.yellow)
                         },
                         icons: {
                             passive: opt(colors.overlay2),
@@ -455,35 +474,35 @@ const options = mkOptions(OPTIONS, {
                                 body: opt(colors.text),
                                 confirm: opt(colors.green),
                                 deny: opt(colors.red),
-                                button_text: opt(colors.crust),
+                                button_text: opt(secondary_colors.crust),
                             }
                         },
                         shortcuts: {
                             background: opt(colors.lavender),
-                            text: opt(colors.crust),
+                            text: opt(secondary_colors.mantle),
                             recording: opt(colors.green)
                         },
                         controls: {
                             disabled: opt(colors.surface2),
                             wifi: {
                                 background: opt(colors.mauve),
-                                text: opt(colors.crust),
+                                text: opt(secondary_colors.mantle),
                             },
                             bluetooth: {
                                 background: opt(colors.sky),
-                                text: opt(colors.crust),
+                                text: opt(secondary_colors.mantle),
                             },
                             notifications: {
                                 background: opt(colors.yellow),
-                                text: opt(colors.crust),
+                                text: opt(secondary_colors.mantle),
                             },
                             volume: {
                                 background: opt(colors.maroon),
-                                text: opt(colors.crust),
+                                text: opt(secondary_colors.mantle),
                             },
                             input: {
                                 background: opt(colors.pink),
-                                text: opt(colors.crust),
+                                text: opt(secondary_colors.mantle),
                             },
                         },
                         directories: {
@@ -514,22 +533,22 @@ const options = mkOptions(OPTIONS, {
                             bar_background: opt(colors.surface1),
                             cpu: {
                                 icon: opt(colors.maroon),
-                                bar: opt(colors.maroon),
+                                bar: opt(secondary_colors.maroon),
                                 label: opt(colors.maroon),
                             },
                             ram: {
                                 icon: opt(colors.yellow),
-                                bar: opt(colors.yellow),
+                                bar: opt(secondary_colors.yellow),
                                 label: opt(colors.yellow),
                             },
                             gpu: {
                                 icon: opt(colors.green),
-                                bar: opt(colors.green),
+                                bar: opt(secondary_colors.green),
                                 label: opt(colors.green),
                             },
                             disk: {
                                 icon: opt(colors.pink),
-                                bar: opt(colors.pink),
+                                bar: opt(secondary_colors.pink),
                                 label: opt(colors.pink),
                             },
                         },
@@ -545,7 +564,7 @@ const options = mkOptions(OPTIONS, {
                         switch: {
                             enabled: opt(colors.lavender),
                             disabled: opt(colors.surface0),
-                            puck: opt(colors.overlay0)
+                            puck: opt(colors.subtext1)
                         },
                     },
                 }

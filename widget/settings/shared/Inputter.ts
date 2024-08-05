@@ -34,7 +34,8 @@ export const Inputter = <T>({
     enums,
     max = 1000000,
     min = 0,
-    increment = 1
+    increment = 1,
+    disabledBinding,
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
@@ -131,8 +132,17 @@ export const Inputter = <T>({
                 ]
 
                 case "enum": return self.child = EnumSetter(opt as unknown as Opt<string>, enums!)
-                case "boolean": return self.child = Widget.Switch()
-                    .on("notify::active", self => opt.value = self.active as T)
+                case "boolean": return self.child = Widget.Switch({
+                    sensitive: disabledBinding !== undefined ? disabledBinding.bind("value").as(disabled => !disabled) : true,
+                })
+                    .on("notify::active", self => {
+                        if (disabledBinding !== undefined && disabledBinding.value) {
+                            return;
+                        }
+                        console.log("changing value");
+
+                        opt.value = self.active as T
+                    })
                     .hook(opt, self => {
                         self.active = opt.value as boolean
                     })
