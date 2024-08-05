@@ -4,6 +4,7 @@ import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
 import Wallpaper from "services/Wallpaper";
+import { dependencies } from "lib/utils";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -36,6 +37,7 @@ export const Inputter = <T>({
     min = 0,
     increment = 1,
     disabledBinding,
+    dependency,
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
@@ -137,6 +139,9 @@ export const Inputter = <T>({
                 })
                     .on("notify::active", self => {
                         if (disabledBinding !== undefined && disabledBinding.value) {
+                            return;
+                        }
+                        if (dependency !== undefined && !dependencies(dependency)) {
                             return;
                         }
                         opt.value = self.active as T

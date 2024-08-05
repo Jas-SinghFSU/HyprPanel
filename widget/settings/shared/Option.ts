@@ -2,8 +2,6 @@ import { Label } from "./Label";
 import { Inputter } from "./Inputter";
 import icons from "lib/icons";
 import { RowProps } from "lib/types/options";
-import { Variable as VarType } from "types/variable";
-import { Opt } from "lib/option";
 
 export const Option = <T>(props: RowProps<T>, className: string = '') => {
     const isUnsaved = Variable(false);

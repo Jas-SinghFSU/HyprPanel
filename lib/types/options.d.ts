@@ -25,6 +25,7 @@ export type RowProps<T> = {
     min?: number
     disabledBinding?: Variable<boolean>
     subtitle?: string | VarType<any> | Opt,
+    dependency?: string,
     increment?: number
 }
 
