@@ -13,7 +13,7 @@ export const Matugen = () => {
             vertical: true,
             children: [
                 Header('Matugen Settings'),
-                Option({ opt: options.theme.matugen, title: 'Enable Matugen', subtitle: 'WARNING: THIS WILL REPLACE YOUR CURRENT COLOR SCHEME!!!', type: 'boolean', dependency: "swww" }),
+                Option({ opt: options.theme.matugen, title: 'Enable Matugen', subtitle: 'WARNING: THIS WILL REPLACE YOUR CURRENT COLOR SCHEME!!!', type: 'boolean', dependencies: ["matugen", "swww"] }),
                 Option({ opt: options.theme.matugen_settings.mode, title: 'Matugen Theme', type: 'enum', enums: ["light", "dark"] }),
                 Option({
                     opt: options.theme.matugen_settings.scheme_type,
