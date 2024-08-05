@@ -27,12 +27,11 @@ class Wallpaper extends Service {
         if (!dependencies("swww"))
             return
 
-        const monitors = hyprland.monitors.map(m => m.name);
+        hyprland.monitors.map(m => m.name);
         sh("hyprctl cursorpos").then(pos => {
             sh([
                 "swww", "img",
                 "--invert-y",
-                // `-o ${monitors.join(",")}`,
                 "--transition-type", "grow",
                 "--transition-duration", "1.5",
                 "--transition-fps", "30",

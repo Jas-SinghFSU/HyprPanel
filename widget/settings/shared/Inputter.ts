@@ -142,6 +142,7 @@ export const Inputter = <T>({
                             return;
                         }
                         if (dependency !== undefined && !dependencies(dependency)) {
+                            self.active = false;
                             return;
                         }
                         opt.value = self.active as T
