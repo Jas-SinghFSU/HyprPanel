@@ -139,8 +139,6 @@ export const Inputter = <T>({
                         if (disabledBinding !== undefined && disabledBinding.value) {
                             return;
                         }
-                        console.log("changing value");
-
                         opt.value = self.active as T
                     })
                     .hook(opt, self => {

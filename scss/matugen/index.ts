@@ -27,15 +27,7 @@ export const replaceHexValues = (incomingHex: string, matugenColors: MatugenColo
 
     const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.value);
     for (let curColor of Object.keys(defaultColorMap)) {
-
         if (defaultColorMap[curColor] === incomingHex) {
-            if (curColor === "listitm_volume") {
-                console.log(curColor);
-                console.log(`defaultColorMap[curColor]: ${defaultColorMap[curColor]}`);
-                console.log(`incomingHex: ${incomingHex}`);
-                console.log(`matugenVariation[curColor]: ${matugenVariation[curColor]}`);
-            }
-
             return matugenVariation[curColor];
         }
     }

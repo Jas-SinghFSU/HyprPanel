@@ -43,7 +43,6 @@ async function resetCss() {
 
     try {
         const matugenColors = await generateMatugenColors();
-        // console.log(JSON.stringify(matugenColors, null, 2));
 
         const variables = [
             ...extractVariables(options.theme, '', matugenColors),

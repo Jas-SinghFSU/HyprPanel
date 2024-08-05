@@ -34,6 +34,7 @@ const colors = {
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 const secondary_colors = {
+    text: "#cdd6f3",
     pink: "#f5c2e6",
     red: "#f38ba7",
     mantle: "#181824",
@@ -47,6 +48,24 @@ const secondary_colors = {
     yellow: "#f9e2ad",
     maroon: "#eba0ab",
     crust: "#11111a",
+    surface2: "#585b69",
+}
+
+const tertiary_colors = {
+    pink: "#f5c2e8",
+    red: "#f38ba9",
+    mantle: "#181826",
+    surface0: "#313245",
+    overlay1: "#7f849d",
+    lavender: "#b4beff",
+    mauve: "#cba6f8",
+    green: "#a6e3a2",
+    sky: "#89dcec",
+    teal: "#94e2d6",
+    yellow: "#f9e2ae",
+    maroon: "#eba0ad",
+    crust: "#11111c",
+    surface2: "#585b71",
 }
 
 const options = mkOptions(OPTIONS, {
@@ -55,7 +74,7 @@ const options = mkOptions(OPTIONS, {
         matugen_settings: {
             mode: opt<MatugenTheme>("dark"),
             scheme_type: opt<MatugenScheme>("tonal-spot"),
-            variation: opt<MatugenVariation>("standard1"),
+            variation: opt<MatugenVariation>("standard_1"),
             contrast: opt(0.0),
         },
         font: {
@@ -216,13 +235,13 @@ const options = mkOptions(OPTIONS, {
                 },
                 buttons: {
                     default: opt(colors.lavender),
-                    active: opt(colors.pink),
-                    disabled: opt(colors.surface2),
+                    active: opt(secondary_colors.pink),
+                    disabled: opt(tertiary_colors.surface2),
                     text: opt(secondary_colors.mantle)
                 },
                 iconbuttons: {
-                    passive: opt(colors.text),
-                    active: opt(colors.lavender)
+                    passive: opt(secondary_colors.text),
+                    active: opt(tertiary_colors.lavender)
                 },
                 progressbar: {
                     foreground: opt(colors.lavender),
@@ -230,7 +249,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 slider: {
                     primary: opt(colors.lavender),
-                    background: opt(colors.surface2),
+                    background: opt(tertiary_colors.surface2),
                     backgroundhover: opt(colors.surface1),
                     puck: opt(colors.overlay0)
                 },
@@ -245,9 +264,9 @@ const options = mkOptions(OPTIONS, {
                 },
                 menu: {
                     media: {
-                        song: opt(secondary_colors.lavender),
-                        artist: opt(secondary_colors.teal),
-                        album: opt(secondary_colors.pink),
+                        song: opt(tertiary_colors.lavender),
+                        artist: opt(tertiary_colors.teal),
+                        album: opt(tertiary_colors.pink),
                         background: {
                             color: opt(colors.crust),
                         },
@@ -257,12 +276,12 @@ const options = mkOptions(OPTIONS, {
                         buttons: {
                             inactive: opt(colors.surface2),
                             enabled: opt(secondary_colors.teal),
-                            background: opt(secondary_colors.lavender),
+                            background: opt(tertiary_colors.lavender),
                             text: opt(colors.crust),
                         },
                         slider: {
                             primary: opt(colors.pink),
-                            background: opt(colors.surface2),
+                            background: opt(tertiary_colors.surface2),
                             backgroundhover: opt(colors.surface1),
                             puck: opt(colors.overlay0)
                         }
@@ -295,14 +314,14 @@ const options = mkOptions(OPTIONS, {
                         },
                         audio_slider: {
                             primary: opt(colors.maroon),
-                            background: opt(colors.overlay0),
-                            backgroundhover: opt(colors.overlay2),
+                            background: opt(tertiary_colors.surface2),
+                            backgroundhover: opt(colors.surface1),
                             puck: opt(colors.surface2)
                         },
                         input_slider: {
                             primary: opt(colors.maroon),
-                            background: opt(colors.overlay0),
-                            backgroundhover: opt(colors.overlay2),
+                            background: opt(tertiary_colors.surface2),
+                            backgroundhover: opt(colors.surface1),
                             puck: opt(colors.surface2)
                         }
                     },
@@ -401,7 +420,7 @@ const options = mkOptions(OPTIONS, {
                         },
                         slider: {
                             primary: opt(colors.yellow),
-                            background: opt(colors.surface2),
+                            background: opt(tertiary_colors.surface2),
                             backgroundhover: opt(colors.surface1),
                             puck: opt(colors.overlay0)
                         },
@@ -424,7 +443,7 @@ const options = mkOptions(OPTIONS, {
                         calendar: {
                             yearmonth: opt(colors.teal),
                             weekdays: opt(colors.pink),
-                            paginator: opt(colors.pink),
+                            paginator: opt(secondary_colors.pink),
                             currentday: opt(colors.pink),
                             days: opt(colors.text),
                             contextdays: opt(colors.surface2),
@@ -533,22 +552,22 @@ const options = mkOptions(OPTIONS, {
                             bar_background: opt(colors.surface1),
                             cpu: {
                                 icon: opt(colors.maroon),
-                                bar: opt(secondary_colors.maroon),
+                                bar: opt(tertiary_colors.maroon),
                                 label: opt(colors.maroon),
                             },
                             ram: {
                                 icon: opt(colors.yellow),
-                                bar: opt(secondary_colors.yellow),
+                                bar: opt(tertiary_colors.yellow),
                                 label: opt(colors.yellow),
                             },
                             gpu: {
                                 icon: opt(colors.green),
-                                bar: opt(secondary_colors.green),
+                                bar: opt(tertiary_colors.green),
                                 label: opt(colors.green),
                             },
                             disk: {
                                 icon: opt(colors.pink),
-                                bar: opt(secondary_colors.pink),
+                                bar: opt(tertiary_colors.pink),
                                 label: opt(colors.pink),
                             },
                         },

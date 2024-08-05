@@ -94,17 +94,14 @@ type MatugenScheme =
     | "tonal-spot";
 
 type MatugenVariation =
-    | "standard1"
-    | "standard2"
-    | "standard3"
-    | "monochrome1"
-    | "monochrome2"
-    | "monochrome3"
-    | "vibrant1"
-    | "vibrant2"
-    | "vibrant3"
-    | "vibrant_monochrome1"
-    | "vibrant_monochrome2"
-    | "vibrant_monochrome2"
+    | "standard_1"
+    | "standard_2"
+    | "standard_3"
+    | "monochrome_1"
+    | "monochrome_2"
+    | "monochrome_3"
+    | "vivid_1"
+    | "vivid_2"
+    | "vivid_3"
 
 type MatugenTheme = "light" | "dark";
