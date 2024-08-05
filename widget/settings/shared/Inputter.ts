@@ -141,8 +141,7 @@ export const Inputter = <T>({
                         if (disabledBinding !== undefined && disabledBinding.value) {
                             return;
                         }
-                        if (dependency !== undefined && !dependencies(dependency)) {
-                            self.active = false;
+                        if (!self.active && dependency !== undefined && !dependencies(dependency)) {
                             return;
                         }
                         opt.value = self.active as T
