@@ -38,6 +38,7 @@ const secondary_colors = {
     pink: "#f5c2e6",
     red: "#f38ba7",
     mantle: "#181824",
+    surface1: "#454759",
     surface0: "#313243",
     overlay1: "#7f849b",
     lavender: "#b4befd",
@@ -83,7 +84,7 @@ const options = mkOptions(OPTIONS, {
             weight: opt(600),
         },
         notification: {
-            background: opt(secondary_colors.mantle),
+            background: opt(tertiary_colors.mantle),
             actions: {
                 background: opt(secondary_colors.lavender),
                 text: opt(colors.mantle),
@@ -230,8 +231,8 @@ const options = mkOptions(OPTIONS, {
                 },
                 switch: {
                     enabled: opt(colors.lavender),
-                    disabled: opt(colors.surface0),
-                    puck: opt(colors.subtext1)
+                    disabled: opt(tertiary_colors.surface0),
+                    puck: opt(secondary_colors.surface1)
                 },
                 buttons: {
                     default: opt(colors.lavender),
@@ -373,8 +374,8 @@ const options = mkOptions(OPTIONS, {
                         switch_divider: opt(colors.surface1),
                         switch: {
                             enabled: opt(colors.sky),
-                            disabled: opt(colors.surface0),
-                            puck: opt(colors.subtext1)
+                            disabled: opt(tertiary_colors.surface0),
+                            puck: opt(secondary_colors.surface1)
                         },
                         listitems: {
                             passive: opt(colors.text),
@@ -582,8 +583,8 @@ const options = mkOptions(OPTIONS, {
                         clear: opt(colors.red),
                         switch: {
                             enabled: opt(colors.lavender),
-                            disabled: opt(colors.surface0),
-                            puck: opt(colors.subtext1)
+                            disabled: opt(tertiary_colors.surface0),
+                            puck: opt(secondary_colors.surface1)
                         },
                     },
                 }

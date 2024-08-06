@@ -26,6 +26,7 @@ export const defaultColorMap = {
     "base": "#1e1e2e",
     "mantle": "#181825",
     "crust": "#11111b",
+    "surface1_2": "#454759",
     "text2": "#cdd6f3",
     "pink2": "#f5c2e6",
     "red2": "#f38ba7",
