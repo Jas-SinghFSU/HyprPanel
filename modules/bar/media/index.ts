@@ -1,6 +1,10 @@
 import Gdk from 'gi://Gdk?version=3.0';
 const mpris = await Service.import("mpris");
 import { openMenu } from "../utils.js";
+import options from "options";
+import media from 'modules/menus/media/index.js';
+
+const { show_artist, truncation, truncation_size } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
@@ -51,14 +55,17 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const label = Utils.watch("󰎇 Media 󰎇", mpris, "changed", () => {
+    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist], () => {
         if (activePlayer.value) {
-            const { track_title, identity } = activePlayer.value;
+            const { track_title, identity, track_artists } = activePlayer.value;
+            const trackArtist = show_artist.value 
+                ? ` - ${track_artists.join(', ')}` 
+                : ``;
             songIcon.value = getIconForPlayer(identity);
             return track_title.length === 0
                 ? `No media playing...`
-                : `${track_title}`;
-        } else {
+                : `${track_title + trackArtist}`;
+            } else {
             songIcon.value = "";
             return "󰎇 Media 󰎇";
         }
@@ -76,12 +83,17 @@ const Media = () => {
                             label: songIcon.bind("value"),
                             maxWidthChars: 30,
                         }),
-                        Widget.Label({
+                        Widget.Box({
                             class_name: "bar-button-label media",
-                            label,
-                            truncate: "end",
-                            wrap: true,
-                            maxWidthChars: 30,
+                            child: Utils.merge(
+                                [truncation.bind("value"), truncation_size.bind("value")], 
+                                (trunc, tSize) => {
+                                    return Widget.Label({
+                                        label: mediaLabel.transform(m => trunc ? m.substring(0, tSize) : m)
+                                    })
+                                }
+                            ),
+                           
                         }),
                     ],
                 }),

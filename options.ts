@@ -639,6 +639,11 @@ const options = mkOptions(OPTIONS, {
         clock: {
             format: opt("󰃭  %a %b %d    %I:%M:%S %p"),
         },
+        media: {
+            show_artist: opt(false),
+            truncation: opt(true),
+            truncation_size: opt(30)
+        },
         notifications: {
             show_total: opt(false)
         },
