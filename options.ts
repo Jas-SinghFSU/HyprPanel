@@ -790,7 +790,7 @@ const options = mkOptions(OPTIONS, {
     terminal: opt("kitty"),
 
     wallpaper: {
-        image: opt("$HOME/.config/background")
+        image: opt("")
     },
 
     notifications: {
