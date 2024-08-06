@@ -15,6 +15,8 @@
 , gpu-screen-recorder
 , networkmanager
 , brightnessctl
+, matugen
+, swww
 , python3
 }:
 let
@@ -58,6 +60,8 @@ in {
       export PATH=$PATH:${gpu-screen-recorder}/bin
       export PATH=$PATH:${networkmanager}/bin
       export PATH=$PATH:${brightnessctl}/bin
+      export PATH=$PATH:${matugen}/bin
+      export PATH=$PATH:${swww}/bin
       export PATH=$PATH:${pkgs.gnome.gnome-bluetooth}/bin
       export PATH=$PATH:${python3}/bin
       export GDK_BACKEND=wayland
