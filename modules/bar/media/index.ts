@@ -2,7 +2,6 @@ import Gdk from 'gi://Gdk?version=3.0';
 const mpris = await Service.import("mpris");
 import { openMenu } from "../utils.js";
 import options from "options";
-import media from 'modules/menus/media/index.js';
 
 const { show_artist, truncation, truncation_size } = options.bar.media;
 
@@ -55,17 +54,19 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist], () => {
+    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size], () => {
         if (activePlayer.value) {
             const { track_title, identity, track_artists } = activePlayer.value;
-            const trackArtist = show_artist.value 
-                ? ` - ${track_artists.join(', ')}` 
+            const trackArtist = show_artist.value
+                ? ` - ${track_artists.join(', ')}`
                 : ``;
             songIcon.value = getIconForPlayer(identity);
             return track_title.length === 0
                 ? `No media playing...`
-                : `${track_title + trackArtist}`;
-            } else {
+                : truncation.value 
+                    ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
+                    : `${track_title + trackArtist}`;
+        } else {
             songIcon.value = "";
             return "󰎇 Media 󰎇";
         }
@@ -81,18 +82,18 @@ const Media = () => {
                         Widget.Label({
                             class_name: "bar-button-icon media",
                             label: songIcon.bind("value"),
-                            maxWidthChars: 30,
                         }),
-                        Widget.Box({
+                        Widget.Label({
                             class_name: "bar-button-label media",
-                            child: Utils.merge(
-                                [truncation.bind("value"), truncation_size.bind("value")], 
-                                (trunc, tSize) => {
-                                    return Widget.Label({
-                                        label: mediaLabel.transform(m => trunc ? m.substring(0, tSize) : m)
-                                    })
-                                }
-                            ),
+                            label: mediaLabel,
+                            // child: Utils.merge(
+                            //     [truncation.bind("value"), truncation_size.bind("value")], 
+                            //     (trunc, tSize) => {
+                            //         return Widget.Label({
+                            //             label: mediaLabel.transform(m => trunc ? m.substring(0, tSize) : m)
+                            //         })
+                            //     }
+                            // ),
                            
                         }),
                     ],

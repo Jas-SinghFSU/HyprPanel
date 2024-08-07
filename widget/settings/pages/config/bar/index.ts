@@ -74,7 +74,7 @@ export const BarSettings = () => {
                 Option({ opt: options.theme.bar.buttons.media.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
                 Option({ opt: options.bar.media.show_artist, title: 'Show Track Artist', type: 'boolean' }),
                 Option({ opt: options.bar.media.truncation, title: 'Truncate Media Label', type: 'boolean' }),
-                Option({ opt: options.bar.media.truncation_size, title: 'Truncation Size', type: 'number' }),
+                Option({ opt: options.bar.media.truncation_size, title: 'Truncation Size', type: 'number', min: 10 }),
 
                 Header('Notifications'),
                 Option({ opt: options.bar.notifications.show_total, title: 'Show Total # of notifications', type: 'boolean' }),
