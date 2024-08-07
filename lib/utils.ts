@@ -116,7 +116,7 @@ export function createSurfaceFromWidget(widget: Gtk.Widget) {
 
 /*
 // get anchor position from option in user config.
-// currently accepts either notification or OSD, should these be merged?
+// currently accepts either Notification or OSD.
 */
 export function getPosition (pos: NotificationAnchor | OSDAnchor): ("top" | "bottom" | "left" | "right")[] {
     const positionMap: { [key: string]: ("top" | "bottom" | "left" | "right")[] } = {
@@ -125,7 +125,9 @@ export function getPosition (pos: NotificationAnchor | OSDAnchor): ("top" | "bot
         "top left": ["top", "left"],
         "bottom": ["bottom"],
         "bottom right": ["bottom", "right"],
-        "bottom left": ["bottom", "left"]
+        "bottom left": ["bottom", "left"],
+        "right": ["right"],
+        "left": ["left"],
     };
 
     return positionMap[pos] || ["top"];

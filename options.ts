@@ -746,7 +746,7 @@ const options = mkOptions(OPTIONS, {
     notifications: {
         position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
         monitor: opt(0),
-        active_monitor: opt(true), //unsure if I should make the default true/false. I use false, but OSD's version has default as true.
+        active_monitor: opt(true),
         timeout: opt(7000),
         cache_actions: opt(true),
     },
