@@ -108,6 +108,7 @@
   }
 
   .menu-icon-button.network.disconnect {
+    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
     margin: 0em;
     margin-top: -0.2em;
     margin-left: 1em;

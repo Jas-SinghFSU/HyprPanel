@@ -2,7 +2,7 @@ window.settings-dialog {
   background-color: $bar-menus-cards;
   color: $bar-menus-text;
 
-  $padding: 1em;
+  $padding: 0.5em;
   $primary_bg: $bar-menus-background;
   $spacing: 0.4em;
   $radius: 0.5em;
@@ -10,10 +10,14 @@ window.settings-dialog {
   $border: none;
   $fg: $bar-menus-text;
 
+  .settings-dialog-box {
+    min-width: 75em;
+  }
 
   .header {
-    background-color: $bar-menus-background;
-
+    background-color: transparentize($bar-menus-background, 0.1);
+    border-bottom-left-radius: $bar-menus-border-radius/2;
+    border-bottom-right-radius: $bar-menus-border-radius/2;
     padding: $padding;
 
     button {
@@ -57,7 +61,7 @@ window.settings-dialog {
 
   .group {
     .group-title {
-      color: $primary-bg;
+      color: $bar-menus-text;
       margin-bottom: $spacing*.5;
     }
 
@@ -178,7 +182,7 @@ window.settings-dialog {
     }
 
     padding: 0.35em 0.35em;
-    background: $surface1;
+    background: transparentize($bar-menus-background, 0.6);
     margin-right: 1em;
   }
 }
@@ -194,6 +198,7 @@ window.settings-dialog {
 }
 
 .pager-button {
+  color: transparentize($bar-menus-text, 0.4);
   margin: 0.5em 0.75em;
 
   &.category label {
@@ -201,11 +206,17 @@ window.settings-dialog {
   }
 
   &:hover {
-    color: $bar-menus-iconbuttons-active;
+    label {
+      text-decoration: underline;
+      color: $bar-menus-text;
+    }
   }
 
   &.active {
-    color: $bar-menus-iconbuttons-active;
+    label {
+      text-decoration: underline;
+      color: $bar-menus-text;
+    }
   }
 }
 
@@ -219,7 +230,7 @@ window.settings-dialog {
 
 .paged-container {
   .reset-options {
-    color: $bar-menus-iconbuttons-passive;
+    color: $bar-menus-text;
 
     image:disabled {
       color: $bar-menus-buttons-disabled;
@@ -227,7 +238,7 @@ window.settings-dialog {
 
     &:hover {
       image {
-        color: $bar-menus-buttons-active;
+        color: transparentize($bar-menus-text, 0.5);
       }
     }
   }
@@ -246,7 +257,8 @@ window.settings-dialog {
   }
 
   selection {
-    background: $bar-menus-background;
+    background: $bar-menus-label;
+    color: $bar-menus-cards;
   }
 
   switch {
@@ -272,6 +284,12 @@ window.settings-dialog {
 
 dialog {
   background: $bar-menus-cards;
+  color: $bar-menus-text;
+
+  :selected {
+    background: transparentize($bar-menus-label, 0.2);
+    color: transparentize($bar-menus-cards, 0.2);
+  }
 
   headerbar {
     border-bottom: 0.075em solid $bar-menus-border-color;

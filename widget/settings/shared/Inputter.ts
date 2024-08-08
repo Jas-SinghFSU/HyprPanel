@@ -3,6 +3,8 @@ import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
+import Wallpaper from "services/Wallpaper";
+import { dependencies as checkDependencies } from "lib/utils";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -33,7 +35,9 @@ export const Inputter = <T>({
     enums,
     max = 1000000,
     min = 0,
-    increment = 1
+    increment = 1,
+    disabledBinding,
+    dependencies,
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
@@ -130,13 +134,33 @@ export const Inputter = <T>({
                 ]
 
                 case "enum": return self.child = EnumSetter(opt as unknown as Opt<string>, enums!)
-                case "boolean": return self.child = Widget.Switch()
-                    .on("notify::active", self => opt.value = self.active as T)
-                    .hook(opt, self => self.active = opt.value as boolean)
+                case "boolean": return self.child = Widget.Switch({
+                    sensitive: disabledBinding !== undefined ? disabledBinding.bind("value").as(disabled => !disabled) : true,
+                })
+                    .on("notify::active", self => {
+                        if (disabledBinding !== undefined && disabledBinding.value) {
+                            return;
+                        }
+                        if (self.active && dependencies !== undefined && !dependencies.every(d => checkDependencies(d))) {
+                            self.active = false;
+                            return;
+                        }
+                        opt.value = self.active as T
+                    })
+                    .hook(opt, self => {
+                        self.active = opt.value as boolean
+                    })
 
                 case "img": return self.child = Widget.FileChooserButton({
                     class_name: "image-chooser",
                     on_file_set: ({ uri }) => { opt.value = uri!.replace("file://", "") as T },
+                })
+
+                case "wallpaper": return self.child = Widget.FileChooserButton({
+                    on_file_set: ({ uri }) => {
+                        opt.value = uri!.replace("file://", "") as T;
+                        Wallpaper.set(uri!.replace("file://", ""));
+                    },
                 })
 
                 case "font": return self.child = Widget.FontButton({
