@@ -62,6 +62,11 @@
   }
 }
 
+.menu-active-percentage.playback,
+.menu-active-percentage.input {
+  color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-volume-text);
+}
+
 .menu-active-button {
 
   .menu-active-icon.playback,
@@ -120,7 +125,7 @@
 
     .menu-button-name.playback,
     .menu-button-name.input {
-      color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-volume-icons-active);
+      color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-volume-listitems-active);
     }
   }
 }

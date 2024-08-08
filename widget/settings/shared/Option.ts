@@ -3,12 +3,6 @@ import { Inputter } from "./Inputter";
 import icons from "lib/icons";
 import { RowProps } from "lib/types/options";
 
-type Option = {
-    title: string,
-    subtitle: string,
-
-}
-
 export const Option = <T>(props: RowProps<T>, className: string = '') => {
     const isUnsaved = Variable(false);
 

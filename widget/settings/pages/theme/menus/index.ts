@@ -13,7 +13,8 @@ export const MenuTheme = () => {
             vertical: true,
             children: [
                 Header('General'),
-                Option({ opt: options.theme.bar.menus.monochrome, title: 'Use Global Colors', type: 'boolean' }),
+                Option({ opt: options.theme.bar.menus.monochrome, title: 'Use Global Colors', type: 'boolean', disabledBinding: options.theme.matugen }),
+                Option({ opt: options.wallpaper.image, title: 'Wallpaper', subtitle: options.wallpaper.image.bind("value"), type: 'wallpaper' }),
                 Option({ opt: options.theme.bar.menus.background, title: 'Background Color', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.cards, title: 'Cards', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.card_radius, title: 'Card Radius', type: 'string' }),

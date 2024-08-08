@@ -44,7 +44,7 @@
       }
 
       image {
-        color: $base;
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
         font-size: 1.5em;
       }
 

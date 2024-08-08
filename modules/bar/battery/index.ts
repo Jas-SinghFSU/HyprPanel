@@ -8,14 +8,14 @@ const { label: show_label } = options.bar.battery;
 
 const BatteryLabel = () => {
     const isVis = Variable(battery.available);
-    
+
     const batIcon = Utils.merge([battery.bind("percent"), battery.bind("charging"), battery.bind("charged")],
         (batPercent: number, batCharging, batCharged) => {
-            if(batCharged)
+            if (batCharged)
                 return `battery-level-100-charged-symbolic`;
             else
                 return `battery-level-${Math.floor(batPercent / 10) * 10}${batCharging ? '-charging' : ''}-symbolic`;
-    });
+        });
 
     battery.connect("changed", ({ available }) => {
         isVis.value = available;

@@ -27,6 +27,8 @@
           pkgsFor.${system}.bluez
           pkgsFor.${system}.bluez-tools
           pkgsFor.${system}.grimblast
+          pkgsFor.${system}.matugen
+          pkgsFor.${system}.swww
           pkgsFor.${system}.gpu-screen-recorder
           pkgsFor.${system}.brightnessctl
           pkgsFor.${system}.gnome.gnome-bluetooth
