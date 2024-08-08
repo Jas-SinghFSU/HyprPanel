@@ -11,7 +11,7 @@ curl -fsSL https://bun.sh/install | bash && \
   sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 Additional dependencies:
-```
+```sh
 pipewire
 bluez
 bluez-utils
@@ -21,6 +21,7 @@ hyprpicker
 btop
 networkmanager
 matugen
+wl-clipboard
 swww
 dart-sass
 brightnessctl
@@ -28,20 +29,20 @@ gnome-bluetooth-3.0
 ```
 
 Optional Dependencies:
-```
-// Used for Tracking GPU Usage in your Dashboard (NVidia only)
+```sh
+## Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
 python-gpustat
 ```
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):
 ```bash
-yay -S grimblast gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
+yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
 ```
 
 For NixOS/Home-Manager, see [NixOS & Home-Manager instructions](#nixos--home-manager).

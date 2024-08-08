@@ -13,7 +13,7 @@ const deps = [
     "bar.battery.blocks",
 ];
 
-function extractVariables(theme: typeof options.theme, prefix = "", matugenColors: MatugenColors) {
+function extractVariables(theme: typeof options.theme, prefix = "", matugenColors: MatugenColors | undefined) {
     let result = [] as string[];
     for (let key in theme) {
         if (theme.hasOwnProperty(key)) {
@@ -30,7 +30,6 @@ function extractVariables(theme: typeof options.theme, prefix = "", matugenColor
                     result = result.concat(extractVariables(value, newPrefix, matugenColors));
                 }
             } else if (typeof value === 'function' && value.name === 'opt') {
-                replaceHexValues(value.value, matugenColors);
                 result.push(`$${newPrefix}: ${replacedValue};`);
             }
         }
@@ -80,4 +79,3 @@ initializeTrackers(resetCss);
 Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
 options.handler(deps, resetCss);
 await resetCss();
-
