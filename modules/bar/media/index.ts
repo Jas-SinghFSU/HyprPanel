@@ -86,15 +86,6 @@ const Media = () => {
                         Widget.Label({
                             class_name: "bar-button-label media",
                             label: mediaLabel,
-                            // child: Utils.merge(
-                            //     [truncation.bind("value"), truncation_size.bind("value")], 
-                            //     (trunc, tSize) => {
-                            //         return Widget.Label({
-                            //             label: mediaLabel.transform(m => trunc ? m.substring(0, tSize) : m)
-                            //         })
-                            //     }
-                            // ),
-                           
                         }),
                     ],
                 }),
