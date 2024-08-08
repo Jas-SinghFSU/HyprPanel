@@ -2,38 +2,20 @@ import Gdk from 'gi://Gdk?version=3.0';
 const mpris = await Service.import("mpris");
 import { openMenu } from "../utils.js";
 import options from "options";
+import { Mpris } from 'types/service/mpris.js';
+import { getCurrentPlayer } from 'lib/shared/media.js';
 
 const { show_artist, truncation, truncation_size } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
 
-    mpris.connect("changed", (value) => {
-        const statusOrder = {
-            Playing: 1,
-            Paused: 2,
-            Stopped: 3,
-        };
-
-        if (value.players.length === 0) {
-            activePlayer.value = mpris.players[0];
-            return;
-        }
-
-        const isPlaying = value.players.find(
-            (p) => p["play-back-status"] === "Playing",
-        );
-
-        if (isPlaying) {
-            activePlayer.value = value.players.sort(
-                (a, b) =>
-                    statusOrder[a["play-back-status"]] -
-                    statusOrder[b["play-back-status"]],
-            )[0];
-        }
+    mpris.connect("changed", () => {
+        const curPlayer = getCurrentPlayer(activePlayer.value);
+        activePlayer.value = curPlayer;
     });
 
-    const getIconForPlayer = (playerName: string) => {
+    const getIconForPlayer = (playerName: string): string => {
         const windowTitleMap = [
             ["Mozilla Firefox", "󰈹 "],
             ["Microsoft Edge", "󰇩 "],
@@ -63,7 +45,7 @@ const Media = () => {
             songIcon.value = getIconForPlayer(identity);
             return track_title.length === 0
                 ? `No media playing...`
-                : truncation.value 
+                : truncation.value
                     ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
                     : `${track_title + trackArtist}`;
         } else {

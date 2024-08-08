@@ -23,7 +23,7 @@ const Bar = (getPlayerInfo: Function) => {
                         const update = () => {
                             const foundPlayer = getPlayerInfo(media);
                             if (foundPlayer !== undefined) {
-                                const value = foundPlayer.position / foundPlayer.length;
+                                const value = foundPlayer.length ? foundPlayer.position / foundPlayer.length : 0;
                                 self.value = value > 0 ? value : 0;
                             } else {
                                 self.value = 0;
