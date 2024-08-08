@@ -1,4 +1,5 @@
 import { opt, mkOptions } from "lib/option"
+import { NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 
 const colors = {
     "rosewater": "#f5e0dc",
@@ -55,7 +56,7 @@ const options = mkOptions(OPTIONS, {
         },
         osd: {
             enable: opt(true),
-            orientation: opt<"horizontal" | "vertical">("vertical"),
+            orientation: opt<OSDOrientation>("vertical"),
             bar_container: opt(colors.crust),
             icon_container: opt(colors.lavender),
             bar_color: opt(colors.lavender),
@@ -67,7 +68,7 @@ const options = mkOptions(OPTIONS, {
             active_monitor: opt(true),
             radius: opt("0.4em"),
             margins: opt("0px 5px 0px 0px"),
-            location: opt<"top left" | "top" | "top right" | "right" | "bottom right" | "bottom" | "bottom left" | "left">("right"),
+            location: opt<OSDAnchor>("right"),
         },
         bar: {
             floating: opt(false),
@@ -744,7 +745,7 @@ const options = mkOptions(OPTIONS, {
     terminal: opt("kitty"),
 
     notifications: {
-        position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
+        position: opt<NotificationAnchor>("top right"),
         monitor: opt(0),
         active_monitor: opt(true),
         timeout: opt(7000),
