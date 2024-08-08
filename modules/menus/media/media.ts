@@ -18,17 +18,23 @@ const Media = () => {
             (p) => p["play-back-status"] === "Playing",
         );
 
-        if (isPlaying) {
-            curPlayer.value = media.players.sort(
-                (a, b) =>
-                    statusOrder[a["play-back-status"]] -
-                    statusOrder[b["play-back-status"]],
-            )[0].name;
+        const playerStillExists = media.players.some(
+            (p) => curPlayer.value === p["bus-name"],
+        );
+
+        const nextPlayerUp = media.players.sort(
+            (a, b) =>
+                statusOrder[a["play-back-status"]] -
+                statusOrder[b["play-back-status"]],
+        )[0].bus_name;
+
+        if (isPlaying || !playerStillExists) {
+            curPlayer.value = nextPlayerUp;
         }
     });
 
     const getPlayerInfo = (): MprisPlayer => {
-        return media.players.find((p) => p.name === curPlayer.value) || media.players[0];
+        return media.players.find((p) => p.bus_name === curPlayer.value) || media.players[0];
     };
 
     return Widget.Box({
