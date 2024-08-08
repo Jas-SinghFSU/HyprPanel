@@ -1,6 +1,9 @@
 import Gdk from 'gi://Gdk?version=3.0';
 const mpris = await Service.import("mpris");
 import { openMenu } from "../utils.js";
+import options from "options";
+
+const { show_artist, truncation, truncation_size } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
@@ -51,13 +54,18 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const label = Utils.watch("󰎇 Media 󰎇", mpris, "changed", () => {
+    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size], () => {
         if (activePlayer.value) {
-            const { track_title, identity } = activePlayer.value;
+            const { track_title, identity, track_artists } = activePlayer.value;
+            const trackArtist = show_artist.value
+                ? ` - ${track_artists.join(', ')}`
+                : ``;
             songIcon.value = getIconForPlayer(identity);
             return track_title.length === 0
                 ? `No media playing...`
-                : `${track_title}`;
+                : truncation.value 
+                    ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
+                    : `${track_title + trackArtist}`;
         } else {
             songIcon.value = "";
             return "󰎇 Media 󰎇";
@@ -74,14 +82,10 @@ const Media = () => {
                         Widget.Label({
                             class_name: "bar-button-icon media",
                             label: songIcon.bind("value"),
-                            maxWidthChars: 30,
                         }),
                         Widget.Label({
                             class_name: "bar-button-label media",
-                            label,
-                            truncate: "end",
-                            wrap: true,
-                            maxWidthChars: 30,
+                            label: mediaLabel,
                         }),
                     ],
                 }),
