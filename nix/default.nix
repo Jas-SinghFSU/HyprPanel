@@ -21,7 +21,7 @@
 }:
 let
   ags = inputs.ags.packages.${system}.default.override {
-    extraPackages = [accountsservice];
+    extraPackages = [ accountsservice ];
   };
 
   pname = "hyprpanel";
@@ -46,7 +46,8 @@ let
       cp -f main.js $out/config.js
     '';
   };
-in {
+in
+{
   desktop = {
     inherit config;
     script = writeShellScriptBin pname ''
