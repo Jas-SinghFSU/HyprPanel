@@ -1,5 +1,6 @@
 import { opt, mkOptions } from "lib/option"
 import { NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
+import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
 const colors = {
     "rosewater": "#f5e0dc",
