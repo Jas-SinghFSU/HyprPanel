@@ -20,6 +20,7 @@ const Controls = () => {
         },
         on_primary_click: () => network.toggleWifi(),
         child: Widget.Label({
+          class_name: "txt-icon",
           setup: (self) => {
             self.hook(network, () => {
               return (self.label = network.wifi.enabled ? "󰤨" : "󰤭");
