@@ -2,7 +2,6 @@ import Gdk from 'gi://Gdk?version=3.0';
 const mpris = await Service.import("mpris");
 import { openMenu } from "../utils.js";
 import options from "options";
-import { Mpris } from 'types/service/mpris.js';
 import { getCurrentPlayer } from 'lib/shared/media.js';
 
 const { show_artist, truncation, truncation_size } = options.bar.media;
@@ -17,18 +16,16 @@ const Media = () => {
 
     const getIconForPlayer = (playerName: string): string => {
         const windowTitleMap = [
-            ["Mozilla Firefox", "󰈹 "],
+            ["Firefox", "󰈹 "],
             ["Microsoft Edge", "󰇩 "],
-            ["(.*)Discord(.*)", " "],
+            ["Discord", " "],
             ["Plex", "󰚺 "],
-            ["(.*) Spotify Free", "󰓇 "],
-            ["(.*)Spotify Premium", "󰓇 "],
             ["Spotify", "󰓇 "],
             ["(.*)", "󰝚 "],
         ];
 
         const foundMatch = windowTitleMap.find((wt) =>
-            RegExp(wt[0]).test(playerName),
+            RegExp(wt[0], "i").test(playerName),
         );
 
         return foundMatch ? foundMatch[1] : "󰝚";
@@ -39,15 +36,19 @@ const Media = () => {
     const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size], () => {
         if (activePlayer.value) {
             const { track_title, identity, track_artists } = activePlayer.value;
+            songIcon.value = getIconForPlayer(identity);
             const trackArtist = show_artist.value
                 ? ` - ${track_artists.join(', ')}`
                 : ``;
-            songIcon.value = getIconForPlayer(identity);
+            const truncatedLabel = truncation.value 
+                ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
+                : `${track_title + trackArtist}`;
+
             return track_title.length === 0
                 ? `No media playing...`
-                : truncation.value
-                    ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
-                    : `${track_title + trackArtist}`;
+                : ((truncatedLabel.length < truncation_size.value) || !truncation.value)
+                    ? `${truncatedLabel}`
+                    : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
         } else {
             songIcon.value = "";
             return "󰎇 Media 󰎇";
