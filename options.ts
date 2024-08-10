@@ -1,4 +1,5 @@
 import { opt, mkOptions } from "lib/option"
+import { NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
@@ -101,7 +102,7 @@ const options = mkOptions(OPTIONS, {
         },
         osd: {
             enable: opt(true),
-            orientation: opt<"horizontal" | "vertical">("vertical"),
+            orientation: opt<OSDOrientation>("vertical"),
             bar_container: opt(colors.crust),
             icon_container: opt(tertiary_colors.lavender),
             bar_color: opt(tertiary_colors.lavender),
@@ -113,7 +114,7 @@ const options = mkOptions(OPTIONS, {
             active_monitor: opt(true),
             radius: opt("0.4em"),
             margins: opt("0px 5px 0px 0px"),
-            location: opt<"top left" | "top" | "top right" | "right" | "bottom right" | "bottom" | "bottom left" | "left">("right"),
+            location: opt<OSDAnchor>("right"),
         },
         bar: {
             floating: opt(false),
@@ -691,7 +692,7 @@ const options = mkOptions(OPTIONS, {
             truncation_size: opt(30)
         },
         notifications: {
-            show_total: opt(false)
+            show_total: opt(false),
         },
     },
 
@@ -799,7 +800,9 @@ const options = mkOptions(OPTIONS, {
     },
 
     notifications: {
-        position: opt<"top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left">("top right"),
+        position: opt<NotificationAnchor>("top right"),
+        monitor: opt(0),
+        active_monitor: opt(true),
         timeout: opt(7000),
         cache_actions: opt(true),
     },
