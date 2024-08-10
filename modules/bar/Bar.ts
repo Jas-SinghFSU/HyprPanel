@@ -13,6 +13,7 @@ const hyprland = await Service.import("hyprland");
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
 import options from "options";
+import Gdk from "gi://Gdk?version=3.0";
 
 const { layouts } = options.bar;
 
@@ -84,8 +85,52 @@ const widget = {
     clock: () => WidgetContainer(Clock()),
     systray: () => WidgetContainer(SysTray()),
 };
+function getGdkMonitors() {
+    const display = Gdk.Display.get_default();
+
+    if (display === null) {
+        return;
+    }
+    const numGdkMonitors = display.get_n_monitors();
+    const gdkMonitors = {};
+    for (let i = 0; i < numGdkMonitors; i++) {
+        const curMonitor = display.get_monitor(i);
+
+        if (curMonitor === null) {
+            return;
+        }
+
+        const model = curMonitor.get_model();
+        gdkMonitors[i] = model;
+    }
+    return gdkMonitors;
+}
+
+const gdkMonitorIdToHyprlandId = (monitor: number): number => {
+    const gdkMonitors = getGdkMonitors();
+    console.log(getGdkMonitors());
+
+    const gdkMonitorModel = gdkMonitors?.[monitor];
+    if (gdkMonitors === undefined || gdkMonitorModel === undefined) {
+        return monitor;
+    }
+
+    const hyprlandMonitor = hyprland.monitors.find(hypMon => hypMon.model === gdkMonitorModel);
+
+    if (hyprlandMonitor === undefined) {
+        return monitor
+    }
+
+    return hyprlandMonitor.id;
+
+    //based off of the monitor number, get the name that gdk has for it
+
+    //get that monitors id from hyprland itself
+
+}
 
 export const Bar = (monitor: number) => {
+    // const monitor = gdkMonitorIdToHyprlandId(monitor);
     return Widget.Window({
         name: `bar-${monitor}`,
         class_name: "bar",
@@ -104,6 +149,8 @@ export const Bar = (monitor: number) => {
                     setup: self => {
                         self.hook(layouts, (self) => {
                             const foundLayout = getModulesForMonitor(monitor, layouts.value as BarLayout)
+                            // console.log(monitor);
+                            // console.log(JSON.stringify(foundLayout, null, 2));
                             self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](monitor));
                         })
                     },
