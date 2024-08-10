@@ -147,6 +147,7 @@ export const Notify = (notifPayload: NotificationArgs): void => {
 
     Utils.execAsync(command)
 }
+
 export function getPosition (pos: NotificationAnchor | OSDAnchor): ("top" | "bottom" | "left" | "right")[] {
     const positionMap: { [key: string]: ("top" | "bottom" | "left" | "right")[] } = {
         "top": ["top"],
@@ -160,30 +161,4 @@ export function getPosition (pos: NotificationAnchor | OSDAnchor): ("top" | "bot
     };
 
     return positionMap[pos] || ["top"];
-}
-/**
- * Ensure that the provided filepath is a valid image
- */
-export const isAnImage = (imgFilePath: string): boolean => {
-    try {
-        GdkPixbuf.Pixbuf.new_from_file(imgFilePath);
-        return true;
-    } catch (error) {
-        return false;
-    }
-}
-
-export const Notify = (notifPayload: NotificationArgs): void => {
-    let command = 'notify-send';
-    command += ` "${notifPayload.summary} "`;
-    if (notifPayload.body) command += ` "${notifPayload.body}" `;
-    if (notifPayload.appName) command += ` -a "${notifPayload.appName}"`;
-    if (notifPayload.iconName) command += ` -i "${notifPayload.iconName}"`;
-    if (notifPayload.urgency) command += ` -u "${notifPayload.urgency}"`;
-    if (notifPayload.timeout !== undefined) command += ` -t ${notifPayload.timeout}`;
-    if (notifPayload.category) command += ` -c "${notifPayload.category}"`;
-    if (notifPayload.transient) command += ` -e`;
-    if (notifPayload.id !== undefined) command += ` -r ${notifPayload.id}`;
-
-    Utils.execAsync(command)
 }
