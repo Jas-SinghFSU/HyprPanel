@@ -18,7 +18,12 @@ const Workspaces = (monitor = -1, ws = 8) => {
         hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
 
         const currentMonitorName = monitorMap[monitor];
-        return wsRules[currentMonitorName].includes(curWs);
+        const monitorWSRules = wsRules[currentMonitorName];
+
+        if (monitorWSRules === undefined) {
+            return curWs;
+        }
+        return monitorWSRules.includes(curWs);
     };
 
     const getWorkspaceRules = (): WorkspaceMap => {
