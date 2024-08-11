@@ -53,74 +53,9 @@ export async function sh(cmd: string | string[]) {
     })
 }
 
-// function getGdkMonitors() {
-//     const display = Gdk.Display.get_default();
-//     const numGdkMonitors = display.get_n_monitors();
-//     const gdkMonitors = new Map();
-//
-//     for (let i = 0; i < numGdkMonitors; i++) {
-//         const monitor = display.get_monitor(i);
-//         const model = monitor.get_model();
-//         const geometry = monitor.get_geometry();
-//         const scaleFactor = monitor.get_scale_factor();
-//
-//         // Create a composite key
-//         const key = `${model}_${geometry.width}x${geometry.height}_${geometry.x},${geometry.y}_${scaleFactor}`;
-//         gdkMonitors.set(key, i);
-//     }
-//
-//     return gdkMonitors;
-// }
-// export function forMonitors(widget) {
-//     const monitors = JSON.parse(Utils.exec("hyprctl -j monitors"));
-//     const gdkMonitors = getGdkMonitors();
-//
-//     return monitors.map((monitor) => {
-//         // Create the composite key for Hyprland monitor
-//         const key = `${monitor.model}_${monitor.width}x${monitor.height}_${monitor.x},${monitor.y}_${monitor.scale}`;
-//
-//         const gdkMonitor = gdkMonitors.get(key);
-//         if (gdkMonitor !== undefined) {
-//             return widget(monitor.id, gdkMonitor);
-//         } else {
-//             console.warn(
-//                 `Couldn't find Gdk monitor for Hyprland monitor ID ${monitor.id}.`
-//             );
-//             return widget(monitor.id, monitor.id);
-//         }
-//     });
-// }
-// function getGdkMonitors() {
-//     const display = Gdk.Display.get_default();
-//     const numGdkMonitors = display.get_n_monitors();
-//     const gdkMonitors = new Map();
-//     for (let i = 0; i < numGdkMonitors; i++) {
-//         const model = display.get_monitor(i).get_model();
-//         gdkMonitors.set(model, i);
-//     }
-//     return gdkMonitors;
-// }
-
-// export function forMonitors(widget) {
-//     const monitors = JSON.parse(Utils.exec("hyprctl -j monitors"));
-//     const gdkMonitors = getGdkMonitors();
-//     return monitors.map((monitor) => {
-//         const gdkMonitor = gdkMonitors.get(monitor.model);
-//         if (gdkMonitor !== undefined) {
-//             return widget(monitor.id, gdkMonitor);
-//         } else {
-//             console.warn(
-//                 `Couldn't find Gdk monitor for Hyprland monitor ID ${monitor.id}.`
-//             );
-//             return widget(monitor.id, monitor.id);
-//         }
-//     });
-// }
 export function forMonitors(widget: (monitor: number) => Gtk.Window) {
-    const n = Gdk.Display.get_default()?.get_n_monitors() || 1
-    const mappedWidgets = range(n, 0).flatMap(widget);
-
-    return mappedWidgets;
+    const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
+    return range(n, 0).flatMap((monitor) => widget(monitor));
 }
 
 /**

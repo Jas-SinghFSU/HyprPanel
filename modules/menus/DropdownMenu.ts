@@ -24,12 +24,9 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
         let monWidth = curHyprlandMonitor?.width;
         let monHeight = curHyprlandMonitor?.height;
 
-        console.log(hyprland.active.monitor.id);
-        // console.log(hyprland.monitors[hyprland.active.monitor.id].model);
-        hyprland.monitors.forEach(m => console.log(`${m.id}: ${m.model}`));
-        // console.log(JSON.stringify(hyprland.monitors, null, 2));
-        console.log(monWidth);
-        console.log(monHeight);
+        if (monWidth === undefined || monHeight === undefined || hyprScaling === undefined) {
+            return;
+        }
 
         // If GDK Scaling is applied, then get divide width by scaling
         // to get the proper coordinates.
@@ -47,7 +44,11 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
         }
 
         // If monitor is vertical (transform = 1 || 3) swap height and width
-        if (curHyprlandMonitor?.transform % 2 !== 0) {
+        const isVertical = curHyprlandMonitor?.transform !== undefined
+            ? curHyprlandMonitor.transform % 2 !== 0
+            : false;
+
+        if (isVertical) {
             [monWidth, monHeight] = [monHeight, monWidth];
         }
 
