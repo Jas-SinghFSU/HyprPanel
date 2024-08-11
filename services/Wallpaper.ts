@@ -1,4 +1,5 @@
 import { dependencies, sh } from "lib/utils"
+import options from "options";
 const hyprland = await Service.import("hyprland");
 
 const WP = `${Utils.HOME}/.config/background`
@@ -11,6 +12,7 @@ class Wallpaper extends Service {
     }
 
     #blockMonitor = false
+    #isRunning = false
 
     #wallpaper() {
         if (!dependencies("swww"))
@@ -42,21 +44,42 @@ class Wallpaper extends Service {
     }
 
     readonly set = (path: string) => { this.#setWallpaper(path) }
+    readonly isRunning = () => { return this.#isRunning }
+
     get wallpaper() { return WP }
 
     constructor() {
         super()
 
-        if (!dependencies("swww"))
+        options.wallpaper.enable.connect("changed", () => {
+            if (options.wallpaper.enable.value) {
+                this.#isRunning = true
+                Utils.execAsync("swww-daemon")
+                    .then(() => {
+                        this.#wallpaper
+                    })
+                    .catch(() => null)
+            } else {
+                this.#isRunning = false
+                Utils.execAsync("pkill swww-daemon")
+                    .catch(() => null)
+            }
+
+        })
+
+        if (!dependencies("swww") || !options.wallpaper.enable.value)
             return this
 
+        this.#isRunning = true
         Utils.monitorFile(WP, () => {
             if (!this.#blockMonitor)
                 this.#wallpaper()
         })
 
         Utils.execAsync("swww-daemon")
-            .then(this.#wallpaper)
+            .then(() => {
+                this.#wallpaper
+            })
             .catch(() => null)
     }
 }

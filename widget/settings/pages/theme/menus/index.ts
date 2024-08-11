@@ -14,6 +14,7 @@ export const MenuTheme = () => {
             children: [
                 Header('General'),
                 Option({ opt: options.theme.bar.menus.monochrome, title: 'Use Global Colors', type: 'boolean', disabledBinding: options.theme.matugen }),
+                Option({ opt: options.wallpaper.enable, title: 'Apply Wallpapers', subtitle: 'Whether to apply the wallpaper or to only use it for Matugen color generation.', type: 'boolean' }),
                 Option({ opt: options.wallpaper.image, title: 'Wallpaper', subtitle: options.wallpaper.image.bind("value"), type: 'wallpaper' }),
                 Option({ opt: options.theme.bar.menus.background, title: 'Background Color', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.cards, title: 'Cards', type: 'color' }),

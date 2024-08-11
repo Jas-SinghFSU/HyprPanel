@@ -2,7 +2,7 @@ import options from "options";
 import { bash, dependencies } from "lib/utils";
 import { MatugenColors } from "lib/types/options";
 import { initializeTrackers } from "./options_trackers";
-import { generateMatugenColors, replaceHexValues } from "./matugen/index";
+import { generateMatugenColors, replaceHexValues } from "../services/matugen/index";
 
 const deps = [
     "font",
