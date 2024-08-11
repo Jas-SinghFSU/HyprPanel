@@ -5,6 +5,7 @@ import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
 import Wallpaper from "services/Wallpaper";
 import { dependencies as checkDependencies } from "lib/utils";
+import options from "options";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -159,7 +160,9 @@ export const Inputter = <T>({
                 case "wallpaper": return self.child = Widget.FileChooserButton({
                     on_file_set: ({ uri }) => {
                         opt.value = uri!.replace("file://", "") as T;
-                        Wallpaper.set(uri!.replace("file://", ""));
+                        if (options.wallpaper.enable.value) {
+                            Wallpaper.set(uri!.replace("file://", ""));
+                        }
                     },
                 })
 

@@ -37,7 +37,16 @@ export const initializeTrackers = (resetCssFunc: Function) => {
     })
 
     Wallpaper.connect("changed", () => {
+        console.info("Wallpaper changed, regenerating Matugen colors...")
         if (options.theme.matugen.value) {
+            options.resetTheme();
+            resetCssFunc();
+        }
+    })
+
+    options.wallpaper.image.connect("changed", () => {
+        if ((!Wallpaper.isRunning() && options.theme.matugen.value) || !options.wallpaper.enable.value) {
+            console.info("Wallpaper path changed, regenerating Matugen colors...")
             options.resetTheme();
             resetCssFunc();
         }

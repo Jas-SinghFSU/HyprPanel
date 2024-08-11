@@ -796,6 +796,7 @@ const options = mkOptions(OPTIONS, {
     terminal: opt("kitty"),
 
     wallpaper: {
+        enable: opt(true),
         image: opt("")
     },
 
