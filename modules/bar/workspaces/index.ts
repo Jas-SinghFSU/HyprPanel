@@ -9,7 +9,7 @@ function range(length: number, start = 1) {
 }
 
 const Workspaces = (monitor = -1, ws = 8) => {
-    const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap) => {
+    const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap): boolean => {
         if (!wsRules || !Object.keys(wsRules).length) {
             return true;
         }
@@ -18,7 +18,12 @@ const Workspaces = (monitor = -1, ws = 8) => {
         hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
 
         const currentMonitorName = monitorMap[monitor];
-        return wsRules[currentMonitorName].includes(curWs);
+        const monitorWSRules = wsRules[currentMonitorName];
+
+        if (monitorWSRules === undefined) {
+            return true;
+        }
+        return monitorWSRules.includes(curWs);
     };
 
     const getWorkspaceRules = (): WorkspaceMap => {
@@ -42,7 +47,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
         }
     };
 
-    const getCurrentMonitorWorkspaces = () => {
+    const getCurrentMonitorWorkspaces = (): number[] => {
         if (hyprland.monitors.length === 1) {
             return Array.from({ length: workspaces.value }, (_, i) => i + 1);
         }
@@ -61,7 +66,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
         currentMonitorWorkspaces.value = getCurrentMonitorWorkspaces()
     })
 
-    const goToNextWS = () => {
+    const goToNextWS = (): void => {
         const curWorkspace = hyprland.active.workspace.id;
         const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
         let nextIndex = indexOfWs + 1;
@@ -72,7 +77,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
         hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
     }
 
-    const goToPrevWS = () => {
+    const goToPrevWS = (): void => {
         const curWorkspace = hyprland.active.workspace.id;
         const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
         let prevIndex = indexOfWs - 1;
@@ -96,7 +101,12 @@ const Workspaces = (monitor = -1, ws = 8) => {
         } as T;
     }
 
-    const createThrottledScrollHandlers = (scrollSpeed: number) => {
+    type ThrottledScrollHandlers = {
+        throttledScrollUp: () => void;
+        throttledScrollDown: () => void;
+    };
+
+    const createThrottledScrollHandlers = (scrollSpeed: number): ThrottledScrollHandlers => {
         const throttledScrollUp = throttle(() => {
             if (reverse_scroll.value === true) {
                 goToPrevWS();
