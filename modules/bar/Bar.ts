@@ -221,7 +221,6 @@ export const Bar = (() => {
 
     return (monitor: number) => {
         const hyprlandMonitor = gdkMonitorIdToHyprlandId(monitor, usedHyprlandMonitors);
-        console.log(`monitor ${monitor} should really be ${hyprlandMonitor}`);
 
         return Widget.Window({
             name: `bar-${hyprlandMonitor}`,
