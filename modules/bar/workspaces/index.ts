@@ -168,7 +168,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                 child: Widget.Label({
                                     attribute: i,
                                     vpack: "center",
-                                    css: spacing.bind("value").as(sp => `margin: 0rem ${0.375 * sp}rem; `),
+                                    css: spacing.bind("value").as(sp => `margin: 0rem ${0.375 * sp}rem;`),
                                     class_name: Utils.merge(
                                         [
                                             options.bar.workspaces.show_icons.bind("value"),
@@ -181,14 +181,14 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                         ],
                                         (show_icons, show_numbered, numbered_active_indicator) => {
                                             if (show_icons) {
-                                                return `workspace - icon`;
+                                                return `workspace-icon`;
                                             }
                                             if (show_numbered) {
                                                 const numActiveInd = hyprland.active.workspace.id === i
                                                     ? numbered_active_indicator
                                                     : "";
 
-                                                return `workspace - number ${numActiveInd} `;
+                                                return `workspace-number ${numActiveInd} `;
                                             }
                                             return "";
                                         },
@@ -215,7 +215,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                                     return available;
                                                 }
                                             }
-                                            return `${i} `;
+                                            return `${i}`;
                                         },
                                     ),
                                     setup: (self) => {
