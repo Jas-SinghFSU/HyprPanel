@@ -1,6 +1,8 @@
 const hyprland = await Service.import("hyprland");
 import { globalMousePos } from "globals";
 import { Exclusivity } from "lib/types/widget";
+import { bash } from "lib/utils";
+import { Monitor } from "types/service/hyprland";
 
 export const Padding = (name: string) =>
     Widget.EventBox({
@@ -16,11 +18,23 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
         return;
     }
 
-    globalMousePos.connect("changed", ({ value }) => {
+    globalMousePos.connect("changed", async ({ value }) => {
         const curHyprlandMonitor = hyprland.monitors.find(m => m.id === hyprland.active.monitor.id);
         const dropdownWidth = self.child.get_allocation().width;
 
-        const hyprScaling = curHyprlandMonitor?.scale;
+        let hyprScaling = 1;
+        try {
+            const monitorInfo = await bash('hyprctl monitors -j');
+            const parsedMonitorInfo = JSON.parse(monitorInfo);
+
+            const foundMonitor = parsedMonitorInfo.find((monitor: Monitor) =>
+                monitor.id === hyprland.active.monitor.id
+            );
+            hyprScaling = foundMonitor?.scale || 1;
+        } catch (error) {
+            console.error(`Error parsing hyprland monitors: ${error}`);
+        }
+
         let monWidth = curHyprlandMonitor?.width;
         let monHeight = curHyprlandMonitor?.height;
 
