@@ -67,25 +67,43 @@ const Workspaces = (monitor = -1, ws = 8) => {
     })
 
     const goToNextWS = (): void => {
-        const curWorkspace = hyprland.active.workspace.id;
-        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-        let nextIndex = indexOfWs + 1;
-        if (nextIndex >= currentMonitorWorkspaces.value.length) {
-            nextIndex = 0;
-        }
+        if (currentMonitorWorkspaces.value === undefined) {
+            let nextIndex = hyprland.active.workspace.id + 1;
+            if (nextIndex > workspaces.value) {
+                nextIndex = 0;
+            }
+            hyprland.messageAsync(`dispatch workspace ${nextIndex}`)
 
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
+        } else {
+            const curWorkspace = hyprland.active.workspace.id;
+            const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
+            let nextIndex = indexOfWs + 1;
+            if (nextIndex >= currentMonitorWorkspaces.value.length) {
+                nextIndex = 0;
+            }
+
+            hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
+        }
     }
 
     const goToPrevWS = (): void => {
-        const curWorkspace = hyprland.active.workspace.id;
-        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-        let prevIndex = indexOfWs - 1;
-        if (prevIndex < 0) {
-            prevIndex = currentMonitorWorkspaces.value.length - 1;
-        }
+        if (currentMonitorWorkspaces.value === undefined) {
+            let prevIndex = hyprland.active.workspace.id - 1;
 
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
+            if (prevIndex <= 0) {
+                prevIndex = workspaces.value;
+            }
+            hyprland.messageAsync(`dispatch workspace ${prevIndex}`)
+        } else {
+            const curWorkspace = hyprland.active.workspace.id;
+            const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
+            let prevIndex = indexOfWs - 1;
+            if (prevIndex < 0) {
+                prevIndex = currentMonitorWorkspaces.value.length - 1;
+            }
+
+            hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
+        }
     }
 
     function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
