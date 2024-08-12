@@ -188,7 +188,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                                     ? numbered_active_indicator
                                                     : "";
 
-                                                return `workspace-number ${numActiveInd} `;
+                                                return `workspace-number ${numActiveInd}`;
                                             }
                                             return "";
                                         },
