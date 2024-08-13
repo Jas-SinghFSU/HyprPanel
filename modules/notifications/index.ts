@@ -34,13 +34,13 @@ export default () => {
                 if (activeMonitor === true) {
                     return curMon;
                 }
-    
+
                 return mon;
             }
         ),
         layer: "overlay",
         anchor: position.bind("value").as(v => getPosition(v)),
-        exclusivity: "ignore",
+        exclusivity: "normal",
         child: Widget.Box({
             class_name: "notification-card-container",
             vertical: true,
