@@ -816,6 +816,8 @@ const options = mkOptions(OPTIONS, {
         timeout: opt(7000),
         cache_actions: opt(true),
     },
+
+    dummy: opt(true)
 })
 
 globalThis["options"] = options

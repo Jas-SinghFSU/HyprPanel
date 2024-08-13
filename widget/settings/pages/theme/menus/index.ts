@@ -13,6 +13,7 @@ export const MenuTheme = () => {
             vertical: true,
             children: [
                 Header('General'),
+                Option({ opt: options.dummy, title: 'Theme', type: 'export_import', filePath: `${TMP}/config.json` }),
                 Option({ opt: options.theme.bar.menus.monochrome, title: 'Use Global Colors', type: 'boolean', disabledBinding: options.theme.matugen }),
                 Option({ opt: options.wallpaper.enable, title: 'Apply Wallpapers', subtitle: 'Whether to apply the wallpaper or to only use it for Matugen color generation.', type: 'boolean' }),
                 Option({ opt: options.wallpaper.image, title: 'Wallpaper', subtitle: options.wallpaper.image.bind("value"), type: 'wallpaper' }),

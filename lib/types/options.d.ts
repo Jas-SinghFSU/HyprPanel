@@ -19,10 +19,14 @@ export type RowProps<T> = {
     | "boolean"
     | "img"
     | "wallpaper"
+    | "export"
+    | "import"
+    | "export_import"
     | "font"
     enums?: string[]
     max?: number
     min?: number
+    filePath?: string
     disabledBinding?: Variable<boolean>
     subtitle?: string | VarType<any> | Opt,
     dependencies?: string[],

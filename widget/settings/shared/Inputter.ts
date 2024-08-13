@@ -1,11 +1,108 @@
 import { Opt } from "lib/option"
+import GLib from "gi://GLib?version=2.0"
 import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
 import Wallpaper from "services/Wallpaper";
-import { dependencies as checkDependencies } from "lib/utils";
+import { dependencies as checkDependencies, Notify } from "lib/utils";
 import options from "options";
+import Gtk from "gi://Gtk?version=3.0";
+import Gio from "gi://Gio"
+
+const saveFileDialog = (filePath: string): void => {
+    const original_file_path = filePath;
+
+    let file = Gio.File.new_for_path(original_file_path);
+    let [success, content] = file.load_contents(null);
+
+    if (!success) {
+        console.error(`Could not find 'config.json' at ${TMP}`);
+        return;
+    }
+
+    let jsonString = new TextDecoder("utf-8").decode(content);
+    let jsonObject = JSON.parse(jsonString);
+
+    const filterHexColorPairs = (jsonObject: object) => {
+        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+        let filteredObject = {};
+
+        for (let key in jsonObject) {
+            if (typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key])) {
+                filteredObject[key] = jsonObject[key];
+            }
+        }
+
+        return filteredObject;
+    };
+
+    let filteredJsonObject = filterHexColorPairs(jsonObject);
+    let filteredContent = JSON.stringify(filteredJsonObject, null, 2);
+
+    let dialog = new Gtk.FileChooserDialog({
+        title: "Save File As",
+        action: Gtk.FileChooserAction.SAVE,
+    });
+
+    dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+    dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
+    dialog.set_current_name("hyprpanel_theme.json");
+
+    let response = dialog.run();
+
+    if (response === Gtk.ResponseType.ACCEPT) {
+        let file_path = dialog.get_filename();
+        console.info(`Original file path: ${file_path}`);
+
+        // Function to get an incremented file path
+        const getIncrementedFilePath = (filePath: string) => {
+            let increment = 1;
+            let baseName = filePath.replace(/(\.\w+)$/, '');
+            let match = filePath.match(/(\.\w+)$/);
+            let extension = match ? match[0] : '';
+
+            let newFilePath = filePath;
+            let file = Gio.File.new_for_path(newFilePath);
+
+            while (file.query_exists(null)) {
+                newFilePath = `${baseName}_${increment}${extension}`;
+                file = Gio.File.new_for_path(newFilePath);
+                increment++;
+            }
+
+            return newFilePath;
+        };
+
+        // Get an incremented file path if the file already exists
+        let finalFilePath = getIncrementedFilePath(file_path as string);
+        console.info(`File will be saved at: ${finalFilePath}`);
+
+        try {
+            let save_file = Gio.File.new_for_path(finalFilePath);
+            let outputStream = save_file.replace(null, false, Gio.FileCreateFlags.NONE, null);
+            let dataOutputStream = new Gio.DataOutputStream({
+                base_stream: outputStream
+            });
+
+            dataOutputStream.put_string(filteredContent, null);
+
+            dataOutputStream.close(null);
+
+            Notify({
+                summary: "File Saved Successfully",
+                body: `At ${finalFilePath}.`,
+                iconName: icons.ui.info,
+                timeout: 5000
+            })
+
+        } catch (e: any) {
+            console.error("Failed to write to file:", e.message);
+        }
+    }
+
+    dialog.destroy();
+}
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -39,12 +136,13 @@ export const Inputter = <T>({
     increment = 1,
     disabledBinding,
     dependencies,
+    filePath = "",
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
 ) => {
     return Widget.Box({
-        class_name: "inputter-container",
+        class_name: /export|import/.test(type || "") ? "" : "inputter-container",
         setup: self => {
 
             switch (type) {
@@ -155,6 +253,26 @@ export const Inputter = <T>({
                 case "img": return self.child = Widget.FileChooserButton({
                     class_name: "image-chooser",
                     on_file_set: ({ uri }) => { opt.value = uri!.replace("file://", "") as T },
+                })
+
+                case "export_import": return self.child = Widget.Box({
+                    children: [
+                        // TODO: Change to import via FileChooserButton
+                        Widget.Button({
+                            class_name: "options-import",
+                            label: "import",
+                            on_clicked: () => {
+                                saveFileDialog(filePath);
+                            }
+                        }),
+                        Widget.Button({
+                            class_name: "options-export",
+                            label: "export",
+                            on_clicked: () => {
+                                saveFileDialog(filePath);
+                            }
+                        }),
+                    ]
                 })
 
                 case "wallpaper": return self.child = Widget.FileChooserButton({
