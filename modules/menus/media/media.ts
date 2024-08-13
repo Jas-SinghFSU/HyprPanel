@@ -21,7 +21,7 @@ const generateAlbumArt = (imageUrl: string): string => {
     css = `background-image: linear-gradient(
                 rgba(${r}, ${g}, ${b}, ${alpha}),
                 rgba(${r}, ${g}, ${b}, ${alpha}),
-                ${userHexColor} 40em
+                ${userHexColor} 65em
             ), url("${imageUrl}");`;
 
     return css;
