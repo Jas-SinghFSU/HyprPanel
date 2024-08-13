@@ -222,6 +222,10 @@ const options = mkOptions(OPTIONS, {
                 dimtext: opt(colors.surface2),
                 feinttext: opt(colors.surface0),
                 label: opt(colors.lavender),
+                popover: {
+                    text: opt(colors.lavender),
+                    background: opt(secondary_colors.mantle)
+                },
                 listitems: {
                     passive: opt(colors.text),
                     active: opt(secondary_colors.lavender)

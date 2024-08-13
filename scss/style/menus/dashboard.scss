@@ -367,8 +367,3 @@
     }
   }
 }
-
-.dropdown.recording {
-  color: red;
-  background-color: if($bar-menus-monochrome, $bar-menus-dropdownmenu-background, $bar-menus-dropdownmenu-background);
-}

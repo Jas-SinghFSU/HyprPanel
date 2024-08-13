@@ -1,0 +1,26 @@
+@import '../colors.scss';
+
+window.popup {
+  menuitem {
+    label {
+      color: $bar-menus-popover-text;
+    }
+
+    &:hover {
+      background-color: transparentize($bar-menus-popover-text, 0.6);
+    }
+  }
+
+  menu {
+    background: $bar-menus-popover-background;
+  }
+
+  separator {
+    background: transparentize($bar-menus-popover-text, 0.7);
+    min-height: 0.075em;
+  }
+
+  arrow {
+    color: $bar-menus-popover-text;
+  }
+}
