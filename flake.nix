@@ -91,7 +91,7 @@
           pkgs = pkgsFor.${system};
         in
         {
-          default = (pkgs.callPackage ./nix/default.nix { inherit inputs; }).desktop.script;
+          default = (pkgs.callPackage ./nix { inherit inputs; }).desktop.script;
         }
       );
     };
