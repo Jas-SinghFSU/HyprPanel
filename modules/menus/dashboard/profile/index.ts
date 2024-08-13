@@ -7,15 +7,14 @@ import options from "options";
 const { image, name } = options.menus.dashboard.powermenu.avatar;
 const { confirmation, shutdown, logout, sleep, reboot } = options.menus.dashboard.powermenu;
 
-const actions = {
-    shutdown: shutdown.value,
-    reboot: reboot.value,
-    logout: logout.value,
-    sleep: sleep.value,
-};
-
 const Profile = () => {
     const handleClick = (action: PowerOptions) => {
+        const actions = {
+            shutdown: shutdown.value,
+            reboot: reboot.value,
+            logout: logout.value,
+            sleep: sleep.value,
+        };
         App.closeWindow("dashboardmenu");
 
         if (!confirmation.value) {
