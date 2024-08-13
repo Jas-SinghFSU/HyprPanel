@@ -276,6 +276,10 @@ const options = mkOptions(OPTIONS, {
                         background: {
                             color: opt(colors.crust),
                         },
+                        card: {
+                            color: opt(colors.base),
+                            tint: opt(85),
+                        },
                         border: {
                             color: opt(colors.surface0),
                         },
@@ -703,6 +707,7 @@ const options = mkOptions(OPTIONS, {
     menus: {
         dashboard: {
             powermenu: {
+                confirmation: opt(true),
                 sleep: opt("systemctl suspend"),
                 reboot: opt("systemctl reboot"),
                 logout: opt("pkill Hyprland"),
