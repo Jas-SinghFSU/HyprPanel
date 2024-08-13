@@ -80,7 +80,7 @@ Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS usin
 # flake.nix
 
 {
-  inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+  hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   # ...
 
   outputs = { self, nixpkgs, ... }@inputs: 
