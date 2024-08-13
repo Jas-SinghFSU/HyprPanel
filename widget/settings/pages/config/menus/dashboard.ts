@@ -17,6 +17,7 @@ export const DashboardMenuSettings = () => {
                 Option({ opt: options.menus.dashboard.powermenu.avatar.image, title: 'Profile Image', type: 'img' }),
                 Option({ opt: options.menus.dashboard.powermenu.avatar.name, title: 'Profile Name', subtitle: 'Use \'system\' to automatically set system name', type: 'string' }),
 
+                Option({ opt: options.menus.dashboard.powermenu.confirmation, title: 'Show Confirmation Dialogue', type: 'boolean' }),
                 Option({ opt: options.menus.dashboard.powermenu.shutdown, title: 'Shutdown Command', type: 'string' }),
                 Option({ opt: options.menus.dashboard.powermenu.reboot, title: 'Reboot Command', type: 'string' }),
                 Option({ opt: options.menus.dashboard.powermenu.logout, title: 'Logout Command', type: 'string' }),

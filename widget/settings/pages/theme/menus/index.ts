@@ -29,6 +29,10 @@ export const MenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.border.radius, title: 'Border Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.menus.border.color, title: 'Border Color', type: 'color' }),
 
+                Header('Popover'),
+                Option({ opt: options.theme.bar.menus.popover.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.popover.background, title: 'Background', type: 'color' }),
+
                 Header('List Items'),
                 Option({ opt: options.theme.bar.menus.listitems.active, title: 'Active', subtitle: 'Items of a list (network name, bluetooth device name, playback device, etc.) when active or hovered.', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.listitems.passive, title: 'Passive', type: 'color' }),

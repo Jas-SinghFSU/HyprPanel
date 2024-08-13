@@ -5,11 +5,24 @@ import GdkPixbuf from "gi://GdkPixbuf";
 
 import options from "options";
 const { image, name } = options.menus.dashboard.powermenu.avatar;
+const { confirmation, shutdown, logout, sleep, reboot } = options.menus.dashboard.powermenu;
 
 const Profile = () => {
     const handleClick = (action: PowerOptions) => {
+        const actions = {
+            shutdown: shutdown.value,
+            reboot: reboot.value,
+            logout: logout.value,
+            sleep: sleep.value,
+        };
         App.closeWindow("dashboardmenu");
-        return powermenu.action(action);
+
+        if (!confirmation.value) {
+            Utils.execAsync(actions[action])
+                .catch((err) => console.error(`Failed to execute ${action} command. Error: ${err}`));
+        } else {
+            powermenu.action(action);
+        }
     };
 
     return Widget.Box({

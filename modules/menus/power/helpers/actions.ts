@@ -42,7 +42,7 @@ class PowerMenu extends Service {
 
     exec = () => {
         App.closeWindow("verification");
-        Utils.exec(this.#cmd);
+        Utils.execAsync(this.#cmd);
     };
 }
 

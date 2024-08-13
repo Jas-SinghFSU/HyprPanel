@@ -222,6 +222,10 @@ const options = mkOptions(OPTIONS, {
                 dimtext: opt(colors.surface2),
                 feinttext: opt(colors.surface0),
                 label: opt(colors.lavender),
+                popover: {
+                    text: opt(colors.lavender),
+                    background: opt(secondary_colors.mantle)
+                },
                 listitems: {
                     passive: opt(colors.text),
                     active: opt(secondary_colors.lavender)
@@ -271,6 +275,10 @@ const options = mkOptions(OPTIONS, {
                         album: opt(tertiary_colors.pink),
                         background: {
                             color: opt(colors.crust),
+                        },
+                        card: {
+                            color: opt(colors.base),
+                            tint: opt(85),
                         },
                         border: {
                             color: opt(colors.surface0),
@@ -699,6 +707,7 @@ const options = mkOptions(OPTIONS, {
     menus: {
         dashboard: {
             powermenu: {
+                confirmation: opt(true),
                 sleep: opt("systemctl suspend"),
                 reboot: opt("systemctl reboot"),
                 logout: opt("pkill Hyprland"),
