@@ -51,7 +51,7 @@ const Media = () => {
                     : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
         } else {
             songIcon.value = getIconForPlayer(activePlayer.value?.identity || "");
-            return `${songIcon.value} Media`;
+            return `Media`;
         }
     });
 
