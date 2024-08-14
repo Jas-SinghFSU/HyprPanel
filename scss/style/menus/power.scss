@@ -9,7 +9,7 @@ $popover-padding: 0.6rem * 1.6;
 window#verification .verification {
   @include floating-widget;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-powermenu-confirmation-background);
-  border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border, $bar-menus-menu-dashboard-powermenu-confirmation-border);
+  border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-dashboard-powermenu-confirmation-border);
   padding: 0.35em * 1.6 * 1.5;
   min-width: 20em;
   min-height: 6em;

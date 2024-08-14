@@ -1,5 +1,4 @@
 import { Opt } from "lib/option"
-import GLib from "gi://GLib?version=2.0"
 import Gdk from "gi://Gdk"
 import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
@@ -10,7 +9,7 @@ import options from "options";
 import Gtk from "gi://Gtk?version=3.0";
 import Gio from "gi://Gio"
 
-const saveFileDialog = (filePath: string): void => {
+const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const original_file_path = filePath;
 
     let file = Gio.File.new_for_path(original_file_path);
@@ -37,7 +36,7 @@ const saveFileDialog = (filePath: string): void => {
         return filteredObject;
     };
 
-    let filteredJsonObject = filterHexColorPairs(jsonObject);
+    let filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : jsonObject;
     let filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
     let dialog = new Gtk.FileChooserDialog({
@@ -47,7 +46,7 @@ const saveFileDialog = (filePath: string): void => {
 
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
-    dialog.set_current_name("hyprpanel_theme.json");
+    dialog.set_current_name(themeOnly ? "hyprpanel_theme.json" : "hyprpanel_config.json")
 
     let response = dialog.run();
 
@@ -104,6 +103,95 @@ const saveFileDialog = (filePath: string): void => {
     dialog.destroy();
 }
 
+const importFiles = (themeOnly: boolean = false): void => {
+    let dialog = new Gtk.FileChooserDialog({
+        title: `Import ${themeOnly ? "Theme" : "Config"}`,
+        action: Gtk.FileChooserAction.OPEN,
+    });
+
+    dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+    dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+
+    let response = dialog.run();
+
+    if (response === Gtk.ResponseType.ACCEPT) {
+        let filePath = dialog.get_filename();
+        let file = Gio.File.new_for_path(filePath as string);
+        let [success, content] = file.load_contents(null);
+
+        if (!success) {
+            console.error(`Failed to import: ${filePath}`);
+            dialog.destroy();
+            return;
+        }
+
+        Notify({
+            summary: `Importing ${themeOnly ? "Theme" : "Config"}`,
+            body: `Importing: ${filePath}`,
+            iconName: icons.ui.info,
+            timeout: 7000
+        });
+
+        let jsonString = new TextDecoder("utf-8").decode(content);
+        let importedConfig = JSON.parse(jsonString);
+
+        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+
+        const saveConfigToFile = (config: object, filePath: string) => {
+            let file = Gio.File.new_for_path(filePath);
+            let outputStream = file.replace(null, false, Gio.FileCreateFlags.NONE, null);
+            let dataOutputStream = new Gio.DataOutputStream({ base_stream: outputStream });
+
+            let jsonString = JSON.stringify(config, null, 2);
+            dataOutputStream.put_string(jsonString, null);
+            dataOutputStream.close(null);
+        };
+
+        const filterConfigForThemeOnly = (config: object) => {
+            let filteredConfig = {};
+            for (let key in config) {
+                if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
+                    filteredConfig[key] = config[key];
+                }
+            }
+            return filteredConfig;
+        };
+
+        let tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
+        let optionsConfigFile = Gio.File.new_for_path(OPTIONS);
+
+        let [tmpSuccess, tmpContent] = tmpConfigFile.load_contents(null);
+        let [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
+
+        if (!tmpSuccess || !optionsSuccess) {
+            console.error("Failed to read existing configuration files.");
+            dialog.destroy();
+            return;
+        }
+
+        let tmpConfig = JSON.parse(new TextDecoder("utf-8").decode(tmpContent));
+        let optionsConfig = JSON.parse(new TextDecoder("utf-8").decode(optionsContent));
+
+        // If themeOnly is true, only overwrite hex values
+        if (themeOnly) {
+            let filteredConfig = filterConfigForThemeOnly(importedConfig);
+            tmpConfig = { ...tmpConfig, ...filteredConfig };
+            optionsConfig = { ...optionsConfig, ...filteredConfig };
+        } else {
+            // Otherwise, overwrite the entire configuration
+            tmpConfig = { ...tmpConfig, ...importedConfig };
+            optionsConfig = { ...optionsConfig, ...importedConfig };
+        }
+
+        console.log(JSON.stringify(tmpConfig, null, 2));
+        console.log(JSON.stringify(optionsConfig, null, 2));
+
+        saveConfigToFile(tmpConfig, `${TMP}/config.json`);
+        saveConfigToFile(optionsConfig, OPTIONS);
+    }
+    dialog.destroy();
+}
+
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
     const step = (dir: 1 | -1) => {
@@ -136,7 +224,7 @@ export const Inputter = <T>({
     increment = 1,
     disabledBinding,
     dependencies,
-    filePath = "",
+    exportData,
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
@@ -255,21 +343,20 @@ export const Inputter = <T>({
                     on_file_set: ({ uri }) => { opt.value = uri!.replace("file://", "") as T },
                 })
 
-                case "export_import": return self.child = Widget.Box({
+                case "config_import": return self.child = Widget.Box({
                     children: [
-                        // TODO: Change to import via FileChooserButton
                         Widget.Button({
                             class_name: "options-import",
                             label: "import",
                             on_clicked: () => {
-                                saveFileDialog(filePath);
+                                importFiles(exportData?.themeOnly as boolean);
                             }
                         }),
                         Widget.Button({
                             class_name: "options-export",
                             label: "export",
                             on_clicked: () => {
-                                saveFileDialog(filePath);
+                                saveFileDialog(exportData?.filePath as string, exportData?.themeOnly as boolean);
                             }
                         }),
                     ]
