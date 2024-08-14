@@ -16,7 +16,7 @@ export const MenuTheme = () => {
                 Option({
                     opt: options.dummy,
                     title: 'Theme',
-                    subtitle: 'WARNING: This will replace all your current theme color settings.',
+                    subtitle: 'WARNING: Importing a theme will replace your current theme color settings.',
                     type: 'config_import',
                     exportData: {
                         filePath: OPTIONS,

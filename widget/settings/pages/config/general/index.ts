@@ -15,7 +15,7 @@ export const BarGeneral = () => {
             Option({
                 opt: options.dummy,
                 title: 'Config',
-                subtitle: 'WARNING: This will replace all your current configuration settings.',
+                subtitle: 'WARNING: Importing a configuration will replace your current configuration settings.',
                 type: 'config_import',
                 exportData: {
                     filePath: OPTIONS,

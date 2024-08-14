@@ -23,6 +23,7 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     let jsonString = new TextDecoder("utf-8").decode(content);
     let jsonObject = JSON.parse(jsonString);
 
+    // Function to filter hex color pairs
     const filterHexColorPairs = (jsonObject: object) => {
         const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
         let filteredObject = {};
@@ -36,7 +37,22 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         return filteredObject;
     };
 
-    let filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : jsonObject;
+    // Function to filter out hex color pairs (keep only non-hex color value)
+    const filterOutHexColorPairs = (jsonObject: object) => {
+        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+        let filteredObject = {};
+
+        for (let key in jsonObject) {
+            if (!(typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key]))) {
+                filteredObject[key] = jsonObject[key];
+            }
+        }
+
+        return filteredObject;
+    };
+
+    // Filter the JSON object based on the themeOnly flag
+    let filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
     let filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
     let dialog = new Gtk.FileChooserDialog({
@@ -46,7 +62,7 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
 
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
-    dialog.set_current_name(themeOnly ? "hyprpanel_theme.json" : "hyprpanel_config.json")
+    dialog.set_current_name(themeOnly ? "hyprpanel_theme.json" : "hyprpanel_config.json");
 
     let response = dialog.run();
 
@@ -54,7 +70,6 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         let file_path = dialog.get_filename();
         console.info(`Original file path: ${file_path}`);
 
-        // Function to get an incremented file path
         const getIncrementedFilePath = (filePath: string) => {
             let increment = 1;
             let baseName = filePath.replace(/(\.\w+)$/, '');
@@ -73,7 +88,6 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
             return newFilePath;
         };
 
-        // Get an incremented file path if the file already exists
         let finalFilePath = getIncrementedFilePath(file_path as string);
         console.info(`File will be saved at: ${finalFilePath}`);
 
@@ -93,7 +107,7 @@ const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
                 body: `At ${finalFilePath}.`,
                 iconName: icons.ui.info,
                 timeout: 5000
-            })
+            });
 
         } catch (e: any) {
             console.error("Failed to write to file:", e.message);
@@ -157,6 +171,16 @@ const importFiles = (themeOnly: boolean = false): void => {
             return filteredConfig;
         };
 
+        const filterConfigForNonTheme = (config: object) => {
+            let filteredConfig = {};
+            for (let key in config) {
+                if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
+                    filteredConfig[key] = config[key];
+                }
+            }
+            return filteredConfig;
+        };
+
         let tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
         let optionsConfigFile = Gio.File.new_for_path(OPTIONS);
 
@@ -172,15 +196,14 @@ const importFiles = (themeOnly: boolean = false): void => {
         let tmpConfig = JSON.parse(new TextDecoder("utf-8").decode(tmpContent));
         let optionsConfig = JSON.parse(new TextDecoder("utf-8").decode(optionsContent));
 
-        // If themeOnly is true, only overwrite hex values
         if (themeOnly) {
-            let filteredConfig = filterConfigForThemeOnly(importedConfig);
+            const filteredConfig = filterConfigForThemeOnly(importedConfig);
             tmpConfig = { ...tmpConfig, ...filteredConfig };
             optionsConfig = { ...optionsConfig, ...filteredConfig };
         } else {
-            // Otherwise, overwrite the entire configuration
-            tmpConfig = { ...tmpConfig, ...importedConfig };
-            optionsConfig = { ...optionsConfig, ...importedConfig };
+            const filteredConfig = filterConfigForNonTheme(importedConfig);
+            tmpConfig = { ...tmpConfig, ...filteredConfig };
+            optionsConfig = { ...optionsConfig, ...filteredConfig };
         }
 
         console.log(JSON.stringify(tmpConfig, null, 2));
