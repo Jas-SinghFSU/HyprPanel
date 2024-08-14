@@ -64,8 +64,7 @@ const Media = () => {
                     children: [
                         Widget.Label({
                             class_name: "bar-button-icon media",
-                            label: songIcon.bind("value"),
-                            visible: show_label.bind("value"),
+                            label: songIcon.bind("value").as(v => v || "󰝚"),
                         }),
                         Widget.Label({
                             class_name: "bar-button-label media",
