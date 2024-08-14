@@ -75,7 +75,7 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.media.show_artist, title: 'Show Track Artist', type: 'boolean' }),
                 Option({ opt: options.bar.media.show_label, title: 'Toggle Media Label', type: 'boolean' }),
                 Option({ opt: options.bar.media.truncation, title: 'Truncate Media Label', subtitle: 'Only applicable if Toggle Media Label is enabled', type: 'boolean' }),
-                Option({ opt: options.bar.media.truncation_size, title: 'Truncation Size', subtitle: 'Only applicable if Toggle Media Label is enabled', type: 'number', min: 0 }),
+                Option({ opt: options.bar.media.truncation_size, title: 'Truncation Size', subtitle: 'Only applicable if Toggle Media Label is enabled', type: 'number', min: 10 }),
 
                 Header('Notifications'),
                 Option({ opt: options.bar.notifications.show_total, title: 'Show Total # of notifications', type: 'boolean' }),
