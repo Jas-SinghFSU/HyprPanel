@@ -33,7 +33,7 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size, show_label], () => {
+    const mediaLabel = Utils.watch("Media", [mpris, show_artist, truncation, truncation_size, show_label], () => {
         if (activePlayer.value && show_label.value) {
             const { track_title, identity, track_artists } = activePlayer.value;
             songIcon.value = getIconForPlayer(identity);
