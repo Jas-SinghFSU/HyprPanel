@@ -4,7 +4,7 @@ import { openMenu } from "../utils.js";
 import options from "options";
 import { getCurrentPlayer } from 'lib/shared/media.js';
 
-const { show_artist, truncation, truncation_size } = options.bar.media;
+const { show_artist, truncation, truncation_size, show_label } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
@@ -33,8 +33,8 @@ const Media = () => {
 
     const songIcon = Variable("");
 
-    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size], () => {
-        if (activePlayer.value) {
+    const mediaLabel = Utils.watch("󰎇 Media 󰎇", [mpris, show_artist, truncation, truncation_size, show_label], () => {
+        if (activePlayer.value && show_label.value) {
             const { track_title, identity, track_artists } = activePlayer.value;
             songIcon.value = getIconForPlayer(identity);
             const trackArtist = show_artist.value
@@ -50,8 +50,8 @@ const Media = () => {
                     ? `${truncatedLabel}`
                     : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
         } else {
-            songIcon.value = "";
-            return "󰎇 Media 󰎇";
+            songIcon.value = getIconForPlayer(activePlayer.value?.identity || "");
+            return `${songIcon.value} Media`;
         }
     });
 
@@ -65,6 +65,7 @@ const Media = () => {
                         Widget.Label({
                             class_name: "bar-button-icon media",
                             label: songIcon.bind("value"),
+                            visible: show_label.bind("value"),
                         }),
                         Widget.Label({
                             class_name: "bar-button-label media",

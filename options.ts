@@ -697,6 +697,7 @@ const options = mkOptions(OPTIONS, {
         media: {
             show_artist: opt(false),
             truncation: opt(true),
+            show_label: opt(true),
             truncation_size: opt(30)
         },
         notifications: {
