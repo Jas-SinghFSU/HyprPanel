@@ -13,7 +13,7 @@ export const Padding = (name: string) =>
         setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
     });
 
-const moveBoxToCursor = (self: any, fixed: boolean) => {
+const moveBoxToCursor = (self, fixed) => {
     if (fixed) {
         return;
     }
@@ -27,7 +27,7 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
             const monitorInfo = await bash('hyprctl monitors -j');
             const parsedMonitorInfo = JSON.parse(monitorInfo);
 
-            const foundMonitor = parsedMonitorInfo.find((monitor: Monitor) =>
+            const foundMonitor = parsedMonitorInfo.find((monitor) =>
                 monitor.id === hyprland.active.monitor.id
             );
             hyprScaling = foundMonitor?.scale || 1;
@@ -42,19 +42,16 @@ const moveBoxToCursor = (self: any, fixed: boolean) => {
             return;
         }
 
-        // If GDK Scaling is applied, then get divide width by scaling
-        // to get the proper coordinates.
-        // Ex: On a 2860px wide monitor... if scaling is set to 2, then the right
-        // end of the monitor is the 1430th pixel.
-        const gdkScale = Utils.exec('bash -c "echo $GDK_SCALE"');
+        // Adjust for scaling
+        monWidth = monWidth / hyprScaling;
+        monHeight = monHeight / hyprScaling;
 
-        if (/^\d+(.\d+)?$/.test(gdkScale)) {
+        // Handle GDK Scaling if present
+        const gdkScale = await bash('bash -c "echo $GDK_SCALE"');
+        if (/^\d+(\.\d+)?$/.test(gdkScale)) {
             const scale = parseFloat(gdkScale);
             monWidth = monWidth / scale;
             monHeight = monHeight / scale;
-        } else {
-            monWidth = monWidth / hyprScaling;
-            monHeight = monHeight / hyprScaling;
         }
 
         // If monitor is vertical (transform = 1 || 3) swap height and width
