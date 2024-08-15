@@ -138,6 +138,7 @@ export const Inputter = <T>({
 
                 case "enum": return self.child = EnumSetter(opt as unknown as Opt<string>, enums!)
                 case "boolean": return self.child = Widget.Switch({
+                    vpack: "center",
                     sensitive: disabledBinding !== undefined ? disabledBinding.bind("value").as(disabled => !disabled) : true,
                 })
                     .on("notify::active", self => {
