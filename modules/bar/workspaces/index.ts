@@ -2,7 +2,14 @@ const hyprland = await Service.import("hyprland");
 import { WorkspaceRule, WorkspaceMap } from "lib/types/workspace";
 import options from "options";
 
-const { workspaces, monitorSpecific, reverse_scroll, scroll_speed, spacing } = options.bar.workspaces;
+const { 
+    workspaces, 
+    monitorSpecific,
+    workspaceMask, 
+    reverse_scroll, 
+    scroll_speed, 
+    spacing 
+} = options.bar.workspaces;
 
 function range(length: number, start = 1) {
     return Array.from({ length }, (_, i) => i + start);
@@ -148,8 +155,8 @@ const Workspaces = (monitor = -1, ws = 8) => {
         component: Widget.Box({
             class_name: "workspaces",
             children: Utils.merge(
-                [workspaces.bind(), monitorSpecific.bind()],
-                (workspaces, monitorSpecific) => {
+                [workspaces.bind(), monitorSpecific.bind(), workspaceMask.bind()],
+                (workspaces, monitorSpecific, workspaceMask) => {
                     return range(workspaces || 8)
                         .filter((i) => {
                             if (!monitorSpecific) {
@@ -158,7 +165,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                             const workspaceRules = getWorkspaceRules();
                             return getWorkspacesForMonitor(i, workspaceRules);
                         })
-                        .map((i) => {
+                        .map((i, index) => {
                             return Widget.Button({
                                 class_name: "workspace-button",
                                 on_primary_click: () => {
@@ -215,7 +222,9 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                                     return available;
                                                 }
                                             }
-                                            return `${i}`;
+                                            return workspaceMask
+                                                ? `${index + 1}`
+                                                : `${i}`;
                                         },
                                     ),
                                     setup: (self) => {
