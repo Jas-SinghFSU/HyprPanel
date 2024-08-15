@@ -373,3 +373,21 @@ dialog {
   font-size: 1em;
   color: $yellow;
 }
+
+.options-import,
+.options-export {
+  border-radius: $bar-menus-border-radius * 0.5;
+  color: $bar-menus-buttons-text;
+  padding: 0.35em 0.35em;
+  background: $bar-menus-buttons-default;
+  margin-right: 1em;
+  margin-left: 0.5em;
+
+  &:hover {
+    background: transparentize($bar-menus-buttons-default, 0.8);
+  }
+}
+
+.options-import {
+  margin-right: 0em;
+}
