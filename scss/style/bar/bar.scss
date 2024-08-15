@@ -1,9 +1,5 @@
 .bar {
 
-  .transparent {
-    background: transparent;
-  }
-
   .bar-panel-container {
     margin-top: if($bar-floating, $bar-margin_top, 0em);
     margin-bottom: if($bar-floating, $bar-margin_bottom, 0em);

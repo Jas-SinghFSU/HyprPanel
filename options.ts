@@ -146,7 +146,9 @@ const options = mkOptions(OPTIONS, {
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
                     numbered_active_highlight_border: opt("0.2em"),
-                    numbered_active_text_color: opt(colors.mantle),
+                    numbered_active_highlight_padding: opt("0.2em"),
+                    numbered_active_highlighted_text_color: opt(colors.mantle),
+                    numbered_active_underline_color: opt(colors.pink),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
