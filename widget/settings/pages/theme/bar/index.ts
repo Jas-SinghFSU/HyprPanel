@@ -30,6 +30,8 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.workspaces.available, title: 'Workspace Available Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.occupied, title: 'Workspace Occupied Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.active, title: 'Workspace Active Color', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_highlighted_text_color, title: 'Highlighted Workspace Text Color', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_underline_color, title: 'Workspace Underline Color', type: 'color' }),
 
                 Header('Window Title'),
                 Option({ opt: options.theme.bar.buttons.windowtitle.background, title: 'Background', type: 'color' }),

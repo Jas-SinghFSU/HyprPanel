@@ -146,7 +146,9 @@ const options = mkOptions(OPTIONS, {
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
                     numbered_active_highlight_border: opt("0.2em"),
-                    numbered_active_text_color: opt(colors.mantle),
+                    numbered_active_highlight_padding: opt("0.2em"),
+                    numbered_active_highlighted_text_color: opt(colors.mantle),
+                    numbered_active_underline_color: opt(colors.pink),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
@@ -698,6 +700,7 @@ const options = mkOptions(OPTIONS, {
         media: {
             show_artist: opt(false),
             truncation: opt(true),
+            show_label: opt(true),
             truncation_size: opt(30)
         },
         notifications: {
@@ -817,6 +820,8 @@ const options = mkOptions(OPTIONS, {
         timeout: opt(7000),
         cache_actions: opt(true),
     },
+
+    dummy: opt(true)
 })
 
 globalThis["options"] = options

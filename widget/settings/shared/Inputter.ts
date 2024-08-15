@@ -6,6 +6,7 @@ import { Variable } from "types/variable";
 import Wallpaper from "services/Wallpaper";
 import { dependencies as checkDependencies } from "lib/utils";
 import options from "options";
+import { importFiles, saveFileDialog } from "./FileChooser";
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
     const lbl = Widget.Label({ label: opt.bind().as(v => `${v}`) })
@@ -39,12 +40,13 @@ export const Inputter = <T>({
     increment = 1,
     disabledBinding,
     dependencies,
+    exportData,
 }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>
 ) => {
     return Widget.Box({
-        class_name: "inputter-container",
+        class_name: /export|import/.test(type || "") ? "" : "inputter-container",
         setup: self => {
 
             switch (type) {
@@ -155,6 +157,25 @@ export const Inputter = <T>({
                 case "img": return self.child = Widget.FileChooserButton({
                     class_name: "image-chooser",
                     on_file_set: ({ uri }) => { opt.value = uri!.replace("file://", "") as T },
+                })
+
+                case "config_import": return self.child = Widget.Box({
+                    children: [
+                        Widget.Button({
+                            class_name: "options-import",
+                            label: "import",
+                            on_clicked: () => {
+                                importFiles(exportData?.themeOnly as boolean);
+                            }
+                        }),
+                        Widget.Button({
+                            class_name: "options-export",
+                            label: "export",
+                            on_clicked: () => {
+                                saveFileDialog(exportData?.filePath as string, exportData?.themeOnly as boolean);
+                            }
+                        }),
+                    ]
                 })
 
                 case "wallpaper": return self.child = Widget.FileChooserButton({
