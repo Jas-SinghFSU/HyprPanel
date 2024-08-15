@@ -18,8 +18,8 @@ class Brightness extends Service {
 
     #kbdMax = get(`--device ${kbd} max`)
     #kbd = get(`--device ${kbd} get`)
-    #screenMax = get("max")
-    #screen = get("get") / (get("max") || 1)
+    #screenMax = get(`--device ${screen} max`)
+    #screen = get(`--device ${screen} get`) / (get(`--device ${screen} max`) || 1)
 
     get kbd() { return this.#kbd }
     get screen() { return this.#screen }
@@ -41,7 +41,7 @@ class Brightness extends Service {
         if (percent > 1)
             percent = 1
 
-        sh(`brightnessctl set ${Math.round(percent * 100)}% -q`).then(() => {
+        sh(`brightnessctl set ${Math.round(percent * 100)}% -d ${screen} -q`).then(() => {
             this.#screen = percent
             this.changed("screen")
         })
