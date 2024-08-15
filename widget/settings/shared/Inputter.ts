@@ -4,7 +4,7 @@ import icons from "lib/icons"
 import { RowProps } from "lib/types/options"
 import { Variable } from "types/variable";
 import Wallpaper from "services/Wallpaper";
-import { dependencies as checkDependencies, Notify } from "lib/utils";
+import { bash, dependencies as checkDependencies, Notify } from "lib/utils";
 import options from "options";
 import Gtk from "gi://Gtk?version=3.0";
 import Gio from "gi://Gio"
@@ -206,13 +206,11 @@ const importFiles = (themeOnly: boolean = false): void => {
             optionsConfig = { ...optionsConfig, ...filteredConfig };
         }
 
-        console.log(JSON.stringify(tmpConfig, null, 2));
-        console.log(JSON.stringify(optionsConfig, null, 2));
-
         saveConfigToFile(tmpConfig, `${TMP}/config.json`);
         saveConfigToFile(optionsConfig, OPTIONS);
     }
     dialog.destroy();
+    bash("pkill ags && ags");
 }
 
 const EnumSetter = (opt: Opt<string>, values: string[]) => {
