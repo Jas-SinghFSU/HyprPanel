@@ -1,7 +1,5 @@
 import Gdk from 'gi://Gdk?version=3.0';
 
-import { globalMousePos } from 'globals';
-
 export const closeAllMenus = () => {
     const menuWindows = App.windows
         .filter((w) => {
