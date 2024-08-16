@@ -155,8 +155,8 @@ const Workspaces = (monitor = -1, ws = 8) => {
         component: Widget.Box({
             class_name: "workspaces",
             children: Utils.merge(
-                [workspaces.bind(), monitorSpecific.bind(), workspaceMask.bind()],
-                (workspaces, monitorSpecific, workspaceMask) => {
+                [workspaces.bind(), monitorSpecific.bind()],
+                (workspaces, monitorSpecific) => {
                     return range(workspaces || 8)
                         .filter((i) => {
                             if (!monitorSpecific) {
@@ -206,9 +206,10 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                             options.bar.workspaces.icons.available.bind("value"),
                                             options.bar.workspaces.icons.active.bind("value"),
                                             options.bar.workspaces.icons.occupied.bind("value"),
+                                            workspaceMask.bind(),
                                             hyprland.active.workspace.bind("id")
                                         ],
-                                        (showIcons, available, active, occupied, _) => {
+                                        (showIcons, available, active, occupied, workspaceMask, _) => {
                                             if (showIcons) {
                                                 if (hyprland.active.workspace.id === i) {
                                                     return active;
