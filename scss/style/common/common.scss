@@ -17,12 +17,16 @@ menu {
     font: initial;
     text-shadow: none;
     border-radius: 6px;
-    &:hover, &:active{
-        background-color: $secondary_bg;
+
+    &:hover,
+    &:active {
+      background-color: $secondary_bg;
     }
+
     &:disabled {
       color: $secondary_bg;
     }
+
     arrow {
       min-height: 16px;
       min-width: 16px;
@@ -30,6 +34,7 @@ menu {
       margin-left: 8px;
     }
   }
+
   separator {
     min-height: 1px;
     margin: 4px 0;
@@ -37,20 +42,20 @@ menu {
   }
 }
 
-menu > arrow {
+menu>arrow {
   min-height: 16px;
   min-width: 16px;
   padding: 4px;
   color: $secondary_bg;
 }
 
-menu > arrow.top {
+menu>arrow.top {
   margin-top: 0;
   border-radius: 6px;
   -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
 }
 
-menu > arrow.bottom {
+menu>arrow.bottom {
   margin-top: 8px;
   margin-bottom: -12px;
   border-radius: 6px;
@@ -88,21 +93,24 @@ radio:active {
   background-color: $primary_bg;
 }
 
-check:checked, check:indeterminate,
+check:checked,
+check:indeterminate,
 radio:checked,
 radio:indeterminate {
   color: $primary_bg;
   background-color: $primary_fg;
 }
 
-check:checked:hover, check:indeterminate:hover,
+check:checked:hover,
+check:indeterminate:hover,
 radio:checked:hover,
 radio:indeterminate:hover {
   box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
   background-color: $primary_fg;
 }
 
-check:checked:active, check:indeterminate:active,
+check:checked:active,
+check:indeterminate:active,
 radio:checked:active,
 radio:indeterminate:active {
   box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
@@ -200,12 +208,6 @@ scale slider:active {
 
 tooltip {
   box-shadow: none;
-}
-
-tooltip.background {
-  background-color: $crust;
-  color: $text;
-  border-radius: 6px;
 }
 
 separator {

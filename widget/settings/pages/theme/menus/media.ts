@@ -20,6 +20,9 @@ export const MediaMenuTheme = () => {
                 Header('Background'),
                 Option({ opt: options.theme.bar.menus.menu.media.background.color, title: 'Background', type: 'color' }),
 
+                Header('Border'),
+                Option({ opt: options.theme.bar.menus.menu.media.border.color, title: 'Border', type: 'color' }),
+
                 Header('Card/Album Art'),
                 Option({ opt: options.theme.bar.menus.menu.media.card.color, title: 'Color', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.media.card.tint, title: 'Tint', type: 'number', increment: 5, min: 0, max: 100 }),

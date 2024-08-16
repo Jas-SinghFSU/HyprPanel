@@ -4,8 +4,13 @@ import { getMatugenVariations } from "./variations";
 import { bash, dependencies, Notify, isAnImage } from "lib/utils";
 import options from "options";
 import icons from "lib/icons";
+import { Variable } from "types/variable";
 const { scheme_type, contrast } = options.theme.matugen_settings;
 const { matugen } = options.theme;
+
+const updateOptColor = (color: HexColor, opt: Variable<HexColor>) => {
+    opt.value = color;
+}
 
 export async function generateMatugenColors(): Promise<MatugenColors | undefined> {
     if (!matugen.value || !dependencies('matugen')) {
@@ -43,6 +48,7 @@ export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenCo
     }
 
     const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.value);
+    updateOptColor(matugenVariation.base, options.theme.bar.menus.menu.media.card.color as Variable<HexColor>);
     for (let curColor of Object.keys(defaultColorMap)) {
         if (defaultColorMap[curColor] === incomingHex) {
             return matugenVariation[curColor];

@@ -24,7 +24,6 @@
   "theme.bar.menus.menu.dashboard.powermenu.confirmation.border": "#414559",
   "theme.bar.menus.menu.dashboard.powermenu.confirmation.background": "#232634",
   "theme.bar.menus.menu.dashboard.powermenu.confirmation.card": "#292c3c",
-  "theme.bar.menus.menu.media.card.color": "#292c3c",
   "theme.bar.menus.menu.notifications.switch.puck": "#51576d",
   "theme.bar.menus.menu.notifications.switch.disabled": "#414559",
   "theme.bar.menus.menu.notifications.switch.enabled": "#babbf1",
@@ -256,5 +255,8 @@
   "theme.notification.label": "#babbf1",
   "theme.notification.actions.text": "#232634",
   "theme.notification.actions.background": "#babbf1",
-  "theme.notification.background": "#232634"
+  "theme.notification.background": "#232634",
+  "theme.bar.menus.menu.media.card.color": "#292c3c",
+  "theme.bar.menus.check_radio_button.background": "#232534",
+  "theme.bar.menus.check_radio_button.active": "#b9baf1"
 }

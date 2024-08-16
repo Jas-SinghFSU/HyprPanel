@@ -56,6 +56,10 @@ export const MenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.switch.disabled, title: 'Disabled', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.switch.puck, title: 'Puck', type: 'color' }),
 
+                Header('Check/Radio Buttons'),
+                Option({ opt: options.theme.bar.menus.check_radio_button.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.check_radio_button.active, title: 'Active', type: 'color' }),
+
                 Header('Buttons'),
                 Option({ opt: options.theme.bar.menus.buttons.default, title: 'Primary', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.buttons.active, title: 'Active', type: 'color' }),
