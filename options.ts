@@ -226,7 +226,8 @@ const options = mkOptions(OPTIONS, {
                 label: opt(colors.lavender),
                 popover: {
                     text: opt(colors.lavender),
-                    background: opt(secondary_colors.mantle)
+                    background: opt(secondary_colors.mantle),
+                    border: opt(secondary_colors.mantle)
                 },
                 listitems: {
                     passive: opt(colors.text),
@@ -240,6 +241,10 @@ const options = mkOptions(OPTIONS, {
                     enabled: opt(colors.lavender),
                     disabled: opt(tertiary_colors.surface0),
                     puck: opt(secondary_colors.surface1)
+                },
+                check_radio_button: {
+                    background: opt(colors.surface1),
+                    active: opt(tertiary_colors.lavender)
                 },
                 buttons: {
                     default: opt(colors.lavender),

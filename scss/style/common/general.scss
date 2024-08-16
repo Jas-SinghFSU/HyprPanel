@@ -12,6 +12,7 @@ window.popup {
   }
 
   menu {
+    border-color: $bar-menus-popover-border;
     background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
   }
 
@@ -39,4 +40,14 @@ tooltip {
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
     background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
   }
+}
+
+check:not(:checked) {
+  background-color: $bar-menus-check_radio_button-background;
+  border: 1px solid $bar-menus-check_radio_button-active;
+}
+
+check:checked {
+  background-color: $bar-menus-check_radio_button-active;
+  border: 1px solid $bar-menus-check_radio_button-background;
 }
