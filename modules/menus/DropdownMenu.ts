@@ -1,5 +1,4 @@
 const hyprland = await Service.import("hyprland");
-import { globalMousePos } from "globals";
 import { Exclusivity } from "lib/types/widget";
 import { bash } from "lib/utils";
 import { Monitor } from "types/service/hyprland";
