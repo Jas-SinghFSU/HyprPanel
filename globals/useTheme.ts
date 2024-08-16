@@ -2,8 +2,7 @@ import Gio from "gi://Gio"
 import { bash, Notify } from "lib/utils";
 import icons from "lib/icons"
 
-globalThis.useTheme = (themeName: string): void => {
-    const filePath = `.config/ags/themes/${themeName}.json`;
+globalThis.useTheme = (filePath: string): void => {
     const themeOnly = true;
     let file = Gio.File.new_for_path(filePath as string);
     let [success, content] = file.load_contents(null);
