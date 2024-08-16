@@ -1,12 +1,14 @@
-import "lib/session"
-import "scss/style"
+import "lib/session";
+import "scss/style";
+import "globals/useTheme";
+import "globals/mousePos";
 
-import { Bar } from "modules/bar/Bar"
+import { Bar } from "modules/bar/Bar";
 import MenuWindows from "./modules/menus/main.js";
-import SettingsDialog from "widget/settings/SettingsDialog"
+import SettingsDialog from "widget/settings/SettingsDialog";
 import Notifications from "./modules/notifications/index.js";
-import { forMonitors } from "lib/utils"
-import OSD from "modules/osd/index"
+import { forMonitors } from "lib/utils";
+import OSD from "modules/osd/index";
 
 App.config({
     onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
