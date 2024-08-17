@@ -13,6 +13,7 @@ export const OsdTheme = () => {
             vertical: true,
             children: [
                 Header('On Screen Display Settings'),
+                Option({ opt: options.theme.osd.opacity, title: 'OSD Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.osd.bar_color, title: 'Bar', type: 'color' }),
                 Option({ opt: options.theme.osd.bar_overflow_color, title: 'Bar Overflow', subtitle: 'Overflow color is for when the volume goes over a 100', type: 'color' }),
                 Option({ opt: options.theme.osd.bar_empty_color, title: 'Bar Background', type: 'color' }),

@@ -1,6 +1,7 @@
 .menu-items.energy {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
+  opacity: $bar-menus-opacity/100;
 }
 
 .menu-items-container.energy {
@@ -17,9 +18,9 @@
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-battery-card-color);
   }
 
-    .power-profile-item {
-        color: if($bar-menus-monochrome, $bar-menus-listitems-passive, $bar-menus-menu-battery-listitems-passive);
-        margin-bottom: 0.5em;
+  .power-profile-item {
+    color: if($bar-menus-monochrome, $bar-menus-listitems-passive, $bar-menus-menu-battery-listitems-passive);
+    margin-bottom: 0.5em;
 
     label {
       margin-left: 1em;
@@ -32,43 +33,45 @@
       color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-battery-icons-passive);
     }
 
-        &:hover {
-          color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
-            label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
+    &:hover {
+      color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
+
+      label {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
 
       image {
         color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
       }
     }
 
-        &.active {
-            color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
-            image {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-            }
-        }
+    &.active {
+      color: if($bar-menus-monochrome, $bar-menus-listitems-active, $bar-menus-menu-battery-listitems-active);
+
+      image {
+        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+      }
     }
+  }
 
   .brightness-container {
     padding-bottom: 1em;
   }
 
-    .brightness-slider-icon {
-        font-size: 1.4em;
-        min-width: 1em;
-        min-height: 1em;
-        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
-    }
+  .brightness-slider-icon {
+    font-size: 1.4em;
+    min-width: 1em;
+    min-height: 1em;
+    color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-battery-icons-active);
+  }
 
-    .brightness-slider-label {
-        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-battery-text);
-        font-size: 0.9em;
-        min-width: 2.5em;
-        font-weight: bold;
-        margin-bottom: 0.2em;
-    }
+  .brightness-slider-label {
+    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-battery-text);
+    font-size: 0.9em;
+    min-width: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+  }
 
   .menu-slider.brightness {
     trough {

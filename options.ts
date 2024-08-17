@@ -86,6 +86,7 @@ const options = mkOptions(OPTIONS, {
         },
         notification: {
             background: opt(tertiary_colors.mantle),
+            opacity: opt(100),
             actions: {
                 background: opt(secondary_colors.lavender),
                 text: opt(colors.mantle),
@@ -103,6 +104,7 @@ const options = mkOptions(OPTIONS, {
         osd: {
             enable: opt(true),
             orientation: opt<OSDOrientation>("vertical"),
+            opacity: opt(100),
             bar_container: opt(colors.crust),
             icon_container: opt(tertiary_colors.lavender),
             bar_color: opt(tertiary_colors.lavender),
@@ -118,7 +120,9 @@ const options = mkOptions(OPTIONS, {
         },
         bar: {
             floating: opt(false),
+            layer: opt<"top" | "bottom" | "overlay" | "background">("top"),
             margin_top: opt("0.5em"),
+            opacity: opt(100),
             margin_bottom: opt("0em"),
             margin_sides: opt("0.5em"),
             border_radius: opt("0.4em"),
@@ -130,6 +134,7 @@ const options = mkOptions(OPTIONS, {
                 monochrome: opt(false),
                 spacing: opt("0.25em"),
                 radius: opt("0.3em"),
+                opacity: opt(100),
                 background: opt(colors.base2),
                 hover: opt(colors.surface1),
                 text: opt(colors.lavender),
@@ -213,6 +218,7 @@ const options = mkOptions(OPTIONS, {
             menus: {
                 monochrome: opt(false),
                 background: opt(colors.crust),
+                opacity: opt(100),
                 cards: opt(colors.base),
                 card_radius: opt("0.4em"),
                 border: {
@@ -675,6 +681,7 @@ const options = mkOptions(OPTIONS, {
             workspaces: opt(10),
             spacing: opt(1),
             monitorSpecific: opt(true),
+            workspaceMask: opt(false),
             reverse_scroll: opt(false),
             scroll_speed: opt(5),
         },

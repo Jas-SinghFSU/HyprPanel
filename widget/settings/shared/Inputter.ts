@@ -46,6 +46,7 @@ export const Inputter = <T>({
     isUnsaved: Variable<boolean>
 ) => {
     return Widget.Box({
+        vpack: "center",
         class_name: /export|import/.test(type || "") ? "" : "inputter-container",
         setup: self => {
 

@@ -27,6 +27,7 @@ export const MenuTheme = () => {
                 Option({ opt: options.wallpaper.enable, title: 'Apply Wallpapers', subtitle: 'Whether to apply the wallpaper or to only use it for Matugen color generation.', type: 'boolean' }),
                 Option({ opt: options.wallpaper.image, title: 'Wallpaper', subtitle: options.wallpaper.image.bind("value"), type: 'wallpaper' }),
                 Option({ opt: options.theme.bar.menus.background, title: 'Background Color', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.opacity, title: 'Menu Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.menus.cards, title: 'Cards', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.card_radius, title: 'Card Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.menus.text, title: 'Primary Text', type: 'color' }),
