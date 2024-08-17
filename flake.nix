@@ -60,19 +60,12 @@
     {
       devShells = forEachSystem devShellFor;
 
-      overlay = forEachSystem (
-        system:
-        let
-          pkgs = pkgsFor.${system};
-        in
-        final: prev: {
-          hyprpanel =
-            if final ? callPackage
-            then (final.callPackage ./nix/default.nix { inherit inputs; }).desktop.script
-            else inputs.self.packages.${prev.stdenv.system}.default;
-        }
-      );
-
+      overlay = final: prev: {
+        hyprpanel =
+          if final ? callPackage
+          then (final.callPackage ./nix { inherit inputs; }).desktop.script
+          else inputs.self.packages.${prev.stdenv.system}.default;
+      };
       packages = forEachSystem (
         system:
         let
