@@ -128,7 +128,10 @@ const Stats = () => {
                                                 );
                                             }
                                         }),
-                                        label: "󰢮",
+                                        child: Widget.Label({
+                                            class_name: "txt-icon",
+                                            label: "󰢮",
+                                        })
                                     }),
                                     Widget.Button({
                                         on_primary_click: terminal.bind("value").as(term => {
@@ -227,7 +230,10 @@ const Stats = () => {
                                         );
                                     }
                                 }),
-                                label: "",
+                                child: Widget.Label({
+                                    class_name: "txt-icon",
+                                    label: "",
+                                })
                             }),
                             Widget.Button({
                                 on_primary_click: terminal.bind("value").as(term => {
@@ -273,7 +279,10 @@ const Stats = () => {
                                         );
                                     }
                                 }),
-                                label: "",
+                                child: Widget.Label({
+                                    class_name: "txt-icon",
+                                    label: "",
+                                })
                             }),
                             Widget.Button({
                                 on_primary_click: terminal.bind("value").as(term => {
@@ -318,7 +327,10 @@ const Stats = () => {
                                         );
                                     }
                                 }),
-                                label: "󰋊",
+                                child: Widget.Label({
+                                    class_name: "txt-icon",
+                                    label: "󰋊",
+                                })
                             }),
                             Widget.Button({
                                 on_primary_click: terminal.bind("value").as(term => {

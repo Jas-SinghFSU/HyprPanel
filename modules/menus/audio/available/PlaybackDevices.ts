@@ -31,8 +31,8 @@ const renderPlaybacks = (playbackDevices: Stream[]) => {
                                     .bind("description")
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-icon active playback"
-                                            : "menu-button-icon playback",
+                                            ? "menu-button-icon active playback txt-icon"
+                                            : "menu-button-icon playback txt-icon",
                                     ),
                                 label: "",
                             }),

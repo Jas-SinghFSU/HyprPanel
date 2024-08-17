@@ -64,7 +64,7 @@ export const TodayTemperature = (theWeather: Variable<Weather>) => {
                                     .bind("value")
                                     .as(
                                         (v) =>
-                                            `calendar-menu-weather today temp label icon ${getIcon(Math.ceil(v.current.temp_f)).color}`,
+                                            `calendar-menu-weather today temp label icon txt-icon ${getIcon(Math.ceil(v.current.temp_f)).color}`,
                                     ),
                                 label: theWeather
                                     .bind("value")

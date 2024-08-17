@@ -7,7 +7,7 @@ export const OSDIcon = (ort: OSDOrientation) => {
         class_name: "osd-icon-container",
         hexpand: true,
         child: Widget.Label({
-            class_name: "osd-icon",
+            class_name: "osd-icon txt-icon",
             hexpand: true,
             vexpand: true,
             hpack: "center",

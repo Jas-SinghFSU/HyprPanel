@@ -18,7 +18,7 @@ export const Notifications = () => {
                     (notif, dnd, showTotal) => {
                         const notifIcon = Widget.Label({
                             hpack: "center",
-                            class_name: "bar-button-icon notifications",
+                            class_name: "bar-button-icon notifications txt-icon bar",
                             label: dnd ? "󰂛" : notif.length > 0 ? "󱅫" : "󰂚",
                         });
 

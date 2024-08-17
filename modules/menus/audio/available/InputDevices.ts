@@ -37,8 +37,8 @@ const renderInputDevices = (inputDevices: Stream[]) => {
                                     .bind("description")
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-icon active input"
-                                            : "menu-button-icon input",
+                                            ? "menu-button-icon active input txt-icon"
+                                            : "menu-button-icon input txt-icon",
                                     ),
                                 label: "",
                             }),

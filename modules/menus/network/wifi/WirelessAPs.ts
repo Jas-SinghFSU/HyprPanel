@@ -132,7 +132,7 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                                         children: [
                                             Widget.Label({
                                                 vpack: "start",
-                                                class_name: `network-icon wifi ${ap.ssid === network.wifi.ssid ? "active" : ""}`,
+                                                class_name: `network-icon wifi ${ap.ssid === network.wifi.ssid ? "active" : ""} txt-icon`,
                                                 label: getWifiIcon(`${ap["iconName"]}`),
                                             }),
                                             Widget.Box({
@@ -202,6 +202,7 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                                     });
                                 },
                                 child: Widget.Label({
+                                    class_name: "txt-icon delete-network",
                                     label: "󰚃",
                                 }),
                             }),

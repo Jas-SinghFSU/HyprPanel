@@ -127,10 +127,6 @@
           }
         }
 
-        label {
-          font-size: 2em;
-        }
-
         &.record.active {
           background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording);
 

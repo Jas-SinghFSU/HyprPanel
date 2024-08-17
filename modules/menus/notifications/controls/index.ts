@@ -23,6 +23,7 @@ const Controls = (notifs) => {
                 children: [
                     Widget.Switch({
                         class_name: "menu-switch notifications",
+                        vpack: "center",
                         active: notifs.bind("dnd").as((dnd: boolean) => !dnd),
                         on_activate: ({ active }) => {
                             notifs.dnd = !active;
@@ -41,7 +42,7 @@ const Controls = (notifs) => {
                                 tooltip_text: "Clear Notifications",
                                 on_primary_click: () => notifs.clear(),
                                 child: Widget.Label({
-                                    class_name: "clear-notifications-label",
+                                    class_name: "clear-notifications-label txt-icon",
                                     label: "",
                                 }),
                             }),

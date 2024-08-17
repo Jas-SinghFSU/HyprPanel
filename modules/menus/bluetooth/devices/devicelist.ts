@@ -86,7 +86,7 @@ const devices = (bluetooth: Bluetooth, self: Box<any, any>) => {
                                         children: [
                                             Widget.Label({
                                                 vpack: "start",
-                                                class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""}`,
+                                                class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""} txt-icon`,
                                                 label: getBluetoothIcon(`${device["icon-name"]}-symbolic`),
                                             }),
                                             Widget.Box({

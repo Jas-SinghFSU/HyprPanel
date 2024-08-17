@@ -10,7 +10,10 @@
 @import "style/common/common.scss";
 @import "style/common/floating-widget.scss";
 @import "style/common/widget-button.scss";
-@import "style/general.scss";
+
+//general styles
+@import "style/common/general";
+
 //modules - bar
 @import "style/bar/menu";
 @import "style/bar/audio";
@@ -46,6 +49,3 @@
 
 //settings dialog
 @import "style/settings/dialog";
-
-//general styles
-@import "style/common/general";
