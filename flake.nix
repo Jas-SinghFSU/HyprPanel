@@ -53,18 +53,6 @@
             ];
             shellHook = ''
               export GDK_BACKEND=wayland
-              export PATH=$PATH:${pkgsFor.${system}.dart-sass}/bin
-              export PATH=$PATH:${pkgsFor.${system}.fd}/bin
-              export PATH=$PATH:${pkgsFor.${system}.btop}/bin
-              export PATH=$PATH:${pkgsFor.${system}.pipewire}/bin
-              export PATH=$PATH:${pkgsFor.${system}.bluez}/bin
-              export PATH=$PATH:${pkgsFor.${system}.bluez-tools}/bin
-              export PATH=$PATH:${pkgsFor.${system}.grimblast}/bin
-              export PATH=$PATH:${pkgsFor.${system}.gpu-screen-recorder}/bin
-              export PATH=$PATH:${pkgsFor.${system}.networkmanager}/bin
-              export PATH=$PATH:${pkgsFor.${system}.brightnessctl}/bin
-              export PATH=$PATH:${pkgsFor.${system}.gnome.gnome-bluetooth}/bin
-              export PATH=$PATH:${pkgsFor.${system}.python3}/bin
             '';
           }
         );
