@@ -14,6 +14,7 @@ export const NotificationsTheme = () => {
             children: [
                 Header('Notifications Theme Settings'),
                 Option({ opt: options.theme.notification.background, title: 'Notification Background', type: 'color' }),
+                Option({ opt: options.theme.notification.opacity, title: 'Notification Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.notification.actions.background, title: 'Action Button Background', subtitle: 'Buttons that perform actions within a notification', type: 'color' }),
                 Option({ opt: options.theme.notification.actions.text, title: 'Action Button Text Color', type: 'color' }),
                 Option({ opt: options.theme.notification.label, title: 'Label', type: 'color' }),

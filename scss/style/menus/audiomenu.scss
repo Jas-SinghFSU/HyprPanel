@@ -1,6 +1,7 @@
 .menu-items.audio {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-volume-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
+  opacity: $bar-menus-opacity/100;
 }
 
 .menu-dropdown-label.audio {
