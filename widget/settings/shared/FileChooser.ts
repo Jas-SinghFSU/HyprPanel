@@ -122,6 +122,11 @@ export const importFiles = (themeOnly: boolean = false): void => {
 
     let response = dialog.run();
 
+
+    if (response === Gtk.ResponseType.CANCEL) {
+        dialog.destroy();
+        return;
+    }
     if (response === Gtk.ResponseType.ACCEPT) {
         let filePath = dialog.get_filename();
         let file = Gio.File.new_for_path(filePath as string);
