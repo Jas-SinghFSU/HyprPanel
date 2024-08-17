@@ -206,7 +206,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                             options.bar.workspaces.icons.available.bind("value"),
                                             options.bar.workspaces.icons.active.bind("value"),
                                             options.bar.workspaces.icons.occupied.bind("value"),
-                                            workspaceMask.bind(),
+                                            workspaceMask.bind("value"),
                                             hyprland.active.workspace.bind("id")
                                         ],
                                         (showIcons, available, active, occupied, workspaceMask, _) => {
