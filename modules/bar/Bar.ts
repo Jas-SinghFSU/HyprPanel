@@ -229,6 +229,7 @@ export const Bar = (() => {
             visible: true,
             anchor: ["top", "left", "right"],
             exclusivity: "exclusive",
+            layer: options.theme.bar.layer.bind("value"),
             child: Widget.Box({
                 class_name: 'bar-panel-container',
                 child: Widget.CenterBox({

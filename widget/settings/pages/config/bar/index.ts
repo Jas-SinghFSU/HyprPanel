@@ -19,6 +19,7 @@ export const BarSettings = () => {
                 Option({ opt: options.theme.bar.buttons.spacing, title: 'Button Spacing', subtitle: 'Spacing between the buttons in the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.radius, title: 'Button Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.floating, title: 'Floating Bar', type: 'boolean' }),
+                Option({ opt: options.theme.bar.layer, title: 'Layer', type: 'enum', subtitle: 'Layer determines the Z index of your bar.', enums: ["top", "bottom", "overlay", "background"] }),
                 Option({ opt: options.theme.bar.margin_top, title: 'Margin Top', subtitle: 'Only applies if floating is enabled', type: 'string' }),
                 Option({ opt: options.theme.bar.margin_bottom, title: 'Margin Bottom', subtitle: 'Only applies if floating is enabled', type: 'string' }),
                 Option({ opt: options.theme.bar.margin_sides, title: 'Margin Sides', subtitle: 'Only applies if floating is enabled', type: 'string' }),

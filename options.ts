@@ -120,6 +120,7 @@ const options = mkOptions(OPTIONS, {
         },
         bar: {
             floating: opt(false),
+            layer: opt<"top" | "bottom" | "overlay" | "background">("top"),
             margin_top: opt("0.5em"),
             opacity: opt(100),
             margin_bottom: opt("0em"),
