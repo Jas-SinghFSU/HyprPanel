@@ -14,6 +14,7 @@ window#verification .verification {
   min-width: 20em;
   min-height: 6em;
   font-size: 1.3em;
+  opacity: $bar-menus-opacity/100;
 
   .verification-content {
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-powermenu-confirmation-card);

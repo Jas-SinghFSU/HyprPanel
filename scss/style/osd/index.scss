@@ -1,6 +1,7 @@
 .indicator {
   .osd-container {
     margin: $osd-margins;
+    opacity: $osd-opacity/100;
   }
 
   .osd-label-container {

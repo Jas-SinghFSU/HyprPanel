@@ -1,6 +1,7 @@
 .menu-items.network {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
+  opacity: $bar-menus-opacity/100;
 }
 
 .menu-items-container.network {
