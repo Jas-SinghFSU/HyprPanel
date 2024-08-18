@@ -1,5 +1,6 @@
 import { OSDOrientation } from "lib/types/options";
 import brightness from "services/Brightness"
+import options from "../../../options.ts";
 const audio = await Service.import("audio")
 
 export const OSDLabel = (ort: OSDOrientation) => {
@@ -25,16 +26,16 @@ export const OSDLabel = (ort: OSDOrientation) => {
                     self.label = `${Math.round(audio.microphone.volume * 100)}`;
                 }, "notify::volume")
                 self.hook(audio.microphone, () => {
-                    self.toggleClassName("overflow", audio.microphone.is_muted !== false && audio.microphone.volume > 1)
-                    self.label = `${audio.microphone.is_muted !== false ? 0 : Math.round(audio.microphone.volume * 100)}`;
+                    self.toggleClassName("overflow", audio.microphone.volume > 1 && (!options.theme.osd.muted_zero.value || !(audio.microphone.is_muted !== false)));
+                    self.label = `${options.theme.osd.muted_zero.value && audio.microphone.is_muted !== false ? 0 : Math.round(audio.microphone.volume * 100)}`;
                 }, "notify::is-muted")
                 self.hook(audio.speaker, () => {
                     self.toggleClassName("overflow", audio.speaker.volume > 1)
                     self.label = `${Math.round(audio.speaker.volume * 100)}`;
                 }, "notify::volume")
                 self.hook(audio.speaker, () => {
-                    self.toggleClassName("overflow", audio.speaker.is_muted !== false && audio.speaker.volume > 1)
-                    self.label = `${audio.speaker.is_muted !== false ? 0 : Math.round(audio.speaker.volume * 100)}`;
+                    self.toggleClassName("overflow", audio.speaker.volume > 1 && (!options.theme.osd.muted_zero.value || !(audio.speaker.is_muted !== false)));
+                    self.label = `${options.theme.osd.muted_zero.value && audio.speaker.is_muted !== false ? 0 : Math.round(audio.speaker.volume * 100)}`;
                 }, "notify::is-muted")
             }
         })
