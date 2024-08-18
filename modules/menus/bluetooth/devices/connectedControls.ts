@@ -13,7 +13,7 @@ const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevi
                 class_name: "menu-icon-button unpair bluetooth",
                 child: Widget.Label({
                     tooltip_text: dev.paired ? "Unpair" : "Pair",
-                    class_name: "menu-icon-button-label unpair bluetooth",
+                    class_name: "menu-icon-button-label unpair bluetooth txt-icon",
                     label: dev.paired ? "" : "",
                 }),
                 on_primary_click: () =>
@@ -32,7 +32,7 @@ const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevi
                 class_name: "menu-icon-button disconnect bluetooth",
                 child: Widget.Label({
                     tooltip_text: dev.connected ? "Disconnect" : "Connect",
-                    class_name: "menu-icon-button-label disconnect bluetooth",
+                    class_name: "menu-icon-button-label disconnect bluetooth txt-icon",
                     label: dev.connected ? "󱘖" : "",
                 }),
                 on_primary_click: () => dev.setConnection(!dev.connected),
@@ -41,7 +41,7 @@ const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevi
                 class_name: "menu-icon-button untrust bluetooth",
                 child: Widget.Label({
                     tooltip_text: dev.trusted ? "Untrust" : "Trust",
-                    class_name: "menu-icon-button-label untrust bluetooth",
+                    class_name: "menu-icon-button-label untrust bluetooth txt-icon",
                     label: dev.trusted ? "" : "󱖡",
                 }),
                 on_primary_click: () =>
@@ -60,7 +60,7 @@ const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevi
                 class_name: "menu-icon-button delete bluetooth",
                 child: Widget.Label({
                     tooltip_text: "Forget",
-                    class_name: "menu-icon-button-label delete bluetooth",
+                    class_name: "menu-icon-button-label delete bluetooth txt-icon",
                     label: "󰆴",
                 }),
                 on_primary_click: () => {

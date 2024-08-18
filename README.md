@@ -3,6 +3,9 @@ A panel built for Hyprland with [Aylur's Gtk Shell](https://github.com/Aylur/ags
 
 ![HyprPanel](./assets/HyprPanel.png)
 
+## Installation
+The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for installing the panel and all of its dependencies. The instructions below are general instructions for installing the panel.
+
 ## Requirements
 Bun
 

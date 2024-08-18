@@ -3,8 +3,6 @@ const audio = await Service.import("audio");
 import { openMenu } from "../utils.js";
 import options from "options";
 
-import { globalMousePos } from "globals.js";
-
 const Volume = () => {
     const icons = {
         101: "󰕾",
@@ -30,7 +28,7 @@ const Volume = () => {
     const volIcn = Widget.Label({
         vpack: "center",
         label: getIcon(),
-        class_name: "bar-button-icon volume",
+        class_name: "bar-button-icon volume txt-icon bar",
     });
 
     const volPct = Widget.Label({

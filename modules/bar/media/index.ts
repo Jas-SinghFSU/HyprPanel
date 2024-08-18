@@ -40,7 +40,7 @@ const Media = () => {
             const trackArtist = show_artist.value
                 ? ` - ${track_artists.join(', ')}`
                 : ``;
-            const truncatedLabel = truncation.value 
+            const truncatedLabel = truncation.value
                 ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
                 : `${track_title + trackArtist}`;
 
@@ -63,7 +63,7 @@ const Media = () => {
                 child: Widget.Box({
                     children: [
                         Widget.Label({
-                            class_name: "bar-button-icon media",
+                            class_name: "bar-button-icon media txt-icon bar",
                             label: songIcon.bind("value").as(v => v || "󰝚"),
                         }),
                         Widget.Label({

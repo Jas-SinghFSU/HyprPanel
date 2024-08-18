@@ -3,14 +3,16 @@ import { BarSettings } from "./bar/index";
 import { ClockMenuSettings } from "./menus/clock";
 import { DashboardMenuSettings } from "./menus/dashboard";
 import { NotificationSettings } from "./notifications/index";
+import { OSDSettings } from "./osd/index";
 
-type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu" | "Notifications";
+type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu" | "Notifications" | "OSD";
 const CurrentPage = Variable<Page>("General");
 
 const pagerMap: Page[] = [
     "General",
     "Bar",
     "Notifications",
+    "OSD",
     "Clock Menu",
     "Dashboard Menu",
 ]
@@ -40,6 +42,7 @@ export const SettingsMenu = () => {
                         "General": BarGeneral(),
                         "Bar": BarSettings(),
                         "Notifications": NotificationSettings(),
+                        "OSD": OSDSettings(),
                         "Clock Menu": ClockMenuSettings(),
                         "Dashboard Menu": DashboardMenuSettings(),
                     },

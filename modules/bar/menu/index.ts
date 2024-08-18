@@ -6,7 +6,7 @@ const Menu = () => {
     return {
         component: Widget.Box({
             child: Widget.Label({
-                class_name: "bar-menu_label",
+                class_name: "bar-menu_label txt-icon bar",
                 label: options.bar.launcher.icon.bind("value"),
             }),
         }),

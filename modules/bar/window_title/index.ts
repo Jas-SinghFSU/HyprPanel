@@ -31,7 +31,7 @@ const ClientTitle = () => {
         component: Widget.Box({
             children: [
                 Widget.Label({
-                    class_name: "bar-button-icon windowtitle",
+                    class_name: "bar-button-icon windowtitle txt-icon bar",
                     label: hyprland.active.bind("client").as((v) => filterTitle(v).icon),
                 }),
                 Widget.Label({
