@@ -117,6 +117,7 @@ const options = mkOptions(OPTIONS, {
             radius: opt("0.4em"),
             margins: opt("0px 5px 0px 0px"),
             location: opt<OSDAnchor>("right"),
+            muted_zero: opt(false),
         },
         bar: {
             floating: opt(false),
