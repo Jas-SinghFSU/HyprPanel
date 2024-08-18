@@ -7,13 +7,18 @@ const filterTitle = (windowtitle: ActiveClient) => {
         ["firefox", "󰈹", "Firefox"],
         ["microsoft-edge", "󰇩", "Edge"],
         ["discord", "", "Discord"],
+        ["vesktop", "", "Vesktop"],
         ["org.kde.dolphin", "", "Dolphin"],
         ["plex", "󰚺", "Plex"],
         ["steam", "", "Steam"],
         ["spotify", "󰓇", "Spotify"],
+        ["thunar", "", "Thunar"],
+        ["vlc", "󰕼", "VLC Player"],
+        ["Ristretto", "󰋩", "Ristretto"],
+        ["org.telegram.desktop", "", "Telegram"],
         ["obsidian", "󱓧", "Obsidian"],
-        ["^$", "󰇄", "Desktop"],
-        ["(.+)", "󰣆", `${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
+        ["^$", "󰇄 ", "Desktop"],
+        ["(.+)", "󰣆 ", `${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
     ];
 
     const foundMatch = windowTitleMap.find((wt) =>
