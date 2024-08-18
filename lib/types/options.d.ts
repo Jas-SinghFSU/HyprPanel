@@ -34,6 +34,7 @@ export type RowProps<T> = {
     disabledBinding?: Variable<boolean>
     exportData?: ThemeExportData
     subtitle?: string | VarType<any> | Opt,
+    subtitleLink?: string,
     dependencies?: string[],
     increment?: number
 }

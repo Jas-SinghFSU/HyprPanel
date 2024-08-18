@@ -669,6 +669,9 @@ const options = mkOptions(OPTIONS, {
         launcher: {
             icon: opt("󰣇"),
         },
+        windowtitle: {
+            title_map: opt([]),
+        },
         workspaces: {
             show_icons: opt(false),
             show_numbered: opt(false),
