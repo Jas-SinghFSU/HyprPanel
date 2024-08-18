@@ -16,6 +16,7 @@ export const OSDSettings = () => {
             Option({ opt: options.theme.osd.active_monitor, title: 'Follow Cursor', subtitle: 'The OSD will follow the monitor of your cursor', type: 'boolean' }),
             Option({ opt: options.theme.osd.radius, title: 'Radius', subtitle: 'Radius of the on-screen-display that indicates volume/brightness change', type: 'string' }),
             Option({ opt: options.theme.osd.margins, title: 'Margins', subtitle: 'Margins in the following format: top right bottom left', type: 'string' }),
+            Option({ opt: options.theme.osd.muted_zero, title: 'Mute Volume as Zero', subtitle: 'Display volume as 0 when muting, instead of previous device volume', type: 'boolean' }),
         ]
     })
 }
