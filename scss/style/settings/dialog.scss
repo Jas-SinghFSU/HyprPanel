@@ -171,6 +171,19 @@ window.settings-dialog {
     color: $bar-menus-dimtext;
   }
 
+  .options-sublabel-link {
+
+    label {
+      font-size: 0.75em;
+      margin-top: 0.2em;
+      color: $bar-menus-dimtext;
+    }
+
+    &:hover label {
+      color: $bar-menus-listitems-active;
+    }
+  }
+
   .inputter-container {
     border-radius: $bar-menus-border-radius * 0.5;
 
