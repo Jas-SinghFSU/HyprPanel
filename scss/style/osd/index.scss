@@ -1,4 +1,8 @@
 .indicator {
+  * {
+    font-size: $font-size * $osd-scaling/100;
+  }
+
   .osd-container {
     margin: $osd-margins;
     opacity: $osd-opacity/100;

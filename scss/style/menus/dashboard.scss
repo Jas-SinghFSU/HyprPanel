@@ -1,3 +1,7 @@
+.dashboard-menu-content * {
+  font-size: $font-size * $bar-menus-menu-dashboard-scaling/100;
+}
+
 .dashboard-content-items {
   margin-left: 0.50em;
   min-width: 28.5em;
@@ -87,6 +91,8 @@
   }
 
   .shortcuts-container {
+    font-size: 1em;
+
     .dashboard-card {
       padding: 1.5em;
 
@@ -121,10 +127,8 @@
         color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
         min-height: 3em;
 
-        &.discord {
-          label {
-            margin-right: 0.15em;
-          }
+        label {
+          font-size: 1.5em;
         }
 
         &.record.active {
