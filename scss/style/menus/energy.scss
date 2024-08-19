@@ -1,3 +1,7 @@
+.menu-items-container.energy * {
+  font-size: $font-size * $bar-menus-menu-bluetooth-scaling/100;
+}
+
 .menu-items.energy {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
