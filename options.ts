@@ -502,6 +502,7 @@ const options = mkOptions(OPTIONS, {
                     },
                     dashboard: {
                         scaling: opt(100),
+                        confirmation_scaling: opt(100),
                         card: {
                             color: opt(colors.base),
                         },
