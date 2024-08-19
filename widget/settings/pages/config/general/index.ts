@@ -23,6 +23,18 @@ export const BarGeneral = () => {
                 }
             }),
             Option({ opt: options.terminal, title: 'Terminal', subtitle: "Tools such as 'btop' will open in this terminal", type: 'string' }),
+
+            Header('Scaling'),
+            Option({ opt: options.theme.bar.scaling, title: 'Bar', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.notification.scaling, title: 'Notifications', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.osd.scaling, title: 'OSD', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.dashboard.scaling, title: 'Dashboard Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.media.scaling, title: 'Media Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.volume.scaling, title: 'Volume Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.network.scaling, title: 'Network Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.bluetooth.scaling, title: 'Bluetooth Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.clock.scaling, title: 'Clock Menu', type: 'number', min: 1, max: 100, increment: 5 }),
+            Option({ opt: options.theme.bar.menus.menu.notifications.scaling, title: 'Notifications Menu', type: 'number', min: 1, max: 100, increment: 5 }),
         ]
     })
 }

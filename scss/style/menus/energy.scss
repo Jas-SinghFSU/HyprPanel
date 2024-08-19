@@ -2,9 +2,14 @@
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
   opacity: $bar-menus-opacity/100;
+  font-size: $font-size * $bar-menus-menu-battery-scaling/100;
 }
 
+@import "./menu.scss";
+
 .menu-items-container.energy {
+  min-width: 18em * $bar-menus-menu-battery-scaling/100;
+
   .menu-label {
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
   }
