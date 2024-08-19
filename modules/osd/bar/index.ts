@@ -14,9 +14,11 @@ export const OSDBar = (ort: OSDOrientation) => {
                 bar_mode: "continuous",
                 setup: self => {
                     self.hook(brightness, () => {
+                        self.class_names = self.class_names.filter(c => c !== "overflow");
                         self.value = brightness.screen;
                     }, "notify::screen")
                     self.hook(brightness, () => {
+                        self.class_names = self.class_names.filter(c => c !== "overflow");
                         self.value = brightness.kbd;
                     }, "notify::kbd")
                     self.hook(audio.microphone, () => {
