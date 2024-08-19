@@ -1,4 +1,8 @@
 .bar {
+  * {
+    font-size: $font-size * $bar-scaling/100;
+  }
+
   .bar-panel-container {
     margin-top: if($bar-floating, $bar-margin_top, 0em);
     margin-bottom: if($bar-floating, $bar-margin_bottom, 0em);
@@ -19,7 +23,7 @@
   background-color: $bar-buttons-background;
   border-radius: $bar-buttons-radius;
   padding: 0.2rem 0.9rem;
-  margin: 0.5rem $bar-buttons-spacing;
+  margin: $bar-buttons-y_margins $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
 
   &:hover {

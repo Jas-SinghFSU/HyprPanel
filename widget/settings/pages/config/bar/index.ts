@@ -16,6 +16,7 @@ export const BarSettings = () => {
 
                 Header('Spacing'),
                 Option({ opt: options.theme.bar.outer_spacing, title: 'Outer Spacing', subtitle: 'Spacing on the outer left and right edges of the bar.', type: 'string' }),
+                Option({ opt: options.theme.bar.buttons.y_margins, title: 'Vertical Margins', subtitle: 'Spacing above/below the buttons in the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.spacing, title: 'Button Spacing', subtitle: 'Spacing between the buttons in the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.radius, title: 'Button Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.floating, title: 'Floating Bar', type: 'boolean' }),
