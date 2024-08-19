@@ -2,7 +2,6 @@ import options from "options";
 import { GPU_Stat } from "lib/types/gpustat";
 import { dependencies } from "lib/utils";
 
-const { terminal } = options;
 const { enable_gpu } = options.menus.dashboard.stats;
 
 const Stats = () => {
@@ -120,28 +119,24 @@ const Stats = () => {
 
                                 return self.children = [
                                     Widget.Button({
-                                        on_primary_click: terminal.bind("value").as(term => {
-                                            return () => {
-                                                App.closeWindow("dashboardmenu");
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            }
-                                        }),
+                                        on_primary_click: () => {
+                                            App.closeWindow("dashboardmenu");
+                                            Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                                (err) => `Failed to open btop: ${err}`,
+                                            );
+                                        },
                                         child: Widget.Label({
                                             class_name: "txt-icon",
                                             label: "󰢮",
                                         })
                                     }),
                                     Widget.Button({
-                                        on_primary_click: terminal.bind("value").as(term => {
-                                            return () => {
-                                                App.closeWindow("dashboardmenu");
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            }
-                                        }),
+                                        on_primary_click: () => {
+                                            App.closeWindow("dashboardmenu");
+                                            Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                                (err) => `Failed to open btop: ${err}`,
+                                            );
+                                        },
                                         child: Widget.LevelBar({
                                             class_name: "stats-bar",
                                             hexpand: true,
@@ -222,28 +217,24 @@ const Stats = () => {
                         vpack: "center",
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                                on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.Label({
                                     class_name: "txt-icon",
                                     label: "",
                                 })
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                                on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.LevelBar({
                                     class_name: "stats-bar",
                                     hexpand: true,
@@ -271,28 +262,24 @@ const Stats = () => {
                         hexpand: true,
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                               on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.Label({
                                     class_name: "txt-icon",
                                     label: "",
                                 })
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                               on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.LevelBar({
                                     class_name: "stats-bar",
                                     hexpand: true,
@@ -319,28 +306,24 @@ const Stats = () => {
                         vpack: "center",
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                               on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.Label({
                                     class_name: "txt-icon",
                                     label: "󰋊",
                                 })
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
-                                    return () => {
-                                        App.closeWindow("dashboardmenu");
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    }
-                                }),
+                               on_primary_click: () => {
+                                    App.closeWindow("dashboardmenu");
+                                    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch(
+                                        (err) => `Failed to open btop: ${err}`,
+                                    );
+                                },
                                 child: Widget.LevelBar({
                                     class_name: "stats-bar",
                                     hexpand: true,

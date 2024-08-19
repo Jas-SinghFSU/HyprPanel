@@ -30,6 +30,6 @@ if eval "$command"; then
         -a "Grimblast" \
         -t 7000 \
         -u normal \
-        --action="scriptAction:-dolphin $outputDir=Directory" \
+        --action="scriptAction:-xdg-open $outputDir=Directory" \
         --action="scriptAction:-xdg-open $recentFile=View"
 fi
