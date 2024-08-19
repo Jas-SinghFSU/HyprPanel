@@ -88,7 +88,7 @@ const Shortcuts = () => {
                                     .bind("value")
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: left.shortcut1.icon.bind("value"),
                                 }),
                             }),
@@ -99,7 +99,7 @@ const Shortcuts = () => {
                                     .bind("value")
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: left.shortcut2.icon.bind("value"),
                                 }),
                             }),
@@ -117,7 +117,7 @@ const Shortcuts = () => {
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
                                     hpack: "center",
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: left.shortcut3.icon.bind("value"),
                                 }),
                             }),
@@ -128,7 +128,7 @@ const Shortcuts = () => {
                                     .bind("value")
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: left.shortcut4.icon.bind("value"),
                                 }),
                             }),
@@ -152,7 +152,7 @@ const Shortcuts = () => {
                                     .bind("value")
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: right.shortcut1.icon.bind("value"),
                                 }),
                             }),
@@ -164,7 +164,7 @@ const Shortcuts = () => {
                                     App.toggleWindow("settings-dialog");
                                 },
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: "󰒓",
                                 }),
                             }),
@@ -181,7 +181,7 @@ const Shortcuts = () => {
                                     .bind("value")
                                     .as((cmd) => () => handleClick(cmd)),
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: right.shortcut3.icon.bind("value"),
                                 }),
                             }),
@@ -206,7 +206,7 @@ const Shortcuts = () => {
                                     });
                                 },
                                 child: Widget.Label({
-                                    class_name: "button-label",
+                                    class_name: "button-label txt-icon",
                                     label: "󰑊",
                                 }),
                             }),

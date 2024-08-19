@@ -16,7 +16,7 @@ export const TodayStats = (theWeather: Variable<Weather>) => {
                 class_name: "weather wind",
                 children: [
                     Widget.Label({
-                        class_name: "weather wind icon",
+                        class_name: "weather wind icon txt-icon",
                         label: "",
                     }),
                     Widget.Label({
@@ -37,7 +37,7 @@ export const TodayStats = (theWeather: Variable<Weather>) => {
                 class_name: "weather precip",
                 children: [
                     Widget.Label({
-                        class_name: "weather precip icon",
+                        class_name: "weather precip icon txt-icon",
                         label: "",
                     }),
                     Widget.Label({

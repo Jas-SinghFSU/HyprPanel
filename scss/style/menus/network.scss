@@ -1,10 +1,18 @@
+.menu-items-container.network * {
+  font-size: $font-size * $bar-menus-menu-network-scaling/100;
+}
+
+@import "./menu.scss";
+
 .menu-items.network {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
   opacity: $bar-menus-opacity/100;
+  font-size: $font-size * $bar-menus-menu-network-scaling/100;
 }
 
 .menu-items-container.network {
+  min-width: 18em * $bar-menus-menu-network-scaling/100;
   font-size: 1.3em;
 
   .menu-items-section {

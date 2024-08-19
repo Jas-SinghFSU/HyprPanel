@@ -14,7 +14,7 @@ export const Option = <T>(props: RowProps<T>, className: string = '') => {
                 hpack: "start",
                 vpack: "center",
                 hexpand: true,
-                child: Label(props.title, props.subtitle || ""),
+                child: Label(props.title, props.subtitle || "", props.subtitleLink),
             }),
             Inputter(props, className, isUnsaved),
             Widget.Button({

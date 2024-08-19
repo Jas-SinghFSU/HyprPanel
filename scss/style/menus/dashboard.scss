@@ -1,3 +1,7 @@
+.dashboard-menu-content * {
+  font-size: $font-size * $bar-menus-menu-dashboard-scaling/100;
+}
+
 .dashboard-content-items {
   margin-left: 0.50em;
   min-width: 28.5em;
@@ -87,6 +91,8 @@
   }
 
   .shortcuts-container {
+    font-size: 1em;
+
     .dashboard-card {
       padding: 1.5em;
 
@@ -121,12 +127,6 @@
         color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
         min-height: 3em;
 
-        &.discord {
-          label {
-            margin-right: 0.15em;
-          }
-        }
-
         label {
           font-size: 1.5em;
         }
@@ -156,6 +156,7 @@
     button {
       padding: 0em;
       min-height: 3em;
+      min-width: 3.8em;
 
       label {
         color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-controls-wifi-text);
@@ -287,8 +288,9 @@
 
     .stat {
       label {
-        margin-right: 1em;
+        margin-right: 0.75em;
         font-size: 1.5em;
+        min-width: 1.65em;
       }
 
       &.cpu label {

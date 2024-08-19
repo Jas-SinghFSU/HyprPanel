@@ -6,7 +6,7 @@ import { openMenu } from "../utils.js";
 const Bluetooth = () => {
     const btIcon = Widget.Label({
         label: bluetooth.bind("enabled").as((v) => v ? "󰂯" : "󰂲"),
-        class_name: "bar-button-icon bluetooth",
+        class_name: "bar-button-icon bluetooth txt-icon bar",
     });
 
     const btText = Widget.Label({

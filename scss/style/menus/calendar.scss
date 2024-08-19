@@ -1,3 +1,7 @@
+.calendar-menu-content * {
+  font-size: $font-size * $bar-menus-menu-clock-scaling/100;
+}
+
 .calendar-content-container {
   margin-top: 0em;
   min-width: 27em;
@@ -165,4 +169,14 @@
 
 .hourly-weather-temp {
   color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-clock-weather-hourly-temperature);
+}
+
+.weather.precip.icon {
+  min-width: 1em;
+  font-size: 1em;
+}
+
+.weather.wind.icon {
+  min-width: 1em;
+  font-size: 1em;
 }

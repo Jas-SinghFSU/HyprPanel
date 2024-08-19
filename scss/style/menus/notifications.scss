@@ -1,7 +1,11 @@
+.notification-menu-content * {
+  font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
+}
+
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 30.6em;
-  min-height: 48em;
+  min-width: 30.6em * $bar-menus-menu-notifications-scaling/100;
+  min-height: 48em * $bar-menus-menu-notifications-scaling/100;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
   border-radius: $bar-menus-border-radius;
@@ -28,7 +32,8 @@
 
   .notification-card.menu {
     background: $notification-background;
-    min-width: 26.2em;
+    min-width: 26.2em * $bar-menus-menu-notifications-scaling/100;
+    font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
     border: 0.15em solid $notification-border;
     border-radius: 0em;
     border-bottom-left-radius: 0.4em;
@@ -50,6 +55,7 @@
 
   .menu-label.notifications {
     margin: 0em;
+    font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-notifications-label);
   }
 
@@ -107,11 +113,11 @@
   }
 
   .bell {
-    font-size: 10em;
+    font-size: 10em * $bar-menus-menu-notifications-scaling/100;
   }
 
   .message {
-    font-size: 1.5em;
+    font-size: 1.5em * $bar-menus-menu-notifications-scaling/100;
   }
 }
 

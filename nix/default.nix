@@ -2,6 +2,7 @@
 , pkgs
 , system
 , stdenv
+, lib
 , writeShellScriptBin
 , bun
 , dart-sass
@@ -18,10 +19,11 @@
 , matugen
 , swww
 , python3
+, gnome
 }:
 let
   ags = inputs.ags.packages.${system}.default.override {
-    extraPackages = [accountsservice];
+    extraPackages = [ accountsservice ];
   };
 
   pname = "hyprpanel";
@@ -46,26 +48,13 @@ let
       cp -f main.js $out/config.js
     '';
   };
-in {
+in
+{
   desktop = {
     inherit config;
     script = writeShellScriptBin pname ''
-      export PATH=$PATH:${dart-sass}/bin
-      export PATH=$PATH:${fd}/bin
-      export PATH=$PATH:${btop}/bin
-      export PATH=$PATH:${pipewire}/bin
-      export PATH=$PATH:${bluez}/bin
-      export PATH=$PATH:${bluez-tools}/bin
-      export PATH=$PATH:${grimblast}/bin
-      export PATH=$PATH:${gpu-screen-recorder}/bin
-      export PATH=$PATH:${networkmanager}/bin
-      export PATH=$PATH:${brightnessctl}/bin
-      export PATH=$PATH:${matugen}/bin
-      export PATH=$PATH:${swww}/bin
-      export PATH=$PATH:${pkgs.gnome.gnome-bluetooth}/bin
-      export PATH=$PATH:${python3}/bin
-      export GDK_BACKEND=wayland
-      ${ags}/bin/ags -b hyprpanel -c ${config}/config.js $@
+      export PATH=$PATH:${lib.makeBinPath [dart-sass fd btop pipewire bluez bluez-tools grimblast gpu-screen-recorder brightnessctl gnome.gnome-bluetooth python3]}
+            ${ags}/bin/ags -b hyprpanel -c ${config}/config.js $@
     '';
   };
 }

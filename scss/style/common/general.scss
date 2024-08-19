@@ -1,5 +1,27 @@
 @import '../colors.scss';
 
+.txt-icon {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  font-size: 1.5em;
+
+  &.bluetooth {
+    font-size: 1em;
+  }
+
+  &.playback {
+    font-size: 1.3em;
+  }
+
+  &.input {
+    font-size: 1.3em;
+  }
+}
+
+.bar.txt-icon {
+  font-family: "JetBrainsMono Nerd Font Propo", monospace;
+  font-size: 1.2em;
+}
+
 window.popup {
   opacity: $bar-menus-opacity/100;
 

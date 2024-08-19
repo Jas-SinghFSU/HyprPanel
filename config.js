@@ -33,7 +33,7 @@ try {
     }
 
     if (v.ags[1] < v.expect[1] || v.ags[2] < v.expect[2]) {
-        print(`my config needs at least v${v.expect.join(".")}, yours is v${v.ags.join(".")}`)
+        print(`HyprPanel needs atleast v${v.expect.join(".")} of AGS, yours is v${v.ags.join(".")}`)
         App.quit()
     }
 

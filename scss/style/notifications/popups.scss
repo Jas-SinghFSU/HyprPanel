@@ -10,6 +10,10 @@
 }
 
 .notification-card-container {
+  * {
+    font-size: $font-size * $notification-scaling/100;
+  }
+
   padding: 1px;
 }
 
