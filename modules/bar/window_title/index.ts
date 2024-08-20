@@ -18,6 +18,7 @@ const filterTitle = (windowtitle: ActiveClient) => {
         ["spotify", "󰓇", "Spotify"],
         ["ristretto", "󰋩", "Ristretto"],
         ["obsidian", "󱓧", "Obsidian"],
+
         // Browsers
         ["google-chrome", "", "Google Chrome"],
         ["brave-browser", "󰖟", "Brave Browser"],
