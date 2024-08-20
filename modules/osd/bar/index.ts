@@ -26,7 +26,7 @@ export const OSDBar = (ort: OSDOrientation) => {
                         self.value = audio.microphone.volume <= 1 ? audio.microphone.volume : audio.microphone.volume - 1;
                     }, "notify::volume")
                     self.hook(audio.microphone, () => {
-                        self.toggleClassName("overflow", audio.microphone.volume > 1 && (!options.theme.osd.muted_zero.value || !(audio.microphone.is_muted !== false)));
+                        self.toggleClassName("overflow", audio.microphone.volume > 1 && (!options.theme.osd.muted_zero.value || audio.microphone.is_muted === false));
                         self.value = (options.theme.osd.muted_zero.value && audio.microphone.is_muted !== false) ? 0 : audio.microphone.volume <= 1 ? audio.microphone.volume : audio.microphone.volume - 1;
                     }, "notify::is-muted")
                     self.hook(audio.speaker, () => {
