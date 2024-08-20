@@ -11,10 +11,12 @@ const filterTitle = (windowtitle: ActiveClient) => {
         ["firefox", "󰈹", "Firefox"],
         ["microsoft-edge", "󰇩", "Edge"],
         ["discord", "", "Discord"],
+        ["vesktop", "", "Vesktop"],
         ["org.kde.dolphin", "", "Dolphin"],
         ["plex", "󰚺", "Plex"],
         ["steam", "", "Steam"],
         ["spotify", "󰓇", "Spotify"],
+        ["ristretto", "󰋩", "Ristretto"],
         ["obsidian", "󱓧", "Obsidian"],
 
         // Browsers
@@ -58,6 +60,7 @@ const filterTitle = (windowtitle: ActiveClient) => {
         // Communication Tools
         ["slack", "󰒱", "Slack"],
         ["telegram-desktop", "", "Telegram"],
+        ["org.telegram.desktop", "", "Telegram"],
         ["whatsapp", "󰖣", "WhatsApp"],
         ["teams", "󰊻", "Microsoft Teams"],
         ["skype", "󰒯", "Skype"],
