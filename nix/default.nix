@@ -30,7 +30,7 @@ let
   config = stdenv.mkDerivation {
     inherit pname;
     version = "latest";
-    src = ./.;
+    src = ../.;
 
     buildPhase = ''
       ${bun}/bin/bun build ./main.ts \
