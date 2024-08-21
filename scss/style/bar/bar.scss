@@ -205,3 +205,26 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 .box-right {
   margin-right: $bar-outer_spacing;
 }
+
+.stats-bar {
+  levelbar * {
+    transition: 16ms;
+  }
+
+  trough {
+    min-height: 1.05em;
+  }
+
+  block {
+    border-radius: 0;
+
+    &.empty {
+      background: $bar-background
+    }
+
+    &.filled {
+      background: #FBBA65;
+      padding-left: 0.85em;
+    }
+  }
+}
