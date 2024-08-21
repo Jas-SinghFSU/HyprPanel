@@ -47,7 +47,11 @@ export const BarSettings = () => {
 
                 Header('Window Titles'),
                 Option({ opt: options.theme.bar.buttons.windowtitle.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
-                Option({ opt: options.bar.windowtitle.title_map, title: 'Window Title Mappings', subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings', type: 'object', subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings' }),
+                Option({ opt: options.bar.windowtitle.show_custom_title, title: 'Show Custom Title', type: 'boolean' }),
+                Option({ opt: options.bar.windowtitle.show_icon, title: 'Show Icon', subtitle: 'Only applicable if Show Custom Title is enabled', type: 'boolean' }),
+                Option({ opt: options.bar.windowtitle.title_map, title: 'Window Title Mappings', subtitle: 'Only applicable if Show Custom Title is enabled\nWiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings', type: 'object', subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings' }),
+                Option({ opt: options.bar.windowtitle.truncation, title: 'Truncate Window Title', subtitle: 'Only applicable if Show Custom Title is disabled', type: 'boolean' }),
+                Option({ opt: options.bar.windowtitle.truncation_size, title: 'Truncation Size', subtitle: 'Only applicable if Show Custom Title is disabled', type: 'number', min: 10 }),
 
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),
