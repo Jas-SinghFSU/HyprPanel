@@ -132,19 +132,41 @@ const filterTitle = (windowtitle: ActiveClient) => {
     };
 };
 
+const defaultTitle = (client: ActiveClient, max_size: number) => {
+    let title = client.title;
+    // If the title is empty or only filled with spaces, fallback to the class name
+    if (title.length === 0 || title.match(/^ *$/)) {
+        title = client.class;
+    }
+    return max_size > 0 && title.length > max_size ? title.substring(0, max_size) + "..." : title;
+};
+
 const ClientTitle = () => {
+    const show_custom_title = options.bar.windowtitle.show_custom_title;
+    const show_icon = options.bar.windowtitle.show_icon;
+    const truncation = options.bar.windowtitle.truncation;
+    const truncation_size = options.bar.windowtitle.truncation_size;
+
     return {
         component: Widget.Box({
-            children: [
-                Widget.Label({
-                    class_name: "bar-button-icon windowtitle txt-icon bar",
-                    label: hyprland.active.bind("client").as((v) => filterTitle(v).icon),
+            children:
+                Utils.merge(
+                    [hyprland.active.bind("client"), show_custom_title.bind("value"), show_icon.bind("value"),
+                        truncation.bind("value"), truncation_size.bind("value")],
+                    (client, showCustomTitle, showIcon, truncate, truncationSize) => {
+                        const children: any[] = [];
+                        if (showCustomTitle && showIcon) {
+                            children.push(Widget.Label({
+                                class_name: "bar-button-icon windowtitle txt-icon bar",
+                                label: filterTitle(client).icon,
+                            }));
+                        }
+                        children.push(Widget.Label({
+                            class_name: "bar-button-label windowtitle",
+                            label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
+                        }));
+                        return children;
                 }),
-                Widget.Label({
-                    class_name: "bar-button-label windowtitle",
-                    label: hyprland.active.bind("client").as((v) => filterTitle(v).label),
-                })
-            ]
         }),
         isVisible: true,
         boxClass: "windowtitle",
