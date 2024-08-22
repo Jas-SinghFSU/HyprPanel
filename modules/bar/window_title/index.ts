@@ -28,6 +28,7 @@ const filterTitle = (windowtitle: ActiveClient) => {
         ["waterfox", "󰖟", "Waterfox"],
         ["thorium", "󰖟", "Waterfox"],
         ["tor-browser", "", "Tor Browser"],
+        ["floorp", "󰈹", "Floorp"],
 
         // Terminals
         ["gnome-terminal", "", "GNOME Terminal"],
@@ -55,6 +56,7 @@ const filterTitle = (windowtitle: ActiveClient) => {
         ["docker", "", "Docker"],
         ["vim", "", "Vim"],
         ["neovim", "", "Neovim"],
+        ["neovide", "", "Neovide"],
         ["emacs", "", "Emacs"],
 
         // Communication Tools
@@ -98,6 +100,8 @@ const filterTitle = (windowtitle: ActiveClient) => {
 
         // Office and Productivity
         ["evernote", "", "Evernote"],
+        ["sioyek", "", "Sioyek"],
+
 
         // Cloud Services and Sync
         ["dropbox", "󰇣", "Dropbox"],
