@@ -42,6 +42,7 @@
     }
 
     &.underline {
+      border-top: 0.1em solid transparent;
       border-bottom: 0.1em solid $bar-buttons-workspaces-numbered_active_underline_color;
     }
 
@@ -51,5 +52,26 @@
       background-color: $bar-buttons-workspaces-active;
       padding: 0em $bar-buttons-workspaces-numbered_active_highlight_padding;
     }
+  }
+}
+
+.workspace-button {
+  &:hover label {
+    color: $bar-buttons-workspaces-hover;
+
+    &.default {
+      background-color: $bar-buttons-workspaces-hover;
+    }
+  }
+
+  &:hover .can_underline {
+    border-top: 0.1em solid transparent;
+    border-bottom: 0.1em solid if($bar-buttons-monochrome, $bar-buttons-workspaces-hover, $bar-buttons-workspaces-hover);
+  }
+
+  &:hover .can_highlight {
+    background-color: $bar-buttons-workspaces-hover;
+    color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
+    border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
   }
 }

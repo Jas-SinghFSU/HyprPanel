@@ -16,6 +16,8 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.background, title: 'Background Color', type: 'color' }),
                 Option({ opt: options.theme.bar.opacity, title: 'Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.opacity, title: 'Button Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
+                Option({ opt: options.theme.bar.buttons.background_opacity, title: 'Button Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
+                Option({ opt: options.theme.bar.buttons.background_hover_opacity, title: 'Button Background Hover Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.monochrome, title: 'Use Global Colors', type: 'boolean', disabledBinding: options.theme.matugen }),
                 Option({ opt: options.theme.bar.buttons.background, title: 'Button Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.hover, title: 'Button Hover', type: 'color' }),
@@ -29,6 +31,7 @@ export const BarTheme = () => {
 
                 Header('Workspaces'),
                 Option({ opt: options.theme.bar.buttons.workspaces.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.workspaces.hover, title: 'Workspace Hover Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.available, title: 'Workspace Available Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.occupied, title: 'Workspace Occupied Color', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.active, title: 'Workspace Active Color', type: 'color' }),
