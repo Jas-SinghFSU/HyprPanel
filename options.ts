@@ -140,6 +140,8 @@ const options = mkOptions(OPTIONS, {
                 y_margins: opt("0.4em"),
                 radius: opt("0.3em"),
                 opacity: opt(100),
+                background_opacity: opt(100),
+                background_hover_opacity: opt(100),
                 background: opt(colors.base2),
                 hover: opt(colors.surface1),
                 text: opt(colors.lavender),
@@ -151,7 +153,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 workspaces: {
                     background: opt(colors.base2),
-                    hover: opt(colors.surface1),
+                    hover: opt(colors.pink),
                     available: opt(colors.sky),
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),

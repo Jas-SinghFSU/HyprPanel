@@ -19,103 +19,105 @@
   }
 }
 
+$bar-button-background-opacity-ratio: $bar-buttons-background_opacity / 100;
+$transparency-value: 1 - $bar-button-background-opacity-ratio;
+
+$bar-button-background-hover-opacity-ratio: $bar-buttons-background_hover_opacity / 100;
+$transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
+
 .bar_item_box_visible {
-  background-color: $bar-buttons-background;
+  background-color: transparentize($bar-buttons-background, $transparency-value);
   border-radius: $bar-buttons-radius;
   padding: 0.2rem 0.9rem;
   margin: $bar-buttons-y_margins $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
 
   &:hover {
-    background: $bar-buttons-hover;
+    background: transparentize($bar-buttons-hover, $transparency-value-hover);
   }
 
   &.battery {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-battery-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-battery-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-battery-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-battery-hover), $transparency-value-hover);
     }
   }
 
   &.bluetooth {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-bluetooth-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-bluetooth-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-bluetooth-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-bluetooth-hover), $transparency-value-hover);
     }
   }
 
   &.clock {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-clock-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-clock-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover), $transparency-value-hover);
     }
   }
 
   &.media {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-media-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-media-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-media-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-media-hover), $transparency-value-hover);
     }
   }
 
   &.dashboard {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-dashboard-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-dashboard-hover), $transparency-value-hover);
     }
   }
 
   &.network {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-network-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-network-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-network-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-network-hover), $transparency-value-hover);
     }
   }
 
   &.notifications {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-notifications-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-notifications-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-hover), $transparency-value-hover);
     }
   }
 
   &.systray {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-systray-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-systray-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-systray-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-systray-hover), $transparency-value-hover);
     }
   }
 
   &.volume {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-volume-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-volume-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-volume-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-volume-hover), $transparency-value-hover);
     }
   }
 
   &.windowtitle {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-windowtitle-background);
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-windowtitle-background), $transparency-value);
 
     &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-windowtitle-hover);
+      background: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-windowtitle-hover), $transparency-value-hover);
     }
   }
 
   &.workspaces {
-    background-color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-workspaces-background);
-
-    &:hover {
-      background: if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-workspaces-hover);
-    }
+    background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-workspaces-background), $transparency-value);
   }
 }
 
