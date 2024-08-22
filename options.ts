@@ -135,6 +135,7 @@ const options = mkOptions(OPTIONS, {
             transparent: opt(false),
             background: opt(colors.crust),
             buttons: {
+                style: opt<"default" | "split" | "wave">("default"),
                 monochrome: opt(false),
                 spacing: opt("0.25em"),
                 y_margins: opt("0.4em"),
@@ -143,13 +144,15 @@ const options = mkOptions(OPTIONS, {
                 background_opacity: opt(100),
                 background_hover_opacity: opt(100),
                 background: opt(colors.base2),
+                icon_background: opt(colors.base2),
                 hover: opt(colors.surface1),
                 text: opt(colors.lavender),
                 icon: opt(colors.lavender),
                 dashboard: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
-                    icon: opt(colors.yellow)
+                    icon: opt(colors.yellow),
+                    spacing: opt("0.5em"),
                 },
                 workspaces: {
                     background: opt(colors.base2),
@@ -161,12 +164,14 @@ const options = mkOptions(OPTIONS, {
                     numbered_active_highlight_padding: opt("0.2em"),
                     numbered_active_highlighted_text_color: opt(colors.mantle),
                     numbered_active_underline_color: opt(colors.pink),
+                    spacing: opt("0.5em"),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.pink),
                     icon: opt(colors.pink),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 media: {
@@ -174,6 +179,7 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.lavender),
                     icon: opt(colors.lavender),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 volume: {
@@ -181,6 +187,7 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.maroon),
                     icon: opt(colors.maroon),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 network: {
@@ -188,6 +195,7 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.mauve),
                     icon: opt(colors.mauve),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 bluetooth: {
@@ -195,17 +203,20 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.sky),
                     icon: opt(colors.sky),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 systray: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
+                    spacing: opt("0.5em"),
                 },
                 battery: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     text: opt(colors.yellow),
                     icon: opt(colors.yellow),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 clock: {
@@ -213,11 +224,13 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.pink),
                     icon: opt(colors.pink),
+                    spacing: opt("0.5em"),
                 },
                 notifications: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
                     icon: opt(colors.lavender),
+                    icon_background: opt(colors.base2),
                     total: opt(colors.lavender),
                     spacing: opt("0.5em"),
                 },
@@ -687,6 +700,7 @@ const options = mkOptions(OPTIONS, {
         },
         windowtitle: {
             title_map: opt([]),
+            label: opt(true),
         },
         workspaces: {
             show_icons: opt(false),

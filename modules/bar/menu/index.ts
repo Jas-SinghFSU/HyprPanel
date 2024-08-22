@@ -5,8 +5,16 @@ import options from "options";
 const Menu = () => {
     return {
         component: Widget.Box({
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value")], (style) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `dashboard ${styleMap[style]}`;
+            }),
             child: Widget.Label({
-                class_name: "bar-menu_label txt-icon bar",
+                class_name: "bar-menu_label bar-button_icon txt-icon bar",
                 label: options.bar.launcher.icon.bind("value"),
             }),
         }),

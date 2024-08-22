@@ -46,6 +46,7 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.scroll_speed, title: 'Scrolling Speed', type: 'number' }),
 
                 Header('Window Titles'),
+                Option({ opt: options.bar.windowtitle.label, title: 'Show Window Title Label', type: 'boolean' }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
                 Option({ opt: options.bar.windowtitle.title_map, title: 'Window Title Mappings', subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings', type: 'object', subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings' }),
 

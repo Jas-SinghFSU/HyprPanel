@@ -27,12 +27,16 @@ const Volume = () => {
 
     const volIcn = Widget.Label({
         vpack: "center",
+        hpack: "start",
+        hexpand: true,
         label: getIcon(),
         class_name: "bar-button-icon volume txt-icon bar",
     });
 
     const volPct = Widget.Label({
         vpack: "center",
+        hpack: "center",
+        hexpand: true,
         label: audio.speaker.bind("volume").as((v) => `${Math.round(v * 100)}%`),
         class_name: "bar-button-label volume",
     });
@@ -40,7 +44,17 @@ const Volume = () => {
     return {
         component: Widget.Box({
             vpack: "center",
-            class_name: "volume",
+            hpack: "fill",
+            hexpand: true,
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), options.bar.volume.label.bind("value")], (style, showLabel) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+
+                return `volume ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
+            }),
             children: options.bar.volume.label.bind("value").as((showLabel) => {
                 if (showLabel) {
                     return [volIcn, volPct];

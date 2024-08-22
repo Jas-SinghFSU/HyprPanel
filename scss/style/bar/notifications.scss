@@ -1,10 +1,28 @@
 .bar-button-icon.notifications {
   color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
   font-size: 1.3em;
-  min-width: 1em;
 }
 
 .bar-button-label.notifications {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-notifications-total);
   margin-left: $bar-buttons-notifications-spacing;
+  min-width: 1em;
+}
+
+.style2 {
+  .bar-button-icon.notifications {
+    border-top-left-radius: $bar-buttons-radius;
+    border-bottom-left-radius: $bar-buttons-radius;
+    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-notifications-icon_background);
+    padding: 0.2rem 0em;
+    padding-left: $bar-buttons-notifications-spacing;
+    padding-right: $bar-buttons-notifications-spacing;
+  }
+
+  .bar-button-label.notifications {
+    padding: 0.2rem 0em;
+    padding-right: $bar-buttons-notifications-spacing;
+    padding-left: $bar-buttons-notifications-spacing;
+    margin-left: 0em;
+  }
 }

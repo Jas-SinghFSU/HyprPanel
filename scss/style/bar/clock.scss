@@ -1,3 +1,7 @@
 .clock {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
 }
+
+.style2.clock {
+  padding: 0.2rem $bar-buttons-clock-spacing;
+}

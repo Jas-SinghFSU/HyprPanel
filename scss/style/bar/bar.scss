@@ -28,9 +28,9 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 .bar_item_box_visible {
   background-color: transparentize($bar-buttons-background, $transparency-value);
   border-radius: $bar-buttons-radius;
-  padding: 0.2rem 0.9rem;
   margin: $bar-buttons-y_margins $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
+  padding: 0.2rem 0.9rem;
 
   &:hover {
     background: transparentize($bar-buttons-hover, $transparency-value-hover);
@@ -118,6 +118,61 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 
   &.workspaces {
     background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-workspaces-background), $transparency-value);
+  }
+
+  &.style2 {
+    padding: 0em;
+
+
+    &:hover {
+      .dashboard .bar-button_icon {
+        color: $bar-buttons-dashboard_background;
+      }
+    }
+
+    &:hover .no-label {
+      .battery .bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-battery-hover), $transparency-value);
+        color: $bar-buttons-battery-icon_background;
+      }
+
+      .bluetooth.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-bluetooth-hover), $transparency-value);
+        color: $bar-buttons-bluetooth-icon_background;
+      }
+
+      .media.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-media-hover), $transparency-value);
+        color: $bar-buttons-media-icon_background;
+      }
+
+      .network.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-network-hover), $transparency-value);
+        color: $bar-buttons-network-icon_background;
+      }
+
+      .notifications.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-notifications-hover), $transparency-value);
+        color: $bar-buttons-notifications-icon_background;
+      }
+
+      .volume.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-volume-hover), $transparency-value);
+        color: $bar-buttons-volume-icon_background;
+      }
+
+      .windowtitle.bar-button-icon {
+        background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-windowtitle-hover), $transparency-value);
+        color: $bar-buttons-windowtitle-icon_background;
+      }
+    }
+  }
+}
+
+.no-label.style2 {
+  .bar-button-icon {
+    border-top-right-radius: $bar-buttons-radius;
+    border-bottom-right-radius: $bar-buttons-radius;
   }
 }
 
