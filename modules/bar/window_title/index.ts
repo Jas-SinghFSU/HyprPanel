@@ -1,6 +1,7 @@
 const hyprland = await Service.import("hyprland");
 import options from 'options';
 import { ActiveClient } from 'types/service/hyprland'
+import Label from "types/widgets/label";
 
 const filterTitle = (windowtitle: ActiveClient) => {
     const windowTitleMap = [
@@ -143,13 +144,14 @@ const defaultTitle = (client: ActiveClient, max_size: number) => {
 
 const ClientTitle = () => {
     const show_custom_title = options.bar.windowtitle.show_custom_title;
+    const show_label = options.bar.windowtitle.label;
     const show_icon = options.bar.windowtitle.show_icon;
     const truncation = options.bar.windowtitle.truncation;
     const truncation_size = options.bar.windowtitle.truncation_size;
 
     return {
         component: Widget.Box({
-            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), options.bar.windowtitle.label.bind("value")], (style, showLabel) => {
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), show_label.bind("value")], (style, showLabel) => {
                 const styleMap = {
                     default: "style1",
                     split: "style2",
@@ -159,20 +161,22 @@ const ClientTitle = () => {
             }),
             children:
                 Utils.merge(
-                    [hyprland.active.bind("client"), show_custom_title.bind("value"), show_icon.bind("value"),
+                    [hyprland.active.bind("client"), show_custom_title.bind("value"), show_label.bind("value"), show_icon.bind("value"),
                         truncation.bind("value"), truncation_size.bind("value")],
-                    (client, showCustomTitle, showIcon, truncate, truncationSize) => {
-                        const children: any[] = [];
+                    (client, showCustomTitle, showLabel, showIcon, truncate, truncationSize) => {
+                        const children: Label<any>[] = [];
                         if (showCustomTitle && showIcon) {
                             children.push(Widget.Label({
-                                class_name: "bar-button-icon windowtitle txt-icon bar",
+                                class_name: "bar-button-icon windowtitle txt-icon bar" + (showLabel ? " spacing" : ""),
                                 label: filterTitle(client).icon,
                             }));
                         }
-                        children.push(Widget.Label({
-                            class_name: "bar-button-label windowtitle",
-                            label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
-                        }));
+                        if (!showCustomTitle || showLabel) {
+                            children.push(Widget.Label({
+                                class_name: "bar-button-label windowtitle",
+                                label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
+                            }));
+                        }
                         return children;
                     }),
         }),

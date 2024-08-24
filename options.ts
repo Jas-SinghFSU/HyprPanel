@@ -702,6 +702,7 @@ const options = mkOptions(OPTIONS, {
         },
         windowtitle: {
             show_custom_title: opt(true),
+            label: opt(true),
             show_icon: opt(true),
             title_map: opt([]),
             truncation: opt(true),
