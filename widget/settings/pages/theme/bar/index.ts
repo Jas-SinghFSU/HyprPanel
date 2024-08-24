@@ -14,7 +14,7 @@ export const BarTheme = () => {
                 Header('General'),
                 Option({ opt: options.theme.bar.transparent, title: 'Transparent', type: 'boolean' }),
                 Option({ opt: options.theme.bar.background, title: 'Background Color', type: 'color' }),
-                Option({ opt: options.theme.bar.buttons.style, title: 'Button Style', type: 'enum', enums: ['default', 'split', 'wave'] }),
+                Option({ opt: options.theme.bar.buttons.style, title: 'Button Style', type: 'enum', enums: ['default', 'split', 'wave', 'wave2'] }),
                 Option({ opt: options.theme.bar.opacity, title: 'Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.opacity, title: 'Button Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.background_opacity, title: 'Button Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),

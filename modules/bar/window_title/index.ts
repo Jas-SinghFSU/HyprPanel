@@ -157,6 +157,7 @@ const ClientTitle = () => {
         }),
         isVisible: true,
         boxClass: "windowtitle",
+        props: {}
     };
 };
 

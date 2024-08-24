@@ -32,6 +32,16 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
   opacity: $bar-buttons-opacity/100;
   padding: 0.2rem 0.9rem;
 
+  &.style3 {
+    border-bottom-left-radius: 1.3em;
+    border-top-right-radius: 1.3em;
+  }
+
+  &.style4 {
+    border-bottom-right-radius: 1.3em;
+    border-top-left-radius: 1.3em;
+  }
+
   &:hover {
     background: transparentize($bar-buttons-hover, $transparency-value-hover);
   }

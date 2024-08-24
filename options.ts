@@ -1,5 +1,5 @@
 import { opt, mkOptions } from "lib/option"
-import { NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
+import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
@@ -135,7 +135,7 @@ const options = mkOptions(OPTIONS, {
             transparent: opt(false),
             background: opt(colors.crust),
             buttons: {
-                style: opt<"default" | "split" | "wave">("default"),
+                style: opt<BarButtonStyles>("default"),
                 monochrome: opt(false),
                 spacing: opt("0.25em"),
                 y_margins: opt("0.4em"),
