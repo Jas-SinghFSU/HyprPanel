@@ -66,7 +66,12 @@ const BatteryLabel = () => {
                             }),
                         ];
                     } else if (batAvail && !showLabel) {
-                        return [Widget.Icon({ icon: batIcon })];
+                        return [
+                            Widget.Icon({
+                                class_name: "bar-button-icon battery",
+                                icon: batIcon
+                            })
+                        ];
                     } else {
                         return [];
                     }
