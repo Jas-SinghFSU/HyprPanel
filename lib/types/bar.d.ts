@@ -1,7 +1,9 @@
-export interface Child {
-    isVis?: { bind: (value: string) => any };
+import { Variable } from "types/variable";
+
+export type Child = {
+    component: Box<Gtk.Widget, unknown>;
     isVisible?: boolean;
-    boxClass?: string;
-    component: any;
-    props: any;
-}
+    isVis?: Variable<boolean>;
+    boxClass: string;
+    props: ButtonProps;
+};

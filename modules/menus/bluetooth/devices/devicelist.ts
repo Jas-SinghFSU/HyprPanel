@@ -2,8 +2,9 @@ import { Bluetooth } from "types/service/bluetooth.js";
 import Box from "types/widgets/box.js";
 import { connectedControls } from "./connectedControls.js";
 import { getBluetoothIcon } from "../utils.js";
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
 
-const devices = (bluetooth: Bluetooth, self: Box<any, any>) => {
+const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
     return self.hook(bluetooth, () => {
         if (!bluetooth.enabled) {
             return (self.child = Widget.Box({

@@ -1,7 +1,6 @@
 import Gtk from "gi://Gtk?version=3.0";
 import { Child } from "lib/types/bar";
 import options from "options";
-import Box from "types/widgets/box";
 import { ButtonProps } from "types/widgets/button";
 
 export const BarItemBox = (child: Child): ButtonProps<Gtk.Widget> => {
