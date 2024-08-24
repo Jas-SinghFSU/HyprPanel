@@ -30,7 +30,7 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
   border-radius: $bar-buttons-radius;
   margin: $bar-buttons-y_margins $bar-buttons-spacing;
   opacity: $bar-buttons-opacity/100;
-  padding: 0.2rem 0.9rem;
+  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
 
   &.style3 {
     border-bottom-left-radius: 1.3em;

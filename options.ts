@@ -138,6 +138,8 @@ const options = mkOptions(OPTIONS, {
                 style: opt<BarButtonStyles>("default"),
                 monochrome: opt(false),
                 spacing: opt("0.25em"),
+                padding_x: opt("0.7rem"),
+                padding_y: opt("0.2rem"),
                 y_margins: opt("0.4em"),
                 radius: opt("0.3em"),
                 opacity: opt(100),
