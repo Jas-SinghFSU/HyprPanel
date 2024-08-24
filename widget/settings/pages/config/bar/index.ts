@@ -12,12 +12,21 @@ export const BarSettings = () => {
             vertical: true,
             children: [
                 Header('Layouts'),
-                Option({ opt: options.bar.layouts, title: 'Bar Layouts for Monitors', subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#layouts', type: 'object', subtitleLink: 'https://hyprpanel.com/configuration/panel.html#layouts' }, 'bar-layout-input'),
+                Option({
+                    opt: options.bar.layouts,
+                    title: 'Bar Layouts for Monitors',
+                    subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#layouts',
+                    type: 'object',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#layouts'
+                },
+                    'bar-layout-input'),
 
                 Header('Spacing'),
                 Option({ opt: options.theme.bar.outer_spacing, title: 'Outer Spacing', subtitle: 'Spacing on the outer left and right edges of the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.y_margins, title: 'Vertical Margins', subtitle: 'Spacing above/below the buttons in the bar.', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.spacing, title: 'Button Spacing', subtitle: 'Spacing between the buttons in the bar.', type: 'string' }),
+                Option({ opt: options.theme.bar.buttons.padding_x, title: 'Button Horizontal Padding', type: 'string' }),
+                Option({ opt: options.theme.bar.buttons.padding_y, title: 'Button Vertical Padding', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.radius, title: 'Button Radius', type: 'string' }),
                 Option({ opt: options.theme.bar.floating, title: 'Floating Bar', type: 'boolean' }),
                 Option({ opt: options.theme.bar.layer, title: 'Layer', type: 'enum', subtitle: 'Layer determines the Z index of your bar.', enums: ["top", "bottom", "overlay", "background"] }),
@@ -41,13 +50,27 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.spacing, title: 'Spacing', subtitle: 'Spacing between workspace icons', type: 'float' }),
                 Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
                 Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
-                Option({ opt: options.bar.workspaces.workspaceMask, title: 'Mask Workspace Numbers On Monitors', subtitle: 'Only applicable if Workspace Numbers and Monitor Specific are enabled.\nForces each Monitor\'s Workspace labels to start from 1.', type: 'boolean' }),
+                Option({
+                    opt: options.bar.workspaces.workspaceMask,
+                    title: 'Mask Workspace Numbers On Monitors',
+
+                    subtitle: `Only applicable if Workspace Numbers and Monitor Specific are enabled.
+Forces each Monitor's Workspace labels to start from 1.`,
+                    type: 'boolean'
+                }),
                 Option({ opt: options.bar.workspaces.reverse_scroll, title: 'Invert Scroll', subtitle: 'Scrolling up will go to the previous workspace rather than the next.', type: 'boolean' }),
                 Option({ opt: options.bar.workspaces.scroll_speed, title: 'Scrolling Speed', type: 'number' }),
 
                 Header('Window Titles'),
+                Option({ opt: options.bar.windowtitle.label, title: 'Show Window Title Label', type: 'boolean' }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
-                Option({ opt: options.bar.windowtitle.title_map, title: 'Window Title Mappings', subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings', type: 'object', subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings' }),
+                Option({
+                    opt: options.bar.windowtitle.title_map,
+                    title: 'Window Title Mappings',
+                    subtitle: 'Wiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings',
+                    type: 'object',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings'
+                }),
 
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),

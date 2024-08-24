@@ -3,6 +3,10 @@ import Gio from "gi://Gio"
 import { bash, Notify } from "lib/utils";
 import icons from "lib/icons"
 
+const whiteListedThemeProp = [
+    "theme.bar.buttons.style"
+];
+
 export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const original_file_path = filePath;
 
@@ -25,7 +29,10 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         for (let key in jsonObject) {
             if (typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key])) {
                 filteredObject[key] = jsonObject[key];
+            } else if (whiteListedThemeProp.includes(key)) {
+                filteredObject[key] = jsonObject[key];
             }
+
         }
 
         return filteredObject;
@@ -37,6 +44,11 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         let filteredObject = {};
 
         for (let key in jsonObject) {
+            // do not add key-value pair if its in whiteListedThemeProp
+            if (whiteListedThemeProp.includes(key)) {
+                continue;
+            }
+
             if (!(typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key]))) {
                 filteredObject[key] = jsonObject[key];
             }
@@ -162,8 +174,11 @@ export const importFiles = (themeOnly: boolean = false): void => {
 
         const filterConfigForThemeOnly = (config: object) => {
             let filteredConfig = {};
+
             for (let key in config) {
                 if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
+                    filteredConfig[key] = config[key];
+                } else if (whiteListedThemeProp.includes(key)) {
                     filteredConfig[key] = config[key];
                 }
             }
@@ -173,6 +188,10 @@ export const importFiles = (themeOnly: boolean = false): void => {
         const filterConfigForNonTheme = (config: object) => {
             let filteredConfig = {};
             for (let key in config) {
+                // do not add key-value pair if its in whiteListedThemeProp
+                if (whiteListedThemeProp.includes(key)) {
+                    continue;
+                }
                 if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
                     filteredConfig[key] = config[key];
                 }

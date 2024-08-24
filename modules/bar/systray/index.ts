@@ -41,6 +41,7 @@ const SysTray = () => {
         isVisible: true,
         boxClass: "systray",
         isVis,
+        props: {}
     };
 };
 

@@ -3,6 +3,8 @@ import Gdk from 'gi://Gdk?version=3.0';
 import options from "options";
 import { openMenu } from "../utils.js";
 
+const { label } = options.bar.bluetooth;
+
 const Bluetooth = () => {
     const btIcon = Widget.Label({
         label: bluetooth.bind("enabled").as((v) => v ? "󰂯" : "󰂲"),
@@ -25,7 +27,14 @@ const Bluetooth = () => {
 
     return {
         component: Widget.Box({
-            class_name: "volume",
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), label.bind("value")], (style, showLabel) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `bluetooth ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
+            }),
             children: options.bar.bluetooth.label.bind("value").as((showLabel) => {
                 if (showLabel) {
                     return [btIcon, btText];

@@ -5,5 +5,24 @@
 
 .bar-button-label.volume {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
+  min-width: 2.2em;
   margin-left: $bar-buttons-volume-spacing;
+}
+
+.style2 {
+  .bar-button-icon.volume {
+    border-top-left-radius: $bar-buttons-radius;
+    border-bottom-left-radius: $bar-buttons-radius;
+    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-volume-icon_background);
+    padding: $bar-buttons-padding_y 0em;
+    padding-left: $bar-buttons-padding_x;
+    padding-right: $bar-buttons-volume-spacing;
+  }
+
+  .bar-button-label.volume {
+    padding: $bar-buttons-padding_y 0em;
+    padding-right: $bar-buttons-padding_x;
+    padding-left: $bar-buttons-volume-spacing;
+    margin-left: 0em;
+  }
 }
