@@ -22,7 +22,7 @@
   }
 
   .bar-button-label.battery {
-    padding: 0.2em 0em;
+    padding: $bar-buttons-padding_y 0em;
     padding-right: $bar-buttons-padding_x;
     padding-left: $bar-buttons-battery-spacing;
     margin-left: 0em;
