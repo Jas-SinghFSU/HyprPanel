@@ -8,8 +8,16 @@ const { label: networkLabel, truncation, truncation_size } = options.bar.network
 const Network = () => {
     return {
         component: Widget.Box({
-            vpack: "center",
-            class_name: "bar-network",
+            vpack: "fill",
+            vexpand: true,
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), networkLabel.bind("value")], (style, showLabel) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `network ${styleMap[style]}${!showLabel ? " no-label" : ""}`;
+            }),
             children: [
                 Widget.Icon({
                     class_name: "bar-button-icon network",
@@ -25,7 +33,7 @@ const Network = () => {
                     })
                 }),
                 Widget.Box({
-                    class_name: "bar-button-icon network",
+                    vpack: "center",
                     child: Utils.merge([
                         network.bind("primary"),
                         network.bind("wifi"),

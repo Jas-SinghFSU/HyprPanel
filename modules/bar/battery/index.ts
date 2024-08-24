@@ -1,6 +1,5 @@
 const battery = await Service.import("battery");
 import Gdk from 'gi://Gdk?version=3.0';
-import EventHandler from 'types/widgets/button.ts'
 import { openMenu } from "../utils.js";
 import options from "options";
 
@@ -42,7 +41,14 @@ const BatteryLabel = () => {
 
     return {
         component: Widget.Box({
-            class_name: "battery",
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), show_label.bind("value")], (style, showLabel) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `battery ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
+            }),
             visible: battery.bind("available"),
             tooltip_text: battery.bind("time_remaining").as((t) => t.toString()),
             children: Utils.merge(
@@ -60,7 +66,12 @@ const BatteryLabel = () => {
                             }),
                         ];
                     } else if (batAvail && !showLabel) {
-                        return [Widget.Icon({ icon: batIcon })];
+                        return [
+                            Widget.Icon({
+                                class_name: "bar-button-icon battery",
+                                icon: batIcon
+                            })
+                        ];
                     } else {
                         return [];
                     }

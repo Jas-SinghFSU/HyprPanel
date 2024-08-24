@@ -5,6 +5,7 @@ export type Unit = "imperial" | "metric";
 export type PowerOptions = "sleep" | "reboot" | "logout" | "shutdown";
 export type NotificationAnchor = "top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left" | "left" | "right";
 export type OSDAnchor = "top left" | "top" | "top right" | "right" | "bottom right" | "bottom" | "bottom left" | "left";
+export type BarButtonStyles = "default" | "split" | "wave" | "wave2";
 
 export type ThemeExportData = {
     filePath: string,

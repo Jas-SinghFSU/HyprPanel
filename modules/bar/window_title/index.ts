@@ -149,6 +149,14 @@ const ClientTitle = () => {
 
     return {
         component: Widget.Box({
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), options.bar.windowtitle.label.bind("value")], (style, showLabel) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `windowtitle ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
+            }),
             children:
                 Utils.merge(
                     [hyprland.active.bind("client"), show_custom_title.bind("value"), show_icon.bind("value"),
@@ -166,10 +174,11 @@ const ClientTitle = () => {
                             label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
                         }));
                         return children;
-                }),
+                    }),
         }),
         isVisible: true,
         boxClass: "windowtitle",
+        props: {}
     };
 };
 

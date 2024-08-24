@@ -10,6 +10,14 @@ export const Notifications = () => {
     return {
         component: Widget.Box({
             hpack: "start",
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), show_total.bind("value")], (style, showTotal) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `notifications ${styleMap[style]} ${!showTotal ? "no-label" : ""}`;
+            }),
             child: Widget.Box({
                 hpack: "start",
                 class_name: "bar-notifications",

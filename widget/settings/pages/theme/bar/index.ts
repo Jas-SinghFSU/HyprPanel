@@ -14,6 +14,7 @@ export const BarTheme = () => {
                 Header('General'),
                 Option({ opt: options.theme.bar.transparent, title: 'Transparent', type: 'boolean' }),
                 Option({ opt: options.theme.bar.background, title: 'Background Color', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.style, title: 'Button Style', type: 'enum', enums: ['default', 'split', 'wave', 'wave2'] }),
                 Option({ opt: options.theme.bar.opacity, title: 'Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.opacity, title: 'Button Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
                 Option({ opt: options.theme.bar.buttons.background_opacity, title: 'Button Background Opacity', type: 'number', increment: 5, min: 0, max: 100 }),
@@ -23,6 +24,12 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.hover, title: 'Button Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.text, title: 'Button Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.icon, title: 'Button Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Dashboard Button'),
                 Option({ opt: options.theme.bar.buttons.dashboard.background, title: 'Background', type: 'color' }),
@@ -43,30 +50,60 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.windowtitle.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.windowtitle.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Media'),
                 Option({ opt: options.theme.bar.buttons.media.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.media.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.media.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.media.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.media.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Volume'),
                 Option({ opt: options.theme.bar.buttons.volume.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.volume.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.volume.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.volume.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.volume.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Network'),
                 Option({ opt: options.theme.bar.buttons.network.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.network.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.network.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.network.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.network.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Bluetooth'),
                 Option({ opt: options.theme.bar.buttons.bluetooth.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.bluetooth.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.bluetooth.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.bluetooth.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.bluetooth.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('System Tray'),
                 Option({ opt: options.theme.bar.buttons.systray.background, title: 'Background', type: 'color' }),
@@ -77,6 +114,12 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.battery.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.battery.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.battery.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.battery.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Clock'),
                 Option({ opt: options.theme.bar.buttons.clock.background, title: 'Background', type: 'color' }),
@@ -89,6 +132,12 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.notifications.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.notifications.total, title: 'Notification Count', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.notifications.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.notifications.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })
