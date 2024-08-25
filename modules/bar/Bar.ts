@@ -17,6 +17,8 @@ import Gdk from "gi://Gdk?version=3.0";
 import Button from "types/widgets/button.js";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
 
+import './SideEffects';
+
 const { layouts } = options.bar;
 
 export type BarWidget = keyof typeof widget;

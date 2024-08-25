@@ -126,6 +126,12 @@ export const BarTheme = () => {
                 Option({ opt: options.theme.bar.buttons.clock.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.clock.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.clock.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.clock.icon_background,
+                    title: 'Button Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
 
                 Header('Notifications'),
                 Option({ opt: options.theme.bar.buttons.notifications.background, title: 'Background', type: 'color' }),

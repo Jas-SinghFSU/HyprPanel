@@ -1,7 +1,27 @@
-.clock {
+.bar-button-label.clock {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
+  margin-left: $bar-buttons-clock-spacing;
 }
 
-.style2.clock {
-  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+.bar-button-icon.clock {
+  font-size: 1.2em;
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
+}
+
+.style2 {
+  .bar-button-icon.clock {
+    border-top-left-radius: $bar-buttons-radius;
+    border-bottom-left-radius: $bar-buttons-radius;
+    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-clock-icon_background);
+    padding: $bar-buttons-padding_y 0em;
+    padding-left: $bar-buttons-padding_x;
+    padding-right: $bar-buttons-media-spacing;
+  }
+
+  .bar-button-label.clock {
+    padding: $bar-buttons-padding_y 0em;
+    padding-right: $bar-buttons-padding_x;
+    padding-left: $bar-buttons-clock-spacing;
+    margin-left: 0em;
+  }
 }
