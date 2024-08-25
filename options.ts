@@ -226,6 +226,7 @@ const options = mkOptions(OPTIONS, {
                     hover: opt(colors.surface1),
                     text: opt(colors.pink),
                     icon: opt(colors.pink),
+                    icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
                 notifications: {
@@ -741,7 +742,10 @@ const options = mkOptions(OPTIONS, {
             ]),
         },
         clock: {
-            format: opt("󰃭  %a %b %d    %I:%M:%S %p"),
+            icon: opt("󰸗"),
+            showIcon: opt(true),
+            showTime: opt(true),
+            format: opt("%a %b %d  %I:%M:%S %p"),
         },
         media: {
             show_artist: opt(false),

@@ -96,6 +96,9 @@ Forces each Monitor's Workspace labels to start from 1.`,
 
                 Header('Clock'),
                 Option({ opt: options.bar.clock.format, title: 'Clock Format', type: 'string' }),
+                Option({ opt: options.bar.clock.icon, title: 'Icon', type: 'string' }),
+                Option({ opt: options.bar.clock.showIcon, title: 'Show Icon', type: 'boolean' }),
+                Option({ opt: options.bar.clock.showTime, title: 'Show Time', type: 'boolean' }),
 
                 Header('Media'),
                 Option({ opt: options.theme.bar.buttons.media.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),

@@ -203,7 +203,7 @@
   "theme.bar.buttons.notifications.icon": "#090909",
   "theme.bar.buttons.notifications.hover": "#444444",
   "theme.bar.buttons.notifications.background": "#090909",
-  "theme.bar.buttons.clock.icon": "#FFFFFF",
+  "theme.bar.buttons.clock.icon": "#000000",
   "theme.bar.buttons.clock.text": "#FFFFFF",
   "theme.bar.buttons.clock.hover": "#444444",
   "theme.bar.buttons.clock.background": "#090909",
@@ -269,5 +269,6 @@
   "theme.bar.buttons.windowtitle.icon_background": "#ffffff",
   "theme.bar.buttons.media.icon_background": "#ffffff",
   "theme.bar.buttons.notifications.icon_background": "#ffffff",
-  "theme.bar.buttons.battery.icon_background": "#ffffff"
+  "theme.bar.buttons.battery.icon_background": "#ffffff",
+  "theme.bar.buttons.clock.icon_background": "#ffffff"
 }
