@@ -256,7 +256,18 @@
   "theme.notification.actions.text": "#181926",
   "theme.notification.actions.background": "#b7bdf8",
   "theme.notification.background": "#181926",
+  "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color": "#181825",
+  "theme.bar.buttons.workspaces.numbered_active_underline_color": "#f5c2e7",
   "theme.bar.menus.menu.media.card.color": "#1e2030",
   "theme.bar.menus.check_radio_button.background": "#181826",
-  "theme.bar.menus.check_radio_button.active": "#b7bcf8"
+  "theme.bar.menus.check_radio_button.active": "#b7bcf8",
+  "theme.bar.buttons.style": "default",
+  "theme.bar.buttons.icon_background": "#242438",
+  "theme.bar.buttons.volume.icon_background": "#ee999f",
+  "theme.bar.buttons.network.icon_background": "#c5a0f6",
+  "theme.bar.buttons.bluetooth.icon_background": "#91d7e3",
+  "theme.bar.buttons.windowtitle.icon_background": "#f5bde6",
+  "theme.bar.buttons.media.icon_background": "#b7bcf8",
+  "theme.bar.buttons.notifications.icon_background": "#b7bcf8",
+  "theme.bar.buttons.battery.icon_background": "#eed49f"
 }
