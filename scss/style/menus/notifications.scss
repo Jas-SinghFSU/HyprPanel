@@ -36,8 +36,8 @@
     font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
     border: 0.15em solid $notification-border;
     border-radius: 0em;
-    border-bottom-left-radius: 0.4em;
-    border-top-left-radius: 0.4em;
+    border-bottom-left-radius: $notification-border_radius;
+    border-top-left-radius: $notification-border_radius;
     margin: 0em;
   }
 
@@ -125,7 +125,7 @@
   background: $notification-close_button-background;
   color: $notification-close_button-label;
   min-width: 2.1em;
-  border-radius: 0rem 0.35em 0.35em 0em;
+  border-radius: 0rem $notification-border_radius $notification-border_radius 0em;
 
   label {
     font-size: 1.5em;
