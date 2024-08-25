@@ -94,6 +94,7 @@ const options = mkOptions(OPTIONS, {
             },
             label: opt(colors.lavender),
             border: opt(secondary_colors.surface0),
+            border_radius: opt("0.6em"),
             time: opt(secondary_colors.overlay1),
             text: opt(colors.text),
             labelicon: opt(colors.lavender),
