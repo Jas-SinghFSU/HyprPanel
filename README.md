@@ -76,6 +76,25 @@ Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
 ```bash
 exec-once = ags
 ```
+### Available Themes:
+Hyprpanel has many inbuilt themes with two types (split and non-split), that can be imported using a json file. 
+To import non-split type you can do:
+```
+ags -r "useTheme('$HOME/.config/ags/themes/<theme_name>.json')"
+```
+which looks like : 
+![Non-split-gruvbox](./assets/gruv.png)
+
+To import split type you can do:
+```
+ags -r "useTheme('$HOME/.config/ags/themes/<theme_name>_split.json')"
+```
+which looks like : 
+![Non-split-gruvbox](./assets/split_panel.png)
+
+You can see the list of available pre-built theme in `$HOME/.config/ags/themes/`. The theme above is gruvbox
+
+
 
 ### NixOS & Home-Manager
 Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS using the provided Nix Flake. First, add the repository to your Flake's inputs, and enable the overlay.
