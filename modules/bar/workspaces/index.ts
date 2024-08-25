@@ -1,12 +1,11 @@
 const hyprland = await Service.import("hyprland");
-import { WorkspaceRule, WorkspaceMap } from "lib/types/workspace";
 import options from "options";
+import { createThrottledScrollHandlers, getCurrentMonitorWorkspaces, getWorkspaceRules, getWorkspacesForMonitor } from "./helpers";
 
 const {
     workspaces,
     monitorSpecific,
     workspaceMask,
-    reverse_scroll,
     scroll_speed,
     spacing
 } = options.bar.workspaces;
@@ -16,140 +15,16 @@ function range(length: number, start = 1) {
 }
 
 const Workspaces = (monitor = -1, ws = 8) => {
-    const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap): boolean => {
-        if (!wsRules || !Object.keys(wsRules).length) {
-            return true;
-        }
-
-        const monitorMap = {};
-        hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
-
-        const currentMonitorName = monitorMap[monitor];
-        const monitorWSRules = wsRules[currentMonitorName];
-
-        if (monitorWSRules === undefined) {
-            return true;
-        }
-        return monitorWSRules.includes(curWs);
-    };
-
-    const getWorkspaceRules = (): WorkspaceMap => {
-        try {
-            const rules = Utils.exec("hyprctl workspacerules -j");
-
-            const workspaceRules = {};
-
-            JSON.parse(rules).forEach((rule: WorkspaceRule, index: number) => {
-                if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                    workspaceRules[rule.monitor].push(index + 1);
-                } else {
-                    workspaceRules[rule.monitor] = [index + 1];
-                }
-            });
-
-            return workspaceRules;
-        } catch (err) {
-            console.error(err);
-            return {};
-        }
-    };
-
-    const getCurrentMonitorWorkspaces = (): number[] => {
-        if (hyprland.monitors.length === 1) {
-            return Array.from({ length: workspaces.value }, (_, i) => i + 1);
-        }
-
-        const monitorWorkspaces = getWorkspaceRules();
-        const monitorMap = {};
-        hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
-
-        const currentMonitorName = monitorMap[monitor];
-
-        return monitorWorkspaces[currentMonitorName];
-    }
-    const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces());
+    const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces(monitor));
 
     workspaces.connect("changed", () => {
-        currentMonitorWorkspaces.value = getCurrentMonitorWorkspaces()
+        currentMonitorWorkspaces.value = getCurrentMonitorWorkspaces(monitor)
     })
 
-    const goToNextWS = (): void => {
-        if (currentMonitorWorkspaces.value === undefined) {
-            let nextIndex = hyprland.active.workspace.id + 1;
-            if (nextIndex > workspaces.value) {
-                nextIndex = 0;
-            }
-            hyprland.messageAsync(`dispatch workspace ${nextIndex}`)
+    hyprland.connect("changed", () => {
+        console.log(JSON.stringify(hyprland.workspaces, null, 2));
+    });
 
-        } else {
-            const curWorkspace = hyprland.active.workspace.id;
-            const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-            let nextIndex = indexOfWs + 1;
-            if (nextIndex >= currentMonitorWorkspaces.value.length) {
-                nextIndex = 0;
-            }
-
-            hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`)
-        }
-    }
-
-    const goToPrevWS = (): void => {
-        if (currentMonitorWorkspaces.value === undefined) {
-            let prevIndex = hyprland.active.workspace.id - 1;
-
-            if (prevIndex <= 0) {
-                prevIndex = workspaces.value;
-            }
-            hyprland.messageAsync(`dispatch workspace ${prevIndex}`)
-        } else {
-            const curWorkspace = hyprland.active.workspace.id;
-            const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-            let prevIndex = indexOfWs - 1;
-            if (prevIndex < 0) {
-                prevIndex = currentMonitorWorkspaces.value.length - 1;
-            }
-
-            hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`)
-        }
-    }
-
-    function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
-        let inThrottle: boolean;
-        return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => {
-                    inThrottle = false;
-                }, limit);
-            }
-        } as T;
-    }
-
-    type ThrottledScrollHandlers = {
-        throttledScrollUp: () => void;
-        throttledScrollDown: () => void;
-    };
-
-    const createThrottledScrollHandlers = (scrollSpeed: number): ThrottledScrollHandlers => {
-        const throttledScrollUp = throttle(() => {
-            if (reverse_scroll.value === true) {
-                goToPrevWS();
-            } else {
-                goToNextWS();
-            }
-        }, 200 / scrollSpeed);
-
-        const throttledScrollDown = throttle(() => {
-            if (reverse_scroll.value === true) {
-                goToNextWS();
-            } else {
-                goToPrevWS();
-            }
-        }, 200 / scrollSpeed);
-
-        return { throttledScrollUp, throttledScrollDown };
-    }
 
     return {
         component: Widget.Box({
@@ -163,7 +38,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
                                 return true;
                             }
                             const workspaceRules = getWorkspaceRules();
-                            return getWorkspacesForMonitor(i, workspaceRules);
+                            return getWorkspacesForMonitor(i, workspaceRules, monitor);
                         })
                         .map((i, index) => {
                             return Widget.Button({
@@ -262,7 +137,7 @@ const Workspaces = (monitor = -1, ws = 8) => {
         props: {
             setup: (self: any) => {
                 self.hook(scroll_speed, () => {
-                    const { throttledScrollUp, throttledScrollDown } = createThrottledScrollHandlers(scroll_speed.value);
+                    const { throttledScrollUp, throttledScrollDown } = createThrottledScrollHandlers(scroll_speed.value, currentMonitorWorkspaces);
                     self.on_scroll_up = throttledScrollUp;
                     self.on_scroll_down = throttledScrollDown;
                 });
