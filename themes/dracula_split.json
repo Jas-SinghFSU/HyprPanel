@@ -203,7 +203,7 @@
   "theme.bar.buttons.notifications.icon": "#44475a",
   "theme.bar.buttons.notifications.hover": "#6272a4",
   "theme.bar.buttons.notifications.background": "#44475a",
-  "theme.bar.buttons.clock.icon": "#ff79c6",
+  "theme.bar.buttons.clock.icon": "#44475a",
   "theme.bar.buttons.clock.text": "#ff79c6",
   "theme.bar.buttons.clock.hover": "#6272a4",
   "theme.bar.buttons.clock.background": "#44475a",
@@ -234,7 +234,7 @@
   "theme.bar.buttons.workspaces.active": "#ff79c6",
   "theme.bar.buttons.workspaces.occupied": "#ffb86c",
   "theme.bar.buttons.workspaces.available": "#8be9fd",
-  "theme.bar.buttons.workspaces.hover": "#e23ee2",
+  "theme.bar.buttons.workspaces.hover": "#ff79c6",
   "theme.bar.buttons.workspaces.background": "#44475a",
   "theme.bar.buttons.dashboard.icon": "#44475a",
   "theme.bar.buttons.dashboard.hover": "#6272a4",
@@ -256,8 +256,8 @@
   "theme.notification.actions.text": "#282a36",
   "theme.notification.actions.background": "#bd93f9",
   "theme.notification.background": "#44475a",
-  "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color": "#e23fe2",
-  "theme.bar.buttons.workspaces.numbered_active_underline_color": "#e23ee2",
+  "theme.bar.buttons.workspaces.numbered_active_highlighted_text_color": "#ff79c6",
+  "theme.bar.buttons.workspaces.numbered_active_underline_color": "#ff79c6",
   "theme.bar.menus.menu.media.card.color": "#44475a",
   "theme.bar.menus.check_radio_button.background": "#282936",
   "theme.bar.menus.check_radio_button.active": "#bd93f9",
@@ -269,5 +269,6 @@
   "theme.bar.buttons.windowtitle.icon_background": "#f1fa8c",
   "theme.bar.buttons.media.icon_background": "#bd93f9",
   "theme.bar.buttons.notifications.icon_background": "#bd93f9",
-  "theme.bar.buttons.battery.icon_background": "#f1fa8c"
+  "theme.bar.buttons.battery.icon_background": "#f1fa8c",
+  "theme.bar.buttons.clock.icon_background": "#ff79c6"
 }

@@ -203,11 +203,11 @@
   "theme.bar.buttons.notifications.icon": "#1e1e2e",
   "theme.bar.buttons.notifications.hover": "#45475a",
   "theme.bar.buttons.notifications.background": "#242438",
-  "theme.bar.buttons.clock.icon": "#f5c2e7",
+  "theme.bar.buttons.clock.icon": "#232338",
   "theme.bar.buttons.clock.text": "#f5c2e7",
   "theme.bar.buttons.clock.hover": "#45475a",
   "theme.bar.buttons.clock.background": "#242438",
-  "theme.bar.buttons.battery.icon": "#f9e2af",
+  "theme.bar.buttons.battery.icon": "#242438",
   "theme.bar.buttons.battery.text": "#f9e2af",
   "theme.bar.buttons.battery.hover": "#45475a",
   "theme.bar.buttons.battery.background": "#242438",
@@ -263,10 +263,12 @@
   "theme.bar.menus.check_radio_button.active": "#b4beff",
   "theme.bar.buttons.style": "split",
   "theme.bar.buttons.icon_background": "#242438",
-  "theme.bar.buttons.volume.icon_background": "#f5c2e7",
+  "theme.bar.buttons.volume.icon_background": "#eba0ac",
   "theme.bar.buttons.network.icon_background": "#caa6f7",
   "theme.bar.buttons.bluetooth.icon_background": "#89dbeb",
   "theme.bar.buttons.windowtitle.icon_background": "#f5c2e7",
   "theme.bar.buttons.media.icon_background": "#b4befe",
-  "theme.bar.buttons.notifications.icon_background": "#b4befe"
+  "theme.bar.buttons.notifications.icon_background": "#b4befe",
+  "theme.bar.buttons.battery.icon_background": "#f9e2af",
+  "theme.bar.buttons.clock.icon_background": "#f5c2e7"
 }
