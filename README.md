@@ -78,7 +78,10 @@ exec-once = ags
 ```
 ### Available Themes:
 Hyprpanel has many inbuilt themes with two types (split and non-split), that can be imported using a json file. 
-To import non-split type you can do:
+
+You can import it via GUI from `Dashboard > Settings > Themeing > General Settings`
+
+From command like, to import non-split type you can do:
 ```
 ags -r "useTheme('$HOME/.config/ags/themes/<theme_name>.json')"
 ```
