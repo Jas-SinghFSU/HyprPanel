@@ -181,7 +181,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
         title: `Import ${themeOnly ? "Theme" : "Config"}`,
         action: Gtk.FileChooserAction.OPEN,
     });
-
+    dialog.set_current_folder(`${App.configDir}/themes`)
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
 
