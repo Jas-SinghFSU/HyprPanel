@@ -66,6 +66,9 @@ const Workspaces = (monitor = -1) => {
                             const workspaceRules = getWorkspaceRules();
                             return getWorkspacesForMonitor(i, workspaceRules, monitor);
                         })
+                        .sort((a, b) => {
+                            return a - b;
+                        })
                         .map((i, index) => {
                             return Widget.Button({
                                 class_name: "workspace-button",
@@ -155,6 +158,7 @@ const Workspaces = (monitor = -1) => {
                     monitorSpecific.bind("value"),
                     hyprland.bind("workspaces"),
                     workspaceMask.bind("value"),
+                    workspaces.bind("value"),
                     options.bar.workspaces.show_icons.bind("value"),
                     options.bar.workspaces.icons.available.bind("value"),
                     options.bar.workspaces.icons.active.bind("value"),
@@ -164,16 +168,32 @@ const Workspaces = (monitor = -1) => {
                     spacing.bind("value"),
                     hyprland.active.workspace.bind("id"),
                 ],
-                (monitorSpecific, wkSpaces, workspaceMask, showIcons, available, active, occupied, showNumbered, numberedActiveIndicator, spacing, activeId) => {
-                    const activeWorkspaces = wkSpaces.map(w => w.id);
-                    return activeWorkspaces
-                        .filter((i) => {
-                            if (monitorSpecific === false) {
-                                return true;
-                            }
+                (monitorSpecific, wkSpaces, workspaceMask, totalWkspcs, showIcons, available, active, occupied, showNumbered, numberedActiveIndicator, spacing, activeId) => {
+                    let allWkspcs = range(totalWkspcs || 8);
 
-                            const isOnMonitor = hyprland.workspaces.find(w => w.id === i)?.monitorID === monitor;
-                            return isOnMonitor;
+                    const activeWorkspaces = wkSpaces.map(w => w.id);
+                    const workspaceRules = getWorkspaceRules();
+
+                    // Sometimes hyprland doesn't have all the monitors in the list
+                    // so we complement it with monitors from the workspace list
+                    const workspaceMonitorList = hyprland?.workspaces?.map(m => ({ id: m.monitorID, name: m.monitor }));
+                    const curMonitor = hyprland.monitors.find(m => m.id === monitor)
+                        || workspaceMonitorList.find(m => m.id === monitor);
+
+                    const activesForMonitor = activeWorkspaces.filter(w => workspaceRules[curMonitor?.name as string].includes(w) || false);
+
+                    if (monitorSpecific) {
+                        const wrkspcsInRange = range(totalWkspcs).filter(w => {
+                            return getWorkspacesForMonitor(w, workspaceRules, monitor);
+                        });
+                        allWkspcs = [...new Set([...activesForMonitor, ...wrkspcsInRange])];
+                    } else {
+                        allWkspcs = [...new Set([...allWkspcs, ...activeWorkspaces])];
+                    }
+
+                    return allWkspcs
+                        .sort((a, b) => {
+                            return a - b;
                         })
                         .map((i, index) => {
                             return Widget.Button({
