@@ -16,7 +16,10 @@ export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, mo
     }
 
     const monitorMap = {};
-    hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
+    const workspaceMonitorList = hyprland?.workspaces?.map(m => ({ id: m.monitorID, name: m.monitor }));
+    const monitors = [...new Map([...workspaceMonitorList, ...hyprland.monitors].map(item => [item.id, item])).values()];
+
+    monitors.forEach((m) => (monitorMap[m.id] = m.name));
 
     const currentMonitorName = monitorMap[monitor];
     const monitorWSRules = wsRules[currentMonitorName];
@@ -35,7 +38,10 @@ export const getWorkspaceRules = (): WorkspaceMap => {
 
         JSON.parse(rules).forEach((rule: WorkspaceRule, index: number) => {
             if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                workspaceRules[rule.monitor].push(index + 1);
+                const workspaceNum = parseInt(rule.workspaceString, 10);
+                if (!isNaN(workspaceNum)) {
+                    workspaceRules[rule.monitor].push(workspaceNum);
+                }
             } else {
                 workspaceRules[rule.monitor] = [index + 1];
             }

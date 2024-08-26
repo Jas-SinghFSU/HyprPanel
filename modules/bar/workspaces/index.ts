@@ -1,6 +1,7 @@
 const hyprland = await Service.import("hyprland");
 import options from "options";
 import { createThrottledScrollHandlers, getCurrentMonitorWorkspaces, getWorkspaceRules, getWorkspacesForMonitor } from "./helpers";
+import { Workspace } from "types/service/hyprland";
 
 const {
     workspaces,
@@ -56,8 +57,8 @@ const Workspaces = (monitor = -1) => {
     const defaultWses = () => {
         return Widget.Box({
             children: Utils.merge(
-                [workspaces.bind(), monitorSpecific.bind()],
-                (workspaces, monitorSpecific) => {
+                [workspaces.bind("value"), monitorSpecific.bind()],
+                (workspaces: number, monitorSpecific: boolean) => {
                     return range(workspaces || 8)
                         .filter((i) => {
                             if (!monitorSpecific) {
@@ -65,6 +66,9 @@ const Workspaces = (monitor = -1) => {
                             }
                             const workspaceRules = getWorkspaceRules();
                             return getWorkspacesForMonitor(i, workspaceRules, monitor);
+                        })
+                        .sort((a, b) => {
+                            return a - b;
                         })
                         .map((i, index) => {
                             return Widget.Button({
@@ -87,16 +91,16 @@ const Workspaces = (monitor = -1) => {
                                             options.bar.workspaces.icons.occupied.bind("value"),
                                             hyprland.active.workspace.bind("id")
                                         ],
-                                        (show_icons, show_numbered, numbered_active_indicator) => {
-                                            if (show_icons) {
+                                        (showIcons: boolean, showNumbered: boolean, numberedActiveIndicator: string) => {
+                                            if (showIcons) {
                                                 return `workspace-icon txt-icon bar`;
                                             }
-                                            if (show_numbered) {
+                                            if (showNumbered) {
                                                 const numActiveInd = hyprland.active.workspace.id === i
-                                                    ? numbered_active_indicator
+                                                    ? numberedActiveIndicator
                                                     : "";
 
-                                                return `workspace-number can_${numbered_active_indicator} ${numActiveInd}`;
+                                                return `workspace-number can_${numberedActiveIndicator} ${numActiveInd}`;
                                             }
                                             return "default";
                                         },
@@ -110,7 +114,7 @@ const Workspaces = (monitor = -1) => {
                                             workspaceMask.bind("value"),
                                             hyprland.active.workspace.bind("id")
                                         ],
-                                        (showIcons, available, active, occupied, workspaceMask, _) => {
+                                        (showIcons: boolean, available: string, active: string, occupied: string, workspaceMask: boolean, _: number) => {
                                             if (showIcons) {
                                                 if (hyprland.active.workspace.id === i) {
                                                     return active;
@@ -155,6 +159,7 @@ const Workspaces = (monitor = -1) => {
                     monitorSpecific.bind("value"),
                     hyprland.bind("workspaces"),
                     workspaceMask.bind("value"),
+                    workspaces.bind("value"),
                     options.bar.workspaces.show_icons.bind("value"),
                     options.bar.workspaces.icons.available.bind("value"),
                     options.bar.workspaces.icons.active.bind("value"),
@@ -164,16 +169,55 @@ const Workspaces = (monitor = -1) => {
                     spacing.bind("value"),
                     hyprland.active.workspace.bind("id"),
                 ],
-                (monitorSpecific, wkSpaces, workspaceMask, showIcons, available, active, occupied, showNumbered, numberedActiveIndicator, spacing, activeId) => {
-                    const activeWorkspaces = wkSpaces.map(w => w.id);
-                    return activeWorkspaces
-                        .filter((i) => {
-                            if (monitorSpecific === false) {
-                                return true;
-                            }
+                (
+                    monitorSpecific: boolean,
+                    wkSpaces: Workspace[],
+                    workspaceMask: boolean,
+                    totalWkspcs: number,
+                    showIcons: boolean,
+                    available: string,
+                    active: string,
+                    occupied: string,
+                    showNumbered: boolean,
+                    numberedActiveIndicator: string,
+                    spacing: number,
+                    activeId: number,
+                ) => {
+                    let allWkspcs = range(totalWkspcs || 8);
 
-                            const isOnMonitor = hyprland.workspaces.find(w => w.id === i)?.monitorID === monitor;
-                            return isOnMonitor;
+                    const activeWorkspaces = wkSpaces.map(w => w.id);
+                    const workspaceRules = getWorkspaceRules();
+
+                    // Sometimes hyprland doesn't have all the monitors in the list
+                    // so we complement it with monitors from the workspace list
+                    const workspaceMonitorList = hyprland?.workspaces?.map(m => ({ id: m.monitorID, name: m.monitor }));
+                    const curMonitor = hyprland.monitors.find(m => m.id === monitor)
+                        || workspaceMonitorList.find(m => m.id === monitor);
+
+                    // go through each key in workspaceRules and flatten the array
+                    const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
+                        return [...acc, ...workspaceRules[k]];
+                    }, [] as number[]);
+
+                    const activesForMonitor = activeWorkspaces.filter(w => {
+                        if (curMonitor && Object.hasOwnProperty.call(workspaceRules, curMonitor.name) && workspacesWithRules.includes(w)) {
+                            return workspaceRules[curMonitor.name].includes(w);
+                        }
+                        return true;
+                    });
+
+                    if (monitorSpecific) {
+                        const wrkspcsInRange = range(totalWkspcs).filter(w => {
+                            return getWorkspacesForMonitor(w, workspaceRules, monitor);
+                        });
+                        allWkspcs = [...new Set([...activesForMonitor, ...wrkspcsInRange])];
+                    } else {
+                        allWkspcs = [...new Set([...allWkspcs, ...activeWorkspaces])];
+                    }
+
+                    return allWkspcs
+                        .sort((a, b) => {
+                            return a - b;
                         })
                         .map((i, index) => {
                             return Widget.Button({
