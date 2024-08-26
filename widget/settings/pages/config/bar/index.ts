@@ -48,8 +48,8 @@ export const BarSettings = () => {
                 Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_border, title: 'Highlight Radius', subtitle: 'Only applicable if Workspace Numbers are enabled', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_padding, title: 'Highlight Padding', subtitle: 'Only applicable if Workspace Numbers are enabled', type: 'string' }),
                 Option({ opt: options.bar.workspaces.spacing, title: 'Spacing', subtitle: 'Spacing between workspace icons', type: 'float' }),
-                Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
-                Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', subtitle: 'The least amount of workspaces to always show.', type: 'number' }),
+                Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed.\nWorks in conjuction with \'Total Workspaces\'.', type: 'boolean' }),
                 Option({ opt: options.bar.workspaces.hideUnoccupied, title: 'Hide Unoccupied', subtitle: 'Only show workspaces that are occupied or active', type: 'boolean' }),
                 Option({
                     opt: options.bar.workspaces.workspaceMask,
