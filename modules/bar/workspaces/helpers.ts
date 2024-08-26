@@ -38,7 +38,10 @@ export const getWorkspaceRules = (): WorkspaceMap => {
 
         JSON.parse(rules).forEach((rule: WorkspaceRule, index: number) => {
             if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                workspaceRules[rule.monitor].push(index + 1);
+                const workspaceNum = parseInt(rule.workspaceString, 10);
+                if (!isNaN(workspaceNum)) {
+                    workspaceRules[rule.monitor].push(workspaceNum);
+                }
             } else {
                 workspaceRules[rule.monitor] = [index + 1];
             }
