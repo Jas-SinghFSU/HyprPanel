@@ -50,6 +50,7 @@ export const BarSettings = () => {
                 Option({ opt: options.bar.workspaces.spacing, title: 'Spacing', subtitle: 'Spacing between workspace icons', type: 'float' }),
                 Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
                 Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.hideUnoccupied, title: 'Hide Unoccupied', subtitle: 'Only show workspaces that are occupied or active', type: 'boolean' }),
                 Option({
                     opt: options.bar.workspaces.workspaceMask,
                     title: 'Mask Workspace Numbers On Monitors',
