@@ -180,7 +180,12 @@ const Workspaces = (monitor = -1) => {
                     const curMonitor = hyprland.monitors.find(m => m.id === monitor)
                         || workspaceMonitorList.find(m => m.id === monitor);
 
-                    const activesForMonitor = activeWorkspaces.filter(w => workspaceRules[curMonitor?.name as string].includes(w) || false);
+                    const activesForMonitor = activeWorkspaces.filter(w => {
+                        if (curMonitor && Object.hasOwnProperty.call(workspaceRules, curMonitor.name)) {
+                            return workspaceRules[curMonitor.name].includes(w);
+                        }
+                        return true;
+                    });
 
                     if (monitorSpecific) {
                         const wrkspcsInRange = range(totalWkspcs).filter(w => {
