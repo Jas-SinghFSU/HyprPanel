@@ -88,11 +88,6 @@ const Workspaces = (monitor = -1) => {
                                             hyprland.active.workspace.bind("id")
                                         ],
                                         (show_icons, show_numbered, numbered_active_indicator) => {
-                                            if (index === 0) {
-                                                console.log('in');
-
-                                            }
-
                                             if (show_icons) {
                                                 return `workspace-icon txt-icon bar`;
                                             }
@@ -194,10 +189,6 @@ const Workspaces = (monitor = -1) => {
                                     class_name: renderClassnames(showIcons, showNumbered, numberedActiveIndicator, i),
                                     label: renderLabel(showIcons, available, active, occupied, workspaceMask, i, index),
                                     setup: (self) => {
-                                        if (index === 0) {
-                                            console.log('in');
-
-                                        }
                                         self.toggleClassName(
                                             "active",
                                             activeId === i,
