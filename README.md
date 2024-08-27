@@ -5,12 +5,13 @@
 </p>
 <br/>
 <p align="center">
+  <a href="https://hyprpanel.com/getting_started/installation.html"><img src="https://img.shields.io/badge/Wiki-hyprpanel-orange?style=flat&logo=wiki" alt="wiki"></a>
   <a href="https://discord.gg/MNpg7Z2b3a"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
 </p>
 <br/>
 
 # HyprPanel 🚀
-A panel built for Hyprland with [Aylur's Gtk Shell](https://github.com/Aylur/ags)
+A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 
 ![HyprPanel](./assets/HyprPanel.png)
 
