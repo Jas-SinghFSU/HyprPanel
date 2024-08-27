@@ -9,13 +9,17 @@ import { Bluetooth } from "./bluetooth/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js";
 import { SysTray } from "./systray/index.js";
-import { box } from "../../services/cava.js";
-
 const hyprland = await Service.import("hyprland");
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
 import options from "options";
 import Gdk from "gi://Gdk?version=3.0";
+import Button from "types/widgets/button.js";
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
+
+import { Cava } from "../../services/cava.js"; 
+
+import './SideEffects';
 
 const { layouts } = options.bar;
 
@@ -77,7 +81,7 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
 const widget = {
     battery: () => WidgetContainer(BatteryLabel()),
     dashboard: () => WidgetContainer(Menu()),
-    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor, 10)),
+    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
     windowtitle: () => WidgetContainer(ClientTitle()),
     media: () => WidgetContainer(Media()),
     notifications: () => WidgetContainer(Notifications()),
@@ -243,7 +247,7 @@ export const Bar = (() => {
                         setup: self => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor));
+                                self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
@@ -252,12 +256,9 @@ export const Bar = (() => {
                         hpack: "center",
                         setup: self => {
                             self.hook(layouts, (self) => {
-                               
-                              
-                                self.child = box;
-
-                                // const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                // self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor));
+                                Cava.call
+                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
@@ -267,7 +268,7 @@ export const Bar = (() => {
                         setup: self => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor));
+                                self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
