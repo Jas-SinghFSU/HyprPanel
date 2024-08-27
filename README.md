@@ -1,4 +1,15 @@
-# HyprPanel
+<p align="center">
+  <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="./assets/HyprPanel.png" alt="Hyprpanel logo">
+  </a>
+</p>
+<br/>
+<p align="center">
+  <a href="https://discord.gg/MNpg7Z2b3a"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
+</p>
+<br/>
+
+# HyprPanel 🚀
 A panel built for Hyprland with [Aylur's Gtk Shell](https://github.com/Aylur/ags)
 
 ![HyprPanel](./assets/HyprPanel.png)
