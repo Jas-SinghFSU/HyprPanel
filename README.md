@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="./assets/HyprPanel.png" alt="Hyprpanel logo">
+    <img width="180" src="./assets/hyprpanel.png" alt="Hyprpanel logo">
   </a>
 </p>
 <br/>
