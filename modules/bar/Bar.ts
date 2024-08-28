@@ -78,7 +78,6 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
 }
 
 const widget = {
-    cava: () => WidgetContainer(CavaModule()),
     battery: () => WidgetContainer(BatteryLabel()),
     dashboard: () => WidgetContainer(Menu()),
     workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
@@ -248,10 +247,24 @@ export const Bar = (() => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
                                 self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
+                                console.log(self.children)
                             });
                         },
                     }),
-                    centerWidget: WidgetContainer(CavaModule()) as Button<Gtk.Widget, unknown>,
+                    centerWidget: Widget.Box({
+                        class_name: "box-center",
+                        hpack: "center",
+                        setup: self => {
+                            self.hook(layouts, (self) => {
+
+                                const f = CavaModule();
+                                console.log(f);
+                                self.child = f;
+                                // const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                // self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor));
+                            });
+                        },
+                    }),
                     endWidget: Widget.Box({
                         class_name: "box-right",
                         hpack: "end",
