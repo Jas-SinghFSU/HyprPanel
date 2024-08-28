@@ -9,6 +9,7 @@ import { Bluetooth } from "./bluetooth/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js";
 import { SysTray } from "./systray/index.js";
+import { CavaModule } from "./cava/index.js";
 const hyprland = await Service.import("hyprland");
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -77,9 +78,10 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
 }
 
 const widget = {
+    cava: () => WidgetContainer(CavaModule()),
     battery: () => WidgetContainer(BatteryLabel()),
     dashboard: () => WidgetContainer(Menu()),
-    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor, 10)),
+    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
     windowtitle: () => WidgetContainer(ClientTitle()),
     media: () => WidgetContainer(Media()),
     notifications: () => WidgetContainer(Notifications()),
@@ -249,16 +251,7 @@ export const Bar = (() => {
                             });
                         },
                     }),
-                    centerWidget: Widget.Box({
-                        class_name: "box-center",
-                        hpack: "center",
-                        setup: self => {
-                            self.hook(layouts, (self) => {
-                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
-                            });
-                        },
-                    }),
+                    centerWidget: WidgetContainer(CavaModule()) as Button<Gtk.Widget, unknown>,
                     endWidget: Widget.Box({
                         class_name: "box-right",
                         hpack: "end",
