@@ -4,9 +4,11 @@ import { exec } from 'utils/exec.ts'
 // const input = Utils.execAsync('cava').then(out => print(out));
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import Services from "types/service"
 import { ByteArray, PRIORITY_LOW } from "types/@girs/glib-2.0/glib-2.0.cjs";
 import { read_line } from "types/@girs/pango-1.0/pango-1.0.cjs";
 import { DataInputStream } from "types/@girs/gio-2.0/gio-2.0.cjs";
+import service from "directoryMonitorService";
 const audio = await Service.import("mpris");
 
 
@@ -15,16 +17,15 @@ class Cava extends Service {
         Service.register(
             this, 
             {
-                "running": ['boolean'],
-                "closed": ['boolean']
+                "bar-changed" : ['jsobject']
             }, 
             {
-            "bars": ["gobject", "r"],
+            "bar-array" : ['jsobject', "r"]
             }
         );
     }
 
-
+    private barArray = new Uint8Array;
     private stdout : Gio.DataInputStream;
     private stderr : Gio.DataInputStream;
 
@@ -35,9 +36,9 @@ class Cava extends Service {
         ) 
     }
 
-
-    
-
+    get bar_array(){
+        return this.barArray
+    }
 
         // private _instance?: Gio.Subprocess;
         // private _inputStream: Gio.InputStream | null;
@@ -56,32 +57,43 @@ class Cava extends Service {
         });
     }
     
-        private readStream(stream: Gio.DataInputStream, callback: (out: Uint8Array) => void) {
-            stream.read_bytes_async(10, GLib.PRIORITY_DEFAULT, null, (_, res) => {
-                const output = stream?.read_bytes_finish(res);
-                try{
-                    const data = output.get_data() ?? new Uint8Array;
-                    console.log(data)
-                    callback(data);
-                    this.readStream(stream, callback);
-                }catch(e){}
-                 
+    private readStream(stream: Gio.DataInputStream, callback: (out: Uint8Array) => void) {
+        stream.read_bytes_async(10, GLib.PRIORITY_DEFAULT, null, (_, res) => {
+            const output = stream?.read_bytes_finish(res);
+            try{
+                const data = output.get_data() ?? new Uint8Array;
+                callback(data);
+             
+                this.readStream(stream, callback);
+            }catch(e){}
                 
-            });
-        }
-    
-        constructor() {
-            super();
-            const process = this.proc()
-            let out :Uint8Array = () => void
-            this.stdout = this.get_stdout(process);
-            this.stderr = this.get_stderr(process);
             
-            const onOut = Array.isArray(out) || typeof out === 'object'
-            ? out
-            : out;
+        });
+    }
+
+    private  OnChange = (array : Uint8Array) => {
+        this.barArray = array
+        this.emit('changed');
+        this.notify('bar-array')
+    }
+
+    constructor() {
+        super();
+
+        
+        const process = this.proc()
+       
+
+        this.stdout = this.get_stdout(process);
+        this.stderr = this.get_stderr(process);
+        
+        this.readStream(this.stdout, this.OnChange);
+
+
+    }
+}
+
     
-            this.readStream(this.stdout, onOut ?? out);
             
         
             //  console.log(out);
@@ -92,7 +104,6 @@ class Cava extends Service {
             // console.log("ff" + barline);
 
 
-        }
     // export function subprocess(
     //     argsOrCmd: Args & { bind?: Gtk.Widget } | string | string[],
     //     out: (stdout: string) => void = print,
@@ -139,20 +150,7 @@ class Cava extends Service {
     //     });
     // }
 
-        
-        get bars() {
-            
-
-
-            return 
-        }
-        
-
-
-        
-    }
-
-const f = new Cava();
+     
 
 // const input = Variable('initial-value', {
 //     // listen is what will be passed to Utils.subprocess, so either a string or string[]
@@ -169,45 +167,10 @@ const f = new Cava();
 // // });
 
 
-// const box = Widget.Box({
-
-//     setup: self => self.hook(input, ()=> {
-//         const f = input.value.split(';').map(Number).map(x => x / 1000)
-
-//         self.children = f.map(i => {
-//                 // return Widget.Label({
-//                 //     label: i.toString()
-//                 // })
-//                 return Widget.LevelBar({
-//                     class_name: "stats-bar",
-//                     inverted: true,
-//                     width_request: 10,
-//                     vexpand: true,
-//                     vertical: true,
-//                     hpack: "center",
-//                     bar_mode: "continuous",
-//                     max_value: 1,
-//                     value: i
-//                 })
-//             // return Widget.LevelBar({
-//             //     width_request: 10,
-//             //     max_value: 100,
-//             //     min_value: 0,
-//             //     class_name: "stats-bar",
-//             //     vexpand: true,
-//             //     vertical: true,
-//             //     value: 50
-                    
-//             // })
-    
-//     })
 
 
-// })
-// })
 
-
-export { Cava };
+export const cava = new Cava;
 
 
 // class CavaService extends Service {
