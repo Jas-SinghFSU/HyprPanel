@@ -212,7 +212,7 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
   }
 
   trough {
-    min-height: 1.05em;
+    min-height: .2em;
   }
 
   block {
@@ -224,7 +224,7 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 
     &.filled {
       background: #FBBA65;
-      padding-left: 0.85em;
+      padding-left: 0.2em;
     }
   }
 }

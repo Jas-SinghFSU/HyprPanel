@@ -4,11 +4,6 @@ import { exec } from 'utils/exec.ts'
 // const input = Utils.execAsync('cava').then(out => print(out));
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import Services from "types/service"
-import { ByteArray, PRIORITY_LOW } from "types/@girs/glib-2.0/glib-2.0.cjs";
-import { read_line } from "types/@girs/pango-1.0/pango-1.0.cjs";
-import { DataInputStream } from "types/@girs/gio-2.0/gio-2.0.cjs";
-import service from "directoryMonitorService";
 const audio = await Service.import("mpris");
 
 
@@ -58,13 +53,13 @@ class Cava extends Service {
     }
     
     private readStream(stream: Gio.DataInputStream, callback: (out: Uint8Array) => void) {
-        stream.read_bytes_async(10, GLib.PRIORITY_DEFAULT, null, (_, res) => {
-            const output = stream?.read_bytes_finish(res);
+        stream.read_bytes_async(20, GLib.PRIORITY_LOW, null, (_, res) => {
             try{
-                const data = output.get_data() ?? new Uint8Array;
-                callback(data);
-             
-                this.readStream(stream, callback);
+                const output = stream?.read_bytes_finish(res);
+                console.log(output.get_size())
+                const data = output.toArray() ?? new Uint8Array;
+                    callback(data);
+                    this.readStream(stream, callback);
             }catch(e){}
                 
             
@@ -72,21 +67,20 @@ class Cava extends Service {
     }
 
     private  OnChange = (array : Uint8Array) => {
-        this.#barArray = Array.from(array)
+        this.#barArray = array.length === 20 ? Array.from(array) : this.#barArray;
         this.changed('bar-array')
         this.emit('bar-changed', this.#barArray)
     }
 
     constructor() {
         super();
-
         
         const process = this.proc()
        
-
+        console.log(process.get_identifier())
         this.stdout = this.get_stdout(process);
         this.stderr = this.get_stderr(process);
-        
+        this.stdout.set_buffer_size(256 * 20)
         this.readStream(this.stdout, this.OnChange);
 
 

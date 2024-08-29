@@ -9,10 +9,9 @@ const CavaModule = () => {
         vexpand: true,
         visible: true,
         setup: self => self.hook(cava, (self)=> {
-
+           // console.log(cava.bar_array.length)
             
             self.children = cava.bar_array.map(i => {
-                  
                     return Widget.LevelBar({
                         class_name: "stats-bar",
                         visible: true,
@@ -22,8 +21,8 @@ const CavaModule = () => {
                         vertical: true,
                         hpack: "center",
                         bar_mode: "continuous",
-                        max_value: 256,
-                        value: i
+                        max_value: 10,
+                        value: ((i / 256) * 10)
                     })
                 })
              })
