@@ -145,11 +145,9 @@ home.packages = with pkgs; [
 ];
 
 # or reference it directly in your Hyprland configuration
-wayland.windowManager.hyprland.settings.exec-once = ''
-  # ...
-  ${pkgs.hyprpanel}/bin/hyprpanel
-  # ...
-'';
+wayland.windowManager.hyprland.settings.exec-once = [
+  "${pkgs.hyprpanel}/bin/hyprpanel"
+];
 
 ```
 
