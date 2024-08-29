@@ -6,54 +6,63 @@ import { Image } from "./image/index.js";
 import { Placeholder } from "./placeholder/index.js";
 import { Body } from "./body/index.js";
 import { CloseButton } from "./close/index.js";
+import options from "options.js";
+import { Variable } from "types/variable.js";
 
-const NotificationCard = (notifs: Notifications) => {
-    return Widget.Box({
-        class_name: "menu-content-container notifications",
-        hpack: "center",
-        vexpand: true,
-        spacing: 0,
-        vertical: true,
-        setup: (self) => {
-            self.hook(notifs, () => {
-                const sortedNotifications = notifs.notifications.sort(
-                    (a, b) => b.time - a.time,
-                );
+const { displayedTotal } = options.notifications;
 
-                if (notifs.notifications.length <= 0) {
-                    return (self.children = [Placeholder(notifs)]);
-                }
+const NotificationCard = (notifs: Notifications, curPage: Variable<number>) => {
+    return Widget.Scrollable({
+        vscroll: "automatic",
+        child: Widget.Box({
+            class_name: "menu-content-container notifications",
+            hpack: "center",
+            vexpand: true,
+            spacing: 0,
+            vertical: true,
+            setup: (self) => {
+                Utils.merge([notifs.bind("notifications"), curPage.bind("value")], (notifications, currentPage) => {
+                    const sortedNotifications = notifications.sort(
+                        (a, b) => b.time - a.time,
+                    );
 
-                return (self.children = sortedNotifications.map((notif: Notification) => {
-                    return Widget.Box({
-                        class_name: "notification-card-content-container",
-                        children: [
-                            Widget.Box({
-                                class_name: "notification-card menu",
-                                vpack: "start",
-                                hexpand: true,
-                                vexpand: false,
-                                children: [
-                                    Image(notif),
-                                    Widget.Box({
-                                        vpack: "center",
-                                        vertical: true,
-                                        hexpand: true,
-                                        class_name: `notification-card-content ${!notifHasImg(notif) ? "noimg" : " menu"}`,
-                                        children: [
-                                            Header(notif),
-                                            Body(notif),
-                                            Actions(notif, notifs),
-                                        ],
-                                    }),
-                                ],
-                            }),
-                            CloseButton(notif, notifs),
-                        ],
-                    });
-                }));
-            });
-        },
+                    if (notifications.length <= 0) {
+                        return (self.children = [Placeholder(notifs)]);
+                    }
+
+                    const pageStart = (currentPage - 1) * displayedTotal.value;
+                    const pageEnd = currentPage * displayedTotal.value;
+                    return (self.children = sortedNotifications.slice(pageStart, pageEnd).map((notif: Notification) => {
+                        return Widget.Box({
+                            class_name: "notification-card-content-container",
+                            children: [
+                                Widget.Box({
+                                    class_name: "notification-card menu",
+                                    vpack: "start",
+                                    hexpand: true,
+                                    vexpand: false,
+                                    children: [
+                                        Image(notif),
+                                        Widget.Box({
+                                            vpack: "center",
+                                            vertical: true,
+                                            hexpand: true,
+                                            class_name: `notification-card-content ${!notifHasImg(notif) ? "noimg" : " menu"}`,
+                                            children: [
+                                                Header(notif),
+                                                Body(notif),
+                                                Actions(notif, notifs),
+                                            ],
+                                        }),
+                                    ],
+                                }),
+                                CloseButton(notif, notifs),
+                            ],
+                        });
+                    }));
+                });
+            },
+        })
     });
 };
 

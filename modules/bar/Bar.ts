@@ -79,7 +79,7 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
 const widget = {
     battery: () => WidgetContainer(BatteryLabel()),
     dashboard: () => WidgetContainer(Menu()),
-    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor, 10)),
+    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
     windowtitle: () => WidgetContainer(ClientTitle()),
     media: () => WidgetContainer(Media()),
     notifications: () => WidgetContainer(Notifications()),

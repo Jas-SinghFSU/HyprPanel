@@ -26,7 +26,12 @@ export const NotificationsMenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.menu.notifications.switch.disabled, title: 'Disabled', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.switch.puck, title: 'Puck', type: 'color' }),
 
+                Header('Scrollbar'),
+                Option({ opt: options.theme.bar.menus.menu.notifications.scrollbar.color, title: 'Scrollbar Color', type: 'color' }),
 
+                Header('Pagination'),
+                Option({ opt: options.theme.bar.menus.menu.notifications.pager.button, title: 'Pager Button Color', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.notifications.pager.label, title: 'Pager Label Color', type: 'color' }),
             ]
         })
     })

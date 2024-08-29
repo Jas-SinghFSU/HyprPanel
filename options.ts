@@ -629,6 +629,7 @@ const options = mkOptions(OPTIONS, {
                     },
                     notifications: {
                         scaling: opt(100),
+                        height: opt("58em"),
                         label: opt(colors.lavender),
                         no_notifications_label: opt(colors.surface0),
                         background: opt(colors.crust),
@@ -641,6 +642,17 @@ const options = mkOptions(OPTIONS, {
                             disabled: opt(tertiary_colors.surface0),
                             puck: opt(secondary_colors.surface1)
                         },
+                        pager: {
+                            show: opt(true),
+                            background: opt(colors.crust),
+                            button: opt(colors.lavender),
+                            label: opt(colors.overlay1),
+                        },
+                        scrollbar: {
+                            color: opt(colors.lavender),
+                            width: opt("0.35em"),
+                            radius: opt("0.2em")
+                        }
                     },
                 }
             }
@@ -867,6 +879,7 @@ const options = mkOptions(OPTIONS, {
 
     notifications: {
         position: opt<NotificationAnchor>("top right"),
+        displayedTotal: opt(10),
         monitor: opt(0),
         active_monitor: opt(true),
         timeout: opt(7000),
