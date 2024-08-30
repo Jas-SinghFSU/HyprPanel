@@ -269,5 +269,8 @@
   "theme.bar.buttons.windowtitle.icon_background": "#f5bde6",
   "theme.bar.buttons.media.icon_background": "#b7bcf8",
   "theme.bar.buttons.notifications.icon_background": "#b7bcf8",
-  "theme.bar.buttons.battery.icon_background": "#eed49f"
+  "theme.bar.buttons.battery.icon_background": "#eed49f",
+  "theme.bar.menus.menu.notifications.scrollbar.color": "#b4befe",
+  "theme.bar.menus.menu.notifications.pager.button": "#b4befe",
+  "theme.bar.menus.menu.notifications.pager.label": "#7f849c"
 }
