@@ -1,4 +1,6 @@
-const Controls = (notifs) => {
+import { Notifications } from "types/service/notifications";
+
+const Controls = (notifs: Notifications) => {
     return Widget.Box({
         class_name: "notification-menu-controls",
         expand: false,

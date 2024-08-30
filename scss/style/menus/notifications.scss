@@ -5,7 +5,7 @@
 .notification-card-container.menu {
   margin: 0em;
   min-width: 30.6em * $bar-menus-menu-notifications-scaling/100;
-  min-height: 48em * $bar-menus-menu-notifications-scaling/100;
+  min-height: $bar-menus-menu-notifications-height * $bar-menus-menu-notifications-scaling/100;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
   border-radius: $bar-menus-border-radius;
@@ -103,6 +103,19 @@
     color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear);
     font-size: 1.5em;
   }
+
+  scrollbar {
+    margin-right: 0.2em;
+    min-width: $bar-menus-menu-notifications-scrollbar-width;
+    border-radius: $bar-menus-menu-notifications-scrollbar-radius;
+    background: transparent;
+
+    slider {
+      min-width: $bar-menus-menu-notifications-scrollbar-width;
+      border-radius: $bar-menus-menu-notifications-scrollbar-radius;
+      background: $bar-menus-menu-notifications-scrollbar-color;
+    }
+  }
 }
 
 .notification-label-container {
@@ -133,5 +146,43 @@
 
   &:hover {
     background: transparentize($notification-close_button-background , 0.5);
+  }
+}
+
+.notification-menu-pager {
+  background: $bar-menus-menu-notifications-pager-background;
+  border-radius: $bar-menus-border-radius;
+  border-top-left-radius: 0em;
+  border-top-right-radius: 0em;
+
+  .pager-button {
+    margin: 0em;
+    padding: 0.25em 1em;
+    color: $bar-menus-menu-notifications-pager-button;
+
+    .pager-button-label {
+      font-size: 2em;
+    }
+
+    &:hover {
+      .pager-button-label {
+        color: transparentize($bar-menus-menu-notifications-pager-button, 0.4);
+        text-decoration: none;
+      }
+    }
+  }
+
+  .pager-label {
+    color: $bar-menus-menu-notifications-pager-label;
+  }
+
+  .disabled {
+    color: transparentize($bar-menus-menu-notifications-pager-button, 0.8);
+
+    &:hover {
+      .pager-button-label {
+        color: transparentize($bar-menus-menu-notifications-pager-button, 0.8);
+      }
+    }
   }
 }

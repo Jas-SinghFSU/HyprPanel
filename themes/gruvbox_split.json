@@ -270,5 +270,9 @@
   "theme.bar.buttons.media.icon_background": "#83a598",
   "theme.bar.buttons.notifications.icon_background": "#83a598",
   "theme.bar.buttons.battery.icon_background": "#fabd2f",
-  "theme.bar.buttons.clock.icon_background": "#d3869b"
+  "theme.bar.buttons.clock.icon_background": "#d3869b",
+  "theme.bar.menus.menu.notifications.pager.button": "#83a598",
+  "theme.bar.menus.menu.notifications.scrollbar.color": "#83a598",
+  "theme.bar.menus.menu.notifications.pager.label": "#a89984",
+  "theme.bar.menus.menu.notifications.pager.background": "#1d2021"
 }
