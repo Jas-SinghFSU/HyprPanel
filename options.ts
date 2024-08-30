@@ -646,7 +646,7 @@ const options = mkOptions(OPTIONS, {
                             show: opt(true),
                             background: opt(colors.crust),
                             button: opt(colors.lavender),
-                            label: opt(colors.overlay1),
+                            label: opt(colors.overlay2),
                         },
                         scrollbar: {
                             color: opt(colors.lavender),
