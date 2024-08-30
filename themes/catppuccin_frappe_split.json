@@ -270,5 +270,8 @@
   "theme.bar.buttons.media.icon_background": "#babbf1",
   "theme.bar.buttons.notifications.icon_background": "#b4befe",
   "theme.bar.buttons.battery.icon_background": "#e5c890",
-  "theme.bar.buttons.clock.icon_background": "#f4b8e4"
+  "theme.bar.buttons.clock.icon_background": "#f4b8e4",
+  "theme.bar.menus.menu.notifications.pager.button": "#babbf1",
+  "theme.bar.menus.menu.notifications.scrollbar.color": "#babbf1",
+  "theme.bar.menus.menu.notifications.pager.label": "#949cbb"
 }
