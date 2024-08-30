@@ -30,6 +30,7 @@ export const NotificationsMenuTheme = () => {
                 Option({ opt: options.theme.bar.menus.menu.notifications.scrollbar.color, title: 'Scrollbar Color', type: 'color' }),
 
                 Header('Pagination'),
+                Option({ opt: options.theme.bar.menus.menu.notifications.pager.background, title: 'Pager Footer Background', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.pager.button, title: 'Pager Button Color', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.pager.label, title: 'Pager Label Color', type: 'color' }),
             ]
