@@ -20,7 +20,7 @@ export const NotificationSettings = () => {
 
                 Header('Notification Menu Settings'),
                 Option({ opt: options.theme.bar.menus.menu.notifications.height, title: 'Notification Menu Height', type: 'string' }),
-                Option({ opt: options.notifications.displayedTotal, title: 'Displayed Total', subtitle: 'How many notifications to show in the menu at once.\nNewer notifications will display towards the top.', type: 'number' }),
+                Option({ opt: options.notifications.displayedTotal, title: 'Displayed Total', subtitle: 'How many notifications to show in the menu at once.\nNewer notifications will display towards the top.', type: 'number', min: 1 }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.pager.show, title: 'Show Pager', subtitle: "Shows the pagination footer at the bottom of the menu.", type: 'boolean' }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.scrollbar.width, title: 'Scrollbar Width', type: 'string' }),
                 Option({ opt: options.theme.bar.menus.menu.notifications.scrollbar.radius, title: 'Scrollbar Radius', type: 'string' }),

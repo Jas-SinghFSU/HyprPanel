@@ -21,7 +21,7 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>) => {
             spacing: 0,
             vertical: true,
             setup: (self) => {
-                Utils.merge([notifs.bind("notifications"), curPage.bind("value")], (notifications, currentPage) => {
+                Utils.merge([notifs.bind("notifications"), curPage.bind("value"), displayedTotal.bind("value")], (notifications, currentPage, dispTotal) => {
                     const sortedNotifications = notifications.sort(
                         (a, b) => b.time - a.time,
                     );
@@ -30,8 +30,8 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>) => {
                         return (self.children = [Placeholder(notifs)]);
                     }
 
-                    const pageStart = (currentPage - 1) * displayedTotal.value;
-                    const pageEnd = currentPage * displayedTotal.value;
+                    const pageStart = (currentPage - 1) * dispTotal;
+                    const pageEnd = currentPage * dispTotal;
                     return (self.children = sortedNotifications.slice(pageStart, pageEnd).map((notif: Notification) => {
                         return Widget.Box({
                             class_name: "notification-card-content-container",
