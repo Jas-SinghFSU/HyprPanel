@@ -273,5 +273,6 @@
   "theme.bar.buttons.clock.icon_background": "#f7768e",
   "theme.bar.menus.menu.notifications.pager.button": "#bb9af7",
   "theme.bar.menus.menu.notifications.scrollbar.color": "#bb9af7",
-  "theme.bar.menus.menu.notifications.pager.label": "#565f89"
+  "theme.bar.menus.menu.notifications.pager.label": "#565f89",
+  "theme.bar.menus.menu.notifications.pager.background": "#1a1b26"
 }

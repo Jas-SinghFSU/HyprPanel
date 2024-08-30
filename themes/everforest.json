@@ -264,5 +264,6 @@
   "theme.bar.buttons.style": "default",
   "theme.bar.menus.menu.notifications.pager.button": "#a7c080",
   "theme.bar.menus.menu.notifications.scrollbar.color": "#a7c080",
-  "theme.bar.menus.menu.notifications.pager.label": "#7a8478"
+  "theme.bar.menus.menu.notifications.pager.label": "#7a8478",
+  "theme.bar.menus.menu.notifications.pager.background": "#2b3339"
 }
