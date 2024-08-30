@@ -4,6 +4,7 @@ import { exec } from 'utils/exec.ts'
 // const input = Utils.execAsync('cava').then(out => print(out));
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
+import { Bytes, SIZEOF_LONG, SIZEOF_SIZE_T } from "types/@girs/glib-2.0/glib-2.0.cjs";
 const audio = await Service.import("mpris");
 
 
@@ -20,6 +21,8 @@ class Cava extends Service {
         );
     }
 
+    #bar_number = 50;
+    #byte_size = 255;
     #barArray = new Array<number>;
     private stdout : Gio.DataInputStream;
     private stderr : Gio.DataInputStream;
@@ -41,6 +44,7 @@ class Cava extends Service {
     private get_stdout(proc : Gio.Subprocess){
         return new Gio.DataInputStream({
             base_stream: proc.get_stdout_pipe(),
+            bufferSize: this.#bar_number * 255,
             close_base_stream: true,
         });
     }
@@ -52,25 +56,62 @@ class Cava extends Service {
         });
     }
     
-    private readStream(stream: Gio.DataInputStream, callback: (out: Uint8Array) => void) {
-        stream.read_bytes_async(20, GLib.PRIORITY_LOW, null, (_, res) => {
+    // private readStream(stream: Gio.DataInputStream, callback: (out: Uint8Array) => void) {
+    //     stream.read_bytes_async(this.#bar_number, GLib.PRIORITY_LOW, null, (_, res) => {
+    //         try{
+    //             const output = _.read_bytes_finish(res);
+    //             const data = output.get_data() ?? new Uint8Array;
+    //             if(data.length >= this.#bar_number){
+    //                 callback(data);
+    //             }
+    //             this.readStream(stream, callback);
+    //         }catch(e){}
+                
+            
+    //     });
+    // }
+
+     private readStream(stream: Gio.DataInputStream, callback: (out) => void) {
+        stream.read_line_async(GLib.PRIORITY_LOW, null, (_, res) => {
             try{
-                const output = stream?.read_bytes_finish(res);
-                console.log(output.get_size())
-                const data = output.toArray() ?? new Uint8Array;
+                let output = Array.from(((_.read_line_finish_utf8(res)[0] ?? "").split(';')),
+                (value) => {
+                    try{
+                        if(Number.parseInt(value) !== null){
+                            return Number.parseInt(value);
+
+                        }
+                    } catch(e){}
+                    
+                } 
+                );
+const data = output
+                console.log(data.length);
+                if(data.length === this.#bar_number){
                     callback(data);
-                    this.readStream(stream, callback);
+                }
+                this.readStream(stream, callback);
             }catch(e){}
                 
             
         });
     }
 
-    private  OnChange = (array : Uint8Array) => {
-        this.#barArray = array.length === 20 ? Array.from(array) : this.#barArray;
+
+    private  OnChange = (array) => {
+        // this.#barArray = Array.from(array, (value) => 
+        //      ((value * 10) / 255)
+        // )
+        this.#barArray = array;
+        console.log(this.#barArray.length)
         this.changed('bar-array')
         this.emit('bar-changed', this.#barArray)
     }
+
+
+    private normalizeBarSize = (array : Uint8Array) => {
+    }
+    
 
     constructor() {
         super();
@@ -80,7 +121,6 @@ class Cava extends Service {
         console.log(process.get_identifier())
         this.stdout = this.get_stdout(process);
         this.stderr = this.get_stderr(process);
-        this.stdout.set_buffer_size(256 * 20)
         this.readStream(this.stdout, this.OnChange);
 
 

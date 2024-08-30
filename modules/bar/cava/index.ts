@@ -21,8 +21,8 @@ const CavaModule = () => {
                         vertical: true,
                         hpack: "center",
                         bar_mode: "continuous",
-                        max_value: 10,
-                        value: ((i / 256) * 10)
+                        max_value: 8,
+                        value: i
                     })
                 })
              })
