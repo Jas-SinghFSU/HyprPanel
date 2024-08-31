@@ -35,15 +35,15 @@ const Profile = () => {
                 hexpand: true,
                 vertical: true,
                 children: [
-                    Widget.Icon({
+                    Widget.Box({
                         hpack: "center",
                         class_name: "profile-picture",
-                        icon: image.bind("value").as(i => {
+                        css: image.bind("value").as(i => {
                             try {
                                 GdkPixbuf.Pixbuf.new_from_file(i);
-                                return i;
+                                return `background-image: url("${i}")`
                             } catch {
-                                return "avatar-default-symbolic";
+                                return `background-image: url("${App.configDir}/assets/hyprpanel.png")`
                             }
                         }),
                     }),

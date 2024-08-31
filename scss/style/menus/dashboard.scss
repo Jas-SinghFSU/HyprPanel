@@ -26,7 +26,12 @@
     margin-bottom: 0.65em;
 
     .profile-picture {
-      font-size: 7.5em;
+      min-width: $bar-menus-menu-dashboard-profile-size;
+      min-height: $bar-menus-menu-dashboard-profile-size;
+      border-radius: $bar-menus-menu-dashboard-profile-radius;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .profile-name {
