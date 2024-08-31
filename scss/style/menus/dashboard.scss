@@ -102,11 +102,11 @@
       }
     }
 
-    .card-button-left-section {
+    .card-button-section-container.visible {
       margin-right: 1.5em;
     }
 
-    .top-button {
+    .top-button.paired {
       margin-bottom: 1.5em;
     }
 
@@ -115,11 +115,11 @@
       margin-bottom: 0.65em;
 
       &.most-used {
-        margin-right: 0em;
+        margin-right: 0.65em;
       }
 
-      &.utilities {
-        margin-left: 0.65em;
+      &.utilities.paired {
+        margin-left: 0em;
       }
 
       button {
