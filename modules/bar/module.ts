@@ -1,0 +1,91 @@
+import { Hook, Module } from "lib/types/bar";
+import options from "options";
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
+import { Binding } from "types/service";
+import { Variable as VariableType } from "types/variable";
+import { Widget as WidgetType } from "types/widgets/widget";
+
+const { style } = options.theme.bar.buttons;
+
+export const module = ({
+    availabilityBind,
+    icon,
+    textIcon,
+    label,
+    tooltipText,
+    boxClass,
+    props,
+    showLabel,
+    hooks
+}: Module) => {
+    const setupHooks = (self: WidgetType<unknown>, hooks: Hook[]) => {
+        hooks.forEach(hook => hook(self));
+    };
+
+    const dummyVar = Variable(true);
+
+    const availBinding = availabilityBind === undefined ? dummyVar.bind("value") : availabilityBind;
+
+    const getIconWidget = () => {
+        let iconWidget: Gtk.Widget | undefined;
+
+        if (icon !== undefined) {
+            iconWidget = Widget.Icon({
+                class_name: `bar-button-icon ${boxClass}`,
+                icon: icon
+            }) as unknown as Gtk.Widget;
+        } else if (textIcon !== undefined) {
+            iconWidget = Widget.Label({
+                class_name: `bar-button-icon ${boxClass}`,
+                label: textIcon
+            }) as unknown as Gtk.Widget;
+        }
+
+        return iconWidget;
+    }
+
+    return {
+        component: Widget.Box({
+            className: Utils.merge([style.bind("value"), showLabel], (style: string, shwLabel: boolean) => {
+                const styleMap = {
+                    default: "style1",
+                    split: "style2",
+                    wave: "style3",
+                };
+                return `${boxClass} ${styleMap[style]} ${!shwLabel ? "no-label" : ""}`;
+            }),
+            visible: true,
+            tooltip_text: tooltipText,
+            children: Utils.merge(
+                [availBinding, showLabel],
+                (isAvail, showLabel): Gtk.Widget[] => {
+                    if (!isAvail) {
+                        return [];
+                    }
+
+                    const childrenArray: Gtk.Widget[] = [];
+                    const iconWidget = getIconWidget();
+
+                    if (iconWidget !== undefined) {
+                        childrenArray.push(iconWidget);
+                    }
+
+                    if (showLabel) {
+                        childrenArray.push(
+                            Widget.Label({
+                                class_name: `bar-button-label ${boxClass}`,
+                                label: label,
+                            }) as unknown as Gtk.Widget
+                        );
+                    }
+
+                    return childrenArray;
+                }
+            ) as Binding<VariableType<Gtk.Widget[]>, any, Gtk.Widget[]>,
+            setup: (self) => setupHooks(self, hooks || []),
+        }),
+        tooltip_text: tooltipText,
+        boxClass,
+        props
+    };
+};
