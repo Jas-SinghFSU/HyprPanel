@@ -16,6 +16,8 @@ export const DashboardMenuSettings = () => {
                 Header('Power Menu'),
                 Option({ opt: options.menus.dashboard.powermenu.avatar.image, title: 'Profile Image', type: 'img' }),
                 Option({ opt: options.menus.dashboard.powermenu.avatar.name, title: 'Profile Name', subtitle: 'Use \'system\' to automatically set system name', type: 'string' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.profile.size, title: 'Profile Image Size', type: 'string' }),
+                Option({ opt: options.theme.bar.menus.menu.dashboard.profile.radius, title: 'Profile Image Radius', type: 'string' }),
 
                 Option({ opt: options.menus.dashboard.powermenu.confirmation, title: 'Show Confirmation Dialogue', type: 'boolean' }),
                 Option({ opt: options.menus.dashboard.powermenu.shutdown, title: 'Shutdown Command', type: 'string' }),

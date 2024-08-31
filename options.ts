@@ -533,7 +533,9 @@ const options = mkOptions(OPTIONS, {
                             color: opt(colors.surface0),
                         },
                         profile: {
-                            name: opt(colors.pink)
+                            name: opt(colors.pink),
+                            size: opt("8.5em"),
+                            radius: opt("0.4em"),
                         },
                         powermenu: {
                             shutdown: opt(colors.red),
