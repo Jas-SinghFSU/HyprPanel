@@ -51,6 +51,7 @@
     .module-icon.ram {
       background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
       padding-right: $spacing;
+      color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
     }
 
     .module-label.ram {
