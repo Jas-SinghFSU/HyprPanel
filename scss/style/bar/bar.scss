@@ -180,6 +180,10 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
         background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover), $transparency-value);
         color: $bar-buttons-clock-icon_background;
       }
+
+      .clock.bar-button-icon {
+        opacity: 0.5;
+      }
     }
   }
 }

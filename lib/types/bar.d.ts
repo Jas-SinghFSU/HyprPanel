@@ -13,14 +13,14 @@ export type Child = {
 export type Hook = (self: WidgetType<unknown>) => void;
 
 export type Module = {
-    availabilityBind?: Binding,
     icon?: string,
     textIcon?: string,
-    label?: string,
+    label?: Binding<any>,
+    boundLabel?: string,
     tooltipText?: string,
-    boxClass?: string,
+    boxClass: string,
     props?: ButtonProps,
     showLabel?: Binding,
-    buttonStyle?: string,
-    hooks?: Hook[]
+    hooks?: Hook[],
+    connection?: Binding<Connectable>
 }

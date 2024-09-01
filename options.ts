@@ -238,6 +238,16 @@ const options = mkOptions(OPTIONS, {
                     total: opt(colors.lavender),
                     spacing: opt("0.5em"),
                 },
+                modules: {
+                    ram: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        icon: opt(colors.lavender),
+                        icon_background: opt(colors.base2),
+                        total: opt(colors.lavender),
+                        spacing: opt("0.5em"),
+                    }
+                },
             },
             menus: {
                 monochrome: opt(false),
@@ -655,7 +665,7 @@ const options = mkOptions(OPTIONS, {
                             width: opt("0.35em"),
                             radius: opt("0.2em")
                         }
-                    },
+                    }
                 }
             }
         }
@@ -772,6 +782,10 @@ const options = mkOptions(OPTIONS, {
         notifications: {
             show_total: opt(false),
         },
+        ram: {
+            label: opt(true),
+        }
+
     },
 
     menus: {
