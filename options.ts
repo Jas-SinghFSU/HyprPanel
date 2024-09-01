@@ -239,12 +239,13 @@ const options = mkOptions(OPTIONS, {
                     spacing: opt("0.5em"),
                 },
                 modules: {
+                    scrollSpeed: opt(5),
                     ram: {
                         background: opt(colors.base2),
                         hover: opt(colors.surface1),
-                        icon: opt(colors.lavender),
+                        text: opt(colors.peach),
+                        icon: opt(colors.peach),
                         icon_background: opt(colors.base2),
-                        total: opt(colors.lavender),
                         spacing: opt("0.5em"),
                     }
                 },
@@ -782,10 +783,18 @@ const options = mkOptions(OPTIONS, {
         notifications: {
             show_total: opt(false),
         },
-        ram: {
-            label: opt(true),
+        customModules: {
+            ram: {
+                label: opt(true),
+                labelType: opt<"mem/total" | "memory" | "percentage">("percentage"),
+                round: opt(true),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
+            }
         }
-
     },
 
     menus: {

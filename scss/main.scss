@@ -28,7 +28,6 @@
 @import "style/bar/notifications";
 @import "style/bar/power";
 @import "style/bar/battery";
-@import "style/bar/modules";
 
 //modules - menus
 @import "style/menus/menu";
@@ -50,3 +49,5 @@
 
 //settings dialog
 @import "style/settings/dialog";
+
+@import "../customModules/style/style";

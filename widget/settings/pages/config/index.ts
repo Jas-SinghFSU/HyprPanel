@@ -4,8 +4,9 @@ import { ClockMenuSettings } from "./menus/clock";
 import { DashboardMenuSettings } from "./menus/dashboard";
 import { NotificationSettings } from "./notifications/index";
 import { OSDSettings } from "./osd/index";
+import { CustomModuleSettings } from "customModules/config";
 
-type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu" | "Notifications" | "OSD";
+type Page = "General" | "Bar" | "Clock Menu" | "Dashboard Menu" | "Notifications" | "OSD" | "Custom Modules";
 const CurrentPage = Variable<Page>("General");
 
 const pagerMap: Page[] = [
@@ -15,6 +16,7 @@ const pagerMap: Page[] = [
     "OSD",
     "Clock Menu",
     "Dashboard Menu",
+    "Custom Modules",
 ]
 
 export const SettingsMenu = () => {
@@ -45,6 +47,7 @@ export const SettingsMenu = () => {
                         "OSD": OSDSettings(),
                         "Clock Menu": ClockMenuSettings(),
                         "Dashboard Menu": DashboardMenuSettings(),
+                        "Custom Modules": CustomModuleSettings(),
                     },
                     shown: CurrentPage.bind("value")
                 })

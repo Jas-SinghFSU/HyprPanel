@@ -25,5 +25,7 @@ export {
     BatteryLabel,
     Clock,
     SysTray,
+
+    // Custom Modules
     Ram
 };

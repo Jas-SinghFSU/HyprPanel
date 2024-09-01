@@ -1,0 +1,57 @@
+/* 
+ * #################################
+ * #       Default Styling         #
+ * #################################
+ */
+.bar-button-label {
+  margin-left: 0.5em;
+  color: $text;
+}
+
+.module-icon {
+  font-size: 1.2em;
+}
+
+.style2 {
+  .bar-button-icon.ram {
+    border-top-left-radius: $bar-buttons-radius;
+    border-bottom-left-radius: $bar-buttons-radius;
+    padding: $bar-buttons-padding_y 0em;
+    padding-left: $bar-buttons-padding_x;
+    padding-right: 0.5em;
+    background: $text;
+    color: $bar-background;
+  }
+
+  .bar-button-label.ram {
+    padding: $bar-buttons-padding_y 0em;
+    padding-right: $bar-buttons-padding_x;
+    padding-left: 0.5em;
+    margin-left: 0em;
+  }
+}
+
+/* 
+ * #################################
+ * #      Ram Module Styling       #
+ * #################################
+ */
+.module-label.ram {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-modules-ram-text);
+  margin-left: $bar-buttons-modules-ram-spacing;
+}
+
+.module-icon.ram {
+  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-modules-ram-icon);
+}
+
+.style2 {
+  .module-icon.ram {
+    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-modules-ram-icon_background);
+    padding-right: $bar-buttons-modules-ram-spacing;
+  }
+
+  .module-label.ram {
+    padding-left: $bar-buttons-modules-ram-spacing;
+  }
+}
