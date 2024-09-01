@@ -1,3 +1,5 @@
+import { ResourceLabelType } from 'lib/types/bar';
+import { GenericResourceData } from 'lib/types/customModules/ram';
 import { Binding } from 'lib/utils';
 import { openMenu } from 'modules/bar/utils';
 import options from 'options';
@@ -147,10 +149,11 @@ export const inputHandler = (
 };
 
 export const divide = ([total, used]: number[], round: boolean) => {
+    const percentageTotal = (used / total) * 100;
     if (round) {
-        return total > 0 ? Math.round((used / total) * 100) : 0;
+        return total > 0 ? Math.round(percentageTotal) : 0;
     }
-    return total > 0 ? (used / total) * 100 : 0;
+    return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
 
 };
 
@@ -158,3 +161,15 @@ export const formatSizeInGiB = (sizeInBytes: number, round: VariableType<boolean
     const sizeInGiB = sizeInBytes / (1024 ** 3);
     return round.value ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
+
+export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData) => {
+    const { used, total, percentage } = rmUsg;
+
+    if (lblType === "mem/total") {
+        return `${used}/${total} GiB`;
+    }
+    if (lblType === "memory") {
+        return `${used} GiB`;
+    }
+    return `${percentage}%`;
+}

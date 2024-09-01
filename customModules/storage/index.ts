@@ -1,7 +1,7 @@
 import options from "options";
 import { module } from "../../modules/bar/module"
 
-import { inputHandler } from "customModules/utils";
+import { inputHandler, renderResourceLabel } from "customModules/utils";
 import { computeStorage } from "./computeStorage";
 import { ResourceLabelType } from "lib/types/bar";
 import { GenericResourceData } from "lib/types/customModules/ram";
@@ -35,24 +35,12 @@ export const Storage = () => {
         },
     );
 
-
-    const renderLabel = (storage: GenericResourceData, lblType: ResourceLabelType) => {
-        const { used, total, percentage } = storage;
-        if (lblType === "mem/total") {
-            return `${used}/${total} GB`;
-        }
-        if (lblType === "memory") {
-            return `${used} GB`;
-        }
-        return `${percentage}%`;
-    }
-
     const storageModule = module({
         textIcon: icon.bind("value"),
         label: Utils.merge(
             [storageUsage.bind("value"), labelType.bind("value")],
-            (storage, rnd) => {
-                return renderLabel(storage, rnd);
+            (storage: GenericResourceData, lblTyp: ResourceLabelType) => {
+                return renderResourceLabel(lblTyp, storage);
             }),
         tooltipText: "Storage",
         boxClass: "storage",

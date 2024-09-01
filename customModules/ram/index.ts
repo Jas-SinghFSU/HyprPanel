@@ -48,10 +48,10 @@ export const Ram = () => {
         const { used, total, percentage } = rmUsg;
 
         if (lblType === "mem/total") {
-            return `${used}/${total} GB`;
+            return `${used}/${total} GiB`;
         }
         if (lblType === "memory") {
-            return `${used} GB`;
+            return `${used} GiB`;
         }
         return `${percentage}%`;
     }
@@ -60,8 +60,8 @@ export const Ram = () => {
         textIcon: "",
         label: Utils.merge(
             [ramUsage.bind("value"), labelType.bind("value")],
-            (rmUsg, lblType) => {
-                return renderLabel(lblType, rmUsg);
+            (rmUsg: GenericResourceData, lblTyp: ResourceLabelType) => {
+                return renderLabel(lblTyp, rmUsg);
             }),
         tooltipText: "RAM",
         boxClass: "ram",
