@@ -137,10 +137,10 @@
         }
 
         &.record.active {
-          background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording);
+          background: $red;
 
           &:hover {
-            background: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-dashboard-shortcuts-recording), 0.5);
+            background: transparentize($red, 0.5);
           }
         }
 
