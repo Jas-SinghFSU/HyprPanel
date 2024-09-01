@@ -13,7 +13,7 @@
 }
 
 .style2 {
-  .bar-button-icon.ram {
+  .bar-button-icon {
     border-top-left-radius: $bar-buttons-radius;
     border-bottom-left-radius: $bar-buttons-radius;
     padding: $bar-buttons-padding_y 0em;
@@ -23,7 +23,7 @@
     color: $bar-background;
   }
 
-  .bar-button-label.ram {
+  .bar-button-label {
     padding: $bar-buttons-padding_y 0em;
     padding-right: $bar-buttons-padding_x;
     padding-left: 0.5em;
@@ -36,26 +36,29 @@
  * #        Styling Function       #
  * #################################
  */
-@mixin module-styles($class, $textColor, $iconColor, $iconBackground, $spacing) {
+@mixin styleModule($class, $textColor, $iconColor, $iconBackground, $spacing, $fontSize: 1em) {
 
-  .module-label.ram {
+  .module-label.#{$class} {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $textColor);
     margin-left: $spacing;
   }
 
-  .module-icon.ram {
+  .module-icon.#{$class} {
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
+    // if font-size is not set, use the default of 1em
+    font-size: if($fontSize, $fontSize, 1em);
   }
 
   .style2 {
-    .module-icon.ram {
+    .module-icon.#{$class} {
       background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
       padding-right: $spacing;
       color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
     }
 
-    .module-label.ram {
+    .module-label.#{$class} {
       padding-left: $spacing;
+      margin-left: 0em;
     }
   }
 }
@@ -65,8 +68,55 @@
  * #      Ram Module Styling       #
  * #################################
  */
-@include module-styles('.ram',
+@include styleModule( //
+  // class name
+  'ram',
+  // label color
   $bar-buttons-modules-ram-text,
+  // icon color
   $bar-buttons-modules-ram-icon,
+  // iconkbackground if split style is used
   $bar-buttons-modules-ram-icon_background,
-  $bar-buttons-modules-ram-spacing );
+  // inner spacing
+  $bar-buttons-modules-ram-spacing //
+);
+
+/* 
+ * #################################
+ * #      Cpu Module Styling       #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'cpu',
+  // label color
+  $bar-buttons-modules-cpu-text,
+  // icon color
+  $bar-buttons-modules-cpu-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-cpu-icon_background,
+  // inner spacing
+  $bar-buttons-modules-cpu-spacing,
+  // custom font size
+  1.05em //
+);
+
+/* 
+ * #################################
+ * #    Storage Module Styling     #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'storage',
+  // label color
+  $bar-buttons-modules-storage-text,
+  // icon color
+  $bar-buttons-modules-storage-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-storage-icon_background,
+  // inner spacing
+  $bar-buttons-modules-storage-spacing,
+  // custom font size
+  1.25em //
+);

@@ -54,18 +54,18 @@ export const Cpu = () => {
         },
     );
 
-    const renderLabel = (cpuUsg: number) => {
-        return `${cpuUsg.toFixed(2)}%`; // Rounded to two decimal places for readability
+    const renderLabel = (cpuUsg: number, rnd: boolean) => {
+        return rnd ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     }
 
     const cpuModule = module({
-        textIcon: "󰍛",
+        textIcon: "",
         label: Utils.merge(
-            [cpuUsage.bind("value")],
-            (cpuUsg) => {
-                return renderLabel(cpuUsg);
+            [cpuUsage.bind("value"), round.bind("value")],
+            (cpuUsg, rnd) => {
+                return renderLabel(cpuUsg, rnd);
             }),
-        tooltipText: "CPU Usage",
+        tooltipText: "CPU",
         boxClass: "cpu",
         showLabel: label.bind("value"),
         props: {

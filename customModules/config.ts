@@ -30,6 +30,44 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.ram.leftClick, title: 'Left Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.ram.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.ram.middleClick, title: 'Middle Click', type: 'string' }),
+
+                Header('CPU'),
+                Option({ opt: options.bar.customModules.cpu.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.modules.cpu.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.cpu.round, title: 'Round', type: 'boolean' }),
+                Option({
+                    opt: options.bar.customModules.cpu.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
+                Option({ opt: options.bar.customModules.cpu.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.cpu.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.cpu.middleClick, title: 'Middle Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.cpu.scrollUp, title: 'Scroll Up', type: 'string' }),
+                Option({ opt: options.bar.customModules.cpu.scrollDown, title: 'Scroll Down', type: 'string' }),
+
+                Header('Storage'),
+                Option({ opt: options.bar.customModules.storage.icon, title: 'Storage Icon', type: 'enum', enums: ['󰋊', '', '󱛟', ''] }),
+                Option({ opt: options.bar.customModules.storage.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.modules.storage.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.storage.labelType, title: 'Label Type', type: 'enum', enums: ['mem/total', 'memory', 'percentage'] }),
+                Option({ opt: options.bar.customModules.storage.round, title: 'Round', type: 'boolean' }),
+                Option({
+                    opt: options.bar.customModules.storage.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
+                Option({ opt: options.bar.customModules.storage.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.storage.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.storage.middleClick, title: 'Middle Click', type: 'string' }),
             ]
         })
     })

@@ -1,5 +1,5 @@
 import { opt, mkOptions } from "lib/option"
-import { RamLabelType } from "lib/types/bar";
+import { ResourceLabelType, StorageIcon } from "lib/types/bar";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
@@ -243,18 +243,26 @@ const options = mkOptions(OPTIONS, {
                     ram: {
                         background: opt(colors.base2),
                         hover: opt(colors.surface1),
-                        text: opt(colors.peach),
-                        icon: opt(colors.peach),
+                        text: opt(colors.yellow),
+                        icon: opt(colors.yellow),
                         icon_background: opt(colors.base2),
-                        spacing: opt("0.7em"),
+                        spacing: opt("0.6em"),
                     },
                     cpu: {
                         background: opt(colors.base2),
                         hover: opt(colors.surface1),
-                        text: opt(colors.peach),
-                        icon: opt(colors.peach),
+                        text: opt(colors.red),
+                        icon: opt(colors.red),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.5em"),
+                    },
+                    storage: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.pink),
+                        icon: opt(colors.pink),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.45em"),
                     }
                 },
             },
@@ -795,7 +803,7 @@ const options = mkOptions(OPTIONS, {
             scrollSpeed: opt(5),
             ram: {
                 label: opt(true),
-                labelType: opt<RamLabelType>("percentage"),
+                labelType: opt<ResourceLabelType>("percentage"),
                 round: opt(true),
                 pollingInterval: opt(2000),
                 leftClick: opt(""),
@@ -811,6 +819,16 @@ const options = mkOptions(OPTIONS, {
                 middleClick: opt(""),
                 scrollUp: opt(""),
                 scrollDown: opt(""),
+            },
+            storage: {
+                label: opt(true),
+                icon: opt<StorageIcon>("󰋊"),
+                round: opt(true),
+                labelType: opt<ResourceLabelType>("percentage"),
+                pollingInterval: opt(2000),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
             }
         }
     },

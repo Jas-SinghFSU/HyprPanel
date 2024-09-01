@@ -146,3 +146,15 @@ export const inputHandler = (
     );
 };
 
+export const divide = ([total, used]: number[], round: boolean) => {
+    if (round) {
+        return total > 0 ? Math.round((used / total) * 100) : 0;
+    }
+    return total > 0 ? (used / total) * 100 : 0;
+
+};
+
+export const formatSizeInGiB = (sizeInBytes: number, round: VariableType<boolean>) => {
+    const sizeInGiB = sizeInBytes / (1024 ** 3);
+    return round.value ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
+};

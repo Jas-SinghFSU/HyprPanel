@@ -1,4 +1,6 @@
 const GLib = imports.gi.GLib;
+
+import { divide, formatSizeInGiB } from 'customModules/utils';
 import { Variable as VariableType } from 'types/variable';
 
 export const calculateRamUsage = (round: VariableType<boolean>) => {
@@ -23,14 +25,6 @@ export const calculateRamUsage = (round: VariableType<boolean>) => {
 
         const usedRam = totalRamInBytes - availableRamInBytes;
 
-        const divide = ([total, used]) => {
-            return total > 0 ? Math.round((used / total) * 100) : 0;
-        };
-
-        const formatSizeInGiB = (sizeInBytes: number, round: VariableType<boolean>) => {
-            const sizeInGiB = sizeInBytes / (1024 ** 3);
-            return round.value ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
-        };
 
         let usedRamGiB = formatSizeInGiB(usedRam, round);
 
@@ -39,7 +33,7 @@ export const calculateRamUsage = (round: VariableType<boolean>) => {
         }
 
         return {
-            percentage: divide([totalRamInBytes, usedRam]),
+            percentage: divide([totalRamInBytes, usedRam], round.value),
             total: formatSizeInGiB(totalRamInBytes, round),
             used: usedRamGiB,
         };

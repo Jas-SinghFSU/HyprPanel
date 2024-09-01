@@ -1,52 +1,43 @@
 import options from "options";
-
-// Module initializer
 import { module } from "../../modules/bar/module"
 
-// Types
-import { GenericResourceData } from "lib/types/customModules/ram";
-import Button from "types/widgets/button";
-import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
-
-// Helper Methods
-import { calculateRamUsage } from "./computeRam";
-
-// Utility Methods
 import { inputHandler } from "customModules/utils";
+import { computeStorage } from "./computeStorage";
 import { ResourceLabelType } from "lib/types/bar";
-
-// Global Constants
+import { GenericResourceData } from "lib/types/customModules/ram";
+import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
+import Button from "types/widgets/button";
 import { LABEL_TYPES } from "lib/types/defaults/bar";
 
-// All the user configurable options for the ram module that are needed
 const {
     label,
     labelType,
+    icon,
     round,
     leftClick,
     rightClick,
     middleClick,
     pollingInterval
-} = options.bar.customModules.ram;
+} = options.bar.customModules.storage;
 
-export const Ram = () => {
-    const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0 };
+export const Storage = () => {
+    const defaultStorageData = { total: 0, used: 0, percentage: 0 };
 
-    const ramUsage = Variable(
-        defaultRamData,
+    const storageUsage = Variable(
+        defaultStorageData,
         {
             poll: [
                 pollingInterval.value,
                 () => {
-                    return calculateRamUsage(round);
-                },
+                    return computeStorage(round);
+                }
             ],
         },
     );
 
-    const renderLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData) => {
-        const { used, total, percentage } = rmUsg;
 
+    const renderLabel = (storage: GenericResourceData, lblType: ResourceLabelType) => {
+        const { used, total, percentage } = storage;
         if (lblType === "mem/total") {
             return `${used}/${total} GB`;
         }
@@ -56,15 +47,15 @@ export const Ram = () => {
         return `${percentage}%`;
     }
 
-    const ramModule = module({
-        textIcon: "",
+    const storageModule = module({
+        textIcon: icon.bind("value"),
         label: Utils.merge(
-            [ramUsage.bind("value"), labelType.bind("value")],
-            (rmUsg, lblType) => {
-                return renderLabel(lblType, rmUsg);
+            [storageUsage.bind("value"), labelType.bind("value")],
+            (storage, rnd) => {
+                return renderLabel(storage, rnd);
             }),
-        tooltipText: "RAM",
-        boxClass: "ram",
+        tooltipText: "Storage",
+        boxClass: "storage",
         showLabel: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
@@ -93,5 +84,5 @@ export const Ram = () => {
         }
     });
 
-    return ramModule;
+    return storageModule;
 }

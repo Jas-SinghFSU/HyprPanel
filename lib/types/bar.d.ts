@@ -25,4 +25,6 @@ export type Module = {
     connection?: Binding<Connectable>
 }
 
-export type RamLabelType = "mem/total" | "memory" | "percentage";
+export type ResourceLabelType = "mem/total" | "memory" | "percentage";
+
+export type StorageIcon = "󰋊" | "" | "󱛟" | "";
