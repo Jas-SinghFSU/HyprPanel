@@ -13,6 +13,7 @@ import { calculateRamUsage } from "./computeRam";
 
 // Utility Methods
 import { inputHandler } from "customModules/utils";
+import { RamLabelType } from "lib/types/bar";
 
 // All the user configurable options for the ram module that are needed
 const {
@@ -22,8 +23,7 @@ const {
     leftClick,
     rightClick,
     middleClick,
-    scrollUp,
-    scrollDown
+    pollingInterval
 } = options.bar.customModules.ram;
 
 // Ram module
@@ -32,13 +32,15 @@ export const Ram = () => {
     * For more information on the Variable class, see the documentation at
     * https://aylur.github.io/ags-docs/config/reactivity/#property-bindings
     */
+    const defaultRamData: RamData = { total: 0, used: 0, percentage: 0 };
+
     const ramUsage = Variable(
         // initial values
-        { total: 0, used: 0, percentage: 0 },
+        defaultRamData,
         {
             poll: [
                 //polling interval
-                2000,
+                pollingInterval.value,
                 //cli command
                 "free",
                 // callback function to calculate the ram usage
@@ -48,6 +50,8 @@ export const Ram = () => {
             ],
         },
     );
+
+    const labelTypes: RamLabelType[] = ["mem/total", "memory", "percentage"];
 
     const renderLabel = (lblType: string, rmUsg: RamData) => {
         if (lblType === "mem/total") {
@@ -61,45 +65,33 @@ export const Ram = () => {
 
     const ramModule = module({
         textIcon: "",
-        /**
-        * Utils.merge is a function that takes an array of variable bindings and a callback
-        * function.
-        *
-        * varName.bind("value") is a way to connect to a variable's value so that
-        * the label updates when the variable changes.
-        */
         label: Utils.merge([ramUsage.bind("value"), labelType.bind("value")], (rmUsg, lblType) => renderLabel(lblType, rmUsg)),
-        // tooltip text for the module when hovered
         tooltipText: "RAM",
-        // unique class name for the module
         boxClass: "ram",
-        // 'label' is a boolean variable that determines whether the label should be shown
         showLabel: label.bind("value"),
-        // additional properties that can be passed to the module
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
-                        // command to run on left click
-                        cmd: leftClick.value,
-                        // function to run on command's output
+                        cmd: leftClick,
                         fn: () => { }
                     },
                     onSecondaryClick: {
-                        cmd: rightClick.value,
+                        cmd: rightClick,
                         fn: () => { }
                     },
                     onMiddleClick: {
-                        cmd: middleClick.value,
-                        fn: () => { }
+                        cmd: middleClick,
                     },
                     onScrollUp: {
-                        cmd: scrollUp.value,
-                        fn: () => { }
+                        fn: () => {
+                            labelType.value = labelTypes[(labelTypes.indexOf(labelType.value) + 1) % labelTypes.length] as RamLabelType;
+                        }
                     },
                     onScrollDown: {
-                        cmd: scrollDown.value,
-                        fn: () => { }
+                        fn: () => {
+                            labelType.value = labelTypes[(labelTypes.indexOf(labelType.value) - 1 + labelTypes.length) % labelTypes.length] as RamLabelType;
+                        }
                     },
                 });
             },

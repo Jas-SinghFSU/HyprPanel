@@ -7,7 +7,7 @@ export const CustomModuleSettings = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
         child: Widget.Box({
-            class_name: "bar-theme-page custom-modules",
+            class_name: "menu-theme-page paged-container",
             vertical: true,
             children: [
                 Header('General'),
@@ -18,11 +18,18 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.theme.bar.buttons.modules.ram.spacing, title: 'Spacing', type: 'string' }),
                 Option({ opt: options.bar.customModules.ram.labelType, title: 'Label Type', type: 'enum', enums: ['mem/total', 'memory', 'percentage'] }),
                 Option({ opt: options.bar.customModules.ram.round, title: 'Round', type: 'boolean' }),
+                Option({
+                    opt: options.bar.customModules.ram.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
                 Option({ opt: options.bar.customModules.ram.leftClick, title: 'Left Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.ram.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.ram.middleClick, title: 'Middle Click', type: 'string' }),
-                Option({ opt: options.bar.customModules.ram.scrollUp, title: 'Scroll Up', type: 'string' }),
-                Option({ opt: options.bar.customModules.ram.scrollDown, title: 'Scroll Down', type: 'string' }),
             ]
         })
     })

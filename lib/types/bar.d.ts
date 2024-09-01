@@ -24,3 +24,5 @@ export type Module = {
     hooks?: Hook[],
     connection?: Binding<Connectable>
 }
+
+export type RamLabelType = "mem/total" | "memory" | "percentage";

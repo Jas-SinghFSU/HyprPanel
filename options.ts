@@ -1,4 +1,5 @@
 import { opt, mkOptions } from "lib/option"
+import { RamLabelType } from "lib/types/bar";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
@@ -786,13 +787,12 @@ const options = mkOptions(OPTIONS, {
             scrollSpeed: opt(5),
             ram: {
                 label: opt(true),
-                labelType: opt<"mem/total" | "memory" | "percentage">("percentage"),
+                labelType: opt<RamLabelType>("percentage"),
                 round: opt(true),
+                pollingInterval: opt(2000),
                 leftClick: opt(""),
                 rightClick: opt(""),
                 middleClick: opt(""),
-                scrollUp: opt(""),
-                scrollDown: opt(""),
             }
         }
     },
