@@ -13,8 +13,8 @@ export type Child = {
 export type Hook = (self: WidgetType<unknown>) => void;
 
 export type Module = {
-    icon?: string,
-    textIcon?: string,
+    icon?: string | Binding<string>,
+    textIcon?: string | Binding<string>,
     label?: Binding<any>,
     boundLabel?: string,
     tooltipText?: string,

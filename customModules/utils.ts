@@ -37,7 +37,7 @@ export const throttledScrollHandler = throttle((cmd: string, fn: Function | unde
         .catch(err => console.error(`Error running command "${cmd}": ${err}`));
 }, 200 / scrollSpeed.value);
 
-export const scrollHandler = (self: Button<Gtk.Widget, Gtk.Widget>, { onPrimaryClick, onSecondaryClick, onMiddleClick, onScrollUp, onScrollDown }) => {
+export const inputHandler = (self: Button<Gtk.Widget, Gtk.Widget>, { onPrimaryClick, onSecondaryClick, onMiddleClick, onScrollUp, onScrollDown }) => {
     const sanitizeInput = (input: string) => {
         if (input === undefined) {
             return '';
