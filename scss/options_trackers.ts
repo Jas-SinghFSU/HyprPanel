@@ -1,5 +1,5 @@
 import icons from "lib/icons";
-import { Notify, isAnImage } from "lib/utils";
+import { bash, dependencies, Notify, isAnImage } from "lib/utils";
 import options from "options";
 import Wallpaper from "services/Wallpaper";
 
@@ -49,6 +49,10 @@ export const initializeTrackers = (resetCssFunc: Function) => {
             console.info("Wallpaper path changed, regenerating Matugen colors...")
             options.resetTheme();
             resetCssFunc();
+        }
+        if (options.wallpaper.pywal && dependencies('wal')) {
+            const wallpaperPath = options.wallpaper.image.value;
+            bash(`wal -i ${wallpaperPath}`);
         }
     })
 
