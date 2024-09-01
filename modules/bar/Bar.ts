@@ -10,7 +10,8 @@ import {
     BatteryLabel,
     Clock,
     SysTray,
-    Ram
+    Ram,
+    Cpu,
 } from "./Exports"
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -36,6 +37,7 @@ type Section = "battery"
     | "bluetooth"
     | "clock"
     | "Ram"
+    | "Cpu"
     | "systray";
 
 type Layout = {
@@ -92,6 +94,7 @@ const widget = {
     clock: () => WidgetContainer(Clock()),
     systray: () => WidgetContainer(SysTray()),
     ram: () => WidgetContainer(Ram()),
+    cpu: () => WidgetContainer(Cpu()),
 };
 
 type GdkMonitors = {

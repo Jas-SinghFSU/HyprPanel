@@ -12,6 +12,7 @@ import { SysTray } from "./systray/index";
 
 // Custom Modules
 import { Ram } from "../../customModules/ram/index";
+import { Cpu } from "../../customModules/cpu/index";
 
 export {
     Menu,
@@ -27,5 +28,6 @@ export {
     SysTray,
 
     // Custom Modules
-    Ram
+    Ram,
+    Cpu,
 };

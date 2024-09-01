@@ -34,9 +34,8 @@ export const Ram = () => {
         {
             poll: [
                 pollingInterval.value,
-                "free",
-                (commandExecutionOutput) => {
-                    return calculateRamUsage(commandExecutionOutput, round);
+                () => {
+                    return calculateRamUsage(round);
                 },
             ],
         },
@@ -55,7 +54,7 @@ export const Ram = () => {
     }
 
     const ramModule = module({
-        textIcon: "",
+        textIcon: "",
         label: Utils.merge(
             [ramUsage.bind("value"), labelType.bind("value")],
             (rmUsg, lblType) => {
@@ -69,11 +68,9 @@ export const Ram = () => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
-                        fn: () => { }
                     },
                     onSecondaryClick: {
                         cmd: rightClick,
-                        fn: () => { }
                     },
                     onMiddleClick: {
                         cmd: middleClick,

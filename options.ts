@@ -246,6 +246,14 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.peach),
                         icon: opt(colors.peach),
                         icon_background: opt(colors.base2),
+                        spacing: opt("0.7em"),
+                    },
+                    cpu: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.peach),
+                        icon: opt(colors.peach),
+                        icon_background: opt(colors.base2),
                         spacing: opt("0.5em"),
                     }
                 },
@@ -793,6 +801,16 @@ const options = mkOptions(OPTIONS, {
                 leftClick: opt(""),
                 rightClick: opt(""),
                 middleClick: opt(""),
+            },
+            cpu: {
+                label: opt(true),
+                round: opt(true),
+                pollingInterval: opt(2000),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
             }
         }
     },
