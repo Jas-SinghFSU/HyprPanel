@@ -239,7 +239,6 @@ const options = mkOptions(OPTIONS, {
                     spacing: opt("0.5em"),
                 },
                 modules: {
-                    scrollSpeed: opt(5),
                     ram: {
                         background: opt(colors.base2),
                         hover: opt(colors.surface1),
@@ -784,6 +783,7 @@ const options = mkOptions(OPTIONS, {
             show_total: opt(false),
         },
         customModules: {
+            scrollSpeed: opt(5),
             ram: {
                 label: opt(true),
                 labelType: opt<"mem/total" | "memory" | "percentage">("percentage"),

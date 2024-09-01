@@ -11,7 +11,7 @@ export const CustomModuleSettings = () => {
             vertical: true,
             children: [
                 Header('General'),
-                Option({ opt: options.theme.bar.buttons.modules.scrollSpeed, title: 'Scrolling Speed', type: 'number' }),
+                Option({ opt: options.bar.customModules.scrollSpeed, title: 'Scrolling Speed', type: 'number' }),
 
                 Header('RAM'),
                 Option({ opt: options.bar.customModules.ram.label, title: 'Show Label', type: 'boolean' }),
