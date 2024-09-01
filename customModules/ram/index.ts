@@ -26,24 +26,15 @@ const {
     pollingInterval
 } = options.bar.customModules.ram;
 
-// Ram module
 export const Ram = () => {
-    /**
-    * For more information on the Variable class, see the documentation at
-    * https://aylur.github.io/ags-docs/config/reactivity/#property-bindings
-    */
     const defaultRamData: RamData = { total: 0, used: 0, percentage: 0 };
 
     const ramUsage = Variable(
-        // initial values
         defaultRamData,
         {
             poll: [
-                //polling interval
                 pollingInterval.value,
-                //cli command
                 "free",
-                // callback function to calculate the ram usage
                 (commandExecutionOutput) => {
                     return calculateRamUsage(commandExecutionOutput, round);
                 },
@@ -65,7 +56,11 @@ export const Ram = () => {
 
     const ramModule = module({
         textIcon: "",
-        label: Utils.merge([ramUsage.bind("value"), labelType.bind("value")], (rmUsg, lblType) => renderLabel(lblType, rmUsg)),
+        label: Utils.merge(
+            [ramUsage.bind("value"), labelType.bind("value")],
+            (rmUsg, lblType) => {
+                return renderLabel(lblType, rmUsg);
+            }),
         tooltipText: "RAM",
         boxClass: "ram",
         showLabel: label.bind("value"),
