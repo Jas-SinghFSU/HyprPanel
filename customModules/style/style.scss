@@ -33,25 +33,39 @@
 
 /* 
  * #################################
+ * #        Styling Function       #
+ * #################################
+ */
+@mixin module-styles($class, $textColor, $iconColor, $iconBackground, $spacing) {
+
+  .module-label.ram {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $textColor);
+    margin-left: $spacing;
+  }
+
+  .module-icon.ram {
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
+  }
+
+  .style2 {
+    .module-icon.ram {
+      background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
+      padding-right: $spacing;
+    }
+
+    .module-label.ram {
+      padding-left: $spacing;
+    }
+  }
+}
+
+/* 
+ * #################################
  * #      Ram Module Styling       #
  * #################################
  */
-.module-label.ram {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-modules-ram-text);
-  margin-left: $bar-buttons-modules-ram-spacing;
-}
-
-.module-icon.ram {
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-modules-ram-icon);
-}
-
-.style2 {
-  .module-icon.ram {
-    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-modules-ram-icon_background);
-    padding-right: $bar-buttons-modules-ram-spacing;
-  }
-
-  .module-label.ram {
-    padding-left: $bar-buttons-modules-ram-spacing;
-  }
-}
+@include module-styles('.ram',
+  $bar-buttons-modules-ram-text,
+  $bar-buttons-modules-ram-icon,
+  $bar-buttons-modules-ram-icon_background,
+  $bar-buttons-modules-ram-spacing );
