@@ -45,7 +45,7 @@ stopRecording() {
         -a "Screen Recorder" \
         -t 10000 \
         -u normal \
-        --action="scriptAction:-dolphin $outputDir=Directory" \
+        --action="scriptAction:-xdg-open $outputDir=Directory" \
         --action="scriptAction:-xdg-open $recentFile=Play"
 }
 
