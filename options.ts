@@ -247,7 +247,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.yellow),
                         icon: opt(colors.yellow),
                         icon_background: opt(colors.base2),
-                        spacing: opt("0.6em"),
+                        spacing: opt("0.45em"),
                     },
                     cpu: {
                         background: opt(colors.base2),
@@ -271,7 +271,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.green),
                         icon: opt(colors.green),
                         icon_background: opt(colors.base2),
-                        spacing: opt("0.5em"),
+                        spacing: opt("0.45em"),
                     },
                     kbLayout: {
                         background: opt(colors.base2),
@@ -279,7 +279,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.sky),
                         icon: opt(colors.sky),
                         icon_background: opt(colors.base2),
-                        spacing: opt("0.5em"),
+                        spacing: opt("0.45em"),
                     },
                     updates: {
                         background: opt(colors.base2),
@@ -287,7 +287,7 @@ const options = mkOptions(OPTIONS, {
                         text: opt(colors.mauve),
                         icon: opt(colors.mauve),
                         icon_background: opt(colors.base2),
-                        spacing: opt("0.375em"),
+                        spacing: opt("0.45em"),
                     }
                 },
             },
