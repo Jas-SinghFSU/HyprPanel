@@ -98,7 +98,28 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.kbLayout.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.kbLayout.middleClick, title: 'Middle Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.kbLayout.scrollUp, title: 'Scroll Up', type: 'string' }),
-                Option({ opt: options.bar.customModules.kbLayout.scrollDown, title: 'Scroll Down', type: 'string' })
+                Option({ opt: options.bar.customModules.kbLayout.scrollDown, title: 'Scroll Down', type: 'string' }),
+
+                Header('Updates'),
+                Option({ opt: options.bar.customModules.updates.updateCommand, title: 'Check Updates Command', type: 'string' }),
+                Option({ opt: options.bar.customModules.updates.icon, title: 'Updates Icon', type: 'enum', enums: ["󰚰", "󰇚", "", "󱑢", "󱑣", "󰏖", "", "󰏔", "󰏗"] }),
+                Option({ opt: options.bar.customModules.updates.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.bar.customModules.updates.padZero, title: 'Pad with 0', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.modules.updates.spacing, title: 'Spacing', type: 'string' }),
+                Option({
+                    opt: options.bar.customModules.updates.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
+                Option({ opt: options.bar.customModules.updates.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.updates.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.updates.middleClick, title: 'Middle Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.updates.scrollUp, title: 'Scroll Up', type: 'string' }),
+                Option({ opt: options.bar.customModules.updates.scrollDown, title: 'Scroll Down', type: 'string' })
             ]
         })
     })

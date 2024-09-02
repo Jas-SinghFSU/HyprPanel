@@ -36,3 +36,5 @@ export type StorageIcon = "󰋊" | "" | "󱛟" | "";
 export type NetstatIcon = "󰖟" | "󰇚" | "󰕒" | "󰛳" | "" | "󰣺" | "󰖩" | "" | "󰈀";
 export type NetstatLabelType = "full" | "in" | "out";
 export type RateUnit = "GiB" | "MiB" | "KiB" | "auto";
+
+export type UpdatesIcon = "󰚰" | "󰇚" | "" | "󱑢" | "󱑣" | "󰏖" | "" | "󰏔" | "󰏗";

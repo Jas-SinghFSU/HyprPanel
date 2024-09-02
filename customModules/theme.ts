@@ -69,6 +69,18 @@ export const CustomModuleTheme = () => {
                     subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
                     type: 'color'
                 }),
+
+                Header('Updates'),
+                Option({ opt: options.theme.bar.buttons.modules.updates.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.updates.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.updates.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.updates.hover, title: 'Hover', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.updates.icon_background,
+                    title: 'Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })

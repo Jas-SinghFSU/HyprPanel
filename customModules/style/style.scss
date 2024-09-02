@@ -45,7 +45,6 @@
 
   .module-icon.#{$class} {
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
-    // if font-size is not set, use the default of 1em
     font-size: if($fontSize, $fontSize, 1em);
   }
 
@@ -57,7 +56,7 @@
     }
 
     .module-label.#{$class} {
-      padding-left: $spacing;
+      padding-left: $spacing * 1.5;
       margin-left: 0em;
     }
   }
@@ -159,4 +158,24 @@
   $bar-buttons-modules-kbLayout-spacing,
   // custom font size
   1.2em //
+);
+
+/* 
+ * #################################
+ * #    Updates Module Styling     #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'updates',
+  // label color
+  $bar-buttons-modules-updates-text,
+  // icon color
+  $bar-buttons-modules-updates-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-updates-icon_background,
+  // inner spacing
+  $bar-buttons-modules-updates-spacing,
+  // custom font size
+  1.3em //
 );

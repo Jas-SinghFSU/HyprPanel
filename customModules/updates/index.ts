@@ -9,6 +9,7 @@ import { Variable as VariableType } from "types/variable";
 const {
     updateCommand,
     label,
+    padZero,
     pollingInterval,
     icon,
     leftClick,
@@ -19,24 +20,25 @@ const {
 } = options.bar.customModules.updates;
 
 export const Updates = () => {
-    const pendingUpdates: VariableType<string> = Variable("0",
+    const pendingUpdates: VariableType<string> = Variable(" 0",
         {
             poll: [
                 pollingInterval.value,
-                updateCommand.value,
+                `bash -c "${updateCommand.value}"`,
                 (cmdOutput: string) => {
-                    return cmdOutput
+                    if (!padZero.value) return cmdOutput;
+
+                    return `${cmdOutput.padStart(2, '0')}`;
                 },
             ],
         },
     );
+
     const networkModule = module({
         textIcon: icon.bind("value"),
-        tooltipText: "",
-        boxClass: "kblayout",
-        // labelHook: (self) => {
-        //
-        // },
+        tooltipText: pendingUpdates.bind("value").as(v => `${v} updates available`),
+        boxClass: "updates",
+        label: pendingUpdates.bind("value"),
         showLabel: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {

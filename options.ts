@@ -1,5 +1,5 @@
 import { opt, mkOptions } from "lib/option"
-import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon } from "lib/types/bar";
+import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon, UpdatesIcon } from "lib/types/bar";
 import { KbIcon, KbLabelType } from "lib/types/customModules/kbLayout";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
@@ -280,6 +280,14 @@ const options = mkOptions(OPTIONS, {
                         icon: opt(colors.sky),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.5em"),
+                    },
+                    updates: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.mauve),
+                        icon: opt(colors.mauve),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.375em"),
                     }
                 },
             },
@@ -866,9 +874,10 @@ const options = mkOptions(OPTIONS, {
                 scrollDown: opt(""),
             },
             updates: {
-                updateCommand: opt(""),
+                updateCommand: opt("$HOME/.config/ags/scripts/checkUpdates.sh -arch"),
                 label: opt(true),
-                icon: opt<StorageIcon>("󰋊"),
+                padZero: opt(true),
+                icon: opt<UpdatesIcon>("󰏖"),
                 pollingInterval: opt(2000),
                 leftClick: opt(""),
                 rightClick: opt(""),
