@@ -9,6 +9,7 @@ import { Bluetooth } from "./bluetooth/index.js";
 import { BatteryLabel } from "./battery/index.js";
 import { Clock } from "./clock/index.js";
 import { SysTray } from "./systray/index.js";
+import { CavaModule } from "./cava/index.js";
 const hyprland = await Service.import("hyprland");
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -254,8 +255,11 @@ export const Bar = (() => {
                         hpack: "center",
                         setup: self => {
                             self.hook(layouts, (self) => {
-                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
+
+                                const f = CavaModule();
+                                self.child = f;
+                                // const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                // self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor));
                             });
                         },
                     }),
