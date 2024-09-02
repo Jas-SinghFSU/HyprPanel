@@ -1,10 +1,8 @@
-import { Hook, Module } from "lib/types/bar";
+import { Module } from "lib/types/bar";
 import options from "options";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import { Binding } from "types/service";
 import { Variable as VariableType } from "types/variable";
-import Box from "types/widgets/box";
-import LabelType from "types/widgets/label";
 
 const { style } = options.theme.bar.buttons;
 
@@ -16,16 +14,9 @@ export const module = ({
     boxClass,
     props = {},
     showLabel,
-    labelHooks,
-    hooks
+    labelHook,
+    hook
 }: Module) => {
-    const setupHooks = (self: Box<Gtk.Widget, Gtk.Widget>, hooks: Hook[]) => {
-        hooks.forEach(hook => hook(self));
-    };
-    const setupLabelHooks = (self: LabelType<Gtk.Widget>, hooks: Hook[]) => {
-        hooks.forEach(hook => hook(self));
-    };
-
     const getIconWidget = () => {
         let iconWidget: Gtk.Widget | undefined;
 
@@ -70,14 +61,14 @@ export const module = ({
                             Widget.Label({
                                 class_name: `bar-button-label module-label ${boxClass}`,
                                 label: label,
-                                setup: (self: LabelType<Gtk.Widget>) => setupLabelHooks(self, labelHooks || []),
+                                setup: labelHook,
                             }) as unknown as Gtk.Widget
                         );
                     }
                     return childrenArray;
                 }
             ) as Binding<VariableType<Gtk.Widget[]>, any, Gtk.Widget[]>,
-            setup: (self: Box<Gtk.Widget, Gtk.Widget>) => setupHooks(self, hooks || []),
+            setup: hook,
         }),
         tooltip_text: tooltipText,
         isVisible: true,

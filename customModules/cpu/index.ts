@@ -4,7 +4,7 @@ import options from "options";
 import GTop from 'gi://GTop';
 
 // Module initializer
-import { module } from "../../modules/bar/module"
+import { module } from "../module"
 
 // import { CpuData } from "lib/types/customModules/cpu";
 import Button from "types/widgets/button";

@@ -1,7 +1,7 @@
 import options from "options";
 
 // Module initializer
-import { module } from "../../modules/bar/module"
+import { module } from "../module"
 
 // Types
 import { GenericResourceData } from "lib/types/customModules/generic";

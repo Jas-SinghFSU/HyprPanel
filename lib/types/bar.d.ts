@@ -1,5 +1,7 @@
 import { Binding, Connectable } from "types/service"
 import { Variable } from "types/variable"
+import Box from "types/widgets/box";
+import Label from "types/widgets/label";
 import { Widget as WidgetType } from "types/widgets/widget"
 
 export type Child = {
@@ -10,19 +12,20 @@ export type Child = {
     props: ButtonProps;
 };
 
-export type Hook = (self: WidgetType<unknown>) => void;
+export type BoxHook = (self: Box<Gtk.Widget, Gtk.Widget>) => void;
+export type LabelHook = (self: Label<Gtk.Widget>) => void;
 
 export type Module = {
     icon?: string | Binding<string>,
     textIcon?: string | Binding<string>,
     label?: string | Binding<string>,
-    labelHooks?: Hook[],
+    labelHook?: LabelHook,
     boundLabel?: string,
     tooltipText?: string | Binding<string>,
     boxClass: string,
     props?: ButtonProps,
     showLabel?: Binding,
-    hooks?: Hook[],
+    hook?: BoxHook,
     connection?: Binding<Connectable>
 }
 

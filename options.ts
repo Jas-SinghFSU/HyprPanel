@@ -859,13 +859,23 @@ const options = mkOptions(OPTIONS, {
                 label: opt(true),
                 labelType: opt<KbLabelType>("code"),
                 icon: opt<KbIcon>("󰌌"),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
+            },
+            updates: {
+                updateCommand: opt(""),
+                label: opt(true),
+                icon: opt<StorageIcon>("󰋊"),
                 pollingInterval: opt(2000),
                 leftClick: opt(""),
                 rightClick: opt(""),
                 middleClick: opt(""),
                 scrollUp: opt(""),
                 scrollDown: opt(""),
-            }
+            },
         }
     },
 

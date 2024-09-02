@@ -1,48 +1,42 @@
-const hyprland = await Service.import("hyprland");
-
 import options from "options";
 import { module } from "../module"
 
 import { inputHandler } from "customModules/utils";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
-import Label from "types/widgets/label";
-import { getKeyboardLayout } from "./getLayout";
+import { Variable as VariableType } from "types/variable";
 
 const {
+    updateCommand,
     label,
-    labelType,
+    pollingInterval,
     icon,
     leftClick,
     rightClick,
     middleClick,
     scrollUp,
     scrollDown,
-} = options.bar.customModules.kbLayout;
+} = options.bar.customModules.updates;
 
-export const KbInput = () => {
+export const Updates = () => {
+    const pendingUpdates: VariableType<string> = Variable("0",
+        {
+            poll: [
+                pollingInterval.value,
+                updateCommand.value,
+                (cmdOutput: string) => {
+                    return cmdOutput
+                },
+            ],
+        },
+    );
     const networkModule = module({
         textIcon: icon.bind("value"),
         tooltipText: "",
-        labelHook: (self: Label<Gtk.Widget>): void => {
-            self.hook(hyprland, () => {
-                Utils.execAsync('hyprctl devices -j')
-                    .then((obj) => {
-                        self.label = getKeyboardLayout(obj, labelType.value);
-                    })
-                    .catch((err) => { console.error(err); });
-            }, "keyboard-layout");
-
-            self.hook(labelType, () => {
-                Utils.execAsync('hyprctl devices -j')
-                    .then((obj) => {
-                        self.label = getKeyboardLayout(obj, labelType.value);
-                    })
-                    .catch((err) => { console.error(err); });
-            });
-        },
-
         boxClass: "kblayout",
+        // labelHook: (self) => {
+        //
+        // },
         showLabel: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
@@ -69,5 +63,6 @@ export const KbInput = () => {
 
     return networkModule;
 }
+
 
 

@@ -1,10 +1,10 @@
 import options from "options";
-import { module } from "../../modules/bar/module"
+import { module } from "../module"
 
 import { inputHandler, renderResourceLabel } from "customModules/utils";
 import { computeStorage } from "./computeStorage";
 import { ResourceLabelType } from "lib/types/bar";
-import { GenericResourceData } from "lib/types/customModules/ram";
+import { GenericResourceData } from "lib/types/customModules/generic";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
 import { LABEL_TYPES } from "lib/types/defaults/bar";

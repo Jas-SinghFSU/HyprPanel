@@ -1,5 +1,5 @@
 import options from "options";
-import { module } from "../../modules/bar/module"
+import { module } from "../module"
 
 import { inputHandler } from "customModules/utils";
 import { computeNetwork } from "./computeNetwork";
