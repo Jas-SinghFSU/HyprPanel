@@ -15,6 +15,7 @@ import { Ram } from "../../customModules/ram/index";
 import { Cpu } from "../../customModules/cpu/index";
 import { Storage } from "customModules/storage/index";
 import { Netstat } from "customModules/netstat/index";
+import { KbInput } from "customModules/kblayout/index";
 
 export {
     Menu,
@@ -34,4 +35,5 @@ export {
     Cpu,
     Storage,
     Netstat,
+    KbInput,
 };

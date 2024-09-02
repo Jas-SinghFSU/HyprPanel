@@ -140,3 +140,23 @@
   // custom font size
   1.1em //
 );
+
+/* 
+ * #################################
+ * #    KB Layout Module Styling   #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'kblayout',
+  // label color
+  $bar-buttons-modules-kbLayout-text,
+  // icon color
+  $bar-buttons-modules-kbLayout-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-kbLayout-icon_background,
+  // inner spacing
+  $bar-buttons-modules-kbLayout-spacing,
+  // custom font size
+  1.2em //
+);

@@ -88,6 +88,27 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.netstat.leftClick, title: 'Left Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.netstat.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.netstat.middleClick, title: 'Middle Click', type: 'string' }),
+
+                Header('Keyboard Layout'),
+
+                Option({ opt: options.bar.customModules.kbLayout.icon, title: 'kbLayout Icon', type: 'enum', enums: ["", "󰌌", "", "󰬴", "󰗊"] }),
+                Option({ opt: options.bar.customModules.kbLayout.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.bar.customModules.kbLayout.labelType, title: 'Label Type', type: 'enum', enums: ['layout', 'code'] }),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.spacing, title: 'Spacing', type: 'string' }),
+                Option({
+                    opt: options.bar.customModules.kbLayout.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
+                Option({ opt: options.bar.customModules.kbLayout.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.kbLayout.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.kbLayout.middleClick, title: 'Middle Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.kbLayout.scrollUp, title: 'Scroll Up', type: 'string' }),
+                Option({ opt: options.bar.customModules.kbLayout.scrollDown, title: 'Scroll Down', type: 'string' })
             ]
         })
     })

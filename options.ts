@@ -1,5 +1,6 @@
 import { opt, mkOptions } from "lib/option"
 import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon } from "lib/types/bar";
+import { KbIcon, KbLabelType } from "lib/types/customModules/kbLayout";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
@@ -269,6 +270,14 @@ const options = mkOptions(OPTIONS, {
                         hover: opt(colors.surface1),
                         text: opt(colors.green),
                         icon: opt(colors.green),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.5em"),
+                    },
+                    kbLayout: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.sky),
+                        icon: opt(colors.sky),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.5em"),
                     }
@@ -845,6 +854,17 @@ const options = mkOptions(OPTIONS, {
                 leftClick: opt(""),
                 rightClick: opt(""),
                 middleClick: opt(""),
+            },
+            kbLayout: {
+                label: opt(true),
+                labelType: opt<KbLabelType>("code"),
+                icon: opt<KbIcon>("󰌌"),
+                pollingInterval: opt(2000),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
             }
         }
     },

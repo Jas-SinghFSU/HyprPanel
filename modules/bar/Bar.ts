@@ -14,6 +14,7 @@ import {
     Cpu,
     Storage,
     Netstat,
+    KbInput,
 } from "./Exports"
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -42,6 +43,7 @@ type Section = "battery"
     | "Cpu"
     | "Storage"
     | "Netstat"
+    | "KbInput"
     | "systray";
 
 type Layout = {
@@ -101,6 +103,7 @@ const widget = {
     cpu: () => WidgetContainer(Cpu()),
     storage: () => WidgetContainer(Storage()),
     netstat: () => WidgetContainer(Netstat()),
+    kbinput: () => WidgetContainer(KbInput()),
 };
 
 type GdkMonitors = {

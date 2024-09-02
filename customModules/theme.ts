@@ -57,6 +57,18 @@ export const CustomModuleTheme = () => {
                     subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
                     type: 'color'
                 }),
+
+                Header('Keyboard Layout'),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.hover, title: 'Hover', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.kbLayout.icon_background,
+                    title: 'Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })

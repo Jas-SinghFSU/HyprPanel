@@ -16,6 +16,7 @@ export type Module = {
     icon?: string | Binding<string>,
     textIcon?: string | Binding<string>,
     label?: string | Binding<string>,
+    labelHooks?: Hook[],
     boundLabel?: string,
     tooltipText?: string | Binding<string>,
     boxClass: string,
