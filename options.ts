@@ -41,6 +41,7 @@ const secondary_colors = {
     text: "#cdd6f3",
     pink: "#f5c2e6",
     red: "#f38ba7",
+    peach: "#fab386",
     mantle: "#181824",
     surface1: "#454759",
     surface0: "#313243",
@@ -709,27 +710,27 @@ const options = mkOptions(OPTIONS, {
                         buttons: {
                             shutdown: {
                                 background: opt(colors.base),
-                                icon_background: opt(colors.red),
+                                icon_background: opt(secondary_colors.red),
                                 text: opt(colors.red),
-                                icon: opt(colors.mantle),
+                                icon: opt(secondary_colors.mantle),
                             },
                             restart: {
                                 background: opt(colors.base),
-                                icon_background: opt(colors.peach),
+                                icon_background: opt(secondary_colors.peach),
                                 text: opt(colors.peach),
-                                icon: opt(colors.mantle),
+                                icon: opt(secondary_colors.mantle),
                             },
                             logout: {
                                 background: opt(colors.base),
-                                icon_background: opt(colors.green),
+                                icon_background: opt(secondary_colors.green),
                                 text: opt(colors.green),
-                                icon: opt(colors.mantle),
+                                icon: opt(secondary_colors.mantle),
                             },
                             sleep: {
                                 background: opt(colors.base),
-                                icon_background: opt(colors.sky),
+                                icon_background: opt(secondary_colors.sky),
                                 text: opt(colors.sky),
-                                icon: opt(colors.mantle),
+                                icon: opt(secondary_colors.mantle),
                             },
                         }
                     },

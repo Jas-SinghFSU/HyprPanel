@@ -30,6 +30,7 @@ export const defaultColorMap = {
     "text2": "#cdd6f3",
     "pink2": "#f5c2e6",
     "red2": "#f38ba7",
+    "peach2": "#fab386",
     "mantle2": "#181824",
     "surface0_2": "#313243",
     "surface2_2": "#585b69",
