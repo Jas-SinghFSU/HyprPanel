@@ -14,6 +14,7 @@ import { SysTray } from "./systray/index";
 import { Ram } from "../../customModules/ram/index";
 import { Cpu } from "../../customModules/cpu/index";
 import { Storage } from "customModules/storage/index";
+import { Netstat } from "customModules/netstat/index";
 
 export {
     Menu,
@@ -31,5 +32,6 @@ export {
     // Custom Modules
     Ram,
     Cpu,
-    Storage
+    Storage,
+    Netstat,
 };

@@ -1,5 +1,5 @@
 import { opt, mkOptions } from "lib/option"
-import { ResourceLabelType, StorageIcon } from "lib/types/bar";
+import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon } from "lib/types/bar";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 
@@ -263,6 +263,14 @@ const options = mkOptions(OPTIONS, {
                         icon: opt(colors.pink),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.45em"),
+                    },
+                    netstat: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.green),
+                        icon: opt(colors.green),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.5em"),
                     }
                 },
             },
@@ -779,10 +787,7 @@ const options = mkOptions(OPTIONS, {
             label: opt(true),
         },
         systray: {
-            ignore: opt([
-                "KDE Connect Indicator",
-                "spotify-client",
-            ]),
+            ignore: opt([]),
         },
         clock: {
             icon: opt("󰸗"),
@@ -825,6 +830,17 @@ const options = mkOptions(OPTIONS, {
                 icon: opt<StorageIcon>("󰋊"),
                 round: opt(true),
                 labelType: opt<ResourceLabelType>("percentage"),
+                pollingInterval: opt(2000),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+            },
+            netstat: {
+                label: opt(true),
+                icon: opt<NetstatIcon>("󰖟"),
+                round: opt(true),
+                labelType: opt<NetstatLabelType>("full"),
+                rateUnit: opt<RateUnit>("auto"),
                 pollingInterval: opt(2000),
                 leftClick: opt(""),
                 rightClick: opt(""),

@@ -120,3 +120,23 @@
   // custom font size
   1.25em //
 );
+
+/* 
+ * #################################
+ * #    Netstat Module Styling     #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'netstat',
+  // label color
+  $bar-buttons-modules-netstat-text,
+  // icon color
+  $bar-buttons-modules-netstat-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-netstat-icon_background,
+  // inner spacing
+  $bar-buttons-modules-netstat-spacing,
+  // custom font size
+  1.1em //
+);

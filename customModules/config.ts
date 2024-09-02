@@ -68,6 +68,26 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.storage.leftClick, title: 'Left Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.storage.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.storage.middleClick, title: 'Middle Click', type: 'string' }),
+
+                Header('Netstat'),
+                Option({ opt: options.bar.customModules.netstat.icon, title: 'Netstat Icon', type: 'enum', enums: ["󰖟", "󰇚", "󰕒", "󰛳", "", "󰣺", "󰖩", "", "󰈀"] }),
+                Option({ opt: options.bar.customModules.netstat.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.bar.customModules.netstat.rateUnit, title: 'Rate Unit', type: 'enum', enums: ['GiB', 'MiB', 'KiB', 'auto'] }),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.netstat.labelType, title: 'Label Type', type: 'enum', enums: ['full', 'in', 'out'] }),
+                Option({ opt: options.bar.customModules.netstat.round, title: 'Round', type: 'boolean' }),
+                Option({
+                    opt: options.bar.customModules.netstat.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    subtitle: "Requires a Hyprpanel restart",
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000
+                }),
+                Option({ opt: options.bar.customModules.netstat.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.netstat.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.netstat.middleClick, title: 'Middle Click', type: 'string' }),
             ]
         })
     })

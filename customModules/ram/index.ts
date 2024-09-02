@@ -4,7 +4,7 @@ import options from "options";
 import { module } from "../../modules/bar/module"
 
 // Types
-import { GenericResourceData } from "lib/types/customModules/ram";
+import { GenericResourceData } from "lib/types/customModules/generic";
 import Button from "types/widgets/button";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 

@@ -15,9 +15,9 @@ export type Hook = (self: WidgetType<unknown>) => void;
 export type Module = {
     icon?: string | Binding<string>,
     textIcon?: string | Binding<string>,
-    label?: Binding<any>,
+    label?: string | Binding<string>,
     boundLabel?: string,
-    tooltipText?: string,
+    tooltipText?: string | Binding<string>,
     boxClass: string,
     props?: ButtonProps,
     showLabel?: Binding,
@@ -28,3 +28,7 @@ export type Module = {
 export type ResourceLabelType = "mem/total" | "memory" | "percentage";
 
 export type StorageIcon = "󰋊" | "" | "󱛟" | "";
+
+export type NetstatIcon = "󰖟" | "󰇚" | "󰕒" | "󰛳" | "" | "󰣺" | "󰖩" | "" | "󰈀";
+export type NetstatLabelType = "full" | "in" | "out";
+export type RateUnit = "GiB" | "MiB" | "KiB" | "auto";

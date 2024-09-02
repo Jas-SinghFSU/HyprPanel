@@ -45,6 +45,18 @@ export const CustomModuleTheme = () => {
                     subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
                     type: 'color'
                 }),
+
+                Header('Netstat'),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.hover, title: 'Hover', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.netstat.icon_background,
+                    title: 'Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })

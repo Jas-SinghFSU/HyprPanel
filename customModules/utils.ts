@@ -1,5 +1,5 @@
 import { ResourceLabelType } from 'lib/types/bar';
-import { GenericResourceData } from 'lib/types/customModules/ram';
+import { GenericResourceData } from 'lib/types/customModules/generic';
 import { Binding } from 'lib/utils';
 import { openMenu } from 'modules/bar/utils';
 import options from 'options';
