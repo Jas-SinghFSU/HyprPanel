@@ -1,5 +1,5 @@
 import { opt, mkOptions } from "lib/option"
-import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon, UpdatesIcon } from "lib/types/bar";
+import { NetstatIcon, NetstatLabelType, PowerIcon, RateUnit, ResourceLabelType, StorageIcon, UpdatesIcon } from "lib/types/bar";
 import { KbIcon, KbLabelType } from "lib/types/customModules/kbLayout";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
@@ -947,6 +947,8 @@ const options = mkOptions(OPTIONS, {
                 scrollDown: opt(""),
             },
             power: {
+                icon: opt<PowerIcon>(""),
+                showLabel: opt(true),
                 leftClick: opt("menu:powerdropdown"),
                 rightClick: opt(""),
                 middleClick: opt(""),

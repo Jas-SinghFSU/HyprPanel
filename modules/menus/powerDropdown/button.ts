@@ -24,7 +24,9 @@ export const PowerButton = (action: PowerOptions) => {
     };
 
     return Widget.Button({
-        className: `power-menu-button ${action}`,
+        className: showLabel.bind("value").as(shwLbl => {
+            return `power-menu-button ${action} ${!shwLbl ? "no-label" : ""}`;
+        }),
         on_clicked: () => handleClick(action),
         child: Widget.Box({
             vertical: false,

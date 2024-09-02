@@ -50,9 +50,9 @@
 
   .style2 {
     .module-icon.#{$class} {
-      background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
+      background: if($bar-buttons-monochrome, $bar-buttons-icon, $iconBackground);
       padding-right: $spacing;
-      color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
+      color: if($bar-buttons-monochrome, $bar-buttons-background, $iconColor);
     }
 
     .module-label.#{$class} {
@@ -217,5 +217,5 @@
   // inner spacing
   $bar-buttons-modules-power-spacing,
   // custom font size
-  1.15em //
+  1.3em //
 );

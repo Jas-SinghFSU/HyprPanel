@@ -65,7 +65,7 @@ export const ThemesMenu = () => {
                     children: [0, 1, 2].map(section => {
                         return Widget.Box({
                             children: pagerMap.map((page, index) => {
-                                if (index >= section * 5 && index < section * 5 + 5) {
+                                if (index >= section * 6 && index < section * 6 + 6) {
                                     return Widget.Button({
                                         hpack: "center",
                                         xalign: 0,

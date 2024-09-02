@@ -4,9 +4,9 @@ import { module } from "../module"
 import { inputHandler } from "customModules/utils";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
-import icons from "lib/icons";
 
 const {
+    icon,
     leftClick,
     rightClick,
     middleClick,
@@ -17,7 +17,7 @@ const {
 export const Power = () => {
     const powerModule = module({
         tooltipText: "Power Menu",
-        icon: icons.powermenu.shutdown,
+        textIcon: icon.bind("value"),
         boxClass: "powermodule",
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {

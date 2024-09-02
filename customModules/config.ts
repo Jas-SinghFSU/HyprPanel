@@ -6,6 +6,8 @@ import options from "options";
 export const CustomModuleSettings = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
+        hscroll: "automatic",
+        class_name: "menu-theme-page customModules paged-container",
         child: Widget.Box({
             class_name: "menu-theme-page paged-container",
             vertical: true,
@@ -51,7 +53,7 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.cpu.scrollDown, title: 'Scroll Down', type: 'string' }),
 
                 Header('Storage'),
-                Option({ opt: options.bar.customModules.storage.icon, title: 'Storage Icon', type: 'enum', enums: ['󰋊', '', '󱛟', ''] }),
+                Option({ opt: options.bar.customModules.storage.icon, title: 'Storage Icon', type: 'enum', enums: ['󰋊', '', '󱛟', '', '', ''] }),
                 Option({ opt: options.bar.customModules.storage.label, title: 'Show Label', type: 'boolean' }),
                 Option({ opt: options.theme.bar.buttons.modules.storage.spacing, title: 'Spacing', type: 'string' }),
                 Option({ opt: options.bar.customModules.storage.labelType, title: 'Label Type', type: 'enum', enums: ['mem/total', 'memory', 'percentage'] }),
@@ -133,6 +135,7 @@ export const CustomModuleSettings = () => {
 
                 Header('Power'),
                 Option({ opt: options.theme.bar.buttons.modules.power.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.icon, title: 'Power Button Icon', type: 'enum', enums: ["", "", "󰍃", "󰿅", "󰒲", "󰤄"] }),
                 Option({ opt: options.bar.customModules.power.leftClick, title: 'Left Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.power.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.power.middleClick, title: 'Middle Click', type: 'string' }),

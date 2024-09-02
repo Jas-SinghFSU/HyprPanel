@@ -6,6 +6,8 @@ import options from "options";
 export const CustomModuleTheme = () => {
     return Widget.Scrollable({
         vscroll: "automatic",
+        hscroll: "automatic",
+        class_name: "menu-theme-page customModules paged-container",
         child: Widget.Box({
             class_name: "bar-theme-page paged-container",
             vertical: true,

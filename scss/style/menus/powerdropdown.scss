@@ -33,6 +33,20 @@
   }
 
   .power-menu-button {
+    border-radius: $bar-menus-border-radius * 0.6;
+
+    // This doubles the border-radius so it doesn't show up as 
+    // an artifact behind the button as that has a radius as well
+    border-top-left-radius: $bar-menus-border-radius * 2;
+    border-bottom-left-radius: $bar-menus-border-radius * 2;
+
+    &.no-label {
+      // This doubles the border-radius so it doesn't show up as 
+      // an artifact behind the button as that has a radius as well
+      border-top-right-radius: $bar-menus-border-radius * 2;
+      border-bottom-right-radius: $bar-menus-border-radius * 2;
+    }
+
     &:hover {
       opacity: 0.4;
     }
@@ -61,10 +75,14 @@
       background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-sleep-background);
     }
 
-    border-radius: $bar-menus-border-radius * 0.5;
-    border-top-left-radius: $bar-menus-border-radius;
-    border-bottom-left-radius: $bar-menus-border-radius;
-    padding-right: 1em;
+    .show-label {
+      padding-right: 1em;
+    }
+
+    .no-label {
+      border-top-right-radius: $bar-menus-border-radius * 0.35;
+      border-bottom-right-radius: $bar-menus-border-radius * 0.35;
+    }
 
     .shutdown-label {
       color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-shutdown-text);
@@ -91,8 +109,8 @@
     min-width: 3.75rem * $bar-menus-menu-power-scaling/100;
     min-height: 3.75rem * $bar-menus-menu-power-scaling/100;
     background: $red;
-    border-top-left-radius: $bar-menus-border-radius * 0.5;
-    border-bottom-left-radius: $bar-menus-border-radius * 0.5;
+    border-top-left-radius: $bar-menus-border-radius * 0.35;
+    border-bottom-left-radius: $bar-menus-border-radius * 0.35;
     font-size: 1.75em;
 
     &.shutdown-icon {

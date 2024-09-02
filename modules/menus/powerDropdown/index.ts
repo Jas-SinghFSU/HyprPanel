@@ -1,5 +1,8 @@
+import options from "options.js";
 import DropdownMenu from "../DropdownMenu.js";
 import { PowerButton } from "./button.js";
+
+const { showLabel } = options.menus.power;
 
 export default () => {
     return DropdownMenu({
