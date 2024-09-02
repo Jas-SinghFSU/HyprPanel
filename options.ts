@@ -297,6 +297,13 @@ const options = mkOptions(OPTIONS, {
                         icon: opt(colors.lavender),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.45em"),
+                    },
+                    power: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        icon: opt(colors.red),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.45em"),
                     }
                 },
             },
@@ -690,6 +697,42 @@ const options = mkOptions(OPTIONS, {
                             },
                         },
                     },
+                    power: {
+                        scaling: opt(90),
+                        radius: opt("0.4em"),
+                        background: {
+                            color: opt(colors.crust),
+                        },
+                        border: {
+                            color: opt(colors.surface0),
+                        },
+                        buttons: {
+                            shutdown: {
+                                background: opt(colors.base),
+                                icon_background: opt(colors.red),
+                                text: opt(colors.red),
+                                icon: opt(colors.mantle),
+                            },
+                            restart: {
+                                background: opt(colors.base),
+                                icon_background: opt(colors.peach),
+                                text: opt(colors.peach),
+                                icon: opt(colors.mantle),
+                            },
+                            logout: {
+                                background: opt(colors.base),
+                                icon_background: opt(colors.green),
+                                text: opt(colors.green),
+                                icon: opt(colors.mantle),
+                            },
+                            sleep: {
+                                background: opt(colors.base),
+                                icon_background: opt(colors.sky),
+                                text: opt(colors.sky),
+                                icon: opt(colors.mantle),
+                            },
+                        }
+                    },
                     notifications: {
                         scaling: opt(100),
                         height: opt("58em"),
@@ -887,7 +930,7 @@ const options = mkOptions(OPTIONS, {
                 label: opt(true),
                 padZero: opt(true),
                 icon: opt<UpdatesIcon>("󰏖"),
-                pollingInterval: opt(2000),
+                pollingInterval: opt(1000 * 60 * 60 * 6),
                 leftClick: opt(""),
                 rightClick: opt(""),
                 middleClick: opt(""),
@@ -903,10 +946,25 @@ const options = mkOptions(OPTIONS, {
                 scrollUp: opt(""),
                 scrollDown: opt(""),
             },
+            power: {
+                leftClick: opt("menu:powerdropdown"),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
+            },
         }
     },
 
     menus: {
+        power: {
+            showLabel: opt(true),
+            confirmation: opt(true),
+            sleep: opt("systemctl suspend"),
+            reboot: opt("systemctl reboot"),
+            logout: opt("pkill Hyprland"),
+            shutdown: opt("shutdown now"),
+        },
         dashboard: {
             powermenu: {
                 confirmation: opt(true),

@@ -65,7 +65,7 @@ export const Ram = () => {
             }),
         tooltipText: "RAM",
         boxClass: "ram",
-        showLabel: label.bind("value"),
+        showLabelBinding: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {

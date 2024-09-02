@@ -199,3 +199,23 @@
   // custom font size
   1.15em //
 );
+
+/* 
+ * #################################
+ * #    Power Module Styling       #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'powermodule',
+  // label color
+  $red,
+  // icon color
+  $bar-buttons-modules-power-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-power-icon_background,
+  // inner spacing
+  $bar-buttons-modules-power-spacing,
+  // custom font size
+  1.15em //
+);

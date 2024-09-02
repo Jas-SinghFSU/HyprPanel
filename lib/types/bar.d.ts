@@ -24,7 +24,8 @@ export type Module = {
     tooltipText?: string | Binding<string>,
     boxClass: string,
     props?: ButtonProps,
-    showLabel?: Binding,
+    showLabel?: boolean,
+    showLabelBinding?: Binding,
     hook?: BoxHook,
     connection?: Binding<Connectable>
 }

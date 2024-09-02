@@ -23,7 +23,7 @@ export const Weather = () => {
             const weatherStatusIcon = getWeatherStatusIcon(wthr);
             return weatherStatusIcon;
         }),
-        tooltipText: globalWeatherVar.bind("value").as(v => `${v} weather available`),
+        tooltipText: globalWeatherVar.bind("value").as(v => `Weather Status: ${v.current.condition.text}`),
         boxClass: "weather-custom",
         label: Utils.merge(
             [globalWeatherVar.bind("value"), unit.bind("value")],
@@ -35,7 +35,7 @@ export const Weather = () => {
                 }
             },
         ),
-        showLabel: label.bind("value"),
+        showLabelBinding: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {

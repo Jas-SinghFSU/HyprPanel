@@ -19,6 +19,7 @@ import {
     KbInput,
     Updates,
     Weather,
+    Power,
 } from "./Exports"
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -50,6 +51,7 @@ type Section = "battery"
     | "KbInput"
     | "Updates"
     | "Weather"
+    | "Power"
     | "systray";
 
 type Layout = {
@@ -112,6 +114,7 @@ const widget = {
     kbinput: () => WidgetContainer(KbInput()),
     updates: () => WidgetContainer(Updates()),
     weather: () => WidgetContainer(Weather()),
+    power: () => WidgetContainer(Power()),
 };
 
 type GdkMonitors = {

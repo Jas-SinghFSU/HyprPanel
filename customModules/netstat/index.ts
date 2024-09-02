@@ -45,7 +45,7 @@ export const Netstat = () => {
         }
     };
 
-    const networkModule = module({
+    const netstatModule = module({
         textIcon: icon.bind("value"),
         label: Utils.merge(
             [networkUsage.bind("value"), labelType.bind("value")],
@@ -56,7 +56,7 @@ export const Netstat = () => {
             return lblTyp === "full" ? "Ingress / Egress" : lblTyp === "in" ? "Ingress" : "Egress";
         }),
         boxClass: "netstat",
-        showLabel: label.bind("value"),
+        showLabelBinding: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
@@ -84,5 +84,5 @@ export const Netstat = () => {
         }
     });
 
-    return networkModule;
+    return netstatModule;
 }

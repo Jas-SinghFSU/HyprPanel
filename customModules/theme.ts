@@ -93,6 +93,17 @@ export const CustomModuleTheme = () => {
                     subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
                     type: 'color'
                 }),
+
+                Header('Power'),
+                Option({ opt: options.theme.bar.buttons.modules.power.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.power.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.power.hover, title: 'Hover', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.power.icon_background,
+                    title: 'Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })

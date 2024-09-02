@@ -110,7 +110,7 @@ export const CustomModuleSettings = () => {
                     opt: options.bar.customModules.updates.pollingInterval,
                     title: 'Polling Interval',
                     type: 'number',
-                    subtitle: "Requires a Hyprpanel restart",
+                    subtitle: "WARNING: Be careful of your package manager\'s rate limit.\nRequires a Hyprpanel restart",
                     min: 100,
                     max: 60 * 24 * 1000,
                     increment: 1000
@@ -130,6 +130,14 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.weather.middleClick, title: 'Middle Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.weather.scrollUp, title: 'Scroll Up', type: 'string' }),
                 Option({ opt: options.bar.customModules.weather.scrollDown, title: 'Scroll Down', type: 'string' }),
+
+                Header('Power'),
+                Option({ opt: options.theme.bar.buttons.modules.power.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.middleClick, title: 'Middle Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.scrollUp, title: 'Scroll Up', type: 'string' }),
+                Option({ opt: options.bar.customModules.power.scrollDown, title: 'Scroll Down', type: 'string' }),
             ]
         })
     })

@@ -13,6 +13,7 @@ import { VolumeMenuTheme } from "./menus/volume";
 import { OsdTheme } from "./osd/index";
 import { Matugen } from "./menus/matugen";
 import { CustomModuleTheme } from "customModules/theme";
+import { PowerMenuTheme } from "./menus/power";
 
 type Page = "General Settings"
     | "Matugen Settings"
@@ -28,6 +29,7 @@ type Page = "General Settings"
     | "Notifications Menu"
     | "System Tray"
     | "Volume Menu"
+    | "Power Menu"
     | "Custom Modules";
 
 const CurrentPage = Variable<Page>("General Settings");
@@ -46,6 +48,7 @@ const pagerMap: Page[] = [
     "Notifications Menu",
     "System Tray",
     "Volume Menu",
+    "Power Menu",
     "Custom Modules",
 ]
 
@@ -94,6 +97,7 @@ export const ThemesMenu = () => {
                         "Notifications Menu": NotificationsMenuTheme(),
                         "System Tray": SystrayMenuTheme(),
                         "Volume Menu": VolumeMenuTheme(),
+                        "Power Menu": PowerMenuTheme(),
                         "Custom Modules": CustomModuleTheme(),
                     },
                     shown: CurrentPage.bind("value"),

@@ -6,6 +6,8 @@ import { Variable as VariableType } from "types/variable";
 
 const { style } = options.theme.bar.buttons;
 
+const undefinedVar = Variable(undefined);
+
 export const module = ({
     icon,
     textIcon,
@@ -13,6 +15,7 @@ export const module = ({
     tooltipText,
     boxClass,
     props = {},
+    showLabelBinding = undefinedVar.bind("value"),
     showLabel,
     labelHook,
     hook
@@ -37,18 +40,19 @@ export const module = ({
 
     return {
         component: Widget.Box({
-            className: Utils.merge([style.bind("value"), showLabel], (style: string, shwLabel: boolean) => {
+            className: Utils.merge([style.bind("value"), showLabelBinding], (style: string, shwLabel: boolean) => {
+                const shouldShowLabel = shwLabel || showLabel;
                 const styleMap = {
                     default: "style1",
                     split: "style2",
                     wave: "style3",
                 };
-                return `${boxClass} ${styleMap[style]} ${!shwLabel ? "no-label" : ""}`;
+                return `${boxClass} ${styleMap[style]} ${!shouldShowLabel ? "no-label" : ""}`;
             }),
             tooltip_text: tooltipText,
             children: Utils.merge(
-                [showLabel],
-                (showLabel): Gtk.Widget[] => {
+                [showLabelBinding],
+                (showLabelBinding): Gtk.Widget[] => {
                     const childrenArray: Gtk.Widget[] = [];
                     const iconWidget = getIconWidget();
 
@@ -56,7 +60,7 @@ export const module = ({
                         childrenArray.push(iconWidget);
                     }
 
-                    if (showLabel) {
+                    if (showLabelBinding) {
                         childrenArray.push(
                             Widget.Label({
                                 class_name: `bar-button-label module-label ${boxClass}`,

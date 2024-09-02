@@ -44,7 +44,7 @@ export const Storage = () => {
             }),
         tooltipText: "Storage",
         boxClass: "storage",
-        showLabel: label.bind("value"),
+        showLabelBinding: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {

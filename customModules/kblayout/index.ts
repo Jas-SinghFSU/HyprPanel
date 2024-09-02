@@ -21,7 +21,7 @@ const {
 } = options.bar.customModules.kbLayout;
 
 export const KbInput = () => {
-    const networkModule = module({
+    const keyboardModule = module({
         textIcon: icon.bind("value"),
         tooltipText: "",
         labelHook: (self: Label<Gtk.Widget>): void => {
@@ -43,7 +43,7 @@ export const KbInput = () => {
         },
 
         boxClass: "kblayout",
-        showLabel: label.bind("value"),
+        showLabelBinding: label.bind("value"),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
@@ -67,7 +67,7 @@ export const KbInput = () => {
         },
     });
 
-    return networkModule;
+    return keyboardModule;
 }
 
 

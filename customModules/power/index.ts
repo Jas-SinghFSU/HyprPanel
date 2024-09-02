@@ -4,42 +4,21 @@ import { module } from "../module"
 import { inputHandler } from "customModules/utils";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
-import { Variable as VariableType } from "types/variable";
+import icons from "lib/icons";
 
 const {
-    updateCommand,
-    label,
-    padZero,
-    pollingInterval,
-    icon,
     leftClick,
     rightClick,
     middleClick,
     scrollUp,
     scrollDown,
-} = options.bar.customModules.updates;
+} = options.bar.customModules.power;
 
-export const Updates = () => {
-    const pendingUpdates: VariableType<string> = Variable(" 0",
-        {
-            poll: [
-                pollingInterval.value,
-                `bash -c "${updateCommand.value}"`,
-                (cmdOutput: string) => {
-                    if (!padZero.value) return cmdOutput;
-
-                    return `${cmdOutput.padStart(2, '0')}`;
-                },
-            ],
-        },
-    );
-
-    const updatesModule = module({
-        textIcon: icon.bind("value"),
-        tooltipText: pendingUpdates.bind("value").as(v => `${v} updates available`),
-        boxClass: "updates",
-        label: pendingUpdates.bind("value"),
-        showLabelBinding: label.bind("value"),
+export const Power = () => {
+    const powerModule = module({
+        tooltipText: "Power Menu",
+        icon: icons.powermenu.shutdown,
+        boxClass: "powermodule",
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
@@ -63,8 +42,5 @@ export const Updates = () => {
         },
     });
 
-    return updatesModule;
+    return powerModule;
 }
-
-
-
