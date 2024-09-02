@@ -179,3 +179,23 @@
   // custom font size
   1.15em //
 );
+
+/* 
+ * #################################
+ * #    Weather Module Styling     #
+ * #################################
+ */
+@include styleModule( //
+  // class name
+  'weather-custom',
+  // label color
+  $bar-buttons-modules-weather-text,
+  // icon color
+  $bar-buttons-modules-weather-icon,
+  // icon background if split style is used
+  $bar-buttons-modules-weather-icon_background,
+  // inner spacing
+  $bar-buttons-modules-weather-spacing,
+  // custom font size
+  1.15em //
+);

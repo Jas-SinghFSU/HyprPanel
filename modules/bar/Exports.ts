@@ -17,6 +17,7 @@ import { Storage } from "customModules/storage/index";
 import { Netstat } from "customModules/netstat/index";
 import { KbInput } from "customModules/kblayout/index";
 import { Updates } from "customModules/updates/index";
+import { Weather } from "customModules/weather/index";
 
 export {
     Menu,
@@ -38,4 +39,5 @@ export {
     Netstat,
     KbInput,
     Updates,
+    Weather,
 };

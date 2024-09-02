@@ -81,6 +81,18 @@ export const CustomModuleTheme = () => {
                     subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
                     type: 'color'
                 }),
+
+                Header('Weather'),
+                Option({ opt: options.theme.bar.buttons.modules.weather.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.weather.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.weather.background, title: 'Background', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.weather.hover, title: 'Hover', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.weather.icon_background,
+                    title: 'Icon Background',
+                    subtitle: 'Applies a background color to the icon section of the button.\nRequires \'split\' button styling.',
+                    type: 'color'
+                }),
             ]
         })
     })

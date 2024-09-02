@@ -1,36 +1,10 @@
 import { Weather } from "lib/types/weather";
 import { Variable } from "types/variable";
 import options from "options";
+import { getTemperature, getWeatherIcon } from "globals/weather";
 const { unit } = options.menus.clock.weather;
 
 export const TodayTemperature = (theWeather: Variable<Weather>) => {
-    const getIcon = (fahren: number) => {
-        const icons = {
-            100: "",
-            75: "",
-            50: "",
-            25: "",
-            0: "",
-        };
-        const colors = {
-            100: "weather-color red",
-            75: "weather-color orange",
-            50: "weather-color lavender",
-            25: "weather-color blue",
-            0: "weather-color sky",
-        };
-
-        const threshold =
-            fahren < 0
-                ? 0
-                : [100, 75, 50, 25, 0].find((threshold) => threshold <= fahren);
-
-        return {
-            icon: icons[threshold || 50],
-            color: colors[threshold || 50],
-        };
-    };
-
     return Widget.Box({
         hpack: "center",
         vpack: "center",
@@ -51,11 +25,7 @@ export const TodayTemperature = (theWeather: Variable<Weather>) => {
                                 label: Utils.merge(
                                     [theWeather.bind("value"), unit.bind("value")],
                                     (wthr, unt) => {
-                                        if (unt === "imperial") {
-                                            return `${Math.ceil(wthr.current.temp_f)}° F`;
-                                        } else {
-                                            return `${Math.ceil(wthr.current.temp_c)}° C`;
-                                        }
+                                        return getTemperature(wthr, unt);
                                     },
                                 ),
                             }),
@@ -64,11 +34,11 @@ export const TodayTemperature = (theWeather: Variable<Weather>) => {
                                     .bind("value")
                                     .as(
                                         (v) =>
-                                            `calendar-menu-weather today temp label icon txt-icon ${getIcon(Math.ceil(v.current.temp_f)).color}`,
+                                            `calendar-menu-weather today temp label icon txt-icon ${getWeatherIcon(Math.ceil(v.current.temp_f)).color}`,
                                     ),
                                 label: theWeather
                                     .bind("value")
-                                    .as((v) => getIcon(Math.ceil(v.current.temp_f)).icon),
+                                    .as((v) => getWeatherIcon(Math.ceil(v.current.temp_f)).icon),
                             }),
                         ],
                     }),
@@ -84,7 +54,7 @@ export const TodayTemperature = (theWeather: Variable<Weather>) => {
                         .bind("value")
                         .as(
                             (v) =>
-                                `calendar-menu-weather today condition label ${getIcon(Math.ceil(v.current.temp_f)).color}`,
+                                `calendar-menu-weather today condition label ${getWeatherIcon(Math.ceil(v.current.temp_f)).color}`,
                         ),
                     label: theWeather.bind("value").as((v) => v.current.condition.text),
                 }),

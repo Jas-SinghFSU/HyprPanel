@@ -3,6 +3,7 @@ import { NetstatIcon, NetstatLabelType, RateUnit, ResourceLabelType, StorageIcon
 import { KbIcon, KbLabelType } from "lib/types/customModules/kbLayout";
 import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
+import { UnitType } from "lib/types/weather";
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -286,6 +287,14 @@ const options = mkOptions(OPTIONS, {
                         hover: opt(colors.surface1),
                         text: opt(colors.mauve),
                         icon: opt(colors.mauve),
+                        icon_background: opt(colors.base2),
+                        spacing: opt("0.45em"),
+                    },
+                    weather: {
+                        background: opt(colors.base2),
+                        hover: opt(colors.surface1),
+                        text: opt(colors.lavender),
+                        icon: opt(colors.lavender),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.45em"),
                     }
@@ -885,6 +894,15 @@ const options = mkOptions(OPTIONS, {
                 scrollUp: opt(""),
                 scrollDown: opt(""),
             },
+            weather: {
+                label: opt(true),
+                unit: opt<UnitType>("imperial"),
+                leftClick: opt(""),
+                rightClick: opt(""),
+                middleClick: opt(""),
+                scrollUp: opt(""),
+                scrollDown: opt(""),
+            },
         }
     },
 
@@ -977,7 +995,7 @@ const options = mkOptions(OPTIONS, {
             },
             weather: {
                 interval: opt(60000),
-                unit: opt<"metric" | "imperial">("imperial"),
+                unit: opt<UnitType>("imperial"),
                 location: opt("Los Angeles"),
                 key: opt<string>(
                     JSON.parse(Utils.readFile(`${App.configDir}/.weather.json`) || "{}")?.weather_api_key || "",

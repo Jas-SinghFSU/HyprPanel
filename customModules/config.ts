@@ -119,7 +119,17 @@ export const CustomModuleSettings = () => {
                 Option({ opt: options.bar.customModules.updates.rightClick, title: 'Right Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.updates.middleClick, title: 'Middle Click', type: 'string' }),
                 Option({ opt: options.bar.customModules.updates.scrollUp, title: 'Scroll Up', type: 'string' }),
-                Option({ opt: options.bar.customModules.updates.scrollDown, title: 'Scroll Down', type: 'string' })
+                Option({ opt: options.bar.customModules.updates.scrollDown, title: 'Scroll Down', type: 'string' }),
+
+                Header('Weather'),
+                Option({ opt: options.bar.customModules.weather.label, title: 'Show Label', type: 'boolean' }),
+                Option({ opt: options.bar.customModules.weather.unit, title: 'Units', type: 'enum', enums: ['imperial', 'metric'] }),
+                Option({ opt: options.theme.bar.buttons.modules.weather.spacing, title: 'Spacing', type: 'string' }),
+                Option({ opt: options.bar.customModules.weather.leftClick, title: 'Left Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.weather.rightClick, title: 'Right Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.weather.middleClick, title: 'Middle Click', type: 'string' }),
+                Option({ opt: options.bar.customModules.weather.scrollUp, title: 'Scroll Up', type: 'string' }),
+                Option({ opt: options.bar.customModules.weather.scrollDown, title: 'Scroll Down', type: 'string' }),
             ]
         })
     })

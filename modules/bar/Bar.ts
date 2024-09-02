@@ -10,12 +10,15 @@ import {
     BatteryLabel,
     Clock,
     SysTray,
+
+    // Custom Modules
     Ram,
     Cpu,
     Storage,
     Netstat,
     KbInput,
     Updates,
+    Weather,
 } from "./Exports"
 
 import { BarItemBox as WidgetContainer } from "../shared/barItemBox.js";
@@ -46,6 +49,7 @@ type Section = "battery"
     | "Netstat"
     | "KbInput"
     | "Updates"
+    | "Weather"
     | "systray";
 
 type Layout = {
@@ -107,6 +111,7 @@ const widget = {
     netstat: () => WidgetContainer(Netstat()),
     kbinput: () => WidgetContainer(KbInput()),
     updates: () => WidgetContainer(Updates()),
+    weather: () => WidgetContainer(Weather()),
 };
 
 type GdkMonitors = {
