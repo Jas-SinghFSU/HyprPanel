@@ -245,7 +245,6 @@ const options = mkOptions(OPTIONS, {
                 modules: {
                     ram: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.yellow),
                         icon: opt(colors.yellow),
                         icon_background: opt(colors.base2),
@@ -253,7 +252,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     cpu: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.red),
                         icon: opt(colors.red),
                         icon_background: opt(colors.base2),
@@ -261,7 +259,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     storage: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.pink),
                         icon: opt(colors.pink),
                         icon_background: opt(colors.base2),
@@ -269,7 +266,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     netstat: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.green),
                         icon: opt(colors.green),
                         icon_background: opt(colors.base2),
@@ -277,7 +273,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     kbLayout: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.sky),
                         icon: opt(colors.sky),
                         icon_background: opt(colors.base2),
@@ -285,7 +280,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     updates: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.mauve),
                         icon: opt(colors.mauve),
                         icon_background: opt(colors.base2),
@@ -293,7 +287,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     weather: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         text: opt(colors.lavender),
                         icon: opt(colors.lavender),
                         icon_background: opt(colors.base2),
@@ -301,7 +294,6 @@ const options = mkOptions(OPTIONS, {
                     },
                     power: {
                         background: opt(colors.base2),
-                        hover: opt(colors.surface1),
                         icon: opt(colors.red),
                         icon_background: opt(colors.base2),
                         spacing: opt("0.45em"),

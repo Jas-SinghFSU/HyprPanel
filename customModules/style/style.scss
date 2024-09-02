@@ -36,11 +36,26 @@
  * #        Styling Function       #
  * #################################
  */
-@mixin styleModule($class, $textColor, $iconColor, $iconBackground, $spacing, $fontSize: 1em) {
+@mixin styleModule($class, $textColor, $iconColor, $iconBackground, $labelBackground, $spacing, $fontSize: 1em) {
+  .bar_item_box_visible {
+    &.#{$class} {
+      background: $labelBackground;
+
+      &.style2 {
+        background: transparent;
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
 
   .module-label.#{$class} {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $textColor);
     margin-left: $spacing;
+    border-radius: $bar-buttons-radius;
   }
 
   .module-icon.#{$class} {
@@ -51,13 +66,17 @@
   .style2 {
     .module-icon.#{$class} {
       background: if($bar-buttons-monochrome, $bar-buttons-icon, $iconBackground);
+      opacity: 0.8;
       padding-right: $spacing;
       color: if($bar-buttons-monochrome, $bar-buttons-background, $iconColor);
     }
 
     .module-label.#{$class} {
+      background: $labelBackground;
       padding-left: $spacing * 1.5;
       margin-left: 0em;
+      border-top-left-radius: 0em;
+      border-bottom-left-radius: 0em;
     }
   }
 }
@@ -74,8 +93,10 @@
   $bar-buttons-modules-ram-text,
   // icon color
   $bar-buttons-modules-ram-icon,
-  // iconkbackground if split style is used
+  // icon background if split style is used
   $bar-buttons-modules-ram-icon_background,
+  // label background
+  $bar-buttons-modules-ram-background,
   // inner spacing
   $bar-buttons-modules-ram-spacing //
 );
@@ -94,6 +115,8 @@
   $bar-buttons-modules-cpu-icon,
   // icon background if split style is used
   $bar-buttons-modules-cpu-icon_background,
+  // label background
+  $bar-buttons-modules-cpu-background,
   // inner spacing
   $bar-buttons-modules-cpu-spacing,
   // custom font size
@@ -114,6 +137,8 @@
   $bar-buttons-modules-storage-icon,
   // icon background if split style is used
   $bar-buttons-modules-storage-icon_background,
+  // label background
+  $bar-buttons-modules-storage-background,
   // inner spacing
   $bar-buttons-modules-storage-spacing,
   // custom font size
@@ -134,6 +159,8 @@
   $bar-buttons-modules-netstat-icon,
   // icon background if split style is used
   $bar-buttons-modules-netstat-icon_background,
+  // label background
+  $bar-buttons-modules-netstat-background,
   // inner spacing
   $bar-buttons-modules-netstat-spacing,
   // custom font size
@@ -154,6 +181,8 @@
   $bar-buttons-modules-kbLayout-icon,
   // icon background if split style is used
   $bar-buttons-modules-kbLayout-icon_background,
+  // label background
+  $bar-buttons-modules-kbLayout-background,
   // inner spacing
   $bar-buttons-modules-kbLayout-spacing,
   // custom font size
@@ -174,6 +203,8 @@
   $bar-buttons-modules-updates-icon,
   // icon background if split style is used
   $bar-buttons-modules-updates-icon_background,
+  // label background
+  $bar-buttons-modules-updates-background,
   // inner spacing
   $bar-buttons-modules-updates-spacing,
   // custom font size
@@ -194,6 +225,8 @@
   $bar-buttons-modules-weather-icon,
   // icon background if split style is used
   $bar-buttons-modules-weather-icon_background,
+  // label background
+  $bar-buttons-modules-weather-background,
   // inner spacing
   $bar-buttons-modules-weather-spacing,
   // custom font size
@@ -214,6 +247,8 @@
   $bar-buttons-modules-power-icon,
   // icon background if split style is used
   $bar-buttons-modules-power-icon_background,
+  // label background
+  $bar-buttons-modules-power-background,
   // inner spacing
   $bar-buttons-modules-power-spacing,
   // custom font size
