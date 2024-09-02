@@ -1,7 +1,7 @@
 import options from "options";
 import { module } from "../module"
 
-import { inputHandler, renderResourceLabel } from "customModules/utils";
+import { formatTooltip, inputHandler, renderResourceLabel } from "customModules/utils";
 import { computeStorage } from "./computeStorage";
 import { ResourceLabelType } from "lib/types/bar";
 import { GenericResourceData } from "lib/types/customModules/generic";
@@ -21,7 +21,7 @@ const {
 } = options.bar.customModules.storage;
 
 export const Storage = () => {
-    const defaultStorageData = { total: 0, used: 0, percentage: 0 };
+    const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
 
     const storageUsage = Variable(
         defaultStorageData,
@@ -38,11 +38,14 @@ export const Storage = () => {
     const storageModule = module({
         textIcon: icon.bind("value"),
         label: Utils.merge(
-            [storageUsage.bind("value"), labelType.bind("value")],
-            (storage: GenericResourceData, lblTyp: ResourceLabelType) => {
-                return renderResourceLabel(lblTyp, storage);
+            [storageUsage.bind("value"), labelType.bind("value"), round.bind("value")],
+            (storage: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
+                return renderResourceLabel(lblTyp, storage, round);
             }),
-        tooltipText: "Storage",
+        tooltipText: labelType.bind("value").as(lblTyp => {
+            return formatTooltip('Storage', lblTyp);
+
+        }),
         boxClass: "storage",
         showLabelBinding: label.bind("value"),
         props: {

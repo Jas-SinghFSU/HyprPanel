@@ -12,7 +12,7 @@ import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import { calculateRamUsage } from "./computeRam";
 
 // Utility Methods
-import { inputHandler } from "customModules/utils";
+import { formatTooltip, inputHandler, renderResourceLabel } from "customModules/utils";
 import { ResourceLabelType } from "lib/types/bar";
 
 // Global Constants
@@ -30,7 +30,7 @@ const {
 } = options.bar.customModules.ram;
 
 export const Ram = () => {
-    const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0 };
+    const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
 
     const ramUsage = Variable(
         defaultRamData,
@@ -44,26 +44,16 @@ export const Ram = () => {
         },
     );
 
-    const renderLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData) => {
-        const { used, total, percentage } = rmUsg;
-
-        if (lblType === "mem/total") {
-            return `${used}/${total} GiB`;
-        }
-        if (lblType === "memory") {
-            return `${used} GiB`;
-        }
-        return `${percentage}%`;
-    }
-
     const ramModule = module({
         textIcon: "",
         label: Utils.merge(
-            [ramUsage.bind("value"), labelType.bind("value")],
-            (rmUsg: GenericResourceData, lblTyp: ResourceLabelType) => {
-                return renderLabel(lblTyp, rmUsg);
+            [ramUsage.bind("value"), labelType.bind("value"), round.bind("value")],
+            (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
+                return renderResourceLabel(lblTyp, rmUsg, round);
             }),
-        tooltipText: "RAM",
+        tooltipText: labelType.bind("value").as(lblTyp => {
+            return formatTooltip('RAM', lblTyp);
+        }),
         boxClass: "ram",
         showLabelBinding: label.bind("value"),
         props: {

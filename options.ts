@@ -897,7 +897,7 @@ const options = mkOptions(OPTIONS, {
             storage: {
                 label: opt(true),
                 icon: opt<StorageIcon>("󰋊"),
-                round: opt(true),
+                round: opt(false),
                 labelType: opt<ResourceLabelType>("percentage"),
                 pollingInterval: opt(2000),
                 leftClick: opt(""),

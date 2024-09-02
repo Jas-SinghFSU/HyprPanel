@@ -157,19 +157,90 @@ export const divide = ([total, used]: number[], round: boolean) => {
 
 };
 
-export const formatSizeInGiB = (sizeInBytes: number, round: VariableType<boolean>) => {
+export const formatSizeInKiB = (sizeInBytes: number, round: boolean) => {
+    const sizeInGiB = sizeInBytes / (1024 ** 1);
+    return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
+};
+export const formatSizeInMiB = (sizeInBytes: number, round: boolean) => {
+    const sizeInGiB = sizeInBytes / (1024 ** 2);
+    return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
+};
+export const formatSizeInGiB = (sizeInBytes: number, round: boolean) => {
     const sizeInGiB = sizeInBytes / (1024 ** 3);
-    return round.value ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
+    return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
+};
+export const formatSizeInTiB = (sizeInBytes: number, round: boolean) => {
+    const sizeInGiB = sizeInBytes / (1024 ** 4);
+    return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
 
-export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData) => {
-    const { used, total, percentage } = rmUsg;
+export const autoFormatSize = (sizeInBytes: number, round: boolean) => {
+    // auto convert to GiB, MiB, KiB, TiB, or bytes
+    if (sizeInBytes >= 1024 ** 4) return formatSizeInTiB(sizeInBytes, round);
+    if (sizeInBytes >= 1024 ** 3) return formatSizeInGiB(sizeInBytes, round);
+    if (sizeInBytes >= 1024 ** 2) return formatSizeInMiB(sizeInBytes, round);
+    if (sizeInBytes >= 1024 ** 1) return formatSizeInKiB(sizeInBytes, round);
 
-    if (lblType === "mem/total") {
-        return `${used}/${total} GiB`;
+    return sizeInBytes;
+}
+
+export const getPostfix = (sizeInBytes: number) => {
+    if (sizeInBytes >= 1024 ** 4) return 'TiB';
+    if (sizeInBytes >= 1024 ** 3) return 'GiB';
+    if (sizeInBytes >= 1024 ** 2) return 'MiB';
+    if (sizeInBytes >= 1024 ** 1) return 'KiB';
+
+    return 'B';
+}
+
+export const renderResourceLabel = (
+    lblType: ResourceLabelType,
+    rmUsg: GenericResourceData,
+    round: boolean
+) => {
+    const { used, total, percentage, free } = rmUsg;
+
+    const formatFunctions = {
+        TiB: formatSizeInTiB,
+        GiB: formatSizeInGiB,
+        MiB: formatSizeInMiB,
+        KiB: formatSizeInKiB,
+        B: (size: number, _: boolean) => size
+    };
+
+    // Get them datas in proper GiB, MiB, KiB, TiB, or bytes
+    const totalSizeFormatted = autoFormatSize(total, round);
+    // get the postfix: one of [TiB, GiB, MiB, KiB, B]
+    const postfix = getPostfix(total);
+
+    // Determine which format function to use
+    const formatUsed = formatFunctions[postfix] || formatFunctions['B'];
+    const usedSizeFormatted = formatUsed(used, round);
+
+    if (lblType === "used/total") {
+        return `${usedSizeFormatted}/${totalSizeFormatted} ${postfix}`;
     }
-    if (lblType === "memory") {
-        return `${used} GiB`;
+    if (lblType === "used") {
+        return `${autoFormatSize(used, round)} ${getPostfix(used)}`;
     }
+    if (lblType === "free") {
+        return `${autoFormatSize(free, round)} ${getPostfix(free)}`;
+    }
+
     return `${percentage}%`;
+};
+
+export const formatTooltip = (dataType: string, lblTyp: ResourceLabelType) => {
+    switch (lblTyp) {
+        case 'used':
+            return `Used ${dataType}`;
+        case 'free':
+            return `Free ${dataType}`;
+        case 'used/total':
+            return `Used/Total ${dataType}`;
+        case 'percentage':
+            return `Percentage ${dataType} Usage`;
+        default:
+            return '';
+    }
 }

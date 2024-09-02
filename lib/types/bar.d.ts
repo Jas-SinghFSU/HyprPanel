@@ -30,7 +30,7 @@ export type Module = {
     connection?: Binding<Connectable>
 }
 
-export type ResourceLabelType = "mem/total" | "memory" | "percentage";
+export type ResourceLabelType = "used/total" | "used" | "percentage" | "free";
 
 export type StorageIcon = "󰋊" | "" | "󱛟" | "" | "" | "";
 
