@@ -38,6 +38,7 @@
               pkgsFor.${system}.fd
               pkgsFor.${system}.btop
               pkgsFor.${system}.bluez
+              pkgsFor.${system}.libgtop
               pkgsFor.${system}.bluez-tools
               pkgsFor.${system}.grimblast
               pkgsFor.${system}.gpu-screen-recorder

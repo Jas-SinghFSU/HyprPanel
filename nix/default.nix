@@ -20,6 +20,7 @@
   matugen,
   swww,
   python3,
+  libgtop,
   gnome,
 }: let
   ags = inputs.ags.packages.${system}.default.override {
