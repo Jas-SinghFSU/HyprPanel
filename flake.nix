@@ -39,6 +39,8 @@
               pkgsFor.${system}.btop
               pkgsFor.${system}.bluez
               pkgsFor.${system}.libgtop
+              pkgsFor.${system}.gobject-introspection
+              pkgsFor.${system}.glib
               pkgsFor.${system}.bluez-tools
               pkgsFor.${system}.grimblast
               pkgsFor.${system}.gpu-screen-recorder
@@ -54,6 +56,7 @@
             ];
             shellHook = ''
               export GDK_BACKEND=wayland
+              export GI_TYPELIB_PATH=${pkgsFor.${system}.libgtop}/lib/girepository-1.0:${pkgsFor.${system}.glib}/lib/girepository-1.0:$GI_TYPELIB_PATH
             '';
           }
         );
@@ -78,3 +81,4 @@
       );
     };
 }
+
