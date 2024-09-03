@@ -29,45 +29,6 @@ const Shortcuts = () => {
         }, tOut);
     };
 
-    const recordingDropdown = Widget.Menu({
-        class_name: "dropdown recording",
-        hpack: "fill",
-        hexpand: true,
-        setup: (self) => {
-            self.hook(hyprland, () => {
-                const displays = hyprland.monitors.map((mon) => {
-                    return Widget.MenuItem({
-                        label: `Display ${mon.name}`,
-                        on_activate: () => {
-                            App.closeWindow("dashboardmenu");
-                            Utils.execAsync(
-                                `${App.configDir}/services/screen_record.sh start ${mon.name}`,
-                            ).catch((err) => console.error(err));
-                        },
-                    });
-                });
-
-                // NOTE: This is disabled since window recording isn't available on wayland
-                const apps = hyprland.clients.map((clt) => {
-                    return Widget.MenuItem({
-                        label: `${clt.class.charAt(0).toUpperCase() + clt.class.slice(1)} (Workspace ${clt.workspace.name})`,
-                        on_activate: () => {
-                            App.closeWindow("dashboardmenu");
-                            Utils.execAsync(
-                                `${App.configDir}/services/screen_record.sh start ${clt.focusHistoryID}`,
-                            ).catch((err) => console.error(err));
-                        },
-                    });
-                });
-
-                return (self.children = [
-                    ...displays,
-                    // Disabled since window recording isn't available on wayland
-                    // ...apps
-                ]);
-            });
-        },
-    });
 
     type ShortcutFixed = {
         tooltip: string;
@@ -93,7 +54,7 @@ const Shortcuts = () => {
         !(cmdLn(left.shortcut1) || cmdLn(left.shortcut2) || cmdLn(left.shortcut3) || cmdLn(left.shortcut4))
     );
 
-    function createButton(shortcut: Shortcut, className: string) {
+    const createButton = (shortcut: Shortcut, className: string) => {
         if (shortcut.configurable !== false) {
             return Widget.Button({
                 vexpand: true,
@@ -111,19 +72,10 @@ const Shortcuts = () => {
                 vexpand: true,
                 tooltip_text: shortcut.tooltip,
                 class_name: className,
-                on_primary_click: (_, event) => {
+                on_primary_click: (_) => {
                     App.closeWindow("dashboardmenu");
                     if (shortcut.command === "settings-dialog") {
                         App.toggleWindow("settings-dialog");
-                    } else if (shortcut.command === "record") {
-                        if (isRecording.value === true) {
-                            App.closeWindow("dashboardmenu");
-                            return Utils.execAsync(
-                                `${App.configDir}/services/screen_record.sh stop`,
-                            ).catch((err) => console.error(err));
-                        } else {
-                            recordingDropdown.popup_at_pointer(event);
-                        }
                     }
                 },
                 child: Widget.Label({
@@ -134,7 +86,7 @@ const Shortcuts = () => {
         }
     }
 
-    function createButtonIfCommandExists(shortcut: Shortcut, className: string, command: string) {
+    const createButtonIfCommandExists = (shortcut: Shortcut, className: string, command: string) => {
         if (command.length > 0) {
             return createButton(shortcut, className);
         }
@@ -149,16 +101,16 @@ const Shortcuts = () => {
             Widget.Box({
                 child: Utils.merge([
                     left.shortcut1.command.bind("value"),
-                    left.shortcut2.command.bind("value"),
                     left.shortcut1.tooltip.bind("value"),
-                    left.shortcut2.tooltip.bind("value"),
                     left.shortcut1.icon.bind("value"),
+                    left.shortcut2.command.bind("value"),
+                    left.shortcut2.tooltip.bind("value"),
                     left.shortcut2.icon.bind("value"),
                     left.shortcut3.command.bind("value"),
-                    left.shortcut4.command.bind("value"),
                     left.shortcut3.tooltip.bind("value"),
-                    left.shortcut4.tooltip.bind("value"),
                     left.shortcut3.icon.bind("value"),
+                    left.shortcut4.command.bind("value"),
+                    left.shortcut4.tooltip.bind("value"),
                     left.shortcut4.icon.bind("value")
                 ], () => {
                     const isVisibleLeft = cmdLn(left.shortcut1) || cmdLn(left.shortcut2);
@@ -228,8 +180,46 @@ const Shortcuts = () => {
                     right.shortcut3.command.bind("value"),
                     right.shortcut3.tooltip.bind("value"),
                     right.shortcut3.icon.bind("value"),
-                    leftCardHidden.bind("value")
+                    leftCardHidden.bind("value"),
+                    hyprland.bind("monitors")
                 ], () => {
+                    const rcdDrpDwn = Widget.Menu({
+                        class_name: "dropdown recording",
+                        hpack: "fill",
+                        hexpand: true,
+                        setup: (self) => {
+                            const displays = hyprland.monitors.map((mon) => {
+                                return Widget.MenuItem({
+                                    label: `Display ${mon.name}`,
+                                    on_activate: () => {
+                                        App.closeWindow("dashboardmenu");
+                                        Utils.execAsync(
+                                            `${App.configDir}/services/screen_record.sh start ${mon.name}`,
+                                        ).catch((err) => console.error(err));
+                                    },
+                                });
+                            });
+
+                            // NOTE: This is disabled since window recording isn't available on wayland
+                            // const apps = hyprland.clients.map((clt) => {
+                            //     return Widget.MenuItem({
+                            //         label: `${clt.class.charAt(0).toUpperCase() + clt.class.slice(1)} (Workspace ${clt.workspace.name})`,
+                            //         on_activate: () => {
+                            //             App.closeWindow("dashboardmenu");
+                            //             Utils.execAsync(
+                            //                 `${App.configDir}/services/screen_record.sh start ${clt.focusHistoryID}`,
+                            //             ).catch((err) => console.error(err));
+                            //         },
+                            //     });
+                            // });
+
+                            return (self.children = [
+                                ...displays,
+                                // Disabled since window recording isn't available on wayland
+                                // ...apps
+                            ]);
+                        },
+                    })
                     return Widget.Box({
                         class_name: `container utilities dashboard-card ${!leftCardHidden.value ? "paired" : ""}`,
                         children: [
@@ -259,12 +249,32 @@ const Shortcuts = () => {
                                     vexpand: true,
                                     children: [
                                         createButtonIfCommandExists(right.shortcut3, "dashboard-button top-button paired", right.shortcut3.command.value),
-                                        createButtonIfCommandExists({
-                                            tooltip: "Record Screen",
-                                            command: "record",
-                                            icon: "󰑊",
-                                            configurable: false
-                                        }, "dashboard-button", "record"),
+                                        Widget.Button({
+                                            vexpand: true,
+                                            tooltip_text: "Record Screen",
+                                            class_name: isRecording
+                                                .bind("value")
+                                                .as((v) => `dashboard-button record ${v ? "active" : ""}`),
+                                            setup: (self) => {
+                                                self.hook(isRecording, () => {
+                                                    self.toggleClassName("hover", true);
+                                                    self.on_primary_click = (_, event) => {
+                                                        if (isRecording.value === true) {
+                                                            App.closeWindow("dashboardmenu");
+                                                            return Utils.execAsync(
+                                                                `${App.configDir}/services/screen_record.sh stop`,
+                                                            ).catch((err) => console.error(err));
+                                                        } else {
+                                                            rcdDrpDwn.popup_at_pointer(event);
+                                                        }
+                                                    };
+                                                });
+                                            },
+                                            child: Widget.Label({
+                                                class_name: "button-label txt-icon",
+                                                label: "󰑊",
+                                            }),
+                                        }),
                                     ],
                                 }),
                             }),
