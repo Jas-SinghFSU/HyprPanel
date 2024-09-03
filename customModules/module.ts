@@ -25,12 +25,12 @@ export const module = ({
 
         if (icon !== undefined) {
             iconWidget = Widget.Icon({
-                class_name: `bar-button-icon module-icon ${boxClass}`,
+                class_name: `txt-icon bar-button-icon module-icon ${boxClass}`,
                 icon: icon
             }) as unknown as Gtk.Widget;
         } else if (textIcon !== undefined) {
             iconWidget = Widget.Label({
-                class_name: `bar-button-icon module-icon ${boxClass}`,
+                class_name: `txt-icon bar-button-icon module-icon ${boxClass}`,
                 label: textIcon
             }) as unknown as Gtk.Widget;
         }

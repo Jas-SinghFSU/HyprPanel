@@ -17,6 +17,7 @@ import { ResourceLabelType } from "lib/types/bar";
 
 // Global Constants
 import { LABEL_TYPES } from "lib/types/defaults/bar";
+import { pollVariable } from "customModules/PollVar";
 
 // All the user configurable options for the ram module that are needed
 const {
@@ -29,27 +30,27 @@ const {
     pollingInterval
 } = options.bar.customModules.ram;
 
-export const Ram = () => {
-    const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
+const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
+const ramUsage = Variable(defaultRamData);
 
-    const ramUsage = Variable(
-        defaultRamData,
-        {
-            poll: [
-                pollingInterval.value,
-                () => {
-                    return calculateRamUsage(round);
-                },
-            ],
-        },
-    );
+pollVariable(
+    ramUsage,
+    [round.bind('value')],
+    pollingInterval.bind('value'),
+    calculateRamUsage,
+    round,
+);
+
+export const Ram = () => {
 
     const ramModule = module({
         textIcon: "",
         label: Utils.merge(
             [ramUsage.bind("value"), labelType.bind("value"), round.bind("value")],
             (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
-                return renderResourceLabel(lblTyp, rmUsg, round);
+                const returnValue = renderResourceLabel(lblTyp, rmUsg, round);
+
+                return returnValue;
             }),
         tooltipText: labelType.bind("value").as(lblTyp => {
             return formatTooltip('RAM', lblTyp);

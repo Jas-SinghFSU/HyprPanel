@@ -899,6 +899,7 @@ const options = mkOptions(OPTIONS, {
             },
             netstat: {
                 label: opt(true),
+                networkInterface: opt(""),
                 icon: opt<NetstatIcon>("󰖟"),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>("full"),

@@ -12,6 +12,8 @@ import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 
 // Utility Methods
 import { inputHandler } from "customModules/utils";
+import { computeCPU } from "./computeCPU";
+import { pollVariable } from "customModules/PollVar";
 
 // All the user configurable options for the cpu module that are needed
 const {
@@ -25,35 +27,20 @@ const {
     pollingInterval
 } = options.bar.customModules.cpu;
 
+export const cpuUsage = Variable(0);
+
+pollVariable(
+    // Variable to poll and update with the result of the function passed in
+    cpuUsage,
+    // Variables that should trigger the polling function to update when they change
+    [round.bind('value')],
+    // Interval at which to poll
+    pollingInterval.bind('value'),
+    // Function to execute to get the network data
+    computeCPU,
+);
+
 export const Cpu = () => {
-    const defaultCpuData: number = 0;
-
-    let previousCpuData = new GTop.glibtop_cpu();
-    GTop.glibtop_get_cpu(previousCpuData);
-
-    const cpuUsage = Variable(
-        defaultCpuData,
-        {
-            poll: [
-                pollingInterval.value,
-                () => {
-                    const currentCpuData = new GTop.glibtop_cpu();
-                    GTop.glibtop_get_cpu(currentCpuData);
-
-                    // Calculate the differences from the previous to current data
-                    const totalDiff = currentCpuData.total - previousCpuData.total;
-                    const idleDiff = currentCpuData.idle - previousCpuData.idle;
-
-                    const cpuUsagePercentage = totalDiff > 0 ? ((totalDiff - idleDiff) / totalDiff) * 100 : 0;
-
-                    previousCpuData = currentCpuData;
-
-                    return cpuUsagePercentage
-                },
-            ],
-        },
-    );
-
     const renderLabel = (cpuUsg: number, rnd: boolean) => {
         return rnd ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     }

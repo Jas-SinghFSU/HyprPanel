@@ -5,6 +5,7 @@ import { inputHandler } from "customModules/utils";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
 import { Variable as VariableType } from "types/variable";
+import { pollVariableBash } from "customModules/PollVar";
 
 const {
     updateCommand,
@@ -19,21 +20,22 @@ const {
     scrollDown,
 } = options.bar.customModules.updates;
 
+const pendingUpdates: VariableType<string> = Variable(" 0");
+
+const processUpdateCount = (updateCount: string) => {
+    if (!padZero.value) return updateCount;
+    return `${updateCount.padStart(2, '0')}`;
+}
+
+pollVariableBash(
+    pendingUpdates,
+    [padZero.bind('value')],
+    pollingInterval.bind('value'),
+    `bash -c "${updateCommand.value}"`,
+    processUpdateCount,
+);
+
 export const Updates = () => {
-    const pendingUpdates: VariableType<string> = Variable(" 0",
-        {
-            poll: [
-                pollingInterval.value,
-                `bash -c "${updateCommand.value}"`,
-                (cmdOutput: string) => {
-                    if (!padZero.value) return cmdOutput;
-
-                    return `${cmdOutput.padStart(2, '0')}`;
-                },
-            ],
-        },
-    );
-
     const updatesModule = module({
         textIcon: icon.bind("value"),
         tooltipText: pendingUpdates.bind("value").as(v => `${v} updates available`),

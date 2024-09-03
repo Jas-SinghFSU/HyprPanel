@@ -8,6 +8,7 @@ import { GenericResourceData } from "lib/types/customModules/generic";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
 import { LABEL_TYPES } from "lib/types/defaults/bar";
+import { pollVariable } from "customModules/PollVar";
 
 const {
     label,
@@ -20,21 +21,19 @@ const {
     pollingInterval
 } = options.bar.customModules.storage;
 
+const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
+
+const storageUsage = Variable(defaultStorageData);
+
+pollVariable(
+    storageUsage,
+    [round.bind('value')],
+    pollingInterval.bind('value'),
+    computeStorage,
+    round,
+);
+
 export const Storage = () => {
-    const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
-
-    const storageUsage = Variable(
-        defaultStorageData,
-        {
-            poll: [
-                pollingInterval.value,
-                () => {
-                    return computeStorage(round);
-                }
-            ],
-        },
-    );
-
     const storageModule = module({
         textIcon: icon.bind("value"),
         label: Utils.merge(

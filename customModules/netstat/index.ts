@@ -1,44 +1,62 @@
-import options from "options";
-import { module } from "../module"
-
-import { inputHandler } from "customModules/utils";
-import { computeNetwork } from "./computeNetwork";
-import { NetstatLabelType } from "lib/types/bar";
-import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
-import Button from "types/widgets/button";
-import { NetworkResourceData } from "lib/types/customModules/network";
-import { NETWORK_LABEL_TYPES } from "lib/types/defaults/bar";
-import { GET_DEFAULT_NETSTAT_DATA } from "lib/types/defaults/netstat";
+import options from 'options';
+import { module } from '../module';
+import { inputHandler } from 'customModules/utils';
+import { computeNetwork } from './computeNetwork';
+import { NetstatLabelType } from 'lib/types/bar';
+import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import Button from 'types/widgets/button';
+import { NetworkResourceData } from 'lib/types/customModules/network';
+import { NETWORK_LABEL_TYPES } from 'lib/types/defaults/bar';
+import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
+import { pollVariable } from 'customModules/PollVar';
 
 const {
     label,
     labelType,
+    networkInterface,
     rateUnit,
     icon,
     round,
     leftClick,
     rightClick,
     middleClick,
-    pollingInterval
+    pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const Netstat = () => {
-    const networkUsage = Variable(GET_DEFAULT_NETSTAT_DATA(rateUnit.value),
-        {
-            poll: [
-                pollingInterval.value,
-                () => {
-                    return computeNetwork(round, "enp42s0", rateUnit.value);
-                }
-            ],
-        },
-    );
+export const networkUsage = Variable<NetworkResourceData>(
+    GET_DEFAULT_NETSTAT_DATA(rateUnit.value),
+);
 
-    const renderNetworkLabel = (labelType: NetstatLabelType, network: NetworkResourceData) => {
-        switch (labelType) {
-            case "in":
+pollVariable(
+    // Variable to poll and update with the result of the function passed in
+    networkUsage,
+    // Variables that should trigger the polling function to update when they change
+    [rateUnit.bind('value'), networkInterface.bind('value'), round.bind('value')],
+    // Interval at which to poll
+    pollingInterval.bind('value'),
+    // Function to execute to get the network data
+    computeNetwork,
+    // Optional parameters to pass to the function
+    // round is a boolean that determines whether to round the values
+    round,
+    // Optional parameters to pass to the function
+    // networkInterface.value is the interface name to filter the data
+    networkInterface.value,
+    // Optional parameters to pass to the function
+    // rateUnit is the unit to display the data in
+    // e.g. KiB, MiB, GiB, etc.
+    rateUnit,
+);
+
+export const Netstat = () => {
+    const renderNetworkLabel = (
+        lblType: NetstatLabelType,
+        network: NetworkResourceData,
+    ): string => {
+        switch (lblType) {
+            case 'in':
                 return `↓ ${network.in}`;
-            case "out":
+            case 'out':
                 return `↑ ${network.out}`;
             default:
                 return `↓ ${network.in} ↑ ${network.out}`;
@@ -46,17 +64,16 @@ export const Netstat = () => {
     };
 
     const netstatModule = module({
-        textIcon: icon.bind("value"),
+        textIcon: icon.bind('value'),
         label: Utils.merge(
-            [networkUsage.bind("value"), labelType.bind("value")],
-            (network: NetworkResourceData, lblTyp: NetstatLabelType) => {
-                return renderNetworkLabel(lblTyp, network);
-            }),
-        tooltipText: labelType.bind("value").as(lblTyp => {
-            return lblTyp === "full" ? "Ingress / Egress" : lblTyp === "in" ? "Ingress" : "Egress";
+            [networkUsage.bind('value'), labelType.bind('value')],
+            (network: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, network),
+        ),
+        tooltipText: labelType.bind('value').as((lblTyp) => {
+            return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
         }),
-        boxClass: "netstat",
-        showLabelBinding: label.bind("value"),
+        boxClass: 'netstat',
+        showLabelBinding: label.bind('value'),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
@@ -71,18 +88,26 @@ export const Netstat = () => {
                     },
                     onScrollUp: {
                         fn: () => {
-                            labelType.value = NETWORK_LABEL_TYPES[(NETWORK_LABEL_TYPES.indexOf(labelType.value) + 1) % NETWORK_LABEL_TYPES.length] as NetstatLabelType;
-                        }
+                            labelType.value =
+                                NETWORK_LABEL_TYPES[
+                                (NETWORK_LABEL_TYPES.indexOf(labelType.value) + 1) % NETWORK_LABEL_TYPES.length
+                                ] as NetstatLabelType;
+                        },
                     },
                     onScrollDown: {
                         fn: () => {
-                            labelType.value = NETWORK_LABEL_TYPES[(NETWORK_LABEL_TYPES.indexOf(labelType.value) - 1 + NETWORK_LABEL_TYPES.length) % NETWORK_LABEL_TYPES.length] as NetstatLabelType;
-                        }
+                            labelType.value =
+                                NETWORK_LABEL_TYPES[
+                                (NETWORK_LABEL_TYPES.indexOf(labelType.value) - 1 + NETWORK_LABEL_TYPES.length) %
+                                NETWORK_LABEL_TYPES.length
+                                ] as NetstatLabelType;
+                        },
                     },
                 });
             },
-        }
+        },
     });
 
     return netstatModule;
-}
+};
+
