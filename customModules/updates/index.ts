@@ -31,7 +31,7 @@ pollVariableBash(
     pendingUpdates,
     [padZero.bind('value')],
     pollingInterval.bind('value'),
-    `bash -c "${updateCommand.value}"`,
+    updateCommand.value,
     processUpdateCount,
 );
 
