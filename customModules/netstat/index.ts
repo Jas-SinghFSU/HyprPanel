@@ -40,8 +40,8 @@ pollVariable(
     // round is a boolean that determines whether to round the values
     round,
     // Optional parameters to pass to the function
-    // networkInterface.value is the interface name to filter the data
-    networkInterface.value,
+    // networkInterface is the interface name to filter the data
+    networkInterface,
     // Optional parameters to pass to the function
     // rateUnit is the unit to display the data in
     // e.g. KiB, MiB, GiB, etc.

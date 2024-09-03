@@ -28,7 +28,7 @@ const formatRate = (rate: number, type: string, round: boolean): string => {
 };
 
 interface NetworkUsage {
-    name: string | null;
+    name: string;
     rx: number;
     tx: number;
 }
@@ -47,17 +47,17 @@ const parseInterfaceData = (line: string): NetworkUsage | null => {
     return { name: cleanedIface, rx: rxValue, tx: txValue };
 };
 
-const isValidInterface = (iface: NetworkUsage | null, interfaceName: string | null): boolean => {
+const isValidInterface = (iface: NetworkUsage | null, interfaceName: string): boolean => {
     if (!iface) return false;
     if (interfaceName) return iface.name === interfaceName;
     return iface.name !== 'lo' && iface.rx > 0 && iface.tx > 0;
 };
 
-const getNetworkUsage = (interfaceName: string | null = null): NetworkUsage => {
+const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
     const [success, data] = GLib.file_get_contents('/proc/net/dev');
     if (!success) {
         console.error('Failed to read /proc/net/dev');
-        return { name: null, rx: 0, tx: 0 };
+        return { name: '', rx: 0, tx: 0 };
     }
 
     const lines = new TextDecoder('utf-8').decode(data).split('\n');
@@ -68,11 +68,12 @@ const getNetworkUsage = (interfaceName: string | null = null): NetworkUsage => {
         }
     }
 
-    return { name: null, rx: 0, tx: 0 };
+    return { name: '', rx: 0, tx: 0 };
 };
 
-export const computeNetwork = (round: VariableType<boolean>, interfaceName: string | null, dataType: VariableType<RateUnit>): NetworkResourceData => {
+export const computeNetwork = (round: VariableType<boolean>, interfaceNameVar: VariableType<string>, dataType: VariableType<RateUnit>): NetworkResourceData => {
     const rateUnit = dataType.value;
+    const interfaceName = interfaceNameVar ? interfaceNameVar.value : '';
 
     const DEFAULT_NETSTAT_DATA = GET_DEFAULT_NETSTAT_DATA(rateUnit);
     try {
