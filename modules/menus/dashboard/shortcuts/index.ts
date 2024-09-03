@@ -228,7 +228,8 @@ const Shortcuts = () => {
                     right.shortcut3.command.bind("value"),
                     right.shortcut3.tooltip.bind("value"),
                     right.shortcut3.icon.bind("value"),
-                    leftCardHidden.bind("value")
+                    leftCardHidden.bind("value"),
+                    isRecording.bind("value")
                 ], () => {
                     return Widget.Box({
                         class_name: `container utilities dashboard-card ${!leftCardHidden.value ? "paired" : ""}`,
@@ -264,7 +265,7 @@ const Shortcuts = () => {
                                             command: "record",
                                             icon: "󰑊",
                                             configurable: false
-                                        }, "dashboard-button", "record"),
+                                        }, `dashboard-button record ${isRecording.value ? "active" : ""}`, "record"),
                                     ],
                                 }),
                             }),
