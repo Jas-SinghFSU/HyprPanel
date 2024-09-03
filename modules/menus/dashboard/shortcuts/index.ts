@@ -112,8 +112,8 @@ const Shortcuts = () => {
                 tooltip_text: shortcut.tooltip,
                 class_name: className,
                 on_primary_click: (_, event) => {
-                    App.closeWindow("dashboardmenu");
                     if (shortcut.command === "settings-dialog") {
+                        App.closeWindow("dashboardmenu");
                         App.toggleWindow("settings-dialog");
                     } else if (shortcut.command === "record") {
                         if (isRecording.value === true) {
