@@ -1,6 +1,6 @@
 import { Weather } from "lib/types/weather";
 import { Variable } from "types/variable";
-import icons from "../../../../icons/index.js";
+import { getWeatherStatusIcon } from "globals/weather.js";
 
 export const TodayIcon = (theWeather: Variable<Weather>) => {
     return Widget.Box({
@@ -11,15 +11,7 @@ export const TodayIcon = (theWeather: Variable<Weather>) => {
             Widget.Icon({
                 class_name: "calendar-menu-weather today icon",
                 icon: theWeather.bind("value").as((v) => {
-                    let iconQuery = v.current.condition.text
-                        .trim()
-                        .toLowerCase()
-                        .replaceAll(" ", "_");
-
-                    if (!v.current.is_day && iconQuery === "partly_cloudy") {
-                        iconQuery = "partly_cloudy_night";
-                    }
-                    return icons.weather[iconQuery];
+                    return getWeatherStatusIcon(v);
                 }),
             }),
         ],

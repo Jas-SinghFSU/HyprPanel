@@ -1,5 +1,5 @@
 .calendar-menu-content * {
-  font-size: $font-size * $bar-menus-menu-clock-scaling/100;
+  font-size: $font-size * $bar-menus-menu-clock-scaling * 0.01;
 }
 
 .calendar-content-container {
@@ -10,7 +10,7 @@
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-clock-border-color);
   border-radius: $bar-menus-border-radius;
   margin-right: 0.5em;
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
 }
 
 .calendar-menu-item-container {

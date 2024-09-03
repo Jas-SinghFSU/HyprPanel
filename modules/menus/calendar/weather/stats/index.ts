@@ -2,6 +2,7 @@ import { Weather } from "lib/types/weather";
 import { Variable } from "types/variable";
 import options from "options";
 import { Unit } from "lib/types/options";
+import { getRainChance, getWindConditions } from "globals/weather";
 
 const { unit } = options.menus.clock.weather;
 
@@ -24,10 +25,7 @@ export const TodayStats = (theWeather: Variable<Weather>) => {
                         label: Utils.merge(
                             [theWeather.bind("value"), unit.bind("value")],
                             (wthr: Weather, unt: Unit) => {
-                                if (unt === "imperial") {
-                                    return `${Math.floor(wthr.current.wind_mph)} mph`;
-                                }
-                                return `${Math.floor(wthr.current.wind_kph)} kph`;
+                                return getWindConditions(wthr, unt);
                             },
                         ),
                     }),
@@ -45,7 +43,7 @@ export const TodayStats = (theWeather: Variable<Weather>) => {
                         label: theWeather
                             .bind("value")
                             .as(
-                                (v) => `${v.forecast.forecastday[0].day.daily_chance_of_rain}%`,
+                                (v) => getRainChance(v),
                             ),
                     }),
                 ],

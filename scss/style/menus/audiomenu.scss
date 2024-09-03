@@ -1,17 +1,17 @@
 .menu-items-container.audio {
-  min-width: 18em * $bar-menus-menu-volume-scaling/100;
+  min-width: 18em * $bar-menus-menu-volume-scaling * 0.01;
 
   @import "./menu.scss";
 
   * {
-    font-size: $font-size * $bar-menus-menu-volume-scaling/100;
+    font-size: $font-size * $bar-menus-menu-volume-scaling * 0.01;
   }
 
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-volume-background-color);
 
   .menu-items {
     border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
-    opacity: $bar-menus-opacity/100;
+    opacity: $bar-menus-opacity * 0.01;
   }
 
   .menu-dropdown-label.audio {

@@ -1,6 +1,6 @@
 .bar {
   * {
-    font-size: $font-size * $bar-scaling/100;
+    font-size: $font-size * $bar-scaling * 0.01;
   }
 
   .bar-panel-container {
@@ -12,24 +12,24 @@
 
 
   .bar-panel {
-    $bar-opacity-ratio: $bar-opacity / 100;
+    $bar-opacity-ratio: $bar-opacity * 0.01;
     $transparency-value: 1 - $bar-opacity-ratio;
     background: if($bar-transparent, transparent, transparentize($bar-background, $transparency-value));
     border-radius: if($bar-floating, $bar-border_radius, 0em);
   }
 }
 
-$bar-button-background-opacity-ratio: $bar-buttons-background_opacity / 100;
+$bar-button-background-opacity-ratio: $bar-buttons-background_opacity * 0.01;
 $transparency-value: 1 - $bar-button-background-opacity-ratio;
 
-$bar-button-background-hover-opacity-ratio: $bar-buttons-background_hover_opacity / 100;
+$bar-button-background-hover-opacity-ratio: $bar-buttons-background_hover_opacity * 0.01;
 $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
 
 .bar_item_box_visible {
   background-color: transparentize($bar-buttons-background, $transparency-value);
   border-radius: $bar-buttons-radius;
   margin: $bar-buttons-y_margins $bar-buttons-spacing;
-  opacity: $bar-buttons-opacity/100;
+  opacity: $bar-buttons-opacity * 0.01;
   padding: $bar-buttons-padding_y $bar-buttons-padding_x;
 
   &.style3 {
@@ -179,6 +179,10 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
       .clock.bar-button-icon {
         background-color: transparentize(if($bar-buttons-monochrome, $bar-buttons-hover, $bar-buttons-clock-hover), $transparency-value);
         color: $bar-buttons-clock-icon_background;
+      }
+
+      .bar-button-icon {
+        opacity: 0.5;
       }
     }
   }

@@ -8,6 +8,7 @@ import NotificationsMenu from "./notifications/index.js";
 import CalendarMenu from "./calendar/index.js";
 import EnergyMenu from "./energy/index.js";
 import DashboardMenu from "./dashboard/index.js";
+import PowerDropdown from "./powerDropdown/index.js";
 
 export default [
     PowerMenu(),
@@ -20,4 +21,5 @@ export default [
     CalendarMenu(),
     EnergyMenu(),
     DashboardMenu(),
+    PowerDropdown(),
 ];

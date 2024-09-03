@@ -32,6 +32,7 @@
 //modules - menus
 @import "style/menus/menu";
 @import "style/menus/power";
+@import "style/menus/powerdropdown";
 @import "style/menus/audiomenu";
 @import "style/menus/network";
 @import "style/menus/bluetooth";
@@ -49,3 +50,5 @@
 
 //settings dialog
 @import "style/settings/dialog";
+
+@import "style/customModules/style";

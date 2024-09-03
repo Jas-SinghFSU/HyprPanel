@@ -12,7 +12,8 @@
         "noImplicitAny": false,
         "baseUrl": ".",
         "typeRoots": [
-            "./types"
+            "types",
+            "lib/types/globals",
         ],
         "skipLibCheck": true
     }
