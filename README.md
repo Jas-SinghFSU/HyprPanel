@@ -28,6 +28,7 @@ curl -fsSL https://bun.sh/install | bash && \
 Additional dependencies:
 ```sh
 pipewire
+libgtop
 bluez
 bluez-utils
 grimblast
@@ -52,7 +53,7 @@ python-gpustat
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):
