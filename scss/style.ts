@@ -77,6 +77,5 @@ async function resetCss() {
 initializeTrackers(resetCss);
 
 Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
-Utils.monitorFile(`${App.configDir}/customModules/style`, resetCss);
 options.handler(deps, resetCss);
 await resetCss();
