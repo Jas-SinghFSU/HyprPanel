@@ -1,5 +1,5 @@
 .menu-items-container.bluetooth * {
-  font-size: $font-size * $bar-menus-menu-bluetooth-scaling/100;
+  font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
 }
 
 @import "./menu.scss";
@@ -7,13 +7,13 @@
 .menu-items.bluetooth {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-bluetooth-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-bluetooth-border-color);
-  opacity: $bar-menus-opacity/100;
-  font-size: $font-size * $bar-menus-menu-bluetooth-scaling/100;
+  opacity: $bar-menus-opacity * 0.01;
+  font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
 }
 
 .menu-items-container.bluetooth {
 
-  min-width: 18em * $bar-menus-menu-bluetooth-scaling/100;
+  min-width: 18em * $bar-menus-menu-bluetooth-scaling * 0.01;
 
   font-size: 1.3em;
 
@@ -36,7 +36,7 @@
 
   .menu-items-section {
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
-    min-height: 20em * $bar-menus-menu-bluetooth-scaling/100;
+    min-height: 20em * $bar-menus-menu-bluetooth-scaling * 0.01;
     font-size: 1em;
   }
 

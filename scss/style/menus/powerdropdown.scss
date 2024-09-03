@@ -1,5 +1,5 @@
 .menu-items-container.power-dropdown * {
-  font-size: $font-size * $bar-menus-menu-power-scaling/100;
+  font-size: $font-size * $bar-menus-menu-power-scaling * 0.01;
 }
 
 @import "./menu.scss";
@@ -7,8 +7,8 @@
 .menu-items.power-dropdown {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-power-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-power-border-color);
-  opacity: $bar-menus-opacity/100;
-  font-size: $font-size * $bar-menus-menu-power-scaling/100;
+  opacity: $bar-menus-opacity * 0.01;
+  font-size: $font-size * $bar-menus-menu-power-scaling * 0.01;
 }
 
 .menu-items-container.power-dropdown {
@@ -24,7 +24,7 @@
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-sleep-background);
   }
 
-  min-height: 3.5em * $bar-menus-menu-power-scaling/100;
+  min-height: 3.5em * $bar-menus-menu-power-scaling * 0.01;
   font-size: 1.3em;
   margin: 1em;
 
@@ -106,8 +106,8 @@
   }
 
   image {
-    min-width: 3.75rem * $bar-menus-menu-power-scaling/100;
-    min-height: 3.75rem * $bar-menus-menu-power-scaling/100;
+    min-width: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
+    min-height: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
     background: $red;
     border-top-left-radius: $bar-menus-border-radius * 0.35;
     border-bottom-left-radius: $bar-menus-border-radius * 0.35;

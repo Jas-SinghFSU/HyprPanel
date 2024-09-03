@@ -23,7 +23,7 @@
 }
 
 window.popup {
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
 
   menuitem {
     label {
@@ -56,13 +56,13 @@ tooltip {
     all: unset;
   }
 
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
 
   font-size: 1.1em;
 
   >*>* {
     padding: 0.6em;
-    border-radius: $bar-menus-border-radius/2;
+    border-radius: $bar-menus-border-radius * 0.5;
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
     background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
   }

@@ -6,12 +6,12 @@
   min-width: 26em;
   min-height: 6rem;
   border-radius: $notification-border_radius;
-  opacity: $notification-opacity/100;
+  opacity: $notification-opacity * 0.01;
 }
 
 .notification-card-container {
   * {
-    font-size: $font-size * $notification-scaling/100;
+    font-size: $font-size * $notification-scaling * 0.01;
   }
 
   padding: 1px;

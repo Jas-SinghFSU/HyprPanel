@@ -1,5 +1,5 @@
 window.settings-dialog {
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
   background-color: $bar-menus-cards;
   color: $bar-menus-text;
 
@@ -13,8 +13,8 @@ window.settings-dialog {
 
   .header {
     background-color: transparentize($bar-menus-background, 0.1);
-    border-bottom-left-radius: $bar-menus-border-radius/2;
-    border-bottom-right-radius: $bar-menus-border-radius/2;
+    border-bottom-left-radius: $bar-menus-border-radius * 0.5;
+    border-bottom-right-radius: $bar-menus-border-radius * 0.5;
     padding: $padding;
 
     button {
@@ -347,7 +347,7 @@ dialog {
         background: $bar-menus-iconbuttons-active;
         min-width: 3em;
         min-height: 2em;
-        border-radius: $bar-menus-border-radius / 2;
+        border-radius: $bar-menus-border-radius * 0.5;
 
         &:disabled {
           background: $bar-menus-buttons-disabled;

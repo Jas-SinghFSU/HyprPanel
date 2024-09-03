@@ -1,5 +1,5 @@
 .menu-items-container.network * {
-  font-size: $font-size * $bar-menus-menu-network-scaling/100;
+  font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
 }
 
 @import "./menu.scss";
@@ -7,12 +7,12 @@
 .menu-items.network {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
-  opacity: $bar-menus-opacity/100;
-  font-size: $font-size * $bar-menus-menu-network-scaling/100;
+  opacity: $bar-menus-opacity * 0.01;
+  font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
 }
 
 .menu-items-container.network {
-  min-width: 18em * $bar-menus-menu-network-scaling/100;
+  min-width: 18em * $bar-menus-menu-network-scaling * 0.01;
   font-size: 1.3em;
 
   .menu-items-section {

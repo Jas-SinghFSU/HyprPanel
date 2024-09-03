@@ -1,16 +1,16 @@
 .notification-menu-content * {
-  font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
+  font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
 }
 
 .notification-card-container.menu {
   margin: 0em;
-  min-width: 30.6em * $bar-menus-menu-notifications-scaling/100;
-  min-height: $bar-menus-menu-notifications-height * $bar-menus-menu-notifications-scaling/100;
+  min-width: 30.6em * $bar-menus-menu-notifications-scaling * 0.01;
+  min-height: $bar-menus-menu-notifications-height * $bar-menus-menu-notifications-scaling * 0.01;
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
   border-radius: $bar-menus-border-radius;
   margin-right: 0.45em;
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
 
   .window-content.notificationsmenu-window {
     margin-right: 0.50em;
@@ -32,8 +32,8 @@
 
   .notification-card.menu {
     background: $notification-background;
-    min-width: 26.2em * $bar-menus-menu-notifications-scaling/100;
-    font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
+    min-width: 26.2em * $bar-menus-menu-notifications-scaling * 0.01;
+    font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
     border: 0.15em solid $notification-border;
     border-radius: 0em;
     border-bottom-left-radius: $notification-border_radius;
@@ -55,7 +55,7 @@
 
   .menu-label.notifications {
     margin: 0em;
-    font-size: $font-size * $bar-menus-menu-notifications-scaling/100;
+    font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-notifications-label);
   }
 
@@ -126,11 +126,11 @@
   }
 
   .bell {
-    font-size: 10em * $bar-menus-menu-notifications-scaling/100;
+    font-size: 10em * $bar-menus-menu-notifications-scaling * 0.01;
   }
 
   .message {
-    font-size: 1.5em * $bar-menus-menu-notifications-scaling/100;
+    font-size: 1.5em * $bar-menus-menu-notifications-scaling * 0.01;
   }
 }
 
