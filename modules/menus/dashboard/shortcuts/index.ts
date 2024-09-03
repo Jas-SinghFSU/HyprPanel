@@ -106,7 +106,7 @@ const Shortcuts = () => {
                 }),
             });
         } else {
-            // handle non-configurable shortcut
+            // handle non-configurable shortcuts
             return Widget.Button({
                 vexpand: true,
                 tooltip_text: shortcut.tooltip,
