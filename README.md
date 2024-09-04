@@ -1,5 +1,17 @@
-# HyprPanel
-A panel built for Hyprland with [Aylur's Gtk Shell](https://github.com/Aylur/ags)
+<p align="center">
+  <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="./assets/hyprpanel.png" alt="Hyprpanel logo">
+  </a>
+</p>
+<br/>
+<p align="center">
+  <a href="https://hyprpanel.com/getting_started/installation.html"><img src="https://img.shields.io/badge/Wiki-hyprpanel-orange?style=flat&logo=wiki" alt="wiki"></a>
+  <a href="https://discord.gg/MNpg7Z2b3a"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
+</p>
+<br/>
+
+# HyprPanel 🚀
+A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 
 ![HyprPanel](./assets/HyprPanel.png)
 
@@ -16,6 +28,7 @@ curl -fsSL https://bun.sh/install | bash && \
 Additional dependencies:
 ```sh
 pipewire
+libgtop
 bluez
 bluez-utils
 grimblast
@@ -40,7 +53,7 @@ python-gpustat
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
 ```
 
 Arch (AUR):
@@ -133,11 +146,9 @@ home.packages = with pkgs; [
 ];
 
 # or reference it directly in your Hyprland configuration
-wayland.windowManager.hyprland.settings.exec-once = ''
-  # ...
-  ${pkgs.hyprpanel}/bin/hyprpanel
-  # ...
-'';
+wayland.windowManager.hyprland.settings.exec-once = [
+  "${pkgs.hyprpanel}/bin/hyprpanel"
+];
 
 ```
 

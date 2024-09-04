@@ -48,8 +48,9 @@ export const BarSettings = () => {
                 Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_border, title: 'Highlight Radius', subtitle: 'Only applicable if Workspace Numbers are enabled', type: 'string' }),
                 Option({ opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_padding, title: 'Highlight Padding', subtitle: 'Only applicable if Workspace Numbers are enabled', type: 'string' }),
                 Option({ opt: options.bar.workspaces.spacing, title: 'Spacing', subtitle: 'Spacing between workspace icons', type: 'float' }),
-                Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', type: 'number' }),
-                Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.workspaces, title: 'Total Workspaces', subtitle: 'The least amount of workspaces to always show.', type: 'number' }),
+                Option({ opt: options.bar.workspaces.monitorSpecific, title: 'Monitor Specific', subtitle: 'Only workspaces applicable to the monitor will be displayed.\nWorks in conjuction with \'Total Workspaces\'.', type: 'boolean' }),
+                Option({ opt: options.bar.workspaces.hideUnoccupied, title: 'Hide Unoccupied', subtitle: 'Only show workspaces that are occupied or active', type: 'boolean' }),
                 Option({
                     opt: options.bar.workspaces.workspaceMask,
                     title: 'Mask Workspace Numbers On Monitors',
@@ -100,6 +101,10 @@ Forces each Monitor's Workspace labels to start from 1.`,
 
                 Header('Clock'),
                 Option({ opt: options.bar.clock.format, title: 'Clock Format', type: 'string' }),
+                Option({ opt: options.bar.clock.icon, title: 'Icon', type: 'string' }),
+                Option({ opt: options.bar.clock.showIcon, title: 'Show Icon', type: 'boolean' }),
+                Option({ opt: options.bar.clock.showTime, title: 'Show Time', type: 'boolean' }),
+                Option({ opt: options.theme.bar.buttons.clock.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),
 
                 Header('Media'),
                 Option({ opt: options.theme.bar.buttons.media.spacing, title: 'Inner Spacing', subtitle: 'Spacing between the icon and the label inside the buttons.', type: 'string' }),

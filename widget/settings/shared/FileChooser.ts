@@ -7,6 +7,59 @@ const whiteListedThemeProp = [
     "theme.bar.buttons.style"
 ];
 
+
+// Helper functions
+export const loadJsonFile = (filePath: string): object | null => {
+    let file = Gio.File.new_for_path(filePath as string);
+    let [success, content] = file.load_contents(null);
+
+    if (!success) {
+        console.error(`Failed to import: ${filePath}`);
+        return null;
+    }
+
+    let jsonString = new TextDecoder("utf-8").decode(content);
+    return JSON.parse(jsonString);
+}
+
+export const saveConfigToFile = (config: object, filePath: string): void => {
+    let file = Gio.File.new_for_path(filePath);
+    let outputStream = file.replace(null, false, Gio.FileCreateFlags.NONE, null);
+    let dataOutputStream = new Gio.DataOutputStream({ base_stream: outputStream });
+
+    let jsonString = JSON.stringify(config, null, 2);
+    dataOutputStream.put_string(jsonString, null);
+    dataOutputStream.close(null);
+}
+
+export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+
+export const filterConfigForThemeOnly = (config: object) => {
+    let filteredConfig = {};
+
+    for (let key in config) {
+        if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
+            filteredConfig[key] = config[key];
+        } else if (whiteListedThemeProp.includes(key)) {
+            filteredConfig[key] = config[key];
+        }
+    }
+    return filteredConfig;
+};
+
+export const filterConfigForNonTheme = (config: object) => {
+    let filteredConfig = {};
+    for (let key in config) {
+        if (whiteListedThemeProp.includes(key)) {
+            continue;
+        }
+        if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
+            filteredConfig[key] = config[key];
+        }
+    }
+    return filteredConfig;
+};
+
 export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const original_file_path = filePath;
 
@@ -128,12 +181,11 @@ export const importFiles = (themeOnly: boolean = false): void => {
         title: `Import ${themeOnly ? "Theme" : "Config"}`,
         action: Gtk.FileChooserAction.OPEN,
     });
-
+    dialog.set_current_folder(`${App.configDir}/themes`)
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
 
     let response = dialog.run();
-
 
     if (response === Gtk.ResponseType.CANCEL) {
         dialog.destroy();
@@ -141,11 +193,9 @@ export const importFiles = (themeOnly: boolean = false): void => {
     }
     if (response === Gtk.ResponseType.ACCEPT) {
         let filePath = dialog.get_filename();
-        let file = Gio.File.new_for_path(filePath as string);
-        let [success, content] = file.load_contents(null);
+        let importedConfig = loadJsonFile(filePath as string);
 
-        if (!success) {
-            console.error(`Failed to import: ${filePath}`);
+        if (!importedConfig) {
             dialog.destroy();
             return;
         }
@@ -156,48 +206,6 @@ export const importFiles = (themeOnly: boolean = false): void => {
             iconName: icons.ui.info,
             timeout: 7000
         });
-
-        let jsonString = new TextDecoder("utf-8").decode(content);
-        let importedConfig = JSON.parse(jsonString);
-
-        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
-
-        const saveConfigToFile = (config: object, filePath: string) => {
-            let file = Gio.File.new_for_path(filePath);
-            let outputStream = file.replace(null, false, Gio.FileCreateFlags.NONE, null);
-            let dataOutputStream = new Gio.DataOutputStream({ base_stream: outputStream });
-
-            let jsonString = JSON.stringify(config, null, 2);
-            dataOutputStream.put_string(jsonString, null);
-            dataOutputStream.close(null);
-        };
-
-        const filterConfigForThemeOnly = (config: object) => {
-            let filteredConfig = {};
-
-            for (let key in config) {
-                if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
-                    filteredConfig[key] = config[key];
-                } else if (whiteListedThemeProp.includes(key)) {
-                    filteredConfig[key] = config[key];
-                }
-            }
-            return filteredConfig;
-        };
-
-        const filterConfigForNonTheme = (config: object) => {
-            let filteredConfig = {};
-            for (let key in config) {
-                // do not add key-value pair if its in whiteListedThemeProp
-                if (whiteListedThemeProp.includes(key)) {
-                    continue;
-                }
-                if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
-                    filteredConfig[key] = config[key];
-                }
-            }
-            return filteredConfig;
-        };
 
         let tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
         let optionsConfigFile = Gio.File.new_for_path(OPTIONS);

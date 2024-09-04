@@ -1,3 +1,5 @@
+export type UnitType = "imperial" | "metric";
+
 export type Weather = {
     location: Location;
     current: Current;

@@ -1,0 +1,136 @@
+.menu-items-container.power-dropdown * {
+  font-size: $font-size * $bar-menus-menu-power-scaling * 0.01;
+}
+
+@import "./menu.scss";
+
+.menu-items.power-dropdown {
+  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-power-background-color);
+  border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-power-border-color);
+  opacity: $bar-menus-opacity * 0.01;
+  font-size: $font-size * $bar-menus-menu-power-scaling * 0.01;
+}
+
+.menu-items-container.power-dropdown {
+  &.reboot {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-restart-background);
+  }
+
+  &.logout {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-logout-background);
+  }
+
+  &.sleep {
+    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-sleep-background);
+  }
+
+  min-height: 3.5em * $bar-menus-menu-power-scaling * 0.01;
+  font-size: 1.3em;
+  margin: 1em;
+
+  .menu-items-section {
+    padding-bottom: 1.5em;
+  }
+
+  .power-menu-button {
+    border-radius: $bar-menus-border-radius * 0.6;
+
+    // This doubles the border-radius so it doesn't show up as 
+    // an artifact behind the button as that has a radius as well
+    border-top-left-radius: $bar-menus-border-radius * 2;
+    border-bottom-left-radius: $bar-menus-border-radius * 2;
+
+    &.no-label {
+      // This doubles the border-radius so it doesn't show up as 
+      // an artifact behind the button as that has a radius as well
+      border-top-right-radius: $bar-menus-border-radius * 2;
+      border-bottom-right-radius: $bar-menus-border-radius * 2;
+    }
+
+    &:hover {
+      opacity: 0.4;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1.5em;
+    }
+
+    .power-button-label {
+      font-size: 1.1em;
+    }
+
+    &.shutdown {
+      background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-shutdown-background);
+    }
+
+    &.reboot {
+      background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-restart-background);
+    }
+
+    &.logout {
+      background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-logout-background);
+    }
+
+    &.sleep {
+      background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-power-buttons-sleep-background);
+    }
+
+    .show-label {
+      padding-right: 1em;
+    }
+
+    .no-label {
+      border-top-right-radius: $bar-menus-border-radius * 0.35;
+      border-bottom-right-radius: $bar-menus-border-radius * 0.35;
+    }
+
+    .shutdown-label {
+      color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-shutdown-text);
+    }
+
+    .reboot-label {
+      color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-restart-text);
+    }
+
+    .logout-label {
+      color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-logout-text);
+    }
+
+    .sleep-label {
+      color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-sleep-text);
+    }
+  }
+
+  label {
+    margin-left: 1em;
+  }
+
+  image {
+    min-width: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
+    min-height: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
+    background: $red;
+    border-top-left-radius: $bar-menus-border-radius * 0.35;
+    border-bottom-left-radius: $bar-menus-border-radius * 0.35;
+    font-size: 1.75em;
+
+    &.shutdown-icon {
+      background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-shutdown-icon_background);
+      color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-power-buttons-shutdown-icon);
+    }
+
+    &.reboot-icon {
+      background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-restart-icon_background);
+      color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-power-buttons-restart-icon);
+    }
+
+    &.logout-icon {
+      background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-logout-icon_background);
+      color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-power-buttons-logout-icon);
+    }
+
+    &.sleep-icon {
+      background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-power-buttons-sleep-icon_background);
+      color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-power-buttons-sleep-icon);
+    }
+  }
+}

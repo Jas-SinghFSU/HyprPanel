@@ -8,7 +8,7 @@ $popover-padding: 0.6rem * 1.6;
 
 window#verification .verification {
   * {
-    font-size: $font-size * $bar-menus-menu-dashboard-confirmation_scaling/100;
+    font-size: $font-size * $bar-menus-menu-dashboard-confirmation_scaling * 0.01;
   }
 
   @include floating-widget;
@@ -17,11 +17,11 @@ window#verification .verification {
   padding: 0.35em * 1.6 * 1.5;
   min-width: 20em;
   min-height: 6em;
-  opacity: $bar-menus-opacity/100;
+  opacity: $bar-menus-opacity * 0.01;
 
   .verification-content {
     background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-powermenu-confirmation-card);
-    border-radius: $bar-menus-border-radius/2;
+    border-radius: $bar-menus-border-radius * 0.5;
     padding: 1em;
   }
 
@@ -46,7 +46,7 @@ window#verification .verification {
     background: $bar-menus-buttons-default;
     padding: 0.7em 0em;
     margin: 0.4em 1.7em;
-    border-radius: $bar-menus-border-radius/2;
+    border-radius: $bar-menus-border-radius * 0.5;
     opacity: 1;
     transition: border-color 0.2s ease-in-out;
     transition: opacity .3s ease-in-out;

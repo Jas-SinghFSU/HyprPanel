@@ -2,11 +2,15 @@ import GLib from "gi://GLib";
 import { notifHasImg } from "../../menus/notifications/utils.js";
 import { NotificationIcon } from "./icon.js";
 import { Notification } from "types/service/notifications";
+import options from "options.js";
 
-const time = (time: number, format = "%I:%M %p") =>
-    GLib.DateTime.new_from_unix_local(time).format(format);
+const { military } = options.menus.clock.time;
 
 export const Header = (notif: Notification) => {
+    const time = (time: number, format = "%I:%M %p") => {
+        return GLib.DateTime.new_from_unix_local(time).format(military.value ? "%H:%M" : format);
+    }
+
     return Widget.Box({
         vertical: false,
         hexpand: true,

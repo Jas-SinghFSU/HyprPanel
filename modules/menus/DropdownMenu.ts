@@ -126,6 +126,17 @@ export default ({
                 vertical: true,
                 children: [
                     Widget.EventBox({
+                        class_name: "mid-eb event-top-padding-static",
+                        hexpand: true,
+                        vexpand: false,
+                        can_focus: false,
+                        child: Widget.Box(),
+                        setup: (w) => {
+                            w.on("button-press-event", () => App.toggleWindow(name));
+                            w.set_margin_top(1);
+                        },
+                    }),
+                    Widget.EventBox({
                         class_name: "mid-eb event-top-padding",
                         hexpand: true,
                         vexpand: false,

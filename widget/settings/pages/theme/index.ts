@@ -12,6 +12,8 @@ import { SystrayMenuTheme } from "./menus/systray";
 import { VolumeMenuTheme } from "./menus/volume";
 import { OsdTheme } from "./osd/index";
 import { Matugen } from "./menus/matugen";
+import { CustomModuleTheme } from "customModules/theme";
+import { PowerMenuTheme } from "./menus/power";
 
 type Page = "General Settings"
     | "Matugen Settings"
@@ -26,7 +28,9 @@ type Page = "General Settings"
     | "Network Menu"
     | "Notifications Menu"
     | "System Tray"
-    | "Volume Menu";
+    | "Volume Menu"
+    | "Power Menu"
+    | "Custom Modules";
 
 const CurrentPage = Variable<Page>("General Settings");
 
@@ -44,6 +48,8 @@ const pagerMap: Page[] = [
     "Notifications Menu",
     "System Tray",
     "Volume Menu",
+    "Power Menu",
+    "Custom Modules",
 ]
 
 export const ThemesMenu = () => {
@@ -59,7 +65,7 @@ export const ThemesMenu = () => {
                     children: [0, 1, 2].map(section => {
                         return Widget.Box({
                             children: pagerMap.map((page, index) => {
-                                if (index >= section * 5 && index < section * 5 + 5) {
+                                if (index >= section * 6 && index < section * 6 + 6) {
                                     return Widget.Button({
                                         hpack: "center",
                                         xalign: 0,
@@ -91,6 +97,8 @@ export const ThemesMenu = () => {
                         "Notifications Menu": NotificationsMenuTheme(),
                         "System Tray": SystrayMenuTheme(),
                         "Volume Menu": VolumeMenuTheme(),
+                        "Power Menu": PowerMenuTheme(),
+                        "Custom Modules": CustomModuleTheme(),
                     },
                     shown: CurrentPage.bind("value"),
                 })

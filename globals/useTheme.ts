@@ -1,58 +1,21 @@
 import Gio from "gi://Gio"
 import { bash, Notify } from "lib/utils";
 import icons from "lib/icons"
+import { filterConfigForThemeOnly, loadJsonFile, saveConfigToFile } from "widget/settings/shared/FileChooser";
 
 globalThis.useTheme = (filePath: string): void => {
-    const themeOnly = true;
-    let file = Gio.File.new_for_path(filePath as string);
-    let [success, content] = file.load_contents(null);
+    let importedConfig = loadJsonFile(filePath);
 
-    if (!success) {
-        console.error(`Failed to import: ${filePath}`);
+    if (!importedConfig) {
         return;
     }
 
     Notify({
-        summary: `Importing ${themeOnly ? "Theme" : "Config"}`,
+        summary: `Importing Theme`,
         body: `Importing: ${filePath}`,
         iconName: icons.ui.info,
         timeout: 7000
     });
-
-    let jsonString = new TextDecoder("utf-8").decode(content);
-    let importedConfig = JSON.parse(jsonString);
-
-    const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
-
-    const saveConfigToFile = (config: object, filePath: string) => {
-        let file = Gio.File.new_for_path(filePath);
-        let outputStream = file.replace(null, false, Gio.FileCreateFlags.NONE, null);
-        let dataOutputStream = new Gio.DataOutputStream({ base_stream: outputStream });
-
-        let jsonString = JSON.stringify(config, null, 2);
-        dataOutputStream.put_string(jsonString, null);
-        dataOutputStream.close(null);
-    };
-
-    const filterConfigForThemeOnly = (config: object) => {
-        let filteredConfig = {};
-        for (let key in config) {
-            if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
-                filteredConfig[key] = config[key];
-            }
-        }
-        return filteredConfig;
-    };
-
-    const filterConfigForNonTheme = (config: object) => {
-        let filteredConfig = {};
-        for (let key in config) {
-            if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
-                filteredConfig[key] = config[key];
-            }
-        }
-        return filteredConfig;
-    };
 
     let tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
     let optionsConfigFile = Gio.File.new_for_path(OPTIONS);
@@ -68,17 +31,12 @@ globalThis.useTheme = (filePath: string): void => {
     let tmpConfig = JSON.parse(new TextDecoder("utf-8").decode(tmpContent));
     let optionsConfig = JSON.parse(new TextDecoder("utf-8").decode(optionsContent));
 
-    if (themeOnly) {
-        const filteredConfig = filterConfigForThemeOnly(importedConfig);
-        tmpConfig = { ...tmpConfig, ...filteredConfig };
-        optionsConfig = { ...optionsConfig, ...filteredConfig };
-    } else {
-        const filteredConfig = filterConfigForNonTheme(importedConfig);
-        tmpConfig = { ...tmpConfig, ...filteredConfig };
-        optionsConfig = { ...optionsConfig, ...filteredConfig };
-    }
+    const filteredConfig = filterConfigForThemeOnly(importedConfig);
+    tmpConfig = { ...tmpConfig, ...filteredConfig };
+    optionsConfig = { ...optionsConfig, ...filteredConfig };
 
     saveConfigToFile(tmpConfig, `${TMP}/config.json`);
     saveConfigToFile(optionsConfig, OPTIONS);
     bash("pkill ags && ags");
 }
+

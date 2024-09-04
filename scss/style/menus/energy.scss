@@ -1,18 +1,18 @@
 .menu-items-container.energy * {
-  font-size: $font-size * $bar-menus-menu-battery-scaling/100;
+  font-size: $font-size * $bar-menus-menu-battery-scaling * 0.01;
 }
 
 .menu-items.energy {
   background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
-  opacity: $bar-menus-opacity/100;
-  font-size: $font-size * $bar-menus-menu-battery-scaling/100;
+  opacity: $bar-menus-opacity * 0.01;
+  font-size: $font-size * $bar-menus-menu-battery-scaling * 0.01;
 }
 
 @import "./menu.scss";
 
 .menu-items-container.energy {
-  min-width: 18em * $bar-menus-menu-battery-scaling/100;
+  min-width: 18em * $bar-menus-menu-battery-scaling * 0.01;
 
   .menu-label {
     color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-battery-label-color);
