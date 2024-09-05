@@ -10,10 +10,14 @@ const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
     const isVis = Variable(!show_active_only.value);
 
+    show_active_only.connect("changed", () => {
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
+    });
+
     mpris.connect("changed", () => {
         const curPlayer = getCurrentPlayer(activePlayer.value);
         activePlayer.value = curPlayer;
-        isVis.value = !show_active_only.value ? true : mpris.players.length > 0;
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
     });
 
     const getIconForPlayer = (playerName: string): string => {
