@@ -74,8 +74,8 @@ Forces each Monitor's Workspace labels to start from 1.`,
                     type: 'object',
                     subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings'
                 }),
-                Option({ opt: options.bar.windowtitle.truncation, title: 'Truncate Window Title', subtitle: 'Only applicable if Show Custom Title is disabled', type: 'boolean' }),
-                Option({ opt: options.bar.windowtitle.truncation_size, title: 'Truncation Size', subtitle: 'Only applicable if Show Custom Title is disabled', type: 'number', min: 10 }),
+                Option({ opt: options.bar.windowtitle.truncation, title: 'Truncate Window Title', subtitle: 'Will truncate the window title to the specified size below.', type: 'boolean' }),
+                Option({ opt: options.bar.windowtitle.truncation_size, title: 'Truncation Size', type: 'number', min: 10 }),
 
                 Header('Volume'),
                 Option({ opt: options.bar.volume.label, title: 'Show Volume Percentage', type: 'boolean' }),

@@ -133,14 +133,21 @@ const filterTitle = (windowtitle: ActiveClient) => {
     };
 };
 
-const defaultTitle = (client: ActiveClient, max_size: number) => {
+const defaultTitle = (client: ActiveClient) => {
     let title = client.title;
     // If the title is empty or only filled with spaces, fallback to the class name
     if (title.length === 0 || title.match(/^ *$/)) {
         title = client.class;
     }
-    return max_size > 0 && title.length > max_size ? title.substring(0, max_size) + "..." : title;
+    return title;
 };
+
+const truncateTitle = (title: string, max_size: number) => {
+    if (max_size > 0 && title.length > max_size) {
+        return title.substring(0, max_size).trim() + "...";
+    }
+    return title;
+}
 
 const ClientTitle = () => {
     const { show_custom_title, label: show_label, show_icon, truncation, truncation_size } = options.bar.windowtitle;
@@ -169,8 +176,8 @@ const ClientTitle = () => {
                         }
                         if (!showCustomTitle || showLabel) {
                             children.push(Widget.Label({
-                                label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
                                 class_name: `bar-button-label windowtitle ${showCustomTitle && showIcon ? "" : "no-icon"}`,
+                                label: truncateTitle(showCustomTitle ? filterTitle(client).label : defaultTitle(client), truncate ? truncationSize : -1),
                             }));
                         }
                         return children;
