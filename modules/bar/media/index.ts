@@ -83,7 +83,6 @@ const Media = () => {
                 }),
             }),
         }),
-        isVisible: false,
         isVis,
         boxClass: "media",
         name: "media",
