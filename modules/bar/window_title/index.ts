@@ -143,11 +143,7 @@ const defaultTitle = (client: ActiveClient, max_size: number) => {
 };
 
 const ClientTitle = () => {
-    const show_custom_title = options.bar.windowtitle.show_custom_title;
-    const show_label = options.bar.windowtitle.label;
-    const show_icon = options.bar.windowtitle.show_icon;
-    const truncation = options.bar.windowtitle.truncation;
-    const truncation_size = options.bar.windowtitle.truncation_size;
+    const { show_custom_title, label: show_label, show_icon, truncation, truncation_size } = options.bar.windowtitle;
 
     return {
         component: Widget.Box({
@@ -167,14 +163,14 @@ const ClientTitle = () => {
                         const children: Label<any>[] = [];
                         if (showCustomTitle && showIcon) {
                             children.push(Widget.Label({
-                                class_name: "bar-button-icon windowtitle txt-icon bar" + (showLabel ? " spacing" : ""),
+                                class_name: "bar-button-icon windowtitle txt-icon bar",
                                 label: filterTitle(client).icon,
                             }));
                         }
                         if (!showCustomTitle || showLabel) {
                             children.push(Widget.Label({
-                                class_name: "bar-button-label windowtitle",
                                 label: showCustomTitle ? filterTitle(client).label : defaultTitle(client, truncate ? truncationSize : -1),
+                                class_name: `bar-button-label windowtitle ${showCustomTitle && showIcon ? "" : "no-icon"}`,
                             }));
                         }
                         return children;
