@@ -168,15 +168,15 @@ const ClientTitle = () => {
                         truncation.bind("value"), truncation_size.bind("value")],
                     (client, showCustomTitle, showLabel, showIcon, truncate, truncationSize) => {
                         const children: Label<any>[] = [];
-                        if (showCustomTitle && showIcon) {
+                        if (showIcon) {
                             children.push(Widget.Label({
                                 class_name: "bar-button-icon windowtitle txt-icon bar",
                                 label: filterTitle(client).icon,
                             }));
                         }
-                        if (!showCustomTitle || showLabel) {
+                        if (showLabel) {
                             children.push(Widget.Label({
-                                class_name: `bar-button-label windowtitle ${showCustomTitle && showIcon ? "" : "no-icon"}`,
+                                class_name: `bar-button-label windowtitle ${showIcon ? "" : "no-icon"}`,
                                 label: truncateTitle(showCustomTitle ? filterTitle(client).label : defaultTitle(client), truncate ? truncationSize : -1),
                             }));
                         }
