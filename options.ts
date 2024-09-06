@@ -861,7 +861,8 @@ const options = mkOptions(OPTIONS, {
             show_artist: opt(false),
             truncation: opt(true),
             show_label: opt(true),
-            truncation_size: opt(30)
+            truncation_size: opt(30),
+            show_active_only: opt(false)
         },
         notifications: {
             show_total: opt(false),

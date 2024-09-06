@@ -108,6 +108,7 @@ Forces each Monitor's Workspace labels to start from 1.`,
                 Option({ opt: options.bar.media.show_label, title: 'Toggle Media Label', type: 'boolean' }),
                 Option({ opt: options.bar.media.truncation, title: 'Truncate Media Label', subtitle: 'Only applicable if Toggle Media Label is enabled', type: 'boolean' }),
                 Option({ opt: options.bar.media.truncation_size, title: 'Truncation Size', subtitle: 'Only applicable if Toggle Media Label is enabled', type: 'number', min: 10 }),
+                Option({ opt: options.bar.media.show_active_only, title: 'Auto Hide', subtitle: 'Button will automatically hide if no media is detected.', type: 'boolean' }),
 
                 Header('Notifications'),
                 Option({ opt: options.bar.notifications.show_total, title: 'Show Total # of notifications', type: 'boolean' }),

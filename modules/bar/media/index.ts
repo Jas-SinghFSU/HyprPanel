@@ -4,14 +4,20 @@ import { openMenu } from "../utils.js";
 import options from "options";
 import { getCurrentPlayer } from 'lib/shared/media.js';
 
-const { show_artist, truncation, truncation_size, show_label } = options.bar.media;
+const { show_artist, truncation, truncation_size, show_label, show_active_only } = options.bar.media;
 
 const Media = () => {
     const activePlayer = Variable(mpris.players[0]);
+    const isVis = Variable(!show_active_only.value);
+
+    show_active_only.connect("changed", () => {
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
+    });
 
     mpris.connect("changed", () => {
         const curPlayer = getCurrentPlayer(activePlayer.value);
         activePlayer.value = curPlayer;
+        isVis.value = !show_active_only.value || mpris.players.length > 0;
     });
 
     const getIconForPlayer = (playerName: string): string => {
@@ -81,7 +87,7 @@ const Media = () => {
                 }),
             }),
         }),
-        isVisible: false,
+        isVis,
         boxClass: "media",
         name: "media",
         props: {
