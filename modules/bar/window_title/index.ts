@@ -128,8 +128,8 @@ const filterTitle = (windowtitle: ActiveClient) => {
     }
 
     return {
-        icon: foundMatch ? foundMatch[1] : windowTitleMap[windowTitleMap.length - 1][1],
-        label: foundMatch ? foundMatch[2] : windowTitleMap[windowTitleMap.length - 1][2]
+        icon: foundMatch[1],
+        label: foundMatch[2]
     };
 };
 
