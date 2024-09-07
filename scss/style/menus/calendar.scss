@@ -101,9 +101,9 @@
   min-width: 3em;
 
   .calendar-menu-weather.today.icon {
-    image {
+    label {
       color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-clock-weather-icon);
-      font-size: 6em;
+      font-size: 5em;
     }
   }
 
@@ -164,7 +164,8 @@
 
 .hourly-weather-icon {
   color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-clock-weather-hourly-icon);
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
+  font-size: 1.8em;
 }
 
 .hourly-weather-temp {
