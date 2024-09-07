@@ -4,7 +4,7 @@ import { module } from "../module"
 import { inputHandler } from "customModules/utils";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import Button from "types/widgets/button";
-import { getWeatherStatusIcon, globalWeatherVar } from "globals/weather";
+import { getWeatherStatusTextIcon, globalWeatherVar } from "globals/weather";
 
 const {
     label,
@@ -17,10 +17,9 @@ const {
 } = options.bar.customModules.weather;
 
 export const Weather = () => {
-
-    const networkModule = module({
-        icon: Utils.merge([globalWeatherVar.bind("value")], (wthr) => {
-            const weatherStatusIcon = getWeatherStatusIcon(wthr);
+    const weatherModule = module({
+        textIcon: Utils.merge([globalWeatherVar.bind("value")], (wthr) => {
+            const weatherStatusIcon = getWeatherStatusTextIcon(wthr);
             return weatherStatusIcon;
         }),
         tooltipText: globalWeatherVar.bind("value").as(v => `Weather Status: ${v.current.condition.text}`),
@@ -59,7 +58,7 @@ export const Weather = () => {
         },
     });
 
-    return networkModule;
+    return weatherModule;
 }
 
 

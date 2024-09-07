@@ -23,6 +23,13 @@ export const PowerButton = (action: PowerOptions) => {
         }
     };
 
+    const powerIconMap = {
+        shutdown: "󰐥",
+        reboot: "󰜉",
+        logout: "󰿅",
+        sleep: "󰤄",
+    };
+
     return Widget.Button({
         className: showLabel.bind("value").as(shwLbl => {
             return `power-menu-button ${action} ${!shwLbl ? "no-label" : ""}`;
@@ -33,9 +40,9 @@ export const PowerButton = (action: PowerOptions) => {
             children: showLabel.bind("value").as(shwLbl => {
                 if (shwLbl) {
                     return [
-                        Widget.Icon({
-                            icon: icons.powermenu[action],
-                            className: `power-button-icon ${action}-icon`,
+                        Widget.Label({
+                            label: powerIconMap[action],
+                            className: `power-button-icon ${action}-icon txt-icon`,
                         }),
                         Widget.Label({
                             hpack: "center",
@@ -46,9 +53,9 @@ export const PowerButton = (action: PowerOptions) => {
                     ];
                 }
                 return [
-                    Widget.Icon({
-                        icon: icons.powermenu[action],
-                        className: `power-button-icon ${action}-icon no-label`,
+                    Widget.Label({
+                        label: powerIconMap[action],
+                        className: `power-button-icon ${action}-icon no-label txt-icon`,
                     }),
                 ];
             }),

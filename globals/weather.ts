@@ -4,6 +4,7 @@ import { DEFAULT_WEATHER } from "lib/types/defaults/weather.js";
 import GLib from "gi://GLib?version=2.0"
 
 import icons from "../modules/icons/index.js";
+import { weatherIcons } from "modules/icons/weather.js";
 
 const { key, interval, location } = options.menus.clock.weather;
 
@@ -98,8 +99,7 @@ export const getWindConditions = (wthr: Weather, unt: UnitType) => {
 
 export const getRainChance = (wthr: Weather) => `${wthr.forecast.forecastday[0].day.daily_chance_of_rain}%`;
 
-
-export const getWeatherStatusIcon = (wthr: Weather) => {
+export const getWeatherStatusTextIcon = (wthr: Weather) => {
     let iconQuery = wthr.current.condition.text
         .trim()
         .toLowerCase()
@@ -108,6 +108,7 @@ export const getWeatherStatusIcon = (wthr: Weather) => {
     if (!wthr.current.is_day && iconQuery === "partly_cloudy") {
         iconQuery = "partly_cloudy_night";
     }
-    return icons.weather[iconQuery];
+    return weatherIcons[iconQuery];
 };
+
 globalThis["globalWeatherVar"] = globalWeatherVar;
