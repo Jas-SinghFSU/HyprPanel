@@ -133,11 +133,14 @@ const filterTitle = (windowtitle: ActiveClient) => {
     };
 };
 
-const defaultTitle = (client: ActiveClient) => {
+const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: boolean) => {
+    if (useCustomTitle) return filterTitle(client).label;
+    if (useClassName) return client.class;
+
     let title = client.title;
     // If the title is empty or only filled with spaces, fallback to the class name
     if (title.length === 0 || title.match(/^ *$/)) {
-        title = client.class;
+        return client.class;
     }
     return title;
 };
@@ -147,14 +150,14 @@ const truncateTitle = (title: string, max_size: number) => {
         return title.substring(0, max_size).trim() + "...";
     }
     return title;
-}
+};
 
 const ClientTitle = () => {
-    const { show_custom_title, label: show_label, show_icon, truncation, truncation_size } = options.bar.windowtitle;
+    const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
 
     return {
         component: Widget.Box({
-            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), show_label.bind("value")], (style, showLabel) => {
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), label.bind("value")], (style, showLabel) => {
                 const styleMap = {
                     default: "style1",
                     split: "style2",
@@ -164,9 +167,9 @@ const ClientTitle = () => {
             }),
             children:
                 Utils.merge(
-                    [hyprland.active.bind("client"), show_custom_title.bind("value"), show_label.bind("value"), show_icon.bind("value"),
-                        truncation.bind("value"), truncation_size.bind("value")],
-                    (client, showCustomTitle, showLabel, showIcon, truncate, truncationSize) => {
+                    [hyprland.active.bind("client"), custom_title.bind("value"), class_name.bind("value"), label.bind("value"),
+                        icon.bind("value"), truncation.bind("value"), truncation_size.bind("value")],
+                    (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
                         const children: Label<any>[] = [];
                         if (showIcon) {
                             children.push(Widget.Label({
@@ -177,7 +180,7 @@ const ClientTitle = () => {
                         if (showLabel) {
                             children.push(Widget.Label({
                                 class_name: `bar-button-label windowtitle ${showIcon ? "" : "no-icon"}`,
-                                label: truncateTitle(showCustomTitle ? filterTitle(client).label : defaultTitle(client), truncate ? truncationSize : -1),
+                                label: truncateTitle(getTitle(client, useCustomTitle, useClassName), truncate ? truncationSize : -1),
                             }));
                         }
                         return children;
