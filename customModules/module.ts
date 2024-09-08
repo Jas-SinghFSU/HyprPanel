@@ -46,6 +46,7 @@ export const module = ({
                     default: "style1",
                     split: "style2",
                     wave: "style3",
+                    wave2: "style3",
                 };
                 return `${boxClass} ${styleMap[style]} ${!shouldShowLabel ? "no-label" : ""}`;
             }),

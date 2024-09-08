@@ -2,9 +2,11 @@ import Gdk from 'gi://Gdk?version=3.0';
 const audio = await Service.import("audio");
 import { openMenu } from "../utils.js";
 import options from "options";
+import { Binding } from 'lib/utils.js';
+import { VolumeIcons } from 'lib/types/volume.js';
 
 const Volume = () => {
-    const icons = {
+    const icons: VolumeIcons = {
         101: "󰕾",
         66: "󰕾",
         34: "󰖀",
@@ -13,16 +15,16 @@ const Volume = () => {
     };
 
     const getIcon = () => {
-        const icon = Utils.merge(
+        const icon: Binding<number> = Utils.merge(
             [audio.speaker.bind("is_muted"), audio.speaker.bind("volume")],
             (isMuted, vol) => {
                 return isMuted
                     ? 0
-                    : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100);
+                    : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100) || 101;
             },
         );
 
-        return icon.as((i) => i !== undefined ? icons[i] : 101);
+        return icon.as((i: number) => i !== undefined ? icons[i] : icons[101]);
     };
 
     const volIcn = Widget.Label({
@@ -46,6 +48,7 @@ const Volume = () => {
                     default: "style1",
                     split: "style2",
                     wave: "style3",
+                    wave2: "style3",
                 };
 
                 return `volume ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;

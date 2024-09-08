@@ -1,4 +1,5 @@
 import Gdk from 'gi://Gdk?version=3.0';
+import { Notify } from 'lib/utils';
 const systemtray = await Service.import("systemtray");
 import options from "options";
 
@@ -27,6 +28,7 @@ const SysTray = () => {
                     }),
                     on_primary_click: (_: any, event: Gdk.Event) => item.activate(event),
                     on_secondary_click: (_, event) => item.openMenu(event),
+                    onMiddleClick: () => Notify({ summary: "App Name", body: item.id }),
                     tooltip_markup: item.bind("tooltip_markup"),
                 });
             });
