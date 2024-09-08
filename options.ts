@@ -1068,7 +1068,8 @@ const options = mkOptions(OPTIONS, {
 
     wallpaper: {
         enable: opt(true),
-        image: opt("")
+        image: opt(""),
+        pywal: opt(false)
     },
 
     notifications: {
