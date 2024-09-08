@@ -24,8 +24,7 @@ export const BarGeneral = () => {
                         themeOnly: false
                     }
                 }),
-                Option({ opt: options.terminal, title: 'Terminal', subtitle: "Tools such as 'btop' will open in this terminal", type: 'string' }),
-
+                
                 Header('Scaling'),
                 Option({ opt: options.theme.bar.scaling, title: 'Bar', type: 'number', min: 1, max: 100, increment: 5 }),
                 Option({ opt: options.theme.notification.scaling, title: 'Notifications', type: 'number', min: 1, max: 100, increment: 5 }),
