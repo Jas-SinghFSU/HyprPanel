@@ -16,7 +16,9 @@ export const NotificationSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.notifications.ignore,
                     title: "Ignored Applications",
-                    subtitle: "Applications to ignore.",
+                    subtitle: "Applications to ignore.\n" +
+                        "Wiki: https://hyprpanel.com/configuration/notifications.html#ignored-applications",
+                    subtitleLink: "https://hyprpanel.com/configuration/notifications.html#ignored-applications",
                     type: "object",
                     enums: ["top left", "top", "top right", "right", "bottom right", "bottom", "bottom left", "left"],
                 }),

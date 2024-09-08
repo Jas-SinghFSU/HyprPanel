@@ -332,7 +332,8 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: "Ignore List",
                     subtitle:
                         "An array of applications to prevent from showing in the system tray.\n" +
-                        "HINT: Middle click on an application's tray icon to get its identifier.",
+                        "Wiki: https://hyprpanel.com/configuration/panel.html#system-tray",
+                    subtitleLink: "https://hyprpanel.com/configuration/panel.html#system-tray",
                     type: "object",
                 }),
 
