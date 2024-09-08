@@ -196,4 +196,4 @@ export default {
         patchy_light_snow_with_thunder: "weather-snow-symbolic",
         moderate_or_heavy_snow_with_thunder: "weather-snow-symbolic",
     },
-};
+} as const;

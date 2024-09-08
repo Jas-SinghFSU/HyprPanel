@@ -51,4 +51,4 @@ export const weatherIcons = {
     moderate_or_heavy_rain_with_thunder: "󰙾",
     patchy_light_snow_with_thunder: "󰼶",
     moderate_or_heavy_snow_with_thunder: "󰼶",
-};
+} as const;

@@ -581,4 +581,4 @@ export const layoutMap = {
     "Wolof": "SN",
     "Yakut": "RU (Sah)",
     "Yoruba": "NG (Yoruba)"
-};
+} as const;

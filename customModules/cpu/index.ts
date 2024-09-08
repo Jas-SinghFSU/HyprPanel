@@ -1,8 +1,5 @@
 import options from "options";
 
-// @ts-expect-error
-import GTop from 'gi://GTop';
-
 // Module initializer
 import { module } from "../module"
 

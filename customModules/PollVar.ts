@@ -69,7 +69,6 @@ export const pollVariableBash = <T>(
         });
     };
 
-    // Set up the interval initially with the provided polling interval
     Utils.merge([pollingInterval, ...trackers], (pollIntrvl: number) => {
         intervalFn(pollIntrvl);
     });

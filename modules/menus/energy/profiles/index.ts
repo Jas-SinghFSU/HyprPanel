@@ -1,7 +1,11 @@
 const powerProfiles = await Service.import("powerprofiles");
+import { PowerProfile, PowerProfileObject, PowerProfiles } from "lib/types/powerprofiles.js";
 import icons from "../../../icons/index.js";
 
 const EnergyProfiles = () => {
+    const isValidProfile = (profile: string): profile is PowerProfile =>
+        profile === "power-saver" || profile === "balanced" || profile === "performance";
+
     return Widget.Box({
         class_name: "menu-section-container energy",
         vertical: true,
@@ -21,13 +25,20 @@ const EnergyProfiles = () => {
                 vpack: "fill",
                 vexpand: true,
                 vertical: true,
-                children: powerProfiles.bind("profiles").as((profiles) => {
-                    return profiles.map((prof) => {
-                        const ProfileLabels = {
+                children: powerProfiles.bind("profiles").as((profiles: PowerProfiles) => {
+                    return profiles.map((prof: PowerProfileObject) => {
+                        const profileLabels = {
                             "power-saver": "Power Saver",
                             balanced: "Balanced",
                             performance: "Performance",
                         };
+
+                        const profileType = prof.Profile;
+
+                        if (!isValidProfile(profileType)) {
+                            return profileLabels.balanced;
+                        }
+
                         return Widget.Button({
                             on_primary_click: () => {
                                 powerProfiles.active_profile = prof.Profile;
@@ -39,11 +50,11 @@ const EnergyProfiles = () => {
                                 children: [
                                     Widget.Icon({
                                         class_name: "power-profile-icon",
-                                        icon: icons.powerprofile[prof.Profile],
+                                        icon: icons.powerprofile[profileType],
                                     }),
                                     Widget.Label({
                                         class_name: "power-profile-label",
-                                        label: ProfileLabels[prof.Profile],
+                                        label: profileLabels[profileType],
                                     }),
                                 ],
                             }),

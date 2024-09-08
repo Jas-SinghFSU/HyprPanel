@@ -88,7 +88,7 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
                                             Widget.Label({
                                                 vpack: "start",
                                                 class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""} txt-icon`,
-                                                label: getBluetoothIcon(`${device["icon-name"]}-symbolic`),
+                                                label: getBluetoothIcon(`${device["icon_name"]}-symbolic`),
                                             }),
                                             Widget.Box({
                                                 vertical: true,

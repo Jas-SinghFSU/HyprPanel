@@ -1,3 +1,5 @@
+import { layoutMap } from "customModules/kblayout/layouts";
+
 export type KbLabelType = "layout" | "code";
 export type KbIcon = "" | "󰌌" | "" | "󰬴" | "󰗊";
 
@@ -26,3 +28,6 @@ export type HyprctlDeviceLayout = {
     touch: any[];
     switches: any[];
 };
+
+export type LayoutKeys = keyof typeof layoutMap;
+export type LayoutValues = typeof layoutMap[LayoutKeys];

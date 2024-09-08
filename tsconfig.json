@@ -10,6 +10,9 @@
         "checkJs": true,
         "strict": true,
         "noImplicitAny": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "noImplicitThis": true,
         "baseUrl": ".",
         "typeRoots": [
             "types",

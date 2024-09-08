@@ -1,4 +1,4 @@
-import { HyprctlDeviceLayout, HyprctlKeyboard, KbLabelType } from "lib/types/customModules/kbLayout";
+import { HyprctlDeviceLayout, HyprctlKeyboard, KbLabelType, LayoutKeys, LayoutValues } from "lib/types/customModules/kbLayout";
 import { layoutMap } from "./layouts";
 
 export const getKeyboardLayout = (obj: string, format: KbLabelType) => {
@@ -15,7 +15,8 @@ export const getKeyboardLayout = (obj: string, format: KbLabelType) => {
         mainKb = keyboards[keyboards.length - 1];
     }
 
-    let layout = mainKb['active_keymap'];
+    let layout: LayoutKeys = mainKb['active_keymap'] as LayoutKeys;
+    const foundLayout: LayoutValues = layoutMap[layout];
 
-    return format === "code" ? layoutMap[layout] || layout : layout;
+    return format === "code" ? foundLayout || layout : layout;
 }
