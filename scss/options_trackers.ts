@@ -50,7 +50,7 @@ export const initializeTrackers = (resetCssFunc: Function) => {
             options.resetTheme();
             resetCssFunc();
         }
-        if (options.wallpaper.pywal && dependencies('wal')) {
+        if (options.wallpaper.pywal.value && dependencies('wal')) {
             const wallpaperPath = options.wallpaper.image.value;
             bash(`wal -i ${wallpaperPath}`);
         }
