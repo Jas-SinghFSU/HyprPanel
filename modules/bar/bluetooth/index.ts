@@ -32,6 +32,7 @@ const Bluetooth = () => {
                     default: "style1",
                     split: "style2",
                     wave: "style3",
+                    wave2: "style3",
                 };
                 return `bluetooth ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
             }),

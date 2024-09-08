@@ -849,7 +849,7 @@ const options = mkOptions(OPTIONS, {
             label: opt(true),
         },
         systray: {
-            ignore: opt([]),
+            ignore: opt<string[]>([]),
         },
         clock: {
             icon: opt("󰸗"),
@@ -1068,6 +1068,7 @@ const options = mkOptions(OPTIONS, {
 
     notifications: {
         position: opt<NotificationAnchor>("top right"),
+        ignore: opt<string[]>([]),
         displayedTotal: opt(10),
         monitor: opt(0),
         active_monitor: opt(true),

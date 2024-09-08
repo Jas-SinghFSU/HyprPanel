@@ -70,6 +70,7 @@ const Media = () => {
                         default: "style1",
                         split: "style2",
                         wave: "style3",
+                        wave2: "style3",
                     };
                     return `media ${styleMap[style]}`;
                 }),
