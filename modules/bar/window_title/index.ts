@@ -1,6 +1,7 @@
 const hyprland = await Service.import("hyprland");
 import options from 'options';
 import { ActiveClient } from 'types/service/hyprland'
+import Label from "types/widgets/label";
 
 const filterTitle = (windowtitle: ActiveClient) => {
     const windowTitleMap = [
@@ -127,15 +128,36 @@ const filterTitle = (windowtitle: ActiveClient) => {
     }
 
     return {
-        icon: foundMatch ? foundMatch[1] : windowTitleMap[windowTitleMap.length - 1][1],
-        label: foundMatch ? foundMatch[2] : windowTitleMap[windowTitleMap.length - 1][2]
+        icon: foundMatch[1],
+        label: foundMatch[2]
     };
 };
 
+const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: boolean) => {
+    if (useCustomTitle) return filterTitle(client).label;
+    if (useClassName) return client.class;
+
+    let title = client.title;
+    // If the title is empty or only filled with spaces, fallback to the class name
+    if (title.length === 0 || title.match(/^ *$/)) {
+        return client.class;
+    }
+    return title;
+};
+
+const truncateTitle = (title: string, max_size: number) => {
+    if (max_size > 0 && title.length > max_size) {
+        return title.substring(0, max_size).trim() + "...";
+    }
+    return title;
+};
+
 const ClientTitle = () => {
+    const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
+
     return {
         component: Widget.Box({
-            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), options.bar.windowtitle.label.bind("value")], (style, showLabel) => {
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), label.bind("value")], (style, showLabel) => {
                 const styleMap = {
                     default: "style1",
                     split: "style2",
@@ -144,17 +166,26 @@ const ClientTitle = () => {
                 };
                 return `windowtitle ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
             }),
-            children: options.bar.windowtitle.label.bind("value").as((showLabel) => {
-                const titleIcon = Widget.Label({
-                    class_name: "bar-button-icon windowtitle txt-icon bar",
-                    label: hyprland.active.bind("client").as((v) => filterTitle(v).icon),
-                });
-                const titleLabel = Widget.Label({
-                    class_name: "bar-button-label windowtitle",
-                    label: hyprland.active.bind("client").as((v) => filterTitle(v).label),
-                });
-                return showLabel ? [titleIcon, titleLabel] : [titleIcon];
-            }),
+            children:
+                Utils.merge(
+                    [hyprland.active.bind("client"), custom_title.bind("value"), class_name.bind("value"), label.bind("value"),
+                        icon.bind("value"), truncation.bind("value"), truncation_size.bind("value")],
+                    (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
+                        const children: Label<any>[] = [];
+                        if (showIcon) {
+                            children.push(Widget.Label({
+                                class_name: "bar-button-icon windowtitle txt-icon bar",
+                                label: filterTitle(client).icon,
+                            }));
+                        }
+                        if (showLabel) {
+                            children.push(Widget.Label({
+                                class_name: `bar-button-label windowtitle ${showIcon ? "" : "no-icon"}`,
+                                label: truncateTitle(getTitle(client, useCustomTitle, useClassName), truncate ? truncationSize : -1),
+                            }));
+                        }
+                        return children;
+                    }),
         }),
         isVisible: true,
         boxClass: "windowtitle",

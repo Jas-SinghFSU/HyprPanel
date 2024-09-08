@@ -220,22 +220,50 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header("Window Titles"),
                 Option({
-                    opt: options.bar.windowtitle.label,
-                    title: "Show Window Title Label",
-                    type: "boolean",
-                }),
-                Option({
-                    opt: options.theme.bar.buttons.windowtitle.spacing,
-                    title: "Inner Spacing",
-                    subtitle: "Spacing between the icon and the label inside the buttons.",
-                    type: "string",
+                    opt: options.bar.windowtitle.custom_title,
+                    title: 'Use Custom Title',
+                    type: 'boolean'
                 }),
                 Option({
                     opt: options.bar.windowtitle.title_map,
-                    title: "Window Title Mappings",
-                    subtitle: "Wiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings",
-                    type: "object",
-                    subtitleLink: "https://hyprpanel.com/configuration/panel.html#window-title-mappings",
+                    title: 'Window Title Mappings',
+                    subtitle: 'Only applicable if Show Custom Title is enabled\nWiki Link: https://hyprpanel.com/configuration/panel.html#window-title-mappings',
+                    type: 'object',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#window-title-mappings'
+                }),
+                Option({
+                    opt: options.bar.windowtitle.class_name,
+                    title: 'Use Class Name',
+                    subtitle: 'Only applicable if Show Custom Title is disabled\nDisplays the window\'s class name instead of its title.',
+                    type: 'boolean'
+                }),
+                Option({
+                    opt: options.bar.windowtitle.label,
+                    title: 'Show Window Title Label',
+                    type: 'boolean'
+                }),
+                Option({
+                    opt: options.bar.windowtitle.icon,
+                    title: 'Show Icon',
+                    type: 'boolean'
+                }),
+                Option({
+                    opt: options.bar.windowtitle.truncation,
+                    title: 'Truncate Window Title',
+                    subtitle: 'Will truncate the window title to the specified size below.',
+                    type: 'boolean'
+                }),
+                Option({
+                    opt: options.bar.windowtitle.truncation_size,
+                    title: 'Truncation Size',
+                    type: 'number',
+                    min: 10
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.windowtitle.spacing,
+                    title: 'Inner Spacing',
+                    subtitle: 'Spacing between the icon and the label inside the buttons.',
+                    type: 'string'
                 }),
 
                 /*

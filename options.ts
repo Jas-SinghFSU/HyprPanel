@@ -814,8 +814,13 @@ const options = mkOptions(OPTIONS, {
             icon: opt("󰣇"),
         },
         windowtitle: {
+            custom_title: opt(true),
             title_map: opt([]),
+            class_name: opt(true),
             label: opt(true),
+            icon: opt(true),
+            truncation: opt(true),
+            truncation_size: opt(50),
         },
         workspaces: {
             show_icons: opt(false),
