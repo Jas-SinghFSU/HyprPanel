@@ -48,6 +48,9 @@ Optional Dependencies:
 ## Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
 python-gpustat
+
+## Only if a pywal hook from wallpaper changes applied through settings is desired
+pywal
 ```
 
 Arch (pacman):
