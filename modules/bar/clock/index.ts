@@ -33,6 +33,7 @@ const Clock = () => {
                     default: "style1",
                     split: "style2",
                     wave: "style3",
+                    wave2: "style3",
                 };
 
                 return `bluetooth ${styleMap[btnStyle]} ${!shwLbl ? "no-label" : ""} ${!shwIcn ? "no-icon" : ""}`;

@@ -162,6 +162,7 @@ const ClientTitle = () => {
                     default: "style1",
                     split: "style2",
                     wave: "style3",
+                    wave2: "style3",
                 };
                 return `windowtitle ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
             }),

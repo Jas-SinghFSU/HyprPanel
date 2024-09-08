@@ -101,11 +101,11 @@
     }
   }
 
-  label {
+  label:not(.txt-icon) {
     margin-left: 1em;
   }
 
-  image {
+  label.txt-icon {
     min-width: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
     min-height: 3.75rem * $bar-menus-menu-power-scaling * 0.01;
     background: $red;

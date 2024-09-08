@@ -854,7 +854,7 @@ const options = mkOptions(OPTIONS, {
             label: opt(true),
         },
         systray: {
-            ignore: opt([]),
+            ignore: opt<string[]>([]),
         },
         clock: {
             icon: opt("󰸗"),
@@ -866,7 +866,8 @@ const options = mkOptions(OPTIONS, {
             show_artist: opt(false),
             truncation: opt(true),
             show_label: opt(true),
-            truncation_size: opt(30)
+            truncation_size: opt(30),
+            show_active_only: opt(false)
         },
         notifications: {
             show_total: opt(false),
@@ -1072,6 +1073,7 @@ const options = mkOptions(OPTIONS, {
 
     notifications: {
         position: opt<NotificationAnchor>("top right"),
+        ignore: opt<string[]>([]),
         displayedTotal: opt(10),
         monitor: opt(0),
         active_monitor: opt(true),

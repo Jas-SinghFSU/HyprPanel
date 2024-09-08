@@ -7,9 +7,11 @@ import { Header } from "./header/index.js";
 import { Body } from "./body/index.js";
 import { CloseButton } from "./close/index.js";
 import { getPosition } from "lib/utils.js";
+import { filterNotifications } from "lib/shared/notifications.js";
+import { Notification } from "types/service/notifications.js";
 const hyprland = await Service.import("hyprland");
 
-const { position, timeout, cache_actions, monitor, active_monitor, displayedTotal } = options.notifications;
+const { position, timeout, cache_actions, monitor, active_monitor, displayedTotal, ignore } = options.notifications;
 
 
 const curMonitor = Variable(monitor.value);
@@ -46,8 +48,10 @@ export default () => {
             vertical: true,
             hexpand: true,
             setup: (self) => {
-                self.hook(notifs, () => {
-                    return (self.children = notifs.popups.slice(0, displayedTotal.value).map((notif) => {
+                Utils.merge([notifs.bind("popups"), ignore.bind("value")], (notifications: Notification[], ignoredNotifs: string[]) => {
+                    const filteredNotifications = filterNotifications(notifications, ignoredNotifs);
+
+                    return (self.children = filteredNotifications.slice(0, displayedTotal.value).map((notif) => {
                         return Widget.Box({
                             class_name: "notification-card",
                             vpack: "start",
@@ -65,7 +69,7 @@ export default () => {
                             ],
                         });
                     }));
-                });
+                })
             },
         }),
     });
