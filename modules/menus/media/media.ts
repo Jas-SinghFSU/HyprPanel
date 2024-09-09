@@ -37,17 +37,17 @@ const Media = () => {
         };
 
         const isPlaying = media.players.find(
-            (p) => p["play-back-status"] === "Playing",
+            (p) => p["play_back_status"] === "Playing",
         );
 
         const playerStillExists = media.players.some(
-            (p) => curPlayer.value === p["bus-name"],
+            (p) => curPlayer.value === p["bus_name"],
         );
 
         const nextPlayerUp = media.players.sort(
             (a, b) =>
-                statusOrder[a["play-back-status"]] -
-                statusOrder[b["play-back-status"]],
+                statusOrder[a["play_back_status"]] -
+                statusOrder[b["play_back_status"]],
         )[0].bus_name;
 
         if (isPlaying || !playerStillExists) {

@@ -2,14 +2,15 @@ import Gtk from "gi://Gtk?version=3.0";
 import Gio from "gi://Gio"
 import { bash, Notify } from "lib/utils";
 import icons from "lib/icons"
+import { Config } from "lib/types/filechooser";
+import { hexColorPattern } from "globals/useTheme";
+import { isHexColor } from "globals/variables";
 
 const whiteListedThemeProp = [
     "theme.bar.buttons.style"
 ];
 
-
-// Helper functions
-export const loadJsonFile = (filePath: string): object | null => {
+export const loadJsonFile = (filePath: string): Config | null => {
     let file = Gio.File.new_for_path(filePath as string);
     let [success, content] = file.load_contents(null);
 
@@ -32,10 +33,8 @@ export const saveConfigToFile = (config: object, filePath: string): void => {
     dataOutputStream.close(null);
 }
 
-export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
-
-export const filterConfigForThemeOnly = (config: object) => {
-    let filteredConfig = {};
+export const filterConfigForThemeOnly = (config: Config): Config => {
+    let filteredConfig: Config = {};
 
     for (let key in config) {
         if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
@@ -47,8 +46,8 @@ export const filterConfigForThemeOnly = (config: object) => {
     return filteredConfig;
 };
 
-export const filterConfigForNonTheme = (config: object) => {
-    let filteredConfig = {};
+export const filterConfigForNonTheme = (config: Config): Config => {
+    let filteredConfig: Config = {};
     for (let key in config) {
         if (whiteListedThemeProp.includes(key)) {
             continue;
@@ -75,12 +74,11 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     let jsonObject = JSON.parse(jsonString);
 
     // Function to filter hex color pairs
-    const filterHexColorPairs = (jsonObject: object) => {
-        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
-        let filteredObject = {};
+    const filterHexColorPairs = (jsonObject: Config) => {
+        let filteredObject: Config = {};
 
         for (let key in jsonObject) {
-            if (typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key])) {
+            if (typeof jsonObject[key] === 'string' && isHexColor(jsonObject[key])) {
                 filteredObject[key] = jsonObject[key];
             } else if (whiteListedThemeProp.includes(key)) {
                 filteredObject[key] = jsonObject[key];
@@ -92,9 +90,8 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     };
 
     // Function to filter out hex color pairs (keep only non-hex color value)
-    const filterOutHexColorPairs = (jsonObject: object) => {
-        const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
-        let filteredObject = {};
+    const filterOutHexColorPairs = (jsonObject: Config) => {
+        let filteredObject: Config = {};
 
         for (let key in jsonObject) {
             // do not add key-value pair if its in whiteListedThemeProp
@@ -102,7 +99,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
                 continue;
             }
 
-            if (!(typeof jsonObject[key] === 'string' && hexColorPattern.test(jsonObject[key]))) {
+            if (!(typeof jsonObject[key] === 'string' && isHexColor(jsonObject[key]))) {
                 filteredObject[key] = jsonObject[key];
             }
         }
@@ -192,8 +189,19 @@ export const importFiles = (themeOnly: boolean = false): void => {
         return;
     }
     if (response === Gtk.ResponseType.ACCEPT) {
-        let filePath = dialog.get_filename();
-        let importedConfig = loadJsonFile(filePath as string);
+        let filePath: string | null = dialog.get_filename();
+
+        if (filePath === null) {
+            Notify({
+                summary: "Failed to import",
+                body: "No file selected.",
+                iconName: icons.ui.warning,
+                timeout: 5000
+            });
+            return;
+        }
+
+        let importedConfig = loadJsonFile(filePath);
 
         if (!importedConfig) {
             dialog.destroy();

@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "noEmit": true,
         "allowImportingTsExtensions": true,
         "target": "ES2022",
         "module": "ES2022",
@@ -10,11 +11,14 @@
         "checkJs": true,
         "strict": true,
         "noImplicitAny": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "noImplicitThis": true,
         "baseUrl": ".",
         "typeRoots": [
             "types",
             "lib/types/globals",
         ],
-        "skipLibCheck": true
+        "skipLibCheck": true,
     }
 }

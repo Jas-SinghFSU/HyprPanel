@@ -1,8 +1,10 @@
 import options from "options";
 import { bash, dependencies } from "lib/utils";
-import { MatugenColors } from "lib/types/options";
+import { MatugenColors, RecursiveOptionsObject } from "lib/types/options";
 import { initializeTrackers } from "./options_trackers";
 import { generateMatugenColors, replaceHexValues } from "../services/matugen/index";
+import { isHexColor, isOpt, isRecursiveOptionsObject } from "globals/variables";
+import { Opt } from "lib/option";
 
 const deps = [
     "font",
@@ -13,27 +15,37 @@ const deps = [
     "bar.battery.blocks",
 ];
 
-function extractVariables(theme: typeof options.theme, prefix = "", matugenColors: MatugenColors | undefined) {
+function extractVariables(
+    theme: RecursiveOptionsObject,
+    prefix = "",
+    matugenColors?: MatugenColors
+): string[] {
     let result = [] as string[];
     for (let key in theme) {
-        if (theme.hasOwnProperty(key)) {
-            const value = theme[key];
+        if (!theme.hasOwnProperty(key)) {
+            continue;
+        }
 
-            const newPrefix = prefix ? `${prefix}-${key}` : key;
+        const value = theme[key];
 
-            const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
-            const replacedValue = isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
-            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-                if (typeof value.value !== 'undefined') {
-                    result.push(`$${newPrefix}: ${replacedValue};`);
-                } else {
-                    result = result.concat(extractVariables(value, newPrefix, matugenColors));
-                }
-            } else if (typeof value === 'function' && value.name === 'opt') {
-                result.push(`$${newPrefix}: ${replacedValue};`);
-            }
+        const newPrefix = prefix ? `${prefix}-${key}` : key;
+
+        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
+        const replacedValue = isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
+
+        if (typeof value === 'function') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
+            continue;
+        }
+        if (typeof value !== 'object' || value === null || Array.isArray(value)) continue;
+
+        if (typeof value.value !== 'undefined') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
+        } else {
+            result = result.concat(extractVariables(value as RecursiveOptionsObject, newPrefix, matugenColors));
         }
     }
+
     return result;
 }
 

@@ -31,8 +31,8 @@
     border-radius: if($osd-orientation =="vertical", 0em 0em $osd-radius $osd-radius, $osd-radius 0em 0em $osd-radius );
 
     .osd-icon {
-      font-size: 2em;
-      padding: if($osd-orientation =="vertical", 0.2em 0em, 0em 0.2em);
+      font-size: 2.1em;
+      padding: if($osd-orientation =="vertical", 0.2em 0em, 0em 0.4em);
       color: $osd-icon;
     }
   }

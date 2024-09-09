@@ -1,5 +1,6 @@
 import { ResourceLabelType } from 'lib/types/bar';
 import { GenericResourceData } from 'lib/types/customModules/generic';
+import { InputHandlerEvents } from 'lib/types/customModules/utils';
 import { Binding } from 'lib/utils';
 import { openMenu } from 'modules/bar/utils';
 import options from 'options';
@@ -75,7 +76,7 @@ export const inputHandler = (
         onMiddleClick,
         onScrollUp,
         onScrollDown,
-    }
+    }: InputHandlerEvents
 ) => {
     const sanitizeInput = (input: VariableType<string>): string => {
         if (input === undefined) {

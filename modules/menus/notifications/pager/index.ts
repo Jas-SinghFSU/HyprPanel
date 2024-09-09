@@ -10,7 +10,7 @@ export const NotificationPager = (curPage: Variable<number>) => {
         class_name: "notification-menu-pager",
         hexpand: true,
         vexpand: false,
-        children: Utils.merge([curPage.bind("value"), displayedTotal.bind("value"), notifs.bind("notifications")], (currentPage, dispTotal, notifications) => {
+        children: Utils.merge([curPage.bind("value"), displayedTotal.bind("value"), notifs.bind("notifications")], (currentPage, dispTotal, _) => {
             return [
                 Widget.Button({
                     hexpand: true,

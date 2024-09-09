@@ -1,17 +1,24 @@
 import { MprisPlayer } from "types/service/mpris.js";
 import icons from "../../../icons/index.js";
+import { LoopStatus, PlaybackStatus } from "lib/types/mpris.js";
 const media = await Service.import("mpris");
 
 const Controls = (getPlayerInfo: Function) => {
+    const isValidLoopStatus = (status: string): status is LoopStatus =>
+        ["none", "track", "playlist"].includes(status);
+
+    const isValidPlaybackStatus = (status: string): status is PlaybackStatus =>
+        ["playing", "paused", "stopped"].includes(status);
+
     const isLoopActive = (player: MprisPlayer) => {
-        return player["loop-status"] !== null &&
-            ["track", "playlist"].includes(player["loop-status"].toLowerCase())
+        return player["loop_status"] !== null &&
+            ["track", "playlist"].includes(player["loop_status"].toLowerCase())
             ? "active"
             : "";
     };
 
     const isShuffleActive = (player: MprisPlayer) => {
-        return player["shuffle-status"] !== null && player["shuffle-status"]
+        return player["shuffle_status"] !== null && player["shuffle_status"]
             ? "active"
             : "";
     };
@@ -98,13 +105,18 @@ const Controls = (getPlayerInfo: Function) => {
                                         media,
                                         "changed",
                                         () => {
-                                            const foundPlayer = getPlayerInfo();
+                                            const foundPlayer: MprisPlayer = getPlayerInfo();
                                             if (foundPlayer === undefined) {
                                                 return icons.mpris["paused"];
                                             }
-                                            return icons.mpris[
-                                                foundPlayer.play_back_status.toLowerCase()
-                                            ];
+                                            const playbackStatus = foundPlayer.play_back_status?.toLowerCase();
+
+                                            if (playbackStatus && isValidPlaybackStatus(playbackStatus)) {
+                                                return icons.mpris[playbackStatus];
+                                            }
+                                            else {
+                                                return icons.mpris["paused"];
+                                            }
                                         },
                                     ),
                                 }),
@@ -161,18 +173,21 @@ const Controls = (getPlayerInfo: Function) => {
                                 child: Widget.Icon({
                                     setup: (self) => {
                                         self.hook(media, () => {
-                                            const foundPlayer = getPlayerInfo();
+                                            const foundPlayer: MprisPlayer = getPlayerInfo();
+
                                             if (foundPlayer === undefined) {
                                                 self.icon = icons.mpris.loop["none"];
                                                 return;
                                             }
 
-                                            self.icon =
-                                                foundPlayer.loop_status === null
-                                                    ? icons.mpris.loop["none"]
-                                                    : icons.mpris.loop[
-                                                    foundPlayer.loop_status?.toLowerCase()
-                                                    ];
+                                            const loopStatus = foundPlayer.loop_status?.toLowerCase();
+
+                                            if (loopStatus && isValidLoopStatus(loopStatus)) {
+                                                self.icon = icons.mpris.loop[loopStatus];
+                                            }
+                                            else {
+                                                self.icon = icons.mpris.loop["none"];
+                                            }
                                         });
                                     },
                                 }),

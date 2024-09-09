@@ -1,8 +1,6 @@
 // @ts-expect-error
 import GTop from 'gi://GTop';
 
-const defaultCpuData: number = 0;
-
 let previousCpuData = new GTop.glibtop_cpu();
 GTop.glibtop_get_cpu(previousCpuData);
 

@@ -8,20 +8,29 @@ import Gdk from "gi://Gdk"
 import GLib from "gi://GLib?version=2.0"
 import GdkPixbuf from "gi://GdkPixbuf";
 import { NotificationArgs } from "types/utils/notify"
+import { SubstituteKeys } from "./types/utils";
 
 export type Binding<T> = import("types/service").Binding<any, any, T>
+
 
 /**
   * @returns substitute icon || name || fallback icon
   */
 export function icon(name: string | null, fallback = icons.missing) {
+    const validateSubstitute = (name: string): name is SubstituteKeys => name in substitutes;
+
     if (!name)
         return fallback || ""
 
     if (GLib.file_test(name, GLib.FileTest.EXISTS))
         return name
 
-    const icon = (substitutes[name] || name)
+    let icon: string = name;
+
+    if (validateSubstitute(name)) {
+        icon = substitutes[name];
+    }
+
     if (Utils.lookUpIcon(icon))
         return icon
 

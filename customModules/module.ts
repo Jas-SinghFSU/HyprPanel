@@ -1,4 +1,5 @@
 import { Module } from "lib/types/bar";
+import { BarButtonStyles } from "lib/types/options";
 import options from "options";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
 import { Binding } from "types/service";
@@ -40,7 +41,7 @@ export const module = ({
 
     return {
         component: Widget.Box({
-            className: Utils.merge([style.bind("value"), showLabelBinding], (style: string, shwLabel: boolean) => {
+            className: Utils.merge([style.bind("value"), showLabelBinding], (style: BarButtonStyles, shwLabel: boolean) => {
                 const shouldShowLabel = shwLabel || showLabel;
                 const styleMap = {
                     default: "style1",

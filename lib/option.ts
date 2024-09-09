@@ -1,3 +1,4 @@
+import { isHexColor } from "globals/variables"
 import { Variable } from "resource:///com/github/Aylur/ags/variable.js"
 
 type OptProps = {
@@ -49,7 +50,7 @@ export class Opt<T = unknown> extends Variable<T> {
         if (this.persistent)
             return;
 
-        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(`${this.value}`);
+        const isColor = isHexColor(this.value as string);
         if ((JSON.stringify(this.value) !== JSON.stringify(this.initial)) && isColor) {
             this.value = this.initial
             return this.id
@@ -60,35 +61,37 @@ export class Opt<T = unknown> extends Variable<T> {
 
 export const opt = <T>(initial: T, opts?: OptProps) => new Opt(initial, opts)
 
-function getOptions(object: object, path = ""): Opt[] {
+function getOptions(object: Record<string, unknown>, path = ""): Opt[] {
     return Object.keys(object).flatMap(key => {
-        const obj: Opt = object[key]
-        const id = path ? path + "." + key : key
+        const obj = object[key];
+        const id = path ? path + "." + key : key;
 
         if (obj instanceof Variable) {
-            obj.id = id
-            return obj
+            const optValue = obj as Opt;
+            optValue.id = id;
+            return optValue;
         }
 
-        if (typeof obj === "object")
-            return getOptions(obj, id)
+        if (typeof obj === "object" && obj !== null) {
+            return getOptions(obj as Record<string, unknown>, id); // Recursively process nested objects
+        }
 
-        return []
-    })
+        return [];
+    });
 }
 
 export function mkOptions<T extends object>(cacheFile: string, object: T, confFile: string = "config.json") {
-    for (const opt of getOptions(object))
+    for (const opt of getOptions(object as Record<string, unknown>))
         opt.init(cacheFile)
 
     Utils.ensureDirectory(cacheFile.split("/").slice(0, -1).join("/"))
 
     const configFile = `${TMP}/${confFile}`
-    const values = getOptions(object).reduce((obj, { id, value }) => ({ [id]: value, ...obj }), {})
+    const values = getOptions(object as Record<string, unknown>).reduce((obj, { id, value }) => ({ [id]: value, ...obj }), {})
     Utils.writeFileSync(JSON.stringify(values, null, 2), configFile)
     Utils.monitorFile(configFile, () => {
         const cache = JSON.parse(Utils.readFile(configFile) || "{}")
-        for (const opt of getOptions(object)) {
+        for (const opt of getOptions(object as Record<string, unknown>)) {
             if (JSON.stringify(cache[opt.id]) !== JSON.stringify(opt.value))
                 opt.value = cache[opt.id]
         }
@@ -99,7 +102,7 @@ export function mkOptions<T extends object>(cacheFile: string, object: T, confFi
     }
 
     async function reset(
-        [opt, ...list] = getOptions(object),
+        [opt, ...list] = getOptions(object as Record<string, unknown>),
         id = opt?.reset(),
     ): Promise<Array<string>> {
         if (!opt)
@@ -111,7 +114,7 @@ export function mkOptions<T extends object>(cacheFile: string, object: T, confFi
     }
 
     async function resetTheme(
-        [opt, ...list] = getOptions(object),
+        [opt, ...list] = getOptions(object as Record<string, unknown>),
         id = opt?.doResetColor(),
     ): Promise<Array<string>> {
         if (!opt)
@@ -124,7 +127,7 @@ export function mkOptions<T extends object>(cacheFile: string, object: T, confFi
 
     return Object.assign(object, {
         configFile,
-        array: () => getOptions(object),
+        array: () => getOptions(object as Record<string, unknown>),
         async reset() {
             return (await reset()).join("\n")
         },
@@ -132,7 +135,7 @@ export function mkOptions<T extends object>(cacheFile: string, object: T, confFi
             return (await resetTheme()).join("\n")
         },
         handler(deps: string[], callback: () => void) {
-            for (const opt of getOptions(object)) {
+            for (const opt of getOptions(object as Record<string, unknown>)) {
                 if (deps.some(i => opt.id.startsWith(i)))
                     opt.connect("changed", callback)
             }

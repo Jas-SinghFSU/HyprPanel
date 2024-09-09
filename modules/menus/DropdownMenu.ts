@@ -1,4 +1,5 @@
 const hyprland = await Service.import("hyprland");
+import { DropdownMenuProps } from "lib/types/dropdownmenu";
 import { Exclusivity } from "lib/types/widget";
 import { bash } from "lib/utils";
 import { Monitor } from "types/service/hyprland";
@@ -99,15 +100,17 @@ setTimeout(() => {
     initRender.value = false;
 }, 2000);
 
-export default ({
-    name,
-    child,
-    layout = "center",
-    transition,
-    exclusivity = "ignore" as Exclusivity,
-    fixed = false,
-    ...props
-}) =>
+export default (
+    {
+        name,
+        child,
+        layout = "center",
+        transition,
+        exclusivity = "ignore" as Exclusivity,
+        fixed = false,
+        ...props
+    }: DropdownMenuProps
+) =>
     Widget.Window({
         name,
         class_names: [name, "dropdown-menu"],
