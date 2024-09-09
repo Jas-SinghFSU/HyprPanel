@@ -3,6 +3,8 @@ import { bash, Notify } from "lib/utils";
 import icons from "lib/icons"
 import { filterConfigForThemeOnly, loadJsonFile, saveConfigToFile } from "widget/settings/shared/FileChooser";
 
+export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+
 globalThis.useTheme = (filePath: string): void => {
     let importedConfig = loadJsonFile(filePath);
 

@@ -1,6 +1,6 @@
 import options from "options";
 import { bash, dependencies } from "lib/utils";
-import { HexColor, MatugenColors, RecursiveOptionsObject } from "lib/types/options";
+import { MatugenColors, RecursiveOptionsObject } from "lib/types/options";
 import { initializeTrackers } from "./options_trackers";
 import { generateMatugenColors, replaceHexValues } from "../services/matugen/index";
 import { isHexColor, isOpt, isRecursiveOptionsObject } from "globals/variables";
@@ -26,14 +26,12 @@ function extractVariables(
         const newPrefix = prefix ? `${prefix}-${key}` : key;
         const value = theme[key];
 
-        // Type guard for Opt<boolean>
         if (isOpt<boolean>(value)) {
             const { value: val } = value;
             result.push(`$${newPrefix}: ${val};`);
             continue;
         }
 
-        // Type guard for Opt<string | number>
         if (isOpt<string | number>(value)) {
             const { value: val } = value as Opt<string | number | boolean>;
 

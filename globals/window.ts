@@ -1,5 +1,3 @@
-import { Layouts } from "lib/types/widget";
-
 export const WINDOW_LAYOUTS: string[] = [
     'center',
     'top',

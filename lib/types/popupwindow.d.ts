@@ -5,7 +5,7 @@ import { Transition } from "./widget";
 export type PopupWindowProps = {
     name: string;
     child: any;
-    layout?: Layout;
+    layout?: Layouts;
     transition?: any;
     exclusivity?: Exclusivity;
 } & WindowProps;
@@ -24,3 +24,4 @@ export type LayoutFunction = (
     "bottom-center": () => Widget;
     "bottom-right": () => Widget;
 };
+export type Layouts = 'center' | 'top' | 'top-right' | 'top-center' | 'top-left' | 'bottom-left' | 'bottom-center' | 'bottom-right';

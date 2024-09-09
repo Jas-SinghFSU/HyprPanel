@@ -1,6 +1,6 @@
 import { WINDOW_LAYOUTS } from "globals/window";
-import { LayoutFunction, PopupWindowProps } from "lib/types/popupwindow";
-import { Exclusivity, Layouts, Transition } from "lib/types/widget";
+import { LayoutFunction, Layouts, PopupWindowProps } from "lib/types/popupwindow";
+import { Exclusivity, Transition } from "lib/types/widget";
 
 type Opts = {
     className: string
@@ -164,11 +164,9 @@ export default ({
     exclusivity = "ignore" as Exclusivity,
     ...props
 }: PopupWindowProps) => {
-    let layoutWidget = Layout(name, child, transition)["center"]();
+    const layoutFn = isValidLayout(layout) ? layout : "center";
 
-    if (isValidLayout(layout)) {
-        layoutWidget = Layout(name, child, transition)[layout]();
-    }
+    const layoutWidget = Layout(name, child, transition)[layoutFn]();
 
     return Widget.Window({
         name,
