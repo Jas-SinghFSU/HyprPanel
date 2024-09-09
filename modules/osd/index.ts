@@ -9,6 +9,7 @@ const audio = await Service.import("audio")
 
 const {
     enable,
+    duration,
     orientation,
     location,
     active_monitor,
@@ -21,8 +22,6 @@ hyprland.active.connect("changed", () => {
     curMonitor.value = hyprland.active.monitor.id;
 })
 
-const DELAY = 2500;
-
 let count = 0
 const handleReveal = (self: any, property: string) => {
     if (!enable.value) {
@@ -30,7 +29,7 @@ const handleReveal = (self: any, property: string) => {
     }
     self[property] = true
     count++
-    Utils.timeout(DELAY, () => {
+    Utils.timeout(duration.value, () => {
         count--
 
         if (count === 0)
@@ -39,8 +38,6 @@ const handleReveal = (self: any, property: string) => {
 }
 
 const renderOSD = () => {
-
-
     return Widget.Revealer({
         transition: "crossfade",
         reveal_child: false,
