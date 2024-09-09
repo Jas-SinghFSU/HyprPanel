@@ -20,33 +20,29 @@ function extractVariables(
     prefix = "",
     matugenColors?: MatugenColors
 ): string[] {
-    const result: string[] = [];
+    let result = [] as string[];
+    for (let key in theme) {
+        if (!theme.hasOwnProperty(key)) {
+            continue;
+        }
 
-    for (const key in theme) {
-        const newPrefix = prefix ? `${prefix}-${key}` : key;
         const value = theme[key];
 
-        if (isOpt<boolean>(value)) {
-            const { value: val } = value;
-            result.push(`$${newPrefix}: ${val};`);
+        const newPrefix = prefix ? `${prefix}-${key}` : key;
+
+        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
+        const replacedValue = isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
+
+        if (typeof value === 'function') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
             continue;
         }
+        if (typeof value !== 'object' || value === null || Array.isArray(value)) continue;
 
-        if (isOpt<string | number>(value)) {
-            const { value: val } = value as Opt<string | number | boolean>;
-
-            if (typeof val === 'string' && isHexColor(val)) {
-                result.push(`$${newPrefix}: ${matugenColors ? replaceHexValues(val, matugenColors) : val};`);
-                continue;
-            }
-
-            result.push(`$${newPrefix}: ${val};`);
-            continue;
-        }
-
-        // Handle recursive options objects
-        if (isRecursiveOptionsObject(value)) {
-            result.push(...extractVariables(value as RecursiveOptionsObject, newPrefix, matugenColors));
+        if (typeof value.value !== 'undefined') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
+        } else {
+            result = result.concat(extractVariables(value as RecursiveOptionsObject, newPrefix, matugenColors));
         }
     }
 
