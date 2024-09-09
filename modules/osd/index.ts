@@ -72,16 +72,16 @@ const renderOSD = () => {
             children: orientation.bind("value").as(ort => {
                 if (ort === "vertical") {
                     return [
-                        OSDLabel(ort),
+                        OSDLabel(),
                         OSDBar(ort),
-                        OSDIcon(ort)
+                        OSDIcon()
                     ]
                 }
 
                 return [
-                    OSDIcon(ort),
+                    OSDIcon(),
                     OSDBar(ort),
-                    OSDLabel(ort),
+                    OSDLabel(),
                 ]
             })
         })

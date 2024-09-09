@@ -1,9 +1,8 @@
-import { OSDOrientation } from "lib/types/options";
 import brightness from "services/Brightness"
 import options from "options"
 const audio = await Service.import("audio")
 
-export const OSDLabel = (ort: OSDOrientation) => {
+export const OSDLabel = () => {
     return Widget.Box({
         class_name: "osd-label-container",
         hexpand: true,

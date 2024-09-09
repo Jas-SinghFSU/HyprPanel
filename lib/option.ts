@@ -62,7 +62,7 @@ export const opt = <T>(initial: T, opts?: OptProps) => new Opt(initial, opts)
 
 function getOptions(object: object, path = ""): Opt[] {
     return Object.keys(object).flatMap(key => {
-        const obj: Opt = object[key]
+        const obj: Opt = object[key];
         const id = path ? path + "." + key : key
 
         if (obj instanceof Variable) {

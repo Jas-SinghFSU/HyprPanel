@@ -1,7 +1,8 @@
 import { Network } from "types/service/network.js";
-import { AccessPoint } from "lib/types/network.js";
+import { AccessPoint, WifiStatus } from "lib/types/network.js";
 import { Variable } from "types/variable.js";
 import { getWifiIcon } from "../utils.js";
+import { WIFI_STATUS_MAP } from "globals/network.js";
 const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>, connecting: Variable<string>) => {
     const getIdBySsid = (ssid: string, nmcliOutput: string) => {
         const lines = nmcliOutput.trim().split("\n");
@@ -14,33 +15,36 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
         return null;
     };
 
-    const WifiStatusMap = {
-        unknown: "Status Unknown",
-        unmanaged: "Unmanaged",
-        unavailable: "Unavailable",
-        disconnected: "Disconnected",
-        prepare: "Preparing Connecting",
-        config: "Connecting",
-        need_auth: "Needs Authentication",
-        ip_config: "Requesting IP",
-        ip_check: "Checking Access",
-        secondaries: "Waiting on Secondaries",
-        activated: "Connected",
-        deactivating: "Disconnecting",
-        failed: "Connection Failed",
+    const isValidWifiStatus = (status: string): status is WifiStatus => {
+        return status in WIFI_STATUS_MAP;
     };
+
+
+    const getWifiStatus = () => {
+        const wifiState = network.wifi.state?.toLowerCase();
+
+        if (wifiState && isValidWifiStatus(wifiState)) {
+            return WIFI_STATUS_MAP[wifiState];
+        }
+        return WIFI_STATUS_MAP["unknown"];
+    }
+
     self.hook(network, () => {
         Utils.merge([staging.bind("value"), connecting.bind("value")], () => {
-            // Sometimes the network service will yield a "this._device is undefined" when
+            // NOTE: Sometimes the network service will yield a "this._device is undefined" when
             // trying to access the "access_points" property. So we must validate that
             // it's not 'undefined'
-            //
+            // --
             // Also this is an AGS bug that needs to be fixed
-            let WAPs =
-                network.wifi._device !== undefined ? network.wifi["access-points"] : [];
+
+            // TODO: Remove @ts-ignore once AGS bug is fixed
+            // @ts-ignore
+            let WAPs = network.wifi._device !== undefined
+                ? network.wifi["access_points"]
+                : [];
 
             const dedupeWAPs = () => {
-                const dedupMap = {};
+                const dedupMap: Record<string, AccessPoint> = {};
                 WAPs.forEach((item: AccessPoint) => {
                     if (item.ssid !== null && !Object.hasOwnProperty.call(dedupMap, item.ssid)) {
                         dedupMap[item.ssid] = item;
@@ -153,8 +157,7 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                                                         child: Widget.Label({
                                                             hpack: "start",
                                                             class_name: "connection-status dim",
-                                                            label:
-                                                                WifiStatusMap[network.wifi.state.toLowerCase()],
+                                                            label: getWifiStatus()
                                                         }),
                                                     }),
                                                 ],

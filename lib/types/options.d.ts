@@ -1,6 +1,10 @@
 import { Opt } from "lib/option";
 import { Variable } from "types/variable";
 
+export type RecursiveOptionsObject = {
+    [key: string]: RecursiveOptionsObject | Opt<string | number | boolean> | Opt<any>;
+};
+
 export type Unit = "imperial" | "metric";
 export type PowerOptions = "sleep" | "reboot" | "logout" | "shutdown";
 export type NotificationAnchor = "top" | "top right" | "top left" | "bottom" | "bottom right" | "bottom left" | "left" | "right";
@@ -117,3 +121,4 @@ type MatugenVariation =
     | "vivid_3"
 
 type MatugenTheme = "light" | "dark";
+

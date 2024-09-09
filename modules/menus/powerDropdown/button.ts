@@ -1,4 +1,3 @@
-import icons from "lib/icons";
 import { PowerOptions } from "lib/types/options";
 import options from "options";
 import powermenu from "../power/helpers/actions";

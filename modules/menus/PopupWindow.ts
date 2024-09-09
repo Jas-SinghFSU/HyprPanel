@@ -1,4 +1,6 @@
-import { Exclusivity, Transition } from "lib/types/widget";
+import { WINDOW_LAYOUTS } from "globals/window";
+import { LayoutFunction, PopupWindowProps } from "lib/types/popupwindow";
+import { Exclusivity, Layouts, Transition } from "lib/types/widget";
 
 type Opts = {
     className: string
@@ -32,7 +34,7 @@ const PopupRevealer = (name: string, child: any, transition = "slide_down" as Tr
         }),
     );
 
-const Layout = (name: string, child: any, transition: Transition) => ({
+const Layout: LayoutFunction = (name: string, child: any, transition: Transition) => ({
     center: () =>
         Widget.CenterBox(
             {},
@@ -150,6 +152,10 @@ const Layout = (name: string, child: any, transition: Transition) => ({
         ),
 });
 
+const isValidLayout = (layout: string): layout is Layouts => {
+    return WINDOW_LAYOUTS.includes(layout);
+};
+
 export default ({
     name,
     child,
@@ -157,8 +163,14 @@ export default ({
     transition,
     exclusivity = "ignore" as Exclusivity,
     ...props
-}) =>
-    Widget.Window({
+}: PopupWindowProps) => {
+    let layoutWidget = Layout(name, child, transition)["center"]();
+
+    if (isValidLayout(layout)) {
+        layoutWidget = Layout(name, child, transition)[layout]();
+    }
+
+    return Widget.Window({
         name,
         class_names: [name, "popup-window"],
         setup: (w) => w.keybind("Escape", () => App.closeWindow(name)),
@@ -167,6 +179,7 @@ export default ({
         exclusivity,
         layer: "top",
         anchor: ["top", "bottom", "right", "left"],
-        child: Layout(name, child, transition)[layout](),
+        child: layoutWidget,
         ...props,
     });
+}
