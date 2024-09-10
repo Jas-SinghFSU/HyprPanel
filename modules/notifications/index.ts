@@ -40,7 +40,7 @@ export default () => {
                 return mon;
             }
         ),
-        layer: "overlay",
+        layer: options.tear.bind("value").as(tear => tear ? "top" : "overlay"),
         anchor: position.bind("value").as(v => getPosition(v)),
         exclusivity: "normal",
         child: Widget.Box({

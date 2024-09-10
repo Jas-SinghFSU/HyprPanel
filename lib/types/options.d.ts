@@ -48,6 +48,8 @@ export type OSDOrientation = "horizontal" | "vertical";
 
 export type HexColor = `#${string}`;
 
+export type WindowLayer = "top" | "bottom" | "overlay" | "background";
+
 export type MatugenColors = {
     "background": HexColor,
     "error": HexColor,
