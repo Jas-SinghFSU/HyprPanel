@@ -193,8 +193,11 @@ const options = mkOptions(OPTIONS, {
                 volume: {
                     background: opt(colors.base2),
                     hover: opt(colors.surface1),
-                    text: opt(colors.maroon),
-                    icon: opt(colors.maroon),
+                    output_text: opt(colors.maroon),
+                    output_icon: opt(colors.maroon),
+                    input_text: opt(colors.maroon),
+                    input_icon: opt(colors.maroon),
+                    separator: opt(colors.surface1),
                     icon_background: opt(colors.base2),
                     spacing: opt("0.5em"),
                 },
@@ -842,6 +845,9 @@ const options = mkOptions(OPTIONS, {
         },
         volume: {
             label: opt(true),
+            output: opt(true),
+            input: opt(false),
+            hide_muted_label: opt(false),
         },
         network: {
             truncation: opt(true),

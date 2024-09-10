@@ -72,8 +72,11 @@ export const BarTheme = () => {
                 Header('Volume'),
                 Option({ opt: options.theme.bar.buttons.volume.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.volume.hover, title: 'Hover', type: 'color' }),
-                Option({ opt: options.theme.bar.buttons.volume.text, title: 'Text', type: 'color' }),
-                Option({ opt: options.theme.bar.buttons.volume.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.volume.output_text, title: 'Output Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.volume.output_icon, title: 'Output Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.volume.input_text, title: 'Input Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.volume.input_icon, title: 'Input Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.volume.separator, title: 'Separator', type: 'color' }),
                 Option({
                     opt: options.theme.bar.buttons.volume.icon_background,
                     title: 'Button Icon Background',
