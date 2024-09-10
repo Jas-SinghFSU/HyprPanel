@@ -125,4 +125,3 @@ export const getWeatherStatusTextIcon = (wthr: Weather): WeatherIcon => {
 };
 
 globalThis["globalWeatherVar"] = globalWeatherVar;
-

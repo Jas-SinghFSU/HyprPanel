@@ -7,6 +7,7 @@ declare global {
     var useTheme: Function;
     var globalWeatherVar: VariableType<Weather>;
     var options: Options
+    var removingNotifications: VariableType<boolean>;
 }
 
 export { };

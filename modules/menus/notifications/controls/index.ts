@@ -1,3 +1,4 @@
+import { closeNotifications } from "globals/notification";
 import { Notifications } from "types/service/notifications";
 
 const Controls = (notifs: Notifications) => {
@@ -40,11 +41,21 @@ const Controls = (notifs: Notifications) => {
                                 class_name: "menu-separator notification-controls",
                             }),
                             Widget.Button({
-                                class_name: "clear-notifications-button",
+                                className: "clear-notifications-button",
                                 tooltip_text: "Clear Notifications",
-                                on_primary_click: () => notifs.clear(),
+                                on_primary_click: () => {
+                                    if (removingNotifications.value) {
+                                        return;
+                                    }
+
+                                    closeNotifications(notifs.notifications);
+                                },
                                 child: Widget.Label({
-                                    class_name: "clear-notifications-label txt-icon",
+                                    class_name: removingNotifications.bind("value").as((removing: boolean) => {
+                                        return removing
+                                            ? "clear-notifications-label txt-icon removing"
+                                            : "clear-notifications-label txt-icon";
+                                    }),
                                     label: "",
                                 }),
                             }),
