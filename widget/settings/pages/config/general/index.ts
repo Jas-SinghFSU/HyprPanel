@@ -30,7 +30,7 @@ export const BarGeneral = () => {
                     title: 'Tearing Compatible',
                     subtitle:
                         "Makes HyprPanel compatible with Hyprland tearing.\n" +
-                        "Enabling this will change all overlays (notifications, OSDs) to the \'top\' layer instead the \'overlay\' layer.",
+                        "Enabling this will change all overlays (Notifications, OSDs, Bar) to the \'top\' layer instead the \'overlay\' layer.",
                     type: 'boolean'
                 }),
 

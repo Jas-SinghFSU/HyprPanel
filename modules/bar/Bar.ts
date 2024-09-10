@@ -29,6 +29,7 @@ import Button from "types/widgets/button.js";
 import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
 
 import './SideEffects';
+import { WindowLayer } from "lib/types/options.js";
 
 const { layouts } = options.bar;
 
@@ -44,14 +45,14 @@ type Section = "battery"
     | "network"
     | "bluetooth"
     | "clock"
-    | "Ram"
-    | "Cpu"
-    | "Storage"
-    | "Netstat"
-    | "KbInput"
-    | "Updates"
-    | "Weather"
-    | "Power"
+    | "ram"
+    | "cpu"
+    | "storage"
+    | "netstat"
+    | "kbinput"
+    | "updates"
+    | "weather"
+    | "power"
     | "systray";
 
 type Layout = {
@@ -134,7 +135,7 @@ function getGdkMonitors(): GdkMonitors {
     }
 
     const numGdkMonitors = display.get_n_monitors();
-    const gdkMonitors = {};
+    const gdkMonitors: GdkMonitors = {};
 
     for (let i = 0; i < numGdkMonitors; i++) {
         const curMonitor = display.get_monitor(i);
@@ -144,7 +145,7 @@ function getGdkMonitors(): GdkMonitors {
             continue;
         }
 
-        const model = curMonitor.get_model();
+        const model = curMonitor.get_model() || '';
         const geometry = curMonitor.get_geometry();
         const scaleFactor = curMonitor.get_scale_factor();
 
@@ -260,7 +261,20 @@ export const Bar = (() => {
             visible: true,
             anchor: ["top", "left", "right"],
             exclusivity: "exclusive",
-            layer: options.theme.bar.layer.bind("value"),
+            layer: Utils.merge(
+                [
+                    options.theme.bar.layer.bind("value"),
+                    options.tear.bind("value")
+                ],
+                (
+                    barLayer: WindowLayer,
+                    tear: boolean
+                ) => {
+                    if (tear && barLayer === "overlay") {
+                        return "top";
+                    }
+                    return barLayer;
+                }),
             child: Widget.Box({
                 class_name: 'bar-panel-container',
                 child: Widget.CenterBox({
