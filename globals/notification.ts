@@ -1,4 +1,7 @@
 import icons from "modules/icons/index";
+import { Notification } from "types/service/notifications";
+
+export const removingNotifications = Variable<boolean>(false);
 
 export const getNotificationIcon = (app_name: string, app_icon: string, app_entry: string) => {
     let icon: string = icons.fallback.notification;
@@ -22,3 +25,13 @@ export const getNotificationIcon = (app_name: string, app_icon: string, app_entr
     return icon;
 };
 
+export const closeNotifications = async (notifications: Notification[]) => {
+    removingNotifications.value = true;
+    for (const notif of notifications) {
+        notif.close();
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    removingNotifications.value = false;
+}
+
+globalThis["removingNotifications"] = removingNotifications;

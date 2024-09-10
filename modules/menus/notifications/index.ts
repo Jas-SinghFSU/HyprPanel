@@ -1,3 +1,4 @@
+import { Notification } from "types/service/notifications.js";
 import DropdownMenu from "../DropdownMenu.js";
 const notifs = await Service.import("notifications");
 import { Controls } from "./controls/index.js";
@@ -7,18 +8,27 @@ import { NotificationPager } from "./pager/index.js";
 import options from "options";
 
 const { displayedTotal } = options.notifications;
-const { show: showPager } = options.theme.bar.menus.menu.notifications.pager;
 
 export default () => {
     const curPage = Variable(1);
 
-    Utils.merge([curPage.bind("value"), displayedTotal.bind("value"), notifs.bind("notifications")], (currentPage, dispTotal, notifications) => {
-        // If the page doesn't have enough notifications to display, go back
-        // to the previous page.
-        if (notifications.length <= (currentPage - 1) * dispTotal) {
-            curPage.value = currentPage <= 1 ? 1 : currentPage - 1;
-        }
-    });
+    Utils.merge(
+        [
+            curPage.bind("value"),
+            displayedTotal.bind("value"),
+            notifs.bind("notifications"),
+        ],
+        (
+            currentPage: number,
+            dispTotal: number,
+            notifications: Notification[],
+        ) => {
+            // If the page doesn't have enough notifications to display, go back
+            // to the previous page.
+            if (notifications.length <= (currentPage - 1) * dispTotal) {
+                curPage.value = currentPage <= 1 ? 1 : currentPage - 1;
+            }
+        });
 
     return DropdownMenu({
         name: "notificationsmenu",
@@ -34,13 +44,7 @@ export default () => {
                     vertical: true,
                     hexpand: false,
                     vexpand: false,
-                    children: showPager.bind("value").as(shPgr => {
-                        if (shPgr) {
-                            return [Controls(notifs), NotificationCard(notifs, curPage), NotificationPager(curPage)];
-                        }
-                        return [Controls(notifs), NotificationCard(notifs, curPage)]
-
-                    })
+                    children: [Controls(notifs), NotificationCard(notifs, curPage), NotificationPager(curPage)]
                 }),
             ],
         }),
