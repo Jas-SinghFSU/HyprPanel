@@ -68,6 +68,14 @@ fill_missing_values() {
         fi
     done
 
+    # Remove any extra properties only present in the target theme
+    for key in $(echo "$filled_theme" | jq -r 'keys_unsorted[]'); do
+        if ! echo "$complete_theme" | jq -e ".\"$key\"" &>/dev/null; then
+            filled_theme=$(echo "$filled_theme" | jq --arg key "$key" 'del(.[$key])')
+            echo "Removed extra property: $key"
+        fi
+    done
+
     # Write the filled theme back to the target file
     echo "$filled_theme" >"$target_theme_file"
     echo "Filled missing values in $filename"
