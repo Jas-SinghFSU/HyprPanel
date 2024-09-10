@@ -1,12 +1,32 @@
 .bar-button-icon.volume {
   font-size: 1.3em;
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
+
+  &.output {
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-output-icon);
+  }
+
+  &.input {
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-input-icon);
+  }
 }
 
 .bar-button-label.volume {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
   min-width: 2.2em;
   margin-left: $bar-buttons-volume-spacing;
+
+  &.output {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-output-text);
+  }
+
+  &.input {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-input-text);
+  }
+}
+
+.bar-separator.volume {
+  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-separator);
+  margin-left: $bar-buttons-volume-spacing;
+  margin-right: $bar-buttons-volume-spacing;
 }
 
 .style2 {
@@ -17,12 +37,20 @@
     padding: $bar-buttons-padding_y 0em;
     padding-left: $bar-buttons-padding_x;
     padding-right: $bar-buttons-volume-spacing;
+
+    &.no-label {
+      border-top-right-radius: $bar-buttons-radius;
+      border-bottom-right-radius: $bar-buttons-radius;
+    }
   }
 
   .bar-button-label.volume {
     padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
     padding-left: $bar-buttons-volume-spacing;
     margin-left: 0em;
+
+    &.no-separator {
+      padding-right: $bar-buttons-padding_x;
+    }
   }
 }

@@ -2,48 +2,81 @@ import Gdk from 'gi://Gdk?version=3.0';
 const audio = await Service.import("audio");
 import { openMenu } from "../utils.js";
 import options from "options";
-import { Binding } from 'lib/utils.js';
 import { VolumeIcons } from 'lib/types/volume.js';
+import { Stream } from 'types/service/audio';
+import Separator from "types/widgets/separator";
+import Label from "types/widgets/label";
 
 const Volume = () => {
-    const icons: VolumeIcons = {
-        101: "󰕾",
+    const { label, input, output, hide_muted_label } = options.bar.volume;
+
+    const outputIcons: VolumeIcons = {
+        101: "󱄠",
         66: "󰕾",
         34: "󰖀",
         1: "󰕿",
         0: "󰝟",
     };
 
-    const getIcon = () => {
-        const icon: Binding<number> = Utils.merge(
-            [audio.speaker.bind("is_muted"), audio.speaker.bind("volume")],
-            (isMuted, vol) => {
-                return isMuted
-                    ? 0
-                    : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100) || 101;
-            },
-        );
-
-        return icon.as((i: number) => i !== undefined ? icons[i] : icons[101]);
+    const inputIcons: VolumeIcons = {
+        51: "󰍬",
+        1: "󰍮",
+        0: "󰍭",
     };
 
-    const volIcn = Widget.Label({
-        hexpand: true,
-        label: getIcon(),
-        class_name: "bar-button-icon volume txt-icon bar",
-    });
+    const getIcon = (icons: VolumeIcons, volume: number, isMuted: (boolean | null)): string => {
+        const keys = Object.keys(icons).map(Number).reverse();
+        let icon: number;
+        if (isMuted !== false || Math.round(volume * 100) === 0) {
+            icon = 0;
+        } else {
+            icon = keys.find((threshold) => threshold <= Math.round(volume * 100)) ?? keys[0];
+        }
+        return icons[icon];
+    };
 
-    const volPct = Widget.Label({
-        hexpand: true,
-        label: audio.speaker.bind("volume").as((v) => `${Math.round(v * 100)}%`),
-        class_name: "bar-button-label volume",
-    });
+    const volIcn = (audio_type: Stream, icons: VolumeIcons, extra_class_name: string, showLabel: boolean, hideMutedLabel: boolean): Label<any> => {
+        const class_name = `bar-button-icon volume txt-icon bar ${extra_class_name}`;
+        return Widget.Label({
+            hexpand: true,
+            class_name
+        }).hook(audio_type, (self) => Utils.merge(
+            [audio_type.bind("volume"), audio_type.bind("is_muted")],
+            (volume, isMuted) => {
+                if (!self.is_destroyed) {
+                    self.set_text(getIcon(icons, volume, isMuted));
+                    self.class_name = `${class_name} ${!showLabel || (hideMutedLabel && (isMuted !== false || Math.round(volume * 100) === 0)) ? "no-label" : ""}`;
+                }
+            }));
+    };
+
+    const volPctUpdate = (label: Label<any>, volume: number, isMuted: boolean | null, hideMutedLabel: boolean): void => {
+        if (!label.is_destroyed) {
+            label.set_text(isMuted !== false ? "0%" : `${Math.round(volume * 100)}%`);
+            label.set_visible(!(hideMutedLabel && (isMuted !== false || Math.round(volume * 100) === 0)));
+        }
+    };
+
+    const volPct = (audio_type: Stream, class_name: string, hideMutedLabel: boolean): Label<any> => {
+        const label: Label<any> = Widget.Label({
+            hexpand: true,
+            class_name: `bar-button-label volume ${class_name}`,
+        }).hook(audio_type, (self) => Utils.merge(
+            [audio_type.bind("is_muted"), audio_type.bind("volume")],
+            (isMuted, volume) => volPctUpdate(self, volume, isMuted, hideMutedLabel)));
+
+        // Workaround for ags setting the label visible on creation
+        if (hideMutedLabel) {
+            Utils.timeout(500, () => volPctUpdate(label, audio_type.volume, audio_type.is_muted, hideMutedLabel));
+        }
+        return label;
+    };
 
     return {
         component: Widget.Box({
             hexpand: true,
             vexpand: true,
-            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), options.bar.volume.label.bind("value")], (style, showLabel) => {
+            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), label.bind("value")], (style, showLabel) => {
                 const styleMap = {
                     default: "style1",
                     split: "style2",
@@ -53,12 +86,27 @@ const Volume = () => {
 
                 return `volume ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
             }),
-            children: options.bar.volume.label.bind("value").as((showLabel) => {
-                if (showLabel) {
-                    return [volIcn, volPct];
-                }
-                return [volIcn];
-            }),
+            children: Utils.merge(
+                [label.bind("value"), output.bind("value"), input.bind("value"), hide_muted_label.bind("value")],
+                (showLabel, showOutput, showInput, hideMutedLabel) => {
+                    let children: (Label<any> | Separator<any>)[] = [];
+                    if (showOutput) {
+                        children.push(volIcn(audio.speaker, outputIcons, "output", showLabel, hideMutedLabel));
+                        if (showLabel) {
+                            children.push(volPct(audio.speaker, `output ${!showInput ? "no-separator" : ""}`, hideMutedLabel));
+                        }
+                    }
+                    if (showInput) {
+                        if (showOutput) {
+                            children.push(Widget.Separator({ vertical: true, class_name: "bar-separator volume" }));
+                        }
+                        children.push(volIcn(audio.microphone, inputIcons, "input", showLabel, hideMutedLabel));
+                        if (showLabel) {
+                            children.push(volPct(audio.microphone, "input no-separator", hideMutedLabel));
+                        }
+                    }
+                    return children;
+                }),
         }),
         isVisible: true,
         boxClass: "volume",
