@@ -1,7 +1,7 @@
 import { opt, mkOptions } from "lib/option"
 import { NetstatIcon, NetstatLabelType, PowerIcon, RateUnit, ResourceLabelType, StorageIcon, UpdatesIcon } from "lib/types/bar";
 import { KbIcon, KbLabelType } from "lib/types/customModules/kbLayout";
-import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation } from "lib/types/options";
+import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation, WindowLayer } from "lib/types/options";
 import { MatugenScheme, MatugenTheme, MatugenVariation } from "lib/types/options";
 import { UnitType } from "lib/types/weather";
 
@@ -130,7 +130,7 @@ const options = mkOptions(OPTIONS, {
         bar: {
             scaling: opt(100),
             floating: opt(false),
-            layer: opt<"top" | "bottom" | "overlay" | "background">("top"),
+            layer: opt<WindowLayer>("top"),
             margin_top: opt("0.5em"),
             opacity: opt(100),
             margin_bottom: opt("0em"),
@@ -1066,6 +1066,8 @@ const options = mkOptions(OPTIONS, {
     },
 
     terminal: opt("kitty"),
+
+    tear: opt(false),
 
     wallpaper: {
         enable: opt(true),

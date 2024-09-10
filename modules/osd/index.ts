@@ -98,7 +98,7 @@ export default () => Widget.Window({
         }),
     name: `indicator`,
     class_name: "indicator",
-    layer: "overlay",
+    layer: options.tear.bind("value").as(tear => tear ? "top" : "overlay"),
     anchor: location.bind("value").as(v => getPosition(v)),
     click_through: true,
     child: Widget.Box({
