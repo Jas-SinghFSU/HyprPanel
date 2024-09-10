@@ -19,6 +19,11 @@ fill_missing_values() {
     local complete_theme_file="$1"
     local target_theme_file="$2"
 
+    # Write the filename to the console
+    filename=$(basename "$target_theme_file")
+    echo "----------------------------------------"
+    echo "Processing $filename:"
+
     # Load complete theme and target theme into variables
     complete_theme=$(jq '.' "$complete_theme_file")
     target_theme=$(jq '.' "$target_theme_file")
@@ -54,7 +59,7 @@ fill_missing_values() {
             # Add missing property with the corresponding color
             if [ -n "$corresponding_color" ]; then
                 filled_theme=$(echo "$filled_theme" | jq --arg key "$key" --arg value "$corresponding_color" '.[$key] = $value')
-                echo "Added missing property: $key with value: $corresponding_color to $target_theme_file"
+                echo "Added missing property: $key with value: $corresponding_color"
             else
                 # Default action if no corresponding color is found
                 echo "No corresponding color found for $key; using value from complete theme."
@@ -65,7 +70,7 @@ fill_missing_values() {
 
     # Write the filled theme back to the target file
     echo "$filled_theme" >"$target_theme_file"
-    echo "Filled missing values in $target_theme_file"
+    echo "Filled missing values in $filename"
 }
 
 # Process all theme files in the directory
