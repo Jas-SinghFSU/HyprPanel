@@ -279,6 +279,7 @@ export const Bar = (() => {
                 class_name: 'bar-panel-container',
                 child: Widget.CenterBox({
                     class_name: 'bar-panel',
+                    //css: 'padding: 1px 0px 0px 0px',
                     css: 'padding: 1px',
                     startWidget: Widget.Box({
                         class_name: "box-left",
