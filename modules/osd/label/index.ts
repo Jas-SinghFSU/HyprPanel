@@ -48,7 +48,11 @@ export const OSDLabel = (): Box<Child, Attribute> => {
                             audio.microphone.volume > 1 &&
                                 (!options.theme.osd.muted_zero.value || audio.microphone.is_muted === false),
                         );
-                        self.label = `${options.theme.osd.muted_zero.value && audio.microphone.is_muted !== false ? 0 : Math.round(audio.microphone.volume * 100)}`;
+                        const inputVolume =
+                            options.theme.osd.muted_zero.value && audio.microphone.is_muted !== false
+                                ? 0
+                                : Math.round(audio.microphone.volume * 100);
+                        self.label = `${inputVolume}`;
                     },
                     'notify::is-muted',
                 );
@@ -68,7 +72,11 @@ export const OSDLabel = (): Box<Child, Attribute> => {
                             audio.speaker.volume > 1 &&
                                 (!options.theme.osd.muted_zero.value || audio.speaker.is_muted === false),
                         );
-                        self.label = `${options.theme.osd.muted_zero.value && audio.speaker.is_muted !== false ? 0 : Math.round(audio.speaker.volume * 100)}`;
+                        const speakerVolume =
+                            options.theme.osd.muted_zero.value && audio.speaker.is_muted !== false
+                                ? 0
+                                : Math.round(audio.speaker.volume * 100);
+                        self.label = `${speakerVolume}`;
                     },
                     'notify::is-muted',
                 );

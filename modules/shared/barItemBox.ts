@@ -21,7 +21,9 @@ export const BarItemBox = (child: BarBoxChild): Button<GtkWidget, Attribute> => 
                 wave2: 'style4',
             };
 
-            return `bar_item_box_visible ${styleMap[style]} ${Object.hasOwnProperty.call(child, 'boxClass') ? child.boxClass : ''}`;
+            const boxClassName = Object.hasOwnProperty.call(child, 'boxClass') ? child.boxClass : '';
+
+            return `bar_item_box_visible ${styleMap[style]} ${boxClassName}`;
         }),
         child: child.component,
         visible: computeVisible(),

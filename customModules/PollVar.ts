@@ -15,7 +15,7 @@ export const pollVariable = <T, P extends unknown[], F extends GenericFunction<T
     trackers: Array<Bind>,
     pollingInterval: Bind,
     someFunc: F,
-    ...params: P // Ensure params match the parameters expected by the function
+    ...params: P
 ): void => {
     let intervalInstance: number | null = null;
 
@@ -25,7 +25,7 @@ export const pollVariable = <T, P extends unknown[], F extends GenericFunction<T
         }
 
         intervalInstance = Utils.interval(pollIntrvl, () => {
-            targetVariable.value = someFunc(...params); // This should now match exactly
+            targetVariable.value = someFunc(...params);
         });
     };
 
@@ -39,7 +39,8 @@ export const pollVariable = <T, P extends unknown[], F extends GenericFunction<T
  * @param {Array<Bind>} trackers - Array of trackers to watch.
  * @param {Bind} pollingInterval - The polling interval in milliseconds.
  * @param {string} someCommand - The bash command to execute.
- * @param {GenericFunction<T, [unknown, ...P]>} someFunc - The function to execute after processing the command result, with the first argument being the result of the command execution.
+ * @param {GenericFunction<T, [unknown, ...P]>} someFunc - The function to execute after processing the command result;
+ * with the first argument being the result of the command execution.
  * @param  {...P} params - Additional parameters to pass to someFunc.
  */
 export const pollVariableBash = <T, P extends unknown[], F extends GenericFunction<T, [string, ...P]>>(
@@ -47,8 +48,8 @@ export const pollVariableBash = <T, P extends unknown[], F extends GenericFuncti
     trackers: Array<Bind>,
     pollingInterval: Bind,
     someCommand: string,
-    someFunc: F, // Now typed as a GenericFunction that takes the command result and additional parameters
-    ...params: P // Additional parameters to match the expectations of someFunc
+    someFunc: F,
+    ...params: P
 ): void => {
     let intervalInstance: number | null = null;
 
@@ -61,7 +62,7 @@ export const pollVariableBash = <T, P extends unknown[], F extends GenericFuncti
             Utils.execAsync(`bash -c "${someCommand}"`)
                 .then((res: string) => {
                     try {
-                        targetVariable.value = someFunc(res, ...params); // Ensures correct typing
+                        targetVariable.value = someFunc(res, ...params);
                     } catch (error) {
                         console.warn(`An error occurred when running interval bash function: ${error}`);
                     }
