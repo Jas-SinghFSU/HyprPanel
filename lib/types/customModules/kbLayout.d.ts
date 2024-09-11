@@ -1,7 +1,7 @@
-import { layoutMap } from "customModules/kblayout/layouts";
+import { layoutMap } from 'customModules/kblayout/layouts';
 
-export type KbLabelType = "layout" | "code";
-export type KbIcon = "" | "󰌌" | "" | "󰬴" | "󰗊";
+export type KbLabelType = 'layout' | 'code';
+export type KbIcon = '' | '󰌌' | '' | '󰬴' | '󰗊';
 
 export type HyprctlKeyboard = {
     address: string;
@@ -30,4 +30,4 @@ export type HyprctlDeviceLayout = {
 };
 
 export type LayoutKeys = keyof typeof layoutMap;
-export type LayoutValues = typeof layoutMap[LayoutKeys];
+export type LayoutValues = (typeof layoutMap)[LayoutKeys];

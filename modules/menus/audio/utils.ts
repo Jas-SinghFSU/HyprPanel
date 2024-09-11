@@ -16,7 +16,7 @@ const inputIcons = {
 
 type IconVolumes = keyof typeof speakerIcons;
 
-const getIcon = (audioVol: IconVolumes, isMuted: boolean) => {
+const getIcon = (audioVol: number, isMuted: boolean) => {
     const thresholds: IconVolumes[] = [101, 66, 34, 1, 0];
     const icon = isMuted
         ? 0

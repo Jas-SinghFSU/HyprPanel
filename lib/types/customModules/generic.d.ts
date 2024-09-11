@@ -3,4 +3,6 @@ export type GenericResourceData = {
     used: number;
     free: number;
     percentage: number;
-}
+};
+
+export type Postfix = 'TiB' | 'GiB' | 'MiB' | 'KiB' | 'B';

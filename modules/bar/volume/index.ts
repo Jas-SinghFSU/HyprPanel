@@ -50,7 +50,6 @@ const Volume = () => {
                     wave: "style3",
                     wave2: "style3",
                 };
-
                 return `volume ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
             }),
             children: options.bar.volume.label.bind("value").as((showLabel) => {
