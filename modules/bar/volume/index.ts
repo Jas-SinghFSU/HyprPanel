@@ -40,14 +40,12 @@ const Volume = () => {
         return Widget.Label({
             hexpand: true,
             class_name
-        }).hook(audio_type, (self) => Utils.merge(
-            [audio_type.bind("volume"), audio_type.bind("is_muted")],
-            (volume, isMuted) => {
-                if (!self.is_destroyed) {
-                    self.set_text(getIcon(icons, volume, isMuted));
-                    self.class_name = `${class_name} ${!showLabel || (hideMutedLabel && (isMuted !== false || Math.round(volume * 100) === 0)) ? "no-label" : ""}`;
-                }
-            }));
+        }).hook(audio_type, (self) => {
+            if (!self.is_destroyed) {
+                self.set_text(getIcon(icons, audio_type.volume, audio_type.is_muted));
+                self.class_name = `${class_name} ${!showLabel || (hideMutedLabel && (audio_type.is_muted !== false || Math.round(audio_type.volume * 100) === 0)) ? "no-label" : ""}`;
+            }
+        });
     };
 
     const volPctUpdate = (label: Label<any>, volume: number, isMuted: boolean | null, hideMutedLabel: boolean): void => {
@@ -61,9 +59,7 @@ const Volume = () => {
         const label: Label<any> = Widget.Label({
             hexpand: true,
             class_name: `bar-button-label volume ${class_name}`,
-        }).hook(audio_type, (self) => Utils.merge(
-            [audio_type.bind("is_muted"), audio_type.bind("volume")],
-            (isMuted, volume) => volPctUpdate(self, volume, isMuted, hideMutedLabel)));
+        }).hook(audio_type, (self) => volPctUpdate(self, audio_type.volume, audio_type.is_muted, hideMutedLabel));
 
         // Workaround for ags setting the label visible on creation
         if (hideMutedLabel) {
