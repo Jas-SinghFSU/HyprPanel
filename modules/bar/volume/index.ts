@@ -48,10 +48,10 @@ const Volume = () => {
         });
     };
 
-    const volPctUpdate = (label: Label<any>, volume: number, isMuted: boolean | null, hideMutedLabel: boolean): void => {
+    const volPctUpdate = (label: Label<any>, audio_type: Stream, hideMutedLabel: boolean): void => {
         if (!label.is_destroyed) {
-            label.set_text(isMuted !== false ? "0%" : `${Math.round(volume * 100)}%`);
-            label.set_visible(!(hideMutedLabel && (isMuted !== false || Math.round(volume * 100) === 0)));
+            label.set_text(audio_type.is_muted !== false ? "0%" : `${Math.round(audio_type.volume * 100)}%`);
+            label.set_visible(!(hideMutedLabel && (audio_type.is_muted !== false || Math.round(audio_type.volume * 100) === 0)));
         }
     };
 
@@ -59,11 +59,11 @@ const Volume = () => {
         const label: Label<any> = Widget.Label({
             hexpand: true,
             class_name: `bar-button-label volume ${class_name}`,
-        }).hook(audio_type, (self) => volPctUpdate(self, audio_type.volume, audio_type.is_muted, hideMutedLabel));
+        }).hook(audio_type, (self) => volPctUpdate(self, audio_type, hideMutedLabel));
 
         // Workaround for ags setting the label visible on creation
         if (hideMutedLabel) {
-            Utils.timeout(500, () => volPctUpdate(label, audio_type.volume, audio_type.is_muted, hideMutedLabel));
+            Utils.timeout(500, () => volPctUpdate(label, audio_type, hideMutedLabel));
         }
         return label;
     };
