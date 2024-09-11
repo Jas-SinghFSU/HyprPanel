@@ -1,4 +1,4 @@
-import { Child, Module } from 'lib/types/bar';
+import { BarBoxChild, Module } from 'lib/types/bar';
 import { BarButtonStyles } from 'lib/types/options';
 import { Bind } from 'lib/types/variable';
 import { GtkWidget } from 'lib/types/widget';
@@ -20,7 +20,7 @@ export const module = ({
     showLabel,
     labelHook,
     hook,
-}: Module): Child => {
+}: Module): BarBoxChild => {
     const getIconWidget = (): GtkWidget | undefined => {
         let iconWidget: Gtk.Widget | undefined;
 

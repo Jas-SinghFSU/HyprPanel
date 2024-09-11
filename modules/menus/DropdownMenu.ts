@@ -110,6 +110,7 @@ setTimeout(() => {
 export default ({
     name,
     child,
+    transition,
     exclusivity = 'ignore' as Exclusivity,
     fixed = false,
     ...props
@@ -173,7 +174,7 @@ export default ({
                                     self.hook(App, (_, wname, visible) => {
                                         if (wname === name) self.reveal_child = visible;
                                     }),
-                                transition: 'crossfade',
+                                transition,
                                 transitionDuration: 350,
                                 child: Widget.Box({
                                     class_name: 'dropdown-menu-container',

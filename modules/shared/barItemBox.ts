@@ -1,10 +1,10 @@
-import { Child } from 'lib/types/bar';
+import { BarBoxChild } from 'lib/types/bar';
 import { Bind } from 'lib/types/variable';
 import { Attribute, GtkWidget } from 'lib/types/widget';
 import options from 'options';
 import Button from 'types/widgets/button';
 
-export const BarItemBox = (child: Child): Button<GtkWidget, Attribute> => {
+export const BarItemBox = (child: BarBoxChild): Button<GtkWidget, Attribute> => {
     const computeVisible = (): Bind | boolean => {
         if (child.isVis !== undefined) {
             return child.isVis.bind('value');

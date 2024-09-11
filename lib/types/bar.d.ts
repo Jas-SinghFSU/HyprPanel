@@ -3,7 +3,7 @@ import { Variable } from 'types/variable';
 import Box from 'types/widgets/box';
 import Label from 'types/widgets/label';
 
-export type Child = {
+export type BarBoxChild = {
     component: Box<Gtk.Widget, unknown>;
     isVisible?: boolean;
     isVis?: Variable<boolean>;
