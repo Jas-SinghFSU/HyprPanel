@@ -1,3 +1,5 @@
+export type GenericFunction<T, P extends unknown[] = unknown[]> = (...args: P) => T;
+
 export type GenericResourceData = {
     total: number;
     used: number;

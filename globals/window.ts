@@ -6,5 +6,5 @@ export const WINDOW_LAYOUTS: string[] = [
     'top-left',
     'bottom-left',
     'bottom-center',
-    'bottom-right'
+    'bottom-right',
 ];

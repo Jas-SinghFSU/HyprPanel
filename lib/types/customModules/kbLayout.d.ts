@@ -24,9 +24,9 @@ export type HyprctlMouse = {
 export type HyprctlDeviceLayout = {
     mice: HyprctlMouse[];
     keyboards: HyprctlKeyboard[];
-    tablets: any[];
-    touch: any[];
-    switches: any[];
+    tablets: unknown[];
+    touch: unknown[];
+    switches: unknown[];
 };
 
 export type LayoutKeys = keyof typeof layoutMap;
