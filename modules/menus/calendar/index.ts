@@ -2,6 +2,9 @@ import DropdownMenu from "../DropdownMenu.js";
 import { TimeWidget } from "./time/index.js";
 import { CalendarWidget } from "./calendar.js";
 import { WeatherWidget } from "./weather/index.js";
+import options from "options";
+
+const { enabled: weatherEnabled } = options.menus.clock.weather;
 
 export default () => {
   return DropdownMenu({
@@ -19,7 +22,13 @@ export default () => {
             Widget.Box({
               class_name: "calendar-content-items",
               vertical: true,
-              children: [TimeWidget(), CalendarWidget(), WeatherWidget()],
+              children: weatherEnabled.bind("value").as(isWeatherEnabled => {
+                  return [
+                      TimeWidget(),
+                      CalendarWidget(),
+                      ... isWeatherEnabled ? [WeatherWidget()] : []
+                  ];
+              }),
             }),
           ],
         }),

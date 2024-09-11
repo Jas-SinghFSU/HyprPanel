@@ -14,6 +14,7 @@ export const ClockMenuSettings = () => {
                 Option({ opt: options.menus.clock.time.military, title: 'Use 24hr time', type: 'boolean' }),
 
                 Header('Weather'),
+                Option({ opt: options.menus.clock.weather.enabled, title: 'Enabled', type: 'boolean' }),
                 Option({ opt: options.menus.clock.weather.location, title: 'Location', subtitle: 'Zip Code, Postal Code, City, etc.', type: 'string' }),
                 Option({ opt: options.menus.clock.weather.key, title: 'Weather API Key', subtitle: 'May require AGS restart. https://weatherapi.com/', type: 'string' }),
                 Option({ opt: options.menus.clock.weather.unit, title: 'Units', type: 'enum', enums: ['imperial', 'metric'] }),
