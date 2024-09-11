@@ -290,6 +290,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.volume.hide_muted_label,
                     title: "Hide Percentage On Mute",
+                    subtitle: "Only applicable if Show Volume Percentage is enabled",
                     type: "boolean",
                 }),
                 Option({
