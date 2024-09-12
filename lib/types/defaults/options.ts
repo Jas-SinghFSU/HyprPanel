@@ -57,4 +57,4 @@ export const defaultColorMap = {
     yellow3: '#f9e2ae',
     maroon3: '#eba0ad',
     crust3: '#11111c',
-};
+} as const;

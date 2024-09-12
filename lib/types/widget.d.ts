@@ -1,4 +1,5 @@
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import Box from 'types/widgets/box';
 
 export type Exclusivity = 'normal' | 'ignore' | 'exclusive';
 export type Anchor = 'left' | 'right' | 'top' | 'down';
@@ -17,5 +18,6 @@ export type Layouts =
 export type Attribute = unknown;
 export type Child = Gtk.Widget;
 export type GtkWidget = Gtk.Widget;
+export type BoxWidget = Box<GtkWidget, Child>;
 
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;

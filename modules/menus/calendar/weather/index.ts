@@ -1,21 +1,21 @@
-import { TodayIcon } from "./icon/index.js";
-import { TodayStats } from "./stats/index.js";
-import { TodayTemperature } from "./temperature/index.js";
-import { Hourly } from "./hourly/index.js";
-import { globalWeatherVar } from "globals/weather.js";
+import { TodayIcon } from './icon/index.js';
+import { TodayStats } from './stats/index.js';
+import { TodayTemperature } from './temperature/index.js';
+import { Hourly } from './hourly/index.js';
+import { globalWeatherVar } from 'globals/weather.js';
 
 const WeatherWidget = () => {
     return Widget.Box({
-        class_name: "calendar-menu-item-container weather",
+        class_name: 'calendar-menu-item-container weather',
         child: Widget.Box({
-            class_name: "weather-container-box",
+            class_name: 'weather-container-box',
             setup: (self) => {
                 return (self.child = Widget.Box({
                     vertical: true,
                     hexpand: true,
                     children: [
                         Widget.Box({
-                            class_name: "calendar-menu-weather today",
+                            class_name: 'calendar-menu-weather today',
                             hexpand: true,
                             children: [
                                 TodayIcon(globalWeatherVar),
@@ -24,7 +24,7 @@ const WeatherWidget = () => {
                             ],
                         }),
                         Widget.Separator({
-                            class_name: "menu-separator weather",
+                            class_name: 'menu-separator weather',
                         }),
                         Hourly(globalWeatherVar),
                     ],

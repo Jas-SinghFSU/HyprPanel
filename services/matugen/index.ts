@@ -1,5 +1,5 @@
 import { defaultColorMap } from 'lib/types/defaults/options';
-import { HexColor, MatugenColors } from 'lib/types/options';
+import { ColorMapValue, ColorMapKey, HexColor, MatugenColors } from 'lib/types/options';
 import { getMatugenVariations } from './variations';
 import { bash, dependencies, Notify, isAnImage } from 'lib/utils';
 import options from 'options';
@@ -42,6 +42,10 @@ export async function generateMatugenColors(): Promise<MatugenColors | undefined
     }
 }
 
+const isColorValid = (color: string): color is ColorMapKey => {
+    return defaultColorMap.hasOwnProperty(color);
+};
+
 export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenColors): HexColor => {
     if (!options.theme.matugen.value) {
         return incomingHex;
@@ -49,9 +53,16 @@ export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenCo
 
     const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.value);
     updateOptColor(matugenVariation.base, options.theme.bar.menus.menu.media.card.color as Variable<HexColor>);
+
     for (const curColor of Object.keys(defaultColorMap)) {
-        if (defaultColorMap[curColor] === incomingHex) {
-            return matugenVariation[curColor];
+        const currentColor: string = curColor;
+        if (!isColorValid(currentColor)) {
+            continue;
+        }
+
+        const curColorValue: ColorMapValue = defaultColorMap[currentColor];
+        if (curColorValue === incomingHex) {
+            return matugenVariation[currentColor];
         }
     }
 
