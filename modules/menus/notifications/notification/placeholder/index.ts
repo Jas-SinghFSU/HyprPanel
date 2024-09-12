@@ -1,24 +1,24 @@
-import { Notifications } from "types/service/notifications";
+import { Notifications } from 'types/service/notifications';
 
 const Placeholder = (notifs: Notifications) => {
     return Widget.Box({
-        class_name: "notification-label-container",
-        vpack: "fill",
-        hpack: "center",
+        class_name: 'notification-label-container',
+        vpack: 'fill',
+        hpack: 'center',
         expand: true,
         child: Widget.Box({
-            vpack: "center",
+            vpack: 'center',
             vertical: true,
             expand: true,
             children: [
                 Widget.Label({
-                    vpack: "center",
-                    class_name: "placeholder-label dim bell",
-                    label: notifs.bind("dnd").as((dnd) => (dnd ? "󰂛" : "󰂚")),
+                    vpack: 'center',
+                    class_name: 'placeholder-label dim bell',
+                    label: notifs.bind('dnd').as((dnd) => (dnd ? '󰂛' : '󰂚')),
                 }),
                 Widget.Label({
-                    vpack: "start",
-                    class_name: "placehold-label dim message",
+                    vpack: 'start',
+                    class_name: 'placehold-label dim message',
                     label: "You're all caught up :)",
                 }),
             ],

@@ -1,5 +1,5 @@
-import { Action } from "lib/types/power";
-import options from "options";
+import { Action } from 'lib/types/power';
+import options from 'options';
 const { sleep, reboot, logout, shutdown } = options.menus.dashboard.powermenu;
 
 class PowerMenu extends Service {
@@ -8,14 +8,14 @@ class PowerMenu extends Service {
             this,
             {},
             {
-                title: ["string"],
-                cmd: ["string"],
+                title: ['string'],
+                cmd: ['string'],
             },
         );
     }
 
-    #title = "";
-    #cmd = "";
+    #title = '';
+    #cmd = '';
 
     get title() {
         return this.#title;
@@ -23,35 +23,35 @@ class PowerMenu extends Service {
 
     action(action: Action) {
         [this.#cmd, this.#title] = {
-            sleep: [sleep.value, "Sleep"],
-            reboot: [reboot.value, "Reboot"],
-            logout: [logout.value, "Log Out"],
-            shutdown: [shutdown.value, "Shutdown"],
+            sleep: [sleep.value, 'Sleep'],
+            reboot: [reboot.value, 'Reboot'],
+            logout: [logout.value, 'Log Out'],
+            shutdown: [shutdown.value, 'Shutdown'],
         }[action];
 
-        this.notify("cmd");
-        this.notify("title");
-        this.emit("changed");
-        App.closeWindow("powermenu");
-        App.openWindow("verification");
+        this.notify('cmd');
+        this.notify('title');
+        this.emit('changed');
+        App.closeWindow('powermenu');
+        App.openWindow('verification');
     }
 
     customAction(action: Action, cmnd: string) {
         [this.#cmd, this.#title] = [cmnd, action];
 
-        this.notify("cmd");
-        this.notify("title");
-        this.emit("changed");
-        App.closeWindow("powermenu");
-        App.openWindow("verification");
+        this.notify('cmd');
+        this.notify('title');
+        this.emit('changed');
+        App.closeWindow('powermenu');
+        App.openWindow('verification');
     }
 
     shutdown = () => {
-        this.action("shutdown");
+        this.action('shutdown');
     };
 
     exec = () => {
-        App.closeWindow("verification");
+        App.closeWindow('verification');
         Utils.execAsync(this.#cmd);
     };
 }

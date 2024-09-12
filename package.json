@@ -2,13 +2,17 @@
     "name": "hyprpanel",
     "version": "1.0.0",
     "description": "A customizble panel built for Hyprland.",
+    "main": "config.js",
+    "directories": {
+        "lib": "lib"
+    },
     "scripts": {
-        "lint": "eslint .",
-        "lint:fix": "eslint .",
-        "format": "prettier --write ."
+        "lint": "eslint --config .eslintrc.js .",
+        "lint:fix": "eslint --config .eslintrc.js .",
+        "format": "prettier --write 'modules/**/*.ts'"
     },
     "keywords": [],
-    "author": "Jas-SinghFSU",
+    "author": "",
     "license": "MIT",
     "devDependencies": {
         "@types/node": "^22.5.4",

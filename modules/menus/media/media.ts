@@ -1,9 +1,9 @@
-const media = await Service.import("mpris");
-import { MediaInfo } from "./components/mediainfo.js";
-import { Controls } from "./components/controls.js";
-import { Bar } from "./components/bar.js";
-import { MprisPlayer } from "types/service/mpris.js";
-import options from "options.js";
+const media = await Service.import('mpris');
+import { MediaInfo } from './components/mediainfo.js';
+import { Controls } from './components/controls.js';
+import { Bar } from './components/bar.js';
+import { MprisPlayer } from 'types/service/mpris.js';
+import options from 'options.js';
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
@@ -25,29 +25,23 @@ const generateAlbumArt = (imageUrl: string): string => {
             ), url("${imageUrl}");`;
 
     return css;
-}
+};
 const Media = () => {
-    const curPlayer = Variable("");
+    const curPlayer = Variable('');
 
-    media.connect("changed", () => {
+    media.connect('changed', () => {
         const statusOrder = {
             Playing: 1,
             Paused: 2,
             Stopped: 3,
         };
 
-        const isPlaying = media.players.find(
-            (p) => p["play_back_status"] === "Playing",
-        );
+        const isPlaying = media.players.find((p) => p['play_back_status'] === 'Playing');
 
-        const playerStillExists = media.players.some(
-            (p) => curPlayer.value === p["bus_name"],
-        );
+        const playerStillExists = media.players.some((p) => curPlayer.value === p['bus_name']);
 
         const nextPlayerUp = media.players.sort(
-            (a, b) =>
-                statusOrder[a["play_back_status"]] -
-                statusOrder[b["play_back_status"]],
+            (a, b) => statusOrder[a['play_back_status']] - statusOrder[b['play_back_status']],
         )[0].bus_name;
 
         if (isPlaying || !playerStillExists) {
@@ -60,26 +54,22 @@ const Media = () => {
     };
 
     return Widget.Box({
-        class_name: "menu-section-container",
+        class_name: 'menu-section-container',
         children: [
             Widget.Box({
-                class_name: "menu-items-section",
+                class_name: 'menu-items-section',
                 vertical: false,
                 child: Widget.Box({
-                    class_name: "menu-content",
+                    class_name: 'menu-content',
                     children: [
                         Widget.Box({
-                            class_name: "media-content",
+                            class_name: 'media-content',
                             child: Widget.Box({
-                                class_name: "media-indicator-right-section",
-                                hpack: "fill",
+                                class_name: 'media-indicator-right-section',
+                                hpack: 'fill',
                                 hexpand: true,
                                 vertical: true,
-                                children: [
-                                    MediaInfo(getPlayerInfo),
-                                    Controls(getPlayerInfo),
-                                    Bar(getPlayerInfo),
-                                ],
+                                children: [MediaInfo(getPlayerInfo), Controls(getPlayerInfo), Bar(getPlayerInfo)],
                             }),
                         }),
                     ],
@@ -91,7 +81,7 @@ const Media = () => {
                             }
                         });
 
-                        Utils.merge([color.bind("value"), tint.bind("value")], () => {
+                        Utils.merge([color.bind('value'), tint.bind('value')], () => {
                             const curPlayer = getPlayerInfo();
                             if (curPlayer !== undefined) {
                                 self.css = generateAlbumArt(curPlayer.track_cover_url);

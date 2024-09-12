@@ -1,14 +1,14 @@
-import { Notification, Notifications } from "types/service/notifications";
+import { Notification, Notifications } from 'types/service/notifications';
 export const CloseButton = (notif: Notification, notifs: Notifications) => {
     return Widget.Button({
-        class_name: "close-notification-button menu",
+        class_name: 'close-notification-button menu',
         on_primary_click: () => {
             notifs.CloseNotification(notif.id);
         },
         child: Widget.Label({
-            class_name: "txt-icon notif-close",
-            label: "󰅜",
-            hpack: "center",
+            class_name: 'txt-icon notif-close',
+            label: '󰅜',
+            hpack: 'center',
         }),
     });
 };

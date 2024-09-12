@@ -1,32 +1,30 @@
-import { Bluetooth } from "types/service/bluetooth.js";
-import Box from "types/widgets/box.js";
-import { connectedControls } from "./connectedControls.js";
-import { getBluetoothIcon } from "../utils.js";
-import Gtk from "types/@girs/gtk-3.0/gtk-3.0.js";
+import { Bluetooth } from 'types/service/bluetooth.js';
+import Box from 'types/widgets/box.js';
+import { connectedControls } from './connectedControls.js';
+import { getBluetoothIcon } from '../utils.js';
+import Gtk from 'types/@girs/gtk-3.0/gtk-3.0.js';
 
 const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
     return self.hook(bluetooth, () => {
         if (!bluetooth.enabled) {
             return (self.child = Widget.Box({
-                class_name: "bluetooth-items",
+                class_name: 'bluetooth-items',
                 vertical: true,
                 expand: true,
-                vpack: "center",
-                hpack: "center",
+                vpack: 'center',
+                hpack: 'center',
                 children: [
                     Widget.Label({
-                        class_name: "bluetooth-disabled dim",
+                        class_name: 'bluetooth-disabled dim',
                         hexpand: true,
-                        label: "Bluetooth is disabled",
+                        label: 'Bluetooth is disabled',
                     }),
                 ],
             }));
         }
 
         const availableDevices = bluetooth.devices
-            .filter(
-                (btDev) => btDev.name !== null,
-            )
+            .filter((btDev) => btDev.name !== null)
             .sort((a, b) => {
                 if (a.connected || a.paired) {
                     return -1;
@@ -39,25 +37,23 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
                 return b.name - a.name;
             });
 
-        const conDevNames = availableDevices
-            .filter((d) => d.connected || d.paired)
-            .map((d) => d.address);
+        const conDevNames = availableDevices.filter((d) => d.connected || d.paired).map((d) => d.address);
 
         if (!availableDevices.length) {
             return (self.child = Widget.Box({
-                class_name: "bluetooth-items",
+                class_name: 'bluetooth-items',
                 vertical: true,
                 expand: true,
-                vpack: "center",
-                hpack: "center",
+                vpack: 'center',
+                hpack: 'center',
                 children: [
                     Widget.Label({
-                        class_name: "no-bluetooth-devices dim",
+                        class_name: 'no-bluetooth-devices dim',
                         hexpand: true,
-                        label: "No devices currently found",
+                        label: 'No devices currently found',
                     }),
                     Widget.Label({
-                        class_name: "search-bluetooth-label dim",
+                        class_name: 'search-bluetooth-label dim',
                         hexpand: true,
                         label: "Press '󰑐' to search",
                     }),
@@ -74,41 +70,40 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
                             hexpand: true,
                             class_name: `bluetooth-element-item ${device}`,
                             on_primary_click: () => {
-                                if (!conDevNames.includes(device.address))
-                                    device.setConnection(true);
+                                if (!conDevNames.includes(device.address)) device.setConnection(true);
                             },
                             child: Widget.Box({
                                 hexpand: true,
                                 children: [
                                     Widget.Box({
                                         hexpand: true,
-                                        hpack: "start",
-                                        class_name: "menu-button-container",
+                                        hpack: 'start',
+                                        class_name: 'menu-button-container',
                                         children: [
                                             Widget.Label({
-                                                vpack: "start",
-                                                class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? "active" : ""} txt-icon`,
-                                                label: getBluetoothIcon(`${device["icon_name"]}-symbolic`),
+                                                vpack: 'start',
+                                                class_name: `menu-button-icon bluetooth ${conDevNames.includes(device.address) ? 'active' : ''} txt-icon`,
+                                                label: getBluetoothIcon(`${device['icon_name']}-symbolic`),
                                             }),
                                             Widget.Box({
                                                 vertical: true,
-                                                vpack: "center",
+                                                vpack: 'center',
                                                 children: [
                                                     Widget.Label({
-                                                        vpack: "center",
-                                                        hpack: "start",
-                                                        class_name: "menu-button-name bluetooth",
-                                                        truncate: "end",
+                                                        vpack: 'center',
+                                                        hpack: 'start',
+                                                        class_name: 'menu-button-name bluetooth',
+                                                        truncate: 'end',
                                                         wrap: true,
                                                         label: device.alias,
                                                     }),
                                                     Widget.Revealer({
-                                                        hpack: "start",
+                                                        hpack: 'start',
                                                         reveal_child: device.connected || device.paired,
                                                         child: Widget.Label({
-                                                            hpack: "start",
-                                                            class_name: "connection-status dim",
-                                                            label: device.connected ? "Connected" : "Paired",
+                                                            hpack: 'start',
+                                                            class_name: 'connection-status dim',
+                                                            label: device.connected ? 'Connected' : 'Paired',
                                                         }),
                                                     }),
                                                 ],
@@ -116,14 +111,14 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>) => {
                                         ],
                                     }),
                                     Widget.Box({
-                                        hpack: "end",
+                                        hpack: 'end',
                                         children: device.connecting
                                             ? [
-                                                Widget.Spinner({
-                                                    vpack: "start",
-                                                    class_name: "spinner bluetooth",
-                                                }),
-                                            ]
+                                                  Widget.Spinner({
+                                                      vpack: 'start',
+                                                      class_name: 'spinner bluetooth',
+                                                  }),
+                                              ]
                                             : [],
                                     }),
                                 ],

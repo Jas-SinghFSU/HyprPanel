@@ -1,14 +1,9 @@
 import icons from 'lib/icons';
 import { Opt } from 'lib/option';
-import { Attribute, GtkWidget } from 'lib/types/widget';
+import { Attribute, BoxWidget } from 'lib/types/widget';
 import { Variable } from 'types/variable';
-import Box from 'types/widgets/box';
 
-export const stringInputter = <T>(
-    self: Box<GtkWidget, Attribute>,
-    opt: Opt<T>,
-    isUnsaved: Variable<boolean>,
-): Attribute => {
+export const stringInputter = <T>(self: BoxWidget, opt: Opt<T>, isUnsaved: Variable<boolean>): Attribute => {
     return (self.children = [
         Widget.Box({
             class_name: 'unsaved-icon-container',

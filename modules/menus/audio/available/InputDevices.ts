@@ -1,5 +1,5 @@
-const audio = await Service.import("audio");
-import { Stream } from "types/service/audio";
+const audio = await Service.import('audio');
+import { Stream } from 'types/service/audio';
 
 const renderInputDevices = (inputDevices: Stream[]) => {
     if (inputDevices.length === 0) {
@@ -9,11 +9,11 @@ const renderInputDevices = (inputDevices: Stream[]) => {
                 child: Widget.Box({
                     children: [
                         Widget.Box({
-                            hpack: "start",
+                            hpack: 'start',
                             children: [
                                 Widget.Label({
-                                    class_name: "menu-button-name input",
-                                    label: "No input devices found...",
+                                    class_name: 'menu-button-name input',
+                                    label: 'No input devices found...',
                                 }),
                             ],
                         }),
@@ -29,28 +29,28 @@ const renderInputDevices = (inputDevices: Stream[]) => {
             child: Widget.Box({
                 children: [
                     Widget.Box({
-                        hpack: "start",
+                        hpack: 'start',
                         children: [
                             Widget.Label({
                                 wrap: true,
                                 class_name: audio.microphone
-                                    .bind("description")
+                                    .bind('description')
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-icon active input txt-icon"
-                                            : "menu-button-icon input txt-icon",
+                                            ? 'menu-button-icon active input txt-icon'
+                                            : 'menu-button-icon input txt-icon',
                                     ),
-                                label: "",
+                                label: '',
                             }),
                             Widget.Label({
-                                truncate: "end",
+                                truncate: 'end',
                                 wrap: true,
                                 class_name: audio.microphone
-                                    .bind("description")
+                                    .bind('description')
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-name active input"
-                                            : "menu-button-name input",
+                                            ? 'menu-button-name active input'
+                                            : 'menu-button-name input',
                                     ),
                                 label: device.description,
                             }),

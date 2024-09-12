@@ -1,8 +1,7 @@
 import { Opt } from 'lib/option';
-import { Attribute, GtkWidget } from 'lib/types/widget';
-import Box from 'types/widgets/box';
+import { Attribute, BoxWidget } from 'lib/types/widget';
 
-export const imageInputter = <T>(self: Box<GtkWidget, Attribute>, opt: Opt<T>): Attribute => {
+export const imageInputter = <T>(self: BoxWidget, opt: Opt<T>): Attribute => {
     return (self.child = Widget.FileChooserButton({
         class_name: 'image-chooser',
         on_file_set: ({ uri }) => {

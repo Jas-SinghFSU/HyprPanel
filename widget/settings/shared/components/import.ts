@@ -1,9 +1,8 @@
 import { ThemeExportData } from 'lib/types/options';
-import { Attribute, GtkWidget } from 'lib/types/widget';
-import Box from 'types/widgets/box';
+import { Attribute, BoxWidget } from 'lib/types/widget';
 import { importFiles, saveFileDialog } from '../FileChooser';
 
-export const importInputter = (self: Box<GtkWidget, Attribute>, exportData?: ThemeExportData): Attribute => {
+export const importInputter = (self: BoxWidget, exportData?: ThemeExportData): Attribute => {
     return (self.child = Widget.Box({
         children: [
             Widget.Button({

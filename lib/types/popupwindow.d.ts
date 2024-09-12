@@ -1,6 +1,6 @@
-import { Widget } from "types/widgets/widget";
-import { WindowProps } from "types/widgets/window";
-import { Transition } from "./widget";
+import { Widget } from 'types/widgets/widget';
+import { WindowProps } from 'types/widgets/window';
+import { Transition } from './widget';
 
 export type PopupWindowProps = {
     name: string;
@@ -13,15 +13,23 @@ export type PopupWindowProps = {
 export type LayoutFunction = (
     name: string,
     child: Widget,
-    transition: Transition
+    transition: Transition,
 ) => {
     center: () => Widget;
     top: () => Widget;
-    "top-right": () => Widget;
-    "top-center": () => Widget;
-    "top-left": () => Widget;
-    "bottom-left": () => Widget;
-    "bottom-center": () => Widget;
-    "bottom-right": () => Widget;
+    'top-right': () => Widget;
+    'top-center': () => Widget;
+    'top-left': () => Widget;
+    'bottom-left': () => Widget;
+    'bottom-center': () => Widget;
+    'bottom-right': () => Widget;
 };
-export type Layouts = 'center' | 'top' | 'top-right' | 'top-center' | 'top-left' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+export type Layouts =
+    | 'center'
+    | 'top'
+    | 'top-right'
+    | 'top-center'
+    | 'top-left'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right';

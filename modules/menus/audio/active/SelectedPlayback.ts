@@ -1,31 +1,27 @@
-const audio = await Service.import("audio");
-import { getIcon } from "../utils.js";
+const audio = await Service.import('audio');
+import { getIcon } from '../utils.js';
 
 const renderActivePlayback = () => {
     return [
         Widget.Box({
-            class_name: "menu-slider-container playback",
+            class_name: 'menu-slider-container playback',
             children: [
                 Widget.Button({
                     vexpand: false,
-                    vpack: "end",
+                    vpack: 'end',
                     setup: (self) => {
                         self.hook(audio, () => {
                             const spkr = audio.speaker;
-                            const className = `menu-active-button playback ${spkr.is_muted ? "muted" : ""}`;
+                            const className = `menu-active-button playback ${spkr.is_muted ? 'muted' : ''}`;
                             return (self.class_name = className);
                         });
                     },
-                    on_primary_click: () =>
-                        (audio.speaker.is_muted = !audio.speaker.is_muted),
+                    on_primary_click: () => (audio.speaker.is_muted = !audio.speaker.is_muted),
                     child: Widget.Icon({
-                        class_name: "menu-active-icon playback",
+                        class_name: 'menu-active-icon playback',
                         setup: (self) => {
                             self.hook(audio, () => {
-                                self.icon = getIcon(
-                                    audio.speaker.volume,
-                                    audio.speaker.is_muted,
-                                )["spkr"];
+                                self.icon = getIcon(audio.speaker.volume, audio.speaker.is_muted)['spkr'];
                             });
                         },
                     }),
@@ -34,16 +30,16 @@ const renderActivePlayback = () => {
                     vertical: true,
                     children: [
                         Widget.Label({
-                            class_name: "menu-active playback",
-                            hpack: "start",
-                            truncate: "end",
+                            class_name: 'menu-active playback',
+                            hpack: 'start',
+                            truncate: 'end',
                             expand: true,
                             wrap: true,
-                            label: audio.bind("speaker").as((v) => v.description || ""),
+                            label: audio.bind('speaker').as((v) => v.description || ''),
                         }),
                         Widget.Slider({
-                            value: audio["speaker"].bind("volume"),
-                            class_name: "menu-active-slider menu-slider playback",
+                            value: audio['speaker'].bind('volume'),
+                            class_name: 'menu-active-slider menu-slider playback',
                             draw_value: false,
                             hexpand: true,
                             min: 0,
@@ -53,11 +49,9 @@ const renderActivePlayback = () => {
                     ],
                 }),
                 Widget.Label({
-                    vpack: "end",
-                    class_name: "menu-active-percentage playback",
-                    label: audio.speaker
-                        .bind("volume")
-                        .as((v) => `${Math.round(v * 100)}%`),
+                    vpack: 'end',
+                    class_name: 'menu-active-percentage playback',
+                    label: audio.speaker.bind('volume').as((v) => `${Math.round(v * 100)}%`),
                 }),
             ],
         }),

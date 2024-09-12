@@ -1,15 +1,15 @@
-import { Weather } from "lib/types/weather";
-import { Variable } from "types/variable";
-import { HourlyIcon } from "./icon/index.js";
-import { HourlyTemp } from "./temperature/index.js";
-import { HourlyTime } from "./time/index.js";
+import { Weather } from 'lib/types/weather';
+import { Variable } from 'types/variable';
+import { HourlyIcon } from './icon/index.js';
+import { HourlyTemp } from './temperature/index.js';
+import { HourlyTime } from './time/index.js';
 
 export const Hourly = (theWeather: Variable<Weather>) => {
     return Widget.Box({
         vertical: false,
         hexpand: true,
-        hpack: "fill",
-        class_name: "hourly-weather-container",
+        hpack: 'fill',
+        class_name: 'hourly-weather-container',
         children: [1, 2, 3, 4].map((hoursFromNow) => {
             const getNextEpoch = (wthr: Weather) => {
                 const currentEpoch = wthr.location.localtime_epoch;
@@ -25,14 +25,13 @@ export const Hourly = (theWeather: Variable<Weather>) => {
                  */
                 if (curHour > 19) {
                     const hoursToRewind = curHour - 19;
-                    nextEpoch =
-                        3600 * hoursFromNow + epochAtHourStart - hoursToRewind * 3600;
+                    nextEpoch = 3600 * hoursFromNow + epochAtHourStart - hoursToRewind * 3600;
                 }
                 return nextEpoch;
             };
 
             return Widget.Box({
-                class_name: "hourly-weather-item",
+                class_name: 'hourly-weather-item',
                 hexpand: true,
                 vertical: true,
                 children: [

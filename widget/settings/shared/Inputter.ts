@@ -1,4 +1,3 @@
-import { Opt } from 'lib/option';
 import { RowProps } from 'lib/types/options';
 import { Variable } from 'types/variable';
 import { BoxWidget } from 'lib/types/widget';
@@ -9,11 +8,11 @@ import { booleanInputter } from './components/boolean';
 import { imageInputter } from './components/image';
 import { importInputter } from './components/import';
 import { wallpaperInputter } from './components/wallpaper';
-import { Notify } from 'lib/utils';
 import { colorInputter } from './components/color';
 import { enumInputter } from './components/enum';
+import { fontInputter } from './components/font';
 
-export const Inputter = <T>(
+export const Inputter = <T extends string | number | boolean>(
     {
         opt,
         type = typeof opt.value as RowProps<T>['type'],
@@ -24,7 +23,7 @@ export const Inputter = <T>(
         min = 0,
         max = 1000000,
         increment = 1,
-    }: RowProps<T>,
+    }: RowProps<T> & { enums?: T[] },
     className: string,
     isUnsaved: Variable<boolean>,
 ): BoxWidget => {
@@ -41,7 +40,7 @@ export const Inputter = <T>(
                 case 'string':
                     return stringInputter(self, opt, isUnsaved);
                 case 'enum':
-                    return enumInputter(self, opt as unknown as Opt<string>, enums!);
+                    return enumInputter(self, opt, enums!);
                 case 'boolean':
                     return booleanInputter(self, opt, disabledBinding, dependencies);
                 case 'img':
@@ -49,32 +48,14 @@ export const Inputter = <T>(
                 case 'config_import':
                     return importInputter(self, exportData);
                 case 'wallpaper':
-                    return wallpaperInputter(self, opt as unknown as Opt<string>);
+                    return wallpaperInputter(self, opt);
                 case 'font':
-                    return (self.child = Widget.FontButton({
-                        show_size: false,
-                        use_size: false,
-                        setup: (self) =>
-                            self
-                                .hook(opt, () => (self.font = opt.value as string))
-                                .on(
-                                    'font-set',
-                                    ({ font }) => (opt.value = font!.split(' ').slice(0, -1).join(' ') as T),
-                                ),
-                    }));
-
+                    return fontInputter(self, opt);
                 case 'color':
-                    if (typeof opt.value !== 'string') {
-                        Notify({
-                            summary: 'Color Picker Error',
-                            body: 'Color is not a hex string.',
-                        });
-                        return;
-                    }
-                    return colorInputter(self, opt as unknown as Opt<string>);
+                    return colorInputter(self, opt);
                 default:
                     return (self.child = Widget.Label({
-                        label: `no setter with type ${type}`,
+                        label: `No setter with type ${type}`,
                     }));
             }
         },

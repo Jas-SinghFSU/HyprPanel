@@ -1,17 +1,17 @@
-import { Notification } from "types/service/notifications";
-import { notifHasImg } from "../../utils.js";
+import { Notification } from 'types/service/notifications';
+import { notifHasImg } from '../../utils.js';
 
 const Image = (notif: Notification) => {
     if (notifHasImg(notif)) {
         return Widget.Box({
-            class_name: "notification-card-image-container menu",
-            hpack: "center",
-            vpack: "center",
+            class_name: 'notification-card-image-container menu',
+            hpack: 'center',
+            vpack: 'center',
             vexpand: false,
             child: Widget.Box({
-                hpack: "center",
+                hpack: 'center',
                 vexpand: false,
-                class_name: "notification-card-image menu",
+                class_name: 'notification-card-image menu',
                 css: `background-image: url("${notif.image}")`,
             }),
         });

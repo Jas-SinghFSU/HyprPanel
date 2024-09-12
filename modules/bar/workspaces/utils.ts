@@ -1,23 +1,21 @@
-const hyprland = await Service.import("hyprland");
+const hyprland = await Service.import('hyprland');
 
 export const renderClassnames = (
     showIcons: boolean,
     showNumbered: boolean,
     numberedActiveIndicator: string,
-    i: number
+    i: number,
 ) => {
     if (showIcons) {
         return `workspace-icon txt-icon bar`;
     }
     if (showNumbered) {
-        const numActiveInd = hyprland.active.workspace.id === i
-            ? numberedActiveIndicator
-            : "";
+        const numActiveInd = hyprland.active.workspace.id === i ? numberedActiveIndicator : '';
 
         return `workspace-number can_${numberedActiveIndicator} ${numActiveInd}`;
     }
-    return "default";
-}
+    return 'default';
+};
 
 export const renderLabel = (
     showIcons: boolean,
@@ -27,7 +25,7 @@ export const renderLabel = (
     workspaceMask: boolean,
     i: number,
     index: number,
-    monitor: number
+    monitor: number,
 ) => {
     if (showIcons) {
         if (hyprland.active.workspace.id === i) {
@@ -36,15 +34,10 @@ export const renderLabel = (
         if ((hyprland.getWorkspace(i)?.windows || 0) > 0) {
             return occupied;
         }
-        if (
-            monitor !== -1
-        ) {
+        if (monitor !== -1) {
             return available;
         }
     }
 
-    return workspaceMask
-        ? `${index + 1}`
-        : `${i}`;
-}
-
+    return workspaceMask ? `${index + 1}` : `${i}`;
+};

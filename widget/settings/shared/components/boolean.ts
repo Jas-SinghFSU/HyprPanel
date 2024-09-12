@@ -1,12 +1,11 @@
 import { Opt } from 'lib/option';
-import { Attribute, GtkWidget } from 'lib/types/widget';
+import { Attribute, BoxWidget } from 'lib/types/widget';
 import { Variable } from 'types/variable';
-import Box from 'types/widgets/box';
 
 import { dependencies as checkDependencies } from 'lib/utils';
 
 export const booleanInputter = <T>(
-    self: Box<GtkWidget, Attribute>,
+    self: BoxWidget,
     opt: Opt<T>,
     disabledBinding: Variable<boolean> | undefined,
     dependencies: string[] | undefined,
