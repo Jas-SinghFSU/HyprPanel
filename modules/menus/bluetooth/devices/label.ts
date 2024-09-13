@@ -1,7 +1,10 @@
+import { BoxWidget } from 'lib/types/widget';
 import { Bluetooth } from 'types/service/bluetooth';
-const label = (bluetooth: Bluetooth) => {
+
+const label = (bluetooth: Bluetooth): BoxWidget => {
     const searchInProgress = Variable(false);
-    const startRotation = () => {
+
+    const startRotation = (): void => {
         searchInProgress.value = true;
         setTimeout(() => {
             searchInProgress.value = false;

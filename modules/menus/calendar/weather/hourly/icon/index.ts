@@ -1,9 +1,10 @@
-import { Weather, WeatherIcon, WeatherIconTitle } from 'lib/types/weather.js';
+import { Weather, WeatherIconTitle } from 'lib/types/weather.js';
 import { Variable } from 'types/variable.js';
 import { weatherIcons } from 'modules/icons/weather.js';
 import { isValidWeatherIconTitle } from 'globals/weather';
+import { BoxWidget } from 'lib/types/widget';
 
-export const HourlyIcon = (theWeather: Variable<Weather>, getNextEpoch: any) => {
+export const HourlyIcon = (theWeather: Variable<Weather>, getNextEpoch: (wthr: Weather) => number): BoxWidget => {
     const getIconQuery = (wthr: Weather): WeatherIconTitle => {
         const nextEpoch = getNextEpoch(wthr);
         const weatherAtEpoch = wthr.forecast.forecastday[0].hour.find((h) => h.time_epoch === nextEpoch);
@@ -28,10 +29,9 @@ export const HourlyIcon = (theWeather: Variable<Weather>, getNextEpoch: any) => 
     return Widget.Box({
         hpack: 'center',
         child: theWeather.bind('value').as((w) => {
-            let weatherIcn: WeatherIcon;
-
             const iconQuery = getIconQuery(w);
-            weatherIcn = weatherIcons[iconQuery] || weatherIcons['warning'];
+            const weatherIcn = weatherIcons[iconQuery] || weatherIcons['warning'];
+
             return Widget.Label({
                 hpack: 'center',
                 class_name: 'hourly-weather-icon txt-icon',

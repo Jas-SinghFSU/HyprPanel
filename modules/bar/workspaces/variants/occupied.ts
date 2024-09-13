@@ -4,10 +4,11 @@ import { getWorkspaceRules, getWorkspacesForMonitor } from '../helpers';
 import { Workspace } from 'types/service/hyprland';
 import { renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
+import { BoxWidget } from 'lib/types/widget';
 
 const { workspaces, monitorSpecific, workspaceMask, spacing } = options.bar.workspaces;
 
-export const occupiedWses = (monitor: number) => {
+export const occupiedWses = (monitor: number): BoxWidget => {
     return Widget.Box({
         children: Utils.merge(
             [

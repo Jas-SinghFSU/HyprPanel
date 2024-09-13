@@ -1,7 +1,8 @@
 const audio = await Service.import('audio');
+import { BarBoxChild } from 'lib/types/bar.js';
 import { getIcon } from '../utils.js';
 
-const renderActivePlayback = () => {
+const renderActivePlayback = (): BarBoxChild => {
     return [
         Widget.Box({
             class_name: 'menu-slider-container playback',
@@ -21,7 +22,8 @@ const renderActivePlayback = () => {
                         class_name: 'menu-active-icon playback',
                         setup: (self) => {
                             self.hook(audio, () => {
-                                self.icon = getIcon(audio.speaker.volume, audio.speaker.is_muted)['spkr'];
+                                const isSpeakerMuted = audio.speaker.is_muted !== null ? audio.speaker.is_muted : true;
+                                self.icon = getIcon(audio.speaker.volume, isSpeakerMuted)['spkr'];
                             });
                         },
                     }),

@@ -1,11 +1,12 @@
 import Gdk from 'gi://Gdk?version=3.0';
+import { BarBoxChild, SelfButton } from 'lib/types/bar';
 import { Notify } from 'lib/utils';
 const systemtray = await Service.import('systemtray');
 import options from 'options';
 
 const { ignore } = options.bar.systray;
 
-const SysTray = () => {
+const SysTray = (): BarBoxChild => {
     const isVis = Variable(false);
 
     const items = Utils.merge([systemtray.bind('items'), ignore.bind('value')], (items, ignored) => {
@@ -14,9 +15,7 @@ const SysTray = () => {
         isVis.value = filteredTray.length > 0;
 
         return filteredTray.map((item) => {
-            if (item.menu !== undefined) {
-                item.menu['class_name'] = 'systray-menu';
-            }
+            console.log(JSON.stringify(item, null, 2));
 
             return Widget.Button({
                 cursor: 'pointer',
@@ -24,7 +23,7 @@ const SysTray = () => {
                     class_name: 'systray-icon',
                     icon: item.bind('icon'),
                 }),
-                on_primary_click: (_: any, event: Gdk.Event) => item.activate(event),
+                on_primary_click: (_: SelfButton, event: Gdk.Event) => item.activate(event),
                 on_secondary_click: (_, event) => item.openMenu(event),
                 onMiddleClick: () => Notify({ summary: 'App Name', body: item.id }),
                 tooltip_markup: item.bind('tooltip_markup'),

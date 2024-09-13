@@ -1,4 +1,4 @@
-const getBluetoothIcon = (iconName: string) => {
+const getBluetoothIcon = (iconName: string): string => {
     const deviceIconMap = [
         ['^audio-card*', '󰎄'],
         ['^audio-headphones*', '󰋋'],

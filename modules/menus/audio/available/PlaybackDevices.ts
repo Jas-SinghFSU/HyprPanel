@@ -1,7 +1,8 @@
 const audio = await Service.import('audio');
+import { PlaybackDevices } from 'lib/types/audio';
 import { Stream } from 'types/service/audio';
 
-const renderPlaybacks = (playbackDevices: Stream[]) => {
+const renderPlaybacks = (playbackDevices: Stream[]): PlaybackDevices => {
     return playbackDevices.map((device) => {
         if (device.description === 'Dummy Output') {
             return Widget.Box({

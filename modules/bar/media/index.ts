@@ -3,10 +3,11 @@ const mpris = await Service.import('mpris');
 import { openMenu } from '../utils.js';
 import options from 'options';
 import { getCurrentPlayer } from 'lib/shared/media.js';
+import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
 
 const { show_artist, truncation, truncation_size, show_label, show_active_only } = options.bar.media;
 
-const Media = () => {
+const Media = (): BarBoxChild => {
     const activePlayer = Variable(mpris.players[0]);
     const isVis = Variable(!show_active_only.value);
 
@@ -63,7 +64,7 @@ const Media = () => {
             child: Widget.Box({
                 className: Utils.merge(
                     [options.theme.bar.buttons.style.bind('value'), show_label.bind('value')],
-                    (style, showLabel) => {
+                    (style) => {
                         const styleMap = {
                             default: 'style1',
                             split: 'style2',
@@ -93,7 +94,7 @@ const Media = () => {
         props: {
             on_scroll_up: () => activePlayer.value?.next(),
             on_scroll_down: () => activePlayer.value?.previous(),
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
+            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'mediamenu');
             },
         },

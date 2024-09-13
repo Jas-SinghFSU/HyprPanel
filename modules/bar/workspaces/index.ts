@@ -7,14 +7,16 @@ import {
     getWorkspacesForMonitor,
 } from './helpers';
 import { Workspace } from 'types/service/hyprland';
+import { BoxWidget } from 'lib/types/widget';
+import { BarBoxChild, SelfButton } from 'lib/types/bar';
 
 const { workspaces, monitorSpecific, workspaceMask, scroll_speed, spacing } = options.bar.workspaces;
 
-function range(length: number, start = 1) {
+function range(length: number, start = 1): number[] {
     return Array.from({ length }, (_, i) => i + start);
 }
 
-const Workspaces = (monitor = -1) => {
+const Workspaces = (monitor = -1): BarBoxChild => {
     const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces(monitor));
 
     workspaces.connect('changed', () => {
@@ -26,7 +28,7 @@ const Workspaces = (monitor = -1) => {
         showNumbered: boolean,
         numberedActiveIndicator: string,
         i: number,
-    ) => {
+    ): string => {
         if (showIcons) {
             return `workspace-icon txt-icon bar`;
         }
@@ -46,7 +48,7 @@ const Workspaces = (monitor = -1) => {
         workspaceMask: boolean,
         i: number,
         index: number,
-    ) => {
+    ): string => {
         if (showIcons) {
             if (hyprland.active.workspace.id === i) {
                 return active;
@@ -60,7 +62,7 @@ const Workspaces = (monitor = -1) => {
         }
         return workspaceMask ? `${index + 1}` : `${i}`;
     };
-    const defaultWses = () => {
+    const defaultWses = (): BoxWidget => {
         return Widget.Box({
             children: Utils.merge(
                 [workspaces.bind('value'), monitorSpecific.bind()],
@@ -128,7 +130,6 @@ const Workspaces = (monitor = -1) => {
                                             active: string,
                                             occupied: string,
                                             workspaceMask: boolean,
-                                            _: number,
                                         ) => {
                                             if (showIcons) {
                                                 if (hyprland.active.workspace.id === i) {
@@ -160,7 +161,7 @@ const Workspaces = (monitor = -1) => {
             ),
         });
     };
-    const occupiedWses = () => {
+    const occupiedWses = (): BoxWidget => {
         return Widget.Box({
             children: Utils.merge(
                 [
@@ -269,7 +270,7 @@ const Workspaces = (monitor = -1) => {
         isVisible: true,
         boxClass: 'workspaces',
         props: {
-            setup: (self: any) => {
+            setup: (self: SelfButton): void => {
                 Utils.merge(
                     [scroll_speed.bind('value'), options.bar.workspaces.hideUnoccupied.bind('value')],
                     (scroll_speed, hideUnoccupied) => {

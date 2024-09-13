@@ -1,6 +1,6 @@
 const hyprland = await Service.import('hyprland');
 
-import { WorkspaceMap, WorkspaceRule } from 'lib/types/workspace';
+import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'lib/types/workspace';
 import options from 'options';
 import { Variable } from 'types/variable';
 
@@ -11,7 +11,7 @@ export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, mo
         return true;
     }
 
-    const monitorMap = {};
+    const monitorMap: MonitorMap = {};
     const workspaceMonitorList = hyprland?.workspaces?.map((m) => ({ id: m.monitorID, name: m.monitor }));
     const monitors = [
         ...new Map([...workspaceMonitorList, ...hyprland.monitors].map((item) => [item.id, item])).values(),
@@ -32,7 +32,7 @@ export const getWorkspaceRules = (): WorkspaceMap => {
     try {
         const rules = Utils.exec('hyprctl workspacerules -j');
 
-        const workspaceRules = {};
+        const workspaceRules: WorkspaceMap = {};
 
         JSON.parse(rules).forEach((rule: WorkspaceRule, index: number) => {
             if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
@@ -58,7 +58,7 @@ export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
     }
 
     const monitorWorkspaces = getWorkspaceRules();
-    const monitorMap = {};
+    const monitorMap: MonitorMap = {};
     hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
 
     const currentMonitorName = monitorMap[monitor];
@@ -125,7 +125,7 @@ export const goToPrevWS = (currentMonitorWorkspaces: Variable<number[]>, activeW
     }
 };
 
-export function throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+export function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
     let inThrottle: boolean;
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
         if (!inThrottle) {

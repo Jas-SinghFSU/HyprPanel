@@ -1,6 +1,7 @@
+import { BoxWidget } from 'lib/types/widget';
 import { BluetoothDevice } from 'types/service/bluetooth';
 
-const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevice[]) => {
+const connectedControls = (dev: BluetoothDevice, connectedDevices: BluetoothDevice[]): BoxWidget => {
     if (!connectedDevices.includes(dev.address)) {
         return Widget.Box({});
     }

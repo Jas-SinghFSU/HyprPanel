@@ -1,7 +1,9 @@
+import Window from 'types/widgets/window.js';
 import DropdownMenu from '../DropdownMenu.js';
 import { Devices } from './devices/index.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'bluetoothmenu',
         transition: 'crossfade',

@@ -2,10 +2,11 @@ const bluetooth = await Service.import('bluetooth');
 import Gdk from 'gi://Gdk?version=3.0';
 import options from 'options';
 import { openMenu } from '../utils.js';
+import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
 
 const { label } = options.bar.bluetooth;
 
-const Bluetooth = () => {
+const Bluetooth = (): BarBoxChild => {
     const btIcon = Widget.Label({
         label: bluetooth.bind('enabled').as((v) => (v ? '󰂯' : '󰂲')),
         class_name: 'bar-button-icon bluetooth txt-icon bar',
@@ -42,7 +43,7 @@ const Bluetooth = () => {
         isVisible: true,
         boxClass: 'bluetooth',
         props: {
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
+            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'bluetoothmenu');
             },
         },

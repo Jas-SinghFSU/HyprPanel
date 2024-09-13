@@ -2,9 +2,10 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor } from '../helpers';
 import { range } from 'lib/utils';
+import { BoxWidget } from 'lib/types/widget';
 
 const { workspaces, monitorSpecific, workspaceMask, spacing } = options.bar.workspaces;
-export const defaultWses = (monitor: number) => {
+export const defaultWses = (monitor: number): BoxWidget => {
     return Widget.Box({
         children: Utils.merge(
             [workspaces.bind('value'), monitorSpecific.bind()],
@@ -68,7 +69,6 @@ export const defaultWses = (monitor: number) => {
                                         active: string,
                                         occupied: string,
                                         workspaceMask: boolean,
-                                        _: number,
                                     ) => {
                                         if (showIcons) {
                                             if (hyprland.active.workspace.id === i) {

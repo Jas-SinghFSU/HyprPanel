@@ -1,7 +1,9 @@
 import { Binding, Connectable } from 'types/service';
 import { Variable } from 'types/variable';
 import Box from 'types/widgets/box';
+import Button from 'types/widgets/button';
 import Label from 'types/widgets/label';
+import { Attribute, Child } from './widget';
 
 export type BarBoxChild = {
     component: Box<Gtk.Widget, unknown>;
@@ -9,6 +11,8 @@ export type BarBoxChild = {
     isVis?: Variable<boolean>;
     boxClass: string;
 } & ButtonProps;
+
+export type SelfButton = Button<Child, Attribute>;
 
 export type BoxHook = (self: Box<Gtk.Widget, Gtk.Widget>) => void;
 export type LabelHook = (self: Label<Gtk.Widget>) => void;

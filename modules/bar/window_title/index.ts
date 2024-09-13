@@ -1,9 +1,9 @@
 const hyprland = await Service.import('hyprland');
+import { BarBoxChild } from 'lib/types/bar';
 import options from 'options';
 import { ActiveClient } from 'types/service/hyprland';
-import Label from 'types/widgets/label';
 
-const filterTitle = (windowtitle: ActiveClient) => {
+const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
     const windowTitleMap = [
         // user provided values
         ...options.bar.windowtitle.title_map.value,
@@ -130,7 +130,7 @@ const filterTitle = (windowtitle: ActiveClient) => {
     };
 };
 
-const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: boolean) => {
+const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: boolean): string => {
     if (useCustomTitle) return filterTitle(client).label;
     if (useClassName) return client.class;
 
@@ -142,14 +142,14 @@ const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: b
     return title;
 };
 
-const truncateTitle = (title: string, max_size: number) => {
+const truncateTitle = (title: string, max_size: number): string => {
     if (max_size > 0 && title.length > max_size) {
         return title.substring(0, max_size).trim() + '...';
     }
     return title;
 };
 
-const ClientTitle = () => {
+const ClientTitle = (): BarBoxChild => {
     const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
 
     return {
@@ -177,17 +177,12 @@ const ClientTitle = () => {
                     truncation_size.bind('value'),
                 ],
                 (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
-                    const children: Label<any>[] = [];
                     if (showIcon) {
-                        children.push(
+                        return [
                             Widget.Label({
                                 class_name: 'bar-button-icon windowtitle txt-icon bar',
                                 label: filterTitle(client).icon,
                             }),
-                        );
-                    }
-                    if (showLabel) {
-                        children.push(
                             Widget.Label({
                                 class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
                                 label: truncateTitle(
@@ -195,9 +190,22 @@ const ClientTitle = () => {
                                     truncate ? truncationSize : -1,
                                 ),
                             }),
-                        );
+                        ];
                     }
-                    return children;
+
+                    if (showLabel) {
+                        return [
+                            Widget.Label({
+                                class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
+                                label: truncateTitle(
+                                    getTitle(client, useCustomTitle, useClassName),
+                                    truncate ? truncationSize : -1,
+                                ),
+                            }),
+                        ];
+                    }
+
+                    return [];
                 },
             ),
         }),

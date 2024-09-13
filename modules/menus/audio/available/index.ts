@@ -1,8 +1,9 @@
 const audio = await Service.import('audio');
+import { BoxWidget } from 'lib/types/widget.js';
 import { renderInputDevices } from './InputDevices.js';
 import { renderPlaybacks } from './PlaybackDevices.js';
 
-const availableDevices = () => {
+const availableDevices = (): BoxWidget => {
     return Widget.Box({
         vertical: true,
         children: [

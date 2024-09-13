@@ -2,10 +2,11 @@ const battery = await Service.import('battery');
 import Gdk from 'gi://Gdk?version=3.0';
 import { openMenu } from '../utils.js';
 import options from 'options';
+import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
 
 const { label: show_label } = options.bar.battery;
 
-const BatteryLabel = () => {
+const BatteryLabel = (): BarBoxChild => {
     const isVis = Variable(battery.available);
 
     const batIcon = Utils.merge(
@@ -20,13 +21,13 @@ const BatteryLabel = () => {
         isVis.value = available;
     });
 
-    const formatTime = (seconds: number) => {
+    const formatTime = (seconds: number): Record<string, number> => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         return { hours, minutes };
     };
 
-    const generateTooltip = (timeSeconds: number, isCharging: boolean, isCharged: boolean) => {
+    const generateTooltip = (timeSeconds: number, isCharging: boolean, isCharged: boolean): string => {
         if (isCharged) {
             return 'Fully Charged!!!';
         }
@@ -89,7 +90,7 @@ const BatteryLabel = () => {
         isVis,
         boxClass: 'battery',
         props: {
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
+            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'energymenu');
             },
         },

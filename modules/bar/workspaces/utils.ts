@@ -5,7 +5,7 @@ export const renderClassnames = (
     showNumbered: boolean,
     numberedActiveIndicator: string,
     i: number,
-) => {
+): string => {
     if (showIcons) {
         return `workspace-icon txt-icon bar`;
     }
@@ -26,7 +26,7 @@ export const renderLabel = (
     i: number,
     index: number,
     monitor: number,
-) => {
+): string => {
     if (showIcons) {
         if (hyprland.active.workspace.id === i) {
             return active;

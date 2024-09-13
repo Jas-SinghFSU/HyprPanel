@@ -6,3 +6,7 @@ export type WorkspaceRule = {
 export type WorkspaceMap = {
     [key: string]: number[];
 };
+
+export type MonitorMap = {
+    [key: number]: string;
+};

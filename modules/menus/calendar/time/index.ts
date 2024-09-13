@@ -1,3 +1,4 @@
+import { BoxWidget } from 'lib/types/widget';
 import options from 'options';
 
 const { military } = options.menus.clock.time;
@@ -14,7 +15,7 @@ const militaryTime = Variable('', {
     poll: [1000, 'date "+%H:%M:%S"'],
 });
 
-const TimeWidget = () => {
+const TimeWidget = (): BoxWidget => {
     return Widget.Box({
         class_name: 'calendar-menu-item-container clock',
         hexpand: true,

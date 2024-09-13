@@ -1,7 +1,8 @@
 const audio = await Service.import('audio');
+import { InputDevices } from 'lib/types/audio';
 import { Stream } from 'types/service/audio';
 
-const renderInputDevices = (inputDevices: Stream[]) => {
+const renderInputDevices = (inputDevices: Stream[]): InputDevices => {
     if (inputDevices.length === 0) {
         return [
             Widget.Button({

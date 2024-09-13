@@ -4,8 +4,10 @@ import { openMenu } from '../utils.js';
 import options from 'options';
 import { Binding } from 'lib/utils.js';
 import { VolumeIcons } from 'lib/types/volume.js';
+import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { Bind } from 'lib/types/variable.js';
 
-const Volume = () => {
+const Volume = (): BarBoxChild => {
     const icons: VolumeIcons = {
         101: '󰕾',
         66: '󰕾',
@@ -14,7 +16,7 @@ const Volume = () => {
         0: '󰝟',
     };
 
-    const getIcon = () => {
+    const getIcon = (): Bind => {
         const icon: Binding<number> = Utils.merge(
             [audio.speaker.bind('is_muted'), audio.speaker.bind('volume')],
             (isMuted, vol) => {
@@ -63,7 +65,7 @@ const Volume = () => {
         isVisible: true,
         boxClass: 'volume',
         props: {
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
+            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'audiomenu');
             },
         },

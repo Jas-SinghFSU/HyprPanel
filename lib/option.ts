@@ -19,10 +19,10 @@ export class Opt<T = unknown> extends Variable<T> {
     initial: T;
     id = '';
     persistent: boolean;
-    toString() {
+    toString(): string {
         return `${this.value}`;
     }
-    toJSON() {
+    toJSON(): string {
         return `opt:${this.value}`;
     }
 
@@ -30,7 +30,7 @@ export class Opt<T = unknown> extends Variable<T> {
         return super.getValue();
     };
 
-    init(cacheFile: string) {
+    init(cacheFile: string): void {
         const cacheV = JSON.parse(Utils.readFile(cacheFile) || '{}')[this.id];
         if (cacheV !== undefined) this.value = cacheV;
 
@@ -41,7 +41,7 @@ export class Opt<T = unknown> extends Variable<T> {
         });
     }
 
-    reset() {
+    reset(): string | undefined {
         if (this.persistent) return;
 
         if (JSON.stringify(this.value) !== JSON.stringify(this.initial)) {
@@ -50,7 +50,7 @@ export class Opt<T = unknown> extends Variable<T> {
         }
     }
 
-    doResetColor() {
+    doResetColor(): string | undefined {
         if (this.persistent) return;
 
         const isColor = isHexColor(this.value as string);
@@ -62,7 +62,7 @@ export class Opt<T = unknown> extends Variable<T> {
     }
 }
 
-export const opt = <T>(initial: T, opts?: OptProps) => new Opt(initial, opts);
+export const opt = <T>(initial: T, opts?: OptProps): Opt<T> => new Opt(initial, opts);
 
 function getOptions(object: Record<string, unknown>, path = ''): Opt[] {
     return Object.keys(object).flatMap((key) => {
@@ -83,7 +83,7 @@ function getOptions(object: Record<string, unknown>, path = ''): Opt[] {
     });
 }
 
-export function mkOptions<T extends object>(cacheFile: string, object: T, confFile: string = 'config.json') {
+export function mkOptions<T extends object>(cacheFile: string, object: T, confFile: string = 'config.json'): T {
     for (const opt of getOptions(object as Record<string, unknown>)) opt.init(cacheFile);
 
     Utils.ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));

@@ -1,6 +1,7 @@
 import Gdk from 'gi://Gdk?version=3.0';
+import { SelfButton } from 'lib/types/bar';
 
-export const closeAllMenus = () => {
+export const closeAllMenus = (): void => {
     const menuWindows = App.windows
         .filter((w) => {
             if (w.name) {
@@ -18,7 +19,7 @@ export const closeAllMenus = () => {
     });
 };
 
-export const openMenu = (clicked: any, event: Gdk.Event, window: string) => {
+export const openMenu = (clicked: SelfButton, event: Gdk.Event, window: string): void => {
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn

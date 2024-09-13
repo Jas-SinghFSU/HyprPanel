@@ -2,13 +2,14 @@ import Gdk from 'gi://Gdk?version=3.0';
 import { openMenu } from '../utils.js';
 import options from 'options';
 import { filterNotifications } from 'lib/shared/notifications.js';
+import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
 
 const { show_total } = options.bar.notifications;
 const { ignore } = options.notifications;
 
 const notifs = await Service.import('notifications');
 
-export const Notifications = () => {
+export const Notifications = (): BarBoxChild => {
     return {
         component: Widget.Box({
             hpack: 'start',
@@ -55,7 +56,7 @@ export const Notifications = () => {
         isVisible: true,
         boxClass: 'notifications',
         props: {
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
+            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'notificationsmenu');
             },
         },

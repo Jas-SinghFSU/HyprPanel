@@ -1,7 +1,8 @@
+import { BarBoxChild } from 'lib/types/bar.js';
 import { renderActiveInput } from './SelectedInput.js';
 import { renderActivePlayback } from './SelectedPlayback.js';
 
-const activeDevices = () => {
+const activeDevices = (): BarBoxChild => {
     return Widget.Box({
         class_name: 'menu-section-container volume',
         vertical: true,
