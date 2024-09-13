@@ -32,6 +32,8 @@ import Gtk from 'types/@girs/gtk-3.0/gtk-3.0.js';
 
 import './SideEffects';
 import { WindowLayer } from 'lib/types/options.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import Window from 'types/widgets/window.js';
 
 const { layouts } = options.bar;
 
@@ -68,7 +70,7 @@ type BarLayout = {
     [key: string]: Layout;
 };
 
-const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
+const getModulesForMonitor = (monitor: number, curLayouts: BarLayout): Layout => {
     const foundMonitor = Object.keys(curLayouts).find((mon) => mon === monitor.toString());
 
     const defaultSetup: Layout = {
@@ -85,25 +87,25 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
 };
 
 const widget = {
-    battery: () => WidgetContainer(BatteryLabel()),
-    dashboard: () => WidgetContainer(Menu()),
-    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
-    windowtitle: () => WidgetContainer(ClientTitle()),
-    media: () => WidgetContainer(Media()),
-    notifications: () => WidgetContainer(Notifications()),
-    volume: () => WidgetContainer(Volume()),
-    network: () => WidgetContainer(Network()),
-    bluetooth: () => WidgetContainer(Bluetooth()),
-    clock: () => WidgetContainer(Clock()),
-    systray: () => WidgetContainer(SysTray()),
-    ram: () => WidgetContainer(Ram()),
-    cpu: () => WidgetContainer(Cpu()),
-    storage: () => WidgetContainer(Storage()),
-    netstat: () => WidgetContainer(Netstat()),
-    kbinput: () => WidgetContainer(KbInput()),
-    updates: () => WidgetContainer(Updates()),
-    weather: () => WidgetContainer(Weather()),
-    power: () => WidgetContainer(Power()),
+    battery: (): Button<Child, Attribute> => WidgetContainer(BatteryLabel()),
+    dashboard: (): Button<Child, Attribute> => WidgetContainer(Menu()),
+    workspaces: (monitor: number): Button<Child, Attribute> => WidgetContainer(Workspaces(monitor)),
+    windowtitle: (): Button<Child, Attribute> => WidgetContainer(ClientTitle()),
+    media: (): Button<Child, Attribute> => WidgetContainer(Media()),
+    notifications: (): Button<Child, Attribute> => WidgetContainer(Notifications()),
+    volume: (): Button<Child, Attribute> => WidgetContainer(Volume()),
+    network: (): Button<Child, Attribute> => WidgetContainer(Network()),
+    bluetooth: (): Button<Child, Attribute> => WidgetContainer(Bluetooth()),
+    clock: (): Button<Child, Attribute> => WidgetContainer(Clock()),
+    systray: (): Button<Child, Attribute> => WidgetContainer(SysTray()),
+    ram: (): Button<Child, Attribute> => WidgetContainer(Ram()),
+    cpu: (): Button<Child, Attribute> => WidgetContainer(Cpu()),
+    storage: (): Button<Child, Attribute> => WidgetContainer(Storage()),
+    netstat: (): Button<Child, Attribute> => WidgetContainer(Netstat()),
+    kbinput: (): Button<Child, Attribute> => WidgetContainer(KbInput()),
+    updates: (): Button<Child, Attribute> => WidgetContainer(Updates()),
+    weather: (): Button<Child, Attribute> => WidgetContainer(Weather()),
+    power: (): Button<Child, Attribute> => WidgetContainer(Power()),
 };
 
 type GdkMonitors = {
@@ -239,7 +241,7 @@ const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: Set<num
 export const Bar = (() => {
     const usedHyprlandMonitors = new Set<number>();
 
-    return (monitor: number) => {
+    return (monitor: number): Window<Child, Attribute> => {
         const hyprlandMonitor = gdkMonitorIdToHyprlandId(monitor, usedHyprlandMonitors);
 
         return Widget.Window({
