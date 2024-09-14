@@ -1,24 +1,21 @@
 #!/bin/bash
 
 check_arch_updates() {
-    official_updates=$(checkupdates 2>/dev/null | wc -l)
-    aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+    official_updates=0
+    aur_updates=0
 
-     total_updates=$((official_updates + aur_updates))
+    if [ "$1" = "-y" ]; then
+        aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+    elif [ "$1" = "-p" ]; then
+        official_updates=$(checkupdates 2>/dev/null | wc -l)
+    else
+        official_updates=$(checkupdates 2>/dev/null | wc -l)
+        aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+    fi
+
+    total_updates=$((official_updates + aur_updates))
 
     echo $total_updates
-}
-
-check_aur_updates() {
-    aur_updates=$(yay -Qum 2>/dev/null | wc -l)
-
-    echo $aur_updates
-}
-
-check_pacman_updates() {
-    official_updates=$(checkupdates 2>/dev/null | wc -l)
-
-    echo $official_updates
 }
 
 check_ubuntu_updates() {
