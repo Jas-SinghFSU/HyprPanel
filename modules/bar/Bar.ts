@@ -71,8 +71,8 @@ type BarLayout = {
 };
 
 const getLayoutForMonitor = (monitor: number, layouts: BarLayout): Layout => {
-    const matchingKey = Object.keys(layouts).find(key => key === monitor.toString());
-    const wildcard = Object.keys(layouts).find(key => key === "*");
+    const matchingKey = Object.keys(layouts).find((key) => key === monitor.toString());
+    const wildcard = Object.keys(layouts).find((key) => key === '*');
 
     if (matchingKey) {
         return layouts[matchingKey];
@@ -82,26 +82,12 @@ const getLayoutForMonitor = (monitor: number, layouts: BarLayout): Layout => {
         return layouts[wildcard];
     }
 
-   return {
-        left: [
-            "dashboard",
-            "workspaces",
-            "windowtitle"
-        ],
-        middle: [
-            "media"
-        ],
-        right: [
-            "volume",
-            "network",
-            "bluetooth",
-            "battery",
-            "systray",
-            "clock",
-            "notifications"
-        ]
+    return {
+        left: ['dashboard', 'workspaces', 'windowtitle'],
+        middle: ['media'],
+        right: ['volume', 'network', 'bluetooth', 'battery', 'systray', 'clock', 'notifications'],
     };
-}
+};
 
 const widget = {
     battery: (): Button<Child, Attribute> => WidgetContainer(BatteryLabel()),
@@ -288,7 +274,9 @@ export const Bar = (() => {
                         setup: (self) => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
+                                self.children = foundLayout.left
+                                    .filter((mod) => Object.keys(widget).includes(mod))
+                                    .map((w) => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
@@ -298,7 +286,9 @@ export const Bar = (() => {
                         setup: (self) => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
+                                self.children = foundLayout.middle
+                                    .filter((mod) => Object.keys(widget).includes(mod))
+                                    .map((w) => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
@@ -308,7 +298,9 @@ export const Bar = (() => {
                         setup: (self) => {
                             self.hook(layouts, (self) => {
                                 const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
-                                self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
+                                self.children = foundLayout.right
+                                    .filter((mod) => Object.keys(widget).includes(mod))
+                                    .map((w) => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
                     }),
