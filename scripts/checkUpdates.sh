@@ -30,14 +30,8 @@ check_fedora_updates() {
 
 case "$1" in
 -arch)
-    check_arch_updates
+    check_arch_updates "$2"
     ;;
--aur)
-    check_aur_updates
-    ;;
--pacman)
-    check_pacman_updates
-    ;;        
 -ubuntu)
     check_ubuntu_updates
     ;;
