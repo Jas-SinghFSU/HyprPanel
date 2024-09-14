@@ -1,8 +1,12 @@
 #!/bin/bash
 
 check_arch_updates() {
-    result=$(yay -Qum --noconfirm 2>/dev/null | wc -l || echo 0)
-    echo "$result"
+    official_updates=$(checkupdates 2>/dev/null | wc -l)
+    aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+
+     total_updates=$((official_updates + aur_updates))
+
+    echo $total_updates
 }
 
 check_ubuntu_updates() {
