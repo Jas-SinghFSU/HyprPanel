@@ -35,7 +35,8 @@ export const filterConfigForThemeOnly = (config: Config): Config => {
     const filteredConfig: Config = {};
 
     for (const key in config) {
-        if (typeof config[key] === 'string' && hexColorPattern.test(config[key])) {
+        const value = config[key];
+        if (typeof value === 'string' && hexColorPattern.test(value)) {
             filteredConfig[key] = config[key];
         } else if (whiteListedThemeProp.includes(key)) {
             filteredConfig[key] = config[key];
@@ -50,7 +51,9 @@ export const filterConfigForNonTheme = (config: Config): Config => {
         if (whiteListedThemeProp.includes(key)) {
             continue;
         }
-        if (!(typeof config[key] === 'string' && hexColorPattern.test(config[key]))) {
+
+        const value = config[key];
+        if (!(typeof value === 'string' && hexColorPattern.test(value))) {
             filteredConfig[key] = config[key];
         }
     }
@@ -76,7 +79,8 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const filteredObject: Config = {};
 
         for (const key in jsonObject) {
-            if (typeof jsonObject[key] === 'string' && isHexColor(jsonObject[key])) {
+            const value = jsonObject[key];
+            if (typeof value === 'string' && isHexColor(value)) {
                 filteredObject[key] = jsonObject[key];
             } else if (whiteListedThemeProp.includes(key)) {
                 filteredObject[key] = jsonObject[key];
@@ -96,7 +100,8 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
                 continue;
             }
 
-            if (!(typeof jsonObject[key] === 'string' && isHexColor(jsonObject[key]))) {
+            const value = jsonObject[key];
+            if (!(typeof value === 'string' && isHexColor(value))) {
                 filteredObject[key] = jsonObject[key];
             }
         }

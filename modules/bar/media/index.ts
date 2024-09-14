@@ -3,7 +3,9 @@ const mpris = await Service.import('mpris');
 import { openMenu } from '../utils.js';
 import options from 'options';
 import { getCurrentPlayer } from 'lib/shared/media.js';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 
 const { show_artist, truncation, truncation_size, show_label, show_active_only } = options.bar.media;
 
@@ -94,7 +96,7 @@ const Media = (): BarBoxChild => {
         props: {
             on_scroll_up: () => activePlayer.value?.next(),
             on_scroll_down: () => activePlayer.value?.previous(),
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'mediamenu');
             },
         },

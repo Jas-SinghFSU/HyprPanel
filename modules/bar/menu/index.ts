@@ -1,7 +1,9 @@
 import Gdk from 'gi://Gdk?version=3.0';
 import { openMenu } from '../utils.js';
 import options from 'options';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 
 const Menu = (): BarBoxChild => {
     return {
@@ -23,7 +25,7 @@ const Menu = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'dashboardmenu');
             },
         },

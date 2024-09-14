@@ -2,7 +2,9 @@ const bluetooth = await Service.import('bluetooth');
 import Gdk from 'gi://Gdk?version=3.0';
 import options from 'options';
 import { openMenu } from '../utils.js';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 
 const { label } = options.bar.bluetooth;
 
@@ -43,7 +45,7 @@ const Bluetooth = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'bluetooth',
         props: {
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'bluetoothmenu');
             },
         },

@@ -182,6 +182,9 @@ export type MatugenVariation = {
     yellow3: HexColor;
     maroon3: HexColor;
     crust3: HexColor;
+    notifications_closer?: HexColor;
+    notifications_background?: HexColor;
+    dashboard_btn_text?: HexColor;
 };
 export type MatugenScheme =
     | 'content'

@@ -2,7 +2,9 @@ import Gdk from 'gi://Gdk?version=3.0';
 const network = await Service.import('network');
 import options from 'options';
 import { openMenu } from '../utils.js';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 
 const { label: networkLabel, truncation, truncation_size } = options.bar.network;
 
@@ -68,7 +70,7 @@ const Network = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'network',
         props: {
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'networkmenu');
             },
         },

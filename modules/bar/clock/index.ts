@@ -3,7 +3,9 @@ import GLib from 'gi://GLib';
 import { openMenu } from '../utils.js';
 import options from 'options';
 import { DateTime } from 'types/@girs/glib-2.0/glib-2.0.cjs';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 const { format, icon, showIcon, showTime } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
@@ -51,7 +53,7 @@ const Clock = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'clock',
         props: {
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'calendarmenu');
             },
         },

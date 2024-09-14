@@ -4,8 +4,10 @@ import { openMenu } from '../utils.js';
 import options from 'options';
 import { Binding } from 'lib/utils.js';
 import { VolumeIcons } from 'lib/types/volume.js';
-import { BarBoxChild, SelfButton } from 'lib/types/bar.js';
+import { BarBoxChild } from 'lib/types/bar.js';
 import { Bind } from 'lib/types/variable.js';
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
 
 const Volume = (): BarBoxChild => {
     const icons: VolumeIcons = {
@@ -65,7 +67,7 @@ const Volume = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'volume',
         props: {
-            on_primary_click: (clicked: SelfButton, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'audiomenu');
             },
         },
