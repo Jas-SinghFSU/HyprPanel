@@ -4,13 +4,13 @@ import { Controls } from './components/controls.js';
 import { Bar } from './components/bar.js';
 import { MprisPlayer } from 'types/service/mpris.js';
 import options from 'options.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
 const generateAlbumArt = (imageUrl: string): string => {
     const userTint = tint.value;
     const userHexColor = color.value;
-    let css: string;
 
     const r = parseInt(userHexColor.slice(1, 3), 16);
     const g = parseInt(userHexColor.slice(3, 5), 16);
@@ -18,7 +18,7 @@ const generateAlbumArt = (imageUrl: string): string => {
 
     const alpha = userTint / 100;
 
-    css = `background-image: linear-gradient(
+    const css = `background-image: linear-gradient(
                 rgba(${r}, ${g}, ${b}, ${alpha}),
                 rgba(${r}, ${g}, ${b}, ${alpha}),
                 ${userHexColor} 65em
@@ -26,7 +26,7 @@ const generateAlbumArt = (imageUrl: string): string => {
 
     return css;
 };
-const Media = () => {
+const Media = (): BoxWidget => {
     const curPlayer = Variable('');
 
     media.connect('changed', () => {

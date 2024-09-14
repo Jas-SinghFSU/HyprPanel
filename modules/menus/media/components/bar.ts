@@ -1,6 +1,9 @@
+import { BoxWidget } from 'lib/types/widget';
+import { Mpris, MprisPlayer } from 'types/service/mpris';
+
 const media = await Service.import('mpris');
 
-const Bar = (getPlayerInfo: Function) => {
+const Bar = (getPlayerInfo: (media: Mpris) => MprisPlayer): BoxWidget => {
     return Widget.Box({
         class_name: 'media-indicator-current-progress-bar',
         hexpand: true,
@@ -20,7 +23,7 @@ const Bar = (getPlayerInfo: Function) => {
                         return (foundPlayer.position = value * foundPlayer.length);
                     },
                     setup: (self) => {
-                        const update = () => {
+                        const update = (): void => {
                             const foundPlayer = getPlayerInfo(media);
                             if (foundPlayer !== undefined) {
                                 const value = foundPlayer.length ? foundPlayer.position / foundPlayer.length : 0;
@@ -32,10 +35,11 @@ const Bar = (getPlayerInfo: Function) => {
                         self.hook(media, update);
                         self.poll(1000, update);
 
-                        function updateTooltip() {
+                        const updateTooltip = (): void => {
                             const foundPlayer = getPlayerInfo(media);
                             if (foundPlayer === undefined) {
-                                return (self.tooltip_text = '00:00');
+                                self.tooltip_text = '00:00';
+                                return;
                             }
                             const curHour = Math.floor(foundPlayer.position / 3600);
                             const curMin = Math.floor((foundPlayer.position % 3600) / 60);
@@ -49,7 +53,7 @@ const Bar = (getPlayerInfo: Function) => {
                             } else {
                                 self.tooltip_text = `00:00`;
                             }
-                        }
+                        };
                         self.poll(1000, updateTooltip);
                         self.hook(media, updateTooltip);
                     },

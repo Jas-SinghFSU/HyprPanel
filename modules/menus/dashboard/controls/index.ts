@@ -1,9 +1,11 @@
+import { BoxWidget } from 'lib/types/widget';
+
 const network = await Service.import('network');
 const bluetooth = await Service.import('bluetooth');
 const notifications = await Service.import('notifications');
 const audio = await Service.import('audio');
 
-const Controls = () => {
+const Controls = (): BoxWidget => {
     return Widget.Box({
         class_name: 'dashboard-card controls-container',
         hpack: 'fill',

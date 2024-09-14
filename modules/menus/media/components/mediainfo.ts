@@ -1,6 +1,9 @@
+import { BoxWidget } from 'lib/types/widget';
+import { MprisPlayer } from 'types/service/mpris';
+
 const media = await Service.import('mpris');
 
-const MediaInfo = (getPlayerInfo: Function) => {
+const MediaInfo = (getPlayerInfo: () => MprisPlayer): BoxWidget => {
     return Widget.Box({
         class_name: 'media-indicator-current-media-info',
         hpack: 'center',
@@ -20,8 +23,8 @@ const MediaInfo = (getPlayerInfo: Function) => {
                             self.hook(media, () => {
                                 const curPlayer = getPlayerInfo();
                                 return (self.label =
-                                    curPlayer !== undefined && curPlayer['track-title'].length
-                                        ? curPlayer['track-title']
+                                    curPlayer !== undefined && curPlayer['track_title'].length
+                                        ? curPlayer['track_title']
                                         : 'No Media Currently Playing');
                             });
                         },
@@ -41,16 +44,17 @@ const MediaInfo = (getPlayerInfo: Function) => {
                             self.hook(media, () => {
                                 const curPlayer = getPlayerInfo();
 
-                                const makeArtistList = (trackArtists: string[]) => {
+                                const makeArtistList = (trackArtists: string[]): string => {
                                     if (trackArtists.length === 1 && !trackArtists[0].length) {
                                         return '-----';
                                     }
 
                                     return trackArtists.join(', ');
                                 };
+
                                 return (self.label =
-                                    curPlayer !== undefined && curPlayer['track-artists'].length
-                                        ? makeArtistList(curPlayer['track-artists'])
+                                    curPlayer !== undefined && curPlayer['track_artists'].length
+                                        ? makeArtistList(curPlayer['track_artists'])
                                         : '-----');
                             });
                         },
@@ -70,8 +74,8 @@ const MediaInfo = (getPlayerInfo: Function) => {
                             self.hook(media, () => {
                                 const curPlayer = getPlayerInfo();
                                 return (self.label =
-                                    curPlayer !== undefined && curPlayer['track-album'].length
-                                        ? curPlayer['track-album']
+                                    curPlayer !== undefined && curPlayer['track_album'].length
+                                        ? curPlayer['track_album']
                                         : '---');
                             });
                         },

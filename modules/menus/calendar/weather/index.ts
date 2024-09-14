@@ -3,8 +3,9 @@ import { TodayStats } from './stats/index.js';
 import { TodayTemperature } from './temperature/index.js';
 import { Hourly } from './hourly/index.js';
 import { globalWeatherVar } from 'globals/weather.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
-const WeatherWidget = () => {
+const WeatherWidget = (): BoxWidget => {
     return Widget.Box({
         class_name: 'calendar-menu-item-container weather',
         child: Widget.Box({

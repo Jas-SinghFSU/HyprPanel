@@ -2,9 +2,10 @@ import { Weather } from 'lib/types/weather';
 import { Variable } from 'types/variable';
 import options from 'options';
 import { getTemperature, getWeatherIcon } from 'globals/weather';
+import { BoxWidget } from 'lib/types/widget';
 const { unit } = options.menus.clock.weather;
 
-export const TodayTemperature = (theWeather: Variable<Weather>) => {
+export const TodayTemperature = (theWeather: Variable<Weather>): BoxWidget => {
     return Widget.Box({
         hpack: 'center',
         vpack: 'center',

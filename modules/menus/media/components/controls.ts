@@ -1,21 +1,22 @@
 import { MprisPlayer } from 'types/service/mpris.js';
 import icons from '../../../icons/index.js';
 import { LoopStatus, PlaybackStatus } from 'lib/types/mpris.js';
+import { BoxWidget } from 'lib/types/widget.js';
 const media = await Service.import('mpris');
 
-const Controls = (getPlayerInfo: Function) => {
+const Controls = (getPlayerInfo: () => MprisPlayer): BoxWidget => {
     const isValidLoopStatus = (status: string): status is LoopStatus => ['none', 'track', 'playlist'].includes(status);
 
     const isValidPlaybackStatus = (status: string): status is PlaybackStatus =>
         ['playing', 'paused', 'stopped'].includes(status);
 
-    const isLoopActive = (player: MprisPlayer) => {
+    const isLoopActive = (player: MprisPlayer): string => {
         return player['loop_status'] !== null && ['track', 'playlist'].includes(player['loop_status'].toLowerCase())
             ? 'active'
             : '';
     };
 
-    const isShuffleActive = (player: MprisPlayer) => {
+    const isShuffleActive = (player: MprisPlayer): string => {
         return player['shuffle_status'] !== null && player['shuffle_status'] ? 'active' : '';
     };
 
@@ -48,7 +49,9 @@ const Controls = (getPlayerInfo: Function) => {
                                                     ? 'Shuffling'
                                                     : 'Not Shuffling'
                                                 : null;
-                                        self.on_primary_click = () => foundPlayer.shuffle();
+                                        self.on_primary_click = (): void => {
+                                            foundPlayer.shuffle();
+                                        };
                                         self.class_name = `media-indicator-control-button shuffle ${isShuffleActive(foundPlayer)} ${foundPlayer.shuffle_status !== null ? 'enabled' : 'disabled'}`;
                                     });
                                 },
@@ -69,7 +72,9 @@ const Controls = (getPlayerInfo: Function) => {
                                             return;
                                         }
 
-                                        self.on_primary_click = () => foundPlayer.previous();
+                                        self.on_primary_click = (): void => {
+                                            foundPlayer.previous();
+                                        };
                                         self.class_name = `media-indicator-control-button prev ${foundPlayer.can_go_prev !== null && foundPlayer.can_go_prev ? 'enabled' : 'disabled'}`;
                                     });
                                 },
@@ -88,7 +93,9 @@ const Controls = (getPlayerInfo: Function) => {
                                             return;
                                         }
 
-                                        self.on_primary_click = () => foundPlayer.playPause();
+                                        self.on_primary_click = (): void => {
+                                            foundPlayer.playPause();
+                                        };
                                         self.class_name = `media-indicator-control-button play ${foundPlayer.can_play !== null ? 'enabled' : 'disabled'}`;
                                     });
                                 },
@@ -124,7 +131,9 @@ const Controls = (getPlayerInfo: Function) => {
                                             return;
                                         }
 
-                                        self.on_primary_click = () => foundPlayer.next();
+                                        self.on_primary_click = (): void => {
+                                            foundPlayer.next();
+                                        };
                                         self.class_name = `media-indicator-control-button next ${foundPlayer.can_go_next !== null && foundPlayer.can_go_next ? 'enabled' : 'disabled'}`;
                                     });
                                 },
@@ -151,7 +160,9 @@ const Controls = (getPlayerInfo: Function) => {
                                                     ? 'Shuffling'
                                                     : 'Not Shuffling'
                                                 : null;
-                                        self.on_primary_click = () => foundPlayer.loop();
+                                        self.on_primary_click = (): void => {
+                                            foundPlayer.loop();
+                                        };
                                         self.class_name = `media-indicator-control-button loop ${isLoopActive(foundPlayer)} ${foundPlayer.loop_status !== null ? 'enabled' : 'disabled'}`;
                                     });
                                 },

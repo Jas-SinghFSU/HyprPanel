@@ -15,8 +15,6 @@ const SysTray = (): BarBoxChild => {
         isVis.value = filteredTray.length > 0;
 
         return filteredTray.map((item) => {
-            console.log(JSON.stringify(item, null, 2));
-
             return Widget.Button({
                 cursor: 'pointer',
                 child: Widget.Icon({

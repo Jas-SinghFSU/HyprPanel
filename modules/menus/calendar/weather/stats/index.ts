@@ -3,10 +3,11 @@ import { Variable } from 'types/variable';
 import options from 'options';
 import { Unit } from 'lib/types/options';
 import { getRainChance, getWindConditions } from 'globals/weather';
+import { BoxWidget } from 'lib/types/widget';
 
 const { unit } = options.menus.clock.weather;
 
-export const TodayStats = (theWeather: Variable<Weather>) => {
+export const TodayStats = (theWeather: Variable<Weather>): BoxWidget => {
     return Widget.Box({
         class_name: 'calendar-menu-weather today stats container',
         hpack: 'end',

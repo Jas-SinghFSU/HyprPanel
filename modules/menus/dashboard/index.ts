@@ -4,8 +4,10 @@ import { Shortcuts } from './shortcuts/index.js';
 import { Controls } from './controls/index.js';
 import { Stats } from './stats/index.js';
 import { Directories } from './directories/index.js';
+import Window from 'types/widgets/window.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'dashboardmenu',
         transition: 'crossfade',

@@ -2,8 +2,10 @@ import DropdownMenu from '../DropdownMenu.js';
 import { TimeWidget } from './time/index.js';
 import { CalendarWidget } from './calendar.js';
 import { WeatherWidget } from './weather/index.js';
+import Window from 'types/widgets/window.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'calendarmenu',
         transition: 'crossfade',

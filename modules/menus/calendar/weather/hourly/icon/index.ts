@@ -3,10 +3,11 @@ import { Variable } from 'types/variable.js';
 import { weatherIcons } from 'modules/icons/weather.js';
 import { isValidWeatherIconTitle } from 'globals/weather';
 import { BoxWidget } from 'lib/types/widget';
+import { getNextEpoch } from '../utils';
 
-export const HourlyIcon = (theWeather: Variable<Weather>, getNextEpoch: (wthr: Weather) => number): BoxWidget => {
+export const HourlyIcon = (theWeather: Variable<Weather>, hoursFromNow: number): BoxWidget => {
     const getIconQuery = (wthr: Weather): WeatherIconTitle => {
-        const nextEpoch = getNextEpoch(wthr);
+        const nextEpoch = getNextEpoch(wthr, hoursFromNow);
         const weatherAtEpoch = wthr.forecast.forecastday[0].hour.find((h) => h.time_epoch === nextEpoch);
 
         if (weatherAtEpoch === undefined) {

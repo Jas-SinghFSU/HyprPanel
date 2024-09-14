@@ -1,8 +1,9 @@
 const powerProfiles = await Service.import('powerprofiles');
 import { PowerProfile, PowerProfileObject, PowerProfiles } from 'lib/types/powerprofiles.js';
 import icons from '../../../icons/index.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
-const EnergyProfiles = () => {
+const EnergyProfiles = (): BoxWidget => {
     const isValidProfile = (profile: string): profile is PowerProfile =>
         profile === 'power-saver' || profile === 'balanced' || profile === 'performance';
 

@@ -1,20 +1,22 @@
 import options from 'options';
 import { GPU_Stat } from 'lib/types/gpustat';
 import { dependencies } from 'lib/utils';
+import { BoxWidget } from 'lib/types/widget';
+import { GenericResourceMetrics } from 'lib/types/customModules/generic';
 
 const { terminal } = options;
 const { enable_gpu } = options.menus.dashboard.stats;
 
-const Stats = () => {
-    const divide = ([total, free]: number[]) => free / total;
+const Stats = (): BoxWidget => {
+    const divide = ([total, free]: number[]): number => free / total;
 
-    const formatSizeInGB = (sizeInKB: number) => Number((sizeInKB / 1024 ** 2).toFixed(2));
+    const formatSizeInGB = (sizeInKB: number): number => Number((sizeInKB / 1024 ** 2).toFixed(2));
 
     const cpu = Variable(0, {
         poll: [
             2000,
             'top -b -n 1',
-            (out) => {
+            (out): number => {
                 if (typeof out !== 'string') {
                     return 0;
                 }
@@ -37,7 +39,7 @@ const Stats = () => {
             poll: [
                 2000,
                 'free',
-                (out) => {
+                (out): GenericResourceMetrics => {
                     if (typeof out !== 'string') {
                         return { total: 0, used: 0, percentage: 0 };
                     }
@@ -76,7 +78,7 @@ const Stats = () => {
                         hexpand: true,
                         vpack: 'center',
                         setup: (self) => {
-                            const getGpuUsage = () => {
+                            const getGpuUsage = (): void => {
                                 if (!enable_gpu.value) {
                                     gpu.value = 0;
                                     return;
@@ -117,7 +119,7 @@ const Stats = () => {
                                 return (self.children = [
                                     Widget.Button({
                                         on_primary_click: terminal.bind('value').as((term) => {
-                                            return () => {
+                                            return (): void => {
                                                 App.closeWindow('dashboardmenu');
                                                 Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                                     (err) => `Failed to open btop: ${err}`,
@@ -131,7 +133,7 @@ const Stats = () => {
                                     }),
                                     Widget.Button({
                                         on_primary_click: terminal.bind('value').as((term) => {
-                                            return () => {
+                                            return (): void => {
                                                 App.closeWindow('dashboardmenu');
                                                 Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                                     (err) => `Failed to open btop: ${err}`,
@@ -174,7 +176,7 @@ const Stats = () => {
             poll: [
                 2000,
                 'df -B1 /',
-                (out) => {
+                (out): GenericResourceMetrics => {
                     if (typeof out !== 'string') {
                         return { total: 0, used: 0, percentage: 0 };
                     }

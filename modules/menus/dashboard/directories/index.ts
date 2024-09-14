@@ -1,8 +1,9 @@
+import { BoxWidget } from 'lib/types/widget';
 import options from 'options';
 
 const { left, right } = options.menus.dashboard.directories;
 
-const Directories = () => {
+const Directories = (): BoxWidget => {
     return Widget.Box({
         class_name: 'dashboard-card directories-container',
         vpack: 'fill',

@@ -1,4 +1,6 @@
-const CalendarWidget = () => {
+import { BoxWidget } from 'lib/types/widget';
+
+const CalendarWidget = (): BoxWidget => {
     return Widget.Box({
         class_name: 'calendar-menu-item-container calendar',
         hpack: 'fill',

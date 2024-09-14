@@ -1,15 +1,19 @@
 const hyprland = await Service.import('hyprland');
+import { Attribute, BoxWidget, Child } from 'lib/types/widget';
 import options from 'options';
 import { Variable as VarType } from 'types/variable';
+import Box from 'types/widgets/box';
+import Button from 'types/widgets/button';
+import Label from 'types/widgets/label';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 
-const Shortcuts = () => {
+const Shortcuts = (): BoxWidget => {
     const isRecording = Variable(false, {
         poll: [
             1000,
             `${App.configDir}/services/screen_record.sh status`,
-            (out) => {
+            (out): boolean => {
                 if (out === 'recording') {
                     return true;
                 }
@@ -17,7 +21,7 @@ const Shortcuts = () => {
             },
         ],
     });
-    const handleClick = (action: any, tOut: number = 250) => {
+    const handleClick = (action: string, tOut: number = 250): void => {
         App.closeWindow('dashboardmenu');
 
         setTimeout(() => {
@@ -48,17 +52,17 @@ const Shortcuts = () => {
                 });
 
                 // NOTE: This is disabled since window recording isn't available on wayland
-                const apps = hyprland.clients.map((clt) => {
-                    return Widget.MenuItem({
-                        label: `${clt.class.charAt(0).toUpperCase() + clt.class.slice(1)} (Workspace ${clt.workspace.name})`,
-                        on_activate: () => {
-                            App.closeWindow('dashboardmenu');
-                            Utils.execAsync(
-                                `${App.configDir}/services/screen_record.sh start ${clt.focusHistoryID}`,
-                            ).catch((err) => console.error(err));
-                        },
-                    });
-                });
+                // const apps = hyprland.clients.map((clt) => {
+                //     return Widget.MenuItem({
+                //         label: `${clt.class.charAt(0).toUpperCase() + clt.class.slice(1)} (Workspace ${clt.workspace.name})`,
+                //         on_activate: () => {
+                //             App.closeWindow('dashboardmenu');
+                //             Utils.execAsync(
+                //                 `${App.configDir}/services/screen_record.sh start ${clt.focusHistoryID}`,
+                //             ).catch((err) => console.error(err));
+                //         },
+                //     });
+                // });
 
                 return (self.children = [
                     ...displays,
@@ -85,7 +89,7 @@ const Shortcuts = () => {
 
     type Shortcut = ShortcutFixed | ShortcutVariable;
 
-    const cmdLn = (sCut: ShortcutVariable) => {
+    const cmdLn = (sCut: ShortcutVariable): boolean => {
         return sCut.command.value.length > 0;
     };
 
@@ -93,7 +97,7 @@ const Shortcuts = () => {
         !(cmdLn(left.shortcut1) || cmdLn(left.shortcut2) || cmdLn(left.shortcut3) || cmdLn(left.shortcut4)),
     );
 
-    function createButton(shortcut: Shortcut, className: string) {
+    const createButton = (shortcut: Shortcut, className: string): Button<Label<Attribute>, Attribute> => {
         if (shortcut.configurable !== false) {
             return Widget.Button({
                 vexpand: true,
@@ -132,14 +136,18 @@ const Shortcuts = () => {
                 }),
             });
         }
-    }
+    };
 
-    function createButtonIfCommandExists(shortcut: Shortcut, className: string, command: string) {
+    const createButtonIfCommandExists = (
+        shortcut: Shortcut,
+        className: string,
+        command: string,
+    ): Button<Label<Attribute>, Attribute> | Box<Child, Attribute> => {
         if (command.length > 0) {
             return createButton(shortcut, className);
         }
         return Widget.Box();
-    }
+    };
 
     return Widget.Box({
         class_name: 'shortcuts-container',

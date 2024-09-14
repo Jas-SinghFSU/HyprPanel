@@ -1,7 +1,8 @@
+import { BoxWidget } from 'lib/types/widget.js';
 import brightness from '../../../../services/Brightness.js';
 import icons from '../../../icons/index.js';
 
-const Brightness = () => {
+const Brightness = (): BoxWidget => {
     return Widget.Box({
         class_name: 'menu-section-container brightness',
         vertical: true,

@@ -1,8 +1,9 @@
 import { Weather } from 'lib/types/weather';
 import { Variable } from 'types/variable';
 import { getWeatherStatusTextIcon } from 'globals/weather.js';
+import { BoxWidget } from 'lib/types/widget';
 
-export const TodayIcon = (theWeather: Variable<Weather>) => {
+export const TodayIcon = (theWeather: Variable<Weather>): BoxWidget => {
     return Widget.Box({
         vpack: 'center',
         hpack: 'start',

@@ -3,11 +3,13 @@ import { PowerOptions } from 'lib/types/options.js';
 import GdkPixbuf from 'gi://GdkPixbuf';
 
 import options from 'options';
+import { BoxWidget, Child } from 'lib/types/widget.js';
+import Label from 'types/widgets/label.js';
 const { image, name } = options.menus.dashboard.powermenu.avatar;
 const { confirmation, shutdown, logout, sleep, reboot } = options.menus.dashboard.powermenu;
 
-const Profile = () => {
-    const handleClick = (action: PowerOptions) => {
+const Profile = (): BoxWidget => {
+    const handleClick = (action: PowerOptions): void => {
         const actions = {
             shutdown: shutdown.value,
             reboot: reboot.value,
@@ -25,7 +27,7 @@ const Profile = () => {
         }
     };
 
-    const getIconForButton = (txtIcon: string) => {
+    const getIconForButton = (txtIcon: string): Label<Child> => {
         return Widget.Label({
             className: 'txt-icon',
             label: txtIcon,
