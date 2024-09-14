@@ -1,7 +1,8 @@
 import { closeNotifications } from 'globals/notification';
+import { BoxWidget } from 'lib/types/widget';
 import { Notifications } from 'types/service/notifications';
 
-const Controls = (notifs: Notifications) => {
+const Controls = (notifs: Notifications): BoxWidget => {
     return Widget.Box({
         class_name: 'notification-menu-controls',
         expand: false,

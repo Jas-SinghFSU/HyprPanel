@@ -6,10 +6,12 @@ import { NotificationCard } from './notification/index.js';
 import { NotificationPager } from './pager/index.js';
 
 import options from 'options';
+import Window from 'types/widgets/window.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
 const { displayedTotal } = options.notifications;
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     const curPage = Variable(1);
 
     Utils.merge(

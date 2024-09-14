@@ -1,7 +1,8 @@
 import { Notification } from 'types/service/notifications';
 import { notifHasImg } from '../../utils.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
-const Image = (notif: Notification) => {
+const Image = (notif: Notification): BoxWidget => {
     if (notifHasImg(notif)) {
         return Widget.Box({
             class_name: 'notification-card-image-container menu',

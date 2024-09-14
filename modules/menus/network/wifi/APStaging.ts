@@ -1,12 +1,15 @@
 import { Network } from 'types/service/network';
 import { Variable } from 'types/variable';
 import { AccessPoint } from 'lib/types/network';
+import Box from 'types/widgets/box';
+import { Attribute, Child } from 'lib/types/widget';
+
 const renderWapStaging = (
-    self: any,
+    self: Box<Child, Attribute>,
     network: Network,
     staging: Variable<AccessPoint>,
     connecting: Variable<string>,
-) => {
+): void => {
     Utils.merge([network.bind('wifi'), staging.bind('value')], () => {
         if (!Object.keys(staging.value).length) {
             return (self.child = Widget.Box());

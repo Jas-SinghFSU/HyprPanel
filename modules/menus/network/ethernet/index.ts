@@ -1,6 +1,8 @@
+import { BoxWidget } from 'lib/types/widget';
+
 const network = await Service.import('network');
 
-const Ethernet = () => {
+const Ethernet = (): BoxWidget => {
     return Widget.Box({
         class_name: 'menu-section-container ethernet',
         vertical: true,

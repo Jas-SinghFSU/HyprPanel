@@ -1,5 +1,8 @@
+import { Attribute } from 'lib/types/widget';
 import { Notification, Notifications } from 'types/service/notifications';
-export const CloseButton = (notif: Notification, notifs: Notifications) => {
+import Button from 'types/widgets/button';
+import Label from 'types/widgets/label';
+export const CloseButton = (notif: Notification, notifs: Notifications): Button<Label<Attribute>, Attribute> => {
     return Widget.Button({
         class_name: 'close-notification-button menu',
         on_primary_click: () => {

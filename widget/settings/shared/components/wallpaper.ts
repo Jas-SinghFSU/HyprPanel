@@ -2,7 +2,7 @@ import { Opt } from 'lib/option';
 import { Attribute, BoxWidget } from 'lib/types/widget';
 import Wallpaper from 'services/Wallpaper';
 
-export const wallpaperInputter = <T extends string | number | boolean>(
+export const wallpaperInputter = <T extends string | number | boolean | object>(
     self: BoxWidget,
     opt: Opt<T>,
 ): Attribute | void => {

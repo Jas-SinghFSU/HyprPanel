@@ -2,20 +2,21 @@ const network = await Service.import('network');
 import { renderWAPs } from './WirelessAPs.js';
 import { renderWapStaging } from './APStaging.js';
 import { AccessPoint } from 'lib/types/network.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
 const Staging = Variable({} as AccessPoint);
 const Connecting = Variable('');
 
 const searchInProgress = Variable(false);
 
-const startRotation = () => {
+const startRotation = (): void => {
     searchInProgress.value = true;
     setTimeout(() => {
         searchInProgress.value = false;
     }, 5 * 1000);
 };
 
-const Wifi = () => {
+const Wifi = (): BoxWidget => {
     return Widget.Box({
         class_name: 'menu-section-container wifi',
         vertical: true,

@@ -1,7 +1,8 @@
+import { BoxWidget } from 'lib/types/widget.js';
 import { notifHasImg } from '../../utils.js';
 import { Notification } from 'types/service/notifications';
 
-export const Body = (notif: Notification) => {
+export const Body = (notif: Notification): BoxWidget => {
     return Widget.Box({
         vpack: 'start',
         hexpand: true,

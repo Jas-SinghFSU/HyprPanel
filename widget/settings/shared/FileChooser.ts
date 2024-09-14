@@ -72,7 +72,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const jsonObject = JSON.parse(jsonString);
 
     // Function to filter hex color pairs
-    const filterHexColorPairs = (jsonObject: Config) => {
+    const filterHexColorPairs = (jsonObject: Config): Config => {
         const filteredObject: Config = {};
 
         for (const key in jsonObject) {
@@ -87,7 +87,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     };
 
     // Function to filter out hex color pairs (keep only non-hex color value)
-    const filterOutHexColorPairs = (jsonObject: Config) => {
+    const filterOutHexColorPairs = (jsonObject: Config): Config => {
         const filteredObject: Config = {};
 
         for (const key in jsonObject) {
@@ -123,7 +123,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const file_path = dialog.get_filename();
         console.info(`Original file path: ${file_path}`);
 
-        const getIncrementedFilePath = (filePath: string) => {
+        const getIncrementedFilePath = (filePath: string): string => {
             let increment = 1;
             const baseName = filePath.replace(/(\.\w+)$/, '');
             const match = filePath.match(/(\.\w+)$/);
@@ -161,8 +161,10 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
                 iconName: icons.ui.info,
                 timeout: 5000,
             });
-        } catch (e: any) {
-            console.error('Failed to write to file:', e.message);
+        } catch (e) {
+            if (e instanceof Error) {
+                console.error('Failed to write to file:', e.message);
+            }
         }
     }
 

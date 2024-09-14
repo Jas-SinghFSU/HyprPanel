@@ -2,8 +2,10 @@ import { Action } from 'lib/types/power.js';
 import PopupWindow from '../PopupWindow.js';
 import powermenu from './helpers/actions.js';
 import icons from '../../icons/index.js';
+import Window from 'types/widgets/window.js';
+import { Attribute, Child, GButton } from 'lib/types/widget.js';
 
-const SysButton = (action: Action, label: string) =>
+const SysButton = (action: Action, label: string): GButton =>
     Widget.Button({
         class_name: `widget-button powermenu-button-${action}`,
         on_clicked: () => powermenu.action(action),
@@ -22,7 +24,7 @@ const SysButton = (action: Action, label: string) =>
             ],
         }),
     });
-export default () =>
+export default (): Window<Child, Attribute> =>
     PopupWindow({
         name: 'powermenu',
         transition: 'crossfade',

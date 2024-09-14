@@ -3,8 +3,15 @@ import { AccessPoint, WifiStatus } from 'lib/types/network.js';
 import { Variable } from 'types/variable.js';
 import { getWifiIcon } from '../utils.js';
 import { WIFI_STATUS_MAP } from 'globals/network.js';
-const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>, connecting: Variable<string>) => {
-    const getIdBySsid = (ssid: string, nmcliOutput: string) => {
+import { Attribute, Child } from 'lib/types/widget.js';
+import Box from 'types/widgets/box.js';
+const renderWAPs = (
+    self: Box<Child, Attribute>,
+    network: Network,
+    staging: Variable<AccessPoint>,
+    connecting: Variable<string>,
+): void => {
+    const getIdBySsid = (ssid: string, nmcliOutput: string): string | undefined => {
         const lines = nmcliOutput.trim().split('\n');
         for (const line of lines) {
             const columns = line.trim().split(/\s{2,}/);
@@ -12,14 +19,13 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                 return columns[1];
             }
         }
-        return null;
     };
 
     const isValidWifiStatus = (status: string): status is WifiStatus => {
         return status in WIFI_STATUS_MAP;
     };
 
-    const getWifiStatus = () => {
+    const getWifiStatus = (): string => {
         const wifiState = network.wifi.state?.toLowerCase();
 
         if (wifiState && isValidWifiStatus(wifiState)) {
@@ -37,10 +43,10 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
             // Also this is an AGS bug that needs to be fixed
 
             // TODO: Remove @ts-ignore once AGS bug is fixed
-            // @ts-ignore
+            // @ts-expect-error to fix AGS bug
             let WAPs = network.wifi._device !== undefined ? network.wifi['access_points'] : [];
 
-            const dedupeWAPs = () => {
+            const dedupeWAPs = (): AccessPoint[] => {
                 const dedupMap: Record<string, AccessPoint> = {};
                 WAPs.forEach((item: AccessPoint) => {
                     if (item.ssid !== null && !Object.hasOwnProperty.call(dedupMap, item.ssid)) {
@@ -53,7 +59,7 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
 
             WAPs = dedupeWAPs();
 
-            const isInStaging = (wap: AccessPoint) => {
+            const isInStaging = (wap: AccessPoint): boolean => {
                 if (Object.keys(staging.value).length === 0) {
                     return false;
                 }
@@ -61,7 +67,7 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                 return wap.bssid === staging.value.bssid;
             };
 
-            const isDisconnecting = (wap: AccessPoint) => {
+            const isDisconnecting = (wap: AccessPoint): boolean => {
                 if (wap.ssid === network.wifi.ssid) {
                     return network.wifi.state.toLowerCase() === 'deactivating';
                 }
@@ -180,6 +186,13 @@ const renderWAPs = (self: any, network: Network, staging: Variable<AccessPoint>,
                                     Utils.execAsync('nmcli connection show --active').then(() => {
                                         Utils.execAsync('nmcli connection show --active').then((res) => {
                                             const connectionId = getIdBySsid(ap.ssid || '', res);
+
+                                            if (connectionId === undefined) {
+                                                console.error(
+                                                    `Error while forgetting "${ap.ssid}": Connection ID not found`,
+                                                );
+                                                return;
+                                            }
 
                                             Utils.execAsync(`nmcli connection delete ${connectionId} "${ap.ssid}"`)
                                                 .then(() => (connecting.value = ''))

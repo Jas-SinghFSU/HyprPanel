@@ -2,8 +2,12 @@ import { Label } from './Label';
 import { Inputter } from './Inputter';
 import icons from 'lib/icons';
 import { RowProps } from 'lib/types/options';
+import { GBox } from 'lib/types/widget';
 
-export const Option = <T>(props: RowProps<T>, className: string = '') => {
+export const Option = <T extends string | number | boolean | object>(
+    props: RowProps<T>,
+    className: string = '',
+): GBox => {
     const isUnsaved = Variable(false);
 
     return Widget.Box({

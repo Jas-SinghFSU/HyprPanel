@@ -1,5 +1,6 @@
 import { isHexColor } from 'globals/variables';
 import { Variable } from 'resource:///com/github/Aylur/ags/variable.js';
+import { MkOptionsResult } from './types/options';
 
 type OptProps = {
     persistent?: boolean;
@@ -29,7 +30,6 @@ export class Opt<T = unknown> extends Variable<T> {
     getValue = (): T => {
         return super.getValue();
     };
-
     init(cacheFile: string): void {
         const cacheV = JSON.parse(Utils.readFile(cacheFile) || '{}')[this.id];
         if (cacheV !== undefined) this.value = cacheV;
@@ -64,7 +64,7 @@ export class Opt<T = unknown> extends Variable<T> {
 
 export const opt = <T>(initial: T, opts?: OptProps): Opt<T> => new Opt(initial, opts);
 
-function getOptions(object: Record<string, unknown>, path = ''): Opt[] {
+const getOptions = (object: Record<string, unknown>, path = ''): Opt[] => {
     return Object.keys(object).flatMap((key) => {
         const obj = object[key];
         const id = path ? path + '.' + key : key;
@@ -81,9 +81,13 @@ function getOptions(object: Record<string, unknown>, path = ''): Opt[] {
 
         return [];
     });
-}
+};
 
-export function mkOptions<T extends object>(cacheFile: string, object: T, confFile: string = 'config.json'): T {
+export function mkOptions<T extends object>(
+    cacheFile: string,
+    object: T,
+    confFile: string = 'config.json',
+): T & MkOptionsResult<T> {
     for (const opt of getOptions(object as Record<string, unknown>)) opt.init(cacheFile);
 
     Utils.ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
@@ -105,25 +109,25 @@ export function mkOptions<T extends object>(cacheFile: string, object: T, confFi
         return new Promise((r) => setTimeout(r, ms));
     }
 
-    async function reset(
+    const reset = async (
         [opt, ...list] = getOptions(object as Record<string, unknown>),
         id = opt?.reset(),
-    ): Promise<Array<string>> {
+    ): Promise<Array<string>> => {
         if (!opt) return sleep().then(() => []);
 
         return id ? [id, ...(await sleep(50).then(() => reset(list)))] : await sleep().then(() => reset(list));
-    }
+    };
 
-    async function resetTheme(
+    const resetTheme = async (
         [opt, ...list] = getOptions(object as Record<string, unknown>),
         id = opt?.doResetColor(),
-    ): Promise<Array<string>> {
+    ): Promise<Array<string>> => {
         if (!opt) return sleep().then(() => []);
 
         return id
             ? [id, ...(await sleep(50).then(() => resetTheme(list)))]
             : await sleep().then(() => resetTheme(list));
-    }
+    };
 
     return Object.assign(object, {
         configFile,

@@ -2,8 +2,10 @@ import { Option } from 'widget/settings/shared/Option';
 import { Header } from 'widget/settings/shared/Header';
 
 import options from 'options';
+import { Attribute, Child } from 'lib/types/widget';
+import Scrollable from 'types/widgets/scrollable';
 
-export const PowerMenuSettings = () => {
+export const PowerMenuSettings = (): Scrollable<Child, Attribute> => {
     return Widget.Scrollable({
         class_name: 'bar-theme-page paged-container',
         vscroll: 'always',

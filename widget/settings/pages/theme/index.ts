@@ -14,6 +14,7 @@ import { OsdTheme } from './osd/index';
 import { Matugen } from './menus/matugen';
 import { CustomModuleTheme } from 'customModules/theme';
 import { PowerMenuTheme } from './menus/power';
+import { GBox } from 'lib/types/widget';
 
 type Page =
     | 'General Settings'
@@ -54,7 +55,7 @@ const pagerMap: Page[] = [
     'Custom Modules',
 ];
 
-export const ThemesMenu = () => {
+export const ThemesMenu = (): GBox => {
     return Widget.Box({
         vertical: true,
         children: CurrentPage.bind('value').as((v) => {

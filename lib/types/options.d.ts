@@ -2,6 +2,14 @@ import { Opt } from 'lib/option';
 import { Variable } from 'types/variable';
 import { defaultColorMap } from './defaults/options';
 
+export type MkOptionsResult<T> = {
+    configFile: string;
+    array: () => Opt[];
+    reset: () => Promise<string>;
+    resetTheme: () => Promise<string>;
+    handler: (deps: string[], callback: () => void) => void;
+};
+
 export type RecursiveOptionsObject = {
     [key: string]: RecursiveOptionsObject | Opt<string | number | boolean> | Opt<any>;
 };
@@ -42,7 +50,7 @@ export type RowProps<T> = {
         | 'import'
         | 'config_import'
         | 'font';
-    enums?: string[];
+    enums?: T[];
     max?: number;
     min?: number;
     disabledBinding?: Variable<boolean>;
@@ -58,6 +66,8 @@ export type OSDOrientation = 'horizontal' | 'vertical';
 export type HexColor = `#${string}`;
 
 export type WindowLayer = 'top' | 'bottom' | 'overlay' | 'background';
+
+export type ActiveWsIndicator = 'underline' | 'highlight' | 'color';
 
 export type MatugenColors = {
     background: HexColor;

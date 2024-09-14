@@ -1,12 +1,13 @@
-export const Label = (name: string, sub = '', subtitleLink = '') => {
-    const subTitle = () => {
+import { GBox, GButton, GLabel } from 'lib/types/widget';
+
+export const Label = (name: string, sub = '', subtitleLink = ''): GBox => {
+    const subTitle = (): GButton | GLabel => {
         if (subtitleLink.length) {
             return Widget.Button({
                 hpack: 'start',
                 vpack: 'center',
                 class_name: 'options-sublabel-link',
                 label: sub,
-                // run a bash command to open the link in the default browswer
                 on_primary_click: () => Utils.execAsync(`bash -c 'xdg-open ${subtitleLink}'`),
             });
         }

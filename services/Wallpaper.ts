@@ -18,7 +18,7 @@ class Wallpaper extends Service {
     #blockMonitor = false;
     #isRunning = false;
 
-    #wallpaper() {
+    #wallpaper(): void {
         if (!dependencies('swww')) return;
 
         hyprland.monitors.map((m) => m.name);
@@ -42,7 +42,7 @@ class Wallpaper extends Service {
         });
     }
 
-    async #setWallpaper(path: string) {
+    async #setWallpaper(path: string): Promise<void> {
         this.#blockMonitor = true;
 
         await sh(`cp ${path} ${WP}`);
@@ -51,14 +51,14 @@ class Wallpaper extends Service {
         this.#blockMonitor = false;
     }
 
-    readonly set = (path: string) => {
+    readonly set = (path: string): void => {
         this.#setWallpaper(path);
     };
-    readonly isRunning = () => {
+    readonly isRunning = (): boolean => {
         return this.#isRunning;
     };
 
-    get wallpaper() {
+    get wallpaper(): string {
         return WP;
     }
 
@@ -70,7 +70,7 @@ class Wallpaper extends Service {
                 this.#isRunning = true;
                 Utils.execAsync('swww-daemon')
                     .then(() => {
-                        this.#wallpaper;
+                        this.#wallpaper();
                     })
                     .catch(() => null);
             } else {
@@ -88,7 +88,7 @@ class Wallpaper extends Service {
 
         Utils.execAsync('swww-daemon')
             .then(() => {
-                this.#wallpaper;
+                this.#wallpaper();
             })
             .catch(() => null);
     }

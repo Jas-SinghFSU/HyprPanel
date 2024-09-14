@@ -1,11 +1,12 @@
 import { PowerOptions } from 'lib/types/options';
 import options from 'options';
 import powermenu from '../power/helpers/actions';
+import { GButton } from 'lib/types/widget';
 
 const { confirmation, shutdown, logout, sleep, reboot, showLabel } = options.menus.power;
 
-export const PowerButton = (action: PowerOptions) => {
-    const handleClick = (action: PowerOptions) => {
+export const PowerButton = (action: PowerOptions): GButton => {
+    const handleClick = (action: PowerOptions): void => {
         const actions = {
             shutdown: shutdown.value,
             reboot: reboot.value,

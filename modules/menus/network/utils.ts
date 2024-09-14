@@ -1,5 +1,7 @@
-const getWifiIcon = (iconName: string) => {
-    const deviceIconMap = [
+import { WifiIcon } from 'lib/types/network';
+
+const getWifiIcon = (iconName: string): WifiIcon => {
+    const deviceIconMap: [string, WifiIcon][] = [
         ['network-wireless-acquiring', '󰤩'],
         ['network-wireless-connected', '󰤨'],
         ['network-wireless-encrypted', '󰤪'],

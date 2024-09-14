@@ -4,6 +4,8 @@ import options from 'options';
 import { ThemesMenu } from './pages/theme/index';
 import { SettingsMenu } from './pages/config/index';
 import './side_effects';
+import { GBox, GCenterBox } from 'lib/types/widget';
+import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 
 type Page = 'Configuration' | 'Theming';
 
@@ -11,7 +13,7 @@ const CurrentPage = Variable<Page>('Configuration');
 
 const pagerMap: Page[] = ['Configuration', 'Theming'];
 
-const Header = () =>
+const Header = (): GCenterBox =>
     Widget.CenterBox({
         class_name: 'header',
         start_widget: Widget.Button({
@@ -32,7 +34,7 @@ const Header = () =>
         }),
     });
 
-const PageContainer = () => {
+const PageContainer = (): GBox => {
     return Widget.Box({
         hpack: 'fill',
         hexpand: true,
@@ -67,7 +69,7 @@ const PageContainer = () => {
     });
 };
 
-export default () =>
+export default (): Gtk.Window =>
     RegularWindow({
         name: 'settings-dialog',
         class_name: 'settings-dialog',

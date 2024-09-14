@@ -12,3 +12,5 @@ export type AccessPoint = {
 };
 
 export type WifiStatus = keyof typeof WIFI_STATUS_MAP;
+
+export type WifiIcon = '󰤩' | '󰤨' | '󰤪' | '󰤨' | '󰤩' | '󰤮' | '󰤨' | '󰤥' | '󰤢' | '󰤟' | '󰤯';

@@ -12,7 +12,7 @@ import { colorInputter } from './components/color';
 import { enumInputter } from './components/enum';
 import { fontInputter } from './components/font';
 
-export const Inputter = <T extends string | number | boolean>(
+export const Inputter = <T extends string | number | boolean | object>(
     {
         opt,
         type = typeof opt.value as RowProps<T>['type'],
@@ -23,7 +23,7 @@ export const Inputter = <T extends string | number | boolean>(
         min = 0,
         max = 1000000,
         increment = 1,
-    }: RowProps<T> & { enums?: T[] },
+    }: RowProps<T>,
     className: string,
     isUnsaved: Variable<boolean>,
 ): BoxWidget => {

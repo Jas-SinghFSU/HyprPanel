@@ -1,8 +1,9 @@
 import { Notification } from 'types/service/notifications.js';
 import { NotificationIcon } from 'lib/types/notification.js';
 import { getNotificationIcon } from 'globals/notification';
+import { BoxWidget } from 'lib/types/widget';
 
-const NotificationIcon = ({ app_entry = '', app_icon = '', app_name = '' }: Partial<Notification>) => {
+const NotificationIcon = ({ app_entry = '', app_icon = '', app_name = '' }: Partial<Notification>): BoxWidget => {
     return Widget.Box({
         css: `
                 min-width: 2rem;

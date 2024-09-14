@@ -17,11 +17,11 @@ class PowerMenu extends Service {
     #title = '';
     #cmd = '';
 
-    get title() {
+    get title(): string {
         return this.#title;
     }
 
-    action(action: Action) {
+    action(action: Action): void {
         [this.#cmd, this.#title] = {
             sleep: [sleep.value, 'Sleep'],
             reboot: [reboot.value, 'Reboot'],
@@ -36,7 +36,7 @@ class PowerMenu extends Service {
         App.openWindow('verification');
     }
 
-    customAction(action: Action, cmnd: string) {
+    customAction(action: Action, cmnd: string): void {
         [this.#cmd, this.#title] = [cmnd, action];
 
         this.notify('cmd');
@@ -46,11 +46,11 @@ class PowerMenu extends Service {
         App.openWindow('verification');
     }
 
-    shutdown = () => {
+    shutdown = (): void => {
         this.action('shutdown');
     };
 
-    exec = () => {
+    exec = (): void => {
         App.closeWindow('verification');
         Utils.execAsync(this.#cmd);
     };

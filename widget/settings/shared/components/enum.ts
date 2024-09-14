@@ -3,7 +3,11 @@ import { BoxWidget } from 'lib/types/widget';
 import icons from 'lib/icons';
 import { Box } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 
-export const enumInputter = <T extends string | number | boolean>(self: BoxWidget, opt: Opt<T>, values: T[]): Box => {
+export const enumInputter = <T extends string | number | boolean | object>(
+    self: BoxWidget,
+    opt: Opt<T>,
+    values: T[],
+): Box => {
     const lbl = Widget.Label({ label: opt.bind().as((v) => `${v}`) });
     const step = (dir: 1 | -1): void => {
         const i = values.findIndex((i) => i === lbl.label);

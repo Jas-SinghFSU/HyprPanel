@@ -9,7 +9,14 @@ import {
     UpdatesIcon,
 } from 'lib/types/bar';
 import { KbIcon, KbLabelType } from 'lib/types/customModules/kbLayout';
-import { BarButtonStyles, NotificationAnchor, OSDAnchor, OSDOrientation, WindowLayer } from 'lib/types/options';
+import {
+    ActiveWsIndicator,
+    BarButtonStyles,
+    NotificationAnchor,
+    OSDAnchor,
+    OSDOrientation,
+    WindowLayer,
+} from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
 import { UnitType } from 'lib/types/weather';
 
@@ -800,7 +807,7 @@ const options = mkOptions(OPTIONS, {
         workspaces: {
             show_icons: opt(false),
             show_numbered: opt(false),
-            numbered_active_indicator: opt<'underline' | 'highlight'>('underline'),
+            numbered_active_indicator: opt<ActiveWsIndicator>('underline'),
             icons: {
                 available: opt(''),
                 active: opt(''),

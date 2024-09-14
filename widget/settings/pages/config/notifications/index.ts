@@ -3,9 +3,9 @@ import { Header } from 'widget/settings/shared/Header';
 
 import options from 'options';
 import Scrollable from 'types/widgets/scrollable';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import { Attribute, Child } from 'lib/types/widget';
 
-export const NotificationSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
+export const NotificationSettings = (): Scrollable<Child, Attribute> => {
     return Widget.Scrollable({
         vscroll: 'automatic',
         child: Widget.Box({
@@ -21,7 +21,6 @@ export const NotificationSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                         'Wiki: https://hyprpanel.com/configuration/notifications.html#ignored-applications',
                     subtitleLink: 'https://hyprpanel.com/configuration/notifications.html#ignored-applications',
                     type: 'object',
-                    enums: ['top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left'],
                 }),
                 Option({
                     opt: options.notifications.position,

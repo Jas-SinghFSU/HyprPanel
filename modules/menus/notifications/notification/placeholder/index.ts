@@ -1,6 +1,7 @@
+import { BoxWidget } from 'lib/types/widget';
 import { Notifications } from 'types/service/notifications';
 
-const Placeholder = (notifs: Notifications) => {
+const Placeholder = (notifs: Notifications): BoxWidget => {
     return Widget.Box({
         class_name: 'notification-label-container',
         vpack: 'fill',

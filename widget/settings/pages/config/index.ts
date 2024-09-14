@@ -6,6 +6,7 @@ import { NotificationSettings } from './notifications/index';
 import { OSDSettings } from './osd/index';
 import { CustomModuleSettings } from 'customModules/config';
 import { PowerMenuSettings } from './menus/power';
+import { GBox } from 'lib/types/widget';
 
 type Page =
     | 'General'
@@ -30,7 +31,7 @@ const pagerMap: Page[] = [
     'Custom Modules',
 ];
 
-export const SettingsMenu = () => {
+export const SettingsMenu = (): GBox => {
     return Widget.Box({
         vertical: true,
         children: CurrentPage.bind('value').as((v) => {

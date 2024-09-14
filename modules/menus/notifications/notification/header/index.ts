@@ -3,12 +3,13 @@ import { Notification } from 'types/service/notifications';
 import { NotificationIcon } from './icon.js';
 import { notifHasImg } from '../../utils.js';
 import options from 'options.js';
+import { BoxWidget } from 'lib/types/widget.js';
 
 const { military } = options.menus.clock.time;
 
-export const Header = (notif: Notification) => {
-    const time = (time: number, format = '%I:%M %p') => {
-        return GLib.DateTime.new_from_unix_local(time).format(military.value ? '%H:%M' : format);
+export const Header = (notif: Notification): BoxWidget => {
+    const time = (time: number, format = '%I:%M %p'): string => {
+        return GLib.DateTime.new_from_unix_local(time).format(military.value ? '%H:%M' : format) || '--:--';
     };
 
     return Widget.Box({

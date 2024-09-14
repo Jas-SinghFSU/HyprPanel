@@ -20,4 +20,9 @@ export type Child = Gtk.Widget;
 export type GtkWidget = Gtk.Widget;
 export type BoxWidget = Box<GtkWidget, Child>;
 
+export type GButton = Gtk.Button;
+export type GBox = Gtk.Box;
+export type GLabel = Gtk.Label;
+export type GCenterBox = Gtk.Box;
+
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;

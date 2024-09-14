@@ -9,10 +9,12 @@ import { CloseButton } from './close/index.js';
 import options from 'options.js';
 import { Variable } from 'types/variable.js';
 import { filterNotifications } from 'lib/shared/notifications.js';
+import Scrollable from 'types/widgets/scrollable.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
 const { displayedTotal, ignore } = options.notifications;
 
-const NotificationCard = (notifs: Notifications, curPage: Variable<number>) => {
+const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scrollable<Child, Attribute> => {
     return Widget.Scrollable({
         vscroll: 'automatic',
         child: Widget.Box({

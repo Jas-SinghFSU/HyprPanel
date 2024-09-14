@@ -1,7 +1,9 @@
+import Window from 'types/widgets/window.js';
 import DropdownMenu from '../DropdownMenu.js';
 import { PowerButton } from './button.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'powerdropdownmenu',
         transition: 'crossfade',

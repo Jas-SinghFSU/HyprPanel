@@ -1,4 +1,6 @@
-export const Header = (headerName: string) => {
+import { GBox } from 'lib/types/widget';
+
+export const Header = (headerName: string): GBox => {
     return Widget.Box({
         class_name: 'options-header',
         children: [

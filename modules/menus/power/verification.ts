@@ -1,7 +1,9 @@
+import Window from 'types/widgets/window.js';
 import PopupWindow from '../PopupWindow.js';
 import powermenu from './helpers/actions.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () =>
+export default (): Window<Child, Attribute> =>
     PopupWindow({
         name: 'verification',
         transition: 'crossfade',

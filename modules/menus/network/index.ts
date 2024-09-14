@@ -1,8 +1,10 @@
+import Window from 'types/widgets/window.js';
 import DropdownMenu from '../DropdownMenu.js';
 import { Ethernet } from './ethernet/index.js';
 import { Wifi } from './wifi/index.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-export default () => {
+export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'networkmenu',
         transition: 'crossfade',

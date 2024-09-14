@@ -1,5 +1,6 @@
+import { BoxWidget } from 'lib/types/widget';
 import { Notification, Notifications } from 'types/service/notifications';
-const Actions = (notif: Notification, notifs: Notifications) => {
+const Actions = (notif: Notification, notifs: Notifications): BoxWidget => {
     if (notif.actions !== undefined && notif.actions.length > 0) {
         return Widget.Box({
             class_name: 'notification-card-actions menu',
