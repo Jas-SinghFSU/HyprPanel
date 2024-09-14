@@ -1,11 +1,11 @@
 .systray button:not(:first-child) {
-  margin-left: $bar-buttons-systray-spacing;
+    margin-left: $bar-buttons-systray-spacing;
 }
 
 .systray-icon {
-  font-size: 1.3em;
+    font-size: 1.3em;
 }
 
 .style2.systray {
-  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+    padding: $bar-buttons-padding_y $bar-buttons-padding_x;
 }

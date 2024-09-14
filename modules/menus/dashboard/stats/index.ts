@@ -1,32 +1,33 @@
-import options from "options";
-import { GPU_Stat } from "lib/types/gpustat";
-import { dependencies } from "lib/utils";
+import options from 'options';
+import { GPU_Stat } from 'lib/types/gpustat';
+import { dependencies } from 'lib/utils';
+import { BoxWidget } from 'lib/types/widget';
+import { GenericResourceMetrics } from 'lib/types/customModules/generic';
 
 const { terminal } = options;
 const { enable_gpu } = options.menus.dashboard.stats;
 
-const Stats = () => {
-    const divide = ([total, free]: number[]) => free / total;
+const Stats = (): BoxWidget => {
+    const divide = ([total, free]: number[]): number => free / total;
 
-    const formatSizeInGB = (sizeInKB: number) =>
-        Number((sizeInKB / 1024 ** 2).toFixed(2));
+    const formatSizeInGB = (sizeInKB: number): number => Number((sizeInKB / 1024 ** 2).toFixed(2));
 
     const cpu = Variable(0, {
         poll: [
             2000,
-            "top -b -n 1",
-            (out) => {
-                if (typeof out !== "string") {
+            'top -b -n 1',
+            (out): number => {
+                if (typeof out !== 'string') {
                     return 0;
                 }
 
-                const cpuOut = out.split("\n").find((line) => line.includes("Cpu(s)"));
+                const cpuOut = out.split('\n').find((line) => line.includes('Cpu(s)'));
 
                 if (cpuOut === undefined) {
                     return 0;
                 }
 
-                const freeCpu = parseFloat(cpuOut.split(/\s+/)[1].replace(",", "."));
+                const freeCpu = parseFloat(cpuOut.split(/\s+/)[1].replace(',', '.'));
                 return divide([100, freeCpu]);
             },
         ],
@@ -37,22 +38,19 @@ const Stats = () => {
         {
             poll: [
                 2000,
-                "free",
-                (out) => {
-                    if (typeof out !== "string") {
+                'free',
+                (out): GenericResourceMetrics => {
+                    if (typeof out !== 'string') {
                         return { total: 0, used: 0, percentage: 0 };
                     }
 
-                    const ramOut = out.split("\n").find((line) => line.includes("Mem:"));
+                    const ramOut = out.split('\n').find((line) => line.includes('Mem:'));
 
                     if (ramOut === undefined) {
                         return { total: 0, used: 0, percentage: 0 };
                     }
 
-                    const [totalRam, usedRam] = ramOut
-                        .split(/\s+/)
-                        .splice(1, 2)
-                        .map(Number);
+                    const [totalRam, usedRam] = ramOut.split(/\s+/).splice(1, 2).map(Number);
 
                     return {
                         percentage: divide([totalRam, usedRam]),
@@ -67,8 +65,8 @@ const Stats = () => {
     const gpu = Variable(0);
 
     const GPUStat = Widget.Box({
-        child: enable_gpu.bind("value").as((gpStat) => {
-            if (!gpStat || !dependencies("gpustat")) {
+        child: enable_gpu.bind('value').as((gpStat) => {
+            if (!gpStat || !dependencies('gpustat')) {
                 return Widget.Box();
             }
 
@@ -76,19 +74,19 @@ const Stats = () => {
                 vertical: true,
                 children: [
                     Widget.Box({
-                        class_name: "stat gpu",
+                        class_name: 'stat gpu',
                         hexpand: true,
-                        vpack: "center",
-                        setup: self => {
-                            const getGpuUsage = () => {
+                        vpack: 'center',
+                        setup: (self) => {
+                            const getGpuUsage = (): void => {
                                 if (!enable_gpu.value) {
                                     gpu.value = 0;
                                     return;
                                 }
 
-                                Utils.execAsync("gpustat --json")
+                                Utils.execAsync('gpustat --json')
                                     .then((out) => {
-                                        if (typeof out !== "string") {
+                                        if (typeof out !== 'string') {
                                             return 0;
                                         }
                                         try {
@@ -97,80 +95,79 @@ const Stats = () => {
                                             const totalGpu = 100;
                                             const usedGpu =
                                                 data.gpus.reduce((acc: number, gpu: GPU_Stat) => {
-
-                                                    return acc + gpu["utilization.gpu"]
+                                                    return acc + gpu['utilization.gpu'];
                                                 }, 0) / data.gpus.length;
 
                                             gpu.value = divide([totalGpu, usedGpu]);
                                         } catch (e) {
-                                            console.error("Error getting GPU stats:", e);
+                                            console.error('Error getting GPU stats:', e);
                                             gpu.value = 0;
                                         }
                                     })
                                     .catch((err) => {
-                                        console.error(`An error occurred while fetching GPU stats: ${err}`)
-                                    })
-                            }
+                                        console.error(`An error occurred while fetching GPU stats: ${err}`);
+                                    });
+                            };
 
-                            self.poll(2000, getGpuUsage)
+                            self.poll(2000, getGpuUsage);
 
-                            Utils.merge([gpu.bind("value"), enable_gpu.bind("value")], (gpu, enableGpu) => {
+                            Utils.merge([gpu.bind('value'), enable_gpu.bind('value')], (gpu, enableGpu) => {
                                 if (!enableGpu) {
-                                    return self.children = [];
+                                    return (self.children = []);
                                 }
 
-                                return self.children = [
+                                return (self.children = [
                                     Widget.Button({
-                                        on_primary_click: terminal.bind("value").as(term => {
-                                            return () => {
-                                                App.closeWindow("dashboardmenu");
+                                        on_primary_click: terminal.bind('value').as((term) => {
+                                            return (): void => {
+                                                App.closeWindow('dashboardmenu');
                                                 Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                                     (err) => `Failed to open btop: ${err}`,
                                                 );
-                                            }
+                                            };
                                         }),
                                         child: Widget.Label({
-                                            class_name: "txt-icon",
-                                            label: "󰢮",
-                                        })
+                                            class_name: 'txt-icon',
+                                            label: '󰢮',
+                                        }),
                                     }),
                                     Widget.Button({
-                                        on_primary_click: terminal.bind("value").as(term => {
-                                            return () => {
-                                                App.closeWindow("dashboardmenu");
+                                        on_primary_click: terminal.bind('value').as((term) => {
+                                            return (): void => {
+                                                App.closeWindow('dashboardmenu');
                                                 Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                                     (err) => `Failed to open btop: ${err}`,
                                                 );
-                                            }
+                                            };
                                         }),
                                         child: Widget.LevelBar({
-                                            class_name: "stats-bar",
+                                            class_name: 'stats-bar',
                                             hexpand: true,
-                                            vpack: "center",
+                                            vpack: 'center',
                                             value: gpu,
                                         }),
                                     }),
-                                ]
-                            })
+                                ]);
+                            });
                         },
                     }),
                     Widget.Box({
-                        hpack: "end",
-                        children: Utils.merge([gpu.bind("value"), enable_gpu.bind("value")], (gpuUsed, enableGpu) => {
+                        hpack: 'end',
+                        children: Utils.merge([gpu.bind('value'), enable_gpu.bind('value')], (gpuUsed, enableGpu) => {
                             if (!enableGpu) {
                                 return [];
                             }
                             return [
                                 Widget.Label({
-                                    class_name: "stat-value gpu",
+                                    class_name: 'stat-value gpu',
                                     label: `${Math.floor(gpuUsed * 100)}%`,
-                                })
+                                }),
                             ];
-                        })
-                    })
-                ]
-            })
-        })
+                        }),
+                    }),
+                ],
+            });
+        }),
     });
 
     const storage = Variable(
@@ -178,13 +175,13 @@ const Stats = () => {
         {
             poll: [
                 2000,
-                "df -B1 /",
-                (out) => {
-                    if (typeof out !== "string") {
+                'df -B1 /',
+                (out): GenericResourceMetrics => {
+                    if (typeof out !== 'string') {
                         return { total: 0, used: 0, percentage: 0 };
                     }
 
-                    const dfOut = out.split("\n").find((line) => line.startsWith("/"));
+                    const dfOut = out.split('\n').find((line) => line.startsWith('/'));
 
                     if (dfOut === undefined) {
                         return { total: 0, used: 0, percentage: 0 };
@@ -208,58 +205,58 @@ const Stats = () => {
     );
 
     return Widget.Box({
-        class_name: "dashboard-card stats-container",
+        class_name: 'dashboard-card stats-container',
         vertical: true,
-        vpack: "fill",
-        hpack: "fill",
+        vpack: 'fill',
+        hpack: 'fill',
         expand: true,
         children: [
             Widget.Box({
                 vertical: true,
                 children: [
                     Widget.Box({
-                        class_name: "stat cpu",
+                        class_name: 'stat cpu',
                         hexpand: true,
-                        vpack: "center",
+                        vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.Label({
-                                    class_name: "txt-icon",
-                                    label: "",
-                                })
+                                    class_name: 'txt-icon',
+                                    label: '',
+                                }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.LevelBar({
-                                    class_name: "stats-bar",
+                                    class_name: 'stats-bar',
                                     hexpand: true,
-                                    vpack: "center",
-                                    bar_mode: "continuous",
+                                    vpack: 'center',
+                                    bar_mode: 'continuous',
                                     max_value: 1,
-                                    value: cpu.bind("value"),
+                                    value: cpu.bind('value'),
                                 }),
                             }),
                         ],
                     }),
                     Widget.Label({
-                        hpack: "end",
-                        class_name: "stat-value cpu",
-                        label: cpu.bind("value").as((v) => `${Math.floor(v * 100)}%`),
+                        hpack: 'end',
+                        class_name: 'stat-value cpu',
+                        label: cpu.bind('value').as((v) => `${Math.floor(v * 100)}%`),
                     }),
                 ],
             }),
@@ -267,46 +264,46 @@ const Stats = () => {
                 vertical: true,
                 children: [
                     Widget.Box({
-                        class_name: "stat ram",
-                        vpack: "center",
+                        class_name: 'stat ram',
+                        vpack: 'center',
                         hexpand: true,
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.Label({
-                                    class_name: "txt-icon",
-                                    label: "",
-                                })
+                                    class_name: 'txt-icon',
+                                    label: '',
+                                }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.LevelBar({
-                                    class_name: "stats-bar",
+                                    class_name: 'stats-bar',
                                     hexpand: true,
-                                    vpack: "center",
-                                    value: ram.bind("value").as((v) => v.percentage),
+                                    vpack: 'center',
+                                    value: ram.bind('value').as((v) => v.percentage),
                                 }),
                             }),
                         ],
                     }),
                     Widget.Label({
-                        hpack: "end",
-                        class_name: "stat-value ram",
-                        label: ram.bind("value").as((v) => `${v.used}/${v.total} GB`),
+                        hpack: 'end',
+                        class_name: 'stat-value ram',
+                        label: ram.bind('value').as((v) => `${v.used}/${v.total} GB`),
                     }),
                 ],
             }),
@@ -315,46 +312,46 @@ const Stats = () => {
                 vertical: true,
                 children: [
                     Widget.Box({
-                        class_name: "stat storage",
+                        class_name: 'stat storage',
                         hexpand: true,
-                        vpack: "center",
+                        vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.Label({
-                                    class_name: "txt-icon",
-                                    label: "󰋊",
-                                })
+                                    class_name: 'txt-icon',
+                                    label: '󰋊',
+                                }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind("value").as(term => {
+                                on_primary_click: terminal.bind('value').as((term) => {
                                     return () => {
-                                        App.closeWindow("dashboardmenu");
+                                        App.closeWindow('dashboardmenu');
                                         Utils.execAsync(`bash -c "${term} -e btop"`).catch(
                                             (err) => `Failed to open btop: ${err}`,
                                         );
-                                    }
+                                    };
                                 }),
                                 child: Widget.LevelBar({
-                                    class_name: "stats-bar",
+                                    class_name: 'stats-bar',
                                     hexpand: true,
-                                    vpack: "center",
-                                    value: storage.bind("value").as((v) => v.percentage),
+                                    vpack: 'center',
+                                    value: storage.bind('value').as((v) => v.percentage),
                                 }),
-                            })
+                            }),
                         ],
                     }),
                     Widget.Label({
-                        hpack: "end",
-                        class_name: "stat-value storage",
-                        label: storage.bind("value").as((v) => `${v.used}/${v.total} GB`),
+                        hpack: 'end',
+                        class_name: 'stat-value storage',
+                        label: storage.bind('value').as((v) => `${v.used}/${v.total} GB`),
                     }),
                 ],
             }),

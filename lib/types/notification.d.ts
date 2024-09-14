@@ -1,4 +1,4 @@
-import icons from "modules/icons/index";
+import icons from 'modules/icons/index';
 
 export interface NotificationArgs {
     appName?: string;

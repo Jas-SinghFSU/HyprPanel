@@ -1,87 +1,97 @@
-import { dependencies, sh } from "lib/utils"
-import options from "options";
-const hyprland = await Service.import("hyprland");
+import { dependencies, sh } from 'lib/utils';
+import options from 'options';
+const hyprland = await Service.import('hyprland');
 
-const WP = `${Utils.HOME}/.config/background`
+const WP = `${Utils.HOME}/.config/background`;
 
 class Wallpaper extends Service {
     static {
-        Service.register(this, {}, {
-            "wallpaper": ["string"],
-        })
+        Service.register(
+            this,
+            {},
+            {
+                wallpaper: ['string'],
+            },
+        );
     }
 
-    #blockMonitor = false
-    #isRunning = false
+    #blockMonitor = false;
+    #isRunning = false;
 
-    #wallpaper() {
-        if (!dependencies("swww"))
-            return
+    #wallpaper(): void {
+        if (!dependencies('swww')) return;
 
-        hyprland.monitors.map(m => m.name);
-        sh("hyprctl cursorpos").then(pos => {
+        hyprland.monitors.map((m) => m.name);
+        sh('hyprctl cursorpos').then((pos) => {
             sh([
-                "swww", "img",
-                "--invert-y",
-                "--transition-type", "grow",
-                "--transition-duration", "1.5",
-                "--transition-fps", "30",
-                "--transition-pos", pos.replace(" ", ""),
+                'swww',
+                'img',
+                '--invert-y',
+                '--transition-type',
+                'grow',
+                '--transition-duration',
+                '1.5',
+                '--transition-fps',
+                '30',
+                '--transition-pos',
+                pos.replace(' ', ''),
                 WP,
             ]).then(() => {
-                this.changed("wallpaper")
-            })
-        })
+                this.changed('wallpaper');
+            });
+        });
     }
 
-    async #setWallpaper(path: string) {
-        this.#blockMonitor = true
+    async #setWallpaper(path: string): Promise<void> {
+        this.#blockMonitor = true;
 
-        await sh(`cp ${path} ${WP}`)
-        this.#wallpaper()
+        await sh(`cp ${path} ${WP}`);
+        this.#wallpaper();
 
-        this.#blockMonitor = false
+        this.#blockMonitor = false;
     }
 
-    readonly set = (path: string) => { this.#setWallpaper(path) }
-    readonly isRunning = () => { return this.#isRunning }
+    readonly set = (path: string): void => {
+        this.#setWallpaper(path);
+    };
+    readonly isRunning = (): boolean => {
+        return this.#isRunning;
+    };
 
-    get wallpaper() { return WP }
+    get wallpaper(): string {
+        return WP;
+    }
 
     constructor() {
-        super()
+        super();
 
-        options.wallpaper.enable.connect("changed", () => {
+        options.wallpaper.enable.connect('changed', () => {
             if (options.wallpaper.enable.value) {
-                this.#isRunning = true
-                Utils.execAsync("swww-daemon")
+                this.#isRunning = true;
+                Utils.execAsync('swww-daemon')
                     .then(() => {
-                        this.#wallpaper
+                        this.#wallpaper();
                     })
-                    .catch(() => null)
+                    .catch(() => null);
             } else {
-                this.#isRunning = false
-                Utils.execAsync("pkill swww-daemon")
-                    .catch(() => null)
+                this.#isRunning = false;
+                Utils.execAsync('pkill swww-daemon').catch(() => null);
             }
+        });
 
-        })
+        if (!dependencies('swww') || !options.wallpaper.enable.value) return this;
 
-        if (!dependencies("swww") || !options.wallpaper.enable.value)
-            return this
-
-        this.#isRunning = true
+        this.#isRunning = true;
         Utils.monitorFile(WP, () => {
-            if (!this.#blockMonitor)
-                this.#wallpaper()
-        })
+            if (!this.#blockMonitor) this.#wallpaper();
+        });
 
-        Utils.execAsync("swww-daemon")
+        Utils.execAsync('swww-daemon')
             .then(() => {
-                this.#wallpaper
+                this.#wallpaper();
             })
-            .catch(() => null)
+            .catch(() => null);
     }
 }
 
-export default new Wallpaper
+export default new Wallpaper();
