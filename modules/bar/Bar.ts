@@ -65,10 +65,19 @@ type BarLayout = {
     [key: string]: Layout
 }
 
-const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
-    const foundMonitor = Object.keys(curLayouts).find(mon => mon === monitor.toString());
+const getLayoutForMonitor = (monitor: number, layouts: BarLayout): Layout => {
+    const matchingKey = Object.keys(layouts).find(key => key === monitor.toString());
+    const wildcard = Object.keys(layouts).find(key => key === "*");
 
-    const defaultSetup: Layout = {
+    if (matchingKey) {
+        return layouts[matchingKey];
+    }
+
+    if (wildcard) {
+        return layouts[wildcard];
+    }
+
+   return {
         left: [
             "dashboard",
             "workspaces",
@@ -86,14 +95,7 @@ const getModulesForMonitor = (monitor: number, curLayouts: BarLayout) => {
             "clock",
             "notifications"
         ]
-    }
-
-    if (foundMonitor === undefined) {
-        return defaultSetup;
-    }
-
-    return curLayouts[foundMonitor];
-
+    };
 }
 
 const widget = {
@@ -285,7 +287,7 @@ export const Bar = (() => {
                         hexpand: true,
                         setup: self => {
                             self.hook(layouts, (self) => {
-                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
                                 self.children = foundLayout.left.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
@@ -295,7 +297,7 @@ export const Bar = (() => {
                         hpack: "center",
                         setup: self => {
                             self.hook(layouts, (self) => {
-                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
                                 self.children = foundLayout.middle.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
@@ -305,7 +307,7 @@ export const Bar = (() => {
                         hpack: "end",
                         setup: self => {
                             self.hook(layouts, (self) => {
-                                const foundLayout = getModulesForMonitor(hyprlandMonitor, layouts.value as BarLayout);
+                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value as BarLayout);
                                 self.children = foundLayout.right.filter(mod => Object.keys(widget).includes(mod)).map(w => widget[w](hyprlandMonitor) as Button<Gtk.Widget, unknown>);
                             });
                         },
