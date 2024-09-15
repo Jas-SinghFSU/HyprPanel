@@ -10,6 +10,7 @@ import GdkPixbuf from 'gi://GdkPixbuf';
 import { NotificationArgs } from 'types/utils/notify';
 import { SubstituteKeys } from './types/utils';
 import { Window } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
+import { namedColors } from './constants/colors';
 
 export type Binding<T> = import('types/service').Binding<any, any, T>;
 
@@ -166,3 +167,25 @@ export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bott
 
     return positionMap[pos] || ['top'];
 }
+export const isValidGjsColor = (color: string): boolean => {
+    const colorLower = color.toLowerCase().trim();
+
+    if (namedColors.has(colorLower)) {
+        return true;
+    }
+
+    const hexColorRegex = /^#(?:[a-fA-F0-9]{3,4}|[a-fA-F0-9]{6,8})$/;
+
+    const rgbRegex = /^rgb\(\s*(\d{1,3}%?\s*,\s*){2}\d{1,3}%?\s*\)$/;
+    const rgbaRegex = /^rgba\(\s*(\d{1,3}%?\s*,\s*){3}(0|1|0?\.\d+)\s*\)$/;
+
+    if (hexColorRegex.test(color)) {
+        return true;
+    }
+
+    if (rgbRegex.test(colorLower) || rgbaRegex.test(colorLower)) {
+        return true;
+    }
+
+    return false;
+};
