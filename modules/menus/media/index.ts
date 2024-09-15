@@ -1,5 +1,5 @@
 import Window from 'types/widgets/window.js';
-import DropdownMenu from '../DropdownMenu.js';
+import DropdownMenu from '../shared/dropdown/index.js';
 import { Media } from './media.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 

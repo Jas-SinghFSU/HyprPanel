@@ -233,8 +233,7 @@
 
 .event-box-container {
     min-height: 0em;
-    margin-top: if($bar-location == 'top', 3.5rem, 0);
-    margin-bottom: if($bar-location == 'bottom', 3.5rem, 0);
+    margin-top: $bar-dropdownGap;
 }
 
 .event-top-padding * {

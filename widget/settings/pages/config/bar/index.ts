@@ -88,6 +88,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     enums: ['top', 'bottom', 'overlay', 'background'],
                 }),
                 Option({
+                    opt: options.theme.bar.dropdownGap,
+                    title: 'Dropdown Gap',
+                    subtitle: 'The gap between the dropdown and the bar',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.theme.bar.margin_top,
                     title: 'Margin Top',
                     subtitle: 'Only applies if floating is enabled',

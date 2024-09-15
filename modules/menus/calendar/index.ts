@@ -1,4 +1,4 @@
-import DropdownMenu from '../DropdownMenu.js';
+import DropdownMenu from '../shared/dropdown/index.js';
 import { TimeWidget } from './time/index.js';
 import { CalendarWidget } from './calendar.js';
 import { WeatherWidget } from './weather/index.js';

@@ -1,5 +1,5 @@
 import { Notification } from 'types/service/notifications.js';
-import DropdownMenu from '../DropdownMenu.js';
+import DropdownMenu from '../shared/dropdown/index.js';
 const notifs = await Service.import('notifications');
 import { Controls } from './controls/index.js';
 import { NotificationCard } from './notification/index.js';
