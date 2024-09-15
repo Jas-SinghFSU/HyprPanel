@@ -12,6 +12,7 @@ import { KbIcon, KbLabelType } from 'lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
+    BarLocation,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -145,10 +146,11 @@ const options = mkOptions(OPTIONS, {
         bar: {
             scaling: opt(100),
             floating: opt(false),
+            location: opt<BarLocation>('top'),
             layer: opt<WindowLayer>('top'),
             margin_top: opt('0.5em'),
             opacity: opt(100),
-            margin_bottom: opt('0em'),
+            margin_bottom: opt('0.5em'),
             margin_sides: opt('0.5em'),
             border_radius: opt('0.4em'),
             outer_spacing: opt('1.6em'),

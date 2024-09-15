@@ -29,6 +29,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     },
                     'bar-layout-input',
                 ),
+                Option({
+                    opt: options.theme.bar.floating,
+                    title: 'Floating Bar',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.location,
+                    title: 'Location',
+                    type: 'enum',
+                    enums: ['top', 'bottom'],
+                }),
 
                 /*
                  ******************************
@@ -68,11 +79,6 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     opt: options.theme.bar.buttons.radius,
                     title: 'Button Radius',
                     type: 'string',
-                }),
-                Option({
-                    opt: options.theme.bar.floating,
-                    title: 'Floating Bar',
-                    type: 'boolean',
                 }),
                 Option({
                     opt: options.theme.bar.layer,

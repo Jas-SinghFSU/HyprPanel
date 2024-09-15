@@ -1,6 +1,8 @@
 const hyprland = await Service.import('hyprland');
+
+import options from 'options';
 import { DropdownMenuProps } from 'lib/types/dropdownmenu';
-import { Attribute, Child, Exclusivity, GtkWidget } from 'lib/types/widget';
+import { Attribute, BoxWidget, Child, Exclusivity, GtkWidget } from 'lib/types/widget';
 import { bash } from 'lib/utils';
 import { Widget as TWidget } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 import { Monitor } from 'types/service/hyprland';
@@ -12,6 +14,8 @@ import Window from 'types/widgets/window';
 type NestedRevealer = Revealer<Box<TWidget, unknown>, unknown>;
 type NestedBox = Box<NestedRevealer, unknown>;
 type NestedEventBox = EventBox<NestedBox, unknown>;
+
+const { location } = options.theme.bar;
 
 export const Padding = (name: string): EventBox<Box<GtkWidget, Attribute>, Attribute> =>
     Widget.EventBox({
@@ -89,12 +93,38 @@ const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean): voi
             marginRight = monWidth - dropdownWidth - minimumMargin;
         }
 
-        const marginTop = 45;
-        const marginBottom = monHeight - marginTop;
         self.set_margin_left(marginLeft);
         self.set_margin_right(marginRight);
-        self.set_margin_bottom(marginBottom);
+
+        console.log(location.value);
     });
+};
+
+const barEventMargins = (windowName: string): [EventBox<BoxWidget, Attribute>, EventBox<BoxWidget, Attribute>] => {
+    return [
+        Widget.EventBox({
+            class_name: 'mid-eb event-top-padding-static',
+            hexpand: true,
+            vexpand: false,
+            can_focus: false,
+            child: Widget.Box(),
+            setup: (w) => {
+                w.on('button-press-event', () => App.toggleWindow(windowName));
+                w.set_margin_top(1);
+            },
+        }),
+        Widget.EventBox({
+            class_name: 'mid-eb event-top-padding',
+            hexpand: true,
+            vexpand: false,
+            can_focus: false,
+            child: Widget.Box(),
+            setup: (w) => {
+                w.on('button-press-event', () => App.toggleWindow(windowName));
+                w.set_margin_top(1);
+            },
+        }),
+    ];
 };
 
 // NOTE: We make the window visible for 2 seconds (on startup) so the child
@@ -123,7 +153,7 @@ export default ({
         keymode: 'on-demand',
         exclusivity,
         layer: 'top',
-        anchor: ['top', 'left'],
+        anchor: location.bind('value').as((ln) => [ln, 'left']),
         child: Widget.EventBox({
             class_name: 'parent-event',
             on_primary_click: () => App.closeWindow(name),
@@ -132,27 +162,14 @@ export default ({
                 class_name: 'top-eb',
                 vertical: true,
                 children: [
-                    Widget.EventBox({
-                        class_name: 'mid-eb event-top-padding-static',
-                        hexpand: true,
-                        vexpand: false,
-                        can_focus: false,
-                        child: Widget.Box(),
-                        setup: (w) => {
-                            w.on('button-press-event', () => App.toggleWindow(name));
-                            w.set_margin_top(1);
-                        },
-                    }),
-                    Widget.EventBox({
-                        class_name: 'mid-eb event-top-padding',
-                        hexpand: true,
-                        vexpand: false,
-                        can_focus: false,
-                        child: Widget.Box(),
-                        setup: (w) => {
-                            w.on('button-press-event', () => App.toggleWindow(name));
-                            w.set_margin_top(1);
-                        },
+                    Widget.Box({
+                        children: location.bind('value').as((lcn) => {
+                            if (lcn === 'top') {
+                                return barEventMargins(name);
+                            } else {
+                                return [];
+                            }
+                        }),
                     }),
                     Widget.EventBox({
                         class_name: 'in-eb menu-event-box',
@@ -182,6 +199,15 @@ export default ({
                                     children: [child],
                                 }),
                             }),
+                        }),
+                    }),
+                    Widget.Box({
+                        children: location.bind('value').as((lcn) => {
+                            if (lcn === 'bottom') {
+                                return barEventMargins(name);
+                            } else {
+                                return [];
+                            }
                         }),
                     }),
                 ],
