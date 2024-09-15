@@ -42,7 +42,6 @@ swww
 dart-sass
 brightnessctl
 gnome-bluetooth-3.0
-power-profiles-daemon
 ```
 
 Optional Dependencies:
