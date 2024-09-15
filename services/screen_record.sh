@@ -26,8 +26,10 @@ startRecording() {
         echo "Usage: $0 start screen [screen_name]"
         exit 1
     fi
+    
+    GPU_TYPE=$(lspci | grep -E 'VGA|3D' | grep -Ev '00:02.0|Integrated' > /dev/null && echo "" || echo "-encoder cpu")
 
-    gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" &
+    gpu-screen-recorder -w "$target" -f 60 -a "$(pactl get-default-sink).monitor" -o "$outputPath" $GPU_TYPE &
 
     echo "Recording started. Output will be saved to $outputPath"
 }
