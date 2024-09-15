@@ -52,11 +52,14 @@ python-gpustat
 
 ## Only if a pywal hook from wallpaper changes applied through settings is desired
 pywal
+
+## To check for pacman updates in the default script used in the updates module
+pacman-contrib
 ```
 
 Arch (pacman):
 ```bash
-sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib
 ```
 
 Arch (AUR):
