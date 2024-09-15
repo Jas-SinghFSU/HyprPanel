@@ -52,6 +52,9 @@ python-gpustat
 
 ## Only if a pywal hook from wallpaper changes applied through settings is desired
 pywal
+
+## To check for pacman updates in the default script used in the updates module
+pacman-contrib
 ```
 
 Arch (pacman):
