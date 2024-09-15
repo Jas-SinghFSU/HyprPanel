@@ -1,4 +1,4 @@
-import DropdownMenu from '../DropdownMenu.js';
+import DropdownMenu from '../shared/dropdown/index.js';
 import { EnergyProfiles } from './profiles/index.js';
 import { Brightness } from './brightness/index.js';
 import { Attribute, Child } from 'lib/types/widget.js';

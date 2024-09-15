@@ -29,6 +29,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     },
                     'bar-layout-input',
                 ),
+                Option({
+                    opt: options.theme.bar.floating,
+                    title: 'Floating Bar',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.location,
+                    title: 'Location',
+                    type: 'enum',
+                    enums: ['top', 'bottom'],
+                }),
 
                 /*
                  ******************************
@@ -70,16 +81,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
-                    opt: options.theme.bar.floating,
-                    title: 'Floating Bar',
-                    type: 'boolean',
-                }),
-                Option({
                     opt: options.theme.bar.layer,
                     title: 'Layer',
                     type: 'enum',
                     subtitle: 'Layer determines the Z index of your bar.',
                     enums: ['top', 'bottom', 'overlay', 'background'],
+                }),
+                Option({
+                    opt: options.theme.bar.dropdownGap,
+                    title: 'Dropdown Gap',
+                    subtitle: 'The gap between the dropdown and the bar',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.theme.bar.margin_top,

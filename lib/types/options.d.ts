@@ -14,6 +14,8 @@ export type RecursiveOptionsObject = {
     [key: string]: RecursiveOptionsObject | Opt<string | number | boolean> | Opt<any>;
 };
 
+export type BarLocation = 'top' | 'bottom';
+
 export type Unit = 'imperial' | 'metric';
 export type PowerOptions = 'sleep' | 'reboot' | 'logout' | 'shutdown';
 export type NotificationAnchor =
