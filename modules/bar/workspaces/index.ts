@@ -9,6 +9,7 @@ import {
 import { Workspace } from 'types/service/hyprland';
 import { BoxWidget } from 'lib/types/widget';
 import { BarBoxChild, SelfButton } from 'lib/types/bar';
+import { WorkspaceIcons } from 'lib/types/workspace';
 
 const { workspaces, monitorSpecific, workspaceMask, scroll_speed, spacing } = options.bar.workspaces;
 
@@ -93,6 +94,7 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                                             options.bar.workspaces.show_icons.bind('value'),
                                             options.bar.workspaces.show_numbered.bind('value'),
                                             options.bar.workspaces.numbered_active_indicator.bind('value'),
+                                            options.bar.workspaces.showWsIcons.bind('value'),
                                             options.bar.workspaces.icons.available.bind('value'),
                                             options.bar.workspaces.icons.active.bind('value'),
                                             options.bar.workspaces.icons.occupied.bind('value'),
@@ -102,8 +104,9 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                                             showIcons: boolean,
                                             showNumbered: boolean,
                                             numberedActiveIndicator: string,
+                                            showWsIcons: boolean,
                                         ) => {
-                                            if (showIcons) {
+                                            if (showIcons || showWsIcons) {
                                                 return `workspace-icon txt-icon bar`;
                                             }
                                             if (showNumbered) {
@@ -121,6 +124,8 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                                             options.bar.workspaces.icons.available.bind('value'),
                                             options.bar.workspaces.icons.active.bind('value'),
                                             options.bar.workspaces.icons.occupied.bind('value'),
+                                            options.bar.workspaces.workspaceIconMap.bind('value'),
+                                            options.bar.workspaces.showWsIcons.bind('value'),
                                             workspaceMask.bind('value'),
                                             hyprland.active.workspace.bind('id'),
                                         ],
@@ -129,6 +134,8 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                                             available: string,
                                             active: string,
                                             occupied: string,
+                                            wsIconMap: WorkspaceIcons,
+                                            showWsIcons: boolean,
                                             workspaceMask: boolean,
                                         ) => {
                                             if (showIcons) {
@@ -142,6 +149,10 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                                                     return available;
                                                 }
                                             }
+                                            if (showWsIcons) {
+                                                return wsIconMap[i] || `${i}`;
+                                            }
+
                                             return workspaceMask ? `${index + 1}` : `${i}`;
                                         },
                                     ),

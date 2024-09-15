@@ -181,6 +181,16 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
+                    opt: options.bar.workspaces.showWsIcons,
+                    title: 'Map Workspaces to Icons',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.workspaceIconMap,
+                    title: 'Workspace Icon Mappings',
+                    type: 'object',
+                }),
+                Option({
                     opt: options.bar.workspaces.spacing,
                     title: 'Spacing',
                     subtitle: 'Spacing between workspace icons',

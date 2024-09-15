@@ -10,3 +10,7 @@ export type WorkspaceMap = {
 export type MonitorMap = {
     [key: number]: string;
 };
+
+export type WorkspaceIcons = {
+    [key: string]: string;
+};
