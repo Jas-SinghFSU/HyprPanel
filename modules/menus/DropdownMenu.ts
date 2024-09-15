@@ -34,6 +34,7 @@ const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean): voi
     globalMousePos.connect('changed', async ({ value }) => {
         const curHyprlandMonitor = hyprland.monitors.find((m) => m.id === hyprland.active.monitor.id);
         const dropdownWidth = self.child.get_allocation().width;
+        const dropdownHeight = self.child.get_allocation().height;
 
         let hyprScaling = 1;
         try {
@@ -95,6 +96,14 @@ const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean): voi
 
         self.set_margin_left(marginLeft);
         self.set_margin_right(marginRight);
+
+        if (location.value === 'top') {
+            self.set_margin_top(0);
+            self.set_margin_bottom(monHeight);
+        } else {
+            self.set_margin_bottom(0);
+            self.set_margin_top(monHeight - dropdownHeight);
+        }
 
         console.log(location.value);
     });
@@ -163,6 +172,7 @@ export default ({
                 vertical: true,
                 children: [
                     Widget.Box({
+                        className: 'event-box-container',
                         children: location.bind('value').as((lcn) => {
                             if (lcn === 'top') {
                                 return barEventMargins(name);
@@ -202,6 +212,7 @@ export default ({
                         }),
                     }),
                     Widget.Box({
+                        className: 'event-box-container',
                         children: location.bind('value').as((lcn) => {
                             if (lcn === 'bottom') {
                                 return barEventMargins(name);

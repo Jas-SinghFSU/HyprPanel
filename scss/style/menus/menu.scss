@@ -231,10 +231,10 @@
     color: $sky;
 }
 
-.event-top-padding-static * {
+.event-box-container {
     min-height: 0em;
-    margin-top: if($bar-location == 'top', 2.8em, 0);
-    margin-bottom: if($bar-location == 'bottom', 2.8em, 0);
+    margin-top: if($bar-location == 'top', 3.5rem, 0);
+    margin-bottom: if($bar-location == 'bottom', 3.5rem, 0);
 }
 
 .event-top-padding * {
