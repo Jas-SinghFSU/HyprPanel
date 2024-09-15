@@ -178,18 +178,12 @@ export const isValidGjsColor = (color: string): boolean => {
 
     const rgbRegex = /^rgb\(\s*(\d{1,3}%?\s*,\s*){2}\d{1,3}%?\s*\)$/;
     const rgbaRegex = /^rgba\(\s*(\d{1,3}%?\s*,\s*){3}(0|1|0?\.\d+)\s*\)$/;
-    const hslRegex = /^hsl\(\s*\d{1,3}(deg)?\s*,\s*(\d{1,3}%\s*,\s*){2}\)$/;
-    const hslaRegex = /^hsla\(\s*\d{1,3}(deg)?\s*,\s*(\d{1,3}%\s*,\s*){2}(0|1|0?\.\d+)\s*\)$/;
 
     if (hexColorRegex.test(color)) {
         return true;
     }
 
     if (rgbRegex.test(colorLower) || rgbaRegex.test(colorLower)) {
-        return true;
-    }
-
-    if (hslRegex.test(colorLower) || hslaRegex.test(colorLower)) {
         return true;
     }
 
