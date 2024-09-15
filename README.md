@@ -61,12 +61,15 @@ pywal
 
 ## To check for pacman updates in the default script used in the updates module
 pacman-contrib
+
+## To switch between power profiles in battery module
+power-profiles-daemon
 ```
 
 Arch (pacman):
 
 ```bash
-sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib power-profiles-daemon
 ```
 
 Arch (AUR):
