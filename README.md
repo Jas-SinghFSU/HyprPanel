@@ -57,15 +57,42 @@ pywal
 pacman-contrib
 ```
 
-Arch (pacman):
+### Arch
+
+pacman:
 ```bash
 sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib
 ```
 
-Arch (AUR):
+AUR:
 ```bash
 yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
 ```
+
+### Fedora
+
+DNF - with solopasha's [hyprland COPR](https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/)
+```bash
+dnf copr enable solopasha/hyprland
+dnf install pipewire libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager cargo wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell
+```
+
+flatpak:
+```bash
+flatpak install flathub --system com.dec05eba.gpu_screen_recorder
+```
+
+cargo:
+```bash
+cargo install matugen
+```
+
+bun:
+```bash
+bun install -g sass
+```
+
+### NixOS
 
 For NixOS/Home-Manager, see [NixOS & Home-Manager instructions](#nixos--home-manager).
 
@@ -105,7 +132,7 @@ Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS usin
   inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   # ...
 
-  outputs = { self, nixpkgs, ... }@inputs: 
+  outputs = { self, nixpkgs, ... }@inputs:
   let
     # ...
 	system = "x86_64-linux"; # change to whatever your system should be.
