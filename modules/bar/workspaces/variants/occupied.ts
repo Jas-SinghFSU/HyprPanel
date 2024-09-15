@@ -2,9 +2,10 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor } from '../helpers';
 import { Workspace } from 'types/service/hyprland';
-import { renderClassnames, renderLabel } from '../utils';
+import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
+import { WorkspaceIconMap } from 'lib/types/workspace';
 
 const { workspaces, monitorSpecific, workspaceMask, spacing } = options.bar.workspaces;
 
@@ -24,6 +25,9 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.numbered_active_indicator.bind('value'),
                 spacing.bind('value'),
                 hyprland.active.workspace.bind('id'),
+                options.bar.workspaces.workspaceIconMap.bind('value'),
+                options.bar.workspaces.showWsIcons.bind('value'),
+                options.theme.matugen.bind('value'),
             ],
             (
                 monitorSpecific: boolean,
@@ -38,6 +42,9 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 numberedActiveIndicator: string,
                 spacing: number,
                 activeId: number,
+                wsIconMap: WorkspaceIconMap,
+                showWsIcons: boolean,
+                matugen: boolean,
             ) => {
                 let allWkspcs = range(totalWkspcs || 8);
 
@@ -46,7 +53,10 @@ export const occupiedWses = (monitor: number): BoxWidget => {
 
                 // Sometimes hyprland doesn't have all the monitors in the list
                 // so we complement it with monitors from the workspace list
-                const workspaceMonitorList = hyprland?.workspaces?.map((m) => ({ id: m.monitorID, name: m.monitor }));
+                const workspaceMonitorList = hyprland?.workspaces?.map((m) => ({
+                    id: m.monitorID,
+                    name: m.monitor,
+                }));
                 const curMonitor =
                     hyprland.monitors.find((m) => m.id === monitor) ||
                     workspaceMonitorList.find((m) => m.id === monitor);
@@ -89,14 +99,24 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             child: Widget.Label({
                                 attribute: i,
                                 vpack: 'center',
-                                css: `margin: 0rem ${0.375 * spacing}rem;`,
-                                class_name: renderClassnames(showIcons, showNumbered, numberedActiveIndicator, i),
+                                css:
+                                    `margin: 0rem ${0.375 * spacing}rem;` +
+                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i) : ''}`,
+                                class_name: renderClassnames(
+                                    showIcons,
+                                    showNumbered,
+                                    numberedActiveIndicator,
+                                    showWsIcons,
+                                    i,
+                                ),
                                 label: renderLabel(
                                     showIcons,
                                     available,
                                     active,
                                     occupied,
                                     workspaceMask,
+                                    showWsIcons,
+                                    wsIconMap,
                                     i,
                                     index,
                                     monitor,

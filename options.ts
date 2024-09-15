@@ -20,7 +20,7 @@ import {
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
 import { UnitType } from 'lib/types/weather';
-import { WorkspaceIcons } from 'lib/types/workspace';
+import { WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -192,6 +192,7 @@ const options = mkOptions(OPTIONS, {
                     numbered_active_highlighted_text_color: opt(colors.mantle),
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),
+                    fontSize: opt('1.2em'),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
@@ -818,7 +819,7 @@ const options = mkOptions(OPTIONS, {
                 active: opt(''),
                 occupied: opt(''),
             },
-            workspaceIconMap: opt<WorkspaceIcons>({}),
+            workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
             workspaces: opt(10),
             spacing: opt(1),
             monitorSpecific: opt(true),

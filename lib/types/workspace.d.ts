@@ -14,3 +14,12 @@ export type MonitorMap = {
 export type WorkspaceIcons = {
     [key: string]: string;
 };
+
+export type WorkspaceIconsColored = {
+    [key: string]: {
+        color: string;
+        icon: string;
+    };
+};
+
+export type WorkspaceIconMap = WorkspaceIcons | WorkspaceIconsColored;
