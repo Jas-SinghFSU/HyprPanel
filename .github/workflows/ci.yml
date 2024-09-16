@@ -9,31 +9,15 @@ jobs:
     code_quality:
         runs-on: ubuntu-latest
 
-        container:
-            image: fedora:latest
-
         steps:
             - name: Install Node.js and npm
               run: |
                   sudo dnf install -y nodejs npm
 
-            - name: Install dnf-plugins-core
-              run: |
-                  sudo dnf install -y 'dnf-command(copr)'
-
-            - name: Enable COPR for ags
-              run: |
-                  sudo dnf copr enable solopasha/hyprland -y
-
-            - name: Install ags
-              run: |
-                  sudo dnf install -y aylurs-gtk-shell which
-
-            - name: Initialize ags types
-              run: sudo ags --init
-
             - name: Checkout repository
               uses: actions/checkout@v3
+              with:
+                  submodules: true
 
             - name: Install Node.js Dependencies
               run: npm install

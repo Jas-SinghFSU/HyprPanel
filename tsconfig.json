@@ -13,7 +13,7 @@
         "alwaysStrict": true,
         "noImplicitThis": true,
         "baseUrl": ".",
-        "typeRoots": ["types", "lib/types/globals"],
+        "typeRoots": ["types", "lib/types/globals", "./external/ags-types/types"],
         "skipLibCheck": true,
         "types": []
     },
