@@ -10,16 +10,21 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Install Node.js and npm
-              run: |
-                  sudo dnf install -y nodejs npm
+            - name: Checkout main repository
+              uses: actions/checkout@v3
 
-            - name: Checkout repository
+            - name: Clone ags-types repository
               uses: actions/checkout@v3
               with:
-                  submodules: true
+                  repository: Jas-SinghFSU/ags-types
+                  path: external/ags-types
 
-            - name: Install Node.js Dependencies
+            - name: Install Node.js and npm
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '21'
+
+            - name: Install Dependencies
               run: npm install
 
             - name: Run ESLint
