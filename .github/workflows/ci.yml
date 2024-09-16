@@ -24,5 +24,7 @@ jobs:
             - name: ESLint
               run: npm run lint
 
-            - name: Type Check
-              run: npx tsc --noEmit -p tsconfig.json
+            - name: Type Check - Extended Diagnostics
+              run: npx tsc --noEmit --pretty --extendedDiagnostics
+            # - name: Type Check
+            #   run: npx tsc --noEmit -p tsconfig.json
