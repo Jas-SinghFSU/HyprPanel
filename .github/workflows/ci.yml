@@ -6,7 +6,7 @@ on:
             - master
 
 jobs:
-    lint_and_typecheck:
+    code_quality:
         runs-on: ubuntu-latest
 
         steps:
