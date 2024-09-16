@@ -4,7 +4,7 @@ import { divide } from 'customModules/utils';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 import { Variable as VariableType } from 'types/variable';
 
-export const calculateRamUsage = (round: VariableType<boolean>): string => {
+export const calculateRamUsage = (round: VariableType<boolean>): GenericResourceData => {
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
