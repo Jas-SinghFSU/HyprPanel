@@ -2,7 +2,7 @@ import options from 'options';
 import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
 import { computeNetwork } from './computeNetwork';
-import { NetstatLabelType } from 'lib/types/bar';
+import { Module, NetstatLabelType } from 'lib/types/bar';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import { NetworkResourceData } from 'lib/types/customModules/network';
@@ -23,9 +23,7 @@ const {
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const networkUsage = Variable<NetworkResourceData>(
-    GET_DEFAULT_NETSTAT_DATA(rateUnit.value),
-);
+export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.value));
 
 pollVariable(
     // Variable to poll and update with the result of the function passed in
@@ -48,11 +46,8 @@ pollVariable(
     rateUnit,
 );
 
-export const Netstat = () => {
-    const renderNetworkLabel = (
-        lblType: NetstatLabelType,
-        network: NetworkResourceData,
-    ): string => {
+export const Netstat = (): Module => {
+    const renderNetworkLabel = (lblType: NetstatLabelType, network: NetworkResourceData): string => {
         switch (lblType) {
             case 'in':
                 return `↓ ${network.in}`;
@@ -88,19 +83,17 @@ export const Netstat = () => {
                     },
                     onScrollUp: {
                         fn: () => {
-                            labelType.value =
-                                NETWORK_LABEL_TYPES[
+                            labelType.value = NETWORK_LABEL_TYPES[
                                 (NETWORK_LABEL_TYPES.indexOf(labelType.value) + 1) % NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType;
+                            ] as NetstatLabelType;
                         },
                     },
                     onScrollDown: {
                         fn: () => {
-                            labelType.value =
-                                NETWORK_LABEL_TYPES[
+                            labelType.value = NETWORK_LABEL_TYPES[
                                 (NETWORK_LABEL_TYPES.indexOf(labelType.value) - 1 + NETWORK_LABEL_TYPES.length) %
-                                NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType;
+                                    NETWORK_LABEL_TYPES.length
+                            ] as NetstatLabelType;
                         },
                     },
                 });
@@ -110,4 +103,3 @@ export const Netstat = () => {
 
     return netstatModule;
 };
-

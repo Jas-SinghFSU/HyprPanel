@@ -1,257 +1,256 @@
 .menu-slider {
-  trough {
-    border-radius: 0.3rem;
-    background: $surface0;
-
-    highlight,
-    progress {
-      background: $peach;
-      border-radius: 0.3rem;
-    }
-  }
-
-  slider {
-    box-shadow: none;
-    background-color: transparent;
-    min-height: 0.6rem;
-    min-width: 0.6rem;
-    border: 0rem solid transparent;
-    border-radius: 0.3rem;
-  }
-
-  &:hover {
     trough {
-      background: $surface0;
+        border-radius: 0.3rem;
+        background: $surface0;
+
+        highlight,
+        progress {
+            background: $peach;
+            border-radius: 0.3rem;
+        }
     }
 
     slider {
-      background: $overlay0;
-      box-shadow: none;
+        box-shadow: none;
+        background-color: transparent;
+        min-height: 0.6rem;
+        min-width: 0.6rem;
+        border: 0rem solid transparent;
+        border-radius: 0.3rem;
     }
-  }
+
+    &:hover {
+        trough {
+            background: $surface0;
+        }
+
+        slider {
+            background: $overlay0;
+            box-shadow: none;
+        }
+    }
 }
 
 .menu-switch {
-  font-size: 1.3em;
-  background-color: $surface0;
-  border-radius: 0.2em;
-
-  &:checked {
-    background: $sky;
-  }
-
-  trough {
-
-    highlight,
-    progress {
-      background-color: $peach;
-      border-radius: 0.3em;
-    }
-  }
-
-  slider {
-    box-shadow: none;
-    background-color: $overlay0;
-    min-height: 1em;
-    min-width: 1em;
-    border: 0em solid transparent;
+    font-size: 1.3em;
+    background-color: $surface0;
     border-radius: 0.2em;
-    margin: 0.1em 0.15em;
-  }
 
-  &:hover {
+    &:checked {
+        background: $sky;
+    }
+
     trough {
-      background: $surface0;
+        highlight,
+        progress {
+            background-color: $peach;
+            border-radius: 0.3em;
+        }
     }
 
     slider {
-      background: $overlay0;
-      box-shadow: none;
+        box-shadow: none;
+        background-color: $overlay0;
+        min-height: 1em;
+        min-width: 1em;
+        border: 0em solid transparent;
+        border-radius: 0.2em;
+        margin: 0.1em 0.15em;
     }
-  }
 
-  &:active {
-    background-color: $sky;
-  }
+    &:hover {
+        trough {
+            background: $surface0;
+        }
+
+        slider {
+            background: $overlay0;
+            box-shadow: none;
+        }
+    }
+
+    &:active {
+        background-color: $sky;
+    }
 }
 
 .menu-separator {
-  min-height: .1rem;
-  margin: .6rem 0rem;
-  background: $surface1;
+    min-height: 0.1rem;
+    margin: 0.6rem 0rem;
+    background: $surface1;
 }
 
 .menu-items {
-  background: $crust;
-  border: $bar-menus-border-size solid $bar-menus-border-color;
-  border-radius: $bar-menus-border-radius;
-  color: $text;
+    background: $crust;
+    border: $bar-menus-border-size solid $bar-menus-border-color;
+    border-radius: $bar-menus-border-radius;
+    color: $text;
 }
 
 .menu-items-container {
-  border-radius: 0.4em;
-  font-size: 1.3em;
+    border-radius: 0.4em;
+    font-size: 1.3em;
 }
 
 .menu-section-container {
-  margin: 1em 0em;
+    margin: 1em 0em;
 
-  .menu-label {
-    color: $text;
-    font-size: 1.1em;
-    font-weight: bold;
-  }
+    .menu-label {
+        color: $text;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
 
-  .menu-label-container {
-    background: $base;
-    border-radius: $bar-menus-card_radius;
-    border-bottom-left-radius: 0em;
-    border-bottom-right-radius: 0em;
-    margin: 0em 1em;
-    min-height: 2em;
-  }
+    .menu-label-container {
+        background: $base;
+        border-radius: $bar-menus-card_radius;
+        border-bottom-left-radius: 0em;
+        border-bottom-right-radius: 0em;
+        margin: 0em 1em;
+        min-height: 2em;
+    }
 
-  &:first-child {
-    margin-bottom: 0em;
-  }
+    &:first-child {
+        margin-bottom: 0em;
+    }
 
-  &:last-child {
-    margin-top: 0em;
-  }
+    &:last-child {
+        margin-top: 0em;
+    }
 
-  &:nth-child(2) {
-    margin-top: 1em;
-  }
+    &:nth-child(2) {
+        margin-top: 1em;
+    }
 
-  .menu-items-section {
-    background: $base;
-    border-radius: $bar-menus-card_radius;
-    border-top-left-radius: 0em;
-    border-top-right-radius: 0em;
-    padding: 0.9em;
-    margin: 0em 1em;
-  }
+    .menu-items-section {
+        background: $base;
+        border-radius: $bar-menus-card_radius;
+        border-top-left-radius: 0em;
+        border-top-right-radius: 0em;
+        padding: 0.9em;
+        margin: 0em 1em;
+    }
 }
 
 .menu-active {
-  font-size: 0.9em;
-  font-weight: bold;
-  margin: 0rem 1em;
-  margin-bottom: 0.9em;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 0rem 1em;
+    margin-bottom: 0.9em;
 }
 
 .menu-active-container {
-  &:first-child {
-    margin-bottom: 0.5em;
-  }
+    &:first-child {
+        margin-bottom: 0.5em;
+    }
 }
 
 .menu-active-button {
-  padding: 0.1em;
-  margin-bottom: -0.2em;
+    padding: 0.1em;
+    margin-bottom: -0.2em;
 
-  .menu-active-icon {
-    font-size: 1.4em;
-    font-weight: bold;
+    .menu-active-icon {
+        font-size: 1.4em;
+        font-weight: bold;
+    }
 
-  }
+    &.muted image {
+        color: $maroon;
+    }
 
-  &.muted image {
-    color: $maroon;
-  }
-
-  &:hover image {
-    color: $maroon;
-  }
+    &:hover image {
+        color: $maroon;
+    }
 }
 
 .menu-active-percentage {
-  font-size: 0.9em;
-  min-width: 2.5em;
-  font-weight: bold;
+    font-size: 0.9em;
+    min-width: 2.5em;
+    font-weight: bold;
 }
 
 .menu-active-slider {
-  margin-left: 1rem;
-  margin-right: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1.5rem;
 }
 
 .menu-active-slider * {
-  min-height: 0.85em;
-  border-radius: .2em;
+    min-height: 0.85em;
+    border-radius: 0.2em;
 }
 
 .menu-slider-container {
-  margin-bottom: .7rem;
+    margin-bottom: 0.7rem;
 }
 
 .menu-label-dim {
-  color: $overlay0;
-  margin-right: 1rem;
-  font-size: 1em;
-  font-weight: bold;
+    color: $overlay0;
+    margin-right: 1rem;
+    font-size: 1em;
+    font-weight: bold;
 }
 
 .menu-icon-button {
-  &:hover {
-    color: $surface2;
-  }
+    &:hover {
+        color: $surface2;
+    }
 }
 
 .menu-dropdown-label-container {
-  background: $base;
-  border-radius: 0.4em;
+    background: $base;
+    border-radius: 0.4em;
 }
 
 .menu-button {
-  margin-bottom: .4em;
+    margin-bottom: 0.4em;
 }
 
 .menu-button-name {
-  font-size: 0.95em;
-  font-weight: bold;
-  margin-left: 0.5em;
-  margin-right: 1.2rem;
+    font-size: 0.95em;
+    font-weight: bold;
+    margin-left: 0.5em;
+    margin-right: 1.2rem;
 }
 
 .menu-button-icon {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-right: .5rem;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-right: 0.5rem;
 }
 
 .menu-item-box {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .dropdown-menu-container {
-  min-height: 10em;
+    min-height: 10em;
 }
 
 .menu-label {
-  margin: 0.5em 1em;
-  color: $sky;
+    margin: 0.5em 1em;
+    color: $sky;
 }
 
-.event-top-padding-static * {
-  min-height: 0em;
-  margin-top: 2.8em;
+.event-box-container {
+    min-height: 0em;
+    margin-top: $bar-dropdownGap;
 }
 
 .event-top-padding * {
-  min-height: 0em;
-  margin-top: if($bar-floating, $bar-margin_top, 0);
+    min-height: 0em;
+    margin-top: if($bar-floating and $bar-location == 'top', $bar-margin_top, 0);
+    margin-bottom: if($bar-floating and $bar-location == 'bottom', $bar-margin_bottom, 0);
 }
 
 @keyframes spin {
-  to {
-    -gtk-icon-transform: rotate(1turn);
-  }
+    to {
+        -gtk-icon-transform: rotate(1turn);
+    }
 }
 
 image.spinning {
-  animation-name: spin;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }

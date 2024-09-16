@@ -1,49 +1,50 @@
-const hyprland = await Service.import("hyprland");
+const hyprland = await Service.import('hyprland');
 
-import options from "options";
-import { module } from "../module"
+import options from 'options';
+import { module } from '../module';
 
-import { inputHandler } from "customModules/utils";
-import Gtk from "types/@girs/gtk-3.0/gtk-3.0";
-import Button from "types/widgets/button";
-import Label from "types/widgets/label";
-import { getKeyboardLayout } from "./getLayout";
+import { inputHandler } from 'customModules/utils';
+import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import Button from 'types/widgets/button';
+import Label from 'types/widgets/label';
+import { getKeyboardLayout } from './getLayout';
+import { Module } from 'lib/types/bar';
 
-const {
-    label,
-    labelType,
-    icon,
-    leftClick,
-    rightClick,
-    middleClick,
-    scrollUp,
-    scrollDown,
-} = options.bar.customModules.kbLayout;
+const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
+    options.bar.customModules.kbLayout;
 
-export const KbInput = () => {
+export const KbInput = (): Module => {
     const keyboardModule = module({
-        textIcon: icon.bind("value"),
-        tooltipText: "",
+        textIcon: icon.bind('value'),
+        tooltipText: '',
         labelHook: (self: Label<Gtk.Widget>): void => {
-            self.hook(hyprland, () => {
-                Utils.execAsync('hyprctl devices -j')
-                    .then((obj) => {
-                        self.label = getKeyboardLayout(obj, labelType.value);
-                    })
-                    .catch((err) => { console.error(err); });
-            }, "keyboard-layout");
+            self.hook(
+                hyprland,
+                () => {
+                    Utils.execAsync('hyprctl devices -j')
+                        .then((obj) => {
+                            self.label = getKeyboardLayout(obj, labelType.value);
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                },
+                'keyboard-layout',
+            );
 
             self.hook(labelType, () => {
                 Utils.execAsync('hyprctl devices -j')
                     .then((obj) => {
                         self.label = getKeyboardLayout(obj, labelType.value);
                     })
-                    .catch((err) => { console.error(err); });
+                    .catch((err) => {
+                        console.error(err);
+                    });
             });
         },
 
-        boxClass: "kblayout",
-        showLabelBinding: label.bind("value"),
+        boxClass: 'kblayout',
+        showLabelBinding: label.bind('value'),
         props: {
             setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
                 inputHandler(self, {
@@ -68,6 +69,4 @@ export const KbInput = () => {
     });
 
     return keyboardModule;
-}
-
-
+};

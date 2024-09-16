@@ -1,12 +1,12 @@
-import { weatherIcons } from "modules/icons/weather";
+import { weatherIcons } from 'modules/icons/weather';
 
-export type UnitType = "imperial" | "metric";
+export type UnitType = 'imperial' | 'metric';
 
 export type Weather = {
     location: Location;
     current: Current;
     forecast: Forecast;
-}
+};
 
 export type Current = {
     last_updated_epoch?: number;
@@ -45,17 +45,17 @@ export type Current = {
     chance_of_rain?: number;
     will_it_snow?: number;
     chance_of_snow?: number;
-}
+};
 
 export type Condition = {
     text: string;
     icon: string;
     code: number;
-}
+};
 
 export type Forecast = {
     forecastday: Forecastday[];
-}
+};
 
 export type Forecastday = {
     date: string;
@@ -63,7 +63,7 @@ export type Forecastday = {
     day: Day;
     astro: Astro;
     hour: Current[];
-}
+};
 
 export type Astro = {
     sunrise: string;
@@ -74,7 +74,7 @@ export type Astro = {
     moon_illumination: number;
     is_moon_up: number;
     is_sun_up: number;
-}
+};
 
 export type Day = {
     maxtemp_c: number;
@@ -97,7 +97,7 @@ export type Day = {
     daily_chance_of_snow: number;
     condition: Condition;
     uv: number;
-}
+};
 
 export type Location = {
     name: string;
@@ -108,11 +108,11 @@ export type Location = {
     tz_id: string;
     localtime_epoch: number;
     localtime: string;
-}
+};
 
 export type TemperatureIconColorMap = {
     [key: number]: string;
-}
+};
 
 export type WeatherIconTitle = keyof typeof weatherIcons;
-export type WeatherIcon = typeof weatherIcons[WeatherIconTitle];
+export type WeatherIcon = (typeof weatherIcons)[WeatherIconTitle];

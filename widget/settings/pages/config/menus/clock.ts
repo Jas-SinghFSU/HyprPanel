@@ -1,13 +1,15 @@
-import { Option } from "widget/settings/shared/Option";
-import { Header } from "widget/settings/shared/Header";
+import { Option } from 'widget/settings/shared/Option';
+import { Header } from 'widget/settings/shared/Header';
 
-import options from "options";
+import options from 'options';
+import Scrollable from 'types/widgets/scrollable';
+import { Attribute, Child } from 'lib/types/widget';
 
-export const ClockMenuSettings = () => {
+export const ClockMenuSettings = (): Scrollable<Child, Attribute> => {
     return Widget.Scrollable({
-        vscroll: "automatic",
+        vscroll: 'automatic',
         child: Widget.Box({
-            class_name: "bar-theme-page paged-container",
+            class_name: 'bar-theme-page paged-container',
             vertical: true,
             children: [
                 Header('Time'),
