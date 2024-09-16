@@ -1043,7 +1043,7 @@ const options = mkOptions(OPTIONS, {
                 military: opt(false),
             },
             weather: {
-                enabled: opt(false),
+                enabled: opt(true),
                 interval: opt(60000),
                 unit: opt<UnitType>('imperial'),
                 location: opt('Los Angeles'),
