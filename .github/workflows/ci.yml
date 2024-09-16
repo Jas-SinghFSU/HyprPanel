@@ -24,6 +24,7 @@ jobs:
                   rm -rf types
                   mkdir -p types
                   cp -R temp-ags-types/types/* types/
+                  rm -rf temp-ags-types
 
             - name: Node Setup
               uses: actions/setup-node@v3
