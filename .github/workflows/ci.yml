@@ -23,7 +23,7 @@ jobs:
 
             - name: Enable COPR for ags
               run: |
-                  sud  dnf copr enable solopasha/hyprland -y
+                  sudo dnf copr enable solopasha/hyprland -y
 
             - name: Install Aylur's GTK Shell
               run: |
