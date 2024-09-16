@@ -9,14 +9,19 @@ jobs:
     code_quality:
         runs-on: ubuntu-latest
 
+        container:
+            image: fedora:latest
+
         steps:
+            - name: Install Node.js and npm
+              run: |
+                  dnf install -y nodejs npm aylurs-gtk-shell
+
+            - name: Initialize AGS
+              run: sudo ags --init
+
             - name: Checkout repository
               uses: actions/checkout@v3
-
-            - name: Node Setup
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '21'
 
             - name: Install dependencies
               run: npm install
@@ -26,5 +31,3 @@ jobs:
 
             - name: Type Check - Extended Diagnostics
               run: npx tsc --noEmit --pretty --extendedDiagnostics
-            # - name: Type Check
-            #   run: npx tsc --noEmit -p tsconfig.json
