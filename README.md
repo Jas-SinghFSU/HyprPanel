@@ -66,17 +66,51 @@ pacman-contrib
 power-profiles-daemon
 ```
 
-Arch (pacman):
+### Arch
 
+pacman:
 ```bash
 sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib power-profiles-daemon
 ```
 
-Arch (AUR):
+AUR:
 
 ```bash
 yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
 ```
+
+### Fedora
+
+COPR - Add [solopasha/hyprland](https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/) for most hyprland-related dependencies, and [hues-sueh/packages](https://copr.fedorainfracloud.org/coprs/heus-sueh/packages/) for matugen. Both provide the `swww` package, so prioritise the former repo:
+```bash
+sudo dnf copr enable solopasha/hyprland
+sudo dnf copr enable heus-sueh/packages
+sudo dnf config-manager --save --setopt=copr:copr.fedorainfracloud.org:heus-sueh:packages.priority=200
+```
+
+DNF:
+```bash
+sudo dnf install pipewire libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager  wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell power-profiles-daemon gvfs
+```
+
+bun:
+```bash
+bun install -g sass
+```
+
+flatpak:
+```bash
+flatpak install flathub --system com.dec05eba.gpu_screen_recorder
+```
+
+#### Optional Dependencies
+
+pip:
+```bash
+sudo dnf install python python3-pip; pip install gpustat pywal
+```
+
+### NixOS
 
 For NixOS/Home-Manager, see [NixOS & Home-Manager instructions](#nixos--home-manager).
 
