@@ -71,7 +71,11 @@ const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
     return { name: '', rx: 0, tx: 0 };
 };
 
-export const computeNetwork = (round: VariableType<boolean>, interfaceNameVar: VariableType<string>, dataType: VariableType<RateUnit>): NetworkResourceData => {
+export const computeNetwork = (
+    round: VariableType<boolean>,
+    interfaceNameVar: VariableType<string>,
+    dataType: VariableType<RateUnit>,
+): NetworkResourceData => {
     const rateUnit = dataType.value;
     const interfaceName = interfaceNameVar ? interfaceNameVar.value : '';
 

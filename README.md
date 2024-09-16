@@ -11,21 +11,26 @@
 <br/>
 
 # HyprPanel 🚀
+
 A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 
 ![HyprPanel](./assets/HyprPanel.png)
 
 ## Installation
+
 The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for installing the panel and all of its dependencies. The instructions below are general instructions for installing the panel.
 
 ## Requirements
+
 Bun
 
 ```sh
 curl -fsSL https://bun.sh/install | bash && \
   sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
+
 Additional dependencies:
+
 ```sh
 pipewire
 libgtop
@@ -45,6 +50,7 @@ gnome-bluetooth-3.0
 ```
 
 Optional Dependencies:
+
 ```sh
 ## Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
@@ -52,14 +58,22 @@ python-gpustat
 
 ## Only if a pywal hook from wallpaper changes applied through settings is desired
 pywal
+
+## To check for pacman updates in the default script used in the updates module
+pacman-contrib
+
+## To switch between power profiles in battery module
+power-profiles-daemon
 ```
 
 Arch (pacman):
+
 ```bash
-sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0
+sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib power-profiles-daemon
 ```
 
 Arch (AUR):
+
 ```bash
 yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git
 ```
@@ -69,32 +83,43 @@ For NixOS/Home-Manager, see [NixOS & Home-Manager instructions](#nixos--home-man
 ## Instructions
 
 ### AGS
+
 Once everything is installed you need to put the contents of this repo in `~/.config/ags`.
 If you already have something in `~/.config/ags`, it's recommended that you back it up with:
+
 ```bash
 mv $HOME/.config/ags $HOME/.config/ags.bkup
 ```
+
 Otherwise you can use this command to install the panel:
+
 ```bash
 git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
   ln -s $(pwd)/HyprPanel $HOME/.config/ags
 ```
+
 ### Nerd Fonts
+
 Additionally, you need to ensure that you have a [Nerd Font](https://www.nerdfonts.com/font-downloads) installed for your icons to render properly.
 
 ### Launch the panel
+
 Afterwards you can run the panel with the following command in your terminal:
+
 ```bash
 ags
 ```
 
 Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
+
 ```bash
 exec-once = ags
 ```
 
 ### NixOS & Home-Manager
+
 Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS using the provided Nix Flake. First, add the repository to your Flake's inputs, and enable the overlay.
+
 ```nix
 # flake.nix
 
@@ -102,7 +127,7 @@ Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS usin
   inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   # ...
 
-  outputs = { self, nixpkgs, ... }@inputs: 
+  outputs = { self, nixpkgs, ... }@inputs:
   let
     # ...
 	system = "x86_64-linux"; # change to whatever your system should be.
@@ -172,6 +197,7 @@ The panel is automatically scaled based on your font size in `Configuration > Ge
 ### Specifying bar layouts per monitor
 
 To specify layouts for each monitor you can create a JSON object such as:
+
 ```JSON
 {
     "0": {
@@ -226,19 +252,21 @@ To specify layouts for each monitor you can create a JSON object such as:
 ```
 
 Where each monitor is defined by its index (0, 1, 2 in this case) and each section (left, middle, right) contains one or more of the following modules:
+
 ```js
-"battery"
-"dashboard"
-"workspaces"
-"windowtitle"
-"media"
-"notifications"
-"volume"
-"network"
-"bluetooth"
-"clock"
-"systray"
+'battery';
+'dashboard';
+'workspaces';
+'windowtitle';
+'media';
+'notifications';
+'volume';
+'network';
+'bluetooth';
+'clock';
+'systray';
 ```
+
 Since the text-box in the options dialog isn't sufficient, it is recommended that you create this JSON configuration in a text editor elsewhere and paste it into the layout text-box under Configuration > Bar > "Bar Layouts for Monitors".
 
 ### Additional Configuration

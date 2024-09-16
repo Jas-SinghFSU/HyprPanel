@@ -1,0 +1,41 @@
+name: CI
+
+on:
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    code_quality:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout main repository
+              uses: actions/checkout@v3
+
+            - name: Clone ags-types to temp dir
+              uses: actions/checkout@v3
+              with:
+                  repository: Jas-SinghFSU/ags-types
+                  path: temp-ags-types
+
+            - name: Copy types to types/
+              run: |
+                  rm -rf types
+                  mkdir -p types
+                  cp -R temp-ags-types/types/* types/
+                  rm -rf temp-ags-types
+
+            - name: Node Setup
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '21'
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: ESLint
+              run: npm run lint
+
+            - name: Type Check
+              run: npx tsc --noEmit --pretty --extendedDiagnostics

@@ -1,9 +1,10 @@
 const GLib = imports.gi.GLib;
 
 import { divide } from 'customModules/utils';
+import { GenericResourceData } from 'lib/types/customModules/generic';
 import { Variable as VariableType } from 'types/variable';
 
-export const calculateRamUsage = (round: VariableType<boolean>) => {
+export const calculateRamUsage = (round: VariableType<boolean>): GenericResourceData => {
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
@@ -26,17 +27,14 @@ export const calculateRamUsage = (round: VariableType<boolean>) => {
         let usedRam = totalRamInBytes - availableRamInBytes;
         usedRam = isNaN(usedRam) || usedRam < 0 ? 0 : usedRam;
 
-
         return {
             percentage: divide([totalRamInBytes, usedRam], round.value),
             total: totalRamInBytes,
             used: usedRam,
             free: availableRamInBytes,
         };
-
     } catch (error) {
         console.error('Error calculating RAM usage:', error);
-        return { total: 0, used: 0, percentage: 0 };
+        return { total: 0, used: 0, percentage: 0, free: 0 };
     }
 };
-
