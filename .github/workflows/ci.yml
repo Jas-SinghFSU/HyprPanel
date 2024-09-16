@@ -15,7 +15,18 @@ jobs:
         steps:
             - name: Install Node.js and npm
               run: |
-                  dnf install -y nodejs npm aylurs-gtk-shell
+                  sudo dnf install -y nodejs npm
+
+            - name: Install dnf-plugins-core
+              run: |
+                  sudo dnf install -y 'dnf-command(copr)'
+
+            - name: Enable COPR for ags
+              run: |
+                  sud  dnf copr enable solopasha/hyprland -y
+
+            - name: Install Aylur's GTK Shell
+              run: |
                   sudo dnf install -y aylurs-gtk-shell
 
             - name: Initialize AGS
@@ -24,11 +35,11 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
-            - name: Install dependencies
+            - name: Install Node.js Dependencies
               run: npm install
 
-            - name: ESLint
+            - name: Run ESLint
               run: npm run lint
 
-            - name: Type Check - Extended Diagnostics
+            - name: Run Type Check - Extended Diagnostics
               run: npx tsc --noEmit --pretty --extendedDiagnostics
