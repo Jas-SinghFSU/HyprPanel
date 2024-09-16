@@ -13,13 +13,18 @@ jobs:
             - name: Checkout main repository
               uses: actions/checkout@v3
 
-            - name: Clone ags-types repository
+            - name: Clone ags-types to temp dir
               uses: actions/checkout@v3
               with:
                   repository: Jas-SinghFSU/ags-types
-                  path: types
+                  path: temp-ags-types
 
-            - name: Set up Node.js
+            - name: Copy types to types/
+              run: |
+                  mkdir -p types
+                  cp -R temp-ags-types/types/* types/
+
+            - name: Node Setup
               uses: actions/setup-node@v3
               with:
                   node-version: '21'
@@ -27,8 +32,8 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
-            - name: Run ESLint
+            - name: ESLint
               run: npm run lint
 
-            - name: Run Type Check - Extended Diagnostics
+            - name: Type Check
               run: npx tsc --noEmit --pretty --extendedDiagnostics
