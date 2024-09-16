@@ -81,10 +81,21 @@ yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat a
 
 ### Fedora
 
-DNF - with solopasha's [hyprland COPR](https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/)
+COPR - Add [solopasha/hyprland](https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/) for most hyprland-related dependencies, and [hues-sueh/packages](https://copr.fedorainfracloud.org/coprs/heus-sueh/packages/) for matugen. Both provide the `swww` package, so prioritise the former repo:
 ```bash
-dnf copr enable solopasha/hyprland
-dnf install pipewire libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager cargo wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell
+sudo dnf copr enable solopasha/hyprland
+sudo dnf copr enable heus-sueh/packages
+sudo dnf config-manager --save --setopt=copr:copr.fedorainfracloud.org:heus-sueh:packages.priority=200
+```
+
+DNF:
+```bash
+sudo dnf install pipewire libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager  wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell power-profiles-daemon gvfs
+```
+
+bun:
+```bash
+bun install -g sass
 ```
 
 flatpak:
@@ -92,14 +103,11 @@ flatpak:
 flatpak install flathub --system com.dec05eba.gpu_screen_recorder
 ```
 
-cargo:
-```bash
-cargo install matugen
-```
+#### Optional Dependencies
 
-bun:
+pip:
 ```bash
-bun install -g sass
+sudo dnf install python python3-pip; pip install gpustat pywal
 ```
 
 ### NixOS
