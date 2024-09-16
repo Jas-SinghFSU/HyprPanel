@@ -25,11 +25,11 @@ jobs:
               run: |
                   sudo dnf copr enable solopasha/hyprland -y
 
-            - name: Install Aylur's GTK Shell
+            - name: Install ags
               run: |
-                  sudo dnf install -y aylurs-gtk-shell
+                  sudo dnf install -y aylurs-gtk-shell which
 
-            - name: Initialize AGS
+            - name: Initialize ags types
               run: sudo ags --init
 
             - name: Checkout repository
