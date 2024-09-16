@@ -21,6 +21,7 @@ jobs:
 
             - name: Copy types to types/
               run: |
+                  rm -rf types
                   mkdir -p types
                   cp -R temp-ags-types/types/* types/
 
