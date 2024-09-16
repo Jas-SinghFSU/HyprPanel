@@ -17,11 +17,31 @@ export const ClockMenuSettings = (): Scrollable<Child, Attribute> => {
 
                 Header('Weather'),
                 Option({ opt: options.menus.clock.weather.enabled, title: 'Enabled', type: 'boolean' }),
-                Option({ opt: options.menus.clock.weather.location, title: 'Location', subtitle: 'Zip Code, Postal Code, City, etc.', type: 'string' }),
-                Option({ opt: options.menus.clock.weather.key, title: 'Weather API Key', subtitle: 'May require AGS restart. https://weatherapi.com/', type: 'string' }),
-                Option({ opt: options.menus.clock.weather.unit, title: 'Units', type: 'enum', enums: ['imperial', 'metric'] }),
-                Option({ opt: options.menus.clock.weather.interval, title: 'Weather Fetching Interval (ms)', subtitle: 'May require AGS restart.', type: 'number' }),
-            ]
-        })
-    })
-}
+                Option({
+                    opt: options.menus.clock.weather.location,
+                    title: 'Location',
+                    subtitle: 'Zip Code, Postal Code, City, etc.',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.menus.clock.weather.key,
+                    title: 'Weather API Key',
+                    subtitle: 'May require AGS restart. https://weatherapi.com/',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.menus.clock.weather.unit,
+                    title: 'Units',
+                    type: 'enum',
+                    enums: ['imperial', 'metric'],
+                }),
+                Option({
+                    opt: options.menus.clock.weather.interval,
+                    title: 'Weather Fetching Interval (ms)',
+                    subtitle: 'May require AGS restart.',
+                    type: 'number',
+                }),
+            ],
+        }),
+    });
+};
