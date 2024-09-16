@@ -36,6 +36,7 @@ import { Attribute, Child } from 'lib/types/widget.js';
 import Window from 'types/widgets/window.js';
 
 const { layouts } = options.bar;
+const { location } = options.theme.bar;
 
 export type BarWidget = keyof typeof widget;
 
@@ -252,7 +253,7 @@ export const Bar = (() => {
             class_name: 'bar',
             monitor,
             visible: true,
-            anchor: ['top', 'left', 'right'],
+            anchor: location.bind('value').as((ln) => [ln, 'left', 'right']),
             exclusivity: 'exclusive',
             layer: Utils.merge(
                 [options.theme.bar.layer.bind('value'), options.tear.bind('value')],

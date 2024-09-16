@@ -12,6 +12,7 @@ import { KbIcon, KbLabelType } from 'lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
+    BarLocation,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -19,6 +20,7 @@ import {
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
 import { UnitType } from 'lib/types/weather';
+import { WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -145,6 +147,7 @@ const options = mkOptions(OPTIONS, {
         bar: {
             scaling: opt(100),
             floating: opt(false),
+            location: opt<BarLocation>('top'),
             layer: opt<WindowLayer>('top'),
             margin_top: opt('0.5em'),
             opacity: opt(100),
@@ -154,6 +157,7 @@ const options = mkOptions(OPTIONS, {
             outer_spacing: opt('1.6em'),
             label_spacing: opt('0.5em'),
             transparent: opt(false),
+            dropdownGap: opt('2.9em'),
             background: opt(colors.crust),
             buttons: {
                 style: opt<BarButtonStyles>('default'),
@@ -188,6 +192,7 @@ const options = mkOptions(OPTIONS, {
                     numbered_active_highlighted_text_color: opt(colors.mantle),
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),
+                    fontSize: opt('1.2em'),
                 },
                 windowtitle: {
                     background: opt(colors.base2),
@@ -807,12 +812,14 @@ const options = mkOptions(OPTIONS, {
         workspaces: {
             show_icons: opt(false),
             show_numbered: opt(false),
+            showWsIcons: opt(false),
             numbered_active_indicator: opt<ActiveWsIndicator>('underline'),
             icons: {
                 available: opt(''),
                 active: opt(''),
                 occupied: opt(''),
             },
+            workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
             workspaces: opt(10),
             spacing: opt(1),
             monitorSpecific: opt(true),

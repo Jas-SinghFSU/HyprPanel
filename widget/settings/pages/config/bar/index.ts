@@ -29,6 +29,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     },
                     'bar-layout-input',
                 ),
+                Option({
+                    opt: options.theme.bar.floating,
+                    title: 'Floating Bar',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.location,
+                    title: 'Location',
+                    type: 'enum',
+                    enums: ['top', 'bottom'],
+                }),
 
                 /*
                  ******************************
@@ -70,16 +81,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
-                    opt: options.theme.bar.floating,
-                    title: 'Floating Bar',
-                    type: 'boolean',
-                }),
-                Option({
                     opt: options.theme.bar.layer,
                     title: 'Layer',
                     type: 'enum',
                     subtitle: 'Layer determines the Z index of your bar.',
                     enums: ['top', 'bottom', 'overlay', 'background'],
+                }),
+                Option({
+                    opt: options.theme.bar.dropdownGap,
+                    title: 'Dropdown Gap',
+                    subtitle: 'The gap between the dropdown and the bar',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.theme.bar.margin_top,
@@ -125,6 +137,14 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Workspaces'),
                 Option({
+                    opt: options.theme.bar.buttons.workspaces.fontSize,
+                    title: 'Indicator Size',
+                    subtitle:
+                        'Only applicable to numbered workspaces and mapped icons\n' +
+                        'Adjust with caution as it may cause the bar to expand',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.bar.workspaces.show_icons,
                     title: 'Show Workspace Icons',
                     type: 'boolean',
@@ -167,6 +187,16 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Highlight Padding',
                     subtitle: 'Only applicable if Workspace Numbers are enabled',
                     type: 'string',
+                }),
+                Option({
+                    opt: options.bar.workspaces.showWsIcons,
+                    title: 'Map Workspaces to Icons',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.workspaceIconMap,
+                    title: 'Workspace Icon Mappings',
+                    type: 'object',
                 }),
                 Option({
                     opt: options.bar.workspaces.spacing,

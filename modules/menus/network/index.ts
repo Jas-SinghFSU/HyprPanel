@@ -1,5 +1,5 @@
 import Window from 'types/widgets/window.js';
-import DropdownMenu from '../DropdownMenu.js';
+import DropdownMenu from '../shared/dropdown/index.js';
 import { Ethernet } from './ethernet/index.js';
 import { Wifi } from './wifi/index.js';
 import { Attribute, Child } from 'lib/types/widget.js';

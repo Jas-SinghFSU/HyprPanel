@@ -1,5 +1,5 @@
 import { Action } from 'lib/types/power.js';
-import PopupWindow from '../PopupWindow.js';
+import PopupWindow from '../shared/popup/index.js';
 import powermenu from './helpers/actions.js';
 import icons from '../../icons/index.js';
 import Window from 'types/widgets/window.js';
