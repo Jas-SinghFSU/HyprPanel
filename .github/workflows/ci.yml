@@ -16,6 +16,7 @@ jobs:
             - name: Install Node.js and npm
               run: |
                   dnf install -y nodejs npm aylurs-gtk-shell
+                  sudo dnf install -y aylurs-gtk-shell
 
             - name: Initialize AGS
               run: sudo ags --init
