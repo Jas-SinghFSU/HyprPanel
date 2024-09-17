@@ -1,81 +1,82 @@
 .workspaces {
-  label {
-    font-size: 0.2em;
-    min-width: 4em;
-    min-height: 4em;
-    border-radius: 1.9rem * .6;
-    transition: 300ms * .5;
-    background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
-    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
+    label {
+        font-size: 0.2em;
+        min-width: 4em;
+        min-height: 4em;
+        border-radius: 1.9rem * 0.6;
+        transition: 300ms * 0.5;
+        background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
 
-    &.occupied {
-      background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
-      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
-      min-width: 4em;
-      min-height: 4em;
-    }
+        &.occupied {
+            background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
+            color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
+            min-width: 4em;
+            min-height: 4em;
+        }
 
-    &.active {
-      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
-      background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
-      min-width: 12em;
-      min-height: 4em;
-    }
+        &.active {
+            color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
+            background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
+            min-width: 12em;
+            min-height: 4em;
+        }
 
-    &.workspace-icon {
-      background-color: transparent;
-      min-width: 0em;
-      min-height: 0em;
-      border-radius: 0em;
-      transition: 300ms * .5;
-      font-size: 1em;
-    }
+        &.workspace-icon {
+            background-color: transparent;
+            min-width: 0em;
+            min-height: 0em;
+            border-radius: 0em;
+            transition: 300ms * 0.5;
+            font-size: 1em;
+        }
 
-    &.workspace-number {
-      background-color: transparent;
-      min-width: 0em;
-      min-height: 0em;
-      border-radius: 0em;
-      transition: 0ms;
-      padding: 0em 0.2em;
-      font-size: 1.2em;
-    }
+        &.workspace-number {
+            background-color: transparent;
+            min-width: 0em;
+            min-height: 0em;
+            border-radius: 0em;
+            transition: 0ms;
+            padding: 0em 0.2em;
+            font-size: $bar-buttons-workspaces-fontSize;
+        }
 
-    &.underline {
-      border-top: 0.1em solid transparent;
-      border-bottom: 0.1em solid $bar-buttons-workspaces-numbered_active_underline_color;
-    }
+        &.underline {
+            border-top: 0.1em solid transparent;
+            border-bottom: 0.1em solid $bar-buttons-workspaces-numbered_active_underline_color;
+        }
 
-    &.highlight {
-      color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
-      border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
-      background-color: $bar-buttons-workspaces-active;
-      padding: 0em $bar-buttons-workspaces-numbered_active_highlight_padding;
+        &.highlight {
+            color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
+            border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+            background-color: $bar-buttons-workspaces-active;
+            padding: 0em $bar-buttons-workspaces-numbered_active_highlight_padding;
+        }
     }
-  }
 }
 
 .workspace-button {
-  &:hover label {
-    color: $bar-buttons-workspaces-hover;
+    &:hover label {
+        color: $bar-buttons-workspaces-hover;
 
-    &.default {
-      background-color: $bar-buttons-workspaces-hover;
+        &.default {
+            background-color: $bar-buttons-workspaces-hover;
+        }
     }
-  }
 
-  &:hover .can_underline {
-    border-top: 0.1em solid transparent;
-    border-bottom: 0.1em solid if($bar-buttons-monochrome, $bar-buttons-workspaces-hover, $bar-buttons-workspaces-hover);
-  }
+    &:hover .can_underline {
+        border-top: 0.1em solid transparent;
+        border-bottom: 0.1em solid
+            if($bar-buttons-monochrome, $bar-buttons-workspaces-hover, $bar-buttons-workspaces-hover);
+    }
 
-  &:hover .can_highlight {
-    background-color: $bar-buttons-workspaces-hover;
-    color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
-    border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
-  }
+    &:hover .can_highlight {
+        background-color: $bar-buttons-workspaces-hover;
+        color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
+        border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
+    }
 }
 
 .style2.workspaces {
-  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+    padding: $bar-buttons-padding_y $bar-buttons-padding_x;
 }

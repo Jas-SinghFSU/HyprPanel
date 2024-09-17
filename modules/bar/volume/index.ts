@@ -3,11 +3,12 @@ const audio = await Service.import("audio");
 import { openMenu } from "../utils.js";
 import options from "options";
 import { VolumeIcons } from 'lib/types/volume.js';
+import { BarBoxChild } from 'lib/types/bar.js';
 import { Stream } from 'types/service/audio';
 import Separator from "types/widgets/separator";
 import Label from "types/widgets/label";
 
-const Volume = () => {
+const Volume = (): BarBoxChild => {
     const { label, input, output, hide_muted_label } = options.bar.volume;
 
     const outputIcons: VolumeIcons = {
@@ -105,10 +106,10 @@ const Volume = () => {
                 }),
         }),
         isVisible: true,
-        boxClass: "volume",
+        boxClass: 'volume',
         props: {
-            on_primary_click: (clicked: any, event: Gdk.Event) => {
-                openMenu(clicked, event, "audiomenu");
+            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+                openMenu(clicked, event, 'audiomenu');
             },
         },
     };

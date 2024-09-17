@@ -1,1 +1,1 @@
-export type Action = "sleep" | "reboot" | "logout" | "shutdown";
+export type Action = 'sleep' | 'reboot' | 'logout' | 'shutdown';
