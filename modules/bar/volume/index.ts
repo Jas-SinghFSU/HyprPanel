@@ -1,34 +1,35 @@
 import Gdk from 'gi://Gdk?version=3.0';
-const audio = await Service.import("audio");
-import { openMenu } from "../utils.js";
-import options from "options";
+const audio = await Service.import('audio');
+import { openMenu } from '../utils.js';
+import options from 'options';
 import { VolumeIcons } from 'lib/types/volume.js';
 import { BarBoxChild } from 'lib/types/bar.js';
-import { Stream } from 'types/service/audio';
-import Separator from "types/widgets/separator";
-import Label from "types/widgets/label";
+import Button from 'types/widgets/button.js';
+import { Child } from 'lib/types/widget.js';
+import Separator from 'types/widgets/separator';
+import Label from 'types/widgets/label';
 
 const Volume = (): BarBoxChild => {
     const { label, input, output, hide_muted_label } = options.bar.volume;
 
     const outputIcons: VolumeIcons = {
-        101: "󱄠",
-        66: "󰕾",
-        34: "󰖀",
-        1: "󰕿",
-        0: "󰝟",
+        101: '󱄠',
+        66: '󰕾',
+        34: '󰖀',
+        1: '󰕿',
+        0: '󰝟',
     };
 
     const inputIcons: VolumeIcons = {
-        51: "󰍬",
-        1: "󰍮",
-        0: "󰍭",
+        51: '󰍬',
+        1: '󰍮',
+        0: '󰍭',
     };
 
-    const getIcon = (icons: VolumeIcons, volume: number, isMuted: (boolean | null)): string => {
-        const keys = Object.keys(icons).map(Number).reverse();
+    const getIcon = (icons: VolumeIcons, volume: number, isMuted: boolean): string => {
+        const keys: number[] = Object.keys(icons).map(Number).reverse();
         let icon: number;
-        if (isMuted !== false || Math.round(volume * 100) === 0) {
+        if (isMuted) {
             icon = 0;
         } else {
             icon = keys.find((threshold) => threshold <= Math.round(volume * 100)) ?? keys[0];
@@ -36,74 +37,87 @@ const Volume = (): BarBoxChild => {
         return icons[icon];
     };
 
-    const volIcn = (audio_type: Stream, icons: VolumeIcons, extra_class_name: string, showLabel: boolean, hideMutedLabel: boolean): Label<any> => {
-        const class_name = `bar-button-icon volume txt-icon bar ${extra_class_name}`;
+    const volIcn = (volume: number, isMuted: boolean, icons: VolumeIcons, class_name: string): Label<never> => {
         return Widget.Label({
             hexpand: true,
-            class_name
-        }).hook(audio_type, (self) => {
-            if (!self.is_destroyed) {
-                self.set_text(getIcon(icons, audio_type.volume, audio_type.is_muted));
-                self.class_name = `${class_name} ${!showLabel || (hideMutedLabel && (audio_type.is_muted !== false || Math.round(audio_type.volume * 100) === 0)) ? "no-label" : ""}`;
-            }
+            class_name: `bar-button-icon volume txt-icon bar ${class_name}`,
+            label: getIcon(icons, volume, isMuted),
         });
     };
 
-    const volPctUpdate = (label: Label<any>, audio_type: Stream, hideMutedLabel: boolean): void => {
-        if (!label.is_destroyed) {
-            label.set_text(audio_type.is_muted !== false ? "0%" : `${Math.round(audio_type.volume * 100)}%`);
-            label.set_visible(!(hideMutedLabel && (audio_type.is_muted !== false || Math.round(audio_type.volume * 100) === 0)));
-        }
-    };
-
-    const volPct = (audio_type: Stream, class_name: string, hideMutedLabel: boolean): Label<any> => {
-        const label: Label<any> = Widget.Label({
+    const volPct = (volume: number, isMuted: boolean, class_name: string): Label<never> => {
+        return Widget.Label({
             hexpand: true,
             class_name: `bar-button-label volume ${class_name}`,
-        }).hook(audio_type, (self) => volPctUpdate(self, audio_type, hideMutedLabel));
-
-        // Workaround for ags setting the label visible on creation
-        if (hideMutedLabel) {
-            Utils.timeout(500, () => volPctUpdate(label, audio_type, hideMutedLabel));
-        }
-        return label;
+            label: isMuted ? '0%' : `${Math.round(volume * 100)}%`,
+        });
     };
 
     return {
         component: Widget.Box({
             hexpand: true,
             vexpand: true,
-            className: Utils.merge([options.theme.bar.buttons.style.bind("value"), label.bind("value")], (style, showLabel) => {
-                const styleMap = {
-                    default: "style1",
-                    split: "style2",
-                    wave: "style3",
-                    wave2: "style3",
-                };
+            className: Utils.merge(
+                [options.theme.bar.buttons.style.bind('value'), label.bind('value')],
+                (style, showLabel) => {
+                    const styleMap = {
+                        default: 'style1',
+                        split: 'style2',
+                        wave: 'style3',
+                        wave2: 'style3',
+                    };
 
-                return `volume ${styleMap[style]} ${!showLabel ? "no-label" : ""}`;
-            }),
+                    return `volume ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                },
+            ),
             children: Utils.merge(
-                [label.bind("value"), output.bind("value"), input.bind("value"), hide_muted_label.bind("value")],
-                (showLabel, showOutput, showInput, hideMutedLabel) => {
-                    let children: (Label<any> | Separator<any>)[] = [];
+                [
+                    audio.speaker.bind('volume'),
+                    audio.speaker.bind('is_muted'),
+                    audio.microphone.bind('volume'),
+                    audio.microphone.bind('is_muted'),
+                    label.bind('value'),
+                    output.bind('value'),
+                    input.bind('value'),
+                    hide_muted_label.bind('value'),
+                ],
+                (
+                    outputVolume,
+                    outputIsMuted,
+                    inputVolume,
+                    inputIsMuted,
+                    showLabel,
+                    showOutput,
+                    showInput,
+                    hideMutedLabel,
+                ) => {
+                    const children: (Label<never> | Separator<never>)[] = [];
                     if (showOutput) {
-                        children.push(volIcn(audio.speaker, outputIcons, "output", showLabel, hideMutedLabel));
-                        if (showLabel) {
-                            children.push(volPct(audio.speaker, `output ${!showInput ? "no-separator" : ""}`, hideMutedLabel));
+                        const isMuted = outputIsMuted !== false || Math.round(outputVolume * 100) === 0;
+                        const labelVisible = showLabel && !(hideMutedLabel && isMuted);
+                        children.push(
+                            volIcn(outputVolume, isMuted, outputIcons, `output ${!labelVisible ? 'no-label' : ''}`),
+                        );
+                        if (labelVisible) {
+                            children.push(volPct(outputVolume, isMuted, `output ${!showInput ? 'no-separator' : ''}`));
                         }
                     }
                     if (showInput) {
                         if (showOutput) {
-                            children.push(Widget.Separator({ vertical: true, class_name: "bar-separator volume" }));
+                            children.push(Widget.Separator({ vertical: true, class_name: 'bar-separator volume' }));
                         }
-                        children.push(volIcn(audio.microphone, inputIcons, "input", showLabel, hideMutedLabel));
-                        if (showLabel) {
-                            children.push(volPct(audio.microphone, "input no-separator", hideMutedLabel));
+                        const isMuted = inputIsMuted !== false || Math.round(inputVolume * 100) === 0;
+                        const labelVisible = showLabel && !(hideMutedLabel && isMuted);
+                        children.push(
+                            volIcn(inputVolume, isMuted, inputIcons, `input ${!labelVisible ? 'no-label' : ''}`),
+                        );
+                        if (labelVisible) {
+                            children.push(volPct(inputVolume, isMuted, 'input no-separator'));
                         }
                     }
                     return children;
-                }),
+                },
+            ),
         }),
         isVisible: true,
         boxClass: 'volume',
