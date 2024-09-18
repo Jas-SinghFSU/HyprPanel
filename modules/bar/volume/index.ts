@@ -22,7 +22,15 @@ const Volume = (): BarBoxChild => {
         const icon: Binding<number> = Utils.merge(
             [audio.speaker.bind('is_muted'), audio.speaker.bind('volume')],
             (isMuted, vol) => {
-                return isMuted ? 0 : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100) || 101;
+                if (isMuted) return 0;
+
+                const foundVol = [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100);
+
+                if (foundVol !== undefined) {
+                    return foundVol;
+                }
+
+                return 101;
             },
         );
 
