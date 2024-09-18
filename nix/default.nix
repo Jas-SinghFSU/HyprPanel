@@ -21,7 +21,7 @@
   swww,
   python3,
   libgtop,
-  gnome,
+  gnome-bluetooth,
   gobject-introspection,
   glib,
 }: let
