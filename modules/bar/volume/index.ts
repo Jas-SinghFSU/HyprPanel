@@ -11,6 +11,7 @@ import Label from 'types/widgets/label';
 
 const Volume = (): BarBoxChild => {
     const { label, input, output, hide_muted_label } = options.bar.volume;
+    const button_style = options.theme.bar.buttons.style;
 
     const outputIcons: VolumeIcons = {
         101: '󱄠',
@@ -57,25 +58,23 @@ const Volume = (): BarBoxChild => {
         component: Widget.Box({
             hexpand: true,
             vexpand: true,
-            className: Utils.merge(
-                [options.theme.bar.buttons.style.bind('value'), label.bind('value')],
-                (style, showLabel) => {
-                    const styleMap = {
-                        default: 'style1',
-                        split: 'style2',
-                        wave: 'style3',
-                        wave2: 'style3',
-                    };
+            className: Utils.merge([button_style.bind('value'), label.bind('value')], (style, showLabel) => {
+                const styleMap = {
+                    default: 'style1',
+                    split: 'style2',
+                    wave: 'style3',
+                    wave2: 'style3',
+                };
 
-                    return `volume ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
-                },
-            ),
+                return `volume ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+            }),
             children: Utils.merge(
                 [
                     audio.speaker.bind('volume'),
                     audio.speaker.bind('is_muted'),
                     audio.microphone.bind('volume'),
                     audio.microphone.bind('is_muted'),
+                    button_style.bind('value'),
                     label.bind('value'),
                     output.bind('value'),
                     input.bind('value'),
@@ -86,6 +85,7 @@ const Volume = (): BarBoxChild => {
                     outputIsMuted,
                     inputVolume,
                     inputIsMuted,
+                    buttonStyle,
                     showLabel,
                     showOutput,
                     showInput,
@@ -102,17 +102,33 @@ const Volume = (): BarBoxChild => {
                             children.push(volPct(outputVolume, isMuted, `output ${!showInput ? 'no-separator' : ''}`));
                         }
                     }
+
                     if (showInput) {
                         if (showOutput) {
                             children.push(Widget.Separator({ vertical: true, class_name: 'bar-separator volume' }));
                         }
                         const isMuted = inputIsMuted !== false || Math.round(inputVolume * 100) === 0;
                         const labelVisible = showLabel && !(hideMutedLabel && isMuted);
-                        children.push(
-                            volIcn(inputVolume, isMuted, inputIcons, `input ${!labelVisible ? 'no-label' : ''}`),
-                        );
+                        const rightIcon = buttonStyle === 'split' && showOutput;
+                        if (!rightIcon) {
+                            children.push(
+                                volIcn(inputVolume, isMuted, inputIcons, `input ${!labelVisible ? 'no-label' : ''}`),
+                            );
+                        }
                         if (labelVisible) {
-                            children.push(volPct(inputVolume, isMuted, 'input no-separator'));
+                            children.push(
+                                volPct(inputVolume, isMuted, `input ${rightIcon ? 'right-icon' : 'no-separator'}`),
+                            );
+                        }
+                        if (rightIcon) {
+                            children.push(
+                                volIcn(
+                                    inputVolume,
+                                    isMuted,
+                                    inputIcons,
+                                    `input right-icon ${!labelVisible ? 'no-label' : ''}`,
+                                ),
+                            );
                         }
                     }
                     return children;
