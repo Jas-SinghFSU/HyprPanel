@@ -13,3 +13,17 @@ showTime.connect('changed', () => {
         showIcon.value = true;
     }
 });
+
+const { label, icon } = options.bar.windowtitle;
+
+label.connect('changed', () => {
+    if (!label.value && !icon.value) {
+        icon.value = true;
+    }
+});
+
+icon.connect('changed', () => {
+    if (!label.value && !icon.value) {
+        label.value = true;
+    }
+});
