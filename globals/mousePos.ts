@@ -1,3 +1,5 @@
-const globalMousePosVar = Variable([0, 0]);
+import { Variable as VariableType } from 'types/variable';
 
-globalThis["globalMousePos"] = globalMousePosVar;
+const globalMousePosVar: VariableType<number[]> = Variable([0, 0]);
+
+globalThis['globalMousePos'] = globalMousePosVar;

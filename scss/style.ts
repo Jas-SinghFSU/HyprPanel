@@ -1,63 +1,61 @@
-import options from "options";
-import { bash, dependencies } from "lib/utils";
-import { MatugenColors } from "lib/types/options";
-import { initializeTrackers } from "./options_trackers";
-import { generateMatugenColors, replaceHexValues } from "../services/matugen/index";
+import options from 'options';
+import { bash, dependencies } from 'lib/utils';
+import { MatugenColors, RecursiveOptionsObject } from 'lib/types/options';
+import { initializeTrackers } from './options_trackers';
+import { generateMatugenColors, replaceHexValues } from '../services/matugen/index';
 
-const deps = [
-    "font",
-    "theme",
-    "bar.flatButtons",
-    "bar.position",
-    "bar.battery.charging",
-    "bar.battery.blocks",
-];
+const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
 
-function extractVariables(theme: typeof options.theme, prefix = "", matugenColors: MatugenColors | undefined) {
+function extractVariables(theme: RecursiveOptionsObject, prefix = '', matugenColors?: MatugenColors): string[] {
     let result = [] as string[];
-    for (let key in theme) {
-        if (theme.hasOwnProperty(key)) {
-            const value = theme[key];
+    for (const key in theme) {
+        if (!theme.hasOwnProperty(key)) {
+            continue;
+        }
 
-            const newPrefix = prefix ? `${prefix}-${key}` : key;
+        const value = theme[key];
 
-            const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
-            const replacedValue = isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
-            if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-                if (typeof value.value !== 'undefined') {
-                    result.push(`$${newPrefix}: ${replacedValue};`);
-                } else {
-                    result = result.concat(extractVariables(value, newPrefix, matugenColors));
-                }
-            } else if (typeof value === 'function' && value.name === 'opt') {
-                result.push(`$${newPrefix}: ${replacedValue};`);
-            }
+        const newPrefix = prefix ? `${prefix}-${key}` : key;
+
+        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
+        const replacedValue =
+            isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
+
+        if (typeof value === 'function') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
+            continue;
+        }
+        if (typeof value !== 'object' || value === null || Array.isArray(value)) continue;
+
+        if (typeof value.value !== 'undefined') {
+            result.push(`$${newPrefix}: ${replacedValue};`);
+        } else {
+            result = result.concat(extractVariables(value as RecursiveOptionsObject, newPrefix, matugenColors));
         }
     }
+
     return result;
 }
 
-async function resetCss() {
-    if (!dependencies("sass")) return;
+const resetCss = async (): Promise<void> => {
+    if (!dependencies('sass')) return;
 
     try {
         const matugenColors = await generateMatugenColors();
 
-        const variables = [
-            ...extractVariables(options.theme, '', matugenColors),
-        ];
+        const variables = [...extractVariables(options.theme, '', matugenColors)];
 
-        const vars = `${TMP}/variables.scss`
-        const css = `${TMP}/main.css`
-        const scss = `${TMP}/entry.scss`
+        const vars = `${TMP}/variables.scss`;
+        const css = `${TMP}/main.css`;
+        const scss = `${TMP}/entry.scss`;
         const localScss = `${App.configDir}/scss/main.scss`;
 
         const themeVariables = variables;
         const integratedVariables = themeVariables;
 
-        const imports = [vars].map(f => `@import '${f}';`);
+        const imports = [vars].map((f) => `@import '${f}';`);
 
-        await Utils.writeFile(integratedVariables.join("\n"), vars);
+        await Utils.writeFile(integratedVariables.join('\n'), vars);
 
         let mainScss = Utils.readFile(localScss);
         mainScss = `${imports}\n${mainScss}`;
@@ -68,11 +66,9 @@ async function resetCss() {
 
         App.applyCss(css, true);
     } catch (error) {
-        error instanceof Error
-            ? logError(error)
-            : console.error(error);
+        console.error(error);
     }
-}
+};
 
 initializeTrackers(resetCss);
 

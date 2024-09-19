@@ -1,23 +1,32 @@
-import { Exclusivity, Transition } from "lib/types/widget";
+import { WINDOW_LAYOUTS } from 'globals/window';
+import { LayoutFunction, Layouts, PopupWindowProps } from 'lib/types/popupwindow';
+import { Attribute, Child, Exclusivity, GtkWidget, Transition } from 'lib/types/widget';
+import Box from 'types/widgets/box';
+import EventBox from 'types/widgets/eventbox';
+import Window from 'types/widgets/window';
 
 type Opts = {
-    className: string
-    vexpand: boolean
-}
+    className: string;
+    vexpand: boolean;
+};
 
-export const Padding = (name: string, opts: Opts) =>
+export const Padding = (name: string, opts: Opts): EventBox<Box<GtkWidget, Attribute>, unknown> =>
     Widget.EventBox({
-        class_name: opts?.className || "",
+        class_name: opts?.className || '',
         hexpand: true,
-        vexpand: typeof opts?.vexpand === "boolean" ? opts.vexpand : true,
+        vexpand: typeof opts?.vexpand === 'boolean' ? opts.vexpand : true,
         can_focus: false,
         child: Widget.Box(),
-        setup: (w) => w.on("button-press-event", () => App.toggleWindow(name)),
+        setup: (w) => w.on('button-press-event', () => App.toggleWindow(name)),
     });
 
-const PopupRevealer = (name: string, child: any, transition = "slide_down" as Transition) =>
+const PopupRevealer = (
+    name: string,
+    child: GtkWidget,
+    transition = 'slide_down' as Transition,
+): Box<Child, Attribute> =>
     Widget.Box(
-        { css: "padding: 1px;" },
+        { css: 'padding: 1px;' },
         Widget.Revealer({
             transition,
             child: Widget.Box({
@@ -32,7 +41,7 @@ const PopupRevealer = (name: string, child: any, transition = "slide_down" as Tr
         }),
     );
 
-const Layout = (name: string, child: any, transition: Transition) => ({
+const Layout: LayoutFunction = (name: string, child: GtkWidget, transition: Transition) => ({
     center: () =>
         Widget.CenterBox(
             {},
@@ -49,14 +58,10 @@ const Layout = (name: string, child: any, transition: Transition) => ({
         Widget.CenterBox(
             {},
             Padding(name, {} as Opts),
-            Widget.Box(
-                { vertical: true },
-                PopupRevealer(name, child, transition),
-                Padding(name, {} as Opts),
-            ),
+            Widget.Box({ vertical: true }, PopupRevealer(name, child, transition), Padding(name, {} as Opts)),
             Padding(name, {} as Opts),
         ),
-    "top-right": () =>
+    'top-right': () =>
         Widget.Box(
             {},
             Padding(name, {} as Opts),
@@ -67,13 +72,13 @@ const Layout = (name: string, child: any, transition: Transition) => ({
                 },
                 Padding(name, {
                     vexpand: false,
-                    className: "event-top-padding",
+                    className: 'event-top-padding',
                 }),
                 PopupRevealer(name, child, transition),
                 Padding(name, {} as Opts),
             ),
         ),
-    "top-center": () =>
+    'top-center': () =>
         Widget.Box(
             {},
             Padding(name, {} as Opts),
@@ -84,14 +89,14 @@ const Layout = (name: string, child: any, transition: Transition) => ({
                 },
                 Padding(name, {
                     vexpand: false,
-                    className: "event-top-padding",
+                    className: 'event-top-padding',
                 }),
                 PopupRevealer(name, child, transition),
                 Padding(name, {} as Opts),
             ),
             Padding(name, {} as Opts),
         ),
-    "top-left": () =>
+    'top-left': () =>
         Widget.Box(
             {},
             Widget.Box(
@@ -101,14 +106,14 @@ const Layout = (name: string, child: any, transition: Transition) => ({
                 },
                 Padding(name, {
                     vexpand: false,
-                    className: "event-top-padding",
+                    className: 'event-top-padding',
                 }),
                 PopupRevealer(name, child, transition),
                 Padding(name, {} as Opts),
             ),
             Padding(name, {} as Opts),
         ),
-    "bottom-left": () =>
+    'bottom-left': () =>
         Widget.Box(
             {},
             Widget.Box(
@@ -121,7 +126,7 @@ const Layout = (name: string, child: any, transition: Transition) => ({
             ),
             Padding(name, {} as Opts),
         ),
-    "bottom-center": () =>
+    'bottom-center': () =>
         Widget.Box(
             {},
             Padding(name, {} as Opts),
@@ -135,7 +140,7 @@ const Layout = (name: string, child: any, transition: Transition) => ({
             ),
             Padding(name, {} as Opts),
         ),
-    "bottom-right": () =>
+    'bottom-right': () =>
         Widget.Box(
             {},
             Padding(name, {} as Opts),
@@ -150,23 +155,32 @@ const Layout = (name: string, child: any, transition: Transition) => ({
         ),
 });
 
+const isValidLayout = (layout: string): layout is Layouts => {
+    return WINDOW_LAYOUTS.includes(layout);
+};
+
 export default ({
     name,
     child,
-    layout = "center",
+    layout = 'center',
     transition,
-    exclusivity = "ignore" as Exclusivity,
+    exclusivity = 'ignore' as Exclusivity,
     ...props
-}) =>
-    Widget.Window({
+}: PopupWindowProps): Window<Child, Attribute> => {
+    const layoutFn = isValidLayout(layout) ? layout : 'center';
+
+    const layoutWidget = Layout(name, child, transition)[layoutFn]();
+
+    return Widget.Window({
         name,
-        class_names: [name, "popup-window"],
-        setup: (w) => w.keybind("Escape", () => App.closeWindow(name)),
+        class_names: [name, 'popup-window'],
+        setup: (w) => w.keybind('Escape', () => App.closeWindow(name)),
         visible: false,
-        keymode: "on-demand",
+        keymode: 'on-demand',
         exclusivity,
-        layer: "top",
-        anchor: ["top", "bottom", "right", "left"],
-        child: Layout(name, child, transition)[layout](),
+        layer: 'top',
+        anchor: ['top', 'bottom', 'right', 'left'],
+        child: layoutWidget,
         ...props,
     });
+};

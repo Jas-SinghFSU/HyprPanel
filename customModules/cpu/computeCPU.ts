@@ -1,12 +1,10 @@
-// @ts-expect-error
+// @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
-
-const defaultCpuData: number = 0;
 
 let previousCpuData = new GTop.glibtop_cpu();
 GTop.glibtop_get_cpu(previousCpuData);
 
-export const computeCPU = () => {
+export const computeCPU = (): number => {
     const currentCpuData = new GTop.glibtop_cpu();
     GTop.glibtop_get_cpu(currentCpuData);
 
@@ -19,5 +17,4 @@ export const computeCPU = () => {
     previousCpuData = currentCpuData;
 
     return cpuUsagePercentage;
-}
-
+};

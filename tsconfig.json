@@ -1,20 +1,21 @@
 {
     "compilerOptions": {
+        "noEmit": true,
         "allowImportingTsExtensions": true,
         "target": "ES2022",
         "module": "ES2022",
-        "lib": [
-            "ES2022"
-        ],
+        "lib": ["ES2022"],
         "allowJs": true,
         "checkJs": true,
         "strict": true,
-        "noImplicitAny": false,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "noImplicitThis": true,
         "baseUrl": ".",
-        "typeRoots": [
-            "types",
-            "lib/types/globals",
-        ],
-        "skipLibCheck": true
-    }
+        "typeRoots": ["types", "lib/types/globals"],
+        "skipLibCheck": true,
+        "types": []
+    },
+    "exclude": ["types/@girs/**/*.js"]
 }

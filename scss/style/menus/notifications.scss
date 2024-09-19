@@ -94,7 +94,7 @@
   .clear-notifications-button {
     margin-right: 0.3em;
 
-    &:hover label {
+    &:hover label:not(.removing) {
       color: transparentize(if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear), 0.5);
     }
   }
@@ -102,6 +102,10 @@
   .clear-notifications-label {
     color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear);
     font-size: 1.5em;
+
+    &.removing {
+      color: $bar-menus-buttons-disabled;
+    }
   }
 
   scrollbar {

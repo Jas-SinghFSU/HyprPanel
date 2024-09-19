@@ -1,14 +1,14 @@
-import options from "options";
+import options from 'options';
 
 const { showIcon, showTime } = options.bar.clock;
 
-showIcon.connect("changed", () => {
+showIcon.connect('changed', () => {
     if (!showTime.value && !showIcon.value) {
         showTime.value = true;
     }
 });
 
-showTime.connect("changed", () => {
+showTime.connect('changed', () => {
     if (!showTime.value && !showIcon.value) {
         showIcon.value = true;
     }

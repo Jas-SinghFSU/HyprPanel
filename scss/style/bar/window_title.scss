@@ -5,6 +5,10 @@
 .bar-button-label.windowtitle {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-text);
   margin-left: $bar-buttons-windowtitle-spacing;
+
+  &.no-icon {
+    margin-left: 0;
+  }
 }
 
 .style2 {

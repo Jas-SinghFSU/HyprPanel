@@ -1,3 +1,5 @@
+import icons from 'modules/icons/index';
+
 export interface NotificationArgs {
     appName?: string;
     body?: string;
@@ -9,3 +11,5 @@ export interface NotificationArgs {
     timeout?: number;
     transient?: boolean;
 }
+
+export type NotificationIcon = keyof typeof icons.notifications;

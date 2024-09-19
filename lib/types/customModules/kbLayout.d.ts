@@ -1,5 +1,7 @@
-export type KbLabelType = "layout" | "code";
-export type KbIcon = "" | "󰌌" | "" | "󰬴" | "󰗊";
+import { layoutMap } from 'customModules/kblayout/layouts';
+
+export type KbLabelType = 'layout' | 'code';
+export type KbIcon = '' | '󰌌' | '' | '󰬴' | '󰗊';
 
 export type HyprctlKeyboard = {
     address: string;
@@ -22,7 +24,10 @@ export type HyprctlMouse = {
 export type HyprctlDeviceLayout = {
     mice: HyprctlMouse[];
     keyboards: HyprctlKeyboard[];
-    tablets: any[];
-    touch: any[];
-    switches: any[];
+    tablets: unknown[];
+    touch: unknown[];
+    switches: unknown[];
 };
+
+export type LayoutKeys = keyof typeof layoutMap;
+export type LayoutValues = (typeof layoutMap)[LayoutKeys];

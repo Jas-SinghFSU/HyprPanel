@@ -1,16 +1,17 @@
-const audio = await Service.import("audio");
-import { Stream } from "types/service/audio";
+const audio = await Service.import('audio');
+import { PlaybackDevices } from 'lib/types/audio';
+import { Stream } from 'types/service/audio';
 
-const renderPlaybacks = (playbackDevices: Stream[]) => {
+const renderPlaybacks = (playbackDevices: Stream[]): PlaybackDevices => {
     return playbackDevices.map((device) => {
-        if (device.description === "Dummy Output") {
+        if (device.description === 'Dummy Output') {
             return Widget.Box({
-                class_name: "menu-unfound-button playback",
+                class_name: 'menu-unfound-button playback',
                 child: Widget.Box({
                     children: [
                         Widget.Label({
-                            class_name: "menu-button-name playback",
-                            label: "No playback devices found...",
+                            class_name: 'menu-button-name playback',
+                            label: 'No playback devices found...',
                         }),
                     ],
                 }),
@@ -22,29 +23,29 @@ const renderPlaybacks = (playbackDevices: Stream[]) => {
             child: Widget.Box({
                 children: [
                     Widget.Box({
-                        hpack: "start",
+                        hpack: 'start',
                         children: [
                             Widget.Label({
-                                truncate: "end",
+                                truncate: 'end',
                                 wrap: true,
                                 class_name: audio.speaker
-                                    .bind("description")
+                                    .bind('description')
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-icon active playback txt-icon"
-                                            : "menu-button-icon playback txt-icon",
+                                            ? 'menu-button-icon active playback txt-icon'
+                                            : 'menu-button-icon playback txt-icon',
                                     ),
-                                label: "",
+                                label: '',
                             }),
                             Widget.Label({
-                                truncate: "end",
+                                truncate: 'end',
                                 wrap: true,
                                 class_name: audio.speaker
-                                    .bind("description")
+                                    .bind('description')
                                     .as((v) =>
                                         device.description === v
-                                            ? "menu-button-name active playback"
-                                            : "menu-button-name playback",
+                                            ? 'menu-button-name active playback'
+                                            : 'menu-button-name playback',
                                     ),
                                 label: device.description,
                             }),

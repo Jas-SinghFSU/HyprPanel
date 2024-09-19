@@ -2,8 +2,10 @@ import { Option } from 'widget/settings/shared/Option';
 import { Header } from 'widget/settings/shared/Header';
 
 import options from 'options';
+import Scrollable from 'types/widgets/scrollable';
+import { Attribute, GtkWidget } from 'lib/types/widget';
 
-export const CustomModuleSettings = () =>
+export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
     Widget.Scrollable({
         vscroll: 'automatic',
         hscroll: 'automatic',
@@ -12,11 +14,11 @@ export const CustomModuleSettings = () =>
             class_name: 'menu-theme-page paged-container',
             vertical: true,
             children: [
-                /* 
-                ************************************
-                *            GENERAL               *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *            GENERAL               *
+                 ************************************
+                 */
                 Header('General'),
                 Option({
                     opt: options.bar.customModules.scrollSpeed,
@@ -24,11 +26,11 @@ export const CustomModuleSettings = () =>
                     type: 'number',
                 }),
 
-                /* 
-                ************************************
-                *              RAM                 *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *              RAM                 *
+                 ************************************
+                 */
                 Header('RAM'),
                 Option({
                     opt: options.bar.customModules.ram.label,
@@ -75,11 +77,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *             CPU                  *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *             CPU                  *
+                 ************************************
+                 */
                 Header('CPU'),
                 Option({
                     opt: options.bar.customModules.cpu.label,
@@ -130,11 +132,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *           STORAGE                *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *           STORAGE                *
+                 ************************************
+                 */
                 Header('Storage'),
                 Option({
                     opt: options.bar.customModules.storage.icon,
@@ -187,11 +189,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *           NETSTAT                *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *           NETSTAT                *
+                 ************************************
+                 */
                 Header('Netstat'),
                 Option({
                     opt: options.bar.customModules.netstat.networkInterface,
@@ -204,17 +206,7 @@ export const CustomModuleSettings = () =>
                     opt: options.bar.customModules.netstat.icon,
                     title: 'Netstat Icon',
                     type: 'enum',
-                    enums: [
-                        '󰖟',
-                        '󰇚',
-                        '󰕒',
-                        '󰛳',
-                        '',
-                        '󰣺',
-                        '󰖩',
-                        '',
-                        '󰈀',
-                    ],
+                    enums: ['󰖟', '󰇚', '󰕒', '󰛳', '', '󰣺', '󰖩', '', '󰈀'],
                 }),
                 Option({
                     opt: options.bar.customModules.netstat.label,
@@ -267,11 +259,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *       KEYBOARD LAYOUT            *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *       KEYBOARD LAYOUT            *
+                 ************************************
+                 */
                 Header('Keyboard Layout'),
                 Option({
                     opt: options.bar.customModules.kbLayout.icon,
@@ -321,11 +313,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *            UPDATES               *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *            UPDATES               *
+                 ************************************
+                 */
                 Header('Updates'),
                 Option({
                     opt: options.bar.customModules.updates.updateCommand,
@@ -336,17 +328,7 @@ export const CustomModuleSettings = () =>
                     opt: options.bar.customModules.updates.icon,
                     title: 'Updates Icon',
                     type: 'enum',
-                    enums: [
-                        '󰚰',
-                        '󰇚',
-                        '',
-                        '󱑢',
-                        '󱑣',
-                        '󰏖',
-                        '',
-                        '󰏔',
-                        '󰏗',
-                    ],
+                    enums: ['󰚰', '󰇚', '', '󱑢', '󱑣', '󰏖', '', '󰏔', '󰏗'],
                 }),
                 Option({
                     opt: options.bar.customModules.updates.label,
@@ -367,7 +349,7 @@ export const CustomModuleSettings = () =>
                     opt: options.bar.customModules.updates.pollingInterval,
                     title: 'Polling Interval',
                     type: 'number',
-                    subtitle: "WARNING: Be careful of your package manager\'s rate limit.",
+                    subtitle: "WARNING: Be careful of your package manager's rate limit.",
                     min: 100,
                     max: 60 * 24 * 1000,
                     increment: 1000,
@@ -398,11 +380,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *            WEATHER               *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *            WEATHER               *
+                 ************************************
+                 */
                 Header('Weather'),
                 Option({
                     opt: options.bar.customModules.weather.label,
@@ -446,11 +428,11 @@ export const CustomModuleSettings = () =>
                     type: 'string',
                 }),
 
-                /* 
-                ************************************
-                *            POWER                 *
-                ************************************
-                */
+                /*
+                 ************************************
+                 *            POWER                 *
+                 ************************************
+                 */
                 Header('Power'),
                 Option({
                     opt: options.theme.bar.buttons.modules.power.spacing,
@@ -491,4 +473,3 @@ export const CustomModuleSettings = () =>
             ],
         }),
     });
-
