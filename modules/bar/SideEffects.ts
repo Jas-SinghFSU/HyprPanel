@@ -13,3 +13,17 @@ showTime.connect('changed', () => {
         showIcon.value = true;
     }
 });
+
+const { output, input } = options.bar.volume;
+
+output.connect('changed', () => {
+    if (!output.value && !input.value) {
+        input.value = true;
+    }
+});
+
+input.connect('changed', () => {
+    if (!output.value && !input.value) {
+        output.value = true;
+    }
+});
