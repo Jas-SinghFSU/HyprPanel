@@ -1,6 +1,7 @@
 const hyprland = await Service.import('hyprland');
 import { BarBoxChild } from 'lib/types/bar';
 import options from 'options';
+import { Child } from 'lib/types/widget';
 import { ActiveClient } from 'types/service/hyprland';
 import Label from 'types/widgets/label';
 
@@ -178,7 +179,7 @@ const ClientTitle = (): BarBoxChild => {
                     truncation_size.bind('value'),
                 ],
                 (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
-                    const children: Label<never>[] = [];
+                    const children: Label<Child>[] = [];
                     if (showIcon) {
                         children.push(
                             Widget.Label({
