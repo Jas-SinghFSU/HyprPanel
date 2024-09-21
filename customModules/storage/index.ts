@@ -3,12 +3,12 @@ import { module } from '../module';
 
 import { formatTooltip, inputHandler, renderResourceLabel } from 'customModules/utils';
 import { computeStorage } from './computeStorage';
-import { Module, ResourceLabelType } from 'lib/types/bar';
+import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
 import { GenericResourceData } from 'lib/types/customModules/generic';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import { LABEL_TYPES } from 'lib/types/defaults/bar';
 import { pollVariable } from 'customModules/PollVar';
+import { Attribute, Child } from 'lib/types/widget';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
@@ -19,7 +19,7 @@ const storageUsage = Variable<GenericResourceData>(defaultStorageData);
 
 pollVariable(storageUsage, [round.bind('value')], pollingInterval.bind('value'), computeStorage, round);
 
-export const Storage = (): Module => {
+export const Storage = (): BarBoxChild => {
     const storageModule = module({
         textIcon: icon.bind('value'),
         label: Utils.merge(
@@ -34,7 +34,7 @@ export const Storage = (): Module => {
         boxClass: 'storage',
         showLabelBinding: label.bind('value'),
         props: {
-            setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
+            setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

@@ -1,9 +1,14 @@
 const hyprland = await Service.import('hyprland');
 import { BarBoxChild } from 'lib/types/bar';
 import options from 'options';
-import { Child } from 'lib/types/widget';
+import { Attribute, Child } from 'lib/types/widget';
 import { ActiveClient } from 'types/service/hyprland';
 import Label from 'types/widgets/label';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils';
+import Button from 'types/widgets/button';
+import Gdk from 'types/@girs/gdk-3.0/gdk-3.0';
+
+const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
 
 const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
     const windowTitleMap = [
@@ -207,7 +212,29 @@ const ClientTitle = (): BarBoxChild => {
         }),
         isVisible: true,
         boxClass: 'windowtitle',
-        props: {},
+        props: {
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_primary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(leftClick.value, { clicked, event });
+                    };
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
+            },
+        },
     };
 };
 

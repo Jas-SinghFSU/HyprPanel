@@ -8,12 +8,13 @@ import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import Label from 'types/widgets/label';
 import { getKeyboardLayout } from './getLayout';
-import { Module } from 'lib/types/bar';
+import { BarBoxChild } from 'lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
 
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.kbLayout;
 
-export const KbInput = (): Module => {
+export const KbInput = (): BarBoxChild => {
     const keyboardModule = module({
         textIcon: icon.bind('value'),
         tooltipText: '',
@@ -46,7 +47,7 @@ export const KbInput = (): Module => {
         boxClass: 'kblayout',
         showLabelBinding: label.bind('value'),
         props: {
-            setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
+            setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
