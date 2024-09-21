@@ -213,3 +213,5 @@ type MatugenTheme = 'light' | 'dark';
 
 export type ColorMapKey = keyof typeof defaultColorMap;
 export type ColorMapValue = (typeof defaultColorMap)[ColorMapKey];
+
+export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
