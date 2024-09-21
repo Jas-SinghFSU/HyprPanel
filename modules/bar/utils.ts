@@ -1,5 +1,5 @@
 import Gdk from 'gi://Gdk?version=3.0';
-import { Child } from 'lib/types/widget';
+import { Attribute, Child } from 'lib/types/widget';
 import Button from 'types/widgets/button';
 
 export const closeAllMenus = (): void => {
@@ -20,7 +20,7 @@ export const closeAllMenus = (): void => {
     });
 };
 
-export const openMenu = (clicked: Button<Child, Child>, event: Gdk.Event, window: string): void => {
+export const openMenu = (clicked: Button<Child, Attribute>, event: Gdk.Event, window: string): void => {
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn

@@ -2,11 +2,11 @@ import options from 'options';
 import { module } from '../module';
 
 import { inputHandler } from 'customModules/utils';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import { Variable as VariableType } from 'types/variable';
 import { pollVariableBash } from 'customModules/PollVar';
-import { Module } from 'lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'lib/types/bar';
 
 const {
     updateCommand,
@@ -36,7 +36,7 @@ pollVariableBash(
     processUpdateCount,
 );
 
-export const Updates = (): Module => {
+export const Updates = (): BarBoxChild => {
     const updatesModule = module({
         textIcon: icon.bind('value'),
         tooltipText: pendingUpdates.bind('value').as((v) => `${v} updates available`),
@@ -44,7 +44,7 @@ export const Updates = (): Module => {
         label: pendingUpdates.bind('value'),
         showLabelBinding: label.bind('value'),
         props: {
-            setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
+            setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

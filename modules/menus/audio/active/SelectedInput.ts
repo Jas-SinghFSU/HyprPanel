@@ -1,8 +1,9 @@
 const audio = await Service.import('audio');
-import { BarBoxChild } from 'lib/types/bar.js';
 import { getIcon } from '../utils.js';
+import Box from 'types/widgets/box.js';
+import { Attribute, Child } from 'lib/types/widget.js';
 
-const renderActiveInput = (): BarBoxChild => {
+const renderActiveInput = (): Box<Child, Attribute>[] => {
     return [
         Widget.Box({
             class_name: 'menu-slider-container input',

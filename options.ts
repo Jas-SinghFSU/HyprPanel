@@ -781,6 +781,7 @@ const options = mkOptions(OPTIONS, {
     },
 
     bar: {
+        scrollSpeed: opt(5),
         layouts: opt({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],
@@ -800,6 +801,10 @@ const options = mkOptions(OPTIONS, {
         }),
         launcher: {
             icon: opt('󰣇'),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         windowtitle: {
             custom_title: opt(true),
@@ -809,6 +814,11 @@ const options = mkOptions(OPTIONS, {
             icon: opt(true),
             truncation: opt(true),
             truncation_size: opt(50),
+            leftClick: opt(''),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         workspaces: {
             show_icons: opt(false),
@@ -831,17 +841,33 @@ const options = mkOptions(OPTIONS, {
         },
         volume: {
             label: opt(true),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt('pactl set-sink-volume @DEFAULT_SINK@ +5%'),
+            scrollDown: opt('pactl set-sink-volume @DEFAULT_SINK@ -5%'),
         },
         network: {
             truncation: opt(true),
             truncation_size: opt(7),
             label: opt(true),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         bluetooth: {
             label: opt(true),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         battery: {
             label: opt(true),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         systray: {
             ignore: opt<string[]>([]),
@@ -851,6 +877,10 @@ const options = mkOptions(OPTIONS, {
             showIcon: opt(true),
             showTime: opt(true),
             format: opt('%a %b %d  %I:%M:%S %p'),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         media: {
             show_artist: opt(false),
@@ -858,9 +888,15 @@ const options = mkOptions(OPTIONS, {
             show_label: opt(true),
             truncation_size: opt(30),
             show_active_only: opt(false),
+            rightClick: opt(''),
+            middleClick: opt(''),
         },
         notifications: {
             show_total: opt(false),
+            rightClick: opt(''),
+            middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         customModules: {
             scrollSpeed: opt(5),

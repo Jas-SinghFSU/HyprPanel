@@ -120,6 +120,19 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
 
                 /*
                  ******************************
+                 *          Actions           *
+                 ******************************
+                 */
+
+                Header('Actions'),
+                Option({
+                    opt: options.bar.scrollSpeed,
+                    title: 'Scrolling Speed',
+                    subtitle: 'The speed at which the commands assigned to the scroll event will trigger',
+                    type: 'number',
+                }),
+                /*
+                 ******************************
                  *         DASHBOARD          *
                  ******************************
                  */
@@ -127,6 +140,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.launcher.icon,
                     title: 'Dashboard Menu Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.scrollDown,
+                    title: 'Scroll Down',
                     type: 'string',
                 }),
 
@@ -298,6 +331,31 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.windowtitle.leftClick,
+                    title: 'Left Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -314,6 +372,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     opt: options.theme.bar.buttons.volume.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.scrollDown,
+                    title: 'Scroll Down',
                     type: 'string',
                 }),
 
@@ -345,6 +423,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.network.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -363,6 +461,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.bluetooth.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -379,6 +497,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     opt: options.theme.bar.buttons.battery.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.scrollDown,
+                    title: 'Scroll Down',
                     type: 'string',
                 }),
 
@@ -430,6 +568,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.clock.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -472,6 +630,16 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Button will automatically hide if no media is detected.',
                     type: 'boolean',
                 }),
+                Option({
+                    opt: options.bar.media.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.media.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -488,6 +656,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     opt: options.theme.bar.buttons.notifications.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.scrollDown,
+                    title: 'Scroll Down',
                     type: 'string',
                 }),
             ],
