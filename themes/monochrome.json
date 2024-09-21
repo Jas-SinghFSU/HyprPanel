@@ -221,8 +221,6 @@
   "theme.bar.buttons.network.text": "#FFFFFF",
   "theme.bar.buttons.network.hover": "#444444",
   "theme.bar.buttons.network.background": "#090909",
-  "theme.bar.buttons.volume.icon": "#FFFFFF",
-  "theme.bar.buttons.volume.text": "#FFFFFF",
   "theme.bar.buttons.volume.hover": "#444444",
   "theme.bar.buttons.volume.background": "#090909",
   "theme.bar.buttons.media.hover": "#444444",
@@ -230,7 +228,6 @@
   "theme.bar.buttons.windowtitle.text": "#FFFFFF",
   "theme.bar.buttons.windowtitle.hover": "#444444",
   "theme.bar.buttons.windowtitle.background": "#090909",
-  "theme.bar.buttons.workspaces.numbered_active_text_color": "#000000",
   "theme.bar.buttons.workspaces.active": "#FFFFFF",
   "theme.bar.buttons.workspaces.occupied": "#FFFFFF",
   "theme.bar.buttons.workspaces.available": "#FFFFFF",
@@ -324,5 +321,10 @@
   "theme.bar.buttons.modules.cpu.text": "#ffffff",
   "theme.bar.buttons.modules.netstat.icon_background": "#ffffff",
   "theme.bar.buttons.modules.kbLayout.text": "#ffffff",
-  "theme.bar.buttons.notifications.icon_background": "#FFFFFF"
+  "theme.bar.buttons.notifications.icon_background": "#FFFFFF",
+  "theme.bar.buttons.volume.output_text": "#ffffff",
+  "theme.bar.buttons.volume.input_icon": "#ffffff",
+  "theme.bar.buttons.volume.input_text": "#ffffff",
+  "theme.bar.buttons.volume.output_icon": "#ffffff",
+  "theme.bar.buttons.volume.separator": "#333333"
 }

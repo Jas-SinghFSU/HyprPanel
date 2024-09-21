@@ -306,8 +306,24 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Volume'),
                 Option({
+                    opt: options.bar.volume.output,
+                    title: 'Show Speaker',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.volume.input,
+                    title: 'Show Microphone',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.volume.label,
                     title: 'Show Volume Percentage',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.volume.hide_muted_label,
+                    title: 'Hide Percentage On Mute',
+                    subtitle: 'Only applicable if Show Volume Percentage is enabled',
                     type: 'boolean',
                 }),
                 Option({

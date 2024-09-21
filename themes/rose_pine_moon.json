@@ -221,8 +221,6 @@
   "theme.bar.buttons.network.text": "#c4a7e7",
   "theme.bar.buttons.network.hover": "#393552",
   "theme.bar.buttons.network.background": "#2a283e",
-  "theme.bar.buttons.volume.icon": "#eb6f92",
-  "theme.bar.buttons.volume.text": "#eb6f92",
   "theme.bar.buttons.volume.hover": "#393552",
   "theme.bar.buttons.volume.background": "#2a283e",
   "theme.bar.buttons.media.hover": "#393552",
@@ -230,7 +228,6 @@
   "theme.bar.buttons.windowtitle.text": "#c4a7e7",
   "theme.bar.buttons.windowtitle.hover": "#393552",
   "theme.bar.buttons.windowtitle.background": "#2a283e",
-  "theme.bar.buttons.workspaces.numbered_active_text_color": "#2a273f",
   "theme.bar.buttons.workspaces.active": "#c4a7e7",
   "theme.bar.buttons.workspaces.occupied": "#eb6f92",
   "theme.bar.buttons.workspaces.available": "#9ccfd8",
@@ -268,7 +265,6 @@
   "theme.bar.menus.menu.notifications.pager.background": "#232136",
   "theme.bar.buttons.modules.ram.icon": "#f6c177",
   "theme.bar.buttons.modules.storage.icon_background": "#2a283e",
-  "theme.bar.menus.menu.power.card.color": "#2a283e",
   "theme.bar.buttons.modules.storage.icon": "#c4a7e7",
   "theme.bar.buttons.modules.weather.icon": "#c4a7e7",
   "theme.bar.buttons.modules.power.icon": "#eb6f92",
@@ -325,5 +321,10 @@
   "theme.bar.menus.menu.power.buttons.restart.background": "#2a283e",
   "theme.bar.buttons.modules.cpu.text": "#eb6f92",
   "theme.bar.buttons.modules.kbLayout.text": "#9ccfd8",
-  "theme.bar.buttons.notifications.icon_background": "#c4a7e7"
+  "theme.bar.buttons.notifications.icon_background": "#c4a7e7",
+  "theme.bar.buttons.volume.output_text": "#eb6f92",
+  "theme.bar.buttons.volume.input_icon": "#eb6f92",
+  "theme.bar.buttons.volume.input_text": "#eb6f92",
+  "theme.bar.buttons.volume.output_icon": "#eb6f92",
+  "theme.bar.buttons.volume.separator": "#393552"
 }
