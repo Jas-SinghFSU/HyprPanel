@@ -16,6 +16,7 @@ import {
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
+    ScalingPriority,
     WindowLayer,
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
@@ -1052,6 +1053,8 @@ const options = mkOptions(OPTIONS, {
             },
         },
     },
+
+    scalingPriority: opt<ScalingPriority>('gdk'),
 
     terminal: opt('kitty'),
 
