@@ -91,7 +91,7 @@ const Volume = (): BarBoxChild => {
                     showInput,
                     hideMutedLabel,
                 ) => {
-                    const children: (Label<never> | Separator<never>)[] = [];
+                    const children: (Label<Child> | Separator<Child>)[] = [];
                     if (showOutput) {
                         const isMuted = outputIsMuted !== false || Math.round(outputVolume * 100) === 0;
                         const labelVisible = showLabel && !(hideMutedLabel && isMuted);
@@ -110,16 +110,19 @@ const Volume = (): BarBoxChild => {
                         const isMuted = inputIsMuted !== false || Math.round(inputVolume * 100) === 0;
                         const labelVisible = showLabel && !(hideMutedLabel && isMuted);
                         const rightIcon = buttonStyle === 'split' && showOutput;
+
                         if (!rightIcon) {
                             children.push(
                                 volIcn(inputVolume, isMuted, inputIcons, `input ${!labelVisible ? 'no-label' : ''}`),
                             );
                         }
+
                         if (labelVisible) {
                             children.push(
                                 volPct(inputVolume, isMuted, `input ${rightIcon ? 'right-icon' : 'no-separator'}`),
                             );
                         }
+
                         if (rightIcon) {
                             children.push(
                                 volIcn(
