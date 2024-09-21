@@ -1,7 +1,9 @@
 const hyprland = await Service.import('hyprland');
 import { BarBoxChild } from 'lib/types/bar';
 import options from 'options';
+import { Child } from 'lib/types/widget';
 import { ActiveClient } from 'types/service/hyprland';
+import Label from 'types/widgets/label';
 
 const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
     const windowTitleMap = [
@@ -177,24 +179,18 @@ const ClientTitle = (): BarBoxChild => {
                     truncation_size.bind('value'),
                 ],
                 (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
+                    const children: Label<Child>[] = [];
                     if (showIcon) {
-                        return [
+                        children.push(
                             Widget.Label({
                                 class_name: 'bar-button-icon windowtitle txt-icon bar',
                                 label: filterTitle(client).icon,
                             }),
-                            Widget.Label({
-                                class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
-                                label: truncateTitle(
-                                    getTitle(client, useCustomTitle, useClassName),
-                                    truncate ? truncationSize : -1,
-                                ),
-                            }),
-                        ];
+                        );
                     }
 
                     if (showLabel) {
-                        return [
+                        children.push(
                             Widget.Label({
                                 class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
                                 label: truncateTitle(
@@ -202,10 +198,10 @@ const ClientTitle = (): BarBoxChild => {
                                     truncate ? truncationSize : -1,
                                 ),
                             }),
-                        ];
+                        );
                     }
 
-                    return [];
+                    return children;
                 },
             ),
         }),
