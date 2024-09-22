@@ -41,6 +41,20 @@
             padding-left: $bar-buttons-padding_x;
         }
     }
+    &.no-label.windowtitle-container {
+        .bar-button-icon.windowtitle {
+            border-top-right-radius: if(
+                $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+        }
+    }
 }
 
 .bar_item_box_visible.windowtitle {

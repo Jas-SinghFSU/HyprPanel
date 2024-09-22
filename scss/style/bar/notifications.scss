@@ -36,12 +36,17 @@
         margin-left: 0em;
     }
 
-    &.no-label.notifications {
-        .bar-button-icon {
-            border-right: if(
+    &.no-label.notifications-container {
+        .bar-button-icon.notifications {
+            border-top-right-radius: if(
                 $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-                0em
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
             );
         }
     }

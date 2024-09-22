@@ -99,10 +99,15 @@
         }
         &.no-label.#{$class} {
             .module-icon {
-                border-right: if(
+                border-top-right-radius: if(
                     $borderEnabled or $bar-buttons-enableBorders,
-                    $bar-buttons-borderSize solid $borderColor,
-                    0em
+                    $bar-buttons-radius * 0.4,
+                    $bar-buttons-radius
+                );
+                border-bottom-right-radius: if(
+                    $borderEnabled or $bar-buttons-enableBorders,
+                    $bar-buttons-radius * 0.4,
+                    $bar-buttons-radius
                 );
             }
         }

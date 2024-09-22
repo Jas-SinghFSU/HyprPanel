@@ -36,11 +36,16 @@
         margin-left: 0em;
     }
     &.no-label.volume-container {
-        .bar-button-icon {
-            border-right: if(
+        .bar-button-icon.volume {
+            border-top-right-radius: if(
                 $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid $bar-buttons-volume-border,
-                0em
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
             );
         }
     }

@@ -34,11 +34,16 @@
         margin-left: 0em;
     }
     &.no-label.battery-container {
-        .bar-button-icon {
-            border-right: if(
+        .bar-button-icon.battery {
+            border-top-right-radius: if(
                 $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid $bar-buttons-battery-border,
-                0em
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
             );
         }
     }
