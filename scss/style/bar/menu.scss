@@ -1,24 +1,26 @@
 .bar-menu_label {
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-icon);
-  font-size: 1.3em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-icon);
+    font-size: 1.3em;
+    border: if($bar-buttons-dashboard-enableBorder, $bar-buttons-borderSize solid $bar-buttons-dashboard-border, 0em);
+    border-radius: $bar-buttons-radius;
 }
 
 .bar_item_box_visible.style2.dashboard {
-  background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-background);
-
-  .bar-menu_label {
-    color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-icon);
-  }
-
-  &:hover {
-    background: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-icon);
+    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-background);
 
     .bar-menu_label {
-      color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-background);
+        color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-icon);
     }
-  }
+
+    &:hover {
+        background: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-icon);
+
+        .bar-menu_label {
+            color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-background);
+        }
+    }
 }
 
 .style2 .bar-menu_label {
-  padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+    padding: $bar-buttons-padding_y $bar-buttons-padding_x;
 }

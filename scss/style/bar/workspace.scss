@@ -1,4 +1,5 @@
 .workspaces {
+    border: if($bar-buttons-workspaces-enableBorder, $bar-buttons-borderSize solid $bar-buttons-workspaces-border, 0em);
     label {
         font-size: 0.2em;
         min-width: 4em;

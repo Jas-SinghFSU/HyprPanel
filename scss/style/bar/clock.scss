@@ -1,27 +1,44 @@
 .bar-button-label.clock {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
-  margin-left: $bar-buttons-clock-spacing;
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
+    margin-left: $bar-buttons-clock-spacing;
+    border-top: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
+    border-right: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
+    border-bottom: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
+    border-top-right-radius: $bar-buttons-radius;
+    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .bar-button-icon.clock {
-  font-size: 1.2em;
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
+    font-size: 1.2em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
+    border-top: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
+    border-left: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
+    border-bottom: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
 }
 
 .style2 {
-  .bar-button-icon.clock {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-media-spacing;
-  }
+    .bar-button-icon.clock {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-media-spacing;
+    }
 
-  .bar-button-label.clock {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-clock-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.clock {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-clock-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.clock-container {
+        .bar-button-icon {
+            border-right: if(
+                $bar-buttons-clock-enableBorder,
+                $bar-buttons-borderSize solid $bar-buttons-clock-border,
+                0em
+            );
+        }
+    }
 }

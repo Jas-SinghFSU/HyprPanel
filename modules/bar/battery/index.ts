@@ -54,7 +54,7 @@ const BatteryLabel = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `battery ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `battery-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             visible: battery.bind('available'),

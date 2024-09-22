@@ -1,28 +1,45 @@
 .bar-button-icon.volume {
-  font-size: 1.3em;
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
+    font-size: 1.3em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
+    border-top: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
+    border-left: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
+    border-bottom: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
 }
 
 .bar-button-label.volume {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
-  min-width: 2.2em;
-  margin-left: $bar-buttons-volume-spacing;
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
+    min-width: 2.2em;
+    margin-left: $bar-buttons-volume-spacing;
+    border-top: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
+    border-right: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
+    border-bottom: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
+    border-top-right-radius: $bar-buttons-radius;
+    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .style2 {
-  .bar-button-icon.volume {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-volume-spacing;
-  }
+    .bar-button-icon.volume {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-volume-spacing;
+    }
 
-  .bar-button-label.volume {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-volume-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.volume {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-volume-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.volume-container {
+        .bar-button-icon {
+            border-right: if(
+                $bar-buttons-volume-enableBorder,
+                $bar-buttons-borderSize solid $bar-buttons-volume-border,
+                0em
+            );
+        }
+    }
 }

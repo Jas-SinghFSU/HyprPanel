@@ -76,6 +76,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 Option({ opt: options.theme.bar.buttons.dashboard.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.dashboard.hover, title: 'Hover', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.dashboard.icon, title: 'Icon', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.dashboard.border, title: 'Border', type: 'color' }),
 
                 Header('Workspaces'),
                 Option({ opt: options.theme.bar.buttons.workspaces.background, title: 'Background', type: 'color' }),
@@ -109,6 +110,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                     title: 'Workspace Underline Color',
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.workspaces.border, title: 'Border', type: 'color' }),
 
                 Header('Window Title'),
                 Option({ opt: options.theme.bar.buttons.windowtitle.background, title: 'Background', type: 'color' }),
@@ -122,6 +124,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.windowtitle.border, title: 'Border', type: 'color' }),
 
                 Header('Media'),
                 Option({ opt: options.theme.bar.buttons.media.background, title: 'Background', type: 'color' }),
@@ -135,6 +138,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.media.border, title: 'Border', type: 'color' }),
 
                 Header('Volume'),
                 Option({ opt: options.theme.bar.buttons.volume.background, title: 'Background', type: 'color' }),
@@ -148,6 +152,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.volume.border, title: 'Border', type: 'color' }),
 
                 Header('Network'),
                 Option({ opt: options.theme.bar.buttons.network.background, title: 'Background', type: 'color' }),
@@ -161,6 +166,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.network.border, title: 'Border', type: 'color' }),
 
                 Header('Bluetooth'),
                 Option({ opt: options.theme.bar.buttons.bluetooth.background, title: 'Background', type: 'color' }),
@@ -174,6 +180,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.bluetooth.border, title: 'Border', type: 'color' }),
 
                 Header('System Tray'),
                 Option({ opt: options.theme.bar.buttons.systray.background, title: 'Background', type: 'color' }),
@@ -191,6 +198,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.battery.border, title: 'Border', type: 'color' }),
 
                 Header('Clock'),
                 Option({ opt: options.theme.bar.buttons.clock.background, title: 'Background', type: 'color' }),
@@ -204,6 +212,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.clock.border, title: 'Border', type: 'color' }),
 
                 Header('Notifications'),
                 Option({ opt: options.theme.bar.buttons.notifications.background, title: 'Background', type: 'color' }),
@@ -221,6 +230,7 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.notifications.border, title: 'Border', type: 'color' }),
             ],
         }),
     });

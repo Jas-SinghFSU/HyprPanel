@@ -40,7 +40,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'enum',
                     enums: ['top', 'bottom'],
                 }),
-
+                Option({
+                    opt: options.theme.bar.buttons.borderSize,
+                    title: 'Button Border Size',
+                    subtitle: 'Button border for the individual modules must be enabled first',
+                    type: 'string',
+                }),
                 /*
                  ******************************
                  *          SPACING           *
@@ -143,6 +148,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
+                    opt: options.theme.bar.buttons.dashboard.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.launcher.rightClick,
                     title: 'Right Click',
                     type: 'string',
@@ -169,6 +179,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Workspaces'),
+                Option({
+                    opt: options.theme.bar.buttons.workspaces.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.theme.bar.buttons.workspaces.fontSize,
                     title: 'Indicator Size',
@@ -284,6 +299,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Window Titles'),
                 Option({
+                    opt: options.theme.bar.buttons.windowtitle.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.windowtitle.custom_title,
                     title: 'Use Custom Title',
                     type: 'boolean',
@@ -364,6 +384,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Volume'),
                 Option({
+                    opt: options.theme.bar.buttons.volume.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.volume.label,
                     title: 'Show Volume Percentage',
                     type: 'boolean',
@@ -401,6 +426,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Network'),
+                Option({
+                    opt: options.theme.bar.buttons.network.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.network.label,
                     title: 'Show Network Name',
@@ -451,6 +481,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Bluetooth'),
                 Option({
+                    opt: options.theme.bar.buttons.bluetooth.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.bluetooth.label,
                     title: 'Show Bluetooth Label',
                     type: 'boolean',
@@ -488,6 +523,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Battery'),
+                Option({
+                    opt: options.theme.bar.buttons.battery.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.battery.label,
                     title: 'Show Battery Percentage',
@@ -527,6 +567,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('System Tray'),
                 Option({
+                    opt: options.theme.bar.buttons.systray.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.systray.ignore,
                     title: 'Ignore List',
                     subtitle:
@@ -542,6 +587,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Clock'),
+                Option({
+                    opt: options.theme.bar.buttons.clock.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.clock.format,
                     title: 'Clock Format',
@@ -596,6 +646,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  */
                 Header('Media'),
                 Option({
+                    opt: options.theme.bar.buttons.media.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.media.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
@@ -647,6 +702,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Notifications'),
+                Option({
+                    opt: options.theme.bar.buttons.notifications.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.notifications.show_total,
                     title: 'Show Total # of notifications',

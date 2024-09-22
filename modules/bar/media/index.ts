@@ -75,7 +75,7 @@ const Media = (): BarBoxChild => {
                             wave: 'style3',
                             wave2: 'style3',
                         };
-                        return `media ${styleMap[style]}`;
+                        return `media-container ${styleMap[style]}`;
                     },
                 ),
                 child: Widget.Box({
