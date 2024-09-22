@@ -1,43 +1,11 @@
 .bar-button-icon.bluetooth {
     font-size: 1.15em;
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon);
-    border-top: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
-    border-left: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
-    border-bottom: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
 }
 
 .bar-button-label.bluetooth {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
     margin-left: $bar-buttons-bluetooth-spacing;
-    border-top: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
-    border-right: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
-    border-bottom: if(
-        $bar-buttons-bluetooth-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
-        0em
-    );
-    border-top-right-radius: $bar-buttons-radius;
-    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .bluetooth-disabled-menu {
@@ -59,6 +27,16 @@
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-bluetooth-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
     }
 
     .bar-button-label.bluetooth {
@@ -70,10 +48,18 @@
     &.no-label.bluetooth-container {
         .bar-button-icon {
             border-right: if(
-                $bar-buttons-bluetooth-enableBorder,
+                $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
                 0em
             );
         }
     }
+}
+
+.bar_item_box_visible.bluetooth {
+    border: if(
+        $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-bluetooth-border,
+        0em
+    );
 }

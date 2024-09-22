@@ -1,20 +1,12 @@
 .bar-button-icon.volume {
     font-size: 1.3em;
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-icon);
-    border-top: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
-    border-left: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
-    border-bottom: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
 }
 
 .bar-button-label.volume {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
     min-width: 2.2em;
     margin-left: $bar-buttons-volume-spacing;
-    border-top: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
-    border-right: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
-    border-bottom: if($bar-buttons-volume-enableBorder, $bar-buttons-borderSize solid $bar-buttons-volume-border, 0em);
-    border-top-right-radius: $bar-buttons-radius;
-    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .style2 {
@@ -25,6 +17,16 @@
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-volume-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
     }
 
     .bar-button-label.volume {
@@ -36,10 +38,17 @@
     &.no-label.volume-container {
         .bar-button-icon {
             border-right: if(
-                $bar-buttons-volume-enableBorder,
+                $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid $bar-buttons-volume-border,
                 0em
             );
         }
     }
+}
+.bar_item_box_visible.volume {
+    border: if(
+        $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-volume-border,
+        0em
+    );
 }

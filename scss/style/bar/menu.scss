@@ -1,7 +1,6 @@
 .bar-menu_label {
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-icon);
     font-size: 1.3em;
-    border: if($bar-buttons-dashboard-enableBorder, $bar-buttons-borderSize solid $bar-buttons-dashboard-border, 0em);
     border-radius: $bar-buttons-radius;
 }
 
@@ -23,4 +22,12 @@
 
 .style2 .bar-menu_label {
     padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+}
+
+.bar_item_box_visible.dashboard {
+    border: if(
+        $bar-buttons-dashboard-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-dashboard-border,
+        0em
+    );
 }

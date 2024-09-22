@@ -1,44 +1,12 @@
 .bar-button-icon.notifications {
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
     font-size: 1.3em;
-    border-top: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
-    border-left: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
-    border-bottom: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
 }
 
 .bar-button-label.notifications {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-notifications-total);
     margin-left: $bar-buttons-notifications-spacing;
     min-width: 1em;
-    border-top: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
-    border-right: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
-    border-bottom: if(
-        $bar-buttons-notifications-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
-        0em
-    );
-    border-top-right-radius: $bar-buttons-radius;
-    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .style2 {
@@ -49,6 +17,16 @@
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-notifications-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
     }
 
     .bar-button-label.notifications {
@@ -61,10 +39,18 @@
     &.no-label.notifications {
         .bar-button-icon {
             border-right: if(
-                $bar-buttons-notifications-enableBorder,
+                $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid $bar-buttons-notifications-border,
                 0em
             );
         }
     }
+}
+
+.bar_item_box_visible.notifications {
+    border: if(
+        $bar-buttons-notifications-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-notifications-border,
+        0em
+    );
 }

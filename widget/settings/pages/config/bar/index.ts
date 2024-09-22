@@ -41,6 +41,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     enums: ['top', 'bottom'],
                 }),
                 Option({
+                    opt: options.theme.bar.buttons.enableBorders,
+                    title: 'Enable Button Borders',
+                    subtitle: 'Enables button borders for all buttons in the bar.',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.borderSize,
                     title: 'Button Border Size',
                     subtitle: 'Button border for the individual modules must be enabled first',

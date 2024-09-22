@@ -1,19 +1,11 @@
 .bar-button-label.clock {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-clock-text);
     margin-left: $bar-buttons-clock-spacing;
-    border-top: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
-    border-right: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
-    border-bottom: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
-    border-top-right-radius: $bar-buttons-radius;
-    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .bar-button-icon.clock {
     font-size: 1.2em;
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
-    border-top: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
-    border-left: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
-    border-bottom: if($bar-buttons-clock-enableBorder, $bar-buttons-borderSize solid $bar-buttons-clock-border, 0em);
 }
 
 .style2 {
@@ -23,7 +15,17 @@
         background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon_background);
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
-        padding-right: $bar-buttons-media-spacing;
+        padding-right: $bar-buttons-clock-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-clock-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-clock-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
     }
 
     .bar-button-label.clock {
@@ -35,10 +37,18 @@
     &.no-label.clock-container {
         .bar-button-icon {
             border-right: if(
-                $bar-buttons-clock-enableBorder,
+                $bar-buttons-clock-enableBorder or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid $bar-buttons-clock-border,
                 0em
             );
         }
     }
+}
+
+.bar_item_box_visible.clock {
+    border: if(
+        $bar-buttons-clock-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-clock-border,
+        0em
+    );
 }

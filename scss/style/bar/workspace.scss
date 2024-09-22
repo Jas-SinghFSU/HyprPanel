@@ -1,5 +1,4 @@
 .workspaces {
-    border: if($bar-buttons-workspaces-enableBorder, $bar-buttons-borderSize solid $bar-buttons-workspaces-border, 0em);
     label {
         font-size: 0.2em;
         min-width: 4em;
@@ -80,4 +79,12 @@
 
 .style2.workspaces {
     padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+}
+
+.bar_item_box_visible.workspaces {
+    border: if(
+        $bar-buttons-workspaces-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-workspaces-border,
+        0em
+    );
 }

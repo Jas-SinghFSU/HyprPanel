@@ -50,6 +50,7 @@
     .bar_item_box_visible {
         &.#{$class} {
             background: $labelBackground;
+            border: if($borderEnabled or $bar-buttons-enableBorders, $bar-buttons-borderSize solid $borderColor, 0em);
 
             &.style2 {
                 background: transparent;
@@ -65,17 +66,11 @@
         color: if($bar-buttons-monochrome, $bar-buttons-text, $textColor);
         margin-left: $spacing;
         border-radius: $bar-buttons-radius;
-        border-top: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-        border-right: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-        border-bottom: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
     }
 
     .module-icon.#{$class} {
         color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
         font-size: if($fontSize, $fontSize, 1em);
-        border-top: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-        border-left: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-        border-bottom: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
     }
 
     .style2 {
@@ -83,9 +78,16 @@
             background: if($bar-buttons-monochrome, $bar-buttons-icon, $iconBackground);
             padding-right: $spacing;
             color: if($bar-buttons-monochrome, $bar-buttons-background, $iconColor);
-            border-top: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-            border-left: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-            border-bottom: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
+            border-top-left-radius: if(
+                $borderEnabled or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-left-radius: if(
+                $borderEnabled or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
         }
 
         .module-label.#{$class} {
@@ -94,13 +96,14 @@
             margin-left: 0em;
             border-top-left-radius: 0em;
             border-bottom-left-radius: 0em;
-            border-top: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-            border-right: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
-            border-bottom: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
         }
         &.no-label.#{$class} {
             .module-icon {
-                border-right: if($borderEnabled, $bar-buttons-borderSize solid $borderColor, 0em);
+                border-right: if(
+                    $borderEnabled or $bar-buttons-enableBorders,
+                    $bar-buttons-borderSize solid $borderColor,
+                    0em
+                );
             }
         }
     }

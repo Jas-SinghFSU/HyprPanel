@@ -162,6 +162,7 @@ const options = mkOptions(OPTIONS, {
             background: opt(colors.crust),
             buttons: {
                 style: opt<BarButtonStyles>('default'),
+                enableBorders: opt(false),
                 borderSize: opt('0.1em'),
                 monochrome: opt(false),
                 spacing: opt('0.25em'),

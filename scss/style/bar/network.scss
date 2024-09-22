@@ -1,26 +1,10 @@
 .bar-button-label.network-label {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-network-text);
     margin-left: $bar-buttons-network-spacing;
-    border-top: if($bar-buttons-network-enableBorder, $bar-buttons-borderSize solid $bar-buttons-network-border, 0em);
-    border-right: if($bar-buttons-network-enableBorder, $bar-buttons-borderSize solid $bar-buttons-network-border, 0em);
-    border-bottom: if(
-        $bar-buttons-network-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-network-border,
-        0em
-    );
-    border-top-right-radius: $bar-buttons-radius;
-    border-bottom-right-radius: $bar-buttons-radius;
 }
 
 .bar-button-icon.network-icon {
     color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon);
-    border-top: if($bar-buttons-network-enableBorder, $bar-buttons-borderSize solid $bar-buttons-network-border, 0em);
-    border-left: if($bar-buttons-network-enableBorder, $bar-buttons-borderSize solid $bar-buttons-network-border, 0em);
-    border-bottom: if(
-        $bar-buttons-network-enableBorder,
-        $bar-buttons-borderSize solid $bar-buttons-network-border,
-        0em
-    );
 }
 
 .style2 {
@@ -31,6 +15,16 @@
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-network-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
     }
 
     .bar-button-label.network-label {
@@ -42,10 +36,18 @@
     &.no-label.network-container {
         .bar-button-icon {
             border-right: if(
-                $bar-buttons-network-enableBorder,
+                $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid $bar-buttons-network-border,
                 0em
             );
         }
     }
+}
+
+.bar_item_box_visible.network {
+    border: if(
+        $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-network-border,
+        0em
+    );
 }

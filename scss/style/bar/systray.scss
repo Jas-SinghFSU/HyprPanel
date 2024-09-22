@@ -2,14 +2,18 @@
     margin-left: $bar-buttons-systray-spacing;
 }
 
-.systray {
-    border: if($bar-buttons-systray-enableBorder, $bar-buttons-borderSize solid $bar-buttons-systray-border, 0em);
-}
-
 .systray-icon {
     font-size: 1.3em;
 }
 
 .style2.systray {
     padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+}
+
+.bar_item_box_visible.systray {
+    border: if(
+        $bar-buttons-systray-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid $bar-buttons-systray-border,
+        0em
+    );
 }
