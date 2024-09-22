@@ -39,7 +39,7 @@ const Clock = (): BarBoxChild => {
                         wave2: 'style3',
                     };
 
-                    return `bluetooth ${styleMap[btnStyle]} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
+                    return `clock-container ${styleMap[btnStyle]} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
                 },
             ),
             children: Utils.merge([showIcon.bind('value'), showTime.bind('value')], (shIcn, shTm) => {

@@ -15,7 +15,7 @@ const Workspaces = (monitor = -1): BarBoxChild => {
 
     return {
         component: Widget.Box({
-            class_name: 'workspaces',
+            class_name: 'workspaces-box-container',
             child: options.bar.workspaces.hideUnoccupied
                 .bind('value')
                 .as((hideUnoccupied) => (hideUnoccupied ? occupiedWses(monitor) : defaultWses(monitor))),

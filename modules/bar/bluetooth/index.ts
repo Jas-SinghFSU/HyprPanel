@@ -33,7 +33,7 @@ const Bluetooth = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `bluetooth ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `bluetooth-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             children: options.bar.bluetooth.label.bind('value').as((showLabel) => {

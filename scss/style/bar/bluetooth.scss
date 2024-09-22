@@ -1,38 +1,70 @@
 .bar-button-icon.bluetooth {
-  font-size: 1.15em;
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon);
+    font-size: 1.15em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon);
 }
 
 .bar-button-label.bluetooth {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
-  margin-left: $bar-buttons-bluetooth-spacing;
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
+    margin-left: $bar-buttons-bluetooth-spacing;
 }
 
 .bluetooth-disabled-menu {
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: $surface2;
-  margin: 6rem 0rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: $surface2;
+    margin: 6rem 0rem;
 }
 
 .menu-button-isactive {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-bluetooth-text);
 }
 
 .style2 {
-  .bar-button-icon.bluetooth {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-bluetooth-spacing;
-  }
+    .bar-button-icon.bluetooth {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-bluetooth-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+    }
 
-  .bar-button-label.bluetooth {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-bluetooth-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.bluetooth {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-bluetooth-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.bluetooth-container {
+        .bar-button-icon.bluetooth {
+            border-top-right-radius: if(
+                $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+        }
+    }
+}
+
+.bar_item_box_visible.bluetooth {
+    border: if(
+        $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-border),
+        0em
+    );
 }

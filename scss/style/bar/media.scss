@@ -1,27 +1,43 @@
 .bar-button-label.media {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-media-text);
-  margin-left: $bar-buttons-media-spacing;
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-media-text);
+    margin-left: $bar-buttons-media-spacing;
 }
 
 .bar-button-icon.media {
-  font-size: 1.2em;
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon);
+    font-size: 1.2em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon);
 }
 
 .style2 {
-  .bar-button-icon.media {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-media-spacing;
-  }
+    .bar-button-icon.media {
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-media-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+    }
 
-  .bar-button-label.media {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-media-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.media {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-media-spacing;
+        margin-left: 0em;
+    }
+}
+
+.bar_item_box_visible.media {
+    border: if(
+        $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-border),
+        0em
+    );
 }
