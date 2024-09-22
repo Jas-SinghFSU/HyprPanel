@@ -1,7 +1,7 @@
 import options from 'options';
 import { bash, dependencies } from 'lib/utils';
 import { MatugenColors, RecursiveOptionsObject } from 'lib/types/options';
-import { initializeTrackers } from './options_trackers';
+import { initializeTrackers } from './optionsTrackers';
 import { generateMatugenColors, replaceHexValues } from '../services/matugen/index';
 
 const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
