@@ -110,7 +110,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                     type: 'color',
                 }),
 
-                Header('submap'),
+                Header('Submap'),
                 Option({ opt: options.theme.bar.buttons.modules.submap.text, title: 'Text', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.modules.submap.icon, title: 'Icon', type: 'color' }),
                 Option({
