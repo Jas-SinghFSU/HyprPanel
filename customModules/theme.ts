@@ -29,6 +29,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.ram.border, title: 'Border', type: 'color' }),
 
                 Header('CPU'),
                 Option({ opt: options.theme.bar.buttons.modules.cpu.text, title: 'Text', type: 'color' }),
@@ -45,6 +46,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.cpu.border, title: 'Border', type: 'color' }),
 
                 Header('Storage'),
                 Option({ opt: options.theme.bar.buttons.modules.storage.text, title: 'Text', type: 'color' }),
@@ -61,6 +63,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.storage.border, title: 'Border', type: 'color' }),
 
                 Header('Netstat'),
                 Option({ opt: options.theme.bar.buttons.modules.netstat.text, title: 'Text', type: 'color' }),
@@ -77,6 +80,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.netstat.border, title: 'Border', type: 'color' }),
 
                 Header('Keyboard Layout'),
                 Option({ opt: options.theme.bar.buttons.modules.kbLayout.text, title: 'Text', type: 'color' }),
@@ -93,6 +97,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.kbLayout.border, title: 'Border', type: 'color' }),
 
                 Header('Updates'),
                 Option({ opt: options.theme.bar.buttons.modules.updates.text, title: 'Text', type: 'color' }),
@@ -109,6 +114,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.updates.border, title: 'Border', type: 'color' }),
 
                 Header('Submap'),
                 Option({ opt: options.theme.bar.buttons.modules.submap.text, title: 'Text', type: 'color' }),
@@ -141,6 +147,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.weather.border, title: 'Border', type: 'color' }),
 
                 Header('Power'),
                 Option({ opt: options.theme.bar.buttons.modules.power.icon, title: 'Icon', type: 'color' }),
@@ -156,6 +163,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.power.border, title: 'Border', type: 'color' }),
             ],
         }),
     });

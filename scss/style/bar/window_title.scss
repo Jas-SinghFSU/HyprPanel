@@ -1,30 +1,66 @@
 .bar-button-icon.windowtitle {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-icon);
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-icon);
 }
 
 .bar-button-label.windowtitle {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-text);
-  margin-left: $bar-buttons-windowtitle-spacing;
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-windowtitle-text);
+    margin-left: $bar-buttons-windowtitle-spacing;
 
-  &.no-icon {
-    margin-left: 0;
-  }
+    &.no-icon {
+        margin-left: 0;
+    }
 }
 
 .style2 {
-  .bar-button-icon.windowtitle {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-windowtitle-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-windowtitle-spacing;
-  }
+    .bar-button-icon.windowtitle {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-windowtitle-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-windowtitle-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+    }
 
-  .bar-button-label.windowtitle {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-windowtitle-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.windowtitle {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-windowtitle-spacing;
+        margin-left: 0em;
+
+        &.no-icon {
+            padding-left: $bar-buttons-padding_x;
+        }
+    }
+    &.no-label.windowtitle-container {
+        .bar-button-icon.windowtitle {
+            border-top-right-radius: if(
+                $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+        }
+    }
+}
+
+.bar_item_box_visible.windowtitle {
+    border: if(
+        $bar-buttons-windowtitle-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-windowtitle-border),
+        0em
+    );
 }

@@ -170,7 +170,7 @@ const ClientTitle = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `windowtitle ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `windowtitle-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             children: Utils.merge(

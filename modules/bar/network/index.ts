@@ -31,12 +31,12 @@ const Network = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `network ${styleMap[style]}${!showLabel ? ' no-label' : ''}`;
+                    return `network-container ${styleMap[style]}${!showLabel ? ' no-label' : ''}`;
                 },
             ),
             children: [
                 Widget.Icon({
-                    class_name: 'bar-button-icon network',
+                    class_name: 'bar-button-icon network-icon',
                     icon: Utils.merge(
                         [network.bind('primary'), network.bind('wifi'), network.bind('wired')],
                         (pmry, wfi, wrd) => {
@@ -48,7 +48,6 @@ const Network = (): BarBoxChild => {
                     ),
                 }),
                 Widget.Box({
-                    vpack: 'center',
                     child: Utils.merge(
                         [
                             network.bind('primary'),
@@ -63,12 +62,12 @@ const Network = (): BarBoxChild => {
                             }
                             if (pmry === 'wired') {
                                 return Widget.Label({
-                                    class_name: 'bar-button-label network',
+                                    class_name: 'bar-button-label network-label',
                                     label: 'Wired'.substring(0, tSize),
                                 });
                             }
                             return Widget.Label({
-                                class_name: 'bar-button-label network',
+                                class_name: 'bar-button-label network-label',
                                 label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '--',
                             });
                         },
