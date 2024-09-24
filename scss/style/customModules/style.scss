@@ -281,6 +281,33 @@
 
 /* 
  * #################################
+ * #    Submap Module Styling      #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'submap',
+    // label color
+    $bar-buttons-modules-submap-text,
+    // icon color
+    $bar-buttons-modules-submap-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-submap-icon_background,
+    // label background
+    $bar-buttons-modules-submap-background,
+    // inner spacing
+    $bar-buttons-modules-submap-spacing,
+    // if border enabled
+    $bar-buttons-modules-submap-enableBorder,
+    // border color
+    $bar-buttons-modules-submap-border,
+    // custom font size
+    1.2em //
+);
+
+/* 
+ * #################################
  * #    Weather Module Styling     #
  * #################################
  */

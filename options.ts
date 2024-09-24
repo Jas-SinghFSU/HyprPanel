@@ -351,6 +351,8 @@ const options = mkOptions(OPTIONS, {
                         spacing: opt('0.45em'),
                     },
                     submap: {
+                        enableBorder: opt(false),
+                        border: opt(colors.teal),
                         background: opt(colors.base2),
                         text: opt(colors.teal),
                         icon: opt(colors.teal),

@@ -131,6 +131,7 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                         "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
                     type: 'color',
                 }),
+                Option({ opt: options.theme.bar.buttons.modules.submap.border, title: 'Border', type: 'color' }),
 
                 Header('Weather'),
                 Option({ opt: options.theme.bar.buttons.modules.weather.icon, title: 'Icon', type: 'color' }),

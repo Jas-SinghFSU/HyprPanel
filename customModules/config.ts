@@ -417,6 +417,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  */
                 Header('Submap'),
                 Option({
+                    opt: options.theme.bar.buttons.modules.submap.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.customModules.submap.enabledIcon,
                     title: 'Enabled Icon',
                     type: 'string',
