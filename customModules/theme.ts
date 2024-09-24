@@ -116,6 +116,23 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.modules.updates.border, title: 'Border', type: 'color' }),
 
+                Header('Submap'),
+                Option({ opt: options.theme.bar.buttons.modules.submap.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.submap.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.background,
+                    title: 'Label Background',
+                    type: 'color',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.icon_background,
+                    title: 'Icon Background',
+                    subtitle:
+                        "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
+                    type: 'color',
+                }),
+                Option({ opt: options.theme.bar.buttons.modules.submap.border, title: 'Border', type: 'color' }),
+
                 Header('Weather'),
                 Option({ opt: options.theme.bar.buttons.modules.weather.icon, title: 'Icon', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.modules.weather.text, title: 'Text', type: 'color' }),

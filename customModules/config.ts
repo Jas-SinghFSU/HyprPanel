@@ -412,6 +412,73 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
 
                 /*
                  ************************************
+                 *            SUBMAP                *
+                 ************************************
+                 */
+                Header('Submap'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.enabledIcon,
+                    title: 'Enabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.disabledIcon,
+                    title: 'Disabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.enabledText,
+                    title: 'Enabled Text',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.disabledText,
+                    title: 'Disabled Text',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.label,
+                    title: 'Show Label',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.spacing,
+                    title: 'Spacing',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.leftClick,
+                    title: 'Left Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
+
+                /*
+                 ************************************
                  *            WEATHER               *
                  ************************************
                  */

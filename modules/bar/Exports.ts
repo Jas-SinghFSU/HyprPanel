@@ -17,6 +17,7 @@ import { Storage } from 'customModules/storage/index';
 import { Netstat } from 'customModules/netstat/index';
 import { KbInput } from 'customModules/kblayout/index';
 import { Updates } from 'customModules/updates/index';
+import { Submap } from 'customModules/submap/index';
 import { Weather } from 'customModules/weather/index';
 import { Power } from 'customModules/power/index';
 
@@ -40,6 +41,7 @@ export {
     Netstat,
     KbInput,
     Updates,
+    Submap,
     Weather,
     Power,
 };

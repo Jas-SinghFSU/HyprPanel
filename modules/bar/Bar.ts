@@ -20,6 +20,7 @@ import {
     Netstat,
     KbInput,
     Updates,
+    Submap,
     Weather,
     Power,
 } from './Exports';
@@ -57,6 +58,7 @@ type Section =
     | 'netstat'
     | 'kbinput'
     | 'updates'
+    | 'submap'
     | 'weather'
     | 'power'
     | 'systray';
@@ -108,6 +110,7 @@ const widget = {
     netstat: (): Button<Child, Attribute> => WidgetContainer(Netstat()),
     kbinput: (): Button<Child, Attribute> => WidgetContainer(KbInput()),
     updates: (): Button<Child, Attribute> => WidgetContainer(Updates()),
+    submap: (): Button<Child, Attribute> => WidgetContainer(Submap()),
     weather: (): Button<Child, Attribute> => WidgetContainer(Weather()),
     power: (): Button<Child, Attribute> => WidgetContainer(Power()),
 };
