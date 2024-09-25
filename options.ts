@@ -861,6 +861,7 @@ const options = mkOptions(OPTIONS, {
         },
         workspaces: {
             show_icons: opt(false),
+            ignored: opt(''),
             show_numbered: opt(false),
             showWsIcons: opt(false),
             numbered_active_indicator: opt<ActiveWsIndicator>('underline'),

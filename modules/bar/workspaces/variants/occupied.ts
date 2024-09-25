@@ -1,13 +1,13 @@
 const hyprland = await Service.import('hyprland');
 import options from 'options';
-import { getWorkspaceRules, getWorkspacesForMonitor } from '../helpers';
+import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { Workspace } from 'types/service/hyprland';
 import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
 
-const { workspaces, monitorSpecific, workspaceMask, spacing } = options.bar.workspaces;
+const { workspaces, monitorSpecific, workspaceMask, spacing, ignored } = options.bar.workspaces;
 
 export const occupiedWses = (monitor: number): BoxWidget => {
     return Widget.Box({
@@ -28,6 +28,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.theme.matugen.bind('value'),
+                ignored.bind('value'),
             ],
             (
                 monitorSpecific: boolean,
@@ -61,7 +62,6 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                     hyprland.monitors.find((m) => m.id === monitor) ||
                     workspaceMonitorList.find((m) => m.id === monitor);
 
-                // go through each key in workspaceRules and flatten the array
                 const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
                     return [...acc, ...workspaceRules[k]];
                 }, [] as number[]);
@@ -87,6 +87,9 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 }
 
                 return allWkspcs
+                    .filter((workspaceNumber) => {
+                        return !isWorkspaceIgnored(ignored, workspaceNumber);
+                    })
                     .sort((a, b) => {
                         return a - b;
                     })
