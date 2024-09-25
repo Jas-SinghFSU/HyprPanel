@@ -300,6 +300,9 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.ignored,
                     title: 'Ignored Workspaces',
+                    subtitle:
+                        'An array of workspace numbers to ignore.\n' +
+                        'A regular expression can be passed in the array to ignore workspaces that match the regex.',
                     type: 'object',
                 }),
 
