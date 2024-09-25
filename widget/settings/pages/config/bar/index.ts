@@ -297,6 +297,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Scrolling Speed',
                     type: 'number',
                 }),
+                Option({
+                    opt: options.bar.workspaces.ignored,
+                    title: 'Ignored Workspaces',
+                    type: 'object',
+                }),
 
                 /*
                  ******************************

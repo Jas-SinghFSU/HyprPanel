@@ -1,24 +1,27 @@
 const hyprland = await Service.import('hyprland');
 import options from 'options';
-import { getWorkspaceRules, getWorkspacesForMonitor } from '../helpers';
+import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { WorkspaceIconMap } from 'lib/types/workspace';
 
-const { workspaces, monitorSpecific, workspaceMask, spacing } = options.bar.workspaces;
+const { workspaces, monitorSpecific, workspaceMask, spacing, ignored } = options.bar.workspaces;
 export const defaultWses = (monitor: number): BoxWidget => {
     return Widget.Box({
         children: Utils.merge(
-            [workspaces.bind('value'), monitorSpecific.bind()],
+            [workspaces.bind('value'), monitorSpecific.bind('value'), ignored.bind('value')],
             (workspaces: number, monitorSpecific: boolean) => {
                 return range(workspaces || 8)
-                    .filter((i) => {
+                    .filter((workspaceNumber) => {
                         if (!monitorSpecific) {
                             return true;
                         }
                         const workspaceRules = getWorkspaceRules();
-                        return getWorkspacesForMonitor(i, workspaceRules, monitor);
+                        return (
+                            getWorkspacesForMonitor(workspaceNumber, workspaceRules, monitor) &&
+                            !isWorkspaceIgnored(ignored, workspaceNumber)
+                        );
                     })
                     .sort((a, b) => {
                         return a - b;

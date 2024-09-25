@@ -1,10 +1,11 @@
 const hyprland = await Service.import('hyprland');
 
+import { IgnoredWorkspace, IgnoredWorkspaces } from 'lib/types/options';
 import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'lib/types/workspace';
 import options from 'options';
 import { Variable } from 'types/variable';
 
-const { workspaces, reverse_scroll } = options.bar.workspaces;
+const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
 
 export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, monitor: number): boolean => {
     if (!wsRules || !Object.keys(wsRules).length) {
@@ -66,63 +67,70 @@ export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
     return monitorWorkspaces[currentMonitorName];
 };
 
-export const goToNextWS = (currentMonitorWorkspaces: Variable<number[]>, activeWorkspaces: boolean): void => {
-    if (activeWorkspaces === true) {
-        const activeWses = hyprland.workspaces.filter((ws) => hyprland.active.monitor.id === ws.monitorID);
+type ThrottledScrollHandlers = {
+    throttledScrollUp: () => void;
+    throttledScrollDown: () => void;
+};
 
-        let nextIndex = hyprland.active.workspace.id + 1;
-        if (nextIndex > activeWses[activeWses.length - 1].id) {
-            nextIndex = activeWses[0].id;
+export const isWorkspaceIgnored = (
+    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+    workspaceNumber: number,
+): boolean => {
+    const ignoredValues = ignoredWorkspaces.value;
+
+    return ignoredValues.some((ignore: IgnoredWorkspace) => {
+        if (typeof ignore === 'number') {
+            return ignore === workspaceNumber;
         }
-
-        hyprland.messageAsync(`dispatch workspace ${nextIndex}`);
-    } else if (currentMonitorWorkspaces.value === undefined) {
-        let nextIndex = hyprland.active.workspace.id + 1;
-        if (nextIndex > workspaces.value) {
-            nextIndex = 0;
+        if (typeof ignore === 'string') {
+            return new RegExp(ignore).test(workspaceNumber.toString());
         }
+        return true;
+    });
+};
 
-        hyprland.messageAsync(`dispatch workspace ${nextIndex}`);
-    } else {
-        const curWorkspace = hyprland.active.workspace.id;
-        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-        let nextIndex = indexOfWs + 1;
-        if (nextIndex >= currentMonitorWorkspaces.value.length) {
-            nextIndex = 0;
+const navigateWorkspace = (
+    direction: 'next' | 'prev',
+    currentMonitorWorkspaces: Variable<number[]>,
+    activeWorkspaces: boolean,
+    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+): void => {
+    const workspacesList = activeWorkspaces
+        ? hyprland.workspaces.filter((ws) => hyprland.active.monitor.id === ws.monitorID).map((ws) => ws.id)
+        : currentMonitorWorkspaces.value || Array.from({ length: workspaces.value }, (_, i) => i + 1);
+
+    if (workspacesList.length === 0) return;
+
+    const currentIndex = workspacesList.indexOf(hyprland.active.workspace.id);
+    const step = direction === 'next' ? 1 : -1;
+    let newIndex = (currentIndex + step + workspacesList.length) % workspacesList.length;
+    let attempts = 0;
+
+    while (attempts < workspacesList.length) {
+        const targetWS = workspacesList[newIndex];
+        if (!isWorkspaceIgnored(ignoredWorkspaces, targetWS)) {
+            hyprland.messageAsync(`dispatch workspace ${targetWS}`);
+            return;
         }
-
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[nextIndex]}`);
+        newIndex = (newIndex + step + workspacesList.length) % workspacesList.length;
+        attempts++;
     }
 };
 
-export const goToPrevWS = (currentMonitorWorkspaces: Variable<number[]>, activeWorkspaces: boolean): void => {
-    if (activeWorkspaces === true) {
-        const activeWses = hyprland.workspaces.filter((ws) => hyprland.active.monitor.id === ws.monitorID);
+export const goToNextWS = (
+    currentMonitorWorkspaces: Variable<number[]>,
+    activeWorkspaces: boolean,
+    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+): void => {
+    navigateWorkspace('next', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
+};
 
-        let prevIndex = hyprland.active.workspace.id - 1;
-        if (prevIndex < activeWses[0].id) {
-            prevIndex = activeWses[activeWses.length - 1].id;
-        }
-
-        hyprland.messageAsync(`dispatch workspace ${prevIndex}`);
-    } else if (currentMonitorWorkspaces.value === undefined) {
-        let prevIndex = hyprland.active.workspace.id - 1;
-
-        if (prevIndex <= 0) {
-            prevIndex = workspaces.value;
-        }
-
-        hyprland.messageAsync(`dispatch workspace ${prevIndex}`);
-    } else {
-        const curWorkspace = hyprland.active.workspace.id;
-        const indexOfWs = currentMonitorWorkspaces.value.indexOf(curWorkspace);
-        let prevIndex = indexOfWs - 1;
-        if (prevIndex < 0) {
-            prevIndex = currentMonitorWorkspaces.value.length - 1;
-        }
-
-        hyprland.messageAsync(`dispatch workspace ${currentMonitorWorkspaces.value[prevIndex]}`);
-    }
+export const goToPrevWS = (
+    currentMonitorWorkspaces: Variable<number[]>,
+    activeWorkspaces: boolean,
+    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+): void => {
+    navigateWorkspace('prev', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
 };
 
 export function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
@@ -138,29 +146,24 @@ export function throttle<T extends (...args: unknown[]) => void>(func: T, limit:
     } as T;
 }
 
-type ThrottledScrollHandlers = {
-    throttledScrollUp: () => void;
-    throttledScrollDown: () => void;
-};
-
 export const createThrottledScrollHandlers = (
     scrollSpeed: number,
     currentMonitorWorkspaces: Variable<number[]>,
     activeWorkspaces: boolean = false,
 ): ThrottledScrollHandlers => {
     const throttledScrollUp = throttle(() => {
-        if (reverse_scroll.value === true) {
-            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces);
+        if (reverse_scroll.value) {
+            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         } else {
-            goToNextWS(currentMonitorWorkspaces, activeWorkspaces);
+            goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         }
     }, 200 / scrollSpeed);
 
     const throttledScrollDown = throttle(() => {
-        if (reverse_scroll.value === true) {
-            goToNextWS(currentMonitorWorkspaces, activeWorkspaces);
+        if (reverse_scroll.value) {
+            goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         } else {
-            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces);
+            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         }
     }, 200 / scrollSpeed);
 

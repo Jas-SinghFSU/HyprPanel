@@ -215,3 +215,6 @@ export type ColorMapKey = keyof typeof defaultColorMap;
 export type ColorMapValue = (typeof defaultColorMap)[ColorMapKey];
 
 export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
+
+export type IgnoredWorkspace = number | string;
+export type IgnoredWorkspaces = IgnoredWorkspace[];
