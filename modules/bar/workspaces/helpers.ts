@@ -1,6 +1,5 @@
 const hyprland = await Service.import('hyprland');
 
-import { IgnoredWorkspace, IgnoredWorkspaces } from 'lib/types/options';
 import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'lib/types/workspace';
 import options from 'options';
 import { Variable } from 'types/variable';
@@ -72,28 +71,19 @@ type ThrottledScrollHandlers = {
     throttledScrollDown: () => void;
 };
 
-export const isWorkspaceIgnored = (
-    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
-    workspaceNumber: number,
-): boolean => {
-    const ignoredValues = ignoredWorkspaces.value;
+export const isWorkspaceIgnored = (ignoredWorkspaces: Variable<string>, workspaceNumber: number): boolean => {
+    if (ignoredWorkspaces.value === '') return false;
 
-    return ignoredValues.some((ignore: IgnoredWorkspace) => {
-        if (typeof ignore === 'number') {
-            return ignore === workspaceNumber;
-        }
-        if (typeof ignore === 'string') {
-            return new RegExp(ignore).test(workspaceNumber.toString());
-        }
-        return true;
-    });
+    const ignoredWsRegex = new RegExp(ignoredWorkspaces.value);
+
+    return ignoredWsRegex.test(workspaceNumber.toString());
 };
 
 const navigateWorkspace = (
     direction: 'next' | 'prev',
     currentMonitorWorkspaces: Variable<number[]>,
     activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+    ignoredWorkspaces: Variable<string>,
 ): void => {
     const workspacesList = activeWorkspaces
         ? hyprland.workspaces.filter((ws) => hyprland.active.monitor.id === ws.monitorID).map((ws) => ws.id)
@@ -120,7 +110,7 @@ const navigateWorkspace = (
 export const goToNextWS = (
     currentMonitorWorkspaces: Variable<number[]>,
     activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+    ignoredWorkspaces: Variable<string>,
 ): void => {
     navigateWorkspace('next', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
 };
@@ -128,7 +118,7 @@ export const goToNextWS = (
 export const goToPrevWS = (
     currentMonitorWorkspaces: Variable<number[]>,
     activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<IgnoredWorkspaces>,
+    ignoredWorkspaces: Variable<string>,
 ): void => {
     navigateWorkspace('prev', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
 };
