@@ -5,7 +5,7 @@ import options from 'options';
 const hyprland = await Service.import('hyprland');
 
 const { monochrome, background } = options.theme.bar.buttons;
-const { background: wsBackground, active, hover } = options.theme.bar.buttons.workspaces;
+const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
 const { showWsIcons } = options.bar.workspaces;
 
@@ -48,6 +48,7 @@ export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighligh
     if (hasColor && isValidGjsColor(iconEntry.color)) {
         return `color: ${iconEntry.color}; border-bottom-color: ${iconEntry.color};`;
     }
+
     return '';
 };
 
