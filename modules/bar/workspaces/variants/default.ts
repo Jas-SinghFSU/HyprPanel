@@ -3,28 +3,15 @@ import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
-import { getSmartBackgroundColor, getSmartIconColor, getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { WorkspaceIconMap } from 'lib/types/workspace';
 
 const { workspaces, monitorSpecific, workspaceMask, spacing, ignored } = options.bar.workspaces;
 export const defaultWses = (monitor: number): BoxWidget => {
     return Widget.Box({
         children: Utils.merge(
-            [
-                workspaces.bind('value'),
-                monitorSpecific.bind('value'),
-                options.bar.workspaces.showWsIcons.bind('value'),
-                options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
-                options.bar.workspaces.workspaceIconMap.bind('value'),
-                ignored.bind('value'),
-            ],
-            (
-                workspaces: number,
-                monitorSpecific: boolean,
-                showWsIcons: boolean,
-                smartHighlight: boolean,
-                wsIconMap: WorkspaceIconMap,
-            ) => {
+            [workspaces.bind('value'), monitorSpecific.bind('value'), ignored.bind('value')],
+            (workspaces: number, monitorSpecific: boolean) => {
                 return range(workspaces || 8)
                     .filter((workspaceNumber) => {
                         if (!monitorSpecific) {
@@ -142,11 +129,6 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                     self.hook(hyprland, () => {
                                         self.toggleClassName('active', hyprland.active.workspace.id === i);
                                         self.toggleClassName('occupied', (hyprland.getWorkspace(i)?.windows || 0) > 0);
-                                        if (smartHighlight && showWsIcons) {
-                                            const smartBackground = `background: ${getSmartBackgroundColor(wsIconMap, i, smartHighlight)};`;
-                                            const smartColor = `color: ${getSmartIconColor()};`;
-                                            self.css = `${self.css} .hover-ws label { ${smartBackground} ${smartColor} }`;
-                                        }
                                     });
                                 },
                             }),

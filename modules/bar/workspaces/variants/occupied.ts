@@ -2,7 +2,7 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { Workspace } from 'types/service/hyprland';
-import { getSmartBackgroundColor, getSmartIconColor, getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
@@ -136,9 +136,6 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 setup: (self) => {
                                     self.toggleClassName('active', activeId === i);
                                     self.toggleClassName('occupied', (hyprland.getWorkspace(i)?.windows || 0) > 0);
-                                    if (smartHighlight && showWsIcons) {
-                                        self.css = `${self.css} .hover-ws label { background: ${getSmartBackgroundColor(wsIconMap, i, smartHighlight)}; color: ${getSmartIconColor()}; }`;
-                                    }
                                 },
                             }),
                         });
