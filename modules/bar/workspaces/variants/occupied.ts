@@ -28,6 +28,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.theme.matugen.bind('value'),
+                options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                 ignored.bind('value'),
             ],
             (
@@ -46,6 +47,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
                 matugen: boolean,
+                smartHighlight: boolean,
             ) => {
                 let allWkspcs = range(totalWkspcs || 8);
 
@@ -104,12 +106,13 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 vpack: 'center',
                                 css:
                                     `margin: 0rem ${0.375 * spacing}rem;` +
-                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i) : ''}`,
+                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i, smartHighlight) : ''}`,
                                 class_name: renderClassnames(
                                     showIcons,
                                     showNumbered,
                                     numberedActiveIndicator,
                                     showWsIcons,
+                                    smartHighlight,
                                     i,
                                 ),
                                 label: renderLabel(

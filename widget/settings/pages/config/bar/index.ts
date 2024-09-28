@@ -231,6 +231,14 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     enums: ['underline', 'highlight', 'color'],
                 }),
                 Option({
+                    opt: options.theme.bar.buttons.workspaces.smartHighlight,
+                    title: 'Smart Highlight',
+                    subtitle:
+                        'Automatically determines the highlight color of the workspace icon.\n' +
+                        'Only compatible with mapped icons.',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_border,
                     title: 'Highlight Radius',
                     subtitle: 'Only applicable if Workspace Numbers are enabled',

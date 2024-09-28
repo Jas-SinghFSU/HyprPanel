@@ -188,6 +188,7 @@ const options = mkOptions(OPTIONS, {
                 workspaces: {
                     background: opt(colors.base2),
                     enableBorder: opt(false),
+                    smartHighlight: opt(true),
                     border: opt(colors.pink),
                     available: opt(colors.sky),
                     occupied: opt(colors.flamingo),
@@ -874,7 +875,7 @@ const options = mkOptions(OPTIONS, {
             workspaces: opt(10),
             spacing: opt(1),
             monitorSpecific: opt(true),
-            hideUnoccupied: opt(false),
+            hideUnoccupied: opt(true),
             workspaceMask: opt(false),
             reverse_scroll: opt(false),
             scroll_speed: opt(5),
