@@ -34,14 +34,15 @@ export const getWorkspaceRules = (): WorkspaceMap => {
 
         const workspaceRules: WorkspaceMap = {};
 
-        JSON.parse(rules).forEach((rule: WorkspaceRule, index: number) => {
+        JSON.parse(rules).forEach((rule: WorkspaceRule) => {
+            const workspaceNum = parseInt(rule.workspaceString, 10);
+            if (isNaN(workspaceNum)) {
+                return;
+            }
             if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                const workspaceNum = parseInt(rule.workspaceString, 10);
-                if (!isNaN(workspaceNum)) {
-                    workspaceRules[rule.monitor].push(workspaceNum);
-                }
+                workspaceRules[rule.monitor].push(workspaceNum);
             } else {
-                workspaceRules[rule.monitor] = [index + 1];
+                workspaceRules[rule.monitor] = [workspaceNum];
             }
         });
 
