@@ -1,7 +1,11 @@
 import { WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
+import options from 'options';
 
 const hyprland = await Service.import('hyprland');
+
+const { monochrome, background } = options.theme.bar.buttons;
+const { background: wsBackground, active, hover } = options.theme.bar.buttons.workspaces;
 
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
@@ -23,13 +27,39 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     return `${i}`;
 };
 
-export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number): string => {
+export const getSmartBackgroundColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
     const iconEntry = wsIconMap[i];
+    if (!iconEntry) {
+        return hover.value;
+    }
+
+    if (typeof iconEntry === 'object' && 'color' in iconEntry && iconEntry.color !== '' && smartHighlight) {
+        return iconEntry.color;
+    }
+
+    return hover.value;
+};
+
+export const getSmartIconColor = (): string => {
+    return wsBackground.value;
+};
+
+export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
+    const iconEntry = wsIconMap[i];
+    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && iconEntry.color !== '';
     if (!iconEntry) {
         return '';
     }
 
-    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && iconEntry.color !== '';
+    if (smartHighlight && hyprland.active.workspace.id === i) {
+        const iconColor = monochrome.value ? background : wsBackground;
+        const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.value;
+        const colorCss = `color: ${iconColor};`;
+        const backgroundCss = `background: ${iconBackground};`;
+
+        return colorCss + backgroundCss;
+    }
+
     if (hasColor && isValidGjsColor(iconEntry.color)) {
         return `color: ${iconEntry.color}; border-bottom-color: ${iconEntry.color};`;
     }
@@ -41,21 +71,23 @@ export const renderClassnames = (
     showNumbered: boolean,
     numberedActiveIndicator: string,
     showWsIcons: boolean,
+    smartHighlight: boolean,
     i: number,
 ): string => {
     if (showIcons) {
-        return `workspace-icon txt-icon bar`;
+        return 'workspace-icon txt-icon bar';
     }
+
     if (showNumbered || showWsIcons) {
-        const numActiveInd = hyprland.active.workspace.id === i ? `${numberedActiveIndicator}` : '';
+        const numActiveInd = hyprland.active.workspace.id === i ? numberedActiveIndicator : '';
+        const wsIconClass = showWsIcons ? 'txt-icon' : '';
+        const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
 
-        const className =
-            `workspace-number can_${numberedActiveIndicator} ` +
-            `${numActiveInd} ` +
-            `${showWsIcons ? 'txt-icon' : ''}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass}`;
 
-        return className;
+        return className.trim();
     }
+
     return 'default';
 };
 

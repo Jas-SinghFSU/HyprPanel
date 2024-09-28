@@ -188,6 +188,7 @@ const options = mkOptions(OPTIONS, {
                 workspaces: {
                     background: opt(colors.base2),
                     enableBorder: opt(false),
+                    smartHighlight: opt(true),
                     border: opt(colors.pink),
                     available: opt(colors.sky),
                     occupied: opt(colors.flamingo),

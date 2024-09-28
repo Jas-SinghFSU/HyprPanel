@@ -2,7 +2,7 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { Workspace } from 'types/service/hyprland';
-import { getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getSmartBackgroundColor, getSmartIconColor, getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
@@ -28,6 +28,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.theme.matugen.bind('value'),
+                options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                 ignored.bind('value'),
             ],
             (
@@ -46,6 +47,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
                 matugen: boolean,
+                smartHighlight: boolean,
             ) => {
                 let allWkspcs = range(totalWkspcs || 8);
 
@@ -99,17 +101,24 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             on_primary_click: () => {
                                 hyprland.messageAsync(`dispatch workspace ${i}`);
                             },
+                            onHover: (self) => {
+                                self.toggleClassName('hover-ws', true);
+                            },
+                            onHoverLost: (self) => {
+                                self.toggleClassName('hover-ws', false);
+                            },
                             child: Widget.Label({
                                 attribute: i,
                                 vpack: 'center',
                                 css:
                                     `margin: 0rem ${0.375 * spacing}rem;` +
-                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i) : ''}`,
+                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i, smartHighlight) : ''}`,
                                 class_name: renderClassnames(
                                     showIcons,
                                     showNumbered,
                                     numberedActiveIndicator,
                                     showWsIcons,
+                                    smartHighlight,
                                     i,
                                 ),
                                 label: renderLabel(
@@ -127,6 +136,9 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 setup: (self) => {
                                     self.toggleClassName('active', activeId === i);
                                     self.toggleClassName('occupied', (hyprland.getWorkspace(i)?.windows || 0) > 0);
+                                    if (smartHighlight) {
+                                        self.css = `${self.css} .hover-ws label { background: ${getSmartBackgroundColor(wsIconMap, i, smartHighlight)}; color: ${getSmartIconColor()}; }`;
+                                    }
                                 },
                             }),
                         });
