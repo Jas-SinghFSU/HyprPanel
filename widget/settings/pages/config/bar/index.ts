@@ -193,6 +193,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.showAllActive,
                     title: 'Mark Active Workspace On All Monitors',
+                    subtitle: 'Marks the currently active workspace on each monitor.',
                     type: 'boolean',
                 }),
                 Option({
