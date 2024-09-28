@@ -32,12 +32,6 @@ export const defaultWses = (monitor: number): BoxWidget => {
                             on_primary_click: () => {
                                 hyprland.messageAsync(`dispatch workspace ${i}`);
                             },
-                            onHover: (self) => {
-                                self.toggleClassName('hover-ws', true);
-                            },
-                            onHoverLost: (self) => {
-                                self.toggleClassName('hover-ws', false);
-                            },
                             child: Widget.Label({
                                 attribute: i,
                                 vpack: 'center',
