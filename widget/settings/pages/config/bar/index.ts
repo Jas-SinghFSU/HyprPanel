@@ -191,6 +191,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.workspaces.showAllActive,
+                    title: 'Mark Active Workspace On All Monitors',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.workspaces.fontSize,
                     title: 'Indicator Size',
                     subtitle:

@@ -1,13 +1,18 @@
 import { WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
 import options from 'options';
+import { Monitor } from 'types/service/hyprland';
 
 const hyprland = await Service.import('hyprland');
 
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
-const { showWsIcons } = options.bar.workspaces;
+const { showWsIcons, showAllActive, numbered_active_indicator: activeIndicator } = options.bar.workspaces;
+
+const isWorkspaceActiveOnMonitor = (monitor: number, monitors: Monitor[], i: number): boolean => {
+    return showAllActive.value && monitors[monitor]?.activeWorkspace?.id === i;
+};
 
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
@@ -29,14 +34,25 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     return `${i}`;
 };
 
-export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
+export const getWsColor = (
+    wsIconMap: WorkspaceIconMap,
+    i: number,
+    smartHighlight: boolean,
+    monitor: number,
+    monitors: Monitor[],
+): string => {
     const iconEntry = wsIconMap[i];
     const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
     if (!iconEntry) {
         return '';
     }
 
-    if (showWsIcons.value && smartHighlight && hyprland.active.workspace.id === i) {
+    if (
+        showWsIcons.value &&
+        smartHighlight &&
+        activeIndicator.value === 'highlight' &&
+        (hyprland.active.workspace.id === i || isWorkspaceActiveOnMonitor(monitor, monitors, i))
+    ) {
         const iconColor = monochrome.value ? background : wsBackground;
         const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.value;
         const colorCss = `color: ${iconColor};`;
@@ -58,6 +74,8 @@ export const renderClassnames = (
     numberedActiveIndicator: string,
     showWsIcons: boolean,
     smartHighlight: boolean,
+    monitor: number,
+    monitors: Monitor[],
     i: number,
 ): string => {
     if (showIcons) {
@@ -65,7 +83,11 @@ export const renderClassnames = (
     }
 
     if (showNumbered || showWsIcons) {
-        const numActiveInd = hyprland.active.workspace.id === i ? numberedActiveIndicator : '';
+        const numActiveInd =
+            hyprland.active.workspace.id === i || isWorkspaceActiveOnMonitor(monitor, monitors, i)
+                ? numberedActiveIndicator
+                : '';
+
         const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
 
@@ -88,9 +110,10 @@ export const renderLabel = (
     i: number,
     index: number,
     monitor: number,
+    monitors: Monitor[],
 ): string => {
     if (showIcons) {
-        if (hyprland.active.workspace.id === i) {
+        if (hyprland.active.workspace.id === i || isWorkspaceActiveOnMonitor(monitor, monitors, i)) {
             return active;
         }
         if ((hyprland.getWorkspace(i)?.windows || 0) > 0) {
