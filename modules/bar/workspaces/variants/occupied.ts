@@ -136,7 +136,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 setup: (self) => {
                                     self.toggleClassName('active', activeId === i);
                                     self.toggleClassName('occupied', (hyprland.getWorkspace(i)?.windows || 0) > 0);
-                                    if (smartHighlight) {
+                                    if (smartHighlight && showWsIcons) {
                                         self.css = `${self.css} .hover-ws label { background: ${getSmartBackgroundColor(wsIconMap, i, smartHighlight)}; color: ${getSmartIconColor()}; }`;
                                     }
                                 },

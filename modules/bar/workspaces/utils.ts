@@ -7,6 +7,8 @@ const hyprland = await Service.import('hyprland');
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active, hover } = options.theme.bar.buttons.workspaces;
 
+const { showWsIcons } = options.bar.workspaces;
+
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
 
@@ -46,12 +48,12 @@ export const getSmartIconColor = (): string => {
 
 export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
     const iconEntry = wsIconMap[i];
-    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && iconEntry.color !== '';
+    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
     if (!iconEntry) {
         return '';
     }
 
-    if (smartHighlight && hyprland.active.workspace.id === i) {
+    if (showWsIcons.value && smartHighlight && hyprland.active.workspace.id === i) {
         const iconColor = monochrome.value ? background : wsBackground;
         const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.value;
         const colorCss = `color: ${iconColor};`;
