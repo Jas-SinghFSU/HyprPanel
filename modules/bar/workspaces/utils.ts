@@ -29,23 +29,6 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     return `${i}`;
 };
 
-export const getSmartBackgroundColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
-    const iconEntry = wsIconMap[i];
-    if (!iconEntry) {
-        return hover.value;
-    }
-
-    if (typeof iconEntry === 'object' && 'color' in iconEntry && iconEntry.color !== '' && smartHighlight) {
-        return iconEntry.color;
-    }
-
-    return hover.value;
-};
-
-export const getSmartIconColor = (): string => {
-    return wsBackground.value;
-};
-
 export const getWsColor = (wsIconMap: WorkspaceIconMap, i: number, smartHighlight: boolean): string => {
     const iconEntry = wsIconMap[i];
     const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
