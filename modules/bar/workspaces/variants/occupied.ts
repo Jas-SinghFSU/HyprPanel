@@ -1,13 +1,13 @@
 const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
-import { Workspace } from 'types/service/hyprland';
+import { Monitor, Workspace } from 'types/service/hyprland';
 import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
 
-const { workspaces, monitorSpecific, workspaceMask, spacing, ignored } = options.bar.workspaces;
+const { workspaces, monitorSpecific, workspaceMask, spacing, ignored, showAllActive } = options.bar.workspaces;
 
 export const occupiedWses = (monitor: number): BoxWidget => {
     return Widget.Box({
@@ -29,7 +29,9 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.theme.matugen.bind('value'),
                 options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
+                hyprland.bind('monitors'),
                 ignored.bind('value'),
+                showAllActive.bind('value'),
             ],
             (
                 monitorSpecific: boolean,
@@ -48,6 +50,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 showWsIcons: boolean,
                 matugen: boolean,
                 smartHighlight: boolean,
+                monitors: Monitor[],
             ) => {
                 let allWkspcs = range(totalWkspcs || 8);
 
@@ -106,13 +109,15 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 vpack: 'center',
                                 css:
                                     `margin: 0rem ${0.375 * spacing}rem;` +
-                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i, smartHighlight) : ''}`,
+                                    `${showWsIcons && !matugen ? getWsColor(wsIconMap, i, smartHighlight, monitor, monitors) : ''}`,
                                 class_name: renderClassnames(
                                     showIcons,
                                     showNumbered,
                                     numberedActiveIndicator,
                                     showWsIcons,
                                     smartHighlight,
+                                    monitor,
+                                    monitors,
                                     i,
                                 ),
                                 label: renderLabel(
@@ -126,6 +131,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                     i,
                                     index,
                                     monitor,
+                                    monitors,
                                 ),
                                 setup: (self) => {
                                     self.toggleClassName('active', activeId === i);

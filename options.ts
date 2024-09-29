@@ -862,6 +862,7 @@ const options = mkOptions(OPTIONS, {
         },
         workspaces: {
             show_icons: opt(false),
+            showAllActive: opt(true),
             ignored: opt(''),
             show_numbered: opt(false),
             showWsIcons: opt(false),
