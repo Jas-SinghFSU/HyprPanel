@@ -59,16 +59,24 @@ const Controls = (): BoxWidget => {
                 expand: true,
                 on_primary_click: () => (audio.speaker.is_muted = !audio.speaker.is_muted),
                 setup: (self) => {
-                    self.hook(audio, () => {
-                        return (self.class_name = `dashboard-button playback ${audio.speaker.is_muted ? 'disabled' : ''}`);
-                    });
+                    self.hook(
+                        audio.speaker,
+                        () => {
+                            return (self.class_name = `dashboard-button playback ${audio.speaker.is_muted ? 'disabled' : ''}`);
+                        },
+                        'notify::is-muted',
+                    );
                 },
                 child: Widget.Label({
                     class_name: 'txt-icon',
                     setup: (self) => {
-                        self.hook(audio, () => {
-                            return (self.label = audio.speaker.is_muted ? '󰖁' : '󰕾');
-                        });
+                        self.hook(
+                            audio.speaker,
+                            () => {
+                                return (self.label = audio.speaker.is_muted ? '󰖁' : '󰕾');
+                            },
+                            'notify::is-muted',
+                        );
                     },
                 }),
             }),
@@ -77,16 +85,24 @@ const Controls = (): BoxWidget => {
                 expand: true,
                 on_primary_click: () => (audio.microphone.is_muted = !audio.microphone.is_muted),
                 setup: (self) => {
-                    self.hook(audio, () => {
-                        return (self.class_name = `dashboard-button input ${audio.microphone.is_muted ? 'disabled' : ''}`);
-                    });
+                    self.hook(
+                        audio.microphone,
+                        () => {
+                            return (self.class_name = `dashboard-button input ${audio.microphone.is_muted ? 'disabled' : ''}`);
+                        },
+                        'notify::is-muted',
+                    );
                 },
                 child: Widget.Label({
                     class_name: 'txt-icon',
                     setup: (self) => {
-                        self.hook(audio, () => {
-                            return (self.label = audio.microphone.is_muted ? '󰍭' : '󰍬');
-                        });
+                        self.hook(
+                            audio.microphone,
+                            () => {
+                                return (self.label = audio.microphone.is_muted ? '󰍭' : '󰍬');
+                            },
+                            'notify::is-muted',
+                        );
                     },
                 }),
             }),
