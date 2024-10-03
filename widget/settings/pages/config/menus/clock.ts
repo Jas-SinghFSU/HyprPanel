@@ -16,6 +16,7 @@ export const ClockMenuSettings = (): Scrollable<Child, Attribute> => {
                 Option({ opt: options.menus.clock.time.military, title: 'Use 24hr time', type: 'boolean' }),
 
                 Header('Weather'),
+                Option({ opt: options.menus.clock.weather.enabled, title: 'Enabled', type: 'boolean' }),
                 Option({
                     opt: options.menus.clock.weather.location,
                     title: 'Location',
