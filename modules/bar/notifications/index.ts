@@ -4,9 +4,10 @@ import options from 'options';
 import { filterNotifications } from 'lib/shared/notifications.js';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
-const { show_total } = options.bar.notifications;
+const { show_total, rightClick, middleClick, scrollUp, scrollDown } = options.bar.notifications;
 const { ignore } = options.notifications;
 
 const notifs = await Service.import('notifications');
@@ -24,7 +25,7 @@ export const Notifications = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `notifications ${styleMap[style]} ${!showTotal ? 'no-label' : ''}`;
+                    return `notifications-container ${styleMap[style]} ${!showTotal ? 'no-label' : ''}`;
                 },
             ),
             child: Widget.Box({
@@ -58,8 +59,26 @@ export const Notifications = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'notifications',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'notificationsmenu');
+            },
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
             },
         },
     };

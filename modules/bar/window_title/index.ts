@@ -1,7 +1,14 @@
 const hyprland = await Service.import('hyprland');
 import { BarBoxChild } from 'lib/types/bar';
 import options from 'options';
+import { Attribute, Child } from 'lib/types/widget';
 import { ActiveClient } from 'types/service/hyprland';
+import Label from 'types/widgets/label';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils';
+import Button from 'types/widgets/button';
+import Gdk from 'types/@girs/gdk-3.0/gdk-3.0';
+
+const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
 
 const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
     const windowTitleMap = [
@@ -163,7 +170,7 @@ const ClientTitle = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `windowtitle ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `windowtitle-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             children: Utils.merge(
@@ -177,24 +184,18 @@ const ClientTitle = (): BarBoxChild => {
                     truncation_size.bind('value'),
                 ],
                 (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
+                    const children: Label<Child>[] = [];
                     if (showIcon) {
-                        return [
+                        children.push(
                             Widget.Label({
                                 class_name: 'bar-button-icon windowtitle txt-icon bar',
                                 label: filterTitle(client).icon,
                             }),
-                            Widget.Label({
-                                class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
-                                label: truncateTitle(
-                                    getTitle(client, useCustomTitle, useClassName),
-                                    truncate ? truncationSize : -1,
-                                ),
-                            }),
-                        ];
+                        );
                     }
 
                     if (showLabel) {
-                        return [
+                        children.push(
                             Widget.Label({
                                 class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
                                 label: truncateTitle(
@@ -202,16 +203,38 @@ const ClientTitle = (): BarBoxChild => {
                                     truncate ? truncationSize : -1,
                                 ),
                             }),
-                        ];
+                        );
                     }
 
-                    return [];
+                    return children;
                 },
             ),
         }),
         isVisible: true,
         boxClass: 'windowtitle',
-        props: {},
+        props: {
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_primary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(leftClick.value, { clicked, event });
+                    };
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
+            },
+        },
     };
 };
 

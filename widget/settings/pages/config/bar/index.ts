@@ -40,7 +40,18 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'enum',
                     enums: ['top', 'bottom'],
                 }),
-
+                Option({
+                    opt: options.theme.bar.buttons.enableBorders,
+                    title: 'Enable Button Borders',
+                    subtitle: 'Enables button borders for all buttons in the bar.',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.borderSize,
+                    title: 'Button Border Size',
+                    subtitle: 'Button border for the individual modules must be enabled first',
+                    type: 'string',
+                }),
                 /*
                  ******************************
                  *          SPACING           *
@@ -120,6 +131,19 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
 
                 /*
                  ******************************
+                 *          Actions           *
+                 ******************************
+                 */
+
+                Header('Actions'),
+                Option({
+                    opt: options.bar.scrollSpeed,
+                    title: 'Scrolling Speed',
+                    subtitle: 'The speed at which the commands assigned to the scroll event will trigger',
+                    type: 'number',
+                }),
+                /*
+                 ******************************
                  *         DASHBOARD          *
                  ******************************
                  */
@@ -129,6 +153,31 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Dashboard Menu Icon',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.theme.bar.buttons.dashboard.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.launcher.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.launcher.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -136,6 +185,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Workspaces'),
+                Option({
+                    opt: options.theme.bar.buttons.workspaces.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.showAllActive,
+                    title: 'Mark Active Workspace On All Monitors',
+                    subtitle: 'Marks the currently active workspace on each monitor.',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.theme.bar.buttons.workspaces.fontSize,
                     title: 'Indicator Size',
@@ -175,6 +235,14 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Only applicable if Workspace Numbers are enabled',
                     type: 'enum',
                     enums: ['underline', 'highlight', 'color'],
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.workspaces.smartHighlight,
+                    title: 'Smart Highlight',
+                    subtitle:
+                        'Automatically determines the highlight color of the workspace icon.\n' +
+                        'Only compatible with mapped icons.',
+                    type: 'boolean',
                 }),
                 Option({
                     opt: options.theme.bar.buttons.workspaces.numbered_active_highlight_border,
@@ -243,6 +311,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Scrolling Speed',
                     type: 'number',
                 }),
+                Option({
+                    opt: options.bar.workspaces.ignored,
+                    title: 'Ignored Workspaces',
+                    subtitle: 'A regex that defines workspaces to ignore',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -250,6 +324,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Window Titles'),
+                Option({
+                    opt: options.theme.bar.buttons.windowtitle.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.windowtitle.custom_title,
                     title: 'Use Custom Title',
@@ -298,6 +377,31 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.windowtitle.leftClick,
+                    title: 'Left Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.windowtitle.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -305,6 +409,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Volume'),
+                Option({
+                    opt: options.theme.bar.buttons.volume.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.volume.label,
                     title: 'Show Volume Percentage',
@@ -316,6 +425,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.volume.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.volume.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -323,6 +452,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Network'),
+                Option({
+                    opt: options.theme.bar.buttons.network.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.network.label,
                     title: 'Show Network Name',
@@ -345,6 +479,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.network.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.network.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -352,6 +506,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Bluetooth'),
+                Option({
+                    opt: options.theme.bar.buttons.bluetooth.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.bluetooth.label,
                     title: 'Show Bluetooth Label',
@@ -363,6 +522,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.bluetooth.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.bluetooth.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -370,6 +549,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Battery'),
+                Option({
+                    opt: options.theme.bar.buttons.battery.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.battery.label,
                     title: 'Show Battery Percentage',
@@ -381,6 +565,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.battery.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.battery.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -388,6 +592,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('System Tray'),
+                Option({
+                    opt: options.theme.bar.buttons.systray.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.systray.ignore,
                     title: 'Ignore List',
@@ -404,6 +613,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Clock'),
+                Option({
+                    opt: options.theme.bar.buttons.clock.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.clock.format,
                     title: 'Clock Format',
@@ -430,6 +644,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
                     type: 'string',
                 }),
+                Option({
+                    opt: options.bar.clock.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.clock.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -437,6 +671,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Media'),
+                Option({
+                    opt: options.theme.bar.buttons.media.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.theme.bar.buttons.media.spacing,
                     title: 'Inner Spacing',
@@ -472,6 +711,16 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitle: 'Button will automatically hide if no media is detected.',
                     type: 'boolean',
                 }),
+                Option({
+                    opt: options.bar.media.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.media.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
 
                 /*
                  ******************************
@@ -479,6 +728,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                  ******************************
                  */
                 Header('Notifications'),
+                Option({
+                    opt: options.theme.bar.buttons.notifications.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.notifications.show_total,
                     title: 'Show Total # of notifications',
@@ -488,6 +742,26 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     opt: options.theme.bar.buttons.notifications.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.notifications.scrollDown,
+                    title: 'Scroll Down',
                     type: 'string',
                 }),
             ],

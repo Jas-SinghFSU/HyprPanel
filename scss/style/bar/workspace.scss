@@ -44,9 +44,11 @@
         &.underline {
             border-top: 0.1em solid transparent;
             border-bottom: 0.1em solid $bar-buttons-workspaces-numbered_active_underline_color;
+            transition: 0ms;
         }
 
         &.highlight {
+            transition: 0ms;
             color: $bar-buttons-workspaces-numbered_active_highlighted_text_color;
             border-radius: $bar-buttons-workspaces-numbered_active_highlight_border;
             background-color: $bar-buttons-workspaces-active;
@@ -79,4 +81,12 @@
 
 .style2.workspaces {
     padding: $bar-buttons-padding_y $bar-buttons-padding_x;
+}
+
+.bar_item_box_visible.workspaces {
+    border: if(
+        $bar-buttons-workspaces-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-border),
+        0em
+    );
 }

@@ -51,6 +51,12 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
 
                 Header('Scaling'),
                 Option({
+                    opt: options.scalingPriority,
+                    title: 'Scaling Priority',
+                    type: 'enum',
+                    enums: ['both', 'gdk', 'hyprland'],
+                }),
+                Option({
                     opt: options.theme.bar.scaling,
                     title: 'Bar',
                     type: 'number',

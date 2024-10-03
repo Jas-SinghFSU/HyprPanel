@@ -1,5 +1,6 @@
 const hyprland = await Service.import('hyprland');
 
+import options from 'options';
 import { bash } from 'lib/utils';
 import { Widget as TWidget } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 import { Monitor } from 'types/service/hyprland';
@@ -12,6 +13,7 @@ type NestedBox = Box<NestedRevealer, unknown>;
 type NestedEventBox = EventBox<NestedBox, unknown>;
 
 const { location } = options.theme.bar;
+const { scalingPriority } = options;
 
 export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean): void => {
     if (fixed) {
@@ -49,7 +51,14 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
         // end of the monitor is the 1430th pixel.
         const gdkScale = Utils.exec('bash -c "echo $GDK_SCALE"');
 
-        if (/^\d+(.\d+)?$/.test(gdkScale)) {
+        if (scalingPriority.value === 'both') {
+            const scale = parseFloat(gdkScale);
+            monWidth = monWidth / scale;
+            monHeight = monHeight / scale;
+
+            monWidth = monWidth / hyprScaling;
+            monHeight = monHeight / hyprScaling;
+        } else if (/^\d+(.\d+)?$/.test(gdkScale) && scalingPriority.value === 'gdk') {
             const scale = parseFloat(gdkScale);
             monWidth = monWidth / scale;
             monHeight = monHeight / scale;

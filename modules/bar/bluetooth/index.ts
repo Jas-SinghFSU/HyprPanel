@@ -4,9 +4,10 @@ import options from 'options';
 import { openMenu } from '../utils.js';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
-const { label } = options.bar.bluetooth;
+const { label, rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
 const Bluetooth = (): BarBoxChild => {
     const btIcon = Widget.Label({
@@ -32,7 +33,7 @@ const Bluetooth = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `bluetooth ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `bluetooth-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             children: options.bar.bluetooth.label.bind('value').as((showLabel) => {
@@ -45,7 +46,25 @@ const Bluetooth = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'bluetooth',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
+            },
+            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'bluetoothmenu');
             },
         },

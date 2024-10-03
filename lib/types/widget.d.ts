@@ -26,3 +26,4 @@ export type GLabel = Gtk.Label;
 export type GCenterBox = Gtk.Box;
 
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;
+export type EventArgs = { clicked: Button<Child, Attribute>; event: Gdk.Event };

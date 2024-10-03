@@ -33,6 +33,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  */
                 Header('RAM'),
                 Option({
+                    opt: options.theme.bar.buttons.modules.ram.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.customModules.ram.label,
                     title: 'Show Label',
                     type: 'boolean',
@@ -83,6 +88,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  ************************************
                  */
                 Header('CPU'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.cpu.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.customModules.cpu.label,
                     title: 'Show Label',
@@ -138,6 +148,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  ************************************
                  */
                 Header('Storage'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.storage.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.customModules.storage.icon,
                     title: 'Storage Icon',
@@ -195,6 +210,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  ************************************
                  */
                 Header('Netstat'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.netstat.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.customModules.netstat.networkInterface,
                     title: 'Network Interface',
@@ -266,6 +286,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  */
                 Header('Keyboard Layout'),
                 Option({
+                    opt: options.theme.bar.buttons.modules.kbLayout.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.customModules.kbLayout.icon,
                     title: 'kbLayout Icon',
                     type: 'enum',
@@ -319,6 +344,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  ************************************
                  */
                 Header('Updates'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.updates.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.customModules.updates.updateCommand,
                     title: 'Check Updates Command',
@@ -382,10 +412,82 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
 
                 /*
                  ************************************
+                 *            SUBMAP                *
+                 ************************************
+                 */
+                Header('Submap'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.enabledIcon,
+                    title: 'Enabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.disabledIcon,
+                    title: 'Disabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.enabledText,
+                    title: 'Enabled Text',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.disabledText,
+                    title: 'Disabled Text',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.label,
+                    title: 'Show Label',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.submap.spacing,
+                    title: 'Spacing',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.leftClick,
+                    title: 'Left Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.submap.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
+
+                /*
+                 ************************************
                  *            WEATHER               *
                  ************************************
                  */
                 Header('Weather'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.weather.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.bar.customModules.weather.label,
                     title: 'Show Label',
@@ -434,6 +536,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                  ************************************
                  */
                 Header('Power'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.power.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
                 Option({
                     opt: options.theme.bar.buttons.modules.power.spacing,
                     title: 'Spacing',

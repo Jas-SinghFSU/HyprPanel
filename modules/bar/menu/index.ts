@@ -3,7 +3,10 @@ import { openMenu } from '../utils.js';
 import options from 'options';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+
+const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
     return {
@@ -25,8 +28,26 @@ const Menu = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'dashboardmenu');
+            },
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
             },
         },
     };

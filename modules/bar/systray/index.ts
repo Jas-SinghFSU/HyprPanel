@@ -31,7 +31,7 @@ const SysTray = (): BarBoxChild => {
 
     return {
         component: Widget.Box({
-            class_name: 'systray',
+            class_name: 'systray-container',
             children: items,
         }),
         isVisible: true,

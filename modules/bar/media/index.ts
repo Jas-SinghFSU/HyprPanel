@@ -5,9 +5,11 @@ import options from 'options';
 import { getCurrentPlayer } from 'lib/shared/media.js';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand } from 'customModules/utils.js';
 
-const { show_artist, truncation, truncation_size, show_label, show_active_only } = options.bar.media;
+const { show_artist, truncation, truncation_size, show_label, show_active_only, rightClick, middleClick } =
+    options.bar.media;
 
 const Media = (): BarBoxChild => {
     const activePlayer = Variable(mpris.players[0]);
@@ -73,7 +75,7 @@ const Media = (): BarBoxChild => {
                             wave: 'style3',
                             wave2: 'style3',
                         };
-                        return `media ${styleMap[style]}`;
+                        return `media-container ${styleMap[style]}`;
                     },
                 ),
                 child: Widget.Box({
@@ -92,12 +94,17 @@ const Media = (): BarBoxChild => {
         }),
         isVis,
         boxClass: 'media',
-        name: 'media',
         props: {
             on_scroll_up: () => activePlayer.value?.next(),
             on_scroll_down: () => activePlayer.value?.previous(),
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'mediamenu');
+            },
+            onSecondaryClick: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                runAsyncCommand(rightClick.value, { clicked, event });
+            },
+            onMiddleClick: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                runAsyncCommand(middleClick.value, { clicked, event });
             },
         },
     };

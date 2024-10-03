@@ -7,7 +7,10 @@ import { VolumeIcons } from 'lib/types/volume.js';
 import { BarBoxChild } from 'lib/types/bar.js';
 import { Bind } from 'lib/types/variable.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+
+const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 
 const Volume = (): BarBoxChild => {
     const icons: VolumeIcons = {
@@ -22,7 +25,15 @@ const Volume = (): BarBoxChild => {
         const icon: Binding<number> = Utils.merge(
             [audio.speaker.bind('is_muted'), audio.speaker.bind('volume')],
             (isMuted, vol) => {
-                return isMuted ? 0 : [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100) || 101;
+                if (isMuted) return 0;
+
+                const foundVol = [101, 66, 34, 1, 0].find((threshold) => threshold <= vol * 100);
+
+                if (foundVol !== undefined) {
+                    return foundVol;
+                }
+
+                return 101;
             },
         );
 
@@ -54,7 +65,7 @@ const Volume = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `volume ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `volume-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             children: options.bar.volume.label.bind('value').as((showLabel) => {
@@ -67,8 +78,26 @@ const Volume = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'volume',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            onPrimaryClick: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'audiomenu');
+            },
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
             },
         },
     };
