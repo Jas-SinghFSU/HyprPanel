@@ -24,7 +24,6 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.show_numbered.bind('value'),
                 options.bar.workspaces.numbered_active_indicator.bind('value'),
                 spacing.bind('value'),
-                hyprland.active.workspace.bind('id'),
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.theme.matugen.bind('value'),
@@ -45,13 +44,13 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 showNumbered: boolean,
                 numberedActiveIndicator: string,
                 spacing: number,
-                activeId: number,
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
                 matugen: boolean,
                 smartHighlight: boolean,
                 monitors: Monitor[],
             ) => {
+                const activeId = hyprland.active.workspace.id;
                 let allWkspcs = range(totalWkspcs || 8);
 
                 const activeWorkspaces = wkSpaces.map((w) => w.id);
@@ -92,13 +91,13 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 }
 
                 return allWkspcs
-                    .filter((workspaceNumber) => {
-                        return !isWorkspaceIgnored(ignored, workspaceNumber);
-                    })
                     .sort((a, b) => {
                         return a - b;
                     })
                     .map((i, index) => {
+                        if (isWorkspaceIgnored(ignored, i)) {
+                            return Widget.Box();
+                        }
                         return Widget.Button({
                             class_name: 'workspace-button',
                             on_primary_click: () => {

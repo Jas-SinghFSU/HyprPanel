@@ -20,6 +20,8 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
         return;
     }
 
+    // TODO: Can we provide click source in the globalMousePos event. So that the event only triggers
+    // for the relevant menu
     globalMousePos.connect('changed', async ({ value }) => {
         const curHyprlandMonitor = hyprland.monitors.find((m) => m.id === hyprland.active.monitor.id);
         const dropdownWidth = self.child.get_allocation().width;
