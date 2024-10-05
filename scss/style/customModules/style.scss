@@ -47,9 +47,14 @@
     $borderColor,
     $fontSize: 1em
 ) {
+    $bar-button-background-opacity-ratio: $bar-buttons-background_opacity * 0.01;
+    $transparency-value: 1 - $bar-button-background-opacity-ratio;
+
+    $bar-button-background-hover-opacity-ratio: $bar-buttons-background_hover_opacity * 0.01;
+    $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
     .bar_item_box_visible {
         &.#{$class} {
-            background: $labelBackground;
+            background: transparentize($labelBackground, $transparency-value);
             border: if(
                 $borderEnabled or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $borderColor),
@@ -61,7 +66,7 @@
             }
 
             &:hover {
-                opacity: 0.5;
+                opacity: $bar-buttons-background_hover_opacity * 0.01;
             }
         }
     }
@@ -95,7 +100,7 @@
         }
 
         .module-label.#{$class} {
-            background: $labelBackground;
+            background: transparentize($labelBackground, $transparency-value);
             padding-left: $spacing * 1.5;
             margin-left: 0em;
             border-top-left-radius: 0em;
