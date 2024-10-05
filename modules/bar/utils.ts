@@ -44,7 +44,10 @@ export const openMenu = (clicked: Button<Child, Attribute>, event: Gdk.Event, wi
     const adjustedXCoord = clickPos[1] + middleOffset;
     const coords = [adjustedXCoord, clickPos[2]];
 
-    globalMousePos.value = coords;
+    globalMousePos.value = {
+        source: window,
+        pos: coords,
+    };
 
     closeAllMenus();
     App.toggleWindow(window);

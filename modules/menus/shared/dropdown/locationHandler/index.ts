@@ -15,7 +15,7 @@ type NestedEventBox = EventBox<NestedBox, unknown>;
 const { location } = options.theme.bar;
 const { scalingPriority } = options;
 
-export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean): void => {
+export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolean, windowName: string): void => {
     if (fixed) {
         return;
     }
@@ -23,6 +23,10 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
     // TODO: Can we provide click source in the globalMousePos event. So that the event only triggers
     // for the relevant menu
     globalMousePos.connect('changed', async ({ value }) => {
+        if (windowName !== value.source) {
+            return;
+        }
+
         const curHyprlandMonitor = hyprland.monitors.find((m) => m.id === hyprland.active.monitor.id);
         const dropdownWidth = self.child.get_allocation().width;
         const dropdownHeight = self.child.get_allocation().height;
@@ -77,7 +81,7 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
         }
 
         let marginRight = monWidth - dropdownWidth / 2;
-        marginRight = fixed ? marginRight - monWidth / 2 : marginRight - value[0];
+        marginRight = fixed ? marginRight - monWidth / 2 : marginRight - value.pos[0];
         let marginLeft = monWidth - dropdownWidth - marginRight;
 
         const minimumMargin = 0;
@@ -91,6 +95,8 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
             marginLeft = minimumMargin;
             marginRight = monWidth - dropdownWidth - minimumMargin;
         }
+
+        console.log(monWidth);
 
         self.set_margin_left(marginLeft);
         self.set_margin_right(marginRight);

@@ -61,7 +61,7 @@ export default ({
                             return true;
                         },
                         setup: (self) => {
-                            moveBoxToCursor(self, fixed);
+                            moveBoxToCursor(self, fixed, name);
                         },
                         child: Widget.Box({
                             class_name: 'dropdown-menu-container',
