@@ -422,6 +422,14 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.customModules.submap.showSubmapName,
+                    title: 'Show Submap Name',
+                    subtitle:
+                        'When enabled, the name of the current submap will be displayed' +
+                        ' instead of the Submap Enabled or Disabled text.',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.customModules.submap.enabledIcon,
                     title: 'Enabled Icon',
                     type: 'string',

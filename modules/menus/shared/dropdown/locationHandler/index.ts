@@ -96,8 +96,6 @@ export const moveBoxToCursor = <T extends NestedEventBox>(self: T, fixed: boolea
             marginRight = monWidth - dropdownWidth - minimumMargin;
         }
 
-        console.log(monWidth);
-
         self.set_margin_left(marginLeft);
         self.set_margin_right(marginRight);
 

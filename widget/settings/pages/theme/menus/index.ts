@@ -21,7 +21,7 @@ export const MenuTheme = (): Scrollable<Child, Attribute> => {
                     subtitle: 'WARNING: Importing a theme will replace your current theme color settings.',
                     type: 'config_import',
                     exportData: {
-                        filePath: OPTIONS,
+                        filePath: `${TMP}/config.json`,
                         themeOnly: true,
                     },
                 }),

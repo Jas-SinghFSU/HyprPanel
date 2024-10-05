@@ -1007,6 +1007,7 @@ const options = mkOptions(OPTIONS, {
             },
             submap: {
                 label: opt(true),
+                showSubmapName: opt(true),
                 enabledIcon: opt('󰌐'),
                 disabledIcon: opt('󰌌'),
                 enabledText: opt('Submap On'),
