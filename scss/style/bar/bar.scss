@@ -42,7 +42,7 @@ $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
     }
 
     &:hover {
-        opacity: 0.5;
+        opacity: $bar-buttons-background_hover_opacity * 0.01;
     }
 
     &.battery {
