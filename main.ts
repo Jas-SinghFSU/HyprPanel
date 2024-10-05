@@ -1,6 +1,7 @@
 import 'lib/session';
 import 'scss/style';
 import 'globals/useTheme';
+import 'globals/utilities';
 import 'globals/mousePos';
 
 import { Bar } from 'modules/bar/Bar';
