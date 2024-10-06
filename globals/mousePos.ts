@@ -6,4 +6,9 @@ const globalMousePosVar: VariableType<MousePos> = Variable({
     pos: [0, 0],
 });
 
+type GlobalEventBoxes = {
+    [key: string]: unknown;
+};
+export const globalEventBoxes: VariableType<GlobalEventBoxes> = Variable({});
+
 globalThis['globalMousePos'] = globalMousePosVar;

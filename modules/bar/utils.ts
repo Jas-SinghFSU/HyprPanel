@@ -1,5 +1,6 @@
 import Gdk from 'gi://Gdk?version=3.0';
 import { Attribute, Child } from 'lib/types/widget';
+import { calculateMenuPosition } from 'modules/menus/shared/dropdown/locationHandler/index';
 import Button from 'types/widgets/button';
 
 export const closeAllMenus = (): void => {
@@ -20,7 +21,7 @@ export const closeAllMenus = (): void => {
     });
 };
 
-export const openMenu = (clicked: Button<Child, Attribute>, event: Gdk.Event, window: string): void => {
+export const openMenu = async (clicked: Button<Child, Attribute>, event: Gdk.Event, window: string): Promise<void> => {
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
@@ -48,6 +49,12 @@ export const openMenu = (clicked: Button<Child, Attribute>, event: Gdk.Event, wi
         source: window,
         pos: coords,
     };
+
+    try {
+        await calculateMenuPosition(coords, window);
+    } catch (error) {
+        console.error(`Error calculating menu position: ${error}`);
+    }
 
     closeAllMenus();
     App.toggleWindow(window);
