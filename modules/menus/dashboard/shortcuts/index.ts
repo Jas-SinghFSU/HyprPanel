@@ -38,7 +38,7 @@ const Shortcuts = (): BoxWidget => {
         hpack: 'fill',
         hexpand: true,
         setup: (self) => {
-            self.hook(hyprland, () => {
+            const renderMonitorList = (): void => {
                 const displays = hyprland.monitors.map((mon) => {
                     return Widget.MenuItem({
                         label: `Display ${mon.name}`,
@@ -64,12 +64,14 @@ const Shortcuts = (): BoxWidget => {
                 //     });
                 // });
 
-                return (self.children = [
+                self.children = [
                     ...displays,
                     // Disabled since window recording isn't available on wayland
                     // ...apps
-                ]);
-            });
+                ];
+            };
+            self.hook(hyprland, renderMonitorList, 'monitor-added');
+            self.hook(hyprland, renderMonitorList, 'monitor-removed');
         },
     });
 

@@ -2,8 +2,8 @@ import options from 'options';
 import { DropdownMenuProps } from 'lib/types/dropdownmenu';
 import { Attribute, Child, Exclusivity } from 'lib/types/widget';
 import Window from 'types/widgets/window';
-import { moveBoxToCursor } from './locationHandler/index';
 import { barEventMargins } from './eventBoxes/index';
+import { globalEventBoxes } from 'globals/dropdown';
 
 const { location } = options.theme.bar;
 
@@ -22,7 +22,6 @@ export default ({
     child,
     transition,
     exclusivity = 'ignore' as Exclusivity,
-    fixed = false,
     ...props
 }: DropdownMenuProps): Window<Child, Attribute> =>
     Widget.Window({
@@ -61,7 +60,7 @@ export default ({
                             return true;
                         },
                         setup: (self) => {
-                            moveBoxToCursor(self, fixed);
+                            globalEventBoxes.value[name] = self;
                         },
                         child: Widget.Box({
                             class_name: 'dropdown-menu-container',
@@ -73,7 +72,7 @@ export default ({
                                         if (wname === name) self.reveal_child = visible;
                                     }),
                                 transition,
-                                transitionDuration: 350,
+                                transitionDuration: options.menus.transitionTime.bind('value'),
                                 child: Widget.Box({
                                     class_name: 'dropdown-menu-container',
                                     can_focus: true,

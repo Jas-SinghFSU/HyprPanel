@@ -1,8 +1,8 @@
 import 'lib/session';
 import 'scss/style';
 import 'globals/useTheme';
+import 'globals/dropdown.js';
 import 'globals/utilities';
-import 'globals/mousePos';
 
 import { Bar } from 'modules/bar/Bar';
 import MenuWindows from './modules/menus/main.js';

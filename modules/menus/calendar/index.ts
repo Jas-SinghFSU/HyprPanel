@@ -11,7 +11,7 @@ const { enabled: weatherEnabled } = options.menus.clock.weather;
 export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'calendarmenu',
-        transition: 'crossfade',
+        transition: options.menus.transition.bind('value'),
         child: Widget.Box({
             class_name: 'calendar-menu-content',
             css: 'padding: 1px; margin: -1px;',

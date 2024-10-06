@@ -163,7 +163,7 @@ export default ({
     name,
     child,
     layout = 'center',
-    transition,
+    transition = 'none',
     exclusivity = 'ignore' as Exclusivity,
     ...props
 }: PopupWindowProps): Window<Child, Attribute> => {

@@ -6,11 +6,12 @@ import { Stats } from './stats/index.js';
 import { Directories } from './directories/index.js';
 import Window from 'types/widgets/window.js';
 import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options.js';
 
 export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'dashboardmenu',
-        transition: 'crossfade',
+        transition: options.menus.transition.bind('value'),
         child: Widget.Box({
             class_name: 'dashboard-menu-content',
             css: 'padding: 1px; margin: -1px;',

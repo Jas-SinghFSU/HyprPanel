@@ -12,27 +12,30 @@ const renderActiveInput = (): Box<Child, Attribute>[] => {
                     vexpand: false,
                     vpack: 'end',
                     setup: (self) => {
-                        self.hook(audio, () => {
+                        const updateClass = (): void => {
                             const mic = audio.microphone;
                             const className = `menu-active-button input ${mic.is_muted ? 'muted' : ''}`;
-                            return (self.class_name = className);
-                        });
+                            self.class_name = className;
+                        };
+
+                        self.hook(audio.microphone, updateClass, 'notify::is-muted');
                     },
                     on_primary_click: () => (audio.microphone.is_muted = !audio.microphone.is_muted),
                     child: Widget.Icon({
                         class_name: 'menu-active-icon input',
                         setup: (self) => {
-                            self.hook(audio, () => {
+                            const updateIcon = (): void => {
                                 const isMicMuted =
                                     audio.microphone.is_muted !== null ? audio.microphone.is_muted : true;
 
                                 if (audio.microphone.volume > 0) {
                                     self.icon = getIcon(audio.microphone.volume, isMicMuted)['mic'];
-                                    return;
+                                } else {
+                                    self.icon = getIcon(100, true)['mic'];
                                 }
-
-                                self.icon = getIcon(100, false)['mic'];
-                            });
+                            };
+                            self.hook(audio.microphone, updateIcon, 'notify::volume');
+                            self.hook(audio.microphone, updateIcon, 'notify::is-muted');
                         },
                     }),
                 }),
@@ -44,9 +47,9 @@ const renderActiveInput = (): Box<Child, Attribute>[] => {
                             hpack: 'start',
                             truncate: 'end',
                             wrap: true,
-                            label: audio
-                                .bind('microphone')
-                                .as((v) => (v.description === null ? 'No input device found...' : v.description)),
+                            label: audio.bind('microphone').as((v) => {
+                                return v.description === null ? 'No input device found...' : v.description;
+                            }),
                         }),
                         Widget.Slider({
                             value: audio.microphone.bind('volume').as((v) => v),

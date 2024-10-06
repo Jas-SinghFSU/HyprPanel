@@ -44,7 +44,6 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                         options.theme.matugen.bind('value'),
                                         options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                                         hyprland.bind('monitors'),
-                                        hyprland.active.workspace.bind('id'),
                                     ],
                                     (
                                         sp: number,
@@ -70,7 +69,6 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                         hyprland.bind('monitors'),
                                         options.bar.workspaces.icons.available.bind('value'),
                                         options.bar.workspaces.icons.active.bind('value'),
-                                        hyprland.active.workspace.bind('id'),
                                     ],
                                     (
                                         showIcons: boolean,
@@ -102,7 +100,6 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                         options.bar.workspaces.showWsIcons.bind('value'),
                                         workspaceMask.bind('value'),
                                         hyprland.bind('monitors'),
-                                        hyprland.active.workspace.bind('id'),
                                     ],
                                     (
                                         showIcons: boolean,

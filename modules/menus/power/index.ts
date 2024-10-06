@@ -4,6 +4,7 @@ import powermenu from './helpers/actions.js';
 import icons from '../../icons/index.js';
 import Window from 'types/widgets/window.js';
 import { Attribute, Child, GButton } from 'lib/types/widget.js';
+import options from 'options.js';
 
 const SysButton = (action: Action, label: string): GButton =>
     Widget.Button({
@@ -27,7 +28,7 @@ const SysButton = (action: Action, label: string): GButton =>
 export default (): Window<Child, Attribute> =>
     PopupWindow({
         name: 'powermenu',
-        transition: 'crossfade',
+        transition: options.menus.transition.bind('value'),
         child: Widget.Box({
             class_name: 'powermenu horizontal',
             children: [

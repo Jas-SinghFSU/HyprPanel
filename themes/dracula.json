@@ -332,5 +332,10 @@
   "theme.notification.label": "#bd93f9",
   "theme.notification.actions.text": "#282a36",
   "theme.notification.actions.background": "#bd93f9",
-  "theme.notification.background": "#282a36"
+  "theme.notification.background": "#282a36",
+  "theme.bar.buttons.modules.submap.background": "#44475a",
+  "theme.bar.buttons.modules.submap.text": "#8be9fd",
+  "theme.bar.buttons.modules.submap.border": "#8be9fd",
+  "theme.bar.buttons.modules.submap.icon": "#8be9fd",
+  "theme.bar.buttons.modules.submap.icon_background": "#44475a"
 }

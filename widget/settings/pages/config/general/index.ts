@@ -48,6 +48,20 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                         "Enabling this will change all overlays (Notifications, OSDs, Bar) to the 'top' layer instead the 'overlay' layer.",
                     type: 'boolean',
                 }),
+                Option({
+                    opt: options.menus.transition,
+                    title: 'Menu Transition',
+                    type: 'enum',
+                    enums: ['none', 'crossfade'],
+                }),
+                Option({
+                    opt: options.menus.transitionTime,
+                    title: 'Menu Transition Duration',
+                    type: 'number',
+                    min: 100,
+                    max: 10000,
+                    increment: 100,
+                }),
 
                 Header('Scaling'),
                 Option({
