@@ -7,7 +7,7 @@ import { Monitor } from 'types/service/hyprland';
 import Box from 'types/widgets/box';
 import EventBox from 'types/widgets/eventbox';
 import Revealer from 'types/widgets/revealer';
-import { globalEventBoxes } from 'globals/mousePos';
+import { globalEventBoxes } from 'globals/dropdown';
 
 type NestedRevealer = Revealer<Box<TWidget, unknown>, unknown>;
 type NestedBox = Box<NestedRevealer, unknown>;

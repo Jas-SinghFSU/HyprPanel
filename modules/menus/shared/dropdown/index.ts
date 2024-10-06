@@ -3,7 +3,7 @@ import { DropdownMenuProps } from 'lib/types/dropdownmenu';
 import { Attribute, Child, Exclusivity } from 'lib/types/widget';
 import Window from 'types/widgets/window';
 import { barEventMargins } from './eventBoxes/index';
-import { globalEventBoxes } from 'globals/mousePos';
+import { globalEventBoxes } from 'globals/dropdown';
 
 const { location } = options.theme.bar;
 

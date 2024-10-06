@@ -45,11 +45,6 @@ export const openMenu = async (clicked: Button<Child, Attribute>, event: Gdk.Eve
     const adjustedXCoord = clickPos[1] + middleOffset;
     const coords = [adjustedXCoord, clickPos[2]];
 
-    globalMousePos.value = {
-        source: window,
-        pos: coords,
-    };
-
     try {
         await calculateMenuPosition(coords, window);
     } catch (error) {

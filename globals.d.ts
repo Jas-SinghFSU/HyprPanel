@@ -4,7 +4,6 @@
 import { Options, Variable as VariableType } from 'types/variable';
 
 declare global {
-    var globalMousePos: VariableType<MousePos>;
     var useTheme: (filePath: string) => void;
     var globalWeatherVar: VariableType<Weather>;
     var options: Options;
