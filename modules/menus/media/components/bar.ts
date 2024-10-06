@@ -46,13 +46,13 @@ const Bar = (getPlayerInfo: (media: Mpris) => MprisPlayer): BoxWidget => {
                             const curSec = Math.floor(foundPlayer.position % 60);
 
                             if (typeof foundPlayer.position === 'number' && foundPlayer.position >= 0) {
-                                function formatTime(time: number): string {
+                                const formatTime = (time: number): string => {
                                     return time.toString().padStart(2, '0');
-                                }
+                                };
 
-                                function formatHour(hour: number): string {
+                                const formatHour = (hour: number): string => {
                                     return hour > 0 ? formatTime(hour) + ':' : '';
-                                }
+                                };
 
                                 self.tooltip_text = `${formatHour(curHour)}${formatTime(curMin)}:${formatTime(curSec)}`;
                             } else {
