@@ -3,6 +3,7 @@ import { bash, dependencies } from 'lib/utils';
 import { MatugenColors, RecursiveOptionsObject } from 'lib/types/options';
 import { initializeTrackers } from './optionsTrackers';
 import { generateMatugenColors, replaceHexValues } from '../services/matugen/index';
+import { isHexColor } from 'globals/variables';
 
 const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
 
@@ -13,24 +14,25 @@ function extractVariables(theme: RecursiveOptionsObject, prefix = '', matugenCol
             continue;
         }
 
-        const value = theme[key];
+        const themeValue = theme[key];
 
         const newPrefix = prefix ? `${prefix}-${key}` : key;
 
-        const isColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value.value);
         const replacedValue =
-            isColor && matugenColors !== undefined ? replaceHexValues(value.value, matugenColors) : value.value;
+            isHexColor(themeValue.value) && matugenColors !== undefined
+                ? replaceHexValues(themeValue.value, matugenColors)
+                : themeValue.value;
 
-        if (typeof value === 'function') {
+        if (typeof themeValue === 'function') {
             result.push(`$${newPrefix}: ${replacedValue};`);
             continue;
         }
-        if (typeof value !== 'object' || value === null || Array.isArray(value)) continue;
+        if (typeof themeValue !== 'object' || themeValue === null || Array.isArray(themeValue)) continue;
 
-        if (typeof value.value !== 'undefined') {
+        if (typeof themeValue.value !== 'undefined') {
             result.push(`$${newPrefix}: ${replacedValue};`);
         } else {
-            result = result.concat(extractVariables(value as RecursiveOptionsObject, newPrefix, matugenColors));
+            result = result.concat(extractVariables(themeValue, newPrefix, matugenColors));
         }
     }
 
@@ -43,7 +45,7 @@ const resetCss = async (): Promise<void> => {
     try {
         const matugenColors = await generateMatugenColors();
 
-        const variables = [...extractVariables(options.theme, '', matugenColors)];
+        const variables = extractVariables(options.theme as RecursiveOptionsObject, '', matugenColors);
 
         const vars = `${TMP}/variables.scss`;
         const css = `${TMP}/main.css`;

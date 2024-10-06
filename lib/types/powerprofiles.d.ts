@@ -1,4 +1,3 @@
-import icons from 'modules/icons/index';
 import PowerProfiles from 'types/service/powerprofiles.js';
 
 export type PowerProfiles = InstanceType<typeof PowerProfiles>;

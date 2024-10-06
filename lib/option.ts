@@ -87,7 +87,7 @@ export function mkOptions<T extends object>(
     cacheFile: string,
     object: T,
     confFile: string = 'config.json',
-): T & MkOptionsResult<T> {
+): T & MkOptionsResult {
     for (const opt of getOptions(object as Record<string, unknown>)) opt.init(cacheFile);
 
     Utils.ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
