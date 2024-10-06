@@ -6,7 +6,7 @@ export type PopupWindowProps = {
     name: string;
     child: Widget;
     layout?: Layouts;
-    transition?: Transition;
+    transition?: Transition | Binding<Transition>;
     exclusivity?: Exclusivity;
 } & WindowProps;
 
