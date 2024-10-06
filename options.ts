@@ -21,6 +21,7 @@ import {
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
 import { UnitType } from 'lib/types/weather';
+import { Transition } from 'lib/types/widget';
 import { WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
@@ -1040,6 +1041,8 @@ const options = mkOptions(OPTIONS, {
     },
 
     menus: {
+        transition: opt<Transition>('crossfade'),
+        transitionTime: opt(200),
         power: {
             showLabel: opt(true),
             confirmation: opt(true),

@@ -72,7 +72,7 @@ export default ({
                                         if (wname === name) self.reveal_child = visible;
                                     }),
                                 transition,
-                                transitionDuration: 350,
+                                transitionDuration: options.menus.transitionTime.bind('value'),
                                 child: Widget.Box({
                                     class_name: 'dropdown-menu-container',
                                     can_focus: true,
