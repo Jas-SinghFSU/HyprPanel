@@ -1048,16 +1048,16 @@ const options = mkOptions(OPTIONS, {
             confirmation: opt(true),
             sleep: opt('systemctl suspend'),
             reboot: opt('systemctl reboot'),
-            logout: opt('pkill Hyprland'),
-            shutdown: opt('shutdown now'),
+            logout: opt('hyprctl dispatch exit'),
+            shutdown: opt('systemctl poweroff'),
         },
         dashboard: {
             powermenu: {
                 confirmation: opt(true),
                 sleep: opt('systemctl suspend'),
                 reboot: opt('systemctl reboot'),
-                logout: opt('pkill Hyprland'),
-                shutdown: opt('shutdown now'),
+                logout: opt('hyprctl dispatch exit'),
+                shutdown: opt('systemctl poweroff'),
                 avatar: {
                     image: opt('avatar-default-symbolic'),
                     name: opt<'system' | string>('system'),
