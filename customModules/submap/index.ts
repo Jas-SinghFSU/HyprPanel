@@ -7,7 +7,7 @@ import Button from 'types/widgets/button';
 import { Variable as VariableType } from 'types/variable';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
-import { caapitalizeFirstLetter } from 'lib/utils';
+import { capitalizeFirstLetter } from 'lib/utils';
 
 const {
     label,
@@ -23,10 +23,14 @@ const {
     scrollDown,
 } = options.bar.customModules.submap;
 
-const submapStatus: VariableType<string> = Variable('');
+const submapStatus: VariableType<string> = Variable('default');
 
 hyprland.connect('submap', (_, currentSubmap) => {
-    submapStatus.value = currentSubmap;
+    if (currentSubmap.length === 0) {
+        submapStatus.value = 'default';
+    } else {
+        submapStatus.value = currentSubmap;
+    }
 });
 
 const getInitialSubmap = (): void => {
@@ -35,7 +39,11 @@ const getInitialSubmap = (): void => {
     const newLineCarriage = /\n/g;
     submap = submap.replace(newLineCarriage, '');
 
-    submapStatus.value = submap && submap === 'default' ? '' : submap;
+    if (submap === 'unknown request') {
+        submap = 'default';
+    }
+
+    submapStatus.value = submap;
 };
 
 getInitialSubmap();
@@ -45,7 +53,7 @@ export const Submap = (): BarBoxChild => {
         textIcon: Utils.merge(
             [submapStatus.bind('value'), enabledIcon.bind('value'), disabledIcon.bind('value')],
             (status, enabled, disabled) => {
-                return status.length > 0 ? enabled : disabled;
+                return status !== 'default' ? enabled : disabled;
             },
         ),
         tooltipText: Utils.merge(
@@ -57,9 +65,9 @@ export const Submap = (): BarBoxChild => {
             ],
             (status, enabled, disabled, showSmName) => {
                 if (showSmName) {
-                    return status.length > 0 ? caapitalizeFirstLetter(status) : 'Default';
+                    return capitalizeFirstLetter(status);
                 }
-                return status.length > 0 ? enabled : disabled;
+                return status !== 'default' ? enabled : disabled;
             },
         ),
         boxClass: 'submap',
@@ -72,9 +80,9 @@ export const Submap = (): BarBoxChild => {
             ],
             (status, enabled, disabled, showSmName) => {
                 if (showSmName) {
-                    return status.length > 0 ? caapitalizeFirstLetter(status) : 'Default';
+                    return capitalizeFirstLetter(status);
                 }
-                return status.length > 0 ? enabled : disabled;
+                return status !== 'default' ? enabled : disabled;
             },
         ),
         showLabelBinding: label.bind('value'),
