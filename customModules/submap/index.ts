@@ -29,6 +29,17 @@ hyprland.connect('submap', (_, currentSubmap) => {
     submapStatus.value = currentSubmap;
 });
 
+const getInitialSubmap = (): void => {
+    let submap = hyprland.message('submap');
+
+    const newLineCarriage = /\n/g;
+    submap = submap.replace(newLineCarriage, '');
+
+    submapStatus.value = submap && submap === 'default' ? '' : submap;
+};
+
+getInitialSubmap();
+
 export const Submap = (): BarBoxChild => {
     const submapModule = module({
         textIcon: Utils.merge(
