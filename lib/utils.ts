@@ -190,6 +190,6 @@ export const isValidGjsColor = (color: string): boolean => {
     return false;
 };
 
-export const caapitalizeFirstLetter = (str: string): string => {
+export const capitalizeFirstLetter = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };

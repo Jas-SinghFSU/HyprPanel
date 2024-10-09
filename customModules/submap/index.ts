@@ -7,7 +7,8 @@ import Button from 'types/widgets/button';
 import { Variable as VariableType } from 'types/variable';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
-import { caapitalizeFirstLetter } from 'lib/utils';
+import { capitalizeFirstLetter } from 'lib/utils';
+import { getInitialSubmap, isSubmapEnabled } from './helpers';
 
 const {
     label,
@@ -23,18 +24,24 @@ const {
     scrollDown,
 } = options.bar.customModules.submap;
 
-const submapStatus: VariableType<string> = Variable('');
+const submapStatus: VariableType<string> = Variable('default');
 
 hyprland.connect('submap', (_, currentSubmap) => {
-    submapStatus.value = currentSubmap;
+    if (currentSubmap.length === 0) {
+        submapStatus.value = 'default';
+    } else {
+        submapStatus.value = currentSubmap;
+    }
 });
+
+getInitialSubmap(submapStatus);
 
 export const Submap = (): BarBoxChild => {
     const submapModule = module({
         textIcon: Utils.merge(
             [submapStatus.bind('value'), enabledIcon.bind('value'), disabledIcon.bind('value')],
             (status, enabled, disabled) => {
-                return status.length > 0 ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         tooltipText: Utils.merge(
@@ -46,9 +53,9 @@ export const Submap = (): BarBoxChild => {
             ],
             (status, enabled, disabled, showSmName) => {
                 if (showSmName) {
-                    return status.length > 0 ? caapitalizeFirstLetter(status) : 'Default';
+                    return capitalizeFirstLetter(status);
                 }
-                return status.length > 0 ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         boxClass: 'submap',
@@ -61,9 +68,9 @@ export const Submap = (): BarBoxChild => {
             ],
             (status, enabled, disabled, showSmName) => {
                 if (showSmName) {
-                    return status.length > 0 ? caapitalizeFirstLetter(status) : 'Default';
+                    return capitalizeFirstLetter(status);
                 }
-                return status.length > 0 ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         showLabelBinding: label.bind('value'),
