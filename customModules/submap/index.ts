@@ -8,6 +8,7 @@ import { Variable as VariableType } from 'types/variable';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
 import { capitalizeFirstLetter } from 'lib/utils';
+import { getInitialSubmap, isSubmapEnabled } from './helpers';
 
 const {
     label,
@@ -33,27 +34,14 @@ hyprland.connect('submap', (_, currentSubmap) => {
     }
 });
 
-const getInitialSubmap = (): void => {
-    let submap = hyprland.message('submap');
-
-    const newLineCarriage = /\n/g;
-    submap = submap.replace(newLineCarriage, '');
-
-    if (submap === 'unknown request') {
-        submap = 'default';
-    }
-
-    submapStatus.value = submap;
-};
-
-getInitialSubmap();
+getInitialSubmap(submapStatus);
 
 export const Submap = (): BarBoxChild => {
     const submapModule = module({
         textIcon: Utils.merge(
             [submapStatus.bind('value'), enabledIcon.bind('value'), disabledIcon.bind('value')],
             (status, enabled, disabled) => {
-                return status !== 'default' ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         tooltipText: Utils.merge(
@@ -67,7 +55,7 @@ export const Submap = (): BarBoxChild => {
                 if (showSmName) {
                     return capitalizeFirstLetter(status);
                 }
-                return status !== 'default' ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         boxClass: 'submap',
@@ -82,7 +70,7 @@ export const Submap = (): BarBoxChild => {
                 if (showSmName) {
                     return capitalizeFirstLetter(status);
                 }
-                return status !== 'default' ? enabled : disabled;
+                return isSubmapEnabled(status, enabled, disabled);
             },
         ),
         showLabelBinding: label.bind('value'),
