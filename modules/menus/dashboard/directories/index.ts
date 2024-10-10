@@ -1,7 +1,7 @@
 import { BoxWidget } from 'lib/types/widget';
 import options from 'options';
 
-const { left, right } = options.menus.dashboard.directories;
+const { enabled:left, right } = options.menus.dashboard.directories;
 
 const Directories = (): BoxWidget => {
     return Widget.Box({
