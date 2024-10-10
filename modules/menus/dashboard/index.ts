@@ -8,6 +8,8 @@ import Window from 'types/widgets/window.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import options from 'options.js';
 
+const { enabled: directoriesEnabled } = options.menus.dashboard.directories;
+
 export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'dashboardmenu',
@@ -20,13 +22,21 @@ export default (): Window<Child, Attribute> => {
                 Widget.Box({
                     class_name: 'dashboard-content-container',
                     vertical: true,
-                    children: [
-                        Widget.Box({
-                            class_name: 'dashboard-content-items',
-                            vertical: true,
-                            children: [Profile(), Shortcuts(), Controls(), Directories(), Stats()],
-                        }),
-                    ],
+                    children: directoriesEnabled.bind('value').as((isDirectoriesEnabled) => {
+                        return [
+                            Widget.Box({
+                                class_name: 'dashboard-content-items',
+                                vertical: true,
+                                children: [
+                                    Profile(),
+                                    Shortcuts(),
+                                    Controls(),
+                                    ...(isDirectoriesEnabled ? [Directories()] : []),
+                                    Stats(),
+                                ],
+                            }),
+                        ];
+                    }),
                 }),
             ],
         }),
