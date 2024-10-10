@@ -23,11 +23,19 @@ export default (): Window<Child, Attribute> => {
                     class_name: 'dashboard-content-container',
                     vertical: true,
                     children: directoriesEnabled.bind('value').as((isDirectoriesEnabled) => {
-                        return [Widget.Box({
-                            class_name: 'dashboard-content-items',
-                            vertical: true,
-                            children: [Profile(), Shortcuts(), Controls(), ...(isDirectoriesEnabled ? [Directories()] : []), Stats()],
-                        })]
+                        return [
+                            Widget.Box({
+                                class_name: 'dashboard-content-items',
+                                vertical: true,
+                                children: [
+                                    Profile(),
+                                    Shortcuts(),
+                                    Controls(),
+                                    ...(isDirectoriesEnabled ? [Directories()] : []),
+                                    Stats(),
+                                ],
+                            }),
+                        ];
                     }),
                 }),
             ],
