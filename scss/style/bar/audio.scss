@@ -26,7 +26,6 @@
 .bar-separator.volume {
   color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-separator);
   margin-left: $bar-buttons-volume-spacing;
-  margin-right: $bar-buttons-volume-spacing;
 }
 
 .style2 {
@@ -37,36 +36,12 @@
     padding: $bar-buttons-padding_y 0em;
     padding-left: $bar-buttons-padding_x;
     padding-right: $bar-buttons-volume-spacing;
-
-    &.right-icon {
-      border-top-right-radius: $bar-buttons-radius;
-      border-bottom-right-radius: $bar-buttons-radius;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      padding-left: $bar-buttons-volume-spacing;
-      padding-right: $bar-buttons-padding_x;
-
-      &.no-label {
-        border-top-left-radius: $bar-buttons-radius;
-        border-bottom-left-radius: $bar-buttons-radius;
-      }
-    }
-
-    &.no-label {
-      border-top-right-radius: $bar-buttons-radius;
-      border-bottom-right-radius: $bar-buttons-radius;
-    }
   }
 
   .bar-button-label.volume {
     padding: $bar-buttons-padding_y 0em;
     padding-left: $bar-buttons-volume-spacing;
     margin-left: 0em;
-
-    &.right-icon {
-      padding-left: 0;
-      padding-right: $bar-buttons-volume-spacing;
-    }
 
     &.no-separator {
       padding-right: $bar-buttons-padding_x;

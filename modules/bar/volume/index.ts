@@ -10,7 +10,7 @@ import Separator from 'types/widgets/separator';
 import Label from 'types/widgets/label';
 
 const Volume = (): BarBoxChild => {
-    const { label, input, output, hide_muted_label } = options.bar.volume;
+    const { label, input, input_label } = options.bar.volume;
     const button_style = options.theme.bar.buttons.style;
 
     const outputIcons: VolumeIcons = {
@@ -74,65 +74,43 @@ const Volume = (): BarBoxChild => {
                     audio.speaker.bind('is_muted'),
                     audio.microphone.bind('volume'),
                     audio.microphone.bind('is_muted'),
-                    button_style.bind('value'),
                     label.bind('value'),
-                    output.bind('value'),
                     input.bind('value'),
-                    hide_muted_label.bind('value'),
+                    input_label.bind('value'),
                 ],
                 (
                     outputVolume,
                     outputIsMuted,
                     inputVolume,
                     inputIsMuted,
-                    buttonStyle,
-                    showLabel,
-                    showOutput,
-                    showInput,
-                    hideMutedLabel,
+                    showOutputLabel,
+                    showInputIcon,
+                    showInputLabel,
                 ) => {
                     const children: (Label<Child> | Separator<Child>)[] = [];
-                    if (showOutput) {
-                        const isMuted = outputIsMuted !== false || Math.round(outputVolume * 100) === 0;
-                        const labelVisible = showLabel && !(hideMutedLabel && isMuted);
+                    const outputMuted = outputIsMuted !== false || Math.round(outputVolume * 100) === 0;
+                    const inputMuted = inputIsMuted !== false || Math.round(inputVolume * 100) === 0;
+                    const showLabel = showOutputLabel || showInputLabel;
+
+                    if (showInputIcon) {
                         children.push(
-                            volIcn(outputVolume, isMuted, outputIcons, `output ${!labelVisible ? 'no-label' : ''}`),
+                            volIcn(inputVolume, inputMuted, inputIcons, `input ${!showLabel ? 'no-label' : ''}`),
                         );
-                        if (labelVisible) {
-                            children.push(volPct(outputVolume, isMuted, `output ${!showInput ? 'no-separator' : ''}`));
-                        }
+                    } else {
+                        children.push(
+                            volIcn(outputVolume, outputMuted, outputIcons, `output ${!showLabel ? 'no-label' : ''}`),
+                        );
                     }
 
-                    if (showInput) {
-                        if (showOutput) {
+                    if (showOutputLabel) {
+                        children.push(volPct(outputVolume, outputMuted, `output`));
+                    }
+
+                    if (showInputLabel) {
+                        if (showOutputLabel) {
                             children.push(Widget.Separator({ vertical: true, class_name: 'bar-separator volume' }));
                         }
-                        const isMuted = inputIsMuted !== false || Math.round(inputVolume * 100) === 0;
-                        const labelVisible = showLabel && !(hideMutedLabel && isMuted);
-                        const rightIcon = buttonStyle === 'split' && showOutput;
-
-                        if (!rightIcon) {
-                            children.push(
-                                volIcn(inputVolume, isMuted, inputIcons, `input ${!labelVisible ? 'no-label' : ''}`),
-                            );
-                        }
-
-                        if (labelVisible) {
-                            children.push(
-                                volPct(inputVolume, isMuted, `input ${rightIcon ? 'right-icon' : 'no-separator'}`),
-                            );
-                        }
-
-                        if (rightIcon) {
-                            children.push(
-                                volIcn(
-                                    inputVolume,
-                                    isMuted,
-                                    inputIcons,
-                                    `input right-icon ${!labelVisible ? 'no-label' : ''}`,
-                                ),
-                            );
-                        }
+                        children.push(volPct(inputVolume, inputMuted, `input`));
                     }
                     return children;
                 },

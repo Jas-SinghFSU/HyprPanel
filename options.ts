@@ -833,9 +833,8 @@ const options = mkOptions(OPTIONS, {
         },
         volume: {
             label: opt(true),
-            output: opt(true),
             input: opt(false),
-            hide_muted_label: opt(false),
+            input_label: opt(false),
         },
         network: {
             truncation: opt(true),
