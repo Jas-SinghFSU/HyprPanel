@@ -1103,6 +1103,7 @@ const options = mkOptions(OPTIONS, {
                 },
             },
             directories: {
+                enabled: opt(true),
                 left: {
                     directory1: {
                         label: opt('󰉍 Downloads'),

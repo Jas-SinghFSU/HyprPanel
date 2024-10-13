@@ -145,6 +145,7 @@ export const DashboardMenuSettings = (): Scrollable<Child, Attribute> => {
                 }),
 
                 Header('Directories'),
+                Option({ opt: options.menus.dashboard.directories.enabled, title: 'Enabled', type: 'boolean' }),
                 Option({
                     opt: options.menus.dashboard.directories.left.directory1.label,
                     title: 'Left - Directory 1 (Label)',
