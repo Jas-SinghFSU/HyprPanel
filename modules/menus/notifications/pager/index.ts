@@ -5,6 +5,7 @@ import options from 'options';
 import { Notification } from 'types/service/notifications';
 import { Variable } from 'types/variable';
 
+
 const { displayedTotal } = options.notifications;
 const { show: showPager } = options.theme.bar.menus.menu.notifications.pager;
 
@@ -21,7 +22,7 @@ export const NotificationPager = (curPage: Variable<number>): BoxWidget => {
                 showPager.bind('value'),
             ],
             (currentPage: number, dispTotal: number, _: Notification[], showPgr: boolean) => {
-                if (showPgr === false) {
+                if (showPgr === false || (currentPage === 1 && notifs.notifications.length <= dispTotal)) {
                     return [];
                 }
                 return [
