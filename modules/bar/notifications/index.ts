@@ -48,7 +48,7 @@ export const Notifications = (): BarBoxChild => {
                             label: filteredNotifications.length.toString(),
                         });
 
-                        if (showTotal) {
+                        if (showTotal && notif.length > 0) {
                             return [notifIcon, notifLabel];
                         }
                         return [notifIcon];
