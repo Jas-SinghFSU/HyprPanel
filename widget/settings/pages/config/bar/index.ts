@@ -740,7 +740,8 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.notifications.hideCountWhenZero,
-                    title: 'Hide Total # of notifications when zero',
+                    title: 'Auto Hide Label',
+                    subtitle: 'Hide Total # of notifications when zero',
                     type: 'boolean',
                 }),
                 Option({
