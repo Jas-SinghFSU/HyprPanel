@@ -5,7 +5,6 @@ import options from 'options';
 import { Notification } from 'types/service/notifications';
 import { Variable } from 'types/variable';
 
-
 const { displayedTotal } = options.notifications;
 const { show: showPager } = options.theme.bar.menus.menu.notifications.pager;
 
