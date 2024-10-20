@@ -7,7 +7,7 @@ import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
-const { show_total, rightClick, middleClick, scrollUp, scrollDown , hideCountWhenZero} = options.bar.notifications;
+const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
 const { ignore } = options.notifications;
 
 const notifs = await Service.import('notifications');
@@ -32,7 +32,13 @@ export const Notifications = (): BarBoxChild => {
                 hpack: 'start',
                 class_name: 'bar-notifications',
                 children: Utils.merge(
-                    [notifs.bind('notifications'), notifs.bind('dnd'), show_total.bind('value'), ignore.bind('value'), hideCountWhenZero.bind("value")],
+                    [
+                        notifs.bind('notifications'),
+                        notifs.bind('dnd'),
+                        show_total.bind('value'),
+                        ignore.bind('value'),
+                        hideCountWhenZero.bind('value'),
+                    ],
                     (notif, dnd, showTotal, ignoredNotifs, hideCountForZero) => {
                         const filteredNotifications = filterNotifications(notif, ignoredNotifs);
 
@@ -49,7 +55,7 @@ export const Notifications = (): BarBoxChild => {
                         });
 
                         if (showTotal) {
-                            if (hideCountForZero && notif.length === 0){
+                            if (hideCountForZero && notif.length === 0) {
                                 return [notifIcon];
                             }
                             return [notifIcon, notifLabel];
