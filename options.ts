@@ -1142,6 +1142,7 @@ const options = mkOptions(OPTIONS, {
         clock: {
             time: {
                 military: opt(false),
+                hideSeconds: opt(false),
             },
             weather: {
                 enabled: opt(true),

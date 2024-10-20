@@ -21,7 +21,7 @@ export const NotificationPager = (curPage: Variable<number>): BoxWidget => {
                 showPager.bind('value'),
             ],
             (currentPage: number, dispTotal: number, _: Notification[], showPgr: boolean) => {
-                if (showPgr === false) {
+                if (showPgr === false || (currentPage === 1 && notifs.notifications.length <= dispTotal)) {
                     return [];
                 }
                 return [
