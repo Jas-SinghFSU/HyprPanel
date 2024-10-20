@@ -1064,9 +1064,14 @@ const options = mkOptions(OPTIONS, {
                 },
             },
             stats: {
+                enabled: opt(true),
                 enable_gpu: opt(false),
             },
+            controls: {
+                enabled: opt(true),
+            },
             shortcuts: {
+                enabled: opt(true),
                 left: {
                     shortcut1: {
                         icon: opt('󰇩'),
