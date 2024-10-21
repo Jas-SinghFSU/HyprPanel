@@ -50,6 +50,8 @@ export const NotificationSettings = (): Scrollable<Child, Attribute> => {
                     title: 'Clear Delay',
                     subtitle: 'The delay in milliseconds before a notification is cleared',
                     type: 'number',
+                    increment: 20,
+
                 }),
                 Option({
                     opt: options.notifications.timeout,
