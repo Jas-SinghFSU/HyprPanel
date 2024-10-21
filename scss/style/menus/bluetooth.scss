@@ -111,6 +111,9 @@
       color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
       opacity: 0.4;
     }
+    .battery{
+      opacity: 0.6;
+    }
   }
 
   spinner {
