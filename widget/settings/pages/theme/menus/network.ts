@@ -40,6 +40,19 @@ export const NetworkMenuTheme = (): Scrollable<Child, Attribute> => {
                     type: 'color',
                 }),
 
+                Header('Switch'),
+                Option({
+                    opt: options.theme.bar.menus.menu.network.switch.enabled,
+                    title: 'Enabled',
+                    type: 'color',
+                }),
+                Option({
+                    opt: options.theme.bar.menus.menu.network.switch.disabled,
+                    title: 'Disabled',
+                    type: 'color',
+                }),
+                Option({ opt: options.theme.bar.menus.menu.network.switch.puck, title: 'Puck', type: 'color' }),
+
                 Header('List Items'),
                 Option({
                     opt: options.theme.bar.menus.menu.network.listitems.active,

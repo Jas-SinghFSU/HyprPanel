@@ -32,7 +32,7 @@ const Wifi = (): BoxWidget => {
                         label: 'Wi-Fi',
                     }),
                     Widget.Switch({
-                        class_name: 'menu-switch notifications',
+                        class_name: 'menu-switch network',
                         vpack: 'center',
                         tooltip_text: 'Toggle Wifi',
                         active: network.wifi.enabled,
