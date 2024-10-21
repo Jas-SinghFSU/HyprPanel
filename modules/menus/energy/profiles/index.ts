@@ -1,11 +1,18 @@
 const powerProfiles = await Service.import('powerprofiles');
 import { PowerProfile, PowerProfileObject, PowerProfiles } from 'lib/types/powerprofiles.js';
-import icons from '../../../icons/index.js';
 import { BoxWidget } from 'lib/types/widget.js';
+import icons from '../../../icons/index.js';
+import { uptime } from "lib/variables.js";
 
 const EnergyProfiles = (): BoxWidget => {
     const isValidProfile = (profile: string): profile is PowerProfile =>
         profile === 'power-saver' || profile === 'balanced' || profile === 'performance';
+
+    function up(up: number) {
+        const h = Math.floor(up / 60)
+        const m = Math.floor(up % 60)
+        return ` : ${h < 10? "0" + h : h}:${m < 10 ? "0" + m : m}`
+    }
 
     return Widget.Box({
         class_name: 'menu-section-container energy',
@@ -14,12 +21,18 @@ const EnergyProfiles = (): BoxWidget => {
             Widget.Box({
                 class_name: 'menu-label-container',
                 hpack: 'fill',
-                child: Widget.Label({
+                children: [Widget.Label({
                     class_name: 'menu-label',
                     hexpand: true,
                     hpack: 'start',
                     label: 'Power Profile',
                 }),
+                Widget.Label({
+                    class_name: "menu-label",
+                    css: "font-size: 0.9em",
+                    label: uptime.bind().as(up),
+                })
+                ],
             }),
             Widget.Box({
                 class_name: 'menu-items-section',
