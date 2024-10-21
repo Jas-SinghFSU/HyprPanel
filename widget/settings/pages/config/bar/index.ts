@@ -744,6 +744,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.notifications.hideCountWhenZero,
+                    title: 'Auto Hide Label',
+                    subtitle: 'Hide Total # of notifications when zero',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.notifications.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',
