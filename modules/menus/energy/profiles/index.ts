@@ -32,7 +32,7 @@ const EnergyProfiles = (): BoxWidget => {
                     Widget.Label({
                         class_name: 'menu-label uptime',
                         label: uptime.bind().as(renderUptime),
-                        tooltipText: 'Uptime'
+                        tooltipText: 'Uptime',
                     }),
                 ],
             }),
