@@ -60,15 +60,15 @@ const BatteryLabel = (): BarBoxChild => {
             visible: battery.bind('available'),
             tooltip_text: battery.bind('time_remaining').as((t) => t.toString()),
             children: Utils.merge(
-                [battery.bind('available'), show_label.bind('value'), hideLabelWhenFull.bind('value')],
-                (batAvail, showLabel, hideWhenFull) => {
+                [battery.bind('available'), show_label.bind('value'),battery.bind("charged"), hideLabelWhenFull.bind('value')],
+                (batAvail, showLabel, hideWhenFull, isCharged) => {
                     if (batAvail && showLabel) {
                         return [
                             Widget.Icon({
                                 class_name: 'bar-button-icon battery',
                                 icon: batIcon,
                             }),
-                            ...(hideWhenFull && battery.charged
+                            ...(hideWhenFull && isCharged
                                 ? []
                                 : [
                                       Widget.Label({
