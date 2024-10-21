@@ -2,16 +2,16 @@ const powerProfiles = await Service.import('powerprofiles');
 import { PowerProfile, PowerProfileObject, PowerProfiles } from 'lib/types/powerprofiles.js';
 import { BoxWidget } from 'lib/types/widget.js';
 import icons from '../../../icons/index.js';
-import { uptime } from "lib/variables.js";
+import { uptime } from 'lib/variables.js';
 
 const EnergyProfiles = (): BoxWidget => {
     const isValidProfile = (profile: string): profile is PowerProfile =>
         profile === 'power-saver' || profile === 'balanced' || profile === 'performance';
 
-    function up(up: number) {
-        const h = Math.floor(up / 60)
-        const m = Math.floor(up % 60)
-        return ` : ${h < 10? "0" + h : h}:${m < 10 ? "0" + m : m}`
+    function up(up: number): string {
+        const h = Math.floor(up / 60);
+        const m = Math.floor(up % 60);
+        return ` : ${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}`;
     }
 
     return Widget.Box({
@@ -21,17 +21,18 @@ const EnergyProfiles = (): BoxWidget => {
             Widget.Box({
                 class_name: 'menu-label-container',
                 hpack: 'fill',
-                children: [Widget.Label({
-                    class_name: 'menu-label',
-                    hexpand: true,
-                    hpack: 'start',
-                    label: 'Power Profile',
-                }),
-                Widget.Label({
-                    class_name: "menu-label",
-                    css: "font-size: 0.92em",
-                    label: uptime.bind().as(up),
-                })
+                children: [
+                    Widget.Label({
+                        class_name: 'menu-label',
+                        hexpand: true,
+                        hpack: 'start',
+                        label: 'Power Profile',
+                    }),
+                    Widget.Label({
+                        class_name: 'menu-label',
+                        css: 'font-size: 0.92em',
+                        label: uptime.bind().as(up),
+                    }),
                 ],
             }),
             Widget.Box({
