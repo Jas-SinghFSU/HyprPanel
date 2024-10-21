@@ -55,7 +55,7 @@ export const Notifications = (): BarBoxChild => {
                         });
 
                         if (showTotal) {
-                            if (hideCountForZero && notif.length === 0) {
+                            if (hideCountForZero && filteredNotifications.length === 0) {
                                 return [notifIcon];
                             }
                             return [notifIcon, notifLabel];
