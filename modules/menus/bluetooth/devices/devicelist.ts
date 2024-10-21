@@ -101,10 +101,19 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                     Widget.Revealer({
                                                         hpack: 'start',
                                                         reveal_child: device.connected || device.paired,
-                                                        child: Widget.Label({
+                                                        child: Widget.Box({
                                                             hpack: 'start',
-                                                            class_name: 'connection-status dim',
-                                                            label: device.connected ? 'Connected' : 'Paired',
+                                                            children: [
+                                                                Widget.Label({
+                                                                    hpack: 'start',
+                                                                    class_name: 'connection-status dim',
+                                                                    label: device.connected ? 'Connected' : 'Paired',
+                                                                }),
+                                                                Widget.Label({
+                                                                    class_name: 'connection-status battery',
+                                                                    label: device.connected ? `| 󰥉 ${device.battery_percentage}%` : "",
+                                                                }),
+                                                            ],
                                                         }),
                                                     }),
                                                 ],
