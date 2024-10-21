@@ -66,7 +66,7 @@ const BatteryLabel = (): BarBoxChild => {
                     battery.bind('charged'),
                     hideLabelWhenFull.bind('value'),
                 ],
-                (batAvail, showLabel, hideWhenFull, isCharged) => {
+                (batAvail, showLabel, isCharged, hideWhenFull) => {
                     if (batAvail && showLabel) {
                         return [
                             Widget.Icon({
