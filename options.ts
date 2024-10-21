@@ -1183,6 +1183,7 @@ const options = mkOptions(OPTIONS, {
         active_monitor: opt(true),
         timeout: opt(7000),
         cache_actions: opt(true),
+        clearDelay: opt(100),
     },
 
     dummy: opt(true),
