@@ -48,7 +48,9 @@ export const NotificationSettings = (): Scrollable<Child, Attribute> => {
                 Option({
                     opt: options.notifications.clearDelay,
                     title: 'Clear Delay',
-                    subtitle: 'The delay in milliseconds before a notification is cleared',
+                    subtitle:
+                        'The delay in milliseconds before a notification is cleared' +
+                        '\nWARNING: Setting this value too low may crash AGS depending on your system.',
                     type: 'number',
                     increment: 20,
 
