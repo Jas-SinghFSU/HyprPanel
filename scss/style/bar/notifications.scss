@@ -28,6 +28,10 @@
             $bar-buttons-radius
         );
         color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
+
+        &:last-child {
+            border-radius: $bar-buttons-radius;
+        }
     }
 
     .bar-button-label.notifications {

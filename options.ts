@@ -942,6 +942,7 @@ const options = mkOptions(OPTIONS, {
         },
         notifications: {
             show_total: opt(false),
+            hideCountWhenZero: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),
