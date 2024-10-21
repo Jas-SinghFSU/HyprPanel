@@ -528,6 +528,11 @@ const options = mkOptions(OPTIONS, {
                             passive: opt(colors.text),
                             active: opt(colors.mauve),
                         },
+                        switch: {
+                            enabled: opt(colors.mauve),
+                            disabled: opt(tertiary_colors.surface0),
+                            puck: opt(secondary_colors.surface1),
+                        },
                     },
                     bluetooth: {
                         scaling: opt(100),
@@ -907,6 +912,7 @@ const options = mkOptions(OPTIONS, {
         },
         battery: {
             label: opt(true),
+            hideLabelWhenFull: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),
@@ -1065,9 +1071,14 @@ const options = mkOptions(OPTIONS, {
                 },
             },
             stats: {
+                enabled: opt(true),
                 enable_gpu: opt(false),
             },
+            controls: {
+                enabled: opt(true),
+            },
             shortcuts: {
+                enabled: opt(true),
                 left: {
                     shortcut1: {
                         icon: opt('󰇩'),
@@ -1138,6 +1149,7 @@ const options = mkOptions(OPTIONS, {
         clock: {
             time: {
                 military: opt(false),
+                hideSeconds: opt(false),
             },
             weather: {
                 enabled: opt(true),

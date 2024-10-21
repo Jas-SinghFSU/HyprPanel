@@ -25,6 +25,10 @@
             $bar-buttons-radius * 0.4,
             $bar-buttons-radius
         );
+
+        &:last-child {
+            border-radius: $bar-buttons-radius;
+        }
     }
 
     .bar-button-label.battery {
@@ -56,3 +60,4 @@
         0em
     );
 }
+
