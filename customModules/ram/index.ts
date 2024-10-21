@@ -20,7 +20,8 @@ import { pollVariable } from 'customModules/PollVar';
 import { Attribute, Child } from 'lib/types/widget';
 
 // All the user configurable options for the ram module that are needed
-const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval } = options.bar.customModules.ram;
+const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
+    options.bar.customModules.ram;
 
 const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
 const ramUsage = Variable<GenericResourceData>(defaultRamData);
@@ -29,7 +30,7 @@ pollVariable(ramUsage, [round.bind('value')], pollingInterval.bind('value'), cal
 
 export const Ram = (): BarBoxChild => {
     const ramModule = module({
-        textIcon: '',
+        textIcon: icon.bind('value'),
         label: Utils.merge(
             [ramUsage.bind('value'), labelType.bind('value'), round.bind('value')],
             (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {

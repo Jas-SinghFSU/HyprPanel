@@ -1,7 +1,6 @@
 import { layoutMap } from 'customModules/kblayout/layouts';
 
 export type KbLabelType = 'layout' | 'code';
-export type KbIcon = '' | '󰌌' | '' | '󰬴' | '󰗊';
 
 export type HyprctlKeyboard = {
     address: string;
