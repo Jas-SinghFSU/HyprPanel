@@ -29,7 +29,7 @@ const EnergyProfiles = (): BoxWidget => {
                 }),
                 Widget.Label({
                     class_name: "menu-label",
-                    css: "font-size: 0.9em",
+                    css: "font-size: 0.92em",
                     label: uptime.bind().as(up),
                 })
                 ],
