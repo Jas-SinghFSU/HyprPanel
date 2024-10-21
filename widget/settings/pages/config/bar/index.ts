@@ -560,6 +560,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.battery.hideLabelWhenFull,
+                    title: 'Hide Battery Percentage When Full',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.battery.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',

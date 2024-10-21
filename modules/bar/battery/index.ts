@@ -7,7 +7,7 @@ import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
-const { label: show_label, rightClick, middleClick, scrollUp, scrollDown } = options.bar.battery;
+const { label: show_label, rightClick, middleClick, scrollUp, scrollDown, hideLabelWhenFull } = options.bar.battery;
 
 const BatteryLabel = (): BarBoxChild => {
     const isVis = Variable(battery.available);
@@ -59,29 +59,41 @@ const BatteryLabel = (): BarBoxChild => {
             ),
             visible: battery.bind('available'),
             tooltip_text: battery.bind('time_remaining').as((t) => t.toString()),
-            children: Utils.merge([battery.bind('available'), show_label.bind('value')], (batAvail, showLabel) => {
-                if (batAvail && showLabel) {
-                    return [
-                        Widget.Icon({
-                            class_name: 'bar-button-icon battery',
-                            icon: batIcon,
-                        }),
-                        Widget.Label({
-                            class_name: 'bar-button-label battery',
-                            label: battery.bind('percent').as((p) => `${Math.floor(p)}%`),
-                        }),
-                    ];
-                } else if (batAvail && !showLabel) {
-                    return [
-                        Widget.Icon({
-                            class_name: 'bar-button-icon battery',
-                            icon: batIcon,
-                        }),
-                    ];
-                } else {
-                    return [];
-                }
-            }),
+            children: Utils.merge(
+                [
+                    battery.bind('available'),
+                    show_label.bind('value'),
+                    battery.bind('charged'),
+                    hideLabelWhenFull.bind('value'),
+                ],
+                (batAvail, showLabel, isCharged, hideWhenFull) => {
+                    if (batAvail && showLabel) {
+                        return [
+                            Widget.Icon({
+                                class_name: 'bar-button-icon battery',
+                                icon: batIcon,
+                            }),
+                            ...(hideWhenFull && isCharged
+                                ? []
+                                : [
+                                      Widget.Label({
+                                          class_name: 'bar-button-label battery',
+                                          label: battery.bind('percent').as((p) => `${Math.floor(p)}%`),
+                                      }),
+                                  ]),
+                        ];
+                    } else if (batAvail && !showLabel) {
+                        return [
+                            Widget.Icon({
+                                class_name: 'bar-button-icon battery',
+                                icon: batIcon,
+                            }),
+                        ];
+                    } else {
+                        return [];
+                    }
+                },
+            ),
             setup: (self) => {
                 self.hook(battery, () => {
                     if (battery.available) {

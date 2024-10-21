@@ -528,6 +528,11 @@ const options = mkOptions(OPTIONS, {
                             passive: opt(colors.text),
                             active: opt(colors.mauve),
                         },
+                        switch: {
+                            enabled: opt(colors.mauve),
+                            disabled: opt(tertiary_colors.surface0),
+                            puck: opt(secondary_colors.surface1),
+                        },
                     },
                     bluetooth: {
                         scaling: opt(100),
@@ -907,6 +912,7 @@ const options = mkOptions(OPTIONS, {
         },
         battery: {
             label: opt(true),
+            hideLabelWhenFull: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),
