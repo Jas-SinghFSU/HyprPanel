@@ -8,10 +8,11 @@ const EnergyProfiles = (): BoxWidget => {
     const isValidProfile = (profile: string): profile is PowerProfile =>
         profile === 'power-saver' || profile === 'balanced' || profile === 'performance';
 
-    function up(up: number): string {
-        const h = Math.floor(up / 60);
-        const m = Math.floor(up % 60);
-        return ` : ${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}`;
+    function renderUptime(curUptime: number): string {
+        const days = Math.floor(curUptime / (60 * 24));
+        const hours = Math.floor((curUptime % (60 * 24)) / 60);
+        const minutes = Math.floor(curUptime % 60);
+        return ` : ${days}d ${hours}h ${minutes}m`;
     }
 
     return Widget.Box({
