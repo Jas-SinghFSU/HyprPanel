@@ -60,7 +60,12 @@ const BatteryLabel = (): BarBoxChild => {
             visible: battery.bind('available'),
             tooltip_text: battery.bind('time_remaining').as((t) => t.toString()),
             children: Utils.merge(
-                [battery.bind('available'), show_label.bind('value'),battery.bind("charged"), hideLabelWhenFull.bind('value')],
+                [
+                    battery.bind('available'),
+                    show_label.bind('value'),
+                    battery.bind('charged'),
+                    hideLabelWhenFull.bind('value'),
+                ],
                 (batAvail, showLabel, hideWhenFull, isCharged) => {
                     if (batAvail && showLabel) {
                         return [
