@@ -25,11 +25,11 @@ export const getNotificationIcon = (app_name: string, app_icon: string, app_entr
     return icon;
 };
 
-export const closeNotifications = async (notifications: Notification[]): Promise<void> => {
+export const closeNotifications = async (notifications: Notification[], delay: number): Promise<void> => {
     removingNotifications.value = true;
     for (const notif of notifications) {
         notif.close();
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, delay));
     }
     removingNotifications.value = false;
 };

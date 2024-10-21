@@ -46,6 +46,12 @@ export const NotificationSettings = (): Scrollable<Child, Attribute> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.notifications.clearDelay,
+                    title: 'Clear Delay',
+                    subtitle: 'The delay in milliseconds before a notification is cleared',
+                    type: 'number',
+                }),
+                Option({
                     opt: options.notifications.timeout,
                     title: 'Notification Timeout',
                     subtitle: 'How long notification popups will last (in milliseconds).',
