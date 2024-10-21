@@ -53,7 +53,6 @@ export const NotificationSettings = (): Scrollable<Child, Attribute> => {
                         '\nWARNING: Setting this value too low may crash AGS depending on your system.',
                     type: 'number',
                     increment: 20,
-
                 }),
                 Option({
                     opt: options.notifications.timeout,
