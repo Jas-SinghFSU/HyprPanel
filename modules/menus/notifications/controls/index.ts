@@ -1,6 +1,9 @@
 import { closeNotifications } from 'globals/notification';
 import { BoxWidget } from 'lib/types/widget';
 import { Notifications } from 'types/service/notifications';
+import options from 'options';
+
+const { clearDelay } = options.notifications;
 
 const Controls = (notifs: Notifications): BoxWidget => {
     return Widget.Box({
@@ -44,13 +47,15 @@ const Controls = (notifs: Notifications): BoxWidget => {
                             Widget.Button({
                                 className: 'clear-notifications-button',
                                 tooltip_text: 'Clear Notifications',
-                                on_primary_click: () => {
-                                    if (removingNotifications.value) {
-                                        return;
-                                    }
+                                on_primary_click: clearDelay.bind('value').as((delay) => {
+                                    return () => {
+                                        if (removingNotifications.value) {
+                                            return;
+                                        }
 
-                                    closeNotifications(notifs.notifications);
-                                },
+                                        return closeNotifications(notifs.notifications, delay);
+                                    };
+                                }),
                                 child: Widget.Label({
                                     class_name: removingNotifications.bind('value').as((removing: boolean) => {
                                         return removing

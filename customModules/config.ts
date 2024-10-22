@@ -38,6 +38,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.customModules.ram.icon,
+                    title: 'Ram Icon',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.bar.customModules.ram.label,
                     title: 'Show Label',
                     type: 'boolean',
@@ -92,6 +97,11 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                     opt: options.theme.bar.buttons.modules.cpu.enableBorder,
                     title: 'Button Border',
                     type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpu.icon,
+                    title: 'Cpu Icon',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.cpu.label,
@@ -156,8 +166,7 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 Option({
                     opt: options.bar.customModules.storage.icon,
                     title: 'Storage Icon',
-                    type: 'enum',
-                    enums: ['󰋊', '', '󱛟', '', '', ''],
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.storage.label,
@@ -225,8 +234,7 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 Option({
                     opt: options.bar.customModules.netstat.icon,
                     title: 'Netstat Icon',
-                    type: 'enum',
-                    enums: ['󰖟', '󰇚', '󰕒', '󰛳', '', '󰣺', '󰖩', '', '󰈀'],
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.netstat.label,
@@ -292,9 +300,8 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 }),
                 Option({
                     opt: options.bar.customModules.kbLayout.icon,
-                    title: 'kbLayout Icon',
-                    type: 'enum',
-                    enums: ['', '󰌌', '', '󰬴', '󰗊'],
+                    title: 'Keyboard Layout Icon',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.kbLayout.label,
@@ -357,8 +364,7 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 Option({
                     opt: options.bar.customModules.updates.icon,
                     title: 'Updates Icon',
-                    type: 'enum',
-                    enums: ['󰚰', '󰇚', '', '󱑢', '󱑣', '󰏖', '', '󰏔', '󰏗'],
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.updates.label,
@@ -557,8 +563,7 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 Option({
                     opt: options.bar.customModules.power.icon,
                     title: 'Power Button Icon',
-                    type: 'enum',
-                    enums: ['', '', '󰍃', '󰿅', '󰒲', '󰤄'],
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.customModules.power.leftClick,

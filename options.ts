@@ -1,14 +1,6 @@
 import { opt, mkOptions } from 'lib/option';
-import {
-    NetstatIcon,
-    NetstatLabelType,
-    PowerIcon,
-    RateUnit,
-    ResourceLabelType,
-    StorageIcon,
-    UpdatesIcon,
-} from 'lib/types/bar';
-import { KbIcon, KbLabelType } from 'lib/types/customModules/kbLayout';
+import { NetstatLabelType, RateUnit, ResourceLabelType } from 'lib/types/bar';
+import { KbLabelType } from 'lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
@@ -528,6 +520,11 @@ const options = mkOptions(OPTIONS, {
                             passive: opt(colors.text),
                             active: opt(colors.mauve),
                         },
+                        switch: {
+                            enabled: opt(colors.mauve),
+                            disabled: opt(tertiary_colors.surface0),
+                            puck: opt(secondary_colors.surface1),
+                        },
                     },
                     bluetooth: {
                         scaling: opt(100),
@@ -907,6 +904,7 @@ const options = mkOptions(OPTIONS, {
         },
         battery: {
             label: opt(true),
+            hideLabelWhenFull: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),
@@ -936,6 +934,7 @@ const options = mkOptions(OPTIONS, {
         },
         notifications: {
             show_total: opt(false),
+            hideCountWhenZero: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),
@@ -944,6 +943,7 @@ const options = mkOptions(OPTIONS, {
         customModules: {
             scrollSpeed: opt(5),
             ram: {
+                icon: opt(''),
                 label: opt(true),
                 labelType: opt<ResourceLabelType>('percentage'),
                 round: opt(true),
@@ -953,6 +953,7 @@ const options = mkOptions(OPTIONS, {
                 middleClick: opt(''),
             },
             cpu: {
+                icon: opt(''),
                 label: opt(true),
                 round: opt(true),
                 pollingInterval: opt(2000),
@@ -964,7 +965,7 @@ const options = mkOptions(OPTIONS, {
             },
             storage: {
                 label: opt(true),
-                icon: opt<StorageIcon>('󰋊'),
+                icon: opt('󰋊'),
                 round: opt(false),
                 labelType: opt<ResourceLabelType>('percentage'),
                 pollingInterval: opt(2000),
@@ -975,7 +976,7 @@ const options = mkOptions(OPTIONS, {
             netstat: {
                 label: opt(true),
                 networkInterface: opt(''),
-                icon: opt<NetstatIcon>('󰖟'),
+                icon: opt('󰖟'),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>('full'),
                 rateUnit: opt<RateUnit>('auto'),
@@ -987,7 +988,7 @@ const options = mkOptions(OPTIONS, {
             kbLayout: {
                 label: opt(true),
                 labelType: opt<KbLabelType>('code'),
-                icon: opt<KbIcon>('󰌌'),
+                icon: opt('󰌌'),
                 leftClick: opt(''),
                 rightClick: opt(''),
                 middleClick: opt(''),
@@ -998,7 +999,7 @@ const options = mkOptions(OPTIONS, {
                 updateCommand: opt('$HOME/.config/ags/scripts/checkUpdates.sh -arch'),
                 label: opt(true),
                 padZero: opt(true),
-                icon: opt<UpdatesIcon>('󰏖'),
+                icon: opt('󰏖'),
                 pollingInterval: opt(1000 * 60 * 60 * 6),
                 leftClick: opt(''),
                 rightClick: opt(''),
@@ -1029,7 +1030,7 @@ const options = mkOptions(OPTIONS, {
                 scrollDown: opt(''),
             },
             power: {
-                icon: opt<PowerIcon>(''),
+                icon: opt(''),
                 showLabel: opt(true),
                 leftClick: opt('menu:powerdropdown'),
                 rightClick: opt(''),
@@ -1064,9 +1065,14 @@ const options = mkOptions(OPTIONS, {
                 },
             },
             stats: {
+                enabled: opt(true),
                 enable_gpu: opt(false),
             },
+            controls: {
+                enabled: opt(true),
+            },
             shortcuts: {
+                enabled: opt(true),
                 left: {
                     shortcut1: {
                         icon: opt('󰇩'),
@@ -1137,6 +1143,7 @@ const options = mkOptions(OPTIONS, {
         clock: {
             time: {
                 military: opt(false),
+                hideSeconds: opt(false),
             },
             weather: {
                 enabled: opt(true),
@@ -1170,6 +1177,7 @@ const options = mkOptions(OPTIONS, {
         active_monitor: opt(true),
         timeout: opt(7000),
         cache_actions: opt(true),
+        clearDelay: opt(100),
     },
 
     dummy: opt(true),
