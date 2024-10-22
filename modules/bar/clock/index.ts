@@ -5,8 +5,10 @@ import options from 'options';
 import { DateTime } from 'types/@girs/glib-2.0/glib-2.0.cjs';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
-const { format, icon, showIcon, showTime } = options.bar.clock;
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+
+const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
 const date = Variable(GLib.DateTime.new_now_local(), {
@@ -37,7 +39,7 @@ const Clock = (): BarBoxChild => {
                         wave2: 'style3',
                     };
 
-                    return `bluetooth ${styleMap[btnStyle]} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
+                    return `clock-container ${styleMap[btnStyle]} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
                 },
             ),
             children: Utils.merge([showIcon.bind('value'), showTime.bind('value')], (shIcn, shTm) => {
@@ -53,7 +55,25 @@ const Clock = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'clock',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
+            },
+            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'calendarmenu');
             },
         },

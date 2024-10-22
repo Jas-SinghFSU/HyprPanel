@@ -3,11 +3,12 @@ import { EnergyProfiles } from './profiles/index.js';
 import { Brightness } from './brightness/index.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import Window from 'types/widgets/window.js';
+import options from 'options.js';
 
 export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'energymenu',
-        transition: 'crossfade',
+        transition: options.menus.transition.bind('value'),
         child: Widget.Box({
             class_name: 'menu-items energy',
             hpack: 'fill',

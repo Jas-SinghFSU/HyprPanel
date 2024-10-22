@@ -7,3 +7,5 @@ export type InputHandlerEvents = {
     onScrollUp?: Binding;
     onScrollDown?: Binding;
 };
+
+export type RunAsyncCommand = (cmd: string, args: EventArgs, fn?: (output: string) => void) => void;

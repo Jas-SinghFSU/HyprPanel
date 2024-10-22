@@ -1,147 +1,184 @@
 .menu-items-container.network * {
-  font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
+    font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
 }
 
-@import "./menu.scss";
+@import './menu.scss';
 
 .menu-items.network {
-  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
-  border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
-  opacity: $bar-menus-opacity * 0.01;
-  font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-network-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-network-border-color);
+    opacity: $bar-menus-opacity * 0.01;
+    font-size: $font-size * $bar-menus-menu-network-scaling * 0.01;
 }
 
 .menu-items-container.network {
-  min-width: 18em * $bar-menus-menu-network-scaling * 0.01;
-  font-size: 1.3em;
-
-  .menu-items-section {
-    padding-bottom: 1.5em;
-  }
-
-  .menu-label {
-    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-network-label-color);
-  }
-
-  .network-icon {
+    min-width: 18em * $bar-menus-menu-network-scaling * 0.01;
     font-size: 1.3em;
-    min-width: 1em;
-    min-height: 1em;
-    color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-network-icons-passive);
-
-    &.active {
-      color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-network-icons-active);
-    }
-  }
-
-  .menu-icon-button.network {
-    margin: 1em;
-  }
-
-  .connection-container {
-    margin-left: 1em;
-  }
-
-  .connection-status.dim {
-    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
-    opacity: 0.5;
-    font-size: 0.9em;
-  }
-
-  .menu-section-container.wifi {
-    margin-top: 0.65em;
 
     .menu-items-section {
-      min-height: 12em;
-    }
-  }
-
-  .network-element-item {
-    &:not(:last-child) {
-      margin-bottom: 0.5em;
+        padding-bottom: 1.5em;
     }
 
-    &.staging {
-      margin-bottom: 0.5em;
+    .menu-label {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-network-label-color);
     }
 
-    &:hover {
-      .network-icon {
-        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-network-icons-active);
-        opacity: 1;
-      }
+    .network-icon {
+        font-size: 1.3em;
+        min-width: 1em;
+        min-height: 1em;
+        color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-network-icons-passive);
 
-      .active-connection {
+        &.active {
+            color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-network-icons-active);
+        }
+    }
+
+    .menu-icon-button.network {
+        margin: 1em;
+    }
+
+    .connection-container {
+        margin-left: 1em;
+    }
+
+    .connection-status.dim {
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+        opacity: 0.5;
+        font-size: 0.9em;
+    }
+
+    .menu-section-container.wifi {
+        margin-top: 0.65em;
+
+        .menu-items-section {
+            min-height: 12em;
+        }
+    }
+
+    .network-element-item {
+        &:not(:last-child) {
+            margin-bottom: 0.5em;
+        }
+
+        &.staging {
+            margin-bottom: 0.5em;
+        }
+
+        &:hover {
+            .network-icon {
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-network-icons-active);
+                opacity: 1;
+            }
+
+            .active-connection {
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-iconbuttons-active,
+                    $bar-menus-menu-network-iconbuttons-active
+                );
+            }
+        }
+
+        .active-connection {
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+        }
+
+        .active-connection.dim {
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+            opacity: 0.5;
+        }
+    }
+
+    .spinner.wap {
         color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
-      }
     }
 
-    .active-connection {
-      color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+    .network-password-input-container {
+        background: darken(if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color), 5%);
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+        border-radius: 0.4em;
+        margin: 0em 2em;
+        margin-top: 0.75em;
+        padding: 0.5em;
     }
 
-    .active-connection.dim {
-      color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
-      opacity: 0.5;
-    }
-  }
+    .close-network-password-input-button {
+        padding: 0em 0.5em;
 
-  .spinner.wap {
-    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
-  }
-
-  .network-password-input-container {
-    background: darken(if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color), 5%);
-    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
-    border-radius: 0.4em;
-    margin: 0em 2em;
-    margin-top: 0.75em;
-    padding: 0.5em;
-  }
-
-  .close-network-password-input-button {
-    padding: 0em 0.5em;
-
-    &:hover image {
-      color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
-      opacity: 0.5;
-    }
-  }
-
-  .menu-icon-button.network.search {
-    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
-
-    &:hover {
-      color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
-    }
-  }
-
-  .menu-icon-button.network.disconnect {
-    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
-    margin: 0em;
-    margin-top: -0.2em;
-    margin-left: 1em;
-
-    label {
-      font-size: 1.4em;
+        &:hover image {
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+            opacity: 0.5;
+        }
     }
 
-    &:hover {
-      color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
+    .menu-icon-button.network.search {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
+
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
+        }
     }
-  }
 
-  .waps-not-found.dim {
-    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
-    opacity: 0.5;
-  }
+    .menu-icon-button.network.disconnect {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-network-iconbuttons-passive);
+        margin: 0em;
+        margin-top: -0.2em;
+        margin-left: 1em;
 
-  .menu-label-container {
-    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
-  }
+        label {
+            font-size: 1.4em;
+        }
 
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-network-iconbuttons-active);
+        }
+    }
 
-  .menu-items-section {
-    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
-  }
+    .waps-not-found.dim {
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-network-text);
+        opacity: 0.5;
+    }
+
+    .menu-label-container {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
+    }
+
+    .menu-items-section {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-network-card-color);
+    }
+
+    .menu-switch.network {
+        background-color: if(
+            $bar-menus-monochrome,
+            $bar-menus-switch-disabled,
+            $bar-menus-menu-network-switch-disabled
+        );
+
+        &:checked {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-network-switch-enabled);
+        }
+
+        slider {
+            background-color: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-network-switch-puck);
+        }
+
+        &:hover {
+            trough {
+                background: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-switch-disabled,
+                    $bar-menus-menu-network-switch-disabled
+                );
+            }
+
+            slider {
+                background: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-network-switch-puck);
+            }
+        }
+
+        &:active {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-network-switch-enabled);
+        }
+    }
 }

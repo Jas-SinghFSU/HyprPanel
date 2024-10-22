@@ -2,13 +2,13 @@ import options from 'options';
 import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
 import { computeNetwork } from './computeNetwork';
-import { Module, NetstatLabelType } from 'lib/types/bar';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import { BarBoxChild, NetstatLabelType } from 'lib/types/bar';
 import Button from 'types/widgets/button';
 import { NetworkResourceData } from 'lib/types/customModules/network';
 import { NETWORK_LABEL_TYPES } from 'lib/types/defaults/bar';
 import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
 import { pollVariable } from 'customModules/PollVar';
+import { Attribute, Child } from 'lib/types/widget';
 
 const {
     label,
@@ -46,7 +46,7 @@ pollVariable(
     rateUnit,
 );
 
-export const Netstat = (): Module => {
+export const Netstat = (): BarBoxChild => {
     const renderNetworkLabel = (lblType: NetstatLabelType, network: NetworkResourceData): string => {
         switch (lblType) {
             case 'in':
@@ -70,7 +70,7 @@ export const Netstat = (): Module => {
         boxClass: 'netstat',
         showLabelBinding: label.bind('value'),
         props: {
-            setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
+            setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

@@ -1,7 +1,7 @@
 import { Binding, Connectable } from 'types/service';
 import { Variable } from 'types/variable';
 import Box from 'types/widgets/box';
-import Button from 'types/widgets/button';
+import Button, { ButtonProps } from 'types/widgets/button';
 import Label from 'types/widgets/label';
 import { Attribute, Child } from './widget';
 
@@ -10,7 +10,9 @@ export type BarBoxChild = {
     isVisible?: boolean;
     isVis?: Variable<boolean>;
     boxClass: string;
-} & ButtonProps;
+    tooltip_text?: string | Binding<string>;
+    props: ButtonProps;
+};
 
 export type SelfButton = Button<Child, Attribute>;
 
@@ -34,12 +36,7 @@ export type Module = {
 
 export type ResourceLabelType = 'used/total' | 'used' | 'percentage' | 'free';
 
-export type StorageIcon = '󰋊' | '' | '󱛟' | '' | '' | '';
-
-export type NetstatIcon = '󰖟' | '󰇚' | '󰕒' | '󰛳' | '' | '󰣺' | '󰖩' | '' | '󰈀';
 export type NetstatLabelType = 'full' | 'in' | 'out';
 export type RateUnit = 'GiB' | 'MiB' | 'KiB' | 'auto';
 
-export type UpdatesIcon = '󰚰' | '󰇚' | '' | '󱑢' | '󱑣' | '󰏖' | '' | '󰏔' | '󰏗';
 
-export type PowerIcon = '' | '' | '󰍃' | '󰿅' | '󰒲' | '󰤄';

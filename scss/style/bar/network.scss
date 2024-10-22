@@ -1,26 +1,58 @@
-.bar-button-label.network {
-  color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-network-text);
-  margin-left: $bar-buttons-network-spacing;
+.bar-button-label.network-label {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-network-text);
+    margin-left: $bar-buttons-network-spacing;
 }
 
-.bar-button-icon.network {
-  color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon);
+.bar-button-icon.network-icon {
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon);
 }
 
 .style2 {
-  .bar-button-icon.network {
-    border-top-left-radius: $bar-buttons-radius;
-    border-bottom-left-radius: $bar-buttons-radius;
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon_background);
-    padding: $bar-buttons-padding_y 0em;
-    padding-left: $bar-buttons-padding_x;
-    padding-right: $bar-buttons-network-spacing;
-  }
+    .bar-button-icon.network-icon {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-network-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius
+        );
+    }
 
-  .bar-button-label.network {
-    padding: $bar-buttons-padding_y 0em;
-    padding-right: $bar-buttons-padding_x;
-    padding-left: $bar-buttons-network-spacing;
-    margin-left: 0em;
-  }
+    .bar-button-label.network-label {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-network-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.network-container {
+        .bar-button-icon.network-icon {
+            border-top-right-radius: if(
+                $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * 0.4,
+                $bar-buttons-radius
+            );
+        }
+    }
+}
+
+.bar_item_box_visible.network {
+    border: if(
+        $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-border),
+        0em
+    );
 }

@@ -153,7 +153,7 @@ export const Notify = (notifPayload: NotificationArgs): void => {
     Utils.execAsync(command);
 };
 
-export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] {
+export const getPosition = (pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] => {
     const positionMap: { [key: string]: ('top' | 'bottom' | 'left' | 'right')[] } = {
         top: ['top'],
         'top right': ['top', 'right'],
@@ -166,7 +166,7 @@ export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bott
     };
 
     return positionMap[pos] || ['top'];
-}
+};
 export const isValidGjsColor = (color: string): boolean => {
     const colorLower = color.toLowerCase().trim();
 
@@ -188,4 +188,8 @@ export const isValidGjsColor = (color: string): boolean => {
     }
 
     return false;
+};
+
+export const capitalizeFirstLetter = (str: string): string => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 };

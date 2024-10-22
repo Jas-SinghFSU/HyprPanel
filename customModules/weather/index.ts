@@ -2,14 +2,14 @@ import options from 'options';
 import { module } from '../module';
 
 import { inputHandler } from 'customModules/utils';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import { getWeatherStatusTextIcon, globalWeatherVar } from 'globals/weather';
-import { Module } from 'lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'lib/types/bar';
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.weather;
 
-export const Weather = (): Module => {
+export const Weather = (): BarBoxChild => {
     const weatherModule = module({
         textIcon: Utils.merge([globalWeatherVar.bind('value')], (wthr) => {
             const weatherStatusIcon = getWeatherStatusTextIcon(wthr);
@@ -26,7 +26,7 @@ export const Weather = (): Module => {
         }),
         showLabelBinding: label.bind('value'),
         props: {
-            setup: (self: Button<Gtk.Widget, Gtk.Widget>) => {
+            setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

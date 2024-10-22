@@ -46,10 +46,15 @@ const Bar = (getPlayerInfo: (media: Mpris) => MprisPlayer): BoxWidget => {
                             const curSec = Math.floor(foundPlayer.position % 60);
 
                             if (typeof foundPlayer.position === 'number' && foundPlayer.position >= 0) {
-                                // WARN: These nested ternaries are absolutely disgusting lol
-                                self.tooltip_text = `${
-                                    curHour > 0 ? (curHour < 10 ? '0' + curHour : curHour) + ':' : ''
-                                }${curMin < 10 ? '0' + curMin : curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
+                                const formatTime = (time: number): string => {
+                                    return time.toString().padStart(2, '0');
+                                };
+
+                                const formatHour = (hour: number): string => {
+                                    return hour > 0 ? formatTime(hour) + ':' : '';
+                                };
+
+                                self.tooltip_text = `${formatHour(curHour)}${formatTime(curMin)}:${formatTime(curSec)}`;
                             } else {
                                 self.tooltip_text = `00:00`;
                             }

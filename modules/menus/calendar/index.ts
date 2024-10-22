@@ -1,14 +1,17 @@
-import DropdownMenu from '../shared/dropdown/index.js';
-import { TimeWidget } from './time/index.js';
-import { CalendarWidget } from './calendar.js';
-import { WeatherWidget } from './weather/index.js';
-import Window from 'types/widgets/window.js';
-import { Attribute, Child } from 'lib/types/widget.js';
+import DropdownMenu from 'modules/menus/shared/dropdown/index';
+import { TimeWidget } from './time/index';
+import { CalendarWidget } from './calendar';
+import { WeatherWidget } from './weather/index';
+import options from 'options';
+import Window from 'types/widgets/window';
+import { Attribute, Child } from 'lib/types/widget';
+
+const { enabled: weatherEnabled } = options.menus.clock.weather;
 
 export default (): Window<Child, Attribute> => {
     return DropdownMenu({
         name: 'calendarmenu',
-        transition: 'crossfade',
+        transition: options.menus.transition.bind('value'),
         child: Widget.Box({
             class_name: 'calendar-menu-content',
             css: 'padding: 1px; margin: -1px;',
@@ -21,7 +24,9 @@ export default (): Window<Child, Attribute> => {
                         Widget.Box({
                             class_name: 'calendar-content-items',
                             vertical: true,
-                            children: [TimeWidget(), CalendarWidget(), WeatherWidget()],
+                            children: weatherEnabled.bind('value').as((isWeatherEnabled) => {
+                                return [TimeWidget(), CalendarWidget(), ...(isWeatherEnabled ? [WeatherWidget()] : [])];
+                            }),
                         }),
                     ],
                 }),

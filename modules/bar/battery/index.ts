@@ -4,9 +4,10 @@ import { openMenu } from '../utils.js';
 import options from 'options';
 import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
-import { Child } from 'lib/types/widget.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
-const { label: show_label } = options.bar.battery;
+const { label: show_label, rightClick, middleClick, scrollUp, scrollDown, hideLabelWhenFull } = options.bar.battery;
 
 const BatteryLabel = (): BarBoxChild => {
     const isVis = Variable(battery.available);
@@ -53,34 +54,46 @@ const BatteryLabel = (): BarBoxChild => {
                         wave: 'style3',
                         wave2: 'style3',
                     };
-                    return `battery ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                    return `battery-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
                 },
             ),
             visible: battery.bind('available'),
             tooltip_text: battery.bind('time_remaining').as((t) => t.toString()),
-            children: Utils.merge([battery.bind('available'), show_label.bind('value')], (batAvail, showLabel) => {
-                if (batAvail && showLabel) {
-                    return [
-                        Widget.Icon({
-                            class_name: 'bar-button-icon battery',
-                            icon: batIcon,
-                        }),
-                        Widget.Label({
-                            class_name: 'bar-button-label battery',
-                            label: battery.bind('percent').as((p) => `${Math.floor(p)}%`),
-                        }),
-                    ];
-                } else if (batAvail && !showLabel) {
-                    return [
-                        Widget.Icon({
-                            class_name: 'bar-button-icon battery',
-                            icon: batIcon,
-                        }),
-                    ];
-                } else {
-                    return [];
-                }
-            }),
+            children: Utils.merge(
+                [
+                    battery.bind('available'),
+                    show_label.bind('value'),
+                    battery.bind('charged'),
+                    hideLabelWhenFull.bind('value'),
+                ],
+                (batAvail, showLabel, isCharged, hideWhenFull) => {
+                    if (batAvail && showLabel) {
+                        return [
+                            Widget.Icon({
+                                class_name: 'bar-button-icon battery',
+                                icon: batIcon,
+                            }),
+                            ...(hideWhenFull && isCharged
+                                ? []
+                                : [
+                                      Widget.Label({
+                                          class_name: 'bar-button-label battery',
+                                          label: battery.bind('percent').as((p) => `${Math.floor(p)}%`),
+                                      }),
+                                  ]),
+                        ];
+                    } else if (batAvail && !showLabel) {
+                        return [
+                            Widget.Icon({
+                                class_name: 'bar-button-icon battery',
+                                icon: batIcon,
+                            }),
+                        ];
+                    } else {
+                        return [];
+                    }
+                },
+            ),
             setup: (self) => {
                 self.hook(battery, () => {
                     if (battery.available) {
@@ -92,7 +105,25 @@ const BatteryLabel = (): BarBoxChild => {
         isVis,
         boxClass: 'battery',
         props: {
-            on_primary_click: (clicked: Button<Child, Child>, event: Gdk.Event): void => {
+            setup: (self: Button<Child, Attribute>): void => {
+                self.hook(options.bar.scrollSpeed, () => {
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+
+                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(rightClick.value, { clicked, event });
+                    };
+                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        runAsyncCommand(middleClick.value, { clicked, event });
+                    };
+                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollUp.value, { clicked, event });
+                    };
+                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                        throttledHandler(scrollDown.value, { clicked, event });
+                    };
+                });
+            },
+            onPrimaryClick: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'energymenu');
             },
         },

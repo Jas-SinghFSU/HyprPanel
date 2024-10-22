@@ -5,7 +5,7 @@ if (!dependencies('brightnessctl')) App.quit();
 
 const get = (args: string): number => Number(Utils.exec(`brightnessctl ${args}`));
 const screen = await bash`ls -w1 /sys/class/backlight | head -1`;
-const kbd = await bash`ls -w1 /sys/class/leds | head -1`;
+const kbd = await bash`ls -w1 /sys/class/leds | grep '::kbd_backlight$' | head -1`;
 
 class Brightness extends Service {
     static {

@@ -14,7 +14,7 @@ const Placeholder = (notifs: Notifications): BoxWidget => {
             children: [
                 Widget.Label({
                     vpack: 'center',
-                    class_name: 'placeholder-label dim bell',
+                    class_name: 'placeholder-label dim bell txt-icon',
                     label: notifs.bind('dnd').as((dnd) => (dnd ? '󰂛' : '󰂚')),
                 }),
                 Widget.Label({

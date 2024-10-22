@@ -4,9 +4,9 @@ import { Transition } from './widget';
 
 export type PopupWindowProps = {
     name: string;
-    child: any;
+    child: Widget;
     layout?: Layouts;
-    transition?: any;
+    transition?: Transition | Binding<Transition>;
     exclusivity?: Exclusivity;
 } & WindowProps;
 

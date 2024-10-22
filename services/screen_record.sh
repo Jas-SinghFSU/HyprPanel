@@ -18,7 +18,7 @@ startRecording() {
 
     target="$2"
 
-    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mkv"
+    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mp4"
     outputPath="$outputDir/$outputFile"
     mkdir -p "$outputDir"
 
@@ -41,7 +41,7 @@ stopRecording() {
     fi
 
     pkill -f gpu-screen-recorder
-    recentFile=$(ls -t "$outputDir"/recording_*.mkv | head -n 1)
+    recentFile=$(ls -t "$outputDir"/recording_*.mp4 | head -n 1)
     notify-send "Recording stopped" "Your recording has been saved." \
         -i video-x-generic \
         -a "Screen Recorder" \
