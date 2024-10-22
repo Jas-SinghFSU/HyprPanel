@@ -111,7 +111,7 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                                 }),
                                                                 Widget.Label({
                                                                     class_name: 'connection-status battery',
-                                                                    label: device.connected
+                                                                    label: device.connected && device.battery_percentage !== null
                                                                         ? `| 󰥉 ${device.battery_percentage}%`
                                                                         : '',
                                                                 }),
