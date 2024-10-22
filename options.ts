@@ -943,7 +943,7 @@ const options = mkOptions(OPTIONS, {
         customModules: {
             scrollSpeed: opt(5),
             ram: {
-                icon: opt('󰘚'),
+                icon: opt(''),
                 label: opt(true),
                 labelType: opt<ResourceLabelType>('percentage'),
                 round: opt(true),
