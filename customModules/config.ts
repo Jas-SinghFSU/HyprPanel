@@ -300,7 +300,7 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 }),
                 Option({
                     opt: options.bar.customModules.kbLayout.icon,
-                    title: 'kbLayout Icon',
+                    title: 'Keyboard Layout Icon',
                     type: 'string',
                 }),
                 Option({
