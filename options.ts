@@ -896,6 +896,7 @@ const options = mkOptions(OPTIONS, {
         },
         network: {
             truncation: opt(true),
+            showWifiInfo: opt(false),
             truncation_size: opt(7),
             label: opt(true),
             rightClick: opt(''),

@@ -19,6 +19,7 @@ const {
     middleClick,
     scrollDown,
     scrollUp,
+    showWifiInfo,
 } = options.bar.network;
 
 const Network = (): BarBoxChild => {
@@ -59,8 +60,9 @@ const Network = (): BarBoxChild => {
                             networkLabel.bind('value'),
                             truncation.bind('value'),
                             truncation_size.bind('value'),
+                            showWifiInfo.bind('value'),
                         ],
-                        (pmry, wfi, showLbl, trunc, tSize) => {
+                        (pmry, wfi, showLbl, trunc, tSize, showWfiInfo) => {
                             if (!showLbl) {
                                 return Widget.Box();
                             }
@@ -73,7 +75,9 @@ const Network = (): BarBoxChild => {
                             return Widget.Label({
                                 class_name: 'bar-button-label network-label',
                                 label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '--',
-                                tooltipText: `Network: ${wfi.ssid} \nSignal Strength: ${wfi.strength}% \nFrequency: ${formatFrequency(wfi.frequency)}`,
+                                tooltipText: showWfiInfo
+                                    ? `Network: ${wfi.ssid} \nSignal Strength: ${wfi.strength}% \nFrequency: ${formatFrequency(wfi.frequency)}`
+                                    : '',
                             });
                         },
                     ),
