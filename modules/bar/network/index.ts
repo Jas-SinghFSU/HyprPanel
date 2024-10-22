@@ -7,6 +7,10 @@ import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
 
+const formatFrequency = (frequency: number): string => {
+    return `${(frequency / 1000).toFixed(2)}MHz`;
+};
+
 const {
     label: networkLabel,
     truncation,
@@ -69,6 +73,7 @@ const Network = (): BarBoxChild => {
                             return Widget.Label({
                                 class_name: 'bar-button-label network-label',
                                 label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '--',
+                                tooltipText: `Network: ${wfi.ssid} \nSignal Strength: ${wfi.strength}% \nFrequency: ${formatFrequency(wfi.frequency)}`,
                             });
                         },
                     ),
