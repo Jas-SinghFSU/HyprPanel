@@ -13,7 +13,7 @@ import { BarBoxChild } from 'lib/types/bar';
 import { Attribute, Child } from 'lib/types/widget';
 
 // All the user configurable options for the cpu module that are needed
-const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval } =
+const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;
 
 export const cpuUsage = Variable(0);
@@ -35,7 +35,7 @@ export const Cpu = (): BarBoxChild => {
     };
 
     const cpuModule = module({
-        textIcon: '',
+        textIcon: icon.bind('value'),
         label: Utils.merge([cpuUsage.bind('value'), round.bind('value')], (cpuUsg, rnd) => {
             return renderLabel(cpuUsg, rnd);
         }),
