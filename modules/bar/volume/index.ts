@@ -10,7 +10,7 @@ import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js'
 import Separator from 'types/widgets/separator';
 import Label from 'types/widgets/label';
 
-const { label, input, input_label, middleClick, scrollUp, scrollDown } = options.bar.volume;
+const { label, input, input_label, rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 
 const Volume = (): BarBoxChild => {
     const outputIcons: VolumeIcons = {
