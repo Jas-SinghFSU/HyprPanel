@@ -74,7 +74,7 @@ const Network = (): BarBoxChild => {
                             }
                             return Widget.Label({
                                 class_name: 'bar-button-label network-label',
-                                label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '--',
+                                label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '',
                                 tooltipText: showWfiInfo
                                     ? `Network: ${wfi.ssid} \nSignal Strength: ${wfi.strength}% \nFrequency: ${formatFrequency(wfi.frequency)}`
                                     : '',
