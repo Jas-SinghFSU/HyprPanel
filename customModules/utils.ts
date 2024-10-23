@@ -159,7 +159,7 @@ export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericRe
         B: (size: number): number => size,
     };
 
-    // Get them datas in proper GiB, MiB, KiB, TiB, or bytes
+    // Get the data in proper GiB, MiB, KiB, TiB, or bytes
     const totalSizeFormatted = autoFormatSize(total, round);
     // get the postfix: one of [TiB, GiB, MiB, KiB, B]
     const postfix = getPostfix(total);

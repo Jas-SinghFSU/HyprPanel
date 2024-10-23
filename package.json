@@ -1,7 +1,7 @@
 {
     "name": "hyprpanel",
     "version": "1.0.0",
-    "description": "A customizble panel built for Hyprland.",
+    "description": "A customizable panel built for Hyprland.",
     "main": "config.js",
     "directories": {
         "lib": "lib"
