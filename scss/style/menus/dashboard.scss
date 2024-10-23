@@ -9,6 +9,7 @@
   border: $bar-menus-border-size solid if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-dashboard-border-color);
   border-radius: $bar-menus-border-radius;
   opacity: $bar-menus-opacity * 0.01;
+  padding-bottom: 0.75em;
 
   button {
     border-radius: 0.4em;
