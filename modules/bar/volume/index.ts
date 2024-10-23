@@ -61,14 +61,15 @@ const Volume = (): BarBoxChild => {
             className: Utils.merge(
                 [options.theme.bar.buttons.style.bind('value'), label.bind('value')],
                 (style, showLabel) => {
-                const styleMap = {
-                    default: 'style1',
-                    split: 'style2',
-                    wave: 'style3',
-                    wave2: 'style3',
-                };
-                return `volume-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
-            }),
+                    const styleMap = {
+                        default: 'style1',
+                        split: 'style2',
+                        wave: 'style3',
+                        wave2: 'style3',
+                    };
+                    return `volume-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+                },
+            ),
             children: Utils.merge(
                 [
                     audio.speaker.bind('volume'),
