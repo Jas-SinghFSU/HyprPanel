@@ -1045,7 +1045,7 @@ const options = mkOptions(OPTIONS, {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
         bluetooth: {
-         showBattery: opt(false),
+            showBattery: opt(false),
         },
         power: {
             showLabel: opt(true),

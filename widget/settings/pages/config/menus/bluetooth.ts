@@ -14,7 +14,10 @@ export const BluetoothMenuSettings = (): Scrollable<Child, Attribute> => {
             children: [
                 Header('Bluetooth'),
                 Option({
-                    opt: options.menus.bluetooth.showBattery, title: 'Show Battery Percentage for Connected Devices (If Supported)', type: 'boolean' }),
+                    opt: options.menus.bluetooth.showBattery,
+                    title: 'Show Battery Percentage for Connected Devices (If Supported)',
+                    type: 'boolean',
+                }),
             ],
         }),
     });
