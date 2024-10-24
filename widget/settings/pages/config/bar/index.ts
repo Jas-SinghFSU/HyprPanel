@@ -262,6 +262,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.workspaces.showApplicationIcons,
+                    title: 'Map Workspaces to Application Icons',
+                    subtitle: 'Use hyprctl clients initialClass to match against',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconMap,
+                    title: 'Application Icon Mappings',
+                    type: 'object',
+                }),
+                Option({
                     opt: options.bar.workspaces.workspaceIconMap,
                     title: 'Workspace Icon Mappings',
                     type: 'object',

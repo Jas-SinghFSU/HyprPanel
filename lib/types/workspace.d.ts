@@ -11,6 +11,10 @@ export type MonitorMap = {
     [key: number]: string;
 };
 
+export type ApplicationIcons = {
+    [key: string]: string;
+};
+
 export type WorkspaceIcons = {
     [key: string]: string;
 };

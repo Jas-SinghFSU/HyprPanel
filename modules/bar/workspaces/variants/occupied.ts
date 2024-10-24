@@ -6,7 +6,6 @@ import { getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
-
 const { workspaces, monitorSpecific, workspaceMask, spacing, ignored, showAllActive } = options.bar.workspaces;
 
 export const occupiedWses = (monitor: number): BoxWidget => {
@@ -26,6 +25,8 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 spacing.bind('value'),
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
+                options.bar.workspaces.showApplicationIcons.bind('value'),
+                options.bar.workspaces.applicationIconMap.bind('value'),
                 options.theme.matugen.bind('value'),
                 options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                 hyprland.bind('monitors'),
@@ -46,6 +47,8 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 spacing: number,
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
+                showApplicationIcons,
+                applicationIconMap,
                 matugen: boolean,
                 smartHighlight: boolean,
                 monitors: Monitor[],
@@ -98,6 +101,21 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                         if (isWorkspaceIgnored(ignored, i)) {
                             return Widget.Box();
                         }
+
+                        let icons: string | undefined = undefined;
+                        if (showApplicationIcons) {
+                            // detect the clients class on the current workspace
+                            const clientClasses = hyprland.clients
+                                .filter((c) => c.workspace.id === i)
+                                .map((c) => c.class);
+
+                            // map the client class to icons
+                            icons = clientClasses
+                                .map((c) => applicationIconMap[c])
+                                .filter((x) => x)
+                                .join(' ');
+                        }
+
                         return Widget.Button({
                             class_name: 'workspace-button',
                             on_primary_click: () => {
@@ -120,10 +138,10 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                     i,
                                 ),
                                 label: renderLabel(
-                                    showIcons,
+                                    showApplicationIcons || showIcons,
                                     available,
-                                    active,
-                                    occupied,
+                                    showApplicationIcons && icons ? icons : active,
+                                    showApplicationIcons && icons ? icons : occupied,
                                     workspaceMask,
                                     showWsIcons,
                                     wsIconMap,
