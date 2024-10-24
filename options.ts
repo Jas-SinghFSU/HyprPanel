@@ -413,6 +413,8 @@ const options = mkOptions(OPTIONS, {
                     background: opt(tertiary_colors.surface2),
                     backgroundhover: opt(colors.surface1),
                     puck: opt(colors.overlay0),
+                    slider_radius: opt('0.3rem'),
+                    progress_radius: opt('0.3rem'),
                 },
                 dropdownmenu: {
                     background: opt(colors.crust),

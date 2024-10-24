@@ -6,7 +6,7 @@
         highlight,
         progress {
             background: $peach;
-            border-radius: 0.3rem;
+            border-radius: $bar-menus-slider-progress-radius;
         }
     }
 
@@ -16,7 +16,7 @@
         min-height: 0.6rem;
         min-width: 0.6rem;
         border: 0rem solid transparent;
-        border-radius: 0.3rem;
+        border-radius: $bar-menus-slider-slider-radius;
     }
 
     &:hover {

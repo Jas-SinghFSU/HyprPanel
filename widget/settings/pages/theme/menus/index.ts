@@ -129,6 +129,16 @@ export const MenuTheme = (): Scrollable<Child, Attribute> => {
                     title: 'Background (Hover)',
                     type: 'color',
                 }),
+                Option({
+                    opt: options.theme.bar.menus.slider.slider_radius,
+                    title: 'Slider Border Radius',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.theme.bar.menus.slider.progress_radius,
+                    title: 'Slider Progress Radius',
+                    type: 'string',
+                }),
                 Option({ opt: options.theme.bar.menus.slider.puck, title: 'Puck', type: 'color' }),
 
                 Header('Dropdown Menu'),
