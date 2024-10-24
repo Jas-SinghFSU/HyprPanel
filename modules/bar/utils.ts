@@ -25,7 +25,7 @@ export const openMenu = async (clicked: Button<Child, Attribute>, event: Gdk.Eve
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
-     * offcenter dependending on which edge of the button you click on.
+     * offcenter depending on which edge of the button you click on.
      * -------------
      * To fix this, we take the x coordinate of the click within the button's bounds.
      * If you click the left edge of a 100 width button, then the x axis will be 0
