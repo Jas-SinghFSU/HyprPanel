@@ -283,7 +283,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Monitor Specific',
                     subtitle:
                         'Only workspaces applicable to the monitor will be displayed.\n' +
-                        "Works in conjuction with 'Total Workspaces'.",
+                        "Works in conjunction with 'Total Workspaces'.",
                     type: 'boolean',
                 }),
                 Option({
