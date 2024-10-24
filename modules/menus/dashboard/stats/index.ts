@@ -22,7 +22,6 @@ interval.connect('changed', () => {
     storageService.updateTimer(interval.value);
 });
 
-
 const handleClick = (): void => {
     App.closeWindow('dashboardmenu');
     Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch((err) => `Failed to open btop: ${err}`);

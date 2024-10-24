@@ -35,12 +35,6 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     },
                 }),
                 Option({
-                    opt: options.terminal,
-                    title: 'Terminal',
-                    subtitle: "Tools such as 'btop' will open in this terminal",
-                    type: 'string',
-                }),
-                Option({
                     opt: options.tear,
                     title: 'Tearing Compatible',
                     subtitle:
