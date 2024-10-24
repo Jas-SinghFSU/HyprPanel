@@ -41,7 +41,6 @@ export default {
         time: 'hourglass-symbolic',
         toolbars: 'toolbars-symbolic',
         warning: 'dialog-warning-symbolic',
-        avatar: 'avatar-default-symbolic',
         arrow: {
             right: 'pan-end-symbolic',
             left: 'pan-start-symbolic',

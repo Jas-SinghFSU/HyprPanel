@@ -16,7 +16,12 @@ export const DashboardMenuSettings = (): Scrollable<Child, Attribute> => {
             vertical: true,
             children: [
                 Header('Power Menu'),
-                Option({ opt: options.menus.dashboard.powermenu.avatar.image, title: 'Profile Image', type: 'img' }),
+                Option({
+                    opt: options.menus.dashboard.powermenu.avatar.image,
+                    title: 'Profile Image',
+                    type: 'img',
+                    subtitle: "By default, uses '~/.face.icon'",
+                }),
                 Option({
                     opt: options.menus.dashboard.powermenu.avatar.name,
                     title: 'Profile Name',

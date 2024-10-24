@@ -1060,7 +1060,7 @@ const options = mkOptions(OPTIONS, {
                 logout: opt('hyprctl dispatch exit'),
                 shutdown: opt('systemctl poweroff'),
                 avatar: {
-                    image: opt('avatar-default-symbolic'),
+                    image: opt('$HOME/.face.icon'),
                     name: opt<'system' | string>('system'),
                 },
             },
