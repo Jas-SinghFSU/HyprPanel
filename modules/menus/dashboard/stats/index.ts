@@ -5,6 +5,7 @@ import { dependencies } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import Cpu from 'services/Cpu';
 import Storage from 'services/Storage';
+import { renderResourceLabel } from 'customModules/utils';
 
 const { terminal } = options;
 const { enable_gpu } = options.menus.dashboard.stats;
@@ -228,7 +229,9 @@ const Stats = (): BoxWidget => {
                     Widget.Label({
                         hpack: 'end',
                         class_name: 'stat-value ram',
-                        label: ramService.ram.bind('value').as((ramUsage) => `${ramUsage.percentage}%`),
+                        label: ramService.ram
+                            .bind('value')
+                            .as((ramUsage) => `${renderResourceLabel('used/total', ramUsage, true)}`),
                     }),
                 ],
             }),
@@ -278,7 +281,9 @@ const Stats = (): BoxWidget => {
                     Widget.Label({
                         hpack: 'end',
                         class_name: 'stat-value storage',
-                        label: storageService.storage.bind('value').as((storageUsage) => `${storageUsage.percentage}%`),
+                        label: storageService.storage
+                            .bind('value')
+                            .as((storageUsage) => `${renderResourceLabel('used/total', storageUsage, true)}`),
                     }),
                 ],
             }),
