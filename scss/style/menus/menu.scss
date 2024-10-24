@@ -34,7 +34,7 @@
 .menu-switch {
     font-size: 1.3em;
     background-color: $surface0;
-    border-radius: 0.2em;
+    border-radius: $bar-menus-switch-radius;
 
     &:checked {
         background: $sky;
@@ -54,7 +54,7 @@
         min-height: 1em;
         min-width: 1em;
         border: 0em solid transparent;
-        border-radius: 0.2em;
+        border-radius: $bar-menus-switch-slider-radius;
         margin: 0.1em 0.15em;
     }
 
