@@ -1066,6 +1066,7 @@ const options = mkOptions(OPTIONS, {
             },
             stats: {
                 enabled: opt(true),
+                interval: opt(2000),
                 enable_gpu: opt(false),
             },
             controls: {
