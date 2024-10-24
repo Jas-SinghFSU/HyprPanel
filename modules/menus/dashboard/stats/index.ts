@@ -8,7 +8,7 @@ import Storage from 'services/Storage';
 import { renderResourceLabel } from 'customModules/utils';
 
 const { terminal } = options;
-const { enable_gpu } = options.menus.dashboard.stats;
+const { enable_gpu, interval } = options.menus.dashboard.stats;
 
 const ramService = new Ram();
 const cpuService = new Cpu();
@@ -16,6 +16,12 @@ const storageService = new Storage();
 
 ramService.setShouldRound(true);
 storageService.setShouldRound(true);
+
+interval.connect('changed', () => {
+    ramService.updateTimer(interval.value);
+    cpuService.updateTimer(interval.value);
+    storageService.updateTimer(interval.value);
+});
 
 const Stats = (): BoxWidget => {
     const divide = ([total, free]: number[]): number => free / total;

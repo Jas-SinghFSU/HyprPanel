@@ -48,8 +48,10 @@ export const DashboardMenuSettings = (): Scrollable<Child, Attribute> => {
                 Option({ opt: options.menus.dashboard.powermenu.reboot, title: 'Reboot Command', type: 'string' }),
                 Option({ opt: options.menus.dashboard.powermenu.logout, title: 'Logout Command', type: 'string' }),
                 Option({ opt: options.menus.dashboard.powermenu.sleep, title: 'Sleep Command', type: 'string' }),
+
                 Header('Controls'),
                 Option({ opt: options.menus.dashboard.controls.enabled, title: 'Enabled', type: 'boolean' }),
+
                 Header('Resource Usage Metrics'),
                 Option({ opt: options.menus.dashboard.stats.enabled, title: 'Enabled', type: 'boolean' }),
                 Option({
@@ -58,6 +60,15 @@ export const DashboardMenuSettings = (): Scrollable<Child, Attribute> => {
                     subtitle: "NOTE: This is currently only available for NVidia GPUs and requires 'python-gpustat'.",
                     type: 'boolean',
                 }),
+                Option({
+                    opt: options.menus.dashboard.stats.interval,
+                    title: 'Update Interval',
+                    subtitle: 'The frequency at which to poll system metrics.',
+                    type: 'number',
+                    min: 100,
+                    increment: 500,
+                }),
+
                 Header('Shortcuts'),
                 Option({ opt: options.menus.dashboard.shortcuts.enabled, title: 'Enabled', type: 'boolean' }),
                 Option({
