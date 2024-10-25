@@ -136,7 +136,7 @@ export const MenuTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({
                     opt: options.theme.bar.menus.slider.progress_radius,
-                    title: 'Slider Progress Radius',
+                    title: 'Slider/Progress Bar Radius',
                     type: 'string',
                 }),
                 Option({ opt: options.theme.bar.menus.slider.puck, title: 'Puck', type: 'color' }),
