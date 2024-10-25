@@ -131,7 +131,7 @@ export const MenuTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({
                     opt: options.theme.bar.menus.slider.slider_radius,
-                    title: 'Slider Border Radius',
+                    title: 'Slider Puck Radius',
                     type: 'string',
                 }),
                 Option({
