@@ -24,7 +24,7 @@ interval.connect('changed', () => {
 
 const handleClick = (): void => {
     App.closeWindow('dashboardmenu');
-    Utils.execAsync(`bash -c "$TERMINAL -e btop"`).catch((err) => `Failed to open btop: ${err}`);
+    Utils.execAsync(`bash -c "${terminal} -e btop"`).catch((err) => `Failed to open btop: ${err}`);
 };
 
 const Stats = (): BoxWidget => {
