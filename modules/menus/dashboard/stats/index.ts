@@ -7,6 +7,7 @@ import Cpu from 'services/Cpu';
 import Storage from 'services/Storage';
 import { renderResourceLabel } from 'customModules/utils';
 
+const { terminal } = options;
 const { enable_gpu, interval } = options.menus.dashboard.stats;
 
 const ramService = new Ram();
