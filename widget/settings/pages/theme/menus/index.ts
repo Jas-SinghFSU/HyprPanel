@@ -91,7 +91,7 @@ export const MenuTheme = (): Scrollable<Child, Attribute> => {
                 Header('Switch'),
                 Option({ opt: options.theme.bar.menus.switch.enabled, title: 'Enabled', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.switch.disabled, title: 'Disabled', type: 'color' }),
-                Option({ opt: options.theme.bar.menus.switch.radius, title: 'Border Radius', type: 'string' }),
+                Option({ opt: options.theme.bar.menus.switch.radius, title: 'Switch Radius', type: 'string' }),
                 Option({
                     opt: options.theme.bar.menus.switch.slider_radius,
                     title: 'Slider Border Radius',
