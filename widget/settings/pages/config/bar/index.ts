@@ -268,6 +268,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.workspaces.applicationIconOncePerWorkspace,
+                    title: 'Show the app icon only once per workspace',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.workspaces.applicationIconMap,
                     title: 'Application Icon Mappings',
                     type: 'object',

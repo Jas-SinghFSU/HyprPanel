@@ -865,6 +865,7 @@ const options = mkOptions(OPTIONS, {
             show_numbered: opt(false),
             showWsIcons: opt(false),
             showApplicationIcons: opt(false),
+            applicationIconOncePerWorkspace: opt(true),
             applicationIconMap: opt<ApplicationIcons>({}),
             numbered_active_indicator: opt<ActiveWsIndicator>('underline'),
             icons: {

@@ -26,6 +26,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
                 options.bar.workspaces.showApplicationIcons.bind('value'),
+                options.bar.workspaces.applicationIconOncePerWorkspace.bind('value'),
                 options.bar.workspaces.applicationIconMap.bind('value'),
                 options.theme.matugen.bind('value'),
                 options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
@@ -48,6 +49,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
                 showApplicationIcons,
+                applicationIconOncePerWorkspace,
                 applicationIconMap,
                 matugen: boolean,
                 smartHighlight: boolean,
@@ -102,7 +104,13 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             return Widget.Box();
                         }
 
-                        const icons = showApplicationIcons ? getAppIcon(applicationIconMap, i) : undefined;
+                        const icons = showApplicationIcons
+                            ? getAppIcon({
+                                  iconMap: applicationIconMap,
+                                  index: i,
+                                  removeDuplicateIcons: applicationIconOncePerWorkspace,
+                              })
+                            : undefined;
 
                         return Widget.Button({
                             class_name: 'workspace-button',

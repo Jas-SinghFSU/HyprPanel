@@ -68,12 +68,25 @@ export const getWsColor = (
     return '';
 };
 
-export const getAppIcon = (iconMap: ApplicationIcons, idx: number) => {
+export const getAppIcon = ({
+    index,
+    iconMap,
+    removeDuplicateIcons,
+}: {
+    iconMap: ApplicationIcons;
+    index: number;
+    removeDuplicateIcons: boolean;
+}) => {
     // detect the clients class on the current workspace
-    const clientClasses = hyprland.clients.filter((c) => c.workspace.id === idx).map((c) => c.class);
+    const clientClasses = hyprland.clients.filter((c) => c.workspace.id === index).map((c) => c.class);
 
     // map the client class to icons
-    const icons = clientClasses.map((c) => iconMap[c]).filter((x) => x);
+    let icons = clientClasses.map((c) => iconMap[c]).filter((x) => x);
+
+    // remove duplicate icons
+    if (removeDuplicateIcons) {
+        icons = [...new Set(icons)];
+    }
 
     if (icons.length) {
         return icons.join(' ');
