@@ -278,6 +278,16 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'object',
                 }),
                 Option({
+                    opt: options.bar.workspaces.applicationIconFallback,
+                    title: 'Fallback Application Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconEmptyWorkspace,
+                    title: 'Application Icon for empty workspace',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.bar.workspaces.workspaceIconMap,
                     title: 'Workspace Icon Mappings',
                     type: 'object',

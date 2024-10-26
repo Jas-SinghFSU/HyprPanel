@@ -28,6 +28,8 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 options.bar.workspaces.showApplicationIcons.bind('value'),
                 options.bar.workspaces.applicationIconOncePerWorkspace.bind('value'),
                 options.bar.workspaces.applicationIconMap.bind('value'),
+                options.bar.workspaces.applicationIconEmptyWorkspace.bind('value'),
+                options.bar.workspaces.applicationIconFallback.bind('value'),
                 options.theme.matugen.bind('value'),
                 options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                 hyprland.bind('monitors'),
@@ -48,9 +50,11 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 spacing: number,
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
-                showApplicationIcons,
+                showAppIcons,
                 applicationIconOncePerWorkspace,
                 applicationIconMap,
+                applicationIconEmptyWorkspace,
+                applicationIconFallback,
                 matugen: boolean,
                 smartHighlight: boolean,
                 monitors: Monitor[],
@@ -104,13 +108,13 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             return Widget.Box();
                         }
 
-                        const icons = showApplicationIcons
-                            ? getAppIcon({
+                        const appIcons = showAppIcons
+                            ? getAppIcon(i, applicationIconOncePerWorkspace, {
                                   iconMap: applicationIconMap,
-                                  index: i,
-                                  removeDuplicateIcons: applicationIconOncePerWorkspace,
+                                  defaultIcon: applicationIconFallback,
+                                  emptyIcon: applicationIconEmptyWorkspace,
                               })
-                            : undefined;
+                            : '';
 
                         return Widget.Button({
                             class_name: 'workspace-button',
@@ -134,10 +138,12 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                     i,
                                 ),
                                 label: renderLabel(
-                                    showApplicationIcons || showIcons,
+                                    showIcons,
                                     available,
-                                    icons ?? active,
-                                    icons ?? occupied,
+                                    active,
+                                    occupied,
+                                    showAppIcons,
+                                    appIcons,
                                     workspaceMask,
                                     showWsIcons,
                                     wsIconMap,

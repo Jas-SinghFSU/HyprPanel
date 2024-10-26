@@ -68,17 +68,25 @@ export const getWsColor = (
     return '';
 };
 
-export const getAppIcon = ({
-    index,
-    iconMap,
-    removeDuplicateIcons,
-}: {
-    iconMap: ApplicationIcons;
-    index: number;
-    removeDuplicateIcons: boolean;
-}) => {
+export const getAppIcon = (
+    index: number,
+    removeDuplicateIcons: boolean,
+    {
+        iconMap,
+        defaultIcon,
+        emptyIcon,
+    }: {
+        iconMap: ApplicationIcons;
+        defaultIcon: string;
+        emptyIcon: string;
+    },
+) => {
     // detect the clients class on the current workspace
     const clientClasses = hyprland.clients.filter((c) => c.workspace.id === index).map((c) => c.class);
+
+    if (!clientClasses.length) {
+        return emptyIcon;
+    }
 
     // map the client class to icons
     let icons = clientClasses.map((c) => iconMap[c]).filter((x) => x);
@@ -92,7 +100,7 @@ export const getAppIcon = ({
         return icons.join(' ');
     }
 
-    return undefined;
+    return defaultIcon;
 };
 
 export const renderClassnames = (
@@ -131,6 +139,8 @@ export const renderLabel = (
     available: string,
     active: string,
     occupied: string,
+    showAppIcons: boolean,
+    appIcons: string,
     workspaceMask: boolean,
     showWsIcons: boolean,
     wsIconMap: WorkspaceIconMap,
@@ -139,6 +149,10 @@ export const renderLabel = (
     monitor: number,
     monitors: Monitor[],
 ): string => {
+    if (showAppIcons) {
+        return appIcons;
+    }
+
     if (showIcons) {
         if (hyprland.active.workspace.id === i || isWorkspaceActiveOnMonitor(monitor, monitors, i)) {
             return active;
@@ -150,8 +164,10 @@ export const renderLabel = (
             return available;
         }
     }
+
     if (showWsIcons) {
         return getWsIcon(wsIconMap, i);
     }
+
     return workspaceMask ? `${index + 1}` : `${i}`;
 };
