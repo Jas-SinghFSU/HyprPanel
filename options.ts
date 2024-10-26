@@ -387,6 +387,8 @@ const options = mkOptions(OPTIONS, {
                     enabled: opt(colors.lavender),
                     disabled: opt(tertiary_colors.surface0),
                     puck: opt(secondary_colors.surface1),
+                    radius: opt('0.2em'),
+                    slider_radius: opt('0.2em'),
                 },
                 check_radio_button: {
                     background: opt(colors.surface1),
@@ -411,6 +413,8 @@ const options = mkOptions(OPTIONS, {
                     background: opt(tertiary_colors.surface2),
                     backgroundhover: opt(colors.surface1),
                     puck: opt(colors.overlay0),
+                    slider_radius: opt('0.3rem'),
+                    progress_radius: opt('0.3rem'),
                 },
                 dropdownmenu: {
                     background: opt(colors.crust),
