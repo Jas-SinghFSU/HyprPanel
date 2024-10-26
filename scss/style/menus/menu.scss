@@ -1,6 +1,6 @@
 .menu-slider {
     trough {
-        border-radius: 0.3rem;
+        border-radius: $bar-menus-slider-progress-radius;
         background: $surface0;
 
         highlight,
@@ -44,7 +44,7 @@
         highlight,
         progress {
             background-color: $peach;
-            border-radius: 0.3em;
+            border-radius: $bar-menus-switch-radius;
         }
     }
 
