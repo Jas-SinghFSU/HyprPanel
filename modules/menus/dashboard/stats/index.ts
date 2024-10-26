@@ -23,6 +23,11 @@ interval.connect('changed', () => {
     storageService.updateTimer(interval.value);
 });
 
+const handleClick = (): void => {
+    App.closeWindow('dashboardmenu');
+    Utils.execAsync(`bash -c "${terminal} -e btop"`).catch((err) => `Failed to open btop: ${err}`);
+};
+
 const Stats = (): BoxWidget => {
     const divide = ([total, free]: number[]): number => free / total;
 
@@ -82,28 +87,18 @@ const Stats = (): BoxWidget => {
 
                                 return (self.children = [
                                     Widget.Button({
-                                        on_primary_click: terminal.bind('value').as((term) => {
-                                            return (): void => {
-                                                App.closeWindow('dashboardmenu');
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            };
-                                        }),
+                                        on_primary_click: () => {
+                                            handleClick();
+                                        },
                                         child: Widget.Label({
                                             class_name: 'txt-icon',
                                             label: '󰢮',
                                         }),
                                     }),
                                     Widget.Button({
-                                        on_primary_click: terminal.bind('value').as((term) => {
-                                            return (): void => {
-                                                App.closeWindow('dashboardmenu');
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            };
-                                        }),
+                                        on_primary_click: () => {
+                                            handleClick();
+                                        },
                                         child: Widget.LevelBar({
                                             class_name: 'stats-bar',
                                             hexpand: true,
@@ -150,28 +145,18 @@ const Stats = (): BoxWidget => {
                         vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
@@ -199,28 +184,18 @@ const Stats = (): BoxWidget => {
                         hexpand: true,
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
@@ -251,28 +226,18 @@ const Stats = (): BoxWidget => {
                         vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '󰋊',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
