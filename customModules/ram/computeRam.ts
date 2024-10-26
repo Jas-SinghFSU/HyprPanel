@@ -4,6 +4,7 @@ import { divide } from 'customModules/utils';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 import { Variable as VariableType } from 'types/variable';
 
+// FIX: Consolidate with Ram service class
 export const calculateRamUsage = (round: VariableType<boolean>): GenericResourceData => {
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');

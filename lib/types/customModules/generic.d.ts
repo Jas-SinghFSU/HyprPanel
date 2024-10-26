@@ -6,7 +6,7 @@ export type GenericResourceMetrics = {
     percentage: number;
 };
 
-type GenericResourceData = ResourceUsage & {
+export type GenericResourceData = GenericResourceMetrics & {
     free: number;
 };
 
