@@ -1118,29 +1118,29 @@ const options = mkOptions(OPTIONS, {
                 left: {
                     directory1: {
                         label: opt('󰉍 Downloads'),
-                        command: opt('bash -c "dolphin $HOME/Downloads/"'),
+                        command: opt('bash -c "xdg-open $HOME/Downloads/"'),
                     },
                     directory2: {
                         label: opt('󰉏 Videos'),
-                        command: opt('bash -c "dolphin $HOME/Videos/"'),
+                        command: opt('bash -c "xdg-open $HOME/Videos/"'),
                     },
                     directory3: {
                         label: opt('󰚝 Projects'),
-                        command: opt('bash -c "dolphin $HOME/Projects/"'),
+                        command: opt('bash -c "xdg-open $HOME/Projects/"'),
                     },
                 },
                 right: {
                     directory1: {
                         label: opt('󱧶 Documents'),
-                        command: opt('bash -c "dolphin $HOME/Documents/"'),
+                        command: opt('bash -c "xdg-open $HOME/Documents/"'),
                     },
                     directory2: {
                         label: opt('󰉏 Pictures'),
-                        command: opt('bash -c "dolphin $HOME/Pictures/"'),
+                        command: opt('bash -c "xdg-open $HOME/Pictures/"'),
                     },
                     directory3: {
                         label: opt('󱂵 Home'),
-                        command: opt('bash -c "dolphin $HOME/"'),
+                        command: opt('bash -c "xdg-open $HOME/"'),
                     },
                 },
             },
@@ -1164,8 +1164,7 @@ const options = mkOptions(OPTIONS, {
 
     scalingPriority: opt<ScalingPriority>('gdk'),
 
-    terminal: opt('kitty'),
-
+    terminal: opt('$TERM'),
     tear: opt(false),
 
     wallpaper: {
