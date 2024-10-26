@@ -1,4 +1,4 @@
-import { WorkspaceIconMap } from 'lib/types/workspace';
+import type { ApplicationIcons, WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
 import options from 'options';
 import { Monitor } from 'types/service/hyprland';
@@ -66,6 +66,20 @@ export const getWsColor = (
     }
 
     return '';
+};
+
+export const getAppIcon = (iconMap: ApplicationIcons, idx: number) => {
+    // detect the clients class on the current workspace
+    const clientClasses = hyprland.clients.filter((c) => c.workspace.id === idx).map((c) => c.class);
+
+    // map the client class to icons
+    const icons = clientClasses.map((c) => iconMap[c]).filter((x) => x);
+
+    if (icons.length) {
+        return icons.join(' ');
+    }
+
+    return undefined;
 };
 
 export const renderClassnames = (

@@ -2,7 +2,7 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { Monitor, Workspace } from 'types/service/hyprland';
-import { getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getAppIcon, getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
@@ -102,19 +102,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             return Widget.Box();
                         }
 
-                        let icons: string | undefined = undefined;
-                        if (showApplicationIcons) {
-                            // detect the clients class on the current workspace
-                            const clientClasses = hyprland.clients
-                                .filter((c) => c.workspace.id === i)
-                                .map((c) => c.class);
-
-                            // map the client class to icons
-                            icons = clientClasses
-                                .map((c) => applicationIconMap[c])
-                                .filter((x) => x)
-                                .join(' ');
-                        }
+                        const icons = showApplicationIcons ? getAppIcon(applicationIconMap, i) : undefined;
 
                         return Widget.Button({
                             class_name: 'workspace-button',
@@ -140,8 +128,8 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                 label: renderLabel(
                                     showApplicationIcons || showIcons,
                                     available,
-                                    showApplicationIcons && icons ? icons : active,
-                                    showApplicationIcons && icons ? icons : occupied,
+                                    icons ?? active,
+                                    icons ?? occupied,
                                     workspaceMask,
                                     showWsIcons,
                                     wsIconMap,
