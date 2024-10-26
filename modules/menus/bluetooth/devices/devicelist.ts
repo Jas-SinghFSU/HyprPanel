@@ -4,6 +4,9 @@ import { connectedControls } from './connectedControls.js';
 import { getBluetoothIcon } from '../utils.js';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0.js';
 import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options';
+
+const { showBattery, batteryIcon } = options.menus.bluetooth;
 
 const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Child, Attribute> => {
     return self.hook(bluetooth, () => {
@@ -103,21 +106,51 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                         reveal_child: device.connected || device.paired,
                                                         child: Widget.Box({
                                                             hpack: 'start',
-                                                            children: [
-                                                                Widget.Label({
-                                                                    hpack: 'start',
-                                                                    class_name: 'connection-status dim',
-                                                                    label: device.connected ? 'Connected' : 'Paired',
-                                                                }),
-                                                                Widget.Label({
-                                                                    class_name: 'connection-status battery',
-                                                                    label:
-                                                                        device.connected &&
-                                                                        device.battery_percentage !== null
-                                                                            ? `| 󰥉 ${device.battery_percentage}%`
-                                                                            : '',
-                                                                }),
-                                                            ],
+                                                            children: Utils.merge(
+                                                                [showBattery.bind('value'), batteryIcon.bind('value')],
+                                                                (showBat, batIcon) => {
+                                                                    if (!showBat) {
+                                                                        return [
+                                                                            Widget.Label({
+                                                                                hpack: 'start',
+                                                                                class_name: 'connection-status dim',
+                                                                                label: device.connected
+                                                                                    ? 'Connected'
+                                                                                    : 'Paired',
+                                                                            }),
+                                                                        ];
+                                                                    }
+
+                                                                    return [
+                                                                        Widget.Label({
+                                                                            hpack: 'start',
+                                                                            class_name: 'connection-status dim',
+                                                                            label: device.connected
+                                                                                ? 'Connected'
+                                                                                : 'Paired',
+                                                                        }),
+                                                                        Widget.Separator({
+                                                                            class_name: 'menu-separator',
+                                                                        }),
+                                                                        Widget.Label({
+                                                                            class_name: 'connection-status txt-icon',
+                                                                            label:
+                                                                                device.connected &&
+                                                                                device.battery_percentage !== null
+                                                                                    ? `${batIcon}`
+                                                                                    : '',
+                                                                        }),
+                                                                        Widget.Label({
+                                                                            class_name: 'connection-status battery',
+                                                                            label:
+                                                                                device.connected &&
+                                                                                device.battery_percentage !== null
+                                                                                    ? `${device.battery_percentage}%`
+                                                                                    : '',
+                                                                        }),
+                                                                    ];
+                                                                },
+                                                            ),
                                                         }),
                                                     }),
                                                 ],

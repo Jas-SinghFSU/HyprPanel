@@ -1046,6 +1046,7 @@ const options = mkOptions(OPTIONS, {
         transitionTime: opt(200),
         bluetooth: {
             showBattery: opt(false),
+            batteryIcon: opt('󰥉'),
         },
         power: {
             showLabel: opt(true),
