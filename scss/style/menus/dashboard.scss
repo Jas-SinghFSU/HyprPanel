@@ -17,14 +17,13 @@
 
     .dashboard-card {
         background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-dashboard-card-color);
-        margin: 1.3em;
+        margin: 0em 1.3em;
         border-radius: $bar-menus-card_radius;
         padding: 1.5em;
     }
 
     .profile-picture-container {
         margin-right: 0.65em;
-        margin-bottom: 0.65em;
 
         .profile-picture {
             min-width: $bar-menus-menu-dashboard-profile-size;
@@ -44,7 +43,6 @@
 
     .power-menu-container {
         margin-left: 0em;
-        margin-bottom: 0.65em;
 
         .dashboard-button {
             min-width: 3em;
@@ -169,7 +167,6 @@
 
         .container {
             margin-top: 0em;
-            margin-bottom: 0.65em;
 
             &.most-used {
                 margin-right: 0.65em;
@@ -215,8 +212,6 @@
     }
 
     .controls-container {
-        margin-bottom: 0.65em;
-
         &.dashboard-card {
             margin-top: 0em;
         }
@@ -398,7 +393,6 @@
     .directories-container {
         &.dashboard-card {
             margin-top: 0em;
-            margin-bottom: 0.65em;
             padding-left: 1.5em;
             padding-right: 0em;
         }
@@ -505,7 +499,7 @@
                 }
 
                 block {
-                    border-radius: $bar-menus-slider-progress-radius;
+                    border-radius: 0.4em;
 
                     &.empty {
                         background: if(
@@ -555,7 +549,7 @@
         }
 
         .stat-value {
-            margin-bottom: 0.75em;
+            margin-bottom: 0.5em;
             font-size: 0.9em;
 
             &.cpu {
@@ -575,4 +569,24 @@
             }
         }
     }
+}
+
+.dashboard-content-items > :not(:first-child):not(:last-child) {
+    margin-top: 0;
+    margin-bottom: 0.65em;
+}
+
+.dashboard-content-items > :first-child {
+    margin-top: 1.3em;
+    margin-bottom: 0.65em;
+}
+
+.dashboard-content-items > :last-child {
+    margin-top: 0;
+    margin-bottom: 1.3em;
+}
+
+.dashboard-content-items > :only-child {
+    margin-top: 1.3em;
+    margin-bottom: 1.3em;
 }
