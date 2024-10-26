@@ -5,6 +5,7 @@ import { divide } from 'customModules/utils';
 import { Variable as VariableType } from 'types/variable';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 
+// FIX: Consolidate with Storage service class
 export const computeStorage = (round: VariableType<boolean>): GenericResourceData => {
     try {
         const currentFsUsage = new GTop.glibtop_fsusage();
