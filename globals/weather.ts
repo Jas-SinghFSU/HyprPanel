@@ -4,11 +4,36 @@ import { DEFAULT_WEATHER } from 'lib/types/defaults/weather.js';
 import GLib from 'gi://GLib?version=2.0';
 import { weatherIcons } from 'modules/icons/weather.js';
 
+const { EXISTS, IS_REGULAR } = GLib.FileTest;
+
 const { key, interval, location } = options.menus.clock.weather;
 
 export const globalWeatherVar = Variable<Weather>(DEFAULT_WEATHER);
 
 let weatherIntervalInstance: null | number = null;
+
+const weatherApiKey = Variable(key.value);
+
+key.connect('changed', () => {
+    const weatherKey = key.value;
+    if (GLib.file_test(weatherKey, EXISTS) && GLib.file_test(weatherKey, IS_REGULAR)) {
+        try {
+            const fileContentArray = GLib.file_get_contents(weatherKey)[1];
+            const fileContent = new TextDecoder().decode(fileContentArray);
+            const parsedContent = JSON.parse(fileContent);
+
+            if (parsedContent.weather_api_key !== undefined) {
+                weatherApiKey.value = parsedContent.weather_api_key;
+            }
+        } catch (error) {
+            console.error(`Failed to read or parse weather key file: ${error}`);
+        }
+
+        return;
+    }
+
+    weatherApiKey.value = key.value;
+});
 
 const weatherIntervalFn = (weatherInterval: number, loc: string, weatherKey: string): void => {
     if (weatherIntervalInstance !== null) {
@@ -46,12 +71,15 @@ const weatherIntervalFn = (weatherInterval: number, loc: string, weatherKey: str
     });
 };
 
-Utils.merge([key.bind('value'), interval.bind('value'), location.bind('value')], (weatherKey, weatherInterval, loc) => {
-    if (!weatherKey) {
-        return (globalWeatherVar.value = DEFAULT_WEATHER);
-    }
-    weatherIntervalFn(weatherInterval, loc, weatherKey);
-});
+Utils.merge(
+    [weatherApiKey.bind('value'), interval.bind('value'), location.bind('value')],
+    (weatherKey, weatherInterval, loc) => {
+        if (!weatherKey) {
+            return (globalWeatherVar.value = DEFAULT_WEATHER);
+        }
+        weatherIntervalFn(weatherInterval, loc, weatherKey);
+    },
+);
 
 export const getTemperature = (wthr: Weather, unt: UnitType): string => {
     if (unt === 'imperial') {
