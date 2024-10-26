@@ -1160,8 +1160,7 @@ const options = mkOptions(OPTIONS, {
 
     scalingPriority: opt<ScalingPriority>('gdk'),
 
-    terminal: opt('$TERMINAL'),
-    
+    terminal: opt('$TERM'),
     tear: opt(false),
 
     wallpaper: {
