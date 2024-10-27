@@ -1,12 +1,12 @@
 .menu-slider {
     trough {
-        border-radius: 0.3rem;
+        border-radius: $bar-menus-slider-progress-radius;
         background: $surface0;
 
         highlight,
         progress {
             background: $peach;
-            border-radius: 0.3rem;
+            border-radius: $bar-menus-slider-progress-radius;
         }
     }
 
@@ -16,7 +16,7 @@
         min-height: 0.6rem;
         min-width: 0.6rem;
         border: 0rem solid transparent;
-        border-radius: 0.3rem;
+        border-radius: $bar-menus-slider-slider-radius;
     }
 
     &:hover {
@@ -34,7 +34,7 @@
 .menu-switch {
     font-size: 1.3em;
     background-color: $surface0;
-    border-radius: 0.2em;
+    border-radius: $bar-menus-switch-radius;
 
     &:checked {
         background: $sky;
@@ -44,7 +44,7 @@
         highlight,
         progress {
             background-color: $peach;
-            border-radius: 0.3em;
+            border-radius: $bar-menus-switch-radius;
         }
     }
 
@@ -54,7 +54,7 @@
         min-height: 1em;
         min-width: 1em;
         border: 0em solid transparent;
-        border-radius: 0.2em;
+        border-radius: $bar-menus-switch-slider-radius;
         margin: 0.1em 0.15em;
     }
 
