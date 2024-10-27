@@ -82,14 +82,43 @@ export const getAppIcon = (
     },
 ) => {
     // detect the clients class on the current workspace
-    const clientClasses = hyprland.clients.filter((c) => c.workspace.id === index).map((c) => c.class);
+    const clients: ReadonlyArray<[className: string, title: string]> = hyprland.clients
+        .filter((c) => c.workspace.id === index)
+        .map((c) => [c.class, c.title]);
 
-    if (!clientClasses.length) {
+    if (!clients.length) {
         return emptyIcon;
     }
 
-    // map the client class to icons
-    let icons = clientClasses.map((c) => iconMap[c]).filter((x) => x);
+    // map the client attributes to icons
+    let icons = clients
+        .map(([clientClass, clientTitle]) => {
+            const maybeIcon = Object.entries(iconMap).find(([matcher]) => {
+                // non-valid Regex construction could result in a syntax error
+                try {
+                    if (matcher.startsWith('class:')) {
+                        const re = matcher.substring(6);
+                        return new RegExp(re, 'i').test(clientClass);
+                    }
+
+                    if (matcher.startsWith('title:')) {
+                        const re = matcher.substring(6);
+                        return new RegExp(re, 'i').test(clientTitle);
+                    }
+
+                    return new RegExp(matcher, 'i').test(clientClass);
+                } catch {
+                    return false;
+                }
+            });
+
+            if (!maybeIcon) {
+                return undefined;
+            }
+
+            return maybeIcon.at(1);
+        })
+        .filter((x) => x);
 
     // remove duplicate icons
     if (removeDuplicateIcons) {
