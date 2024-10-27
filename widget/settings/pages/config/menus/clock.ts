@@ -27,7 +27,7 @@ export const ClockMenuSettings = (): Scrollable<Child, Attribute> => {
                 Option({
                     opt: options.menus.clock.weather.key,
                     title: 'Weather API Key',
-                    subtitle: 'May require AGS restart. https://weatherapi.com/',
+                    subtitle: "API Key or path to a JSON file that contains a 'weather_api_key' variable.",
                     type: 'string',
                 }),
                 Option({
