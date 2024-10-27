@@ -264,22 +264,24 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.showApplicationIcons,
                     title: 'Map Workspaces to Application Icons',
-                    subtitle: 'Use hyprctl clients class/title to match against',
+                    subtitle: "Requires 'Map Workspace to Icons' to be enabled",
                     type: 'boolean',
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconOncePerWorkspace,
-                    title: 'Show the app icon only once per workspace',
+                    title: 'Hide Duplicate App Icons',
                     type: 'boolean',
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconMap,
                     title: 'App Icon Mappings',
+                    subtitle: "Use the class/title output of 'hyprctl clients' to match against",
                     type: 'object',
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconFallback,
                     title: 'Fallback App Icon',
+                    subtitle: 'Fallback icon to display if no specific icon is defined for the application',
                     type: 'string',
                 }),
                 Option({
