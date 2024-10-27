@@ -55,21 +55,26 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                         const filteredNotifications = filterNotifications(notifications, ignoredNotifs);
 
                         return (self.children = filteredNotifications.slice(0, displayedTotal.value).map((notif) => {
-                            return Widget.Box({
-                                class_name: 'notification-card',
-                                vpack: 'start',
-                                hexpand: true,
-                                children: [
-                                    Image(notif),
-                                    Widget.Box({
-                                        vpack: 'start',
-                                        vertical: true,
-                                        hexpand: true,
-                                        class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ''}`,
-                                        children: [Header(notif), Body(notif), Action(notif, notifs)],
-                                    }),
-                                    CloseButton(notif, notifs),
-                                ],
+                            return Widget.EventBox({
+                                on_secondary_click: () => {
+                                    notifs.CloseNotification(notif.id);
+                                },
+                                child: Widget.Box({
+                                    class_name: 'notification-card',
+                                    vpack: 'start',
+                                    hexpand: true,
+                                    children: [
+                                        Image(notif),
+                                        Widget.Box({
+                                            vpack: 'start',
+                                            vertical: true,
+                                            hexpand: true,
+                                            class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ''}`,
+                                            children: [Header(notif), Body(notif), Action(notif, notifs)],
+                                        }),
+                                        CloseButton(notif, notifs),
+                                    ],
+                                }),
                             });
                         }));
                     },
