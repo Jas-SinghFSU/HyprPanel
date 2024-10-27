@@ -1,7 +1,7 @@
 const media = await Service.import('mpris');
 import { MediaInfo } from './components/mediainfo.js';
-import { Controls } from './components/controls.js';
-import { Bar } from './components/bar.js';
+import { Controls } from './components/controls/index.js';
+import { Bar } from './components/timebar/index.js';
 import { MprisPlayer } from 'types/service/mpris.js';
 import options from 'options.js';
 import { BoxWidget } from 'lib/types/widget.js';
@@ -26,33 +26,30 @@ const generateAlbumArt = (imageUrl: string): string => {
 
     return css;
 };
-const Media = (): BoxWidget => {
-    const curPlayer = Variable('');
 
-    media.connect('changed', () => {
-        const statusOrder = {
-            Playing: 1,
-            Paused: 2,
-            Stopped: 3,
-        };
+const curPlayer = Variable('');
 
-        const isPlaying = media.players.find((p) => p['play_back_status'] === 'Playing');
-
-        const playerStillExists = media.players.some((p) => curPlayer.value === p['bus_name']);
-
-        const nextPlayerUp = media.players.sort(
-            (a, b) => statusOrder[a['play_back_status']] - statusOrder[b['play_back_status']],
-        )[0].bus_name;
-
-        if (isPlaying || !playerStillExists) {
-            curPlayer.value = nextPlayerUp;
-        }
-    });
-
-    const getPlayerInfo = (): MprisPlayer => {
-        return media.players.find((p) => p.bus_name === curPlayer.value) || media.players[0];
+media.connect('changed', () => {
+    const statusOrder = {
+        Playing: 1,
+        Paused: 2,
+        Stopped: 3,
     };
 
+    const isPlaying = media.players.find((p) => p['play_back_status'] === 'Playing');
+
+    const playerStillExists = media.players.some((p) => curPlayer.value === p['bus_name']);
+
+    const nextPlayerUp = media.players.sort(
+        (a, b) => statusOrder[a['play_back_status']] - statusOrder[b['play_back_status']],
+    )[0].bus_name;
+
+    if (isPlaying || !playerStillExists) {
+        curPlayer.value = nextPlayerUp;
+    }
+});
+
+const Media = (): BoxWidget => {
     return Widget.Box({
         class_name: 'menu-section-container',
         children: [
@@ -69,7 +66,7 @@ const Media = (): BoxWidget => {
                                 hpack: 'fill',
                                 hexpand: true,
                                 vertical: true,
-                                children: [MediaInfo(getPlayerInfo), Controls(getPlayerInfo), Bar(getPlayerInfo)],
+                                children: [MediaInfo(), Controls(), Bar()],
                             }),
                         }),
                     ],
@@ -92,6 +89,10 @@ const Media = (): BoxWidget => {
             }),
         ],
     });
+};
+
+export const getPlayerInfo = (): MprisPlayer => {
+    return media.players.find((p) => p.bus_name === curPlayer.value) || media.players[0];
 };
 
 export { Media };

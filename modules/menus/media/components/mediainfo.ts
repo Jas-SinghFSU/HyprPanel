@@ -1,9 +1,9 @@
 import { BoxWidget } from 'lib/types/widget';
-import { MprisPlayer } from 'types/service/mpris';
+import { getPlayerInfo } from '../media';
 
 const media = await Service.import('mpris');
 
-const MediaInfo = (getPlayerInfo: () => MprisPlayer): BoxWidget => {
+const MediaInfo = (): BoxWidget => {
     return Widget.Box({
         class_name: 'media-indicator-current-media-info',
         hpack: 'center',
