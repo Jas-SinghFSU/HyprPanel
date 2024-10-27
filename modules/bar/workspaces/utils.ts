@@ -80,7 +80,7 @@ export const getAppIcon = (
         defaultIcon: string;
         emptyIcon: string;
     },
-) => {
+): string => {
     // detect the clients attributes on the current workspace
     const clients: ReadonlyArray<[className: string, title: string]> = hyprland.clients
         .filter((c) => c.workspace.id === workspaceIndex)
