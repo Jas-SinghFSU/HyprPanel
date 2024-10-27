@@ -421,7 +421,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.volume.raiseMaximumVolume,
-                    title: 'Allows Raising Volume Above 100%',
+                    title: 'Allow Raising Volume Above 100%',
                     type: 'boolean',
                 }),
                 Option({
