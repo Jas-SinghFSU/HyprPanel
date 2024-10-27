@@ -81,7 +81,7 @@ export const getAppIcon = (
         emptyIcon: string;
     },
 ) => {
-    // detect the clients class on the current workspace
+    // detect the clients attributes on the current workspace
     const clients: ReadonlyArray<[className: string, title: string]> = hyprland.clients
         .filter((c) => c.workspace.id === workspaceIndex)
         .map((c) => [c.class, c.title]);
