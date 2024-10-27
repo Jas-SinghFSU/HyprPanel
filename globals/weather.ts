@@ -14,9 +14,6 @@ let weatherIntervalInstance: null | number = null;
 
 key.connect('changed', () => {
     const fetchedKey = getWeatherKey(key.value);
-    console.log('fetchedKey');
-    console.log(fetchedKey);
-
     weatherApiKey.value = fetchedKey;
 });
 

@@ -55,25 +55,28 @@ export const module = ({
                 },
             ),
             tooltip_text: tooltipText,
-            children: Utils.merge([showLabelBinding, useTextIcon], (showLabel, forceTextIcon): Gtk.Widget[] => {
-                const childrenArray: Gtk.Widget[] = [];
-                const iconWidget = getIconWidget(forceTextIcon);
+            children: Utils.merge(
+                [showLabelBinding, useTextIcon],
+                (showLabel: boolean, forceTextIcon: boolean): Gtk.Widget[] => {
+                    const childrenArray: Gtk.Widget[] = [];
+                    const iconWidget = getIconWidget(forceTextIcon);
 
-                if (iconWidget !== undefined) {
-                    childrenArray.push(iconWidget);
-                }
+                    if (iconWidget !== undefined) {
+                        childrenArray.push(iconWidget);
+                    }
 
-                if (showLabel) {
-                    childrenArray.push(
-                        Widget.Label({
-                            class_name: `bar-button-label module-label ${boxClass}`,
-                            label: label,
-                            setup: labelHook,
-                        }),
-                    );
-                }
-                return childrenArray;
-            }),
+                    if (showLabel) {
+                        childrenArray.push(
+                            Widget.Label({
+                                class_name: `bar-button-label module-label ${boxClass}`,
+                                label: label,
+                                setup: labelHook,
+                            }),
+                        );
+                    }
+                    return childrenArray;
+                },
+            ),
             setup: hook,
         }),
         tooltip_text: tooltipText,
