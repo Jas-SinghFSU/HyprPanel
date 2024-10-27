@@ -26,7 +26,7 @@ const Bar = (): BoxWidget => {
                         self.poll(1000, () => {
                             const foundPlayer = getPlayerInfo();
 
-                            if (foundPlayer.play_back_status === 'Playing') {
+                            if (foundPlayer?.play_back_status === 'Playing') {
                                 update(self, foundPlayer);
                                 updateTooltip(self, foundPlayer);
                             }
