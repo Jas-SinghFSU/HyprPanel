@@ -69,7 +69,7 @@ export const getWsColor = (
 };
 
 export const getAppIcon = (
-    index: number,
+    workspaceIndex: number,
     removeDuplicateIcons: boolean,
     {
         iconMap,
@@ -83,7 +83,7 @@ export const getAppIcon = (
 ) => {
     // detect the clients class on the current workspace
     const clients: ReadonlyArray<[className: string, title: string]> = hyprland.clients
-        .filter((c) => c.workspace.id === index)
+        .filter((c) => c.workspace.id === workspaceIndex)
         .map((c) => [c.class, c.title]);
 
     if (!clients.length) {
