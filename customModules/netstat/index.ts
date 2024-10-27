@@ -1,3 +1,4 @@
+const network = await Service.import('network');
 import options from 'options';
 import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
@@ -15,6 +16,7 @@ const {
     labelType,
     networkInterface,
     rateUnit,
+    dynamicIcon,
     icon,
     round,
     leftClick,
@@ -59,6 +61,13 @@ export const Netstat = (): BarBoxChild => {
     };
 
     const netstatModule = module({
+        useTextIcon: dynamicIcon.bind('value').as((useDynamicIcon) => !useDynamicIcon),
+        icon: Utils.merge([network.bind('primary'), network.bind('wifi'), network.bind('wired')], (pmry, wfi, wrd) => {
+            if (pmry === 'wired') {
+                return wrd.icon_name;
+            }
+            return wfi.icon_name;
+        }),
         textIcon: icon.bind('value'),
         label: Utils.merge(
             [networkUsage.bind('value'), labelType.bind('value')],
