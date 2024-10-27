@@ -19,6 +19,13 @@ export type WorkspaceIcons = {
     [key: string]: string;
 };
 
+export type AppIconOptions = {
+    iconMap: ApplicationIcons;
+    defaultIcon: string;
+    emptyIcon: string;
+};
+export type ClientAttributes = [className: string, title: string];
+
 export type WorkspaceIconsColored = {
     [key: string]: {
         color: string;

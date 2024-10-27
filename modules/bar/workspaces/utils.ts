@@ -1,4 +1,4 @@
-import type { ApplicationIcons, WorkspaceIconMap } from 'lib/types/workspace';
+import type { ClientAttributes, AppIconOptions, WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
 import options from 'options';
 import { Monitor } from 'types/service/hyprland';
@@ -71,18 +71,10 @@ export const getWsColor = (
 export const getAppIcon = (
     workspaceIndex: number,
     removeDuplicateIcons: boolean,
-    {
-        iconMap,
-        defaultIcon,
-        emptyIcon,
-    }: {
-        iconMap: ApplicationIcons;
-        defaultIcon: string;
-        emptyIcon: string;
-    },
+    { iconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
     // detect the clients attributes on the current workspace
-    const clients: ReadonlyArray<[className: string, title: string]> = hyprland.clients
+    const clients: ReadonlyArray<ClientAttributes> = hyprland.clients
         .filter((c) => c.workspace.id === workspaceIndex)
         .map((c) => [c.class, c.title]);
 
