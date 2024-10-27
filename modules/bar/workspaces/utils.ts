@@ -1,3 +1,4 @@
+import { defaultApplicationIcons } from 'lib/constants/workspaces';
 import type { ClientAttributes, AppIconOptions, WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
 import options from 'options';
@@ -71,8 +72,11 @@ export const getWsColor = (
 export const getAppIcon = (
     workspaceIndex: number,
     removeDuplicateIcons: boolean,
-    { iconMap, defaultIcon, emptyIcon }: AppIconOptions,
+    { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
+    // append the default icons so user defined icons take precedence
+    const iconMap = { ...userDefinedIconMap, ...defaultApplicationIcons };
+
     // detect the clients attributes on the current workspace
     const clients: ReadonlyArray<ClientAttributes> = hyprland.clients
         .filter((c) => c.workspace.id === workspaceIndex)
