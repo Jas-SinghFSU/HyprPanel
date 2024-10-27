@@ -2,6 +2,9 @@ const audio = await Service.import('audio');
 import { getIcon } from '../utils.js';
 import Box from 'types/widgets/box.js';
 import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options';
+
+const { raiseMaximumVolume } = options.bar.volume;
 
 const renderActivePlayback = (): Box<Child, Attribute>[] => {
     return [
@@ -35,25 +38,27 @@ const renderActivePlayback = (): Box<Child, Attribute>[] => {
                 }),
                 Widget.Box({
                     vertical: true,
-                    children: [
-                        Widget.Label({
-                            class_name: 'menu-active playback',
-                            hpack: 'start',
-                            truncate: 'end',
-                            expand: true,
-                            wrap: true,
-                            label: audio.bind('speaker').as((v) => v.description || ''),
-                        }),
-                        Widget.Slider({
-                            value: audio['speaker'].bind('volume'),
-                            class_name: 'menu-active-slider menu-slider playback',
-                            draw_value: false,
-                            hexpand: true,
-                            min: 0,
-                            max: 1,
-                            onChange: ({ value }) => (audio.speaker.volume = value),
-                        }),
-                    ],
+                    children: raiseMaximumVolume.bind('value').as((raiseMaxVol) => {
+                        return [
+                            Widget.Label({
+                                class_name: 'menu-active playback',
+                                hpack: 'start',
+                                truncate: 'end',
+                                expand: true,
+                                wrap: true,
+                                label: audio.bind('speaker').as((v) => v.description || ''),
+                            }),
+                            Widget.Slider({
+                                value: audio['speaker'].bind('volume'),
+                                class_name: 'menu-active-slider menu-slider playback',
+                                draw_value: false,
+                                hexpand: true,
+                                min: 0,
+                                max: raiseMaxVol ? 1.5 : 1,
+                                onChange: ({ value }) => (audio.speaker.volume = value),
+                            }),
+                        ];
+                    }),
                 }),
                 Widget.Label({
                     vpack: 'end',

@@ -885,6 +885,7 @@ const options = mkOptions(OPTIONS, {
         },
         volume: {
             label: opt(true),
+            raiseMaximumVolume: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt('pactl set-sink-volume @DEFAULT_SINK@ +5%'),
