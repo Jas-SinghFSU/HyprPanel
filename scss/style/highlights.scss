@@ -55,24 +55,33 @@ $languages-map: (
   css: "",
   dart: "",
   dockerfile: "󰡨",
+  elixir: "",
+  erlang: "",
+  fsharp: "",
   go: "",
   gradle: "",
   graphql: "󰡷",
+  groovy: ""
   haskell: "",
   html: "",
+  julia: "",
   java: "",
   javascript: "󰌞",
   jekyll: "",
   json: "",
+  kotlin: "󰘏",
   latex: "",
   less: "",
   lua: "󰢱",
   makefile: "",
   markdown: "",
   mipsasm: "",
+  matlab: "",
   nginx: "",
   nix: "󱄅",
   ocaml: ""
+  pascal: "",
+  perl: "",
   php: "",
   prolog: "",
   python: "",
@@ -84,11 +93,16 @@ $languages-map: (
   shell: "",
   stylus: "",
   swift: "",
+  sql: "",
   typescript: "󰛦",
+  vb: "",
+  vue: "󰡄",
   wasm: "",
   x86asm: "",
   xml: "󰗀",
-  groovy: ""
+  zig: ""
+  // add more missing lang icons here
+
 );
 
 @each $lang, $content in $languages-map {
