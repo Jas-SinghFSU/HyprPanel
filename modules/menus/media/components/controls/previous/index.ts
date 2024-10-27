@@ -1,7 +1,7 @@
 const media = await Service.import('mpris');
 import icons from 'lib/icons';
 import { Attribute } from 'lib/types/widget';
-import { getPlayerInfo } from 'modules/menus/media/media';
+import { getPlayerInfo } from '../../helpers';
 import Button from 'types/widgets/button';
 import Icon from 'types/widgets/icon';
 

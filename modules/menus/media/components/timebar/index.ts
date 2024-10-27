@@ -1,6 +1,6 @@
 const media = await Service.import('mpris');
 import { BoxWidget } from 'lib/types/widget';
-import { getPlayerInfo } from '../../media';
+import { getPlayerInfo } from '../helpers';
 import { update, updateTooltip } from './helpers';
 
 const Bar = (): BoxWidget => {

@@ -1,6 +1,6 @@
 const media = await Service.import('mpris');
 import { Attribute, Child } from 'lib/types/widget';
-import { getPlayerInfo } from 'modules/menus/media/media';
+import { getPlayerInfo } from '../../helpers';
 import Box from 'types/widgets/box';
 import { isShuffleActive } from './helpers';
 import icons from 'lib/icons';

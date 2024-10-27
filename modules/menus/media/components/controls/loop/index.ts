@@ -1,6 +1,6 @@
 import icons from 'lib/icons';
 import { BoxWidget } from 'lib/types/widget';
-import { getPlayerInfo } from 'modules/menus/media/media';
+import { getPlayerInfo } from '../../helpers';
 import { MprisPlayer } from 'types/service/mpris';
 import { isLoopActive, isValidLoopStatus } from './helpers';
 

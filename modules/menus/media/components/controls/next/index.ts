@@ -1,7 +1,7 @@
 const media = await Service.import('mpris');
 import icons from 'lib/icons';
 import { BoxWidget } from 'lib/types/widget';
-import { getPlayerInfo } from 'modules/menus/media/media';
+import { getPlayerInfo } from '../../helpers';
 
 export const nextTrack = (): BoxWidget => {
     return Widget.Box({

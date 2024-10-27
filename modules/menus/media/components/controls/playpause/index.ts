@@ -1,5 +1,5 @@
 const media = await Service.import('mpris');
-import { getPlayerInfo } from 'modules/menus/media/media';
+import { getPlayerInfo } from '../../helpers';
 import { MprisPlayer } from 'types/service/mpris';
 import { isValidPlaybackStatus } from './helpers';
 import Button from 'types/widgets/button';
