@@ -264,7 +264,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.showApplicationIcons,
                     title: 'Map Workspaces to Application Icons',
-                    subtitle: 'Use hyprctl clients initialClass to match against',
+                    subtitle: 'Use hyprctl clients class/title to match against',
                     type: 'boolean',
                 }),
                 Option({
@@ -274,17 +274,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconMap,
-                    title: 'Application Icon Mappings',
+                    title: 'App Icon Mappings',
                     type: 'object',
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconFallback,
-                    title: 'Fallback Application Icon',
+                    title: 'Fallback App Icon',
                     type: 'string',
                 }),
                 Option({
                     opt: options.bar.workspaces.applicationIconEmptyWorkspace,
-                    title: 'Application Icon for empty workspace',
+                    title: 'App Icon for empty workspace',
                     type: 'string',
                 }),
                 Option({
