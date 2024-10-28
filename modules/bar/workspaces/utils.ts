@@ -1,4 +1,5 @@
-import { WorkspaceIconMap } from 'lib/types/workspace';
+import { defaultApplicationIcons } from 'lib/constants/workspaces';
+import type { ClientAttributes, AppIconOptions, WorkspaceIconMap } from 'lib/types/workspace';
 import { isValidGjsColor } from 'lib/utils';
 import options from 'options';
 import { Monitor } from 'types/service/hyprland';
@@ -68,6 +69,65 @@ export const getWsColor = (
     return '';
 };
 
+export const getAppIcon = (
+    workspaceIndex: number,
+    removeDuplicateIcons: boolean,
+    { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
+): string => {
+    // append the default icons so user defined icons take precedence
+    const iconMap = { ...userDefinedIconMap, ...defaultApplicationIcons };
+
+    // detect the clients attributes on the current workspace
+    const clients: ReadonlyArray<ClientAttributes> = hyprland.clients
+        .filter((c) => c.workspace.id === workspaceIndex)
+        .map((c) => [c.class, c.title]);
+
+    if (!clients.length) {
+        return emptyIcon;
+    }
+
+    // map the client attributes to icons
+    let icons = clients
+        .map(([clientClass, clientTitle]) => {
+            const maybeIcon = Object.entries(iconMap).find(([matcher]) => {
+                // non-valid Regex construction could result in a syntax error
+                try {
+                    if (matcher.startsWith('class:')) {
+                        const re = matcher.substring(6);
+                        return new RegExp(re, 'i').test(clientClass);
+                    }
+
+                    if (matcher.startsWith('title:')) {
+                        const re = matcher.substring(6);
+                        return new RegExp(re, 'i').test(clientTitle);
+                    }
+
+                    return new RegExp(matcher, 'i').test(clientClass);
+                } catch {
+                    return false;
+                }
+            });
+
+            if (!maybeIcon) {
+                return undefined;
+            }
+
+            return maybeIcon.at(1);
+        })
+        .filter((x) => x);
+
+    // remove duplicate icons
+    if (removeDuplicateIcons) {
+        icons = [...new Set(icons)];
+    }
+
+    if (icons.length) {
+        return icons.join(' ');
+    }
+
+    return defaultIcon;
+};
+
 export const renderClassnames = (
     showIcons: boolean,
     showNumbered: boolean,
@@ -104,6 +164,8 @@ export const renderLabel = (
     available: string,
     active: string,
     occupied: string,
+    showAppIcons: boolean,
+    appIcons: string,
     workspaceMask: boolean,
     showWsIcons: boolean,
     wsIconMap: WorkspaceIconMap,
@@ -112,6 +174,10 @@ export const renderLabel = (
     monitor: number,
     monitors: Monitor[],
 ): string => {
+    if (showAppIcons) {
+        return appIcons;
+    }
+
     if (showIcons) {
         if (hyprland.active.workspace.id === i || isWorkspaceActiveOnMonitor(monitor, monitors, i)) {
             return active;
@@ -123,8 +189,10 @@ export const renderLabel = (
             return available;
         }
     }
+
     if (showWsIcons) {
         return getWsIcon(wsIconMap, i);
     }
+
     return workspaceMask ? `${index + 1}` : `${i}`;
 };
