@@ -420,11 +420,6 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
-                    opt: options.bar.volume.raiseMaximumVolume,
-                    title: 'Allow Raising Volume Above 100%',
-                    type: 'boolean',
-                }),
-                Option({
                     opt: options.theme.bar.buttons.volume.spacing,
                     title: 'Inner Spacing',
                     subtitle: 'Spacing between the icon and the label inside the buttons.',

@@ -885,7 +885,6 @@ const options = mkOptions(OPTIONS, {
         },
         volume: {
             label: opt(true),
-            raiseMaximumVolume: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt('pactl set-sink-volume @DEFAULT_SINK@ +5%'),
@@ -1050,6 +1049,9 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        volume: {
+            raiseMaximumVolume: opt(false),
+        },
         power: {
             showLabel: opt(true),
             confirmation: opt(true),
