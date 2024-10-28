@@ -291,7 +291,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.workspaces.workspaceIconMap,
-                    title: 'Workspace Icon Mappings',
+                    title: 'Workspace Icon & Color Mappings',
                     type: 'object',
                 }),
                 Option({
