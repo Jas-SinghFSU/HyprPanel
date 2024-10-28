@@ -4,6 +4,7 @@ import GTop from 'gi://GTop';
 let previousCpuData = new GTop.glibtop_cpu();
 GTop.glibtop_get_cpu(previousCpuData);
 
+// FIX: Consolidate with Cpu service class
 export const computeCPU = (): number => {
     const currentCpuData = new GTop.glibtop_cpu();
     GTop.glibtop_get_cpu(currentCpuData);

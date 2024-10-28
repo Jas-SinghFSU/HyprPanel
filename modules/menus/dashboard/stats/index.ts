@@ -1,66 +1,35 @@
 import options from 'options';
+import Ram from 'services/Ram';
 import { GPU_Stat } from 'lib/types/gpustat';
 import { dependencies } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
-import { GenericResourceMetrics } from 'lib/types/customModules/generic';
+import Cpu from 'services/Cpu';
+import Storage from 'services/Storage';
+import { renderResourceLabel } from 'customModules/utils';
 
 const { terminal } = options;
-const { enable_gpu } = options.menus.dashboard.stats;
+const { enable_gpu, interval } = options.menus.dashboard.stats;
+
+const ramService = new Ram();
+const cpuService = new Cpu();
+const storageService = new Storage();
+
+ramService.setShouldRound(true);
+storageService.setShouldRound(true);
+
+interval.connect('changed', () => {
+    ramService.updateTimer(interval.value);
+    cpuService.updateTimer(interval.value);
+    storageService.updateTimer(interval.value);
+});
+
+const handleClick = (): void => {
+    App.closeWindow('dashboardmenu');
+    Utils.execAsync(`bash -c "${terminal} -e btop"`).catch((err) => `Failed to open btop: ${err}`);
+};
 
 const Stats = (): BoxWidget => {
     const divide = ([total, free]: number[]): number => free / total;
-
-    const formatSizeInGB = (sizeInKB: number): number => Number((sizeInKB / 1024 ** 2).toFixed(2));
-
-    const cpu = Variable(0, {
-        poll: [
-            2000,
-            'top -b -n 1',
-            (out): number => {
-                if (typeof out !== 'string') {
-                    return 0;
-                }
-
-                const cpuOut = out.split('\n').find((line) => line.includes('Cpu(s)'));
-
-                if (cpuOut === undefined) {
-                    return 0;
-                }
-
-                const freeCpu = parseFloat(cpuOut.split(/\s+/)[1].replace(',', '.'));
-                return divide([100, freeCpu]);
-            },
-        ],
-    });
-
-    const ram = Variable(
-        { total: 0, used: 0, percentage: 0 },
-        {
-            poll: [
-                2000,
-                'free',
-                (out): GenericResourceMetrics => {
-                    if (typeof out !== 'string') {
-                        return { total: 0, used: 0, percentage: 0 };
-                    }
-
-                    const ramOut = out.split('\n').find((line) => line.includes('Mem:'));
-
-                    if (ramOut === undefined) {
-                        return { total: 0, used: 0, percentage: 0 };
-                    }
-
-                    const [totalRam, usedRam] = ramOut.split(/\s+/).splice(1, 2).map(Number);
-
-                    return {
-                        percentage: divide([totalRam, usedRam]),
-                        total: formatSizeInGB(totalRam),
-                        used: formatSizeInGB(usedRam),
-                    };
-                },
-            ],
-        },
-    );
 
     const gpu = Variable(0);
 
@@ -118,28 +87,18 @@ const Stats = (): BoxWidget => {
 
                                 return (self.children = [
                                     Widget.Button({
-                                        on_primary_click: terminal.bind('value').as((term) => {
-                                            return (): void => {
-                                                App.closeWindow('dashboardmenu');
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            };
-                                        }),
+                                        on_primary_click: () => {
+                                            handleClick();
+                                        },
                                         child: Widget.Label({
                                             class_name: 'txt-icon',
                                             label: '󰢮',
                                         }),
                                     }),
                                     Widget.Button({
-                                        on_primary_click: terminal.bind('value').as((term) => {
-                                            return (): void => {
-                                                App.closeWindow('dashboardmenu');
-                                                Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                                    (err) => `Failed to open btop: ${err}`,
-                                                );
-                                            };
-                                        }),
+                                        on_primary_click: () => {
+                                            handleClick();
+                                        },
                                         child: Widget.LevelBar({
                                             class_name: 'stats-bar',
                                             hexpand: true,
@@ -170,40 +129,6 @@ const Stats = (): BoxWidget => {
         }),
     });
 
-    const storage = Variable(
-        { total: 0, used: 0, percentage: 0 },
-        {
-            poll: [
-                2000,
-                'df -B1 /',
-                (out): GenericResourceMetrics => {
-                    if (typeof out !== 'string') {
-                        return { total: 0, used: 0, percentage: 0 };
-                    }
-
-                    const dfOut = out.split('\n').find((line) => line.startsWith('/'));
-
-                    if (dfOut === undefined) {
-                        return { total: 0, used: 0, percentage: 0 };
-                    }
-
-                    const parts = dfOut.split(/\s+/);
-                    const size = parseInt(parts[1], 10);
-                    const used = parseInt(parts[2], 10);
-
-                    const sizeInGB = formatSizeInGB(size);
-                    const usedInGB = formatSizeInGB(used);
-
-                    return {
-                        total: Math.floor(sizeInGB / 1000),
-                        used: Math.floor(usedInGB / 1000),
-                        percentage: divide([size, used]),
-                    };
-                },
-            ],
-        },
-    );
-
     return Widget.Box({
         class_name: 'dashboard-card stats-container',
         vertical: true,
@@ -220,35 +145,25 @@ const Stats = (): BoxWidget => {
                         vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
                                     vpack: 'center',
                                     bar_mode: 'continuous',
                                     max_value: 1,
-                                    value: cpu.bind('value'),
+                                    value: cpuService.cpu.bind('value').as((cpuUsage) => Math.round(cpuUsage) / 100),
                                 }),
                             }),
                         ],
@@ -256,7 +171,7 @@ const Stats = (): BoxWidget => {
                     Widget.Label({
                         hpack: 'end',
                         class_name: 'stat-value cpu',
-                        label: cpu.bind('value').as((v) => `${Math.floor(v * 100)}%`),
+                        label: cpuService.cpu.bind('value').as((cpuUsage) => `${Math.round(cpuUsage)}%`),
                     }),
                 ],
             }),
@@ -269,33 +184,25 @@ const Stats = (): BoxWidget => {
                         hexpand: true,
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
                                     vpack: 'center',
-                                    value: ram.bind('value').as((v) => v.percentage),
+                                    value: ramService.ram.bind('value').as((ramUsage) => {
+                                        return ramUsage.percentage / 100;
+                                    }),
                                 }),
                             }),
                         ],
@@ -303,7 +210,9 @@ const Stats = (): BoxWidget => {
                     Widget.Label({
                         hpack: 'end',
                         class_name: 'stat-value ram',
-                        label: ram.bind('value').as((v) => `${v.used}/${v.total} GB`),
+                        label: ramService.ram
+                            .bind('value')
+                            .as((ramUsage) => `${renderResourceLabel('used/total', ramUsage, true)}`),
                     }),
                 ],
             }),
@@ -317,33 +226,25 @@ const Stats = (): BoxWidget => {
                         vpack: 'center',
                         children: [
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.Label({
                                     class_name: 'txt-icon',
                                     label: '󰋊',
                                 }),
                             }),
                             Widget.Button({
-                                on_primary_click: terminal.bind('value').as((term) => {
-                                    return () => {
-                                        App.closeWindow('dashboardmenu');
-                                        Utils.execAsync(`bash -c "${term} -e btop"`).catch(
-                                            (err) => `Failed to open btop: ${err}`,
-                                        );
-                                    };
-                                }),
+                                on_primary_click: () => {
+                                    handleClick();
+                                },
                                 child: Widget.LevelBar({
                                     class_name: 'stats-bar',
                                     hexpand: true,
                                     vpack: 'center',
-                                    value: storage.bind('value').as((v) => v.percentage),
+                                    value: storageService.storage
+                                        .bind('value')
+                                        .as((storageUsage) => storageUsage.percentage / 100),
                                 }),
                             }),
                         ],
@@ -351,7 +252,9 @@ const Stats = (): BoxWidget => {
                     Widget.Label({
                         hpack: 'end',
                         class_name: 'stat-value storage',
-                        label: storage.bind('value').as((v) => `${v.used}/${v.total} GB`),
+                        label: storageService.storage
+                            .bind('value')
+                            .as((storageUsage) => `${renderResourceLabel('used/total', storageUsage, true)}`),
                     }),
                 ],
             }),

@@ -30,27 +30,37 @@ curl -fsSL https://bun.sh/install | bash && \
   sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
 ```
 
-Additional dependencies:
+### Required
 
 ```sh
 pipewire
+
+## Resource monitoring modules
 libgtop
+
+## Bluetooth menu utilities
 bluez
 bluez-utils
-grimblast
-gpu-screen-recorder
-hyprpicker
-btop
-networkmanager
-matugen
+
+## Copy/Paste utilities
 wl-clipboard
-swww
+
+## Compiler for sass/scss
 dart-sass
+
+## Brightness module for OSD
 brightnessctl
+
+## AGS requirements
+networkmanager
 gnome-bluetooth-3.0
 ```
 
-Optional Dependencies:
+::: warning
+HyprPanel will not run without the required dependencies.
+:::
+
+### Optional
 
 ```sh
 ## Used for Tracking GPU Usage in your Dashboard (NVidia only)
@@ -63,8 +73,26 @@ pywal
 ## To check for pacman updates in the default script used in the updates module
 pacman-contrib
 
-## To switch between power profiles in battery module
+## To switch between power profiles in the battery module
 power-profiles-daemon
+
+## To take snapshots with the default snapshot shortcut in the dashboard
+grimblast
+
+## To record screen through the dashboard record shortcut
+gpu-screen-recorder
+
+## To enable the eyedropper color picker with the default snapshot shortcut in the dashboard
+hyprpicker
+
+## To click resource/stat bars in the dashboard and open btop
+btop
+
+## To enable matugen based color theming
+matugen
+
+## To enable matugen based color theming and setting wallpapers
+swww
 ```
 
 ### Arch

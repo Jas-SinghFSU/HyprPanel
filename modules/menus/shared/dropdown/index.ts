@@ -8,7 +8,7 @@ import { globalEventBoxes } from 'globals/dropdown';
 const { location } = options.theme.bar;
 
 // NOTE: We make the window visible for 2 seconds (on startup) so the child
-// elements can allocat their proper dimensions.
+// elements can allocate their proper dimensions.
 // Otherwise the width that we rely on for menu positioning is set improperly
 // for the first time we open a menu of each type.
 const initRender = Variable(true);

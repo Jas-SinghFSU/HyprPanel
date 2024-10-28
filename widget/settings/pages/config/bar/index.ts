@@ -259,11 +259,46 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.showWsIcons,
                     title: 'Map Workspaces to Icons',
+                    subtitle: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.workspaces.showApplicationIcons,
+                    title: 'Map Workspaces to Application Icons',
+                    subtitle:
+                        "Requires 'Map Workspace to Icons' to be enabled\n" +
+                        'https://hyprpanel.com/configuration/panel.html#map-workspaces-to-application-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#map-workspaces-to-application-icons',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconOncePerWorkspace,
+                    title: 'Hide Duplicate App Icons',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconMap,
+                    title: 'App Icon Mappings',
+                    subtitle: "Use the class/title output of 'hyprctl clients' to match against",
+                    type: 'object',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconFallback,
+                    title: 'Fallback App Icon',
+                    subtitle: 'Fallback icon to display if no specific icon is defined for the application',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.workspaces.applicationIconEmptyWorkspace,
+                    title: 'App Icon for empty workspace',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.bar.workspaces.workspaceIconMap,
-                    title: 'Workspace Icon Mappings',
+                    title: 'Workspace Icon & Color Mappings',
+                    subtitle: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
                     type: 'object',
                 }),
                 Option({
@@ -283,7 +318,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     title: 'Monitor Specific',
                     subtitle:
                         'Only workspaces applicable to the monitor will be displayed.\n' +
-                        "Works in conjuction with 'Total Workspaces'.",
+                        "Works in conjunction with 'Total Workspaces'.",
                     type: 'boolean',
                 }),
                 Option({

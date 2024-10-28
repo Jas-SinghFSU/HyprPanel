@@ -3,7 +3,7 @@ import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
-import { getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getAppIcon, getWsColor, renderClassnames, renderLabel } from '../utils';
 import { WorkspaceIconMap } from 'lib/types/workspace';
 import { Monitor } from 'types/service/hyprland';
 
@@ -98,6 +98,11 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                         options.bar.workspaces.icons.occupied.bind('value'),
                                         options.bar.workspaces.workspaceIconMap.bind('value'),
                                         options.bar.workspaces.showWsIcons.bind('value'),
+                                        options.bar.workspaces.showApplicationIcons.bind('value'),
+                                        options.bar.workspaces.applicationIconOncePerWorkspace.bind('value'),
+                                        options.bar.workspaces.applicationIconMap.bind('value'),
+                                        options.bar.workspaces.applicationIconEmptyWorkspace.bind('value'),
+                                        options.bar.workspaces.applicationIconFallback.bind('value'),
                                         workspaceMask.bind('value'),
                                         hyprland.bind('monitors'),
                                     ],
@@ -108,14 +113,29 @@ export const defaultWses = (monitor: number): BoxWidget => {
                                         occupied: string,
                                         wsIconMap: WorkspaceIconMap,
                                         showWsIcons: boolean,
+                                        showAppIcons,
+                                        applicationIconOncePerWorkspace,
+                                        applicationIconMap,
+                                        applicationIconEmptyWorkspace,
+                                        applicationIconFallback,
                                         workspaceMask: boolean,
                                         monitors: Monitor[],
                                     ) => {
+                                        const appIcons = showAppIcons
+                                            ? getAppIcon(i, applicationIconOncePerWorkspace, {
+                                                  iconMap: applicationIconMap,
+                                                  defaultIcon: applicationIconFallback,
+                                                  emptyIcon: applicationIconEmptyWorkspace,
+                                              })
+                                            : '';
+
                                         return renderLabel(
                                             showIcons,
                                             available,
                                             active,
                                             occupied,
+                                            showAppIcons,
+                                            appIcons,
                                             workspaceMask,
                                             showWsIcons,
                                             wsIconMap,

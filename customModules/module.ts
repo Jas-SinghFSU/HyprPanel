@@ -1,6 +1,5 @@
 import { BarBoxChild, Module } from 'lib/types/bar';
 import { BarButtonStyles } from 'lib/types/options';
-import { Bind } from 'lib/types/variable';
 import { GtkWidget } from 'lib/types/widget';
 import options from 'options';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
@@ -12,6 +11,7 @@ const undefinedVar = Variable(undefined);
 export const module = ({
     icon,
     textIcon,
+    useTextIcon = Variable(false).bind('value'),
     label,
     tooltipText,
     boxClass,
@@ -21,19 +21,19 @@ export const module = ({
     labelHook,
     hook,
 }: Module): BarBoxChild => {
-    const getIconWidget = (): GtkWidget | undefined => {
+    const getIconWidget = (useTxtIcn: boolean): GtkWidget | undefined => {
         let iconWidget: Gtk.Widget | undefined;
 
-        if (icon !== undefined) {
+        if (icon !== undefined && !useTxtIcn) {
             iconWidget = Widget.Icon({
                 class_name: `txt-icon bar-button-icon module-icon ${boxClass}`,
                 icon: icon,
-            }) as unknown as Gtk.Widget;
+            });
         } else if (textIcon !== undefined) {
             iconWidget = Widget.Label({
                 class_name: `txt-icon bar-button-icon module-icon ${boxClass}`,
                 label: textIcon,
-            }) as unknown as Gtk.Widget;
+            });
         }
 
         return iconWidget;
@@ -55,25 +55,28 @@ export const module = ({
                 },
             ),
             tooltip_text: tooltipText,
-            children: Utils.merge([showLabelBinding], (showLabelBinding): Gtk.Widget[] => {
-                const childrenArray: Gtk.Widget[] = [];
-                const iconWidget = getIconWidget();
+            children: Utils.merge(
+                [showLabelBinding, useTextIcon],
+                (showLabel: boolean, forceTextIcon: boolean): Gtk.Widget[] => {
+                    const childrenArray: Gtk.Widget[] = [];
+                    const iconWidget = getIconWidget(forceTextIcon);
 
-                if (iconWidget !== undefined) {
-                    childrenArray.push(iconWidget);
-                }
+                    if (iconWidget !== undefined) {
+                        childrenArray.push(iconWidget);
+                    }
 
-                if (showLabelBinding) {
-                    childrenArray.push(
-                        Widget.Label({
-                            class_name: `bar-button-label module-label ${boxClass}`,
-                            label: label,
-                            setup: labelHook,
-                        }) as unknown as Gtk.Widget,
-                    );
-                }
-                return childrenArray;
-            }) as Bind,
+                    if (showLabel) {
+                        childrenArray.push(
+                            Widget.Label({
+                                class_name: `bar-button-label module-label ${boxClass}`,
+                                label: label,
+                                setup: labelHook,
+                            }),
+                        );
+                    }
+                    return childrenArray;
+                },
+            ),
             setup: hook,
         }),
         tooltip_text: tooltipText,

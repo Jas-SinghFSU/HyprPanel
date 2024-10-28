@@ -73,7 +73,7 @@ export const MediaMenuTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({
                     opt: options.theme.bar.menus.menu.media.slider.backgroundhover,
-                    title: 'Backround (Hover)',
+                    title: 'Background (Hover)',
                     type: 'color',
                 }),
                 Option({ opt: options.theme.bar.menus.menu.media.slider.puck, title: 'Puck', type: 'color' }),
