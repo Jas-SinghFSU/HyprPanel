@@ -259,12 +259,17 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.showWsIcons,
                     title: 'Map Workspaces to Icons',
+                    subtitle: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
                     type: 'boolean',
                 }),
                 Option({
                     opt: options.bar.workspaces.showApplicationIcons,
                     title: 'Map Workspaces to Application Icons',
-                    subtitle: "Requires 'Map Workspace to Icons' to be enabled",
+                    subtitle:
+                        "Requires 'Map Workspace to Icons' to be enabled\n" +
+                        'https://hyprpanel.com/configuration/panel.html#map-workspaces-to-application-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#map-workspaces-to-application-icons',
                     type: 'boolean',
                 }),
                 Option({
@@ -291,7 +296,9 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.workspaces.workspaceIconMap,
-                    title: 'Workspace Icon Mappings',
+                    title: 'Workspace Icon & Color Mappings',
+                    subtitle: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
                     type: 'object',
                 }),
                 Option({

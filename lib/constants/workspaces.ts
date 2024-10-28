@@ -5,7 +5,7 @@ export const defaultApplicationIcons = {
     'draw.io': '󰇟',
     'firefox-developer-edition': '',
     'google-chrome': '',
-    'title:.*youtube': '',
+    'title:YouTube ': '',
     Spotify: '󰓇',
     chromium: '',
     code: '󰨞',
