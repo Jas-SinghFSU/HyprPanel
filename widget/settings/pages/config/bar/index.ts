@@ -297,6 +297,8 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.bar.workspaces.workspaceIconMap,
                     title: 'Workspace Icon & Color Mappings',
+                    subtitle: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#show-workspace-icons',
                     type: 'object',
                 }),
                 Option({
