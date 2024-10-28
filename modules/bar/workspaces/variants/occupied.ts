@@ -2,11 +2,10 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { getWorkspaceRules, getWorkspacesForMonitor, isWorkspaceIgnored } from '../helpers';
 import { Monitor, Workspace } from 'types/service/hyprland';
-import { getWsColor, renderClassnames, renderLabel } from '../utils';
+import { getAppIcon, getWsColor, renderClassnames, renderLabel } from '../utils';
 import { range } from 'lib/utils';
 import { BoxWidget } from 'lib/types/widget';
 import { WorkspaceIconMap } from 'lib/types/workspace';
-
 const { workspaces, monitorSpecific, workspaceMask, spacing, ignored, showAllActive } = options.bar.workspaces;
 
 export const occupiedWses = (monitor: number): BoxWidget => {
@@ -26,6 +25,11 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 spacing.bind('value'),
                 options.bar.workspaces.workspaceIconMap.bind('value'),
                 options.bar.workspaces.showWsIcons.bind('value'),
+                options.bar.workspaces.showApplicationIcons.bind('value'),
+                options.bar.workspaces.applicationIconOncePerWorkspace.bind('value'),
+                options.bar.workspaces.applicationIconMap.bind('value'),
+                options.bar.workspaces.applicationIconEmptyWorkspace.bind('value'),
+                options.bar.workspaces.applicationIconFallback.bind('value'),
                 options.theme.matugen.bind('value'),
                 options.theme.bar.buttons.workspaces.smartHighlight.bind('value'),
                 hyprland.bind('monitors'),
@@ -46,6 +50,11 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                 spacing: number,
                 wsIconMap: WorkspaceIconMap,
                 showWsIcons: boolean,
+                showAppIcons,
+                applicationIconOncePerWorkspace,
+                applicationIconMap,
+                applicationIconEmptyWorkspace,
+                applicationIconFallback,
                 matugen: boolean,
                 smartHighlight: boolean,
                 monitors: Monitor[],
@@ -98,6 +107,15 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                         if (isWorkspaceIgnored(ignored, i)) {
                             return Widget.Box();
                         }
+
+                        const appIcons = showAppIcons
+                            ? getAppIcon(i, applicationIconOncePerWorkspace, {
+                                  iconMap: applicationIconMap,
+                                  defaultIcon: applicationIconFallback,
+                                  emptyIcon: applicationIconEmptyWorkspace,
+                              })
+                            : '';
+
                         return Widget.Button({
                             class_name: 'workspace-button',
                             on_primary_click: () => {
@@ -124,6 +142,8 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                                     available,
                                     active,
                                     occupied,
+                                    showAppIcons,
+                                    appIcons,
                                     workspaceMask,
                                     showWsIcons,
                                     wsIconMap,
