@@ -6,9 +6,14 @@ import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+import { Wifi } from 'types/service/network.js';
 
 const formatFrequency = (frequency: number): string => {
     return `${(frequency / 1000).toFixed(2)}MHz`;
+};
+
+const formatWifiInfo = (wifi: Wifi): string => {
+    return `Network: ${wifi.ssid === '' ? 'None' : wifi.ssid} \nSignal Strength: ${wifi.strength >= 0 ? wifi.strength : '--'}% \nFrequency: ${wifi.frequency >= 0 ? formatFrequency(wifi.frequency) : '--'}`;
 };
 
 const {
@@ -75,9 +80,7 @@ const Network = (): BarBoxChild => {
                             return Widget.Label({
                                 class_name: 'bar-button-label network-label',
                                 label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '',
-                                tooltipText: showWfiInfo
-                                    ? `Network: ${wfi.ssid} \nSignal Strength: ${wfi.strength}% \nFrequency: ${formatFrequency(wfi.frequency)}`
-                                    : '',
+                                tooltipText: showWfiInfo ? formatWifiInfo(wfi) : '',
                             });
                         },
                     ),
