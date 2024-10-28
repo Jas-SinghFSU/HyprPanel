@@ -8,7 +8,7 @@ import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand } from 'customModules/utils.js';
 
-const { show_artist, truncation, truncation_size, show_label, show_active_only, rightClick, middleClick } =
+const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =
     options.bar.media;
 
 const Media = (): BarBoxChild => {
@@ -42,20 +42,21 @@ const Media = (): BarBoxChild => {
 
     const songIcon = Variable('');
 
-    const mediaLabel = Utils.watch('Media', [mpris, show_artist, truncation, truncation_size, show_label], () => {
+    const mediaLabel = Utils.watch('Media', [mpris, truncation, truncation_size, show_label, format], () => {
         if (activePlayer.value && show_label.value) {
-            const { track_title, identity, track_artists } = activePlayer.value;
+            const { track_title, identity, track_artists, track_album, name } = activePlayer.value;
             songIcon.value = getIconForPlayer(identity);
-            const trackArtist = show_artist.value ? ` - ${track_artists.join(', ')}` : ``;
-            const truncatedLabel = truncation.value
-                ? `${track_title + trackArtist}`.substring(0, truncation_size.value)
-                : `${track_title + trackArtist}`;
 
-            return track_title.length === 0
-                ? `No media playing...`
-                : truncatedLabel.length < truncation_size.value || !truncation.value
-                  ? `${truncatedLabel}`
-                  : `${truncatedLabel.substring(0, truncatedLabel.length - 3)}...`;
+            const truncatedLabel = format
+                .getValue()
+                .replace('{title}', track_title)
+                .replace('{artists}', track_artists.join(', '))
+                .replace('{artist}', track_artists[0] || '')
+                .replace('{album}', track_album)
+                .replace('{name}', name)
+                .replace('{identity}', identity);
+
+            return truncation_size.value > 0 ? truncatedLabel.substring(0, truncation_size.value) : truncatedLabel;
         } else {
             songIcon.value = getIconForPlayer(activePlayer.value?.identity || '');
             return `Media`;

@@ -933,7 +933,7 @@ const options = mkOptions(OPTIONS, {
             scrollDown: opt(''),
         },
         media: {
-            show_artist: opt(false),
+            format: opt('{artist} - {title}'),
             truncation: opt(true),
             show_label: opt(true),
             truncation_size: opt(30),

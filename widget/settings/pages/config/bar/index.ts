@@ -723,9 +723,10 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
-                    opt: options.bar.media.show_artist,
-                    title: 'Show Track Artist',
-                    type: 'boolean',
+                    opt: options.bar.media.format,
+                    title: 'Format of the Label',
+                    subtitle: 'Available placeholders: {title}, {artists}, {artist}, {album}, {name}, {identity}',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.media.show_label,
