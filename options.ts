@@ -147,6 +147,7 @@ const options = mkOptions(OPTIONS, {
             opacity: opt(100),
             margin_bottom: opt('0em'),
             margin_sides: opt('0.5em'),
+            corners: opt(50),
             border_radius: opt('0.4em'),
             outer_spacing: opt('1.6em'),
             label_spacing: opt('0.5em'),

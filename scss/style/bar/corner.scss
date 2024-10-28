@@ -1,0 +1,74 @@
+// Default variable definitions
+$padding: 7px;
+$radius: 20px;
+$transition: 0.3s ease;
+$shadows: true;
+$shadow-color: rgba(0, 0, 0, 0.15);
+$bar-position: "top";
+$border-width: 0px;
+$bg: rgba(0, 0, 0, 0.15);
+$border-color: #0a0909;
+$widget-bg: #080808;
+
+// Shadow size and margins
+$_shadow-size: $padding;
+$_radius: $radius;
+$_margin: 99px;
+
+$_shadow-size: $padding;
+$_radius: $radius;
+$_margin: 99px;
+
+window.screen-corner:not(.hidden) {
+    transition: $transition;
+
+    box.shadow {
+        margin-right: $_margin * -1;
+        margin-left: $_margin * -1;
+
+        @if $shadows {
+            box-shadow: inset 0 0 $_shadow-size 0 $shadow-color;
+        }
+
+        @if $bar-position =="top" {
+            margin-bottom: $_margin * -1;
+        }
+
+        @if $bar-position =="bottom" {
+            margin-top: $_margin * -1;
+        }
+    }
+
+    box.border {
+        @if $bar-position =="top" {
+            border-top: $border-width solid $bg;
+        }
+
+        @if $bar-position =="bottom" {
+            border-bottom: $border-width solid $bg;
+        }
+
+        margin-right: $_margin;
+        margin-left: $_margin;
+    }
+
+    box.corner {
+        box-shadow: 0 0 0 $border-width $border-color;
+    }
+
+    &.corners {
+        box.border {
+            border-radius: if($radius>0, $_radius, 0);
+            box-shadow: 0 0 0 $_radius $bg;
+        }
+
+        box.border:not(.flat) {
+            border-radius: if($radius>0, $_radius, 0);
+            box-shadow: 0 0 0 $_radius $widget-bg;
+        }
+
+        box.corner {
+            border-radius: if($radius>0, $_radius, 0);
+        }
+    }
+}
