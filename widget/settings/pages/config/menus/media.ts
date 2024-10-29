@@ -15,11 +15,6 @@ export const MediaMenuSettings = (): Scrollable<Child, Attribute> => {
                 Header('Media'),
                 Option({ opt: options.menus.media.hideAuthor, title: 'Hide Author', type: 'boolean' }),
                 Option({ opt: options.menus.media.hideAlbum, title: 'Hide Album', type: 'boolean' }),
-                Option({
-                    opt: options.menus.media.showUnavailableButtons,
-                    title: 'Show Unavailable Buttons',
-                    type: 'boolean',
-                }),
             ],
         }),
     });
