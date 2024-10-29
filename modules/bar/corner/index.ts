@@ -1,6 +1,6 @@
 import options from "options"
 
-const { corners, transparent } = options.theme.bar
+const { corners, transparent } = options.bar
 
 export default (monitor: number) => Widget.Window({
   monitor,
