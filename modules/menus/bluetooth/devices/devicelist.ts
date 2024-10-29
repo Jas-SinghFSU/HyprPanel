@@ -129,24 +129,28 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                                                 ? 'Connected'
                                                                                 : 'Paired',
                                                                         }),
-                                                                        Widget.Separator({
-                                                                            class_name: 'menu-separator',
-                                                                        }),
-                                                                        Widget.Label({
-                                                                            class_name: 'connection-status txt-icon',
-                                                                            label:
-                                                                                device.connected &&
-                                                                                device.battery_percentage !== null
-                                                                                    ? `${batIcon}`
-                                                                                    : '',
-                                                                        }),
-                                                                        Widget.Label({
-                                                                            class_name: 'connection-status battery',
-                                                                            label:
-                                                                                device.connected &&
-                                                                                device.battery_percentage !== null
-                                                                                    ? `${device.battery_percentage}%`
-                                                                                    : '',
+                                                                        Widget.Box({
+                                                                            children:
+                                                                                typeof device.battery_percentage ===
+                                                                                    'number' &&
+                                                                                device.battery_percentage >= 0
+                                                                                    ? []
+                                                                                    : [
+                                                                                          Widget.Separator({
+                                                                                              class_name:
+                                                                                                  'menu-separator',
+                                                                                          }),
+                                                                                          Widget.Label({
+                                                                                              class_name:
+                                                                                                  'connection-status txt-icon',
+                                                                                              label: `${batIcon}`,
+                                                                                          }),
+                                                                                          Widget.Label({
+                                                                                              class_name:
+                                                                                                  'connection-status battery',
+                                                                                              label: `${device.battery_percentage}%`,
+                                                                                          }),
+                                                                                      ],
                                                                         }),
                                                                     ];
                                                                 },
