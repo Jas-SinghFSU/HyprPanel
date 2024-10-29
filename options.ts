@@ -14,7 +14,7 @@ import {
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
 import { UnitType } from 'lib/types/weather';
 import { Transition } from 'lib/types/widget';
-import { WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
+import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -868,6 +868,11 @@ const options = mkOptions(OPTIONS, {
             ignored: opt(''),
             show_numbered: opt(false),
             showWsIcons: opt(false),
+            showApplicationIcons: opt(false),
+            applicationIconOncePerWorkspace: opt(true),
+            applicationIconMap: opt<ApplicationIcons>({}),
+            applicationIconFallback: opt('󰣆'),
+            applicationIconEmptyWorkspace: opt(''),
             numbered_active_indicator: opt<ActiveWsIndicator>('underline'),
             icons: {
                 available: opt(''),

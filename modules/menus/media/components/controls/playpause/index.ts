@@ -1,6 +1,5 @@
 const media = await Service.import('mpris');
 import { getPlayerInfo } from '../../helpers';
-import { MprisPlayer } from 'types/service/mpris';
 import { isValidPlaybackStatus } from './helpers';
 import Button from 'types/widgets/button';
 import Icon from 'types/widgets/icon';
@@ -26,10 +25,12 @@ export const playPause = (): Button<Icon<Attribute>, Attribute> => {
         },
         child: Widget.Icon({
             icon: Utils.watch(icons.mpris.paused, media, 'changed', () => {
-                const foundPlayer: MprisPlayer = getPlayerInfo();
+                const foundPlayer = getPlayerInfo();
+
                 if (foundPlayer === undefined) {
                     return icons.mpris['paused'];
                 }
+
                 const playbackStatus = foundPlayer.play_back_status?.toLowerCase();
 
                 if (playbackStatus && isValidPlaybackStatus(playbackStatus)) {
