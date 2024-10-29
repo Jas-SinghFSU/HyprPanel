@@ -27,7 +27,7 @@ const Media = (): BoxWidget => {
                                 hpack: 'fill',
                                 hexpand: true,
                                 vertical: true,
-                                children: [MediaInfo(), Controls(), Bar()],
+                                children: [MediaInfo(), Bar() ,Controls()],
                             }),
                         }),
                     ],
