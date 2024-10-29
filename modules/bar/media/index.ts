@@ -32,6 +32,8 @@ const Media = (): BarBoxChild => {
             ['Discord', ''],
             ['Plex', '󰚺'],
             ['Spotify', '󰓇'],
+            ['vlc', '󰕼'],
+            ['mpv', ''],
             ['(.*)', '󰝚'],
         ];
 
