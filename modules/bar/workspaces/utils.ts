@@ -94,12 +94,13 @@ export const getAppIcon = (
                 try {
                     if (matcher.startsWith('class:')) {
                         const re = matcher.substring(6);
-                        return new RegExp(re, 'i').test(clientClass);
+                        return new RegExp(re).test(clientClass);
                     }
 
                     if (matcher.startsWith('title:')) {
                         const re = matcher.substring(6);
-                        return new RegExp(re, 'i').test(clientTitle);
+
+                        return new RegExp(re).test(clientTitle);
                     }
 
                     return new RegExp(matcher, 'i').test(clientClass);
