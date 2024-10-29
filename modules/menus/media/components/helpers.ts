@@ -46,6 +46,9 @@ export const initializeActivePlayerHook = (): void => {
     });
 };
 
-export const getPlayerInfo = (): MprisPlayer => {
+export const getPlayerInfo = (): MprisPlayer | undefined => {
+    if (media.players.length === 0) {
+        return;
+    }
     return media.players.find((p) => p.bus_name === curPlayer.value) || media.players[0];
 };
