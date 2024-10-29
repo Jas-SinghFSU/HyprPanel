@@ -181,7 +181,7 @@ const renderWAPs = (
                             child: Widget.Box({
                                 children: [
                                     Widget.Button({
-                                        class_name: 'menu-icon-button network',
+                                        class_name: 'menu-icon-button network disconnect',
                                         child: Widget.Label({
                                             tooltip_text: 'Disconnect',
                                             class_name: 'menu-icon-button network disconnect',
