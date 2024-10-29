@@ -53,8 +53,13 @@ const renderActivePlayback = (): Box<Child, Attribute>[] => {
                             draw_value: false,
                             hexpand: true,
                             min: 0,
-                            max: raiseMaximumVolume.bind('value').as((raiseMax) => (raiseMax ? 1.5 : 1)),
+                            max: 1,
                             onChange: ({ value }) => (audio.speaker.volume = value),
+                            setup: (self) => {
+                                self.hook(raiseMaximumVolume, () => {
+                                    self.max = raiseMaximumVolume.value ? 1.5 : 1;
+                                });
+                            },
                         }),
                     ],
                 }),
