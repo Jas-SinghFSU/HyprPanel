@@ -55,21 +55,46 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                         const filteredNotifications = filterNotifications(notifications, ignoredNotifs);
 
                         return (self.children = filteredNotifications.slice(0, displayedTotal.value).map((notif) => {
-                            return Widget.Box({
-                                class_name: 'notification-card',
-                                vpack: 'start',
-                                hexpand: true,
-                                children: [
-                                    Image(notif),
-                                    Widget.Box({
-                                        vpack: 'start',
-                                        vertical: true,
-                                        hexpand: true,
-                                        class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ''}`,
-                                        children: [Header(notif), Body(notif), Action(notif, notifs)],
-                                    }),
-                                    CloseButton(notif, notifs),
-                                ],
+                            const actionsbox =
+                                notif.actions.length > 0
+                                    ? Widget.Revealer({
+                                          transition: 'slide_down',
+                                          child: Widget.EventBox({
+                                              child: Action(notif, notifs),
+                                          }),
+                                      })
+                                    : null;
+
+                            return Widget.EventBox({
+                                on_secondary_click: () => {
+                                    notifs.CloseNotification(notif.id);
+                                },
+                                on_hover() {
+                                    if (actionsbox) actionsbox.reveal_child = true;
+                                },
+                                on_hover_lost() {
+                                    if (actionsbox) actionsbox.reveal_child = true;
+
+                                    notif.dismiss();
+                                },
+                                child: Widget.Box({
+                                    class_name: 'notification-card',
+                                    vpack: 'start',
+                                    hexpand: true,
+                                    children: [
+                                        Image(notif),
+                                        Widget.Box({
+                                            vpack: 'start',
+                                            vertical: true,
+                                            hexpand: true,
+                                            class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ''}`,
+                                            children: actionsbox
+                                                ? [Header(notif), Body(notif), actionsbox]
+                                                : [Header(notif), Body(notif)],
+                                        }),
+                                        CloseButton(notif, notifs),
+                                    ],
+                                }),
                             });
                         }));
                     },
