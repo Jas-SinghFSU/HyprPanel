@@ -184,7 +184,7 @@ const renderWAPs = (
                                         class_name: 'menu-icon-button network disconnect',
                                         child: Widget.Label({
                                             tooltip_text: 'Disconnect',
-                                            class_name: 'menu-icon-button network disconnect',
+                                            class_name: 'menu-icon-button disconnect-network txt-icon',
                                             label: '󱘖',
                                         }),
                                         on_primary_click: () => {
