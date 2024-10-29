@@ -7,12 +7,14 @@ import { OSDSettings } from './osd/index';
 import { CustomModuleSettings } from 'customModules/config';
 import { PowerMenuSettings } from './menus/power';
 import { GBox } from 'lib/types/widget';
+import { MediaMenuSettings } from './menus/media';
 
 type Page =
     | 'General'
     | 'Bar'
     | 'Clock Menu'
     | 'Dashboard Menu'
+    | 'Media Menu'
     | 'Power Menu'
     | 'Notifications'
     | 'OSD'
@@ -25,6 +27,7 @@ const pagerMap: Page[] = [
     'Bar',
     'Notifications',
     'OSD',
+    'Media Menu',
     'Power Menu',
     'Clock Menu',
     'Dashboard Menu',
@@ -55,6 +58,7 @@ export const SettingsMenu = (): GBox => {
                     children: {
                         General: BarGeneral(),
                         Bar: BarSettings(),
+                        'Media Menu': MediaMenuSettings(),
                         Notifications: NotificationSettings(),
                         OSD: OSDSettings(),
                         'Clock Menu': ClockMenuSettings(),

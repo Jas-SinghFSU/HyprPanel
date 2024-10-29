@@ -1054,6 +1054,10 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        media: {
+            hideAuthor: opt(false),
+            hideAlbum: opt(false),
+        },
         power: {
             showLabel: opt(true),
             confirmation: opt(true),
