@@ -5,6 +5,7 @@ import {
     ActiveWsIndicator,
     BarButtonStyles,
     BarLocation,
+    BluetoothBatteryState,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -1057,6 +1058,7 @@ const options = mkOptions(OPTIONS, {
         transitionTime: opt(200),
         bluetooth: {
             showBattery: opt(false),
+            batteryState: opt<BluetoothBatteryState>('connected'),
             batteryIcon: opt('󰥉'),
         },
         volume: {

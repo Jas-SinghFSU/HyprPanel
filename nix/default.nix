@@ -48,6 +48,7 @@
       cp -r scss $out
       cp -r widget $out
       cp -r services $out
+      cp -r scripts $out
       cp -f main.js $out/config.js
     '';
   };
@@ -61,4 +62,3 @@ in {
     '';
   };
 }
-

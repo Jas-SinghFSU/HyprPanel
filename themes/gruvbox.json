@@ -337,5 +337,8 @@
   "theme.bar.buttons.modules.submap.text": "#8ec07c",
   "theme.bar.buttons.modules.submap.border": "#8ec07c",
   "theme.bar.buttons.modules.submap.icon": "#8ec07c",
-  "theme.bar.buttons.modules.submap.icon_background": "#282828"
+  "theme.bar.buttons.modules.submap.icon_background": "#282828",
+  "theme.bar.menus.menu.network.switch.enabled": "#b16286",
+  "theme.bar.menus.menu.network.switch.disabled": "#3c3836",
+  "theme.bar.menus.menu.network.switch.puck": "#504945"
 }
