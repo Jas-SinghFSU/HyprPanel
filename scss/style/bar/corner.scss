@@ -2,6 +2,26 @@ $_shadow-size: $padding;
 $_radius: $radius * $hyprland-gaps-multiplier * $screen-corner-multiplier;
 $_margin: 99px;
 
+
+
+
+
+/*
+$padding: Used to define $_shadow-size.
+$radius: Used to define $_radius.
+$hyprland-gaps-multiplier: Used in the calculation of $_radius.
+$screen-corner-multiplier: Also used in the calculation of $_radius.
+$transition: Used in the transition property.
+$shadows: Used to determine if shadows should be applied.
+$shadow-color: Used for the shadow color.
+$bar-position: Used to determine margin and border settings.
+$border-width: Used to set the border properties.
+$bg: Used as the background color for the borders.
+$border-color: Used in the box corner shadow and border radius.
+
+
+*/
+
 window.screen-corner:not(.hidden) {
     transition: $transition;
 
