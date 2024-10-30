@@ -1059,6 +1059,7 @@ const options = mkOptions(OPTIONS, {
         media: {
             hideAuthor: opt(false),
             hideAlbum: opt(false),
+        },
         bluetooth: {
             showBattery: opt(false),
             batteryState: opt<BluetoothBatteryState>('connected'),
