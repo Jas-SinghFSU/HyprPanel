@@ -11,8 +11,6 @@ const { showBattery, batteryIcon, batteryState } = options.menus.bluetooth;
 
 const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Child, Attribute> => {
     return self.hook(bluetooth, () => {
-        console.log(JSON.stringify(bluetooth, null, 2));
-
         if (!bluetooth.enabled) {
             return (self.child = Widget.Box({
                 class_name: 'bluetooth-items',
