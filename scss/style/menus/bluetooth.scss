@@ -1,162 +1,197 @@
 .menu-items-container.bluetooth * {
-  font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
+    font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
 }
 
-@import "./menu.scss";
+@import './menu.scss';
 
 .menu-items.bluetooth {
-  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-bluetooth-background-color);
-  border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-bluetooth-border-color);
-  opacity: $bar-menus-opacity * 0.01;
-  font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-bluetooth-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-bluetooth-border-color);
+    opacity: $bar-menus-opacity * 0.01;
+    font-size: $font-size * $bar-menus-menu-bluetooth-scaling * 0.01;
 }
 
 .menu-items-container.bluetooth {
+    min-width: 18em * $bar-menus-menu-bluetooth-scaling * 0.01;
 
-  min-width: 18em * $bar-menus-menu-bluetooth-scaling * 0.01;
+    font-size: 1.3em;
 
-  font-size: 1.3em;
-
-  .menu-section-container {
-    margin: 1em 0em;
-  }
-
-  .menu-label-container {
-    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
-
-    .menu-label {
-      color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-bluetooth-label-color);
+    .menu-section-container {
+        margin: 1em 0em;
     }
 
-    .controls-container {
-      margin: 0.5em 1em;
+    .menu-label-container {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
+
+        .menu-label {
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-bluetooth-label-color);
+        }
+
+        .controls-container {
+            margin: 0.5em 1em;
+        }
     }
-  }
 
+    .menu-items-section {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
+        min-height: 20em * $bar-menus-menu-bluetooth-scaling * 0.01;
+        font-size: 1em;
+    }
 
-  .menu-items-section {
-    background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-bluetooth-card-color);
-    min-height: 20em * $bar-menus-menu-bluetooth-scaling * 0.01;
-    font-size: 1em;
-  }
+    button {
+        margin-right: 0.5em;
 
-  button {
-    margin-right: 0.5em;
+        &.search {
+            image {
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-iconbuttons-passive,
+                    $bar-menus-menu-bluetooth-iconbutton-passive
+                );
+            }
 
-    &.search {
-      image {
+            &:hover image {
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-iconbuttons-active,
+                    $bar-menus-menu-bluetooth-iconbutton-active
+                );
+            }
+
+            font-size: 0.8em;
+            margin-bottom: 0em;
+        }
+
+        &:hover {
+            color: if(
+                $bar-menus-monochrome,
+                $bar-menus-iconbuttons-active,
+                $bar-menus-menu-bluetooth-iconbutton-active
+            );
+        }
+    }
+
+    .menu-icon-button.bluetooth {
         color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-bluetooth-iconbutton-passive);
-      }
 
-      &:hover image {
+        &:hover {
+            color: if(
+                $bar-menus-monochrome,
+                $bar-menus-iconbuttons-active,
+                $bar-menus-menu-bluetooth-iconbutton-active
+            );
+        }
+    }
+
+    .bluetooth-element-item {
+        margin-bottom: 0.4em;
+
+        &:hover {
+            .menu-button-icon,
+            .menu-button-name {
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-iconbuttons-active,
+                    $bar-menus-menu-bluetooth-iconbutton-active
+                );
+            }
+        }
+
+        image {
+            margin-right: 0em;
+            margin-top: 0em;
+            min-height: 1em;
+            min-width: 1em;
+
+            &.active {
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
+            }
+        }
+
+        label {
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
+            font-size: 1em;
+        }
+
+        .menu-button-icon {
+            font-size: 1.5em;
+            color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-bluetooth-icons-passive);
+
+            &.active {
+                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
+            }
+        }
+
+        .connection-status {
+            font-size: 0.9em;
+            margin-left: 0.6rem;
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
+            opacity: 0.4;
+        }
+        .battery {
+            opacity: 0.6;
+        }
+    }
+
+    spinner {
+        min-height: 1.3em;
+        min-width: 1.3em;
         color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbutton-active);
-      }
-
-      font-size: 0.8em;
-      margin-bottom: 0em;
     }
 
-    &:hover {
-      color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbutton-active);
-    }
-  }
-
-  .menu-icon-button.bluetooth {
-    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-bluetooth-iconbutton-passive);
-
-    &:hover {
-      color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbutton-active);
-    }
-  }
-
-  .bluetooth-element-item {
-    margin-bottom: 0.4em;
-
-    &:hover {
-
-      .menu-button-icon,
-      .menu-button-name {
-        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbutton-active);
-      }
+    .menu-separator {
+        margin: 0em 1em;
     }
 
-    image {
-      margin-right: 0em;
-      margin-top: 0.0em;
-      min-height: 1em;
-      min-width: 1em;
+    .menu-switch.bluetooth {
+        background-color: if(
+            $bar-menus-monochrome,
+            $bar-menus-switch-disabled,
+            $bar-menus-menu-bluetooth-switch-disabled
+        );
 
-      &.active {
-        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
-      }
+        &:checked {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
+        }
+
+        slider {
+            background-color: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
+        }
+
+        &:hover {
+            trough {
+                background: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-switch-disabled,
+                    $bar-menus-menu-bluetooth-switch-disabled
+                );
+            }
+
+            slider {
+                background: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
+            }
+        }
+
+        &:active {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
+        }
     }
 
-    label {
-      color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
-      font-size: 1em;
+    .no-bluetooth-devices.dim,
+    .search-bluetooth-label.dim,
+    .bluetooth-disabled.dim {
+        &:last-child {
+            margin-bottom: 2em;
+        }
+
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
+        opacity: 0.5;
     }
-
-    .menu-button-icon {
-      font-size: 1.5em;
-      color: if($bar-menus-monochrome, $bar-menus-icons-passive, $bar-menus-menu-bluetooth-icons-passive);
-
-      &.active {
-        color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-bluetooth-icons-active);
-      }
+    .menu-separator.bluetooth-battery {
+        margin: 0.2em 0.5em;
+        min-width: 0.1em;
     }
-
-    .connection-status {
-      font-size: 0.9em;
-      margin-left: 0.6rem;
-      color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
-      opacity: 0.4;
+    .connection-status.txt-icon {
+        margin-left: 0.2em;
     }
-  }
-
-  spinner {
-    min-height: 1.3em;
-    min-width: 1.3em;
-    color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-bluetooth-iconbutton-active);
-  }
-
-  .menu-separator {
-    margin: 0em 1em;
-  }
-
-  .menu-switch.bluetooth {
-    background-color: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-bluetooth-switch-disabled);
-
-    &:checked {
-      background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
-    }
-
-    slider {
-      background-color: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
-    }
-
-    &:hover {
-      trough {
-        background: if($bar-menus-monochrome, $bar-menus-switch-disabled, $bar-menus-menu-bluetooth-switch-disabled);
-      }
-
-      slider {
-        background: if($bar-menus-monochrome, $bar-menus-switch-puck, $bar-menus-menu-bluetooth-switch-puck);
-      }
-    }
-
-    &:active {
-      background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
-    }
-  }
-
-  .no-bluetooth-devices.dim,
-  .search-bluetooth-label.dim,
-  .bluetooth-disabled.dim {
-    &:last-child {
-      margin-bottom: 2em;
-    }
-
-    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-menu-bluetooth-text);
-    opacity: 0.5;
-  }
 }

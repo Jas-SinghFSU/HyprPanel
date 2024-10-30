@@ -2,6 +2,9 @@ const audio = await Service.import('audio');
 import { getIcon } from '../utils.js';
 import Box from 'types/widgets/box.js';
 import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options';
+
+const { raiseMaximumVolume } = options.menus.volume;
 
 const renderActivePlayback = (): Box<Child, Attribute>[] => {
     return [
@@ -52,6 +55,11 @@ const renderActivePlayback = (): Box<Child, Attribute>[] => {
                             min: 0,
                             max: 1,
                             onChange: ({ value }) => (audio.speaker.volume = value),
+                            setup: (self) => {
+                                self.hook(raiseMaximumVolume, () => {
+                                    self.max = raiseMaximumVolume.value ? 1.5 : 1;
+                                });
+                            },
                         }),
                     ],
                 }),

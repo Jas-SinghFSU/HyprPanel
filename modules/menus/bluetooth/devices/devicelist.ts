@@ -1,9 +1,13 @@
-import { Bluetooth } from 'types/service/bluetooth.js';
+import { Bluetooth, BluetoothDevice } from 'types/service/bluetooth.js';
 import Box from 'types/widgets/box.js';
 import { connectedControls } from './connectedControls.js';
 import { getBluetoothIcon } from '../utils.js';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0.js';
 import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options';
+import Label from 'types/widgets/label.js';
+
+const { showBattery, batteryIcon, batteryState } = options.menus.bluetooth;
 
 const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Child, Attribute> => {
     return self.hook(bluetooth, () => {
@@ -62,6 +66,33 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
             }));
         }
 
+        const getConnectionStatusLabel = (device: BluetoothDevice): Label<Attribute> => {
+            return Widget.Label({
+                hpack: 'start',
+                class_name: 'connection-status dim',
+                label: device.connected ? 'Connected' : 'Paired',
+            });
+        };
+
+        const getBatteryInfo = (device: BluetoothDevice, batIcon: string): Gtk.Widget[] => {
+            if (typeof device.battery_percentage === 'number' && device.battery_percentage >= 0) {
+                return [
+                    Widget.Separator({
+                        class_name: 'menu-separator bluetooth-battery',
+                    }),
+                    Widget.Label({
+                        class_name: 'connection-status txt-icon',
+                        label: `${batIcon}`,
+                    }),
+                    Widget.Label({
+                        class_name: 'connection-status battery',
+                        label: `${device.battery_percentage}%`,
+                    }),
+                ];
+            }
+            return [];
+        };
+
         return (self.child = Widget.Box({
             vertical: true,
             children: availableDevices.map((device) => {
@@ -101,10 +132,31 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                     Widget.Revealer({
                                                         hpack: 'start',
                                                         reveal_child: device.connected || device.paired,
-                                                        child: Widget.Label({
+                                                        child: Widget.Box({
                                                             hpack: 'start',
-                                                            class_name: 'connection-status dim',
-                                                            label: device.connected ? 'Connected' : 'Paired',
+                                                            children: Utils.merge(
+                                                                [
+                                                                    showBattery.bind('value'),
+                                                                    batteryIcon.bind('value'),
+                                                                    batteryState.bind('value'),
+                                                                ],
+                                                                (showBat, batIcon, batState) => {
+                                                                    if (
+                                                                        !showBat ||
+                                                                        (batState === 'paired' && !device.paired) ||
+                                                                        (batState === 'connected' && !device.connected)
+                                                                    ) {
+                                                                        return [getConnectionStatusLabel(device)];
+                                                                    }
+
+                                                                    return [
+                                                                        getConnectionStatusLabel(device),
+                                                                        Widget.Box({
+                                                                            children: getBatteryInfo(device, batIcon),
+                                                                        }),
+                                                                    ];
+                                                                },
+                                                            ),
                                                         }),
                                                     }),
                                                 ],

@@ -8,6 +8,8 @@ import { CustomModuleSettings } from 'customModules/config';
 import { PowerMenuSettings } from './menus/power';
 import { GBox } from 'lib/types/widget';
 import { MediaMenuSettings } from './menus/media';
+import { BluetoothMenuSettings } from './menus/bluetooth';
+import { VolumeMenuSettings } from './menus/volume';
 
 type Page =
     | 'General'
@@ -16,6 +18,8 @@ type Page =
     | 'Dashboard Menu'
     | 'Media Menu'
     | 'Power Menu'
+    | 'Bluetooth Menu'
+    | 'Volume'
     | 'Notifications'
     | 'OSD'
     | 'Custom Modules';
@@ -29,6 +33,8 @@ const pagerMap: Page[] = [
     'OSD',
     'Media Menu',
     'Power Menu',
+    'Bluetooth Menu',
+    'Volume',
     'Clock Menu',
     'Dashboard Menu',
     'Custom Modules',
@@ -61,9 +67,11 @@ export const SettingsMenu = (): GBox => {
                         'Media Menu': MediaMenuSettings(),
                         Notifications: NotificationSettings(),
                         OSD: OSDSettings(),
+                        Volume: VolumeMenuSettings(),
                         'Clock Menu': ClockMenuSettings(),
                         'Dashboard Menu': DashboardMenuSettings(),
                         'Custom Modules': CustomModuleSettings(),
+                        'Bluetooth Menu': BluetoothMenuSettings(),
                         'Power Menu': PowerMenuSettings(),
                     },
                     shown: CurrentPage.bind('value'),
