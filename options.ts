@@ -1058,7 +1058,7 @@ const options = mkOptions(OPTIONS, {
         transitionTime: opt(200),
         bluetooth: {
             showBattery: opt(false),
-            batteryState: opt<BluetoothBatteryState>('always'),
+            batteryState: opt<BluetoothBatteryState>('paired'),
             batteryIcon: opt('󰥉'),
         },
         volume: {
