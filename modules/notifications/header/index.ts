@@ -37,6 +37,8 @@ export const Header = (notif: Notification): Box<Child, Attribute> => {
                         truncate: 'end',
                         wrap: true,
                         label: notif['summary'],
+                    }).on('realize', (self) => {
+                        self.set_markup(notif['summary']);
                     }),
                 ],
             }),
