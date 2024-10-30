@@ -1,26 +1,23 @@
 $_shadow-size: $padding;
-$_radius: $radius * $hyprland-gaps-multiplier * $screen-corner-multiplier;
+
+$radius : if($bar-floating, $bar-border_radius, 0em);
+$_radius: $radius * 2.4 * $bar-corners;
 $_margin: 99px;
 
 
+$bg : if($bar-transparent, transparent, transparentize($bar-background, $transparency-value));
+$border-color: if(
+      $bar-menus-monochrome,
+      $bar-menus-border-color,
+      $bar-menus-menu-clock-border-color
+    );
+$bar-position : if($bar-floating,$bar-location,'top');
 
+$shadow-color: rgba(0,0,0,.4);
+$border-width : $bar-menus-border-size;
+$transition: 200;
+$padding: 0.7rem;
 
-
-/*
-$padding: Used to define $_shadow-size.
-$radius: Used to define $_radius.
-$hyprland-gaps-multiplier: Used in the calculation of $_radius.
-$screen-corner-multiplier: Also used in the calculation of $_radius.
-$transition: Used in the transition property.
-$shadows: Used to determine if shadows should be applied.
-$shadow-color: Used for the shadow color.
-$bar-position: Used to determine margin and border settings.
-$border-width: Used to set the border properties.
-$bg: Used as the background color for the borders.
-$border-color: Used in the box corner shadow and border radius.
-
-
-*/
 
 window.screen-corner:not(.hidden) {
     transition: $transition;

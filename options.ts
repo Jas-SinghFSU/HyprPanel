@@ -88,6 +88,7 @@ const tertiary_colors = {
 const options = mkOptions(OPTIONS, {
     theme: {
         matugen: opt(false),
+        shadows: opt(true),
         matugen_settings: {
             mode: opt<MatugenTheme>('dark'),
             scheme_type: opt<MatugenScheme>('tonal-spot'),
@@ -145,13 +146,12 @@ const options = mkOptions(OPTIONS, {
             layer: opt<WindowLayer>('top'),
             margin_top: opt('0.5em'),
             opacity: opt(100),
+            corners: opt(50),
+            transparent: opt(false),
             margin_bottom: opt('0em'),
             margin_sides: opt('0.5em'),
-            corners: opt(50),
-            border_radius: opt('0.4em'),
             outer_spacing: opt('1.6em'),
             label_spacing: opt('0.5em'),
-            transparent: opt(false),
             dropdownGap: opt('2.9em'),
             background: opt(colors.crust),
             buttons: {
@@ -825,8 +825,7 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         scrollSpeed: opt(5),
-        corners: opt(50),
-        transparent: opt(false),
+
         layouts: opt({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],
@@ -1194,6 +1193,11 @@ const options = mkOptions(OPTIONS, {
     },
 
     dummy: opt(true),
+    hyprland: {
+        gaps: opt(2.4),
+        inactiveBorder: opt("#282828"),
+        gapsWhenOnly: opt(false),
+    },
 });
 
 globalThis['options'] = options;
