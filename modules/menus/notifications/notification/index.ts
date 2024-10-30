@@ -12,7 +12,7 @@ import { filterNotifications } from 'lib/shared/notifications.js';
 import Scrollable from 'types/widgets/scrollable.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 
-const { displayedTotal, ignore } = options.notifications;
+const { displayedTotal, ignore, showActionsOnHover } = options.notifications;
 
 const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scrollable<Child, Attribute> => {
     return Widget.Scrollable({
@@ -30,8 +30,9 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
                         curPage.bind('value'),
                         displayedTotal.bind('value'),
                         ignore.bind('value'),
+                        showActionsOnHover.bind('value'),
                     ],
-                    (notifications, currentPage, dispTotal, ignoredNotifs) => {
+                    (notifications, currentPage, dispTotal, ignoredNotifs, showActions) => {
                         const filteredNotifications = filterNotifications(notifications, ignoredNotifs);
 
                         const sortedNotifications = filteredNotifications.sort((a, b) => b.time - a.time);
@@ -49,6 +50,7 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
                                     notif.actions.length > 0
                                         ? Widget.Revealer({
                                               transition: 'slide_down',
+                                              reveal_child: showActions ? false : true,
                                               child: Widget.EventBox({
                                                   child: Actions(notif, notifs),
                                               }),
@@ -57,10 +59,10 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
 
                                 return Widget.EventBox({
                                     on_hover() {
-                                        if (actionsbox) actionsbox.reveal_child = true;
+                                        if (actionsbox && showActions) actionsbox.reveal_child = true;
                                     },
                                     on_hover_lost() {
-                                        if (actionsbox) actionsbox.reveal_child = false;
+                                        if (actionsbox && showActions) actionsbox.reveal_child = false;
                                     },
                                     child: Widget.Box({
                                         class_name: 'notification-card-content-container',

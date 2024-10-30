@@ -14,7 +14,8 @@ import Box from 'types/widgets/box.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 const hyprland = await Service.import('hyprland');
 
-const { position, timeout, cache_actions, monitor, active_monitor, displayedTotal, ignore } = options.notifications;
+const { position, timeout, cache_actions, monitor, active_monitor, displayedTotal, ignore, showActionsOnHover } =
+    options.notifications;
 
 const curMonitor = Variable(monitor.value);
 
@@ -50,8 +51,8 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
             hexpand: true,
             setup: (self) => {
                 Utils.merge(
-                    [notifs.bind('popups'), ignore.bind('value')],
-                    (notifications: Notification[], ignoredNotifs: string[]) => {
+                    [notifs.bind('popups'), ignore.bind('value'), showActionsOnHover.bind('value')],
+                    (notifications: Notification[], ignoredNotifs: string[], showActions: boolean) => {
                         const filteredNotifications = filterNotifications(notifications, ignoredNotifs);
 
                         return (self.children = filteredNotifications.slice(0, displayedTotal.value).map((notif) => {
@@ -59,6 +60,7 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                                 notif.actions.length > 0
                                     ? Widget.Revealer({
                                           transition: 'slide_down',
+                                          reveal_child: showActions ? false : true,
                                           child: Widget.EventBox({
                                               child: Action(notif, notifs),
                                           }),
@@ -70,10 +72,10 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                                     notifs.CloseNotification(notif.id);
                                 },
                                 on_hover() {
-                                    if (actionsbox) actionsbox.reveal_child = true;
+                                    if (actionsbox && showActions) actionsbox.reveal_child = true;
                                 },
                                 on_hover_lost() {
-                                    if (actionsbox) actionsbox.reveal_child = false;
+                                    if (actionsbox && showActions) actionsbox.reveal_child = false;
 
                                     notif.dismiss();
                                 },
