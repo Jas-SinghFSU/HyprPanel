@@ -1,7 +1,6 @@
 import icons from 'lib/icons';
 import { BoxWidget } from 'lib/types/widget';
 import { getPlayerInfo } from '../../helpers';
-import { MprisPlayer } from 'types/service/mpris';
 import { isLoopActive, isValidLoopStatus } from './helpers';
 
 const media = await Service.import('mpris');
@@ -36,7 +35,7 @@ export const loopControl = (): BoxWidget => {
                 child: Widget.Icon({
                     setup: (self) => {
                         self.hook(media, () => {
-                            const foundPlayer: MprisPlayer = getPlayerInfo();
+                            const foundPlayer = getPlayerInfo();
 
                             if (foundPlayer === undefined) {
                                 self.icon = icons.mpris.loop['none'];
