@@ -724,7 +724,7 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 Option({
                     opt: options.bar.media.format,
-                    title: 'Format of the Label',
+                    title: 'Label Format',
                     subtitle: 'Available placeholders: {title}, {artists}, {artist}, {album}, {name}, {identity}',
                     type: 'string',
                 }),
