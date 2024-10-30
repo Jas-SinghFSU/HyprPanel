@@ -897,6 +897,7 @@ const options = mkOptions(OPTIONS, {
         },
         network: {
             truncation: opt(true),
+            showWifiInfo: opt(false),
             truncation_size: opt(7),
             label: opt(true),
             rightClick: opt(''),
@@ -1054,6 +1055,13 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        bluetooth: {
+            showBattery: opt(false),
+            batteryIcon: opt('󰥉'),
+        },
+        volume: {
+            raiseMaximumVolume: opt(false),
+        },
         power: {
             showLabel: opt(true),
             confirmation: opt(true),
