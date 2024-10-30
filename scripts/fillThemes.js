@@ -336,8 +336,10 @@ const main = () => {
 
     const baseThemeFile = 'catppuccin_mocha.json';
     const baseThemeSplitFile = 'catppuccin_mocha_split.json';
+    const baseThemeVividFile = 'catppuccin_mocha_vivid.json';
     const baseThemePath = path.join(themesDir, baseThemeFile);
     const baseThemeSplitPath = path.join(themesDir, baseThemeSplitFile);
+    const baseThemeVividPath = path.join(themesDir, baseThemeVividFile);
 
     if (!fs.existsSync(baseThemePath)) {
         console.error(
@@ -356,13 +358,24 @@ const main = () => {
         process.exit(1);
     }
 
+    if (!fs.existsSync(baseThemeVividPath)) {
+        console.error(
+            formatMessage(
+                COLORS.FG_RED,
+                `❌ Error: Base vivid theme '${baseThemeVividFile}' does not exist in '${themesDir}'.`,
+            ),
+        );
+        process.exit(1);
+    }
+
     const baseTheme = loadJSON(baseThemePath);
     const baseThemeSplit = loadJSON(baseThemeSplitPath);
+    const baseThemeVivid = loadJSON(baseThemeVividPath);
 
     const themeFiles = fs.readdirSync(themesDir).filter((file) => file.endsWith('.json'));
 
     themeFiles.forEach((file) => {
-        if (file === baseThemeFile || file === baseThemeSplitFile) {
+        if (file === baseThemeFile || file === baseThemeSplitFile || file === baseThemeVividFile) {
             return;
         }
 
@@ -371,6 +384,8 @@ const main = () => {
 
         if (file.endsWith('_split.json')) {
             correspondingBaseTheme = baseThemeSplit;
+        } else if (file.endsWith('_vivid.json')) {
+            correspondingBaseTheme = baseThemeVivid;
         } else {
             correspondingBaseTheme = baseTheme;
         }
