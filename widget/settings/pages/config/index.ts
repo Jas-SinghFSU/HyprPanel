@@ -7,6 +7,7 @@ import { OSDSettings } from './osd/index';
 import { CustomModuleSettings } from 'customModules/config';
 import { PowerMenuSettings } from './menus/power';
 import { GBox } from 'lib/types/widget';
+import { BluetoothMenuSettings } from './menus/bluetooth';
 import { VolumeMenuSettings } from './menus/volume';
 
 type Page =
@@ -15,6 +16,7 @@ type Page =
     | 'Clock Menu'
     | 'Dashboard Menu'
     | 'Power Menu'
+    | 'Bluetooth Menu'
     | 'Volume'
     | 'Notifications'
     | 'OSD'
@@ -28,6 +30,7 @@ const pagerMap: Page[] = [
     'Notifications',
     'OSD',
     'Power Menu',
+    'Bluetooth Menu',
     'Volume',
     'Clock Menu',
     'Dashboard Menu',
@@ -64,6 +67,7 @@ export const SettingsMenu = (): GBox => {
                         'Clock Menu': ClockMenuSettings(),
                         'Dashboard Menu': DashboardMenuSettings(),
                         'Custom Modules': CustomModuleSettings(),
+                        'Bluetooth Menu': BluetoothMenuSettings(),
                         'Power Menu': PowerMenuSettings(),
                     },
                     shown: CurrentPage.bind('value'),
