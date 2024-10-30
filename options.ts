@@ -1057,6 +1057,7 @@ const options = mkOptions(OPTIONS, {
         bluetooth: {
             showBattery: opt(false),
             batteryIcon: opt('󰥉'),
+        },
         volume: {
             raiseMaximumVolume: opt(false),
         },
