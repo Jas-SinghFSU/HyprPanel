@@ -32,7 +32,6 @@ startRecording() {
     gpu-screen-recorder \
         -w "$target" \
         -f 60 \
-        -fm cfr \
         -k h264 \
         -a "$(pactl get-default-sink).monitor" \
         -o "$outputPath" \
