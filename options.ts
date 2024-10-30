@@ -1054,6 +1054,9 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        volume: {
+            raiseMaximumVolume: opt(false),
+        },
         power: {
             showLabel: opt(true),
             confirmation: opt(true),
