@@ -134,8 +134,7 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                                                 typeof device.battery_percentage ===
                                                                                     'number' &&
                                                                                 device.battery_percentage >= 0
-                                                                                    ? []
-                                                                                    : [
+                                                                                    ? [
                                                                                           Widget.Separator({
                                                                                               class_name:
                                                                                                   'menu-separator',
@@ -151,6 +150,7 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                                                               label: `${device.battery_percentage}%`,
                                                                                           }),
                                                                                       ],
+                                                                                    : []
                                                                         }),
                                                                     ];
                                                                 },
