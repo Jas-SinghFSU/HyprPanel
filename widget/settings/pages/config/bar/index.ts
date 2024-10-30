@@ -498,6 +498,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.bar.network.showWifiInfo,
+                    title: 'Show Wifi Info On Hover',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.bar.network.truncation,
                     title: 'Truncate Network Name',
                     subtitle: 'Will truncate the network name to the specified size below.',
