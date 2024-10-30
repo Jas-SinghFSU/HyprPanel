@@ -73,7 +73,7 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                                     if (actionsbox) actionsbox.reveal_child = true;
                                 },
                                 on_hover_lost() {
-                                    if (actionsbox) actionsbox.reveal_child = true;
+                                    if (actionsbox) actionsbox.reveal_child = false;
 
                                     notif.dismiss();
                                 },

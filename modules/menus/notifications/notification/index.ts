@@ -45,27 +45,48 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
                         return (self.children = sortedNotifications
                             .slice(pageStart, pageEnd)
                             .map((notif: Notification) => {
-                                return Widget.Box({
-                                    class_name: 'notification-card-content-container',
-                                    children: [
-                                        Widget.Box({
-                                            class_name: 'notification-card menu',
-                                            vpack: 'start',
-                                            hexpand: true,
-                                            vexpand: false,
-                                            children: [
-                                                Image(notif),
-                                                Widget.Box({
-                                                    vpack: 'center',
-                                                    vertical: true,
-                                                    hexpand: true,
-                                                    class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ' menu'}`,
-                                                    children: [Header(notif), Body(notif), Actions(notif, notifs)],
-                                                }),
-                                            ],
-                                        }),
-                                        CloseButton(notif, notifs),
-                                    ],
+                                const actionsbox =
+                                    notif.actions.length > 0
+                                        ? Widget.Revealer({
+                                              transition: 'slide_down',
+                                              child: Widget.EventBox({
+                                                  child: Actions(notif, notifs),
+                                              }),
+                                          })
+                                        : null;
+
+                                return Widget.EventBox({
+                                    on_hover() {
+                                        if (actionsbox) actionsbox.reveal_child = true;
+                                    },
+                                    on_hover_lost() {
+                                        if (actionsbox) actionsbox.reveal_child = false;
+                                    },
+                                    child: Widget.Box({
+                                        class_name: 'notification-card-content-container',
+                                        children: [
+                                            Widget.Box({
+                                                class_name: 'notification-card menu',
+                                                vpack: 'start',
+                                                hexpand: true,
+                                                vexpand: false,
+                                                children: [
+                                                    Image(notif),
+                                                    Widget.Box({
+                                                        vpack: 'center',
+                                                        vertical: true,
+                                                        hexpand: true,
+                                                        class_name: `notification-card-content ${!notifHasImg(notif) ? 'noimg' : ' menu'}`,
+
+                                                        children: actionsbox
+                                                            ? [Header(notif), Body(notif), actionsbox]
+                                                            : [Header(notif), Body(notif)],
+                                                    }),
+                                                ],
+                                            }),
+                                            CloseButton(notif, notifs),
+                                        ],
+                                    }),
                                 });
                             }));
                     },
