@@ -19,6 +19,12 @@ export const BluetoothMenuSettings = (): Scrollable<Child, Attribute> => {
                     type: 'boolean',
                 }),
                 Option({
+                    opt: options.menus.bluetooth.batteryState,
+                    title: 'Show Battery When',
+                    type: 'enum',
+                    enums: ['connected', 'paired', 'always'],
+                }),
+                Option({
                     opt: options.menus.bluetooth.batteryIcon,
                     title: 'Battery Icon',
                     type: 'string',

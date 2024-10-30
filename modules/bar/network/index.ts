@@ -13,7 +13,11 @@ const formatFrequency = (frequency: number): string => {
 };
 
 const formatWifiInfo = (wifi: Wifi): string => {
-    return `Network: ${wifi.ssid === '' ? 'None' : wifi.ssid} \nSignal Strength: ${wifi.strength >= 0 ? wifi.strength : '--'}% \nFrequency: ${wifi.frequency >= 0 ? formatFrequency(wifi.frequency) : '--'}`;
+    const netSsid = wifi.ssid === '' ? 'None' : wifi.ssid;
+    const wifiStrength = wifi.strength >= 0 ? wifi.strength : '--';
+    const wifiFreq = wifi.frequency >= 0 ? formatFrequency(wifi.frequency) : '--';
+
+    return `Network: ${netSsid} \nSignal Strength: ${wifiStrength}% \nFrequency: ${wifiFreq}`;
 };
 
 const {
