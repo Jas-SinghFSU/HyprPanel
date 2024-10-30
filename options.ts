@@ -825,6 +825,8 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         scrollSpeed: opt(5),
+        corners: opt(50),
+        transparent: opt(false),
         layouts: opt({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],
