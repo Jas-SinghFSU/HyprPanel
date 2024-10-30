@@ -149,7 +149,7 @@ const devices = (bluetooth: Bluetooth, self: Box<Gtk.Widget, unknown>): Box<Chil
                                                                                                   'connection-status battery',
                                                                                               label: `${device.battery_percentage}%`,
                                                                                           }),
-                                                                                      ],
+                                                                                      ]
                                                                                     : []
                                                                         }),
                                                                     ];
