@@ -5,7 +5,7 @@
  *
  * A Node.js script to compare theme JSON files against base themes and add missing keys,
  * as well as remove any properties that don't exist in the corresponding base theme.
- * It assigns values based on matching colors or randomly selects from border colors.
+ * It assigns values based on matching colors, specific property mappings, or randomly selects from border colors.
  *
  * Usage:
  *   node compare_themes.js [--dry-run] [themes_directory]
@@ -123,7 +123,9 @@ const findMissingKeys = (baseJSON, targetJSON) => {
  * @returns {boolean} True if the key is excluded, otherwise false.
  */
 const isExcludedKey = (key) => {
-    const excludedPatterns = [];
+    const excludedPatterns = [
+        // Add any regex patterns for keys to exclude here
+    ];
 
     return excludedPatterns.some((pattern) => pattern.test(key));
 };
@@ -171,9 +173,27 @@ const collectBorderColors = (baseJSON) => {
  * @param {string} baseValue - The value of the missing key in the base theme.
  * @param {Object} valueToKeysMap - A map from values to keys in the base theme.
  * @param {Object} targetJSON - The target JSON object.
+ * @param {Object} specialKeyMappings - A map of special keys to their source keys.
+ * @param {string} currentKey - The key currently being processed.
  * @returns {*} The best matching value or null if a random selection is needed.
  */
-const determineBestMatchValue = (baseValue, valueToKeysMap, targetJSON) => {
+const determineBestMatchValue = (baseValue, valueToKeysMap, targetJSON, specialKeyMappings, currentKey) => {
+    // Check if the current key is in special mappings
+    if (specialKeyMappings.hasOwnProperty(currentKey)) {
+        const sourceKey = specialKeyMappings[currentKey];
+        if (targetJSON.hasOwnProperty(sourceKey)) {
+            return targetJSON[sourceKey];
+        } else {
+            console.warn(
+                formatMessage(
+                    COLORS.FG_YELLOW,
+                    `⚠️ Source key '${sourceKey}' for special key '${currentKey}' not found. Using random border color.`,
+                ),
+            );
+            return null;
+        }
+    }
+
     const relatedBaseKeys = valueToKeysMap[baseValue] || [];
 
     const correspondingTargetValues = relatedBaseKeys
@@ -225,8 +245,9 @@ const backupTheme = (themePath) => {
  * @param {string} themePath - The path to the theme file.
  * @param {Object} baseTheme - The base JSON object.
  * @param {boolean} dryRun - If true, no changes will be written to files.
+ * @param {Object} specialKeyMappings - A map of special keys to their source keys.
  */
-const processTheme = (themePath, baseTheme, dryRun) => {
+const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => {
     const themeJSON = loadJSON(themePath);
     const missingKeys = findMissingKeys(baseTheme, themeJSON);
 
@@ -252,7 +273,7 @@ const processTheme = (themePath, baseTheme, dryRun) => {
             }
 
             const baseValue = baseTheme[key];
-            const bestValue = determineBestMatchValue(baseValue, valueToKeysMap, themeJSON);
+            const bestValue = determineBestMatchValue(baseValue, valueToKeysMap, themeJSON, specialKeyMappings, key);
 
             if (bestValue !== null) {
                 themeJSON[key] = bestValue;
@@ -336,8 +357,10 @@ const main = () => {
 
     const baseThemeFile = 'catppuccin_mocha.json';
     const baseThemeSplitFile = 'catppuccin_mocha_split.json';
+    const baseThemeVividFile = 'catppuccin_mocha_vivid.json';
     const baseThemePath = path.join(themesDir, baseThemeFile);
     const baseThemeSplitPath = path.join(themesDir, baseThemeSplitFile);
+    const baseThemeVividPath = path.join(themesDir, baseThemeVividFile);
 
     if (!fs.existsSync(baseThemePath)) {
         console.error(
@@ -356,13 +379,31 @@ const main = () => {
         process.exit(1);
     }
 
+    if (!fs.existsSync(baseThemeVividPath)) {
+        console.error(
+            formatMessage(
+                COLORS.FG_RED,
+                `❌ Error: Base vivid theme '${baseThemeVividFile}' does not exist in '${themesDir}'.`,
+            ),
+        );
+        process.exit(1);
+    }
+
     const baseTheme = loadJSON(baseThemePath);
     const baseThemeSplit = loadJSON(baseThemeSplitPath);
+    const baseThemeVivid = loadJSON(baseThemeVividPath);
 
     const themeFiles = fs.readdirSync(themesDir).filter((file) => file.endsWith('.json'));
 
+    // Define special key mappings
+    // Format: "target_key": "source_key"
+    const specialKeyMappings = {
+        'theme.bar.menus.menu.network.switch.enabled': 'theme.bar.menus.menu.network.iconbuttons.active',
+        // Add more special mappings here if needed
+    };
+
     themeFiles.forEach((file) => {
-        if (file === baseThemeFile || file === baseThemeSplitFile) {
+        if (file === baseThemeFile || file === baseThemeSplitFile || file === baseThemeVividFile) {
             return;
         }
 
@@ -371,12 +412,14 @@ const main = () => {
 
         if (file.endsWith('_split.json')) {
             correspondingBaseTheme = baseThemeSplit;
+        } else if (file.endsWith('_vivid.json')) {
+            correspondingBaseTheme = baseThemeVivid;
         } else {
             correspondingBaseTheme = baseTheme;
         }
 
         try {
-            processTheme(themePath, correspondingBaseTheme, dryRun);
+            processTheme(themePath, correspondingBaseTheme, dryRun, specialKeyMappings);
         } catch (error) {
             console.error(formatMessage(COLORS.FG_RED, `❌ Error processing '${file}': ${error.message}`));
         }
