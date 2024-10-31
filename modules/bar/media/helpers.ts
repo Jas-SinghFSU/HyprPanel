@@ -63,7 +63,8 @@ export const generateMediaLabel = (
 
         const mediaLabel =
             truncation_size.value > 0 ? truncatedLabel.substring(0, truncation_size.value) : truncatedLabel;
-        return mediaLabel;
+
+        return mediaLabel.length ? mediaLabel : 'Media';
     } else {
         songIcon.value = getIconForPlayer(activePlayer.value?.identity || '');
         return `Media`;
