@@ -15,7 +15,7 @@
     .bar-button-icon.windowtitle {
         border-top-left-radius: $bar-buttons-radius;
         border-bottom-left-radius: $bar-buttons-radius;
-        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-windowtitle-icon_background);
+        background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-windowtitle-icon_background);
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-windowtitle-spacing;
@@ -29,6 +29,7 @@
             $bar-buttons-radius * 0.4,
             $bar-buttons-radius
         );
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-windowtitle-icon);
     }
 
     .bar-button-label.windowtitle {

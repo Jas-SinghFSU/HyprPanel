@@ -174,6 +174,14 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     max: 100,
                     increment: 5,
                 }),
+                Option({
+                    opt: options.theme.tooltip.scaling,
+                    title: 'Tooltips',
+                    type: 'number',
+                    min: 1,
+                    max: 100,
+                    increment: 5,
+                }),
             ],
         }),
     });

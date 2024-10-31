@@ -13,6 +13,7 @@ import {
     WindowLayer,
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
+import { SystrayIconMap } from 'lib/types/systray';
 import { UnitType } from 'lib/types/weather';
 import { Transition } from 'lib/types/widget';
 import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
@@ -88,6 +89,9 @@ const tertiary_colors = {
 
 const options = mkOptions(OPTIONS, {
     theme: {
+        tooltip: {
+            scaling: opt(100),
+        },
         matugen: opt(false),
         matugen_settings: {
             mode: opt<MatugenTheme>('dark'),
@@ -242,6 +246,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 systray: {
                     enableBorder: opt(false),
+                    customIcon: opt(colors.text),
                     border: opt(colors.lavender),
                     background: opt(colors.base2),
                     spacing: opt('0.5em'),
@@ -923,6 +928,7 @@ const options = mkOptions(OPTIONS, {
         },
         systray: {
             ignore: opt<string[]>([]),
+            customIcons: opt<SystrayIconMap>({}),
         },
         clock: {
             icon: opt('󰸗'),
@@ -935,7 +941,7 @@ const options = mkOptions(OPTIONS, {
             scrollDown: opt(''),
         },
         media: {
-            show_artist: opt(false),
+            format: opt('{artist: - }{title}'),
             truncation: opt(true),
             show_label: opt(true),
             truncation_size: opt(30),
@@ -1056,6 +1062,10 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        media: {
+            hideAuthor: opt(false),
+            hideAlbum: opt(false),
+        },
         bluetooth: {
             showBattery: opt(false),
             batteryState: opt<BluetoothBatteryState>('connected'),
