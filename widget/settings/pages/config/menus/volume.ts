@@ -16,6 +16,7 @@ export const VolumeMenuSettings = (): Scrollable<Child, Attribute> => {
                 Option({
                     opt: options.menus.volume.raiseMaximumVolume,
                     title: 'Allow Raising Volume Above 100%',
+                    subtitle: 'Allows the volume slider in the menu to go up to 150% volume',
                     type: 'boolean',
                 }),
             ],

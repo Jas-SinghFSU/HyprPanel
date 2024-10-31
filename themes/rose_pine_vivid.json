@@ -340,5 +340,6 @@
   "theme.bar.buttons.modules.submap.icon_background": "#21202e",
   "theme.bar.menus.menu.network.switch.puck": "#26233a",
   "theme.bar.menus.menu.network.switch.disabled": "#1f1d2e",
-  "theme.bar.menus.menu.network.switch.enabled": "#c4a7e7"
+  "theme.bar.menus.menu.network.switch.enabled": "#c4a7e7",
+  "theme.bar.buttons.systray.customIcon": "#e0def4"
 }
