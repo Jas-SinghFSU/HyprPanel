@@ -89,6 +89,9 @@ const tertiary_colors = {
 
 const options = mkOptions(OPTIONS, {
     theme: {
+        tooltip: {
+            scaling: opt(100),
+        },
         matugen: opt(false),
         matugen_settings: {
             mode: opt<MatugenTheme>('dark'),
