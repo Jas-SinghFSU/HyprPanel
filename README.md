@@ -17,6 +17,8 @@ A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 ![HyprPanel1](./assets/hp1.png)
 ![HyprPanel2](./assets/hp2.png)
 
+> NOTE: If you would like to support the project, please instead [donate to Aylur](https://ko-fi.com/aylur) who put in tremendous effort to build AGS. Hyprpanel likely wouldn't exist without it.
+
 ## Installation
 
 The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for installing the panel and all of its dependencies. The instructions below are general instructions for installing the panel.
