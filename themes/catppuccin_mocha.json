@@ -273,6 +273,7 @@
     "theme.bar.buttons.battery.border": "#f9e2af",
     "theme.bar.buttons.systray.background": "#242438",
     "theme.bar.buttons.systray.border": "#b4befe",
+    "theme.bar.buttons.systray.customIcon": "#cdd6f4",
     "theme.bar.buttons.bluetooth.icon_background": "#89dbeb",
     "theme.bar.buttons.bluetooth.icon": "#89dceb",
     "theme.bar.buttons.bluetooth.text": "#89dceb",

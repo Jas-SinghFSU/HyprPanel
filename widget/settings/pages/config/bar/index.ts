@@ -651,6 +651,15 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitleLink: 'https://hyprpanel.com/configuration/panel.html#system-tray',
                     type: 'object',
                 }),
+                Option({
+                    opt: options.bar.systray.customIcons,
+                    title: 'Custom Systray Icons',
+                    subtitle:
+                        'An object defining custom icons for the system tray.\n' +
+                        'Wiki: https://hyprpanel.com/configuration/panel.html#custom-systray-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#custom-systray-icons',
+                    type: 'object',
+                }),
 
                 /*
                  ******************************
@@ -728,9 +737,10 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
-                    opt: options.bar.media.show_artist,
-                    title: 'Show Track Artist',
-                    type: 'boolean',
+                    opt: options.bar.media.format,
+                    title: 'Label Format',
+                    subtitle: 'Available placeholders: {title}, {artists}, {artist}, {album}, {name}, {identity}',
+                    type: 'string',
                 }),
                 Option({
                     opt: options.bar.media.show_label,

@@ -1,79 +1,78 @@
 @import '../colors.scss';
 
 .txt-icon {
-  font-family: "JetBrainsMono Nerd Font Propo", monospace;
-  font-size: 1.5em;
+    font-family: 'JetBrainsMono Nerd Font Propo', monospace;
+    font-size: 1.5em;
 
-  &.bluetooth {
-    font-size: 1em;
-  }
+    &.bluetooth {
+        font-size: 1em;
+    }
 
-  &.playback {
-    font-size: 1.3em;
-  }
+    &.playback {
+        font-size: 1.3em;
+    }
 
-  &.input {
-    font-size: 1.3em;
-  }
+    &.input {
+        font-size: 1.3em;
+    }
 }
 
 .bar.txt-icon {
-  font-family: "JetBrainsMono Nerd Font Propo", monospace;
-  font-size: 1.2em;
+    font-family: 'JetBrainsMono Nerd Font Propo', monospace;
+    font-size: 1.2em;
 }
 
 window.popup {
-  opacity: $bar-menus-opacity * 0.01;
+    opacity: $bar-menus-opacity * 0.01;
 
-  menuitem {
-    label {
-      color: $bar-menus-popover-text;
+    menuitem {
+        label {
+            color: $bar-menus-popover-text;
+        }
+
+        &:hover {
+            background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.6);
+        }
     }
 
-    &:hover {
-      background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.6);
+    menu {
+        border-color: $bar-menus-popover-border;
+        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
     }
-  }
 
-  menu {
-    border-color: $bar-menus-popover-border;
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
-  }
+    separator {
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.7);
+        min-height: 0.075em;
+    }
 
-  separator {
-
-    background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.7);
-    min-height: 0.075em;
-  }
-
-  arrow {
-    color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text);
-  }
+    arrow {
+        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text);
+    }
 }
 
 tooltip {
-  * {
-    all: unset;
-  }
+    * {
+        all: unset;
+    }
 
-  opacity: $bar-menus-opacity * 0.01;
+    opacity: $bar-menus-opacity * 0.01;
 
-  font-size: 1.1em;
+    font-size: 1.1em * $tooltip-scaling * 0.01;
 
-  >*>* {
-    padding: 0.6em;
-    border-radius: $bar-menus-border-radius * 0.5;
-    color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
-  }
+    > * > * {
+        padding: 0.6em;
+        border-radius: $bar-menus-border-radius * 0.5;
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
+        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
+    }
 }
 
 check:not(:checked) {
-  background-color: $bar-menus-check_radio_button-background;
-  border: 1px solid $bar-menus-check_radio_button-active;
+    background-color: $bar-menus-check_radio_button-background;
+    border: 1px solid $bar-menus-check_radio_button-active;
 }
 
 check:checked {
-  background-color: $bar-menus-check_radio_button-active;
-  border: 1px solid $bar-menus-check_radio_button-background;
+    background-color: $bar-menus-check_radio_button-active;
+    border: 1px solid $bar-menus-check_radio_button-background;
 }
