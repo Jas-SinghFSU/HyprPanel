@@ -327,6 +327,7 @@
     "theme.bar.buttons.clock.border": "#f5c2e7",
     "theme.bar.buttons.battery.border": "#f9e2af",
     "theme.bar.buttons.systray.border": "#b4befe",
+    "theme.bar.buttons.systray.customIcon": "#cdd6f4",
     "theme.bar.buttons.bluetooth.border": "#89dceb",
     "theme.bar.buttons.network.border": "#cba6f7",
     "theme.bar.buttons.volume.border": "#eba0ac",
