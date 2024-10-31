@@ -84,7 +84,7 @@
 
     .style2 {
         .module-icon.#{$class} {
-            background: if($bar-buttons-monochrome, $bar-buttons-icon, $iconBackground);
+            background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
             padding-right: $spacing;
             color: if($bar-buttons-monochrome, $bar-buttons-background, $iconColor);
             border-top-left-radius: if(
