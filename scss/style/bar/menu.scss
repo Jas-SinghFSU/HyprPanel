@@ -5,7 +5,7 @@
 }
 
 .bar_item_box_visible.style2.dashboard {
-    background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-dashboard-background);
+    background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-dashboard-background);
 
     .bar-menu_label {
         color: if($bar-buttons-monochrome, $bar-buttons-background, $bar-buttons-dashboard-icon);

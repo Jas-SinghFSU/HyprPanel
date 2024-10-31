@@ -12,7 +12,7 @@
     .bar-button-icon.clock {
         border-top-left-radius: $bar-buttons-radius;
         border-bottom-left-radius: $bar-buttons-radius;
-        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon_background);
+        background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-clock-icon_background);
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-clock-spacing;
@@ -26,6 +26,7 @@
             $bar-buttons-radius * 0.4,
             $bar-buttons-radius
         );
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
     }
 
     .bar-button-label.clock {
