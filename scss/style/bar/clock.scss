@@ -26,7 +26,7 @@
             $bar-buttons-radius * 0.4,
             $bar-buttons-radius
         );
-        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-notifications-icon);
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-clock-icon);
     }
 
     .bar-button-label.clock {
