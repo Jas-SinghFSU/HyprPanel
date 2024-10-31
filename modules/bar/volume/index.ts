@@ -56,6 +56,10 @@ const Volume = (): BarBoxChild => {
         component: Widget.Box({
             hexpand: true,
             vexpand: true,
+            tooltip_text: Utils.merge(
+                [audio.speaker.bind('description'), getIcon()],
+                (desc, icon) => ` ${icon} ${desc}`,
+            ),
             className: Utils.merge(
                 [options.theme.bar.buttons.style.bind('value'), options.bar.volume.label.bind('value')],
                 (style, showLabel) => {

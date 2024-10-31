@@ -651,6 +651,15 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     subtitleLink: 'https://hyprpanel.com/configuration/panel.html#system-tray',
                     type: 'object',
                 }),
+                Option({
+                    opt: options.bar.systray.customIcons,
+                    title: 'Custom Systray Icons',
+                    subtitle:
+                        'An object defining custom icons for the system tray.\n' +
+                        'Wiki: https://hyprpanel.com/configuration/panel.html#custom-systray-icons',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#custom-systray-icons',
+                    type: 'object',
+                }),
 
                 /*
                  ******************************

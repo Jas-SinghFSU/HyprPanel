@@ -10,7 +10,7 @@
 
 .style2 {
     .bar-button-icon.media {
-        background: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon_background);
+        background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-media-icon_background);
         padding: $bar-buttons-padding_y 0em;
         padding-left: $bar-buttons-padding_x;
         padding-right: $bar-buttons-media-spacing;
@@ -24,6 +24,7 @@
             $bar-buttons-radius * 0.4,
             $bar-buttons-radius
         );
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon);
     }
 
     .bar-button-label.media {
