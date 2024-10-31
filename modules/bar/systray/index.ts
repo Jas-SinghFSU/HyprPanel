@@ -20,7 +20,7 @@ const SysTray = (): BarBoxChild => {
                 const matchedCustomIcon = Object.keys(custIcons).find((iconRegex) => item.id.match(iconRegex));
 
                 if (matchedCustomIcon !== undefined) {
-                    const iconLabel = custIcons[matchedCustomIcon].icon;
+                    const iconLabel = custIcons[matchedCustomIcon].icon || '󰠫';
                     const iconColor = custIcons[matchedCustomIcon].color;
 
                     return Widget.Button({
