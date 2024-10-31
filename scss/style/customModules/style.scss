@@ -54,7 +54,10 @@
     $transparency-value-hover: 1 - $bar-button-background-hover-opacity-ratio;
     .bar_item_box_visible {
         &.#{$class} {
-            background: transparentize($labelBackground, $transparency-value);
+            background: transparentize(
+                if($bar-buttons-monochrome, $bar-buttons-background, $labelBackground),
+                $transparency-value
+            );
             border: if(
                 $borderEnabled or $bar-buttons-enableBorders,
                 $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $borderColor),
