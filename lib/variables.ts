@@ -13,3 +13,52 @@ export const distro = {
     id: GLib.get_os_info('ID'),
     logo: GLib.get_os_info('LOGO'),
 };
+
+export const distroIcon = ((): string => {
+    switch (distro.id) {
+        case 'fedora':
+            return '';
+        case 'arch':
+            return '';
+        case 'nixos':
+            return '';
+        case 'debian':
+            return '';
+        case 'opensuse-tumbleweed':
+            return '';
+        case 'ubuntu':
+            return '';
+        case 'endeavouros':
+            return '';
+        case 'manjaro':
+            return '';
+        case 'popos':
+            return '';
+        case 'garuda':
+            return '';
+        case 'zorin':
+            return '';
+        case 'mxlinux':
+            return '';
+        case 'arcolinux':
+            return '';
+        case 'gentoo':
+            return '';
+        case 'artix':
+            return '';
+        case 'centos':
+            return '';
+        case 'void':
+            return '';
+        case 'linuxmint':
+            return '';
+        case 'archlabs':
+            return '';
+        case 'archcraft':
+            return '';
+        case 'slackware':
+            return '';
+        default:
+            return '';
+    }
+})();

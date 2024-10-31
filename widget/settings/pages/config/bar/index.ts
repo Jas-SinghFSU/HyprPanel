@@ -154,6 +154,11 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
+                    opt: options.bar.launcher.autoDetectIcon,
+                    title: 'Auto Detect Icon',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.dashboard.enableBorder,
                     title: 'Button Border',
                     type: 'boolean',
