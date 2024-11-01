@@ -16,6 +16,8 @@ export const distro = {
 
 export const distroIcon = ((): string => {
     switch (distro.id) {
+        case 'deepin':
+            return '';
         case 'fedora':
             return '';
         case 'arch':
@@ -48,14 +50,28 @@ export const distroIcon = ((): string => {
             return '';
         case 'centos':
             return '';
+        case 'hyperbola':
+            return '';
+        case 'kubuntu':
+            return '';
+        case 'mandriva':
+            return '';
+        case 'xerolinux':
+            return '';
+        case 'parabola':
+            return '';
         case 'void':
             return '';
         case 'linuxmint':
             return '';
         case 'archlabs':
             return '';
-        case 'archcraft':
-            return '';
+        case 'devuan':
+            return '';
+        case 'freebsd':
+            return '';
+        case 'openbsd':
+            return '';
         case 'slackware':
             return '';
         default:
