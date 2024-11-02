@@ -36,6 +36,13 @@ export const OSDSettings = (): Scrollable<Child, Attribute> => {
                     enums: ['top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left'],
                 }),
                 Option({
+                    opt: options.theme.osd.transition,
+                    title: 'Transition',
+                    subtitle: 'Transition effect for the OSD',
+                    type: 'enum',
+                    enums: ['crossfade', 'slide_up', 'slide_down', 'slide_left', 'slide_right'],
+                }),
+                Option({
                     opt: options.theme.osd.monitor,
                     title: 'Monitor',
                     subtitle: 'The ID of the monitor on which to display the OSD',

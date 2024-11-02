@@ -126,6 +126,7 @@ const options = mkOptions(OPTIONS, {
         osd: {
             scaling: opt(100),
             duration: opt(2500),
+            transition: opt<Transition>('crossfade'),
             enable: opt(true),
             orientation: opt<OSDOrientation>('vertical'),
             opacity: opt(100),
