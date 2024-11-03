@@ -6,6 +6,7 @@ import {
     BarButtonStyles,
     BarLocation,
     BluetoothBatteryState,
+    BorderLocation,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -158,6 +159,11 @@ const options = mkOptions(OPTIONS, {
             transparent: opt(false),
             dropdownGap: opt('2.9em'),
             background: opt(colors.crust),
+            border: {
+                location: opt<BorderLocation>('none'),
+                width: opt('0.15em'),
+                color: opt(colors.lavender),
+            },
             buttons: {
                 style: opt<BarButtonStyles>('default'),
                 enableBorders: opt(false),
