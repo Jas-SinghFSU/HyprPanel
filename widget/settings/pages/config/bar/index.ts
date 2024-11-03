@@ -70,6 +70,12 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
+                    opt: options.theme.bar.border_radius,
+                    title: 'Border Radius',
+                    subtitle: 'Only applies if floating is enabled',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.theme.bar.outer_spacing,
                     title: 'Outer Spacing',
                     subtitle: 'Spacing on the outer left and right edges of the bar.',
@@ -130,12 +136,6 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.theme.bar.margin_sides,
                     title: 'Margin Sides',
-                    subtitle: 'Only applies if floating is enabled',
-                    type: 'string',
-                }),
-                Option({
-                    opt: options.theme.bar.border_radius,
-                    title: 'Border Radius',
                     subtitle: 'Only applies if floating is enabled',
                     type: 'string',
                 }),
