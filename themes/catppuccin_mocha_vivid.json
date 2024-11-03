@@ -341,6 +341,6 @@
     "theme.notification.label": "#b4befe",
     "theme.notification.actions.text": "#181825",
     "theme.notification.actions.background": "#b4befd",
-    "theme.notification.background": "#181826"
+    "theme.notification.background": "#181826",
+    "theme.bar.border.color": "#b4befe"
 }
-
