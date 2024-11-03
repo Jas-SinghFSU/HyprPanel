@@ -9,6 +9,7 @@ import { WorkspaceIconMap } from 'lib/types/workspace';
 const { workspaces, monitorSpecific, workspaceMask, spacing, ignored, showAllActive } = options.bar.workspaces;
 
 export const occupiedWses = (monitor: number): BoxWidget => {
+    const workspaceRules = getWorkspaceRules();
     return Widget.Box({
         children: Utils.merge(
             [
@@ -61,9 +62,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
             ) => {
                 const activeId = hyprland.active.workspace.id;
                 let allWkspcs = range(totalWkspcs || 8);
-
                 const activeWorkspaces = wkSpaces.map((w) => w.id);
-                const workspaceRules = getWorkspaceRules();
 
                 // Sometimes hyprland doesn't have all the monitors in the list
                 // so we complement it with monitors from the workspace list
@@ -99,7 +98,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                     allWkspcs = [...new Set([...allWkspcs, ...activeWorkspaces])];
                 }
 
-                return allWkspcs
+                const returnWs = allWkspcs
                     .sort((a, b) => {
                         return a - b;
                     })
@@ -159,6 +158,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
                             }),
                         });
                     });
+                return returnWs;
             },
         ),
     });
