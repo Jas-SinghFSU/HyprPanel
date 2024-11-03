@@ -38,6 +38,7 @@ import Window from 'types/widgets/window.js';
 
 const { layouts } = options.bar;
 const { location } = options.theme.bar;
+const { location: borderLocation } = options.theme.bar.border;
 
 export type BarWidget = keyof typeof widget;
 
@@ -270,7 +271,9 @@ export const Bar = (() => {
             child: Widget.Box({
                 class_name: 'bar-panel-container',
                 child: Widget.CenterBox({
-                    class_name: 'bar-panel',
+                    class_name: borderLocation
+                        .bind('value')
+                        .as((brdrLcn) => (brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel')),
                     css: 'padding: 1px',
                     startWidget: Widget.Box({
                         class_name: 'box-left',
