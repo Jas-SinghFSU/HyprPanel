@@ -341,5 +341,6 @@
     "theme.bar.buttons.modules.submap.border": "#94e2d5",
     "theme.bar.menus.menu.network.switch.enabled": "#cba6f7",
     "theme.bar.menus.menu.network.switch.disabled": "#313245",
-    "theme.bar.menus.menu.network.switch.puck": "#454759"
+    "theme.bar.menus.menu.network.switch.puck": "#454759",
+    "theme.bar.border.color": "#b4befe"
 }

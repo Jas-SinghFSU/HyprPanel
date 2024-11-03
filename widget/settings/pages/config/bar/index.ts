@@ -54,10 +54,27 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 }),
                 /*
                  ******************************
-                 *          SPACING           *
+                 *          GENERAL           *
                  ******************************
                  */
-                Header('Spacing'),
+                Header('General'),
+                Option({
+                    opt: options.theme.bar.border.location,
+                    title: 'Bar Border Location',
+                    type: 'enum',
+                    enums: ['none', 'full', 'top', 'right', 'bottom', 'left', 'horizontal', 'vertical'],
+                }),
+                Option({
+                    opt: options.theme.bar.border.width,
+                    title: 'Bar Border Width',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.theme.bar.border_radius,
+                    title: 'Border Radius',
+                    subtitle: 'Only applies if floating is enabled',
+                    type: 'string',
+                }),
                 Option({
                     opt: options.theme.bar.outer_spacing,
                     title: 'Outer Spacing',
@@ -119,12 +136,6 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                 Option({
                     opt: options.theme.bar.margin_sides,
                     title: 'Margin Sides',
-                    subtitle: 'Only applies if floating is enabled',
-                    type: 'string',
-                }),
-                Option({
-                    opt: options.theme.bar.border_radius,
-                    title: 'Border Radius',
                     subtitle: 'Only applies if floating is enabled',
                     type: 'string',
                 }),

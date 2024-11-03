@@ -34,6 +34,11 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                     max: 100,
                 }),
                 Option({
+                    opt: options.theme.bar.border.color,
+                    title: 'Bar Border Color',
+                    type: 'color',
+                }),
+                Option({
                     opt: options.theme.bar.buttons.opacity,
                     title: 'Button Opacity',
                     type: 'number',
