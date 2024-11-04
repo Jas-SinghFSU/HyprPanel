@@ -24,29 +24,44 @@ App.config({
     },
 });
 
+/**
+ * Function to determine if the current OS is NixOS by parsing /etc/os-release.
+ * @returns True if NixOS, false otherwise.
+ */
 const isNixOS = (): boolean => {
     try {
         const osRelease = Utils.exec('cat /etc/os-release').toString();
-        console.log(osRelease);
+        const idMatch = osRelease.match(/^ID\s*=\s*"?([^"\n]+)"?/m);
 
-        return osRelease.includes('ID=nixos');
+        if (idMatch && idMatch[1].toLowerCase() === 'nixos') {
+            return true;
+        }
+
+        return false;
     } catch (error) {
-        console.error(error);
+        console.error('Error detecting OS:', error);
         return false;
     }
 };
 
-const restartCommand = (): string => {
+/**
+ * Function to generate the appropriate restart command based on the OS.
+ * @returns The modified or original restart command.
+ */
+const getRestartCommand = (): string => {
     const isNix = isNixOS();
+    const command = options.hyprpanel.restartCommand.value;
+
     if (isNix) {
-        return options.hyprpanel.restartCommand.value.replace(/\bags\b/g, 'hyprpanel');
+        return command.replace(/\bags\b/g, 'hyprpanel');
     }
-    return options.hyprpanel.restartCommand.value;
+
+    return command;
 };
 
 hyprland.connect('monitor-added', () => {
     if (options.hyprpanel.restartAgs.value) {
-        const restartAgsCommand = restartCommand();
+        const restartAgsCommand = getRestartCommand();
         bash(restartAgsCommand);
     }
 });
