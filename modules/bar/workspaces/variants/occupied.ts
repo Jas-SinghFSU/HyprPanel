@@ -76,7 +76,7 @@ export const occupiedWses = (monitor: number): BoxWidget => {
 
                 const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
                     return [...acc, ...workspaceRules[k]];
-                }, [] as number[]);
+                }, []);
 
                 const activesForMonitor = activeWorkspaces.filter((w) => {
                     if (
