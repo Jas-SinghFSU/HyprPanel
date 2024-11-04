@@ -892,7 +892,7 @@ const options = mkOptions(OPTIONS, {
                 occupied: opt(''),
             },
             workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
-            workspaces: opt(10),
+            workspaces: opt(5),
             spacing: opt(1),
             monitorSpecific: opt(true),
             hideUnoccupied: opt(true),
@@ -1214,6 +1214,11 @@ const options = mkOptions(OPTIONS, {
         timeout: opt(7000),
         cache_actions: opt(true),
         clearDelay: opt(100),
+    },
+
+    hyprpanel: {
+        restartAgs: opt(true),
+        restartCommand: opt('ags -q; ags'),
     },
 
     dummy: opt(true),
