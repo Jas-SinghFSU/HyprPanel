@@ -6,6 +6,7 @@ import {
     BarButtonStyles,
     BarLocation,
     BluetoothBatteryState,
+    BorderLocation,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -158,6 +159,11 @@ const options = mkOptions(OPTIONS, {
             transparent: opt(false),
             dropdownGap: opt('2.9em'),
             background: opt(colors.crust),
+            border: {
+                location: opt<BorderLocation>('none'),
+                width: opt('0.15em'),
+                color: opt(colors.lavender),
+            },
             buttons: {
                 style: opt<BarButtonStyles>('default'),
                 enableBorders: opt(false),
@@ -886,7 +892,7 @@ const options = mkOptions(OPTIONS, {
                 occupied: opt(''),
             },
             workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
-            workspaces: opt(10),
+            workspaces: opt(5),
             spacing: opt(1),
             monitorSpecific: opt(true),
             hideUnoccupied: opt(true),
@@ -1208,6 +1214,11 @@ const options = mkOptions(OPTIONS, {
         timeout: opt(7000),
         cache_actions: opt(true),
         clearDelay: opt(100),
+    },
+
+    hyprpanel: {
+        restartAgs: opt(true),
+        restartCommand: opt('ags -q; ags'),
     },
 
     dummy: opt(true),

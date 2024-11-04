@@ -15,6 +15,31 @@
         $transparency-value: 1 - $bar-opacity-ratio;
         background: if($bar-transparent, transparent, transparentize($bar-background, $transparency-value));
         border-radius: if($bar-floating, $bar-border_radius, 0em);
+
+        &.withBorder {
+            border-top: if(
+                $bar-border_location == 'top' or $bar-border_location == 'horizontal' or $bar-border_location == 'full',
+                $bar-border_width solid,
+                none
+            );
+            border-bottom: if(
+                $bar-border_location == 'bottom' or $bar-border_location == 'horizontal' or $bar-border_location ==
+                    'full',
+                $bar-border_width solid,
+                none
+            );
+            border-left: if(
+                $bar-border_location == 'left' or $bar-border_location == 'vertical' or $bar-border_location == 'full',
+                $bar-border_width solid,
+                none
+            );
+            border-right: if(
+                $bar-border_location == 'right' or $bar-border_location == 'vertical' or $bar-border_location == 'full',
+                $bar-border_width solid,
+                none
+            );
+            border-color: $bar-border_color;
+        }
     }
 }
 
