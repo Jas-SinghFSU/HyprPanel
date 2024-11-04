@@ -35,6 +35,20 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     },
                 }),
                 Option({
+                    opt: options.hyprpanel.restartAgs,
+                    title: 'Restart Hyprpanel On Wake Or Monitor Connection',
+                    subtitle:
+                        'WARNING: Disabling this will stop the bar from appearing on monitors after waking \n' +
+                        'from sleep or when a new monitor is connected.',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.hyprpanel.restartCommand,
+                    title: 'Restart Command',
+                    subtitle: 'Command to execute when a restart is initiated.',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.terminal,
                     title: 'Terminal',
                     subtitle: "Tools such as 'btop' will open in this terminal",
