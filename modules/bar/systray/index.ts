@@ -12,7 +12,7 @@ const SysTray = (): BarBoxChild => {
     const items = Utils.merge(
         [systemtray.bind('items'), ignore.bind('value'), customIcons.bind('value')],
         (items, ignored, custIcons) => {
-            const filteredTray = items.filter(({ id }) => !ignored.includes(id));
+            const filteredTray = items.filter(({ id }) => !ignored.includes(id) && id !== null);
 
             isVis.value = filteredTray.length > 0;
 
