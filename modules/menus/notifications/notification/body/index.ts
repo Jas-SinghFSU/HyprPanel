@@ -18,7 +18,7 @@ export const Body = (notif: Notification): BoxWidget => {
                 max_width_chars: !notifHasImg(notif) ? 35 : 28,
                 wrap: true,
                 class_name: 'notification-card-body-label menu',
-                label: notif.body.trim().slice(0, 35),
+                label: notif['body'],
             }).on('realize', (self) => {
                 self.set_markup(notif['body']);
             }),
