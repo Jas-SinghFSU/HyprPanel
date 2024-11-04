@@ -19,7 +19,7 @@ export const Body = (notif: Notification): Box<Child, Attribute> => {
                 max_width_chars: !notifHasImg(notif) ? 35 : 28,
                 wrap: true,
                 class_name: 'notification-card-body-label',
-                label: notif['body'],
+                label: notif.body.trim().slice(0, 35),
             }).on('realize', (self) => {
                 self.set_markup(notif['body']);
             }),
