@@ -16,6 +16,8 @@ export const updateTooltip = (self: Slider<Attribute>, foundPlayer?: MprisPlayer
 
     const playerPosition = foundPlayer.position;
 
+    const mediaLength = foundPlayer.length;
+
     const curHour = Math.floor(playerPosition / 3600);
     const curMin = Math.floor((playerPosition % 3600) / 60);
     const curSec = Math.floor(playerPosition % 60);
@@ -29,7 +31,7 @@ export const updateTooltip = (self: Slider<Attribute>, foundPlayer?: MprisPlayer
             return hour > 0 ? formatTime(hour) + ':' : '';
         };
 
-        self.tooltip_text = `${formatHour(curHour)}${formatTime(curMin)}:${formatTime(curSec)}`;
+        self.tooltip_text = `${formatHour(curHour)}${formatTime(curMin)}:${formatTime(curSec)} / ${formatHour(Math.floor(mediaLength / 3600))}${formatTime(Math.floor((mediaLength % 3600) / 60))}:${formatTime(Math.floor(mediaLength % 60))}`;
     } else {
         self.tooltip_text = `00:00`;
     }
