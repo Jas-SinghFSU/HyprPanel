@@ -1222,11 +1222,6 @@ const options = mkOptions(OPTIONS, {
     },
 
     dummy: opt(true),
-    hyprland: {
-        gaps: opt(2.4),
-        inactiveBorder: opt('#282828'),
-        gapsWhenOnly: opt(false),
-    },
 });
 
 globalThis['options'] = options;
