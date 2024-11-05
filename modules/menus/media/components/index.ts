@@ -5,6 +5,7 @@ import { Bar } from './timebar/index.js';
 import options from 'options.js';
 import { BoxWidget } from 'lib/types/widget.js';
 import { generateAlbumArt, getPlayerInfo, initializeActivePlayerHook } from './helpers.js';
+import { Time } from './timelabel/index.js';
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
@@ -27,7 +28,7 @@ const Media = (): BoxWidget => {
                                 hpack: 'fill',
                                 hexpand: true,
                                 vertical: true,
-                                children: [MediaInfo(), Controls(), Bar()],
+                                children: [MediaInfo(), Controls(), Bar(), Time()],
                             }),
                         }),
                     ],
