@@ -35,6 +35,8 @@ export const Header = (notif: Notification): BoxWidget => {
                         truncate: 'end',
                         wrap: true,
                         label: notif['summary'],
+                    }).on('realize', (self) => {
+                        self.set_markup(notif['summary']);
                     }),
                 ],
             }),
