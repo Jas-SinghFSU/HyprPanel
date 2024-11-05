@@ -1071,6 +1071,7 @@ const options = mkOptions(OPTIONS, {
         media: {
             hideAuthor: opt(false),
             hideAlbum: opt(false),
+            noMediaText: opt('No Media Currently Playing'),
         },
         bluetooth: {
             showBattery: opt(false),
