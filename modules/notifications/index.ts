@@ -76,8 +76,6 @@ export default (): Window<Box<Child, Attribute>, unknown> => {
                                 },
                                 on_hover_lost() {
                                     if (actionsbox && showActions) actionsbox.reveal_child = false;
-
-                                    notif.dismiss();
                                 },
                                 child: Widget.Box({
                                     class_name: 'notification-card',
