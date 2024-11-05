@@ -2,7 +2,7 @@ import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js'
 import Gdk from 'gi://Gdk?version=3.0';
 import { BarBoxChild } from 'lib/types/bar.js';
 import { Attribute, Child } from 'lib/types/widget.js';
-import { distroIcon } from 'lib/variables.js';
+import { getDistroIcon } from 'lib/variables.js';
 import options from 'options';
 import Button from 'types/widgets/button.js';
 import { openMenu } from '../utils.js';
@@ -24,7 +24,7 @@ const Menu = (): BarBoxChild => {
             child: Widget.Label({
                 class_name: 'bar-menu_label bar-button_icon txt-icon bar',
                 label: Utils.merge([autoDetectIcon.bind('value'), icon.bind('value')], (autoDetect, icon): string => {
-                    return autoDetect ? distroIcon : icon;
+                    return autoDetect ? getDistroIcon() : icon;
                 }),
             }),
         }),

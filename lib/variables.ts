@@ -14,67 +14,39 @@ export const distro = {
     logo: GLib.get_os_info('LOGO'),
 };
 
-export const distroIcon = ((): string => {
-    switch (distro.id) {
-        case 'deepin':
-            return '';
-        case 'fedora':
-            return '';
-        case 'arch':
-            return '';
-        case 'nixos':
-            return '';
-        case 'debian':
-            return '';
-        case 'opensuse-tumbleweed':
-            return '';
-        case 'ubuntu':
-            return '';
-        case 'endeavouros':
-            return '';
-        case 'manjaro':
-            return '';
-        case 'popos':
-            return '';
-        case 'garuda':
-            return '';
-        case 'zorin':
-            return '';
-        case 'mxlinux':
-            return '';
-        case 'arcolinux':
-            return '';
-        case 'gentoo':
-            return '';
-        case 'artix':
-            return '';
-        case 'centos':
-            return '';
-        case 'hyperbola':
-            return '';
-        case 'kubuntu':
-            return '';
-        case 'mandriva':
-            return '';
-        case 'xerolinux':
-            return '';
-        case 'parabola':
-            return '';
-        case 'void':
-            return '';
-        case 'linuxmint':
-            return '';
-        case 'archlabs':
-            return '';
-        case 'devuan':
-            return '';
-        case 'freebsd':
-            return '';
-        case 'openbsd':
-            return '';
-        case 'slackware':
-            return '';
-        default:
-            return '';
-    }
-})();
+export const distroIcons = [
+    ['deepin', ''],
+    ['fedora', ''],
+    ['arch', ''],
+    ['nixos', ''],
+    ['debian', ''],
+    ['opensuse-tumbleweed', ''],
+    ['ubuntu', ''],
+    ['endeavouros', ''],
+    ['manjaro', ''],
+    ['popos', ''],
+    ['garuda', ''],
+    ['zorin', ''],
+    ['mxlinux', ''],
+    ['arcolinux', ''],
+    ['gentoo', ''],
+    ['artix', ''],
+    ['centos', ''],
+    ['hyperbola', ''],
+    ['kubuntu', ''],
+    ['mandriva', ''],
+    ['xerolinux', ''],
+    ['parabola', ''],
+    ['void', ''],
+    ['linuxmint', ''],
+    ['archlabs', ''],
+    ['devuan', ''],
+    ['freebsd', ''],
+    ['openbsd', ''],
+    ['slackware', ''],
+];
+
+export function getDistroIcon(): string {
+    const icon = distroIcons.find(([id]) => id === distro.id);
+    return icon ? icon[1] : ''; // default icon if not found
+}
