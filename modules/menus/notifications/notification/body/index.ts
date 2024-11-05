@@ -19,6 +19,8 @@ export const Body = (notif: Notification): BoxWidget => {
                 wrap: true,
                 class_name: 'notification-card-body-label menu',
                 label: notif['body'],
+            }).on('realize', (self) => {
+                self.set_markup(notif['body']);
             }),
         ],
     });
