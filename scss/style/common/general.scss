@@ -22,34 +22,6 @@
     font-size: 1.2em;
 }
 
-window.popup {
-    opacity: $bar-menus-opacity * 0.01;
-
-    menuitem {
-        label {
-            color: $bar-menus-popover-text;
-        }
-
-        &:hover {
-            background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.6);
-        }
-    }
-
-    menu {
-        border-color: $bar-menus-popover-border;
-        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
-    }
-
-    separator {
-        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.7);
-        min-height: 0.075em;
-    }
-
-    arrow {
-        color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text);
-    }
-}
-
 tooltip {
     * {
         all: unset;
