@@ -1,4 +1,5 @@
 import { BoxWidget } from 'lib/types/widget';
+import { capitalizeFirstLetter } from 'lib/utils';
 
 const network = await Service.import('network');
 
@@ -49,9 +50,7 @@ const Ethernet = (): BoxWidget => {
                                                 Widget.Label({
                                                     hpack: 'start',
                                                     class_name: 'connection-status dim',
-                                                    label:
-                                                        network.wired.internet.charAt(0).toUpperCase() +
-                                                        network.wired.internet.slice(1),
+                                                    label: capitalizeFirstLetter(network.wired.internet),
                                                 }),
                                             ],
                                         }),

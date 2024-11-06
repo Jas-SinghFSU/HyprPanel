@@ -2,10 +2,10 @@ import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js'
 import Gdk from 'gi://Gdk?version=3.0';
 import { BarBoxChild } from 'lib/types/bar.js';
 import { Attribute, Child } from 'lib/types/widget.js';
-import { getDistroIcon } from 'lib/variables.js';
 import options from 'options';
 import Button from 'types/widgets/button.js';
 import { openMenu } from '../utils.js';
+import { getDistroIcon } from "lib/utils.js";
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
