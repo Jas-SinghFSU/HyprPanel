@@ -7,6 +7,8 @@ declare global {
     var useTheme: (filePath: string) => void;
     var getSystrayItems: () => string;
     var isWindowVisible: (windowName: string) => boolean;
+    var clearAllNotifications: () => Promise<void>;
+
     var globalWeatherVar: VariableType<Weather>;
     var options: Options;
     var removingNotifications: VariableType<boolean>;
