@@ -384,6 +384,7 @@ const options = mkOptions(OPTIONS, {
                 feinttext: opt(colors.surface0),
                 label: opt(colors.lavender),
                 popover: {
+                    scaling: opt(100),
                     text: opt(colors.lavender),
                     background: opt(secondary_colors.mantle),
                     border: opt(secondary_colors.mantle),
@@ -1212,6 +1213,7 @@ const options = mkOptions(OPTIONS, {
         displayedTotal: opt(10),
         monitor: opt(0),
         active_monitor: opt(true),
+        showActionsOnHover: opt(false),
         timeout: opt(7000),
         cache_actions: opt(true),
         clearDelay: opt(100),

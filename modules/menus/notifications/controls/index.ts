@@ -1,4 +1,4 @@
-import { closeNotifications } from 'globals/notification';
+import { clearNotifications } from 'globals/notification';
 import { BoxWidget } from 'lib/types/widget';
 import { Notifications } from 'types/service/notifications';
 import options from 'options';
@@ -53,7 +53,7 @@ const Controls = (notifs: Notifications): BoxWidget => {
                                             return;
                                         }
 
-                                        return closeNotifications(notifs.notifications, delay);
+                                        return clearNotifications(notifs.notifications, delay);
                                     };
                                 }),
                                 child: Widget.Label({
