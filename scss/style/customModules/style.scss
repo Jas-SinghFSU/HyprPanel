@@ -181,6 +181,33 @@
 
 /* 
  * #################################
+ * #    Cpu Temp Module Styling    #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'cpu-temp',
+    // label color
+    $bar-buttons-modules-cpuTemp-text,
+    // icon color
+    $bar-buttons-modules-cpuTemp-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-cpuTemp-icon_background,
+    // label background
+    $bar-buttons-modules-cpuTemp-background,
+    // inner spacing
+    $bar-buttons-modules-cpuTemp-spacing,
+    // if border enabled
+    $bar-buttons-modules-cpuTemp-enableBorder,
+    // border color
+    $bar-buttons-modules-cpuTemp-border,
+    // custom font size
+    1.05em //
+);
+
+/* 
+ * #################################
  * #    Storage Module Styling     #
  * #################################
  */

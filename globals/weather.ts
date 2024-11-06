@@ -215,4 +215,8 @@ export const getWeatherStatusTextIcon = (weatherData: Weather): WeatherIcon => {
     }
 };
 
+export const convertCelsiusToFahrenheit = (celsiusValue: number): number => {
+    return (celsiusValue * 9) / 5 + 32;
+};
+
 globalThis['globalWeatherVar'] = globalWeatherVar;
