@@ -196,6 +196,15 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     max: 100,
                     increment: 5,
                 }),
+                Option({
+                    opt: options.theme.bar.menus.popover.scaling,
+                    title: 'Popovers',
+                    subtitle: 'Ex: Right click menu of system tray items.',
+                    type: 'number',
+                    min: 1,
+                    max: 100,
+                    increment: 5,
+                }),
             ],
         }),
     });
