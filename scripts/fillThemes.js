@@ -399,7 +399,6 @@ const main = () => {
     // Format: "target_key": "source_key"
     const specialKeyMappings = {
         'theme.bar.menus.menu.network.switch.enabled': 'theme.bar.menus.menu.network.iconbuttons.active',
-        'theme.bar.border.color': 'theme.bar.buttons.notifications.border',
         // Add more special mappings here if needed
     };
 
