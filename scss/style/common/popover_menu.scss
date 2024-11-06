@@ -1,0 +1,114 @@
+@import '../colors';
+
+$popoverScaling: $bar-menus-popover-scaling * 0.01;
+
+window.popup {
+    opacity: $bar-menus-opacity * $popoverScaling;
+
+    menu {
+        border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-popover-border);
+        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
+    }
+
+    menuitem {
+        transition: background-color 100ms cubic-bezier(0, 0, 0.2, 1);
+        padding: 0.3em * $popoverScaling 0.3em * $popoverScaling;
+
+        label {
+            font-size: 1.2rem * $popoverScaling;
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+        }
+
+        &:hover,
+        &:active {
+            background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.6);
+        }
+
+        &:disabled {
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+        }
+
+        arrow {
+            min-height: 1.2em * $popoverScaling;
+            min-width: 1.2em * $popoverScaling;
+            -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+            margin-left: 0.5em * $popoverScaling;
+            color: if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text);
+        }
+    }
+
+    separator {
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.7);
+        min-height: 0.075em * $popoverScaling;
+    }
+
+    arrow.top {
+        margin-top: 0;
+        -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
+    }
+
+    arrow.bottom {
+        margin-top: 0.5em * $popoverScaling;
+        margin-bottom: -0.6em * $popoverScaling;
+        -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
+    }
+
+    check,
+    radio {
+        min-height: 0.8em * $popoverScaling;
+        min-width: 0.8em * $popoverScaling;
+        margin-right: 0.5em * $popoverScaling;
+        padding: 0;
+        color: transparent;
+        background-color: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
+        transition:
+            all 100ms cubic-bezier(0, 0, 0.2, 1),
+            box-shadow 150ms cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    radio {
+        border-radius: 9999px;
+        border-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check {
+        border-radius: $bar-buttons-radius;
+        border-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:hover,
+    radio:hover {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+
+    check:active,
+    radio:active {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:checked,
+    check:indeterminate,
+    radio:checked,
+    radio:indeterminate {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+        background-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:checked:hover,
+    check:indeterminate:hover,
+    radio:checked:hover,
+    radio:indeterminate:hover {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+
+    check:checked:active,
+    check:indeterminate:active,
+    radio:checked:active,
+    radio:indeterminate:active {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+}
