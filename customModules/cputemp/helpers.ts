@@ -1,4 +1,5 @@
 import GLib from 'gi://GLib?version=2.0';
+import { convertCelsiusToFahrenheit } from 'globals/weather';
 import { UnitType } from 'lib/types/weather';
 import options from 'options';
 import { Variable } from 'types/variable';
@@ -25,7 +26,7 @@ export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitT
         let decimalTemp = parseInt(tempInfo) / 1000;
 
         if (unit.value === 'imperial') {
-            decimalTemp = (decimalTemp * 9) / 5 + 32;
+            decimalTemp = convertCelsiusToFahrenheit(decimalTemp);
         }
 
         return round ? Math.round(decimalTemp) : parseFloat(decimalTemp.toFixed(2));
