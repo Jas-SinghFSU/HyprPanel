@@ -5,7 +5,7 @@ import { Attribute, Child } from 'lib/types/widget.js';
 import options from 'options';
 import Button from 'types/widgets/button.js';
 import { openMenu } from '../utils.js';
-import { getDistroIcon } from "lib/utils.js";
+import { getDistroIcon } from 'lib/utils.js';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
