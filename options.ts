@@ -383,6 +383,7 @@ const options = mkOptions(OPTIONS, {
                 feinttext: opt(colors.surface0),
                 label: opt(colors.lavender),
                 popover: {
+                    scaling: opt(100),
                     text: opt(colors.lavender),
                     background: opt(secondary_colors.mantle),
                     border: opt(secondary_colors.mantle),
