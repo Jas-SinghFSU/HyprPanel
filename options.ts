@@ -998,7 +998,7 @@ const options = mkOptions(OPTIONS, {
             },
             cpuTemp: {
                 icon: opt(''),
-                sensor: opt('/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input'),
+                sensor: opt(''),
                 label: opt(true),
                 round: opt(true),
                 showUnit: opt(true),

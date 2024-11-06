@@ -15,6 +15,7 @@ import { Attribute, Child } from 'lib/types/widget';
 // All the user configurable options for the cpu module that are needed
 const {
     label,
+    sensor,
     round,
     showUnit,
     unit,
@@ -33,7 +34,7 @@ pollVariable(
     // Variable to poll and update with the result of the function passed in
     cpuTemp,
     // Variables that should trigger the polling function to update when they change
-    [round.bind('value'), unit.bind('value')],
+    [sensor.bind('value'), round.bind('value'), unit.bind('value')],
     // Interval at which to poll
     pollingInterval.bind('value'),
     // Function to execute to get the network data

@@ -166,8 +166,8 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 Option({
                     opt: options.bar.customModules.cpuTemp.sensor,
                     title: 'CPU Temperature Sensor',
-                    subtitle: 'Wiki: ',
-                    subtitleLink: '',
+                    subtitle: 'Wiki: https://hyprpanel.com/configuration/panel.html#custom-modules',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#custom-modules',
                     type: 'string',
                 }),
                 Option({
