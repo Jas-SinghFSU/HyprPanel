@@ -6,6 +6,19 @@ import { BarBoxChild } from 'lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+import { Wifi } from 'types/service/network.js';
+
+const formatFrequency = (frequency: number): string => {
+    return `${(frequency / 1000).toFixed(2)}MHz`;
+};
+
+const formatWifiInfo = (wifi: Wifi): string => {
+    const netSsid = wifi.ssid === '' ? 'None' : wifi.ssid;
+    const wifiStrength = wifi.strength >= 0 ? wifi.strength : '--';
+    const wifiFreq = wifi.frequency >= 0 ? formatFrequency(wifi.frequency) : '--';
+
+    return `Network: ${netSsid} \nSignal Strength: ${wifiStrength}% \nFrequency: ${wifiFreq}`;
+};
 
 const {
     label: networkLabel,
@@ -15,6 +28,7 @@ const {
     middleClick,
     scrollDown,
     scrollUp,
+    showWifiInfo,
 } = options.bar.network;
 
 const Network = (): BarBoxChild => {
@@ -55,8 +69,9 @@ const Network = (): BarBoxChild => {
                             networkLabel.bind('value'),
                             truncation.bind('value'),
                             truncation_size.bind('value'),
+                            showWifiInfo.bind('value'),
                         ],
-                        (pmry, wfi, showLbl, trunc, tSize) => {
+                        (pmry, wfi, showLbl, trunc, tSize, showWfiInfo) => {
                             if (!showLbl) {
                                 return Widget.Box();
                             }
@@ -69,6 +84,7 @@ const Network = (): BarBoxChild => {
                             return Widget.Label({
                                 class_name: 'bar-button-label network-label',
                                 label: wfi.ssid ? `${trunc ? wfi.ssid.substring(0, tSize) : wfi.ssid}` : '--',
+                                tooltipText: showWfiInfo ? formatWifiInfo(wfi) : '',
                             });
                         },
                     ),

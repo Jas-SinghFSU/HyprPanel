@@ -40,6 +40,12 @@ export const NotificationSettings = (): Scrollable<Child, Attribute> => {
                     type: 'number',
                 }),
                 Option({
+                    opt: options.notifications.showActionsOnHover,
+                    title: 'Show Actions only on Hover',
+                    subtitle: 'Show the action buttons only when hovering over a notification',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.notifications.active_monitor,
                     title: 'Follow Cursor',
                     subtitle: 'The notification will follow the monitor of your cursor',

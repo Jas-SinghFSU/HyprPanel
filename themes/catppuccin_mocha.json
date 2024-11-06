@@ -273,6 +273,7 @@
     "theme.bar.buttons.battery.border": "#f9e2af",
     "theme.bar.buttons.systray.background": "#242438",
     "theme.bar.buttons.systray.border": "#b4befe",
+    "theme.bar.buttons.systray.customIcon": "#cdd6f4",
     "theme.bar.buttons.bluetooth.icon_background": "#89dbeb",
     "theme.bar.buttons.bluetooth.icon": "#89dceb",
     "theme.bar.buttons.bluetooth.text": "#89dceb",
@@ -337,6 +338,9 @@
     "theme.bar.buttons.modules.submap.background": "#242438",
     "theme.bar.buttons.modules.submap.icon_background": "#242438",
     "theme.bar.buttons.modules.submap.text": "#94e2d5",
-    "theme.bar.buttons.modules.submap.border": "#94e2d5"
+    "theme.bar.buttons.modules.submap.border": "#94e2d5",
+    "theme.bar.menus.menu.network.switch.enabled": "#cba6f7",
+    "theme.bar.menus.menu.network.switch.disabled": "#313245",
+    "theme.bar.menus.menu.network.switch.puck": "#454759",
+    "theme.bar.border.color": "#b4befe"
 }
-

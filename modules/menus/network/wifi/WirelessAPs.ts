@@ -178,35 +178,77 @@ const renderWAPs = (
                         Widget.Revealer({
                             vpack: 'start',
                             reveal_child: ap.bssid !== connecting.value && ap.active,
-                            child: Widget.Button({
-                                tooltip_text: 'Delete/Forget Network',
-                                class_name: 'menu-icon-button network disconnect',
-                                on_primary_click: () => {
-                                    connecting.value = ap.bssid || '';
-                                    Utils.execAsync('nmcli connection show --active').then(() => {
-                                        Utils.execAsync('nmcli connection show --active').then((res) => {
-                                            const connectionId = getIdBySsid(ap.ssid || '', res);
+                            child: Widget.Box({
+                                children: [
+                                    Widget.Button({
+                                        class_name: 'menu-icon-button network disconnect',
+                                        child: Widget.Label({
+                                            tooltip_text: 'Disconnect',
+                                            class_name: 'menu-icon-button disconnect-network txt-icon',
+                                            label: '󱘖',
+                                        }),
+                                        on_primary_click: () => {
+                                            connecting.value = ap.bssid || '';
+                                            Utils.execAsync('nmcli connection show --active').then(() => {
+                                                Utils.execAsync('nmcli connection show --active').then((res) => {
+                                                    const connectionId = getIdBySsid(ap.ssid || '', res);
 
-                                            if (connectionId === undefined) {
-                                                console.error(
-                                                    `Error while forgetting "${ap.ssid}": Connection ID not found`,
-                                                );
-                                                return;
-                                            }
+                                                    if (connectionId === undefined) {
+                                                        console.error(
+                                                            `Error while disconnecting "${ap.ssid}": Connection ID not found`,
+                                                        );
+                                                        return;
+                                                    }
 
-                                            Utils.execAsync(`nmcli connection delete ${connectionId} "${ap.ssid}"`)
-                                                .then(() => (connecting.value = ''))
-                                                .catch((err) => {
-                                                    connecting.value = '';
-                                                    console.error(`Error while forgetting "${ap.ssid}": ${err}`);
+                                                    Utils.execAsync(
+                                                        `nmcli connection down ${connectionId} "${ap.ssid}"`,
+                                                    )
+                                                        .then(() => (connecting.value = ''))
+                                                        .catch((err) => {
+                                                            connecting.value = '';
+                                                            console.error(
+                                                                `Error while disconnecting "${ap.ssid}": ${err}`,
+                                                            );
+                                                        });
                                                 });
-                                        });
-                                    });
-                                },
-                                child: Widget.Label({
-                                    class_name: 'txt-icon delete-network',
-                                    label: '󰚃',
-                                }),
+                                            });
+                                        },
+                                    }),
+                                    Widget.Button({
+                                        tooltip_text: 'Delete/Forget Network',
+                                        class_name: 'menu-icon-button network disconnect',
+                                        on_primary_click: () => {
+                                            connecting.value = ap.bssid || '';
+                                            Utils.execAsync('nmcli connection show --active').then(() => {
+                                                Utils.execAsync('nmcli connection show --active').then((res) => {
+                                                    const connectionId = getIdBySsid(ap.ssid || '', res);
+
+                                                    if (connectionId === undefined) {
+                                                        console.error(
+                                                            `Error while forgetting "${ap.ssid}": Connection ID not found`,
+                                                        );
+                                                        return;
+                                                    }
+
+                                                    Utils.execAsync(
+                                                        `nmcli connection delete ${connectionId} "${ap.ssid}"`,
+                                                    )
+                                                        .then(() => (connecting.value = ''))
+                                                        .catch((err) => {
+                                                            connecting.value = '';
+                                                            console.error(
+                                                                `Error while forgetting "${ap.ssid}": ${err}`,
+                                                            );
+                                                        });
+                                                });
+                                            });
+                                        },
+                                        child: Widget.Label({
+                                            class_name: 'txt-icon delete-network',
+                                            label: '󰚃',
+                                        }),
+                                    }),
+                                ],
                             }),
                         }),
                     ],

@@ -215,3 +215,7 @@ export type ColorMapKey = keyof typeof defaultColorMap;
 export type ColorMapValue = (typeof defaultColorMap)[ColorMapKey];
 
 export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
+
+export type BluetoothBatteryState = 'paired' | 'connected' | 'always';
+
+export type BorderLocation = 'none' | 'top' | 'right' | 'bottom' | 'left' | 'horizontal' | 'vertical' | 'full';

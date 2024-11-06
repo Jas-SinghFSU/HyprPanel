@@ -5,6 +5,8 @@ import {
     ActiveWsIndicator,
     BarButtonStyles,
     BarLocation,
+    BluetoothBatteryState,
+    BorderLocation,
     NotificationAnchor,
     OSDAnchor,
     OSDOrientation,
@@ -12,6 +14,7 @@ import {
     WindowLayer,
 } from 'lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
+import { SystrayIconMap } from 'lib/types/systray';
 import { UnitType } from 'lib/types/weather';
 import { Transition } from 'lib/types/widget';
 import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
@@ -87,6 +90,9 @@ const tertiary_colors = {
 
 const options = mkOptions(OPTIONS, {
     theme: {
+        tooltip: {
+            scaling: opt(100),
+        },
         matugen: opt(false),
         shadows: opt(true),
         matugen_settings: {
@@ -154,6 +160,11 @@ const options = mkOptions(OPTIONS, {
             label_spacing: opt('0.5em'),
             dropdownGap: opt('2.9em'),
             background: opt(colors.crust),
+            border: {
+                location: opt<BorderLocation>('none'),
+                width: opt('0.15em'),
+                color: opt(colors.lavender),
+            },
             buttons: {
                 style: opt<BarButtonStyles>('default'),
                 enableBorders: opt(false),
@@ -242,6 +253,7 @@ const options = mkOptions(OPTIONS, {
                 },
                 systray: {
                     enableBorder: opt(false),
+                    customIcon: opt(colors.text),
                     border: opt(colors.lavender),
                     background: opt(colors.base2),
                     spacing: opt('0.5em'),
@@ -882,7 +894,7 @@ const options = mkOptions(OPTIONS, {
                 occupied: opt(''),
             },
             workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
-            workspaces: opt(10),
+            workspaces: opt(5),
             spacing: opt(1),
             monitorSpecific: opt(true),
             hideUnoccupied: opt(true),
@@ -899,6 +911,7 @@ const options = mkOptions(OPTIONS, {
         },
         network: {
             truncation: opt(true),
+            showWifiInfo: opt(false),
             truncation_size: opt(7),
             label: opt(true),
             rightClick: opt(''),
@@ -923,6 +936,7 @@ const options = mkOptions(OPTIONS, {
         },
         systray: {
             ignore: opt<string[]>([]),
+            customIcons: opt<SystrayIconMap>({}),
         },
         clock: {
             icon: opt('󰸗'),
@@ -935,7 +949,7 @@ const options = mkOptions(OPTIONS, {
             scrollDown: opt(''),
         },
         media: {
-            show_artist: opt(false),
+            format: opt('{artist: - }{title}'),
             truncation: opt(true),
             show_label: opt(true),
             truncation_size: opt(30),
@@ -1056,6 +1070,18 @@ const options = mkOptions(OPTIONS, {
     menus: {
         transition: opt<Transition>('crossfade'),
         transitionTime: opt(200),
+        media: {
+            hideAuthor: opt(false),
+            hideAlbum: opt(false),
+        },
+        bluetooth: {
+            showBattery: opt(false),
+            batteryState: opt<BluetoothBatteryState>('connected'),
+            batteryIcon: opt('󰥉'),
+        },
+        volume: {
+            raiseMaximumVolume: opt(false),
+        },
         power: {
             showLabel: opt(true),
             confirmation: opt(true),
@@ -1187,9 +1213,15 @@ const options = mkOptions(OPTIONS, {
         displayedTotal: opt(10),
         monitor: opt(0),
         active_monitor: opt(true),
+        showActionsOnHover: opt(false),
         timeout: opt(7000),
         cache_actions: opt(true),
         clearDelay: opt(100),
+    },
+
+    hyprpanel: {
+        restartAgs: opt(true),
+        restartCommand: opt('ags -q; ags'),
     },
 
     dummy: opt(true),

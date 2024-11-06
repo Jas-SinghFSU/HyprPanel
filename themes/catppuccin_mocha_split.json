@@ -3,7 +3,7 @@
     "theme.bar.background": "#11111b",
     "theme.bar.buttons.media.icon": "#1e1e2e",
     "theme.bar.buttons.media.text": "#b4befe",
-    "theme.bar.buttons.icon": "#b4befe",
+    "theme.bar.buttons.icon": "#242438",
     "theme.bar.buttons.text": "#b4befe",
     "theme.bar.buttons.hover": "#45475a",
     "theme.bar.buttons.background": "#242438",
@@ -251,7 +251,7 @@
     "theme.bar.menus.check_radio_button.background": "#45475a",
     "theme.bar.menus.check_radio_button.active": "#b4beff",
     "theme.bar.buttons.style": "split",
-    "theme.bar.buttons.icon_background": "#242438",
+    "theme.bar.buttons.icon_background": "#b4befe",
     "theme.bar.buttons.volume.icon_background": "#eba0ac",
     "theme.bar.buttons.network.icon_background": "#caa6f7",
     "theme.bar.buttons.bluetooth.icon_background": "#89dbeb",
@@ -327,6 +327,7 @@
     "theme.bar.buttons.clock.border": "#f5c2e7",
     "theme.bar.buttons.battery.border": "#f9e2af",
     "theme.bar.buttons.systray.border": "#b4befe",
+    "theme.bar.buttons.systray.customIcon": "#cdd6f4",
     "theme.bar.buttons.bluetooth.border": "#89dceb",
     "theme.bar.buttons.network.border": "#cba6f7",
     "theme.bar.buttons.volume.border": "#eba0ac",
@@ -337,5 +338,10 @@
     "theme.bar.buttons.modules.submap.background": "#242438",
     "theme.bar.buttons.modules.submap.icon_background": "#94e2d5",
     "theme.bar.buttons.modules.submap.text": "#94e2d5",
-    "theme.bar.buttons.modules.submap.border": "#94e2d5"
+    "theme.bar.buttons.modules.submap.border": "#94e2d5",
+    "theme.bar.menus.menu.network.switch.enabled": "#cba6f7",
+    "theme.bar.menus.menu.network.switch.disabled": "#313245",
+    "theme.bar.menus.menu.network.switch.puck": "#454759",
+    "theme.bar.border.color": "#b4befe"
 }
+

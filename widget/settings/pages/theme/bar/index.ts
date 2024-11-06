@@ -13,6 +13,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
         child: Widget.Box({
             vertical: true,
             children: [
+                /* ================================================== */
+                /*                      GENERAL                       */
+                /* ================================================== */
                 Header('General'),
                 Option({ opt: options.theme.bar.transparent, title: 'Transparent', type: 'boolean' }),
                 Option({ opt: options.theme.bar.background, title: 'Background Color', type: 'color' }),
@@ -29,6 +32,11 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                     increment: 5,
                     min: 0,
                     max: 100,
+                }),
+                Option({
+                    opt: options.theme.bar.border.color,
+                    title: 'Bar Border Color',
+                    type: 'color',
                 }),
                 Option({
                     opt: options.theme.bar.buttons.opacity,
@@ -72,11 +80,17 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                     type: 'color',
                 }),
 
+                /* ================================================== */
+                /*                  DASHBOARD BUTTON                  */
+                /* ================================================== */
                 Header('Dashboard Button'),
                 Option({ opt: options.theme.bar.buttons.dashboard.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.dashboard.icon, title: 'Icon', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.dashboard.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                    WORKSPACES                      */
+                /* ================================================== */
                 Header('Workspaces'),
                 Option({ opt: options.theme.bar.buttons.workspaces.background, title: 'Background', type: 'color' }),
                 Option({
@@ -111,6 +125,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.workspaces.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                   WINDOW TITLE                     */
+                /* ================================================== */
                 Header('Window Title'),
                 Option({ opt: options.theme.bar.buttons.windowtitle.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.text, title: 'Text', type: 'color' }),
@@ -124,6 +141,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.windowtitle.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                      MEDIA                         */
+                /* ================================================== */
                 Header('Media'),
                 Option({ opt: options.theme.bar.buttons.media.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.media.text, title: 'Text', type: 'color' }),
@@ -137,6 +157,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.media.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                      VOLUME                        */
+                /* ================================================== */
                 Header('Volume'),
                 Option({ opt: options.theme.bar.buttons.volume.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.volume.text, title: 'Text', type: 'color' }),
@@ -150,6 +173,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.volume.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                     NETWORK                        */
+                /* ================================================== */
                 Header('Network'),
                 Option({ opt: options.theme.bar.buttons.network.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.network.text, title: 'Text', type: 'color' }),
@@ -163,6 +189,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.network.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                    BLUETOOTH                       */
+                /* ================================================== */
                 Header('Bluetooth'),
                 Option({ opt: options.theme.bar.buttons.bluetooth.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.bluetooth.text, title: 'Text', type: 'color' }),
@@ -176,9 +205,17 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.bluetooth.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                   SYSTEM TRAY                      */
+                /* ================================================== */
                 Header('System Tray'),
+                Option({ opt: options.theme.bar.buttons.systray.border, title: 'Border', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.systray.customIcon, title: 'Custom Icons', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.systray.background, title: 'Background', type: 'color' }),
 
+                /* ================================================== */
+                /*                     BATTERY                        */
+                /* ================================================== */
                 Header('Battery'),
                 Option({ opt: options.theme.bar.buttons.battery.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.battery.text, title: 'Text', type: 'color' }),
@@ -192,6 +229,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.battery.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                      CLOCK                         */
+                /* ================================================== */
                 Header('Clock'),
                 Option({ opt: options.theme.bar.buttons.clock.background, title: 'Background', type: 'color' }),
                 Option({ opt: options.theme.bar.buttons.clock.text, title: 'Text', type: 'color' }),
@@ -205,6 +245,9 @@ export const BarTheme = (): Scrollable<Child, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.clock.border, title: 'Border', type: 'color' }),
 
+                /* ================================================== */
+                /*                   NOTIFICATIONS                    */
+                /* ================================================== */
                 Header('Notifications'),
                 Option({ opt: options.theme.bar.buttons.notifications.background, title: 'Background', type: 'color' }),
                 Option({
