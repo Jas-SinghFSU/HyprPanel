@@ -444,6 +444,7 @@ const options = mkOptions(OPTIONS, {
                         song: opt(tertiary_colors.lavender),
                         artist: opt(tertiary_colors.teal),
                         album: opt(tertiary_colors.pink),
+                        timestamp: opt(colors.text),
                         background: {
                             color: opt(colors.crust),
                         },
@@ -1073,6 +1074,7 @@ const options = mkOptions(OPTIONS, {
             hideAuthor: opt(false),
             hideAlbum: opt(false),
             displayTime: opt(false),
+            displayTimeTooltip: opt(false),
             noMediaText: opt('No Media Currently Playing'),
         },
         bluetooth: {

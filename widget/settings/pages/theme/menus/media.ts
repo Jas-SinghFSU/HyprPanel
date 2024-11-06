@@ -18,6 +18,7 @@ export const MediaMenuTheme = (): Scrollable<Child, Attribute> => {
                 Option({ opt: options.theme.bar.menus.menu.media.song, title: 'Song', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.media.artist, title: 'Artist', type: 'color' }),
                 Option({ opt: options.theme.bar.menus.menu.media.album, title: 'Album', type: 'color' }),
+                Option({ opt: options.theme.bar.menus.menu.media.timestamp, title: 'Time Stamp', type: 'color' }),
 
                 Header('Background'),
                 Option({

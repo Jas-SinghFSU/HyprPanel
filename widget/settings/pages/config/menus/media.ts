@@ -17,8 +17,15 @@ export const MediaMenuSettings = (): Scrollable<Child, Attribute> => {
                 Option({ opt: options.menus.media.hideAlbum, title: 'Hide Album', type: 'boolean' }),
                 Option({ opt: options.menus.media.displayTime, title: 'Display Time Info', type: 'boolean' }),
                 Option({
+                    opt: options.menus.media.displayTimeTooltip,
+                    title: 'Display Time Tooltip',
+                    subtitle: 'Display the current media time tooltip when hovering over the bar',
+                    type: 'boolean',
+                }),
+                Option({
                     opt: options.menus.media.noMediaText,
-                    title: 'Text to display when no media is played',
+                    title: 'No Media Placeholder',
+                    subtitle: 'Text to display when no media is being played',
                     type: 'string',
                 }),
             ],

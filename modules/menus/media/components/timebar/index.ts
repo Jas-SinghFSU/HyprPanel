@@ -1,7 +1,10 @@
 const media = await Service.import('mpris');
+import options from 'options';
 import { BoxWidget } from 'lib/types/widget';
 import { getPlayerInfo } from '../helpers';
 import { update, updateTooltip } from './helpers';
+
+const { displayTimeTooltip } = options.menus.media;
 
 const Bar = (): BoxWidget => {
     return Widget.Box({
@@ -26,15 +29,24 @@ const Bar = (): BoxWidget => {
                         self.poll(1000, () => {
                             const foundPlayer = getPlayerInfo();
 
-                            if (foundPlayer?.play_back_status === 'Playing') {
-                                update(self, foundPlayer);
-                                updateTooltip(self, foundPlayer);
+                            if (foundPlayer?.play_back_status !== 'Playing') return;
+
+                            update(self, foundPlayer);
+
+                            if (!displayTimeTooltip.value) {
+                                self.tooltip_text = '';
+                                return;
                             }
+
+                            updateTooltip(self, foundPlayer);
                         });
 
                         self.hook(media, () => {
                             const foundPlayer = getPlayerInfo();
                             update(self, foundPlayer);
+
+                            if (!displayTimeTooltip.value) return;
+
                             updateTooltip(self, foundPlayer);
                         });
                     },
