@@ -22,7 +22,7 @@
     }
 
     .menu-content {
-        border-radius: 0.4em;
+        border-radius: $bar-menus-buttons-radius;
         background-size: cover;
         background-position: center;
     }
@@ -68,7 +68,7 @@
         color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-media-buttons-text);
         min-height: 1.8em;
         min-width: 2.5em;
-        border-radius: 0.2rem;
+        border-radius: $bar-menus-buttons-radius * 0.75;
 
         &.disabled {
             background: if($bar-menus-monochrome, $bar-menus-buttons-disabled, $bar-menus-menu-media-buttons-inactive);

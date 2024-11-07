@@ -33,7 +33,7 @@ tooltip {
 
     > * > * {
         padding: 0.6em;
-        border-radius: $bar-menus-border-radius * 0.5;
+        border-radius: $bar-menus-tooltip-radius;
         color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-tooltip-text);
         background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-tooltip-background);
     }
