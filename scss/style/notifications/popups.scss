@@ -4,7 +4,7 @@
     margin: 0.45em;
     border: 0.15em solid transparentize($notification-border, 0.5);
     min-width: 26em;
-    min-height: 6rem;
+    min-height: 4em;
     border-radius: $notification-border_radius;
     opacity: $notification-opacity * 0.01;
 }
