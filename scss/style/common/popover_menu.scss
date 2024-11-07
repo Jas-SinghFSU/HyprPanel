@@ -6,6 +6,7 @@ window.popup {
     opacity: $bar-menus-opacity * $popoverScaling;
 
     menu {
+        border-radius: $bar-menus-popover-radius;
         border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-popover-border);
         background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
     }
@@ -13,6 +14,7 @@ window.popup {
     menuitem {
         transition: background-color 100ms cubic-bezier(0, 0, 0.2, 1);
         padding: 0.3em * $popoverScaling 0.3em * $popoverScaling;
+        border-radius: $bar-menus-popover-radius;
 
         label {
             font-size: 1.2rem * $popoverScaling;
@@ -72,7 +74,7 @@ window.popup {
     }
 
     check {
-        border-radius: $bar-buttons-radius;
+        border-radius: $bar-menus-buttons-radius * 0.2;
         border-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
     }
 
