@@ -11,7 +11,7 @@ import { NotificationArgs } from 'types/utils/notify';
 import { SubstituteKeys } from './types/utils';
 import { Window } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 import { namedColors } from './constants/colors';
-import { distroIcons } from './constants/dissto';
+import { distroIcons } from './constants/distro';
 import { distro } from './variables';
 
 export type Binding<T> = import('types/service').Binding<any, any, T>;
