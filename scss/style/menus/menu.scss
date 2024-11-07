@@ -176,7 +176,7 @@
 
 .menu-active-slider * {
     min-height: 0.85em;
-    border-radius: 0.2em;
+    border-radius: $bar-menus-slider-progress-radius;
 }
 
 .menu-slider-container {
