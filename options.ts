@@ -393,6 +393,7 @@ const options = mkOptions(OPTIONS, {
                 label: opt(colors.lavender),
                 popover: {
                     scaling: opt(100),
+                    radius: opt('0.4em'),
                     text: opt(colors.lavender),
                     background: opt(secondary_colors.mantle),
                     border: opt(secondary_colors.mantle),
@@ -421,6 +422,7 @@ const options = mkOptions(OPTIONS, {
                     active: opt(secondary_colors.pink),
                     disabled: opt(tertiary_colors.surface2),
                     text: opt(secondary_colors.mantle),
+                    radius: opt('0.4em'),
                 },
                 iconbuttons: {
                     passive: opt(secondary_colors.text),
@@ -429,6 +431,7 @@ const options = mkOptions(OPTIONS, {
                 progressbar: {
                     foreground: opt(colors.lavender),
                     background: opt(colors.surface1),
+                    radius: opt('0.3rem'),
                 },
                 slider: {
                     primary: opt(colors.lavender),
@@ -444,6 +447,7 @@ const options = mkOptions(OPTIONS, {
                     divider: opt(colors.base),
                 },
                 tooltip: {
+                    radius: opt('0.3em'),
                     background: opt(colors.crust),
                     text: opt(tertiary_colors.lavender),
                 },
