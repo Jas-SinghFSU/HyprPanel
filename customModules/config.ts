@@ -154,6 +154,89 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
 
                 /*
                  ************************************
+                 *            CPU TEMP              *
+                 ************************************
+                 */
+                Header('CPU Temperature'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.cpuTemp.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.sensor,
+                    title: 'CPU Temperature Sensor',
+                    subtitle: 'Wiki: https://hyprpanel.com/configuration/panel.html#custom-modules',
+                    subtitleLink: 'https://hyprpanel.com/configuration/panel.html#custom-modules',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.unit,
+                    title: 'CPU Temperature Unit',
+                    type: 'enum',
+                    enums: ['imperial', 'metric'],
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.showUnit,
+                    title: 'Show Unit',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.icon,
+                    title: 'Cpu Temperature Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.label,
+                    title: 'Show Label',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.cpuTemp.spacing,
+                    title: 'Spacing',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.round,
+                    title: 'Round',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000,
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.leftClick,
+                    title: 'Left Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.cpuTemp.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
+
+                /*
+                 ************************************
                  *           STORAGE                *
                  ************************************
                  */

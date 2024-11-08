@@ -1,234 +1,240 @@
-@import "../colors";
+@import '../colors';
 
 menu {
-  margin: 6px;
-  padding: 6px;
-  background-color: $primary_bg;
-  background-clip: border-box;
-  border-radius: 12px;
-  border: 1px solid $secondary_bg;
+    margin: 6px;
+    padding: 6px;
+    background-color: $primary_bg;
+    background-clip: border-box;
+    border-radius: 12px;
+    border: 1px solid $secondary_bg;
 
-  menuitem {
-    transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
-    min-height: 20px;
-    min-width: 40px;
-    padding: 4px 8px;
-    color: #FFFFFF;
-    font: initial;
-    text-shadow: none;
+    menuitem {
+        transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
+        min-height: 20px;
+        min-width: 40px;
+        padding: 4px 8px;
+        color: #ffffff;
+        font: initial;
+        text-shadow: none;
+        border-radius: 6px;
+
+        &:hover,
+        &:active {
+            background-color: $secondary_bg;
+        }
+
+        &:disabled {
+            color: $secondary_bg;
+        }
+
+        arrow {
+            min-height: 16px;
+            min-width: 16px;
+            -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
+            margin-left: 8px;
+        }
+    }
+
+    separator {
+        min-height: 1px;
+        margin: 4px 0;
+        background-color: $secondary_bg;
+    }
+}
+
+menu > arrow {
+    min-height: 16px;
+    min-width: 16px;
+    padding: 4px;
+    color: $secondary_bg;
+}
+
+menu > arrow.top {
+    margin-top: 0;
     border-radius: 6px;
-
-    &:hover,
-    &:active {
-      background-color: $secondary_bg;
-    }
-
-    &:disabled {
-      color: $secondary_bg;
-    }
-
-    arrow {
-      min-height: 16px;
-      min-width: 16px;
-      -gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
-      margin-left: 8px;
-    }
-  }
-
-  separator {
-    min-height: 1px;
-    margin: 4px 0;
-    background-color: $secondary_bg
-  }
+    -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
 }
 
-menu>arrow {
-  min-height: 16px;
-  min-width: 16px;
-  padding: 4px;
-  color: $secondary_bg;
-}
-
-menu>arrow.top {
-  margin-top: 0;
-  border-radius: 6px;
-  -gtk-icon-source: -gtk-icontheme("pan-up-symbolic");
-}
-
-menu>arrow.bottom {
-  margin-top: 8px;
-  margin-bottom: -12px;
-  border-radius: 6px;
-  -gtk-icon-source: -gtk-icontheme("pan-down-symbolic");
+menu > arrow.bottom {
+    margin-top: 8px;
+    margin-bottom: -12px;
+    border-radius: 6px;
+    -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
 }
 
 check,
 radio {
-  min-height: 15px;
-  min-width: 15px;
-  margin: 4px;
-  padding: 0;
-  color: transparent;
-  background-color: $secondary_bg;
-  transition: all 75ms cubic-bezier(0, 0, 0.2, 1), box-shadow 150ms cubic-bezier(0, 0, 0.2, 1);
+    min-height: 15px;
+    min-width: 15px;
+    margin: 4px;
+    padding: 0;
+    color: transparent;
+    background-color: $secondary_bg;
+    transition:
+        all 75ms cubic-bezier(0, 0, 0.2, 1),
+        box-shadow 150ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 radio {
-  border-radius: 9999px;
+    border-radius: 9999px;
 }
 
 check {
-  border-radius: 4px;
+    border-radius: 4px;
 }
 
 check:hover,
 radio:hover {
-  box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
-  background-color: $primary_bg;
+    box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
+    background-color: $primary_bg;
 }
 
 check:active,
 radio:active {
-  box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
-  background-color: $primary_bg;
+    box-shadow: 0 0 0 4px transparentize($primary_bg, 0.8);
+    background-color: $primary_bg;
 }
 
 check:checked,
 check:indeterminate,
 radio:checked,
 radio:indeterminate {
-  color: $primary_bg;
-  background-color: $primary_fg;
+    color: $primary_bg;
+    background-color: $primary_fg;
 }
 
 check:checked:hover,
 check:indeterminate:hover,
 radio:checked:hover,
 radio:indeterminate:hover {
-  box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
-  background-color: $primary_fg;
+    box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
+    background-color: $primary_fg;
 }
 
 check:checked:active,
 check:indeterminate:active,
 radio:checked:active,
 radio:indeterminate:active {
-  box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
-  background-color: $primary_fg;
+    box-shadow: 0 0 0 4px transparentize($primary_fg, 0.8);
+    background-color: $primary_fg;
 }
 
 switch {
-  transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
-  margin: 4px 0;
-  border: none;
-  border-radius: 9999px;
-  background-color: $secondary_bg;
-  background-clip: padding-box;
-  font-size: 0;
-  color: transparent;
+    transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
+    margin: 4px 0;
+    border: none;
+    border-radius: 9999px;
+    background-color: $secondary_bg;
+    background-clip: padding-box;
+    font-size: 0;
+    color: transparent;
 }
 
 switch:checked {
-  background-color: $primary_fg;
+    background-color: $primary_fg;
 }
 
 switch:disabled {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 switch slider {
-  transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
-  min-width: 18px;
-  min-height: 18px;
-  margin: 3px;
-  border-radius: 9999px;
-  outline: none;
-  background-color: $default_fg;
-  border: none;
-  color: transparent;
+    transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
+    min-width: 18px;
+    min-height: 18px;
+    margin: 3px;
+    border-radius: 9999px;
+    outline: none;
+    background-color: $default_fg;
+    border: none;
+    color: transparent;
 }
 
 scale {
-  min-height: 2px;
-  min-width: 2px;
+    min-height: 2px;
+    min-width: 2px;
 }
 
 scale.horizontal {
-  padding: 17px 12px;
+    padding: 17px 12px;
 }
 
 scale.vertical {
-  padding: 12px 17px;
+    padding: 12px 17px;
 }
 
 scale slider {
-  min-height: 18px;
-  min-width: 18px;
-  margin: -8px;
+    min-height: 18px;
+    min-width: 18px;
+    margin: -8px;
 }
 
 scale trough {
-  transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
-  outline: none;
-  background-color: $secondary_bg;
+    transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
+    outline: none;
+    background-color: $secondary_bg;
 }
 
 scale highlight {
-  transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
-  background-color: $primary_fg;
+    transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
+    background-color: $primary_fg;
 }
 
 scale highlight:disabled {
-  background-color: #1e1e2e;
+    background-color: #1e1e2e;
 }
 
 scale fill {
-  transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
+    transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 scale fill:disabled {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 scale slider {
-  transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
-  border-radius: 9999px;
-  color: $primary_fg;
-  background-color: $primary_bg;
-  box-shadow: inset 0 0 0 2px $primary_fg;
+    transition: all 75ms cubic-bezier(0, 0, 0.2, 1);
+    border-radius: 9999px;
+    color: $primary_fg;
+    background-color: $primary_bg;
+    box-shadow: inset 0 0 0 2px $primary_fg;
 }
 
 scale slider:hover {
-  box-shadow: inset 0 0 0 2px $primary_fg, 0 0 0 8px transparentize($primary_fg, 0.9);
+    box-shadow:
+        inset 0 0 0 2px $primary_fg,
+        0 0 0 8px transparentize($primary_fg, 0.9);
 }
 
 scale slider:active {
-  box-shadow: inset 0 0 0 4px $primary_fg, 0 0 0 8px transparentize($primary_fg, 0.9);
+    box-shadow:
+        inset 0 0 0 4px $primary_fg,
+        0 0 0 8px transparentize($primary_fg, 0.9);
 }
 
 tooltip {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 separator {
-  min-width: 1px;
-  min-height: 1px;
-  background-color: $secondary_bg;
+    min-width: 1px;
+    min-height: 1px;
+    background-color: $secondary_bg;
 }
 
 @keyframes spin {
-  to {
-    -gtk-icon-transform: rotate(1turn);
-  }
+    to {
+        -gtk-icon-transform: rotate(1turn);
+    }
 }
 
 spinner {
-  background: none;
-  opacity: 0;
-  -gtk-icon-source: -gtk-icontheme("process-working-symbolic");
+    background: none;
+    opacity: 0;
+    -gtk-icon-source: -gtk-icontheme('process-working-symbolic');
 }
 
 spinner:checked {
-  opacity: 1;
-  animation: spin 1s linear infinite;
+    opacity: 1;
+    animation: spin 1s linear infinite;
 }

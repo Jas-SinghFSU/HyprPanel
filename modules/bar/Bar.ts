@@ -16,6 +16,7 @@ import {
     // Custom Modules
     Ram,
     Cpu,
+    CpuTemp,
     Storage,
     Netstat,
     KbInput,
@@ -55,6 +56,7 @@ type Section =
     | 'clock'
     | 'ram'
     | 'cpu'
+    | 'cputemp'
     | 'storage'
     | 'netstat'
     | 'kbinput'
@@ -107,6 +109,7 @@ const widget = {
     systray: (): Button<Child, Attribute> => WidgetContainer(SysTray()),
     ram: (): Button<Child, Attribute> => WidgetContainer(Ram()),
     cpu: (): Button<Child, Attribute> => WidgetContainer(Cpu()),
+    cputemp: (): Button<Child, Attribute> => WidgetContainer(CpuTemp()),
     storage: (): Button<Child, Attribute> => WidgetContainer(Storage()),
     netstat: (): Button<Child, Attribute> => WidgetContainer(Netstat()),
     kbinput: (): Button<Child, Attribute> => WidgetContainer(KbInput()),

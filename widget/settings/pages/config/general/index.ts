@@ -72,9 +72,9 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     opt: options.menus.transitionTime,
                     title: 'Menu Transition Duration',
                     type: 'number',
-                    min: 100,
+                    min: 0,
                     max: 10000,
-                    increment: 100,
+                    increment: 25,
                 }),
 
                 Header('Scaling'),
@@ -191,6 +191,15 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                 Option({
                     opt: options.theme.tooltip.scaling,
                     title: 'Tooltips',
+                    type: 'number',
+                    min: 1,
+                    max: 100,
+                    increment: 5,
+                }),
+                Option({
+                    opt: options.theme.bar.menus.popover.scaling,
+                    title: 'Popovers',
+                    subtitle: 'Ex: Right click menu of system tray items.',
                     type: 'number',
                     min: 1,
                     max: 100,

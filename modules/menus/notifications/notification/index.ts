@@ -19,8 +19,8 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
         vscroll: 'automatic',
         child: Widget.Box({
             class_name: 'menu-content-container notifications',
-            hpack: 'center',
             vexpand: true,
+            hpack: 'fill',
             spacing: 0,
             vertical: true,
             setup: (self) => {
@@ -66,11 +66,11 @@ const NotificationCard = (notifs: Notifications, curPage: Variable<number>): Scr
                                     },
                                     child: Widget.Box({
                                         class_name: 'notification-card-content-container',
+                                        hexpand: true,
                                         children: [
                                             Widget.Box({
                                                 class_name: 'notification-card menu',
                                                 vpack: 'start',
-                                                hexpand: true,
                                                 vexpand: false,
                                                 children: [
                                                     Image(notif),

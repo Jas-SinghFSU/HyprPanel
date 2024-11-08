@@ -10,6 +10,18 @@ const getIconForPlayer = (playerName: string): string => {
         ['Discord', ''],
         ['Plex', '󰚺'],
         ['Spotify', '󰓇'],
+        ['Vlc', '󰕼'],
+        ['Mpv', ''],
+        ['Rhythmbox', '󰓃'],
+        ['Google Chrome', ''],
+        ['Brave Browser', '󰖟'],
+        ['Chromium', ''],
+        ['Opera', ''],
+        ['Vivaldi', '󰖟'],
+        ['Waterfox', '󰈹'],
+        ['Thorium', '󰈹'],
+        ['Zen Browser', '󰈹'],
+        ['Floorp', '󰈹'],
         ['(.*)', '󰝚'],
     ];
 

@@ -182,6 +182,7 @@
     "theme.bar.menus.menu.media.card.color": "#1e1e2e",
     "theme.bar.menus.menu.media.background.color": "#11111b",
     "theme.bar.menus.menu.media.album": "#f5c2e8",
+    "theme.bar.menus.menu.media.timestamp": "#cdd6f4",
     "theme.bar.menus.menu.media.artist": "#94e2d6",
     "theme.bar.menus.menu.media.song": "#b4beff",
     "theme.bar.menus.tooltip.text": "#cdd6f4",

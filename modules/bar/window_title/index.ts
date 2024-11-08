@@ -1,12 +1,13 @@
 const hyprland = await Service.import('hyprland');
-import { BarBoxChild } from 'lib/types/bar';
-import options from 'options';
-import { Attribute, Child } from 'lib/types/widget';
-import { ActiveClient } from 'types/service/hyprland';
-import Label from 'types/widgets/label';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils';
-import Button from 'types/widgets/button';
+import { BarBoxChild } from 'lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { capitalizeFirstLetter } from 'lib/utils';
+import options from 'options';
 import Gdk from 'types/@girs/gdk-3.0/gdk-3.0';
+import { ActiveClient } from 'types/service/hyprland';
+import Button from 'types/widgets/button';
+import Label from 'types/widgets/label';
 
 const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
 
@@ -117,7 +118,7 @@ const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
         ['^$', '󰇄', 'Desktop'],
 
         // Fallback icon
-        ['(.+)', '󰣆', `${windowtitle.class.charAt(0).toUpperCase() + windowtitle.class.slice(1)}`],
+        ['(.+)', '󰣆', `${capitalizeFirstLetter(windowtitle.class)}}`],
     ];
 
     const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle.class.toLowerCase()));
