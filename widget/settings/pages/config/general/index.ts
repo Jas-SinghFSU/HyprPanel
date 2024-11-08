@@ -72,9 +72,9 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                     opt: options.menus.transitionTime,
                     title: 'Menu Transition Duration',
                     type: 'number',
-                    min: 100,
+                    min: 0,
                     max: 10000,
-                    increment: 100,
+                    increment: 25,
                 }),
 
                 Header('Scaling'),
