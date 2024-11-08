@@ -13,7 +13,7 @@ import Notifications from './modules/notifications/index.js';
 import { bash, forMonitors } from 'lib/utils';
 import options from 'options.js';
 import OSD from 'modules/osd/index';
-import corner from "modules/bar/corner/index.js";
+import corner from 'modules/bar/corner/index.js';
 
 App.config({
     onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),

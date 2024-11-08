@@ -852,7 +852,8 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         scrollSpeed: opt(5),
-
+        corners: opt(50),
+        transparent: opt(false),
         layouts: opt({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],
@@ -1260,7 +1261,7 @@ const options = mkOptions(OPTIONS, {
     dummy: opt(true),
     hyprland: {
         gaps: opt(2.4),
-        inactiveBorder: opt("#282828"),
+        inactiveBorder: opt('#282828'),
         gapsWhenOnly: opt(false),
     },
 });
