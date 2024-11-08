@@ -56,7 +56,7 @@ const Wifi = (): BoxWidget => {
                 ],
             }),
             Widget.Scrollable({
-                css: "min-height: 300px;",
+                css: 'min-height: 300px;',
                 child: Widget.Box({
                     class_name: 'menu-items-section',
                     vertical: true,
@@ -76,7 +76,7 @@ const Wifi = (): BoxWidget => {
                         }),
                     ],
                 }),
-            })
+            }),
         ],
     });
 };
