@@ -1,12 +1,13 @@
-import Gdk from 'gi://Gdk?version=3.0';
-import { openMenu } from '../utils.js';
-import options from 'options';
-import { BarBoxChild } from 'lib/types/bar.js';
-import Button from 'types/widgets/button.js';
-import { Attribute, Child } from 'lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
+import Gdk from 'gi://Gdk?version=3.0';
+import { BarBoxChild } from 'lib/types/bar.js';
+import { Attribute, Child } from 'lib/types/widget.js';
+import options from 'options';
+import Button from 'types/widgets/button.js';
+import { openMenu } from '../utils.js';
+import { getDistroIcon } from 'lib/utils.js';
 
-const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.launcher;
+const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
     return {
@@ -22,7 +23,9 @@ const Menu = (): BarBoxChild => {
             }),
             child: Widget.Label({
                 class_name: 'bar-menu_label bar-button_icon txt-icon bar',
-                label: options.bar.launcher.icon.bind('value'),
+                label: Utils.merge([autoDetectIcon.bind('value'), icon.bind('value')], (autoDetect, icon): string => {
+                    return autoDetect ? getDistroIcon() : icon;
+                }),
             }),
         }),
         isVisible: true,

@@ -870,6 +870,7 @@ const options = mkOptions(OPTIONS, {
         }),
         launcher: {
             icon: opt('󰣇'),
+            autoDetectIcon: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
             scrollUp: opt(''),

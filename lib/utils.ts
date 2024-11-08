@@ -11,6 +11,8 @@ import { NotificationArgs } from 'types/utils/notify';
 import { SubstituteKeys } from './types/utils';
 import { Window } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 import { namedColors } from './constants/colors';
+import { distroIcons } from './constants/distro';
+import { distro } from './variables';
 
 export type Binding<T> = import('types/service').Binding<any, any, T>;
 
@@ -193,3 +195,8 @@ export const isValidGjsColor = (color: string): boolean => {
 export const capitalizeFirstLetter = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export function getDistroIcon(): string {
+    const icon = distroIcons.find(([id]) => id === distro.id);
+    return icon ? icon[1] : ''; // default icon if not found
+}
