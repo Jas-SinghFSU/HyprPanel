@@ -1,17 +1,16 @@
 import RegularWindow from 'widget/RegularWindow';
 import icons from 'lib/icons';
 import options from 'options';
-import { ThemesMenu } from './pages/theme/index';
-import { SettingsMenu } from './pages/config/index';
 import './side_effects';
 import { GBox, GCenterBox } from 'lib/types/widget';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import { pageList } from 'widget/settings/helpers';
+import { SettingsPage, settingsPages } from './settingsPages';
 
-type Page = 'Configuration' | 'Theming';
+const { transition, transitionTime } = options.menus;
 
-const CurrentPage = Variable<Page>('Configuration');
-
-const pagerMap: Page[] = ['Configuration', 'Theming'];
+const CurrentPage = Variable<SettingsPage>('Configuration');
+const LastPage = Variable<SettingsPage>('Configuration');
 
 const Header = (): GCenterBox =>
     Widget.CenterBox({
@@ -44,7 +43,7 @@ const PageContainer = (): GBox => {
                 class_name: 'option-pages-container',
                 hpack: 'center',
                 hexpand: true,
-                children: pagerMap.map((page) => {
+                children: pageList(settingsPages).map((page) => {
                     return Widget.Button({
                         xalign: 0,
                         hpack: 'center',
@@ -52,17 +51,19 @@ const PageContainer = (): GBox => {
                             (v) => `pager-button ${v === page ? 'active' : ''} category`,
                         ),
                         label: page,
-                        on_primary_click: () => (CurrentPage.value = page),
+                        on_primary_click: () => {
+                            LastPage.value = CurrentPage.value;
+                            CurrentPage.value = page;
+                        },
                     });
                 }),
             }),
             Widget.Stack({
                 vexpand: false,
+                transition: transition.bind('value'),
+                transitionDuration: transitionTime.bind('value'),
                 class_name: 'themes-menu-stack',
-                children: {
-                    Configuration: SettingsMenu(),
-                    Theming: ThemesMenu(),
-                },
+                children: settingsPages,
                 shown: CurrentPage.bind('value'),
             }),
         ],
