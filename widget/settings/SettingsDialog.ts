@@ -39,33 +39,33 @@ const PageContainer = (): GBox => {
         hpack: 'fill',
         hexpand: true,
         vertical: true,
-        children: CurrentPage.bind('value').as((v) => {
-            return [
-                Widget.Box({
-                    class_name: 'option-pages-container',
-                    hpack: 'center',
-                    hexpand: true,
-                    children: pagerMap.map((page) => {
-                        return Widget.Button({
-                            xalign: 0,
-                            hpack: 'center',
-                            class_name: `pager-button ${v === page ? 'active' : ''} category`,
-                            label: page,
-                            on_primary_click: () => (CurrentPage.value = page),
-                        });
-                    }),
+        children: [
+            Widget.Box({
+                class_name: 'option-pages-container',
+                hpack: 'center',
+                hexpand: true,
+                children: pagerMap.map((page) => {
+                    return Widget.Button({
+                        xalign: 0,
+                        hpack: 'center',
+                        class_name: CurrentPage.bind('value').as(
+                            (v) => `pager-button ${v === page ? 'active' : ''} category`,
+                        ),
+                        label: page,
+                        on_primary_click: () => (CurrentPage.value = page),
+                    });
                 }),
-                Widget.Stack({
-                    vexpand: false,
-                    class_name: 'themes-menu-stack',
-                    children: {
-                        Configuration: SettingsMenu(),
-                        Theming: ThemesMenu(),
-                    },
-                    shown: CurrentPage.bind('value'),
-                }),
-            ];
-        }),
+            }),
+            Widget.Stack({
+                vexpand: false,
+                class_name: 'themes-menu-stack',
+                children: {
+                    Configuration: SettingsMenu(),
+                    Theming: ThemesMenu(),
+                },
+                shown: CurrentPage.bind('value'),
+            }),
+        ],
     });
 };
 
