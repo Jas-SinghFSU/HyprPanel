@@ -171,6 +171,7 @@
     "theme.bar.menus.menu.media.album": "#f5c2e8",
     "theme.bar.menus.menu.media.artist": "#94e2d6",
     "theme.bar.menus.menu.media.song": "#b4beff",
+    "theme.bar.menus.menu.media.timestamp": "#cdd6f4",
     "theme.bar.menus.tooltip.text": "#cdd6f4",
     "theme.bar.menus.tooltip.background": "#11111b",
     "theme.bar.menus.dropdownmenu.divider": "#1e1e2e",
@@ -344,4 +345,3 @@
     "theme.bar.menus.menu.network.switch.puck": "#454759",
     "theme.bar.border.color": "#b4befe"
 }
-
