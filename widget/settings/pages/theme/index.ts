@@ -58,54 +58,54 @@ const pagerMap: Page[] = [
 export const ThemesMenu = (): GBox => {
     return Widget.Box({
         vertical: true,
-        children: CurrentPage.bind('value').as((v) => {
-            return [
-                Widget.Box({
-                    class_name: 'option-pages-container',
-                    hpack: 'center',
-                    hexpand: true,
-                    vertical: true,
-                    children: [0, 1, 2].map((section) => {
-                        return Widget.Box({
-                            children: pagerMap.map((page, index) => {
-                                if (index >= section * 6 && index < section * 6 + 6) {
-                                    return Widget.Button({
-                                        hpack: 'center',
-                                        xalign: 0,
-                                        class_name: `pager-button ${v === page ? 'active' : ''}`,
-                                        label: page,
-                                        on_primary_click: () => (CurrentPage.value = page),
-                                    });
-                                }
-                                return Widget.Box();
-                            }),
-                        });
-                    }),
+        children: [
+            Widget.Box({
+                class_name: 'option-pages-container',
+                hpack: 'center',
+                hexpand: true,
+                vertical: true,
+                children: [0, 1, 2].map((section) => {
+                    return Widget.Box({
+                        children: pagerMap.map((page, index) => {
+                            if (index >= section * 6 && index < section * 6 + 6) {
+                                return Widget.Button({
+                                    hpack: 'center',
+                                    xalign: 0,
+                                    class_name: CurrentPage.bind('value').as(
+                                        (v) => `pager-button ${v === page ? 'active' : ''}`,
+                                    ),
+                                    label: page,
+                                    on_primary_click: () => (CurrentPage.value = page),
+                                });
+                            }
+                            return Widget.Box();
+                        }),
+                    });
                 }),
-                Widget.Stack({
-                    vexpand: true,
-                    class_name: 'themes-menu-stack',
-                    children: {
-                        'General Settings': MenuTheme(),
-                        'Matugen Settings': Matugen(),
-                        Bar: BarTheme(),
-                        Notifications: NotificationsTheme(),
-                        OSD: OsdTheme(),
-                        'Battery Menu': BatteryMenuTheme(),
-                        'Bluetooth Menu': BluetoothMenuTheme(),
-                        'Clock Menu': ClockMenuTheme(),
-                        'Dashboard Menu': DashboardMenuTheme(),
-                        'Media Menu': MediaMenuTheme(),
-                        'Network Menu': NetworkMenuTheme(),
-                        'Notifications Menu': NotificationsMenuTheme(),
-                        'System Tray': SystrayMenuTheme(),
-                        'Volume Menu': VolumeMenuTheme(),
-                        'Power Menu': PowerMenuTheme(),
-                        'Custom Modules': CustomModuleTheme(),
-                    },
-                    shown: CurrentPage.bind('value'),
-                }),
-            ];
-        }),
+            }),
+            Widget.Stack({
+                vexpand: true,
+                class_name: 'themes-menu-stack',
+                children: {
+                    'General Settings': MenuTheme(),
+                    'Matugen Settings': Matugen(),
+                    Bar: BarTheme(),
+                    Notifications: NotificationsTheme(),
+                    OSD: OsdTheme(),
+                    'Battery Menu': BatteryMenuTheme(),
+                    'Bluetooth Menu': BluetoothMenuTheme(),
+                    'Clock Menu': ClockMenuTheme(),
+                    'Dashboard Menu': DashboardMenuTheme(),
+                    'Media Menu': MediaMenuTheme(),
+                    'Network Menu': NetworkMenuTheme(),
+                    'Notifications Menu': NotificationsMenuTheme(),
+                    'System Tray': SystrayMenuTheme(),
+                    'Volume Menu': VolumeMenuTheme(),
+                    'Power Menu': PowerMenuTheme(),
+                    'Custom Modules': CustomModuleTheme(),
+                },
+                shown: CurrentPage.bind('value'),
+            }),
+        ],
     });
 };
