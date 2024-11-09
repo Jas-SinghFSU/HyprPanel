@@ -175,6 +175,7 @@ const options = mkOptions(OPTIONS, {
                 padding_y: opt('0.2rem'),
                 y_margins: opt('0.4em'),
                 radius: opt('0.3em'),
+                innerRadiusMultiplier: opt('0.4'),
                 opacity: opt(100),
                 background_opacity: opt(100),
                 background_hover_opacity: opt(100),
