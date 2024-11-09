@@ -15,6 +15,9 @@ export type RecursiveOptionsObject = {
 };
 
 export type BarLocation = 'top' | 'bottom';
+export type BarLayout = {
+    [key: string]: Layout;
+};
 
 export type Unit = 'imperial' | 'metric';
 export type PowerOptions = 'sleep' | 'reboot' | 'logout' | 'shutdown';
