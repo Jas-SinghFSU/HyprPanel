@@ -16,12 +16,12 @@
         padding-right: $bar-buttons-media-spacing;
         border-top-left-radius: if(
             $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
-            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
             $bar-buttons-radius
         );
         border-bottom-left-radius: if(
             $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
-            $bar-buttons-radius * 0.4,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
             $bar-buttons-radius
         );
         color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-icon);
