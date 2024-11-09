@@ -14,10 +14,11 @@ import Notifications from './modules/notifications/index.js';
 import { bash, forMonitors } from 'lib/utils';
 import options from 'options.js';
 import OSD from 'modules/osd/index';
+import corner from 'modules/bar/corner/index.js';
 
 App.config({
     onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
-    windows: [...MenuWindows, Notifications(), SettingsDialog(), ...forMonitors(Bar), OSD()],
+    windows: [...MenuWindows, Notifications(), SettingsDialog(), ...forMonitors(Bar), OSD(), ...forMonitors(corner)],
     closeWindowDelay: {
         sideright: 350,
         launcher: 350,

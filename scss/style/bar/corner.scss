@@ -1,0 +1,69 @@
+$_shadow-size: $padding;
+
+$radius : if($bar-floating, $bar-border_radius, 0em);
+$_radius: $radius * 2.4 * $bar-corners;
+$_margin: 99px;
+
+
+$bg : if($bar-transparent, transparent, transparentize($bar-background, $transparency-value));
+$border-color: if(
+      $bar-menus-monochrome,
+      $bar-menus-border-color,
+      $bar-menus-menu-clock-border-color
+    );
+$bar-position : if($bar-floating,$bar-location,'top');
+
+$shadow-color: rgba(0,0,0,.4);
+$border-width : $bar-menus-border-size;
+$transition: 200;
+$padding: 0.7rem;
+
+
+window.screen-corner:not(.hidden) {
+    transition: $transition;
+
+    box.shadow {
+        margin-right: $_margin * -1;
+        margin-left: $_margin * -1;
+
+        @if $shadows {
+            box-shadow: inset 0 0 $_shadow-size 0 $shadow-color;
+        }
+
+        @if $bar-position =="top" {
+            margin-bottom: $_margin * -1;
+        }
+
+        @if $bar-position =="bottom" {
+            margin-top: $_margin * -1;
+        }
+    }
+
+    box.border {
+        @if $bar-position =="top" {
+            border-top: $border-width solid $bg;
+        }
+
+        @if $bar-position =="bottom" {
+            border-bottom: $border-width solid $bg;
+        }
+
+        margin-right: $_margin;
+        margin-left: $_margin;
+    }
+
+    box.corner {
+        box-shadow: 0 0 0 $border-width $border-color;
+    }
+
+    &.corners {
+        box.border {
+            border-radius: if($radius>0, $_radius, 0);
+            box-shadow: 0 0 0 $_radius $bg;
+        }
+
+        box.corner {
+            border-radius: if($radius>0, $_radius, 0);
+        }
+    }
+}
