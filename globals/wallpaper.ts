@@ -7,8 +7,6 @@ const { EXISTS, IS_REGULAR } = GLib.FileTest;
 const { enable: enableWallpaper, image } = options.wallpaper;
 
 globalThis.setWallpaper = (filePath: string): void => {
-    console.log(filePath);
-
     if (!(GLib.file_test(filePath, EXISTS) && GLib.file_test(filePath, IS_REGULAR))) {
         Notify({
             summary: 'Failed to set Wallpaper',
