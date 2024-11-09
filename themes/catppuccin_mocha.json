@@ -316,6 +316,7 @@
     "theme.bar.buttons.hover": "#45475a",
     "theme.bar.buttons.icon_background": "#242438",
     "theme.bar.buttons.background": "#242438",
+    "theme.bar.buttons.borderColor": "#b4befe",
     "theme.bar.buttons.style": "default",
     "theme.bar.background": "#11111b",
     "theme.osd.label": "#b4beff",

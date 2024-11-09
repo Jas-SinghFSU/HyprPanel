@@ -60,7 +60,7 @@
             );
             border: if(
                 $borderEnabled or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $borderColor),
+                $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $borderColor),
                 0em
             );
 

@@ -343,5 +343,6 @@
   "theme.bar.menus.menu.network.switch.puck": "#bcc0cc",
   "theme.bar.buttons.systray.customIcon": "#4c4f69",
   "theme.bar.border.color": "#7287fd",
-  "theme.bar.menus.menu.media.timestamp": "#4c4f69"
+  "theme.bar.menus.menu.media.timestamp": "#4c4f69",
+  "theme.bar.buttons.borderColor": "#7287fd"
 }

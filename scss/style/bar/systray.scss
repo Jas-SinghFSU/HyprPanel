@@ -17,7 +17,7 @@
 .bar_item_box_visible.systray {
     border: if(
         $bar-buttons-systray-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-systray-border),
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-systray-border),
         0em
     );
 }
