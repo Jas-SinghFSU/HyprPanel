@@ -141,6 +141,7 @@ export default (): Window<Child, Attribute> =>
         ),
         name: `indicator`,
         class_name: 'indicator',
+        visible: false,
         layer: options.tear.bind('value').as((tear) => (tear ? 'top' : 'overlay')),
         anchor: location.bind('value').as((v) => getPosition(v)),
         click_through: true,
