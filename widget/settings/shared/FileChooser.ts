@@ -1,3 +1,4 @@
+import options from 'options';
 import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
 import { bash, Notify } from 'lib/utils';
@@ -6,6 +7,7 @@ import { Config } from 'lib/types/filechooser';
 import { hexColorPattern } from 'globals/useTheme';
 import { isHexColor } from 'globals/variables';
 
+const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
 
 export const loadJsonFile = (filePath: string): Config | null => {
@@ -247,5 +249,5 @@ export const importFiles = (themeOnly: boolean = false): void => {
         saveConfigToFile(optionsConfig, OPTIONS);
     }
     dialog.destroy();
-    bash('pkill ags && ags');
+    bash(restartCommand.value);
 };
