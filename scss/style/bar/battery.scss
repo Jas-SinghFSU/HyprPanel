@@ -57,7 +57,7 @@
 .bar_item_box_visible.battery {
     border: if(
         $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-battery-border),
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-battery-border),
         0em
     );
 }

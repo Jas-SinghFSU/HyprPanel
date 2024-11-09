@@ -38,7 +38,7 @@
 .bar_item_box_visible.media {
     border: if(
         $bar-buttons-media-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-media-border),
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-media-border),
         0em
     );
 }

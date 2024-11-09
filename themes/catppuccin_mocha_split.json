@@ -7,6 +7,7 @@
     "theme.bar.buttons.text": "#b4befe",
     "theme.bar.buttons.hover": "#45475a",
     "theme.bar.buttons.background": "#242438",
+    "theme.bar.buttons.borderColor": "#b4befe",
     "theme.bar.menus.text": "#cdd6f4",
     "theme.bar.menus.border.color": "#313244",
     "theme.bar.buttons.media.background": "#242438",

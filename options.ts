@@ -168,6 +168,7 @@ const options = mkOptions(OPTIONS, {
                 style: opt<BarButtonStyles>('default'),
                 enableBorders: opt(false),
                 borderSize: opt('0.1em'),
+                borderColor: opt(colors.lavender),
                 monochrome: opt(false),
                 spacing: opt('0.25em'),
                 padding_x: opt('0.7rem'),

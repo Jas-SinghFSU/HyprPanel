@@ -53,7 +53,7 @@
 .bar_item_box_visible.network {
     border: if(
         $bar-buttons-network-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-network-border),
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-network-border),
         0em
     );
 }

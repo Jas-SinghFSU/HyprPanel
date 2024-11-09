@@ -54,7 +54,7 @@
 .bar_item_box_visible.volume {
     border: if(
         $bar-buttons-volume-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-volume-border),
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-volume-border),
         0em
     );
 }

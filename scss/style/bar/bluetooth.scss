@@ -65,7 +65,8 @@
 .bar_item_box_visible.bluetooth {
     border: if(
         $bar-buttons-bluetooth-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-bluetooth-border),
+        $bar-buttons-borderSize solid
+            if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-bluetooth-border),
         0em
     );
 }
