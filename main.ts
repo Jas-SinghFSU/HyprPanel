@@ -1,6 +1,7 @@
 import 'lib/session';
 import 'scss/style';
 import 'globals/useTheme';
+import 'globals/wallpaper';
 import 'globals/systray';
 import 'globals/dropdown.js';
 import 'globals/utilities';
