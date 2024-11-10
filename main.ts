@@ -16,7 +16,9 @@ import options from 'options.js';
 import OSD from 'modules/osd/index';
 
 App.config({
-    onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
+    onConfigParsed: () => {
+        Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`);
+    },
     windows: [...MenuWindows, Notifications(), SettingsDialog(), ...forMonitors(Bar), OSD()],
     closeWindowDelay: {
         sideright: 350,

@@ -1,5 +1,5 @@
-const main = '/tmp/ags/hyprpanel/greeter.js';
-const entry = `${App.configDir}/greeter/greeter.ts`;
+const main = `${App.configDir}/greeter.js`;
+const entry = `${App.configDir}/greeter.ts`;
 
 try {
     await Utils.execAsync([
