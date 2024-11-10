@@ -21,7 +21,8 @@ const {
     scrollDown,
 } = options.bar.customModules.updates;
 
-const pendingUpdates: VariableType<string> = Variable(' 0');
+const pendingUpdates: VariableType<string> = Variable('0');
+const postInputUpdater = Variable(true);
 
 const processUpdateCount = (updateCount: string): string => {
     if (!padZero.value) return updateCount;
@@ -30,7 +31,7 @@ const processUpdateCount = (updateCount: string): string => {
 
 pollVariableBash(
     pendingUpdates,
-    [padZero.bind('value')],
+    [padZero.bind('value'), postInputUpdater.bind('value')],
     pollingInterval.bind('value'),
     updateCommand.value,
     processUpdateCount,
@@ -45,23 +46,27 @@ export const Updates = (): BarBoxChild => {
         showLabelBinding: label.bind('value'),
         props: {
             setup: (self: Button<Child, Attribute>) => {
-                inputHandler(self, {
-                    onPrimaryClick: {
-                        cmd: leftClick,
+                inputHandler(
+                    self,
+                    {
+                        onPrimaryClick: {
+                            cmd: leftClick,
+                        },
+                        onSecondaryClick: {
+                            cmd: rightClick,
+                        },
+                        onMiddleClick: {
+                            cmd: middleClick,
+                        },
+                        onScrollUp: {
+                            cmd: scrollUp,
+                        },
+                        onScrollDown: {
+                            cmd: scrollDown,
+                        },
                     },
-                    onSecondaryClick: {
-                        cmd: rightClick,
-                    },
-                    onMiddleClick: {
-                        cmd: middleClick,
-                    },
-                    onScrollUp: {
-                        cmd: scrollUp,
-                    },
-                    onScrollDown: {
-                        cmd: scrollDown,
-                    },
-                });
+                    postInputUpdater,
+                );
             },
         },
     });

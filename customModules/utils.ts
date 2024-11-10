@@ -12,7 +12,13 @@ import Button from 'types/widgets/button';
 
 const { scrollSpeed } = options.bar.customModules;
 
-export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn): void => {
+const handlePostInputUpdater = (postInputUpdater?: VariableType<boolean>): void => {
+    if (postInputUpdater !== undefined) {
+        postInputUpdater.value = !postInputUpdater.value;
+    }
+};
+
+export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdater?: VariableType<boolean>): void => {
     if (cmd.startsWith('menu:')) {
         const menuName = cmd.split(':')[1].trim().toLowerCase();
         openMenu(events.clicked, events.event, `${menuName}menu`);
@@ -22,6 +28,7 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn): void => {
 
     Utils.execAsync(`bash -c "${cmd}"`)
         .then((output) => {
+            handlePostInputUpdater(postInputUpdater);
             if (fn !== undefined) {
                 fn(output);
             }
@@ -43,8 +50,8 @@ export function throttle<T extends ThrottleFn>(func: T, limit: number): T {
 }
 
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
-    throttle((cmd: string, events: EventArgs, fn: ThrottleFnCallback) => {
-        runAsyncCommand(cmd, events, fn);
+    throttle((cmd: string, events: EventArgs, fn: ThrottleFnCallback, postInputUpdater?: VariableType<boolean>) => {
+        runAsyncCommand(cmd, events, fn, postInputUpdater);
     }, 200 / interval);
 
 const dummyVar = Variable('');
@@ -52,6 +59,7 @@ const dummyVar = Variable('');
 export const inputHandler = (
     self: Button<Child, Attribute>,
     { onPrimaryClick, onSecondaryClick, onMiddleClick, onScrollUp, onScrollDown }: InputHandlerEvents,
+    postInputUpdater?: VariableType<boolean>,
 ): void => {
     const sanitizeInput = (input: VariableType<string>): string => {
         if (input === undefined) {
@@ -64,20 +72,50 @@ export const inputHandler = (
         const interval = scrollSpeed.value;
         const throttledHandler = throttledScrollHandler(interval);
 
-        self.on_primary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void =>
-            runAsyncCommand(sanitizeInput(onPrimaryClick?.cmd || dummyVar), { clicked, event }, onPrimaryClick.fn);
+        self.on_primary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            runAsyncCommand(
+                sanitizeInput(onPrimaryClick?.cmd || dummyVar),
+                { clicked, event },
+                onPrimaryClick.fn,
+                postInputUpdater,
+            );
+        };
 
-        self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void =>
-            runAsyncCommand(sanitizeInput(onSecondaryClick?.cmd || dummyVar), { clicked, event }, onSecondaryClick.fn);
+        self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            runAsyncCommand(
+                sanitizeInput(onSecondaryClick?.cmd || dummyVar),
+                { clicked, event },
+                onSecondaryClick.fn,
+                postInputUpdater,
+            );
+        };
 
-        self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void =>
-            runAsyncCommand(sanitizeInput(onMiddleClick?.cmd || dummyVar), { clicked, event }, onMiddleClick.fn);
+        self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            runAsyncCommand(
+                sanitizeInput(onMiddleClick?.cmd || dummyVar),
+                { clicked, event },
+                onMiddleClick.fn,
+                postInputUpdater,
+            );
+        };
 
-        self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void =>
-            throttledHandler(sanitizeInput(onScrollUp?.cmd || dummyVar), { clicked, event }, onScrollUp.fn);
+        self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            throttledHandler(
+                sanitizeInput(onScrollUp?.cmd || dummyVar),
+                { clicked, event },
+                onScrollUp.fn,
+                postInputUpdater,
+            );
+        };
 
-        self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void =>
-            throttledHandler(sanitizeInput(onScrollDown?.cmd || dummyVar), { clicked, event }, onScrollDown.fn);
+        self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            throttledHandler(
+                sanitizeInput(onScrollDown?.cmd || dummyVar),
+                { clicked, event },
+                onScrollDown.fn,
+                postInputUpdater,
+            );
+        };
     };
 
     // Initial setup of event handlers

@@ -1,4 +1,5 @@
 import { Binding } from 'lib/utils';
+import { Variable } from 'types/variable';
 
 export type InputHandlerEvents = {
     onPrimaryClick?: Binding;
@@ -8,4 +9,9 @@ export type InputHandlerEvents = {
     onScrollDown?: Binding;
 };
 
-export type RunAsyncCommand = (cmd: string, args: EventArgs, fn?: (output: string) => void) => void;
+export type RunAsyncCommand = (
+    cmd: string,
+    args: EventArgs,
+    fn?: (output: string) => void,
+    postInputUpdater?: Variable<boolean>,
+) => void;
