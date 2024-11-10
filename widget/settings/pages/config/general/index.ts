@@ -45,7 +45,9 @@ export const BarGeneral = (): Scrollable<Child, Attribute> => {
                 Option({
                     opt: options.hyprpanel.restartCommand,
                     title: 'Restart Command',
-                    subtitle: 'Command to execute when a restart is initiated.',
+                    subtitle:
+                        'Command to execute when a restart is initiated. If running ags on a different bus, you\n' +
+                        " can target it by using the '-b busName' flag. Ex: ags -b panel -q; ags -b panel",
                     type: 'string',
                 }),
                 Option({
