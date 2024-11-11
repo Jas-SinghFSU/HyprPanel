@@ -4,6 +4,7 @@ import { KbLabelType } from 'lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
+    BarLayout,
     BarLocation,
     BluetoothBatteryState,
     BorderLocation,
@@ -168,12 +169,14 @@ const options = mkOptions(OPTIONS, {
                 style: opt<BarButtonStyles>('default'),
                 enableBorders: opt(false),
                 borderSize: opt('0.1em'),
+                borderColor: opt(colors.lavender),
                 monochrome: opt(false),
                 spacing: opt('0.25em'),
                 padding_x: opt('0.7rem'),
                 padding_y: opt('0.2rem'),
                 y_margins: opt('0.4em'),
                 radius: opt('0.3em'),
+                innerRadiusMultiplier: opt('0.4'),
                 opacity: opt(100),
                 background_opacity: opt(100),
                 background_hover_opacity: opt(100),
@@ -851,7 +854,7 @@ const options = mkOptions(OPTIONS, {
 
     bar: {
         scrollSpeed: opt(5),
-        layouts: opt({
+        layouts: opt<BarLayout>({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],
                 middle: ['media'],

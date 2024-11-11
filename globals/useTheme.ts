@@ -1,8 +1,10 @@
+import options from 'options';
 import Gio from 'gi://Gio';
 import { bash, Notify } from 'lib/utils';
 import icons from 'lib/icons';
 import { filterConfigForThemeOnly, loadJsonFile, saveConfigToFile } from 'widget/settings/shared/FileChooser';
 
+const { restartCommand } = options.hyprpanel;
 export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
 
 globalThis.useTheme = (filePath: string): void => {
@@ -39,5 +41,5 @@ globalThis.useTheme = (filePath: string): void => {
 
     saveConfigToFile(tmpConfig, `${TMP}/config.json`);
     saveConfigToFile(optionsConfig, OPTIONS);
-    bash('pkill ags && ags');
+    bash(restartCommand.value);
 };

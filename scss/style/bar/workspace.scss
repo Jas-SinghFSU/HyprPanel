@@ -5,19 +5,19 @@
         min-height: 4em;
         border-radius: 1.9rem * 0.6;
         transition: 300ms * 0.5;
-        background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
-        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-available);
+        background-color: $bar-buttons-workspaces-available;
+        color: $bar-buttons-workspaces-available;
 
         &.occupied {
-            background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
-            color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-occupied);
+            background-color: $bar-buttons-workspaces-occupied;
+            color: $bar-buttons-workspaces-occupied;
             min-width: 4em;
             min-height: 4em;
         }
 
         &.active {
-            color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
-            background-color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-active);
+            background-color: $bar-buttons-workspaces-active;
+            color: $bar-buttons-workspaces-active;
             min-width: 12em;
             min-height: 4em;
         }
@@ -86,7 +86,8 @@
 .bar_item_box_visible.workspaces {
     border: if(
         $bar-buttons-workspaces-enableBorder or $bar-buttons-enableBorders,
-        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-workspaces-border),
+        $bar-buttons-borderSize solid
+            if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-workspaces-border),
         0em
     );
 }

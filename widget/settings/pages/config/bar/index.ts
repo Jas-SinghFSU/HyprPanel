@@ -109,6 +109,14 @@ export const BarSettings = (): Scrollable<Gtk.Widget, Gtk.Widget> => {
                     type: 'string',
                 }),
                 Option({
+                    opt: options.theme.bar.buttons.innerRadiusMultiplier,
+                    title: 'Inner Button Radius Multiplier',
+                    subtitle:
+                        'Change this to fine-tune the padding and prevent any overflow' +
+                        ' or gaps between the content and the border',
+                    type: 'string',
+                }),
+                Option({
                     opt: options.theme.bar.layer,
                     title: 'Layer',
                     type: 'enum',
