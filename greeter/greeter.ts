@@ -2,7 +2,7 @@ import 'greeter/scss/style.ts';
 import './session';
 import GLib from 'gi://GLib?version=2.0';
 import RegularWindow from 'widget/RegularWindow';
-import auth from './auth';
+import auth from './components/auth/index';
 
 const win = RegularWindow({
     name: 'greeter',
@@ -11,7 +11,6 @@ const win = RegularWindow({
     setup: (self) => {
         self.set_default_size(1000, 1000);
         self.show_all();
-        auth.attribute.password.grab_focus();
     },
     child: Widget.Overlay({
         child: Widget.Box({ expand: true }),

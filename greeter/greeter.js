@@ -367,127 +367,204 @@ Object.assign(globalThis, {
 Utils.ensureDirectory(TMP);
 
 // /home/jaskir/.config/ags/greeter/greeter.ts
-import GLib6 from "gi://GLib?version=2.0";
+import GLib5 from "gi://GLib?version=2.0";
 
 // Projects/HyprPanel/widget/RegularWindow.ts
 import Gtk from "gi://Gtk?version=3.0";
 var RegularWindow_default = Widget.subclass(Gtk.Window);
 
-// Projects/HyprPanel/greeter/auth.ts
-import GLib5 from "gi://GLib?version=2.0";
+// Projects/HyprPanel/greeter/services/loginSession.ts
+import Gio from "gi://Gio?version=2.0";
+import GdkPixbuf3 from "gi://GdkPixbuf?version=2.0";
+var greetd = await Service.import("greetd");
 
-// Projects/HyprPanel/greeter/services/Login.ts
-class Login {
-  users;
-  sessions;
+class LoginSession {
+  users = [];
+  sessions = [];
+  loggingIn = Variable(false);
+  userName = Variable("");
+  password = Variable("");
+  constructor() {
+  }
+  static async create() {
+    const login = new LoginSession;
+    await login.initialize();
+    return login;
+  }
+  async initialize() {
+    await this.getAllUsers();
+    await this.getAllSessions();
+    this.userName.value = this.users[0];
+  }
   async getAllUsers() {
-    const allUsers = await bash("cat /etc/passwd | grep '/home' | cut -d: -f1");
-    const allUsersArray = allUsers.split("\n").filter((user) => user.trim() !== "");
-    this.users = allUsersArray;
+    try {
+      const allUsers = await bash("cat /etc/passwd | grep '/home' | cut -d: -f1");
+      const allUsersArray = allUsers.split("\n").map((user) => user.trim()).filter((user) => user !== "");
+      this.users.push(...allUsersArray);
+    } catch (error) {
+      console.error("Error fetching all users:", error);
+      throw error;
+    }
   }
   async getAllSessionPaths() {
     const sessionFilePaths = [];
-    const allXSessions = await bash("ls /usr/share/xsessions/");
-    const xSessionsArray = allXSessions.split("\n");
-    xSessionsArray.forEach((sesh) => {
-      sessionFilePaths.push(`/usr/share/xsessions/${sesh}`);
-    });
-    const allWaylandSessions = await bash("ls /usr/share/wayland-sessions/");
-    const waylandSessionsArray = allWaylandSessions.split("\n");
-    console.log(waylandSessionsArray);
-    waylandSessionsArray.forEach((sesh) => {
-      sessionFilePaths.push(`/usr/share/wayland-sessions/${sesh}`);
-    });
+    try {
+      const allXSessions = await bash("ls /usr/share/xsessions/");
+      const xSessionsArray = allXSessions.split("\n").map((sesh) => sesh.trim()).filter((sesh) => sesh !== "");
+      xSessionsArray.forEach((sesh) => {
+        sessionFilePaths.push(`/usr/share/xsessions/${sesh}`);
+      });
+      const allWaylandSessions = await bash("ls /usr/share/wayland-sessions/");
+      const waylandSessionsArray = allWaylandSessions.split("\n").map((sesh) => sesh.trim()).filter((sesh) => sesh !== "");
+      waylandSessionsArray.forEach((sesh) => {
+        sessionFilePaths.push(`/usr/share/wayland-sessions/${sesh}`);
+      });
+    } catch (error) {
+      console.error(`Error fetching session paths: ${error}`);
+      throw error;
+    }
     return sessionFilePaths;
   }
-  constructor() {
+  getSessionFileContent(sessionFilePath) {
+    try {
+      const sessionFile = Gio.File.new_for_path(sessionFilePath);
+      const [success, contents] = sessionFile.load_contents(null);
+      if (success) {
+        const fileContents = new TextDecoder().decode(contents);
+        return fileContents;
+      } else {
+        console.error(`Failed to load contents of ${sessionFilePath}`);
+      }
+    } catch (error) {
+      console.error(`Failed to read file at ${sessionFilePath}: ${error}`);
+    }
+    return "";
+  }
+  parseSessionFile(sessionFile, key) {
+    const lines = sessionFile.split("\n");
+    for (const line of lines) {
+      if (line.startsWith(`${key}=`)) {
+        const parts = line.split("=");
+        if (parts.length > 1) {
+          return parts[1].trim();
+        }
+      }
+    }
+  }
+  getSessionName(sessionFile) {
+    return this.parseSessionFile(sessionFile, "Name");
+  }
+  getSessionExecCommand(sessionFile) {
+    return this.parseSessionFile(sessionFile, "Exec");
+  }
+  async getAllSessions() {
+    try {
+      const allSessionPaths = await this.getAllSessionPaths();
+      for (const sessionPath of allSessionPaths) {
+        const fileContent = this.getSessionFileContent(sessionPath);
+        const sessionName = this.getSessionName(fileContent);
+        const sessionExec = this.getSessionExecCommand(fileContent);
+        if (sessionName && sessionExec) {
+          this.sessions.push({
+            [sessionName]: sessionExec
+          });
+        }
+      }
+    } catch (error) {
+      console.error(`Error fetching all sessions: ${error}`);
+      throw error;
+    }
+  }
+  getUsers() {
+    return this.users;
+  }
+  getSessions() {
+    return this.sessions;
+  }
+  getProfilePicture(user) {
+    const defaultAvatar = `${App.configDir}/assets/images/avatar.png`;
+    const userProfilePicture = `/var/lib/AccountsService/icons/${user}`;
+    const file = Gio.File.new_for_path(userProfilePicture);
+    if (!file.query_exists(null)) {
+      return defaultAvatar;
+    }
+    try {
+      const pixbuf = GdkPixbuf3.Pixbuf.new_from_file(userProfilePicture);
+      if (pixbuf) {
+        return userProfilePicture;
+      }
+    } catch (error) {
+      console.error(`Failed to load image from ${userProfilePicture}: ${error}`);
+    }
+    return defaultAvatar;
+  }
+  getCurrentProfilePicture() {
+    const defaultAvatar = `${App.configDir}/assets/images/avatar.png`;
+    const userProfilePicture = `/var/lib/AccountsService/icons/${this.userName}`;
+    const file = Gio.File.new_for_path(userProfilePicture);
+    if (!file.query_exists(null)) {
+      return defaultAvatar;
+    }
+    try {
+      const pixbuf = GdkPixbuf3.Pixbuf.new_from_file(userProfilePicture);
+      if (pixbuf) {
+        return userProfilePicture;
+      }
+    } catch (error) {
+      console.error(`Failed to load image from ${userProfilePicture}: ${error}`);
+    }
+    return defaultAvatar;
+  }
+  async login(sessionExec) {
+    this.loggingIn.value = true;
+    return greetd.login(this.userName.value, this.password.value, sessionExec).catch((res) => {
+      this.loggingIn.value = false;
+      return res?.description || JSON.stringify(res);
+    });
   }
 }
-var Login_default = Login;
+var loginSession = await LoginSession.create();
+var loginSession_default = loginSession;
 
-// Projects/HyprPanel/greeter/auth.ts
-async function login(pw) {
-  loggingin.value = true;
-  const greetd = await Service.import("greetd");
-  return greetd.login(userName2.value, pw, CMD, ENV.split(/\s+/)).catch((res) => {
-    loggingin.value = false;
-    response.label = res?.description || JSON.stringify(res);
-    password.text = "";
-    revealer.reveal_child = true;
+// Projects/HyprPanel/greeter/components/auth/input/index.ts
+var passwordInput = () => {
+  return Widget.Entry({
+    className: "login-password",
+    on_change: (self) => {
+    },
+    on_accept: (self) => {
+    },
+    setup: (self) => {
+      self.grab_focus();
+    }
   });
-}
-var userName2 = Variable("jaskir");
-var iconFile = `/var/lib/AccountsService/icons/${userName2}`;
-var loggingin = Variable(false);
-var loginSession = new Login_default;
-console.log(await loginSession.getAllSessionPaths());
-var CMD = GLib5.getenv("ASZTAL_DM_CMD") || "Hyprland";
-var ENV = GLib5.getenv("ASZTAL_DM_ENV") || "WLR_NO_HARDWARE_CURSORS=1 _JAVA_AWT_WM_NONREPARENTING=1";
-var avatar = Widget.Box({
-  class_name: "avatar",
-  hpack: "center",
-  css: `background-image: url('${iconFile}')`
-});
-var password = Widget.Entry({
-  placeholder_text: "Password",
-  hexpand: true,
-  visibility: false,
-  on_accept: ({ text }) => {
-    login(text || "");
-  }
-});
-var response = Widget.Label({
-  class_name: "response",
-  wrap: true,
-  max_width_chars: 35,
-  hpack: "center",
-  hexpand: true,
-  xalign: 0.5
-});
-var revealer = Widget.Revealer({
-  transition: "slide_down",
-  child: response
-});
+};
+
+// Projects/HyprPanel/greeter/components/auth/profile/name.ts
+var profileName = () => {
+  return Widget.Label({
+    className: "profileName",
+    label: "Jaskir"
+  });
+};
+
+// Projects/HyprPanel/greeter/components/auth/profile/picture.ts
+var profilePicture = () => {
+  return Widget.Box({
+    className: "profilePicture",
+    css: `background-image: url("${loginSession_default.getCurrentProfilePicture()}")`
+  });
+};
+
+// Projects/HyprPanel/greeter/components/auth/index.ts
+console.log(loginSession_default.getUsers());
+console.log(loginSession_default.getSessions());
+console.log(loginSession_default.getProfilePicture("jaskirs"));
 var auth_default = Widget.Box({
   class_name: "auth",
   expand: true,
-  attribute: { password },
   vertical: true,
-  children: [
-    Widget.Overlay({
-      child: Widget.Box({
-        css: "min-width: 200px; min-height: 200px;",
-        vertical: true
-      }, Widget.Box({
-        class_name: "wallpaper",
-        expand: true
-      }), Widget.Box({
-        class_name: "wallpaper-contrast",
-        vexpand: true
-      })),
-      overlay: Widget.Box({
-        vpack: "end",
-        vertical: true
-      }, avatar, Widget.Box({
-        hpack: "center",
-        children: [
-          Widget.Icon(icons_default.ui.avatar),
-          Widget.Label({
-            label: userName2.bind("value")
-          })
-        ]
-      }), Widget.Box({
-        class_name: "password"
-      }, Widget.Spinner({
-        visible: loggingin.bind(),
-        active: true
-      }), Widget.Icon({
-        visible: loggingin.bind().as((b) => !b),
-        icon: icons_default.ui.lock
-      }), password))
-    }),
-    Widget.Box({ class_name: "response-box" }, revealer)
-  ]
+  children: [profilePicture(), profileName(), passwordInput()]
 });
 
 // /home/jaskir/.config/ags/greeter/greeter.ts
@@ -498,7 +575,6 @@ var win = RegularWindow_default({
   setup: (self) => {
     self.set_default_size(1000, 1000);
     self.show_all();
-    auth_default.attribute.password.grab_focus();
   },
   child: Widget.Overlay({
     child: Widget.Box({ expand: true }),
@@ -513,5 +589,5 @@ var win = RegularWindow_default({
 });
 App.config({
   windows: [win],
-  cursorTheme: GLib6.getenv("XCURSOR_THEME")
+  cursorTheme: GLib5.getenv("XCURSOR_THEME")
 });
