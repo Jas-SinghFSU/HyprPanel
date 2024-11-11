@@ -13,10 +13,7 @@ declare global {
 Object.assign(globalThis, {
     TMP: `${GLib.get_tmp_dir()}/greeter`,
     OPTIONS: '/var/cache/greeter/options.json',
-    WALLPAPER: '/var/cache/greeter/background',
-    // TMP: "/tmp/ags",
-    // OPTIONS: Utils.CACHE_DIR + "/options.json",
-    // WALLPAPER: Utils.HOME + "/.config/background",
+    WALLPAPER: '/home/jaskir/Pictures/Wallpapers/RosePine/landscape.jpeg',
     USER: userName,
 });
 

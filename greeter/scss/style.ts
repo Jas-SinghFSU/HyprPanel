@@ -1,8 +1,6 @@
 import { bash, dependencies } from 'lib/utils';
 
 const resetCss = async (): Promise<void> => {
-    console.log('changed');
-
     if (!dependencies('sass')) return;
 
     try {

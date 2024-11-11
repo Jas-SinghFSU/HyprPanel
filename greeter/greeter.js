@@ -341,7 +341,6 @@ var Notify = (notifPayload) => {
 
 // Projects/HyprPanel/greeter/scss/style.ts
 var resetCss = async () => {
-  console.log("changed");
   if (!dependencies("sass"))
     return;
   try {
@@ -362,7 +361,7 @@ var userName = await bash("find /home -maxdepth 1 -printf '%f\n' | tail -n 1");
 Object.assign(globalThis, {
   TMP: `${GLib4.get_tmp_dir()}/greeter`,
   OPTIONS: "/var/cache/greeter/options.json",
-  WALLPAPER: "/var/cache/greeter/background",
+  WALLPAPER: "/home/jaskir/Pictures/Wallpapers/RosePine/landscape.jpeg",
   USER: userName
 });
 Utils.ensureDirectory(TMP);
@@ -376,19 +375,52 @@ var RegularWindow_default = Widget.subclass(Gtk.Window);
 
 // Projects/HyprPanel/greeter/auth.ts
 import GLib5 from "gi://GLib?version=2.0";
+
+// Projects/HyprPanel/greeter/services/Login.ts
+class Login {
+  users;
+  sessions;
+  async getAllUsers() {
+    const allUsers = await bash("cat /etc/passwd | grep '/home' | cut -d: -f1");
+    const allUsersArray = allUsers.split("\n").filter((user) => user.trim() !== "");
+    this.users = allUsersArray;
+  }
+  async getAllSessionPaths() {
+    const sessionFilePaths = [];
+    const allXSessions = await bash("ls /usr/share/xsessions/");
+    const xSessionsArray = allXSessions.split("\n");
+    xSessionsArray.forEach((sesh) => {
+      sessionFilePaths.push(`/usr/share/xsessions/${sesh}`);
+    });
+    const allWaylandSessions = await bash("ls /usr/share/wayland-sessions/");
+    const waylandSessionsArray = allWaylandSessions.split("\n");
+    console.log(waylandSessionsArray);
+    waylandSessionsArray.forEach((sesh) => {
+      sessionFilePaths.push(`/usr/share/wayland-sessions/${sesh}`);
+    });
+    return sessionFilePaths;
+  }
+  constructor() {
+  }
+}
+var Login_default = Login;
+
+// Projects/HyprPanel/greeter/auth.ts
 async function login(pw) {
   loggingin.value = true;
   const greetd = await Service.import("greetd");
-  return greetd.login(userName2, pw, CMD, ENV.split(/\s+/)).catch((res) => {
+  return greetd.login(userName2.value, pw, CMD, ENV.split(/\s+/)).catch((res) => {
     loggingin.value = false;
     response.label = res?.description || JSON.stringify(res);
     password.text = "";
     revealer.reveal_child = true;
   });
 }
-var userName2 = await bash("find /home -maxdepth 1 -printf '%f\n' | tail -n 1");
+var userName2 = Variable("jaskir");
 var iconFile = `/var/lib/AccountsService/icons/${userName2}`;
 var loggingin = Variable(false);
+var loginSession = new Login_default;
+console.log(await loginSession.getAllSessionPaths());
 var CMD = GLib5.getenv("ASZTAL_DM_CMD") || "Hyprland";
 var ENV = GLib5.getenv("ASZTAL_DM_ENV") || "WLR_NO_HARDWARE_CURSORS=1 _JAVA_AWT_WM_NONREPARENTING=1";
 var avatar = Widget.Box({
@@ -418,6 +450,7 @@ var revealer = Widget.Revealer({
 });
 var auth_default = Widget.Box({
   class_name: "auth",
+  expand: true,
   attribute: { password },
   vertical: true,
   children: [
@@ -427,7 +460,7 @@ var auth_default = Widget.Box({
         vertical: true
       }, Widget.Box({
         class_name: "wallpaper",
-        css: `background-image: url('${WALLPAPER}')`
+        expand: true
       }), Widget.Box({
         class_name: "wallpaper-contrast",
         vexpand: true
@@ -437,7 +470,12 @@ var auth_default = Widget.Box({
         vertical: true
       }, avatar, Widget.Box({
         hpack: "center",
-        children: [Widget.Icon(icons_default.ui.avatar), Widget.Label(userName2)]
+        children: [
+          Widget.Icon(icons_default.ui.avatar),
+          Widget.Label({
+            label: userName2.bind("value")
+          })
+        ]
       }), Widget.Box({
         class_name: "password"
       }, Widget.Spinner({
@@ -456,6 +494,7 @@ var auth_default = Widget.Box({
 var win = RegularWindow_default({
   name: "greeter",
   className: "greeter-window",
+  css: `background-image: url('/home/jaskir/Pictures/Wallpapers/RosePine/landscape.jpeg')`,
   setup: (self) => {
     self.set_default_size(1000, 1000);
     self.show_all();

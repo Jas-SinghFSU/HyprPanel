@@ -7,6 +7,7 @@ import auth from './auth';
 const win = RegularWindow({
     name: 'greeter',
     className: 'greeter-window',
+    css: `background-image: url('/home/jaskir/Pictures/Wallpapers/RosePine/landscape.jpeg')`,
     setup: (self) => {
         self.set_default_size(1000, 1000);
         self.show_all();

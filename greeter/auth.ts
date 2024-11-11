@@ -1,16 +1,15 @@
 import GLib from 'gi://GLib?version=2.0';
 import icons from 'lib/icons';
-import { bash } from 'lib/utils';
+import Login from './services/Login';
 
-const userName = await bash("find /home -maxdepth 1 -printf '%f\n' | tail -n 1");
+// const userName = Variable(allUsersArray[0]);
+const userName = Variable('jaskir');
 const iconFile = `/var/lib/AccountsService/icons/${userName}`;
 
-// FIXME: AccountsService crashes?
-// import AccountsService from "gi://AccountsService?version=1.0"
-// const { iconFile, realName, userName } = AccountsService.UserManager
-//     .get_default().list_users()[0]
-
 const loggingin = Variable(false);
+
+const loginSession = new Login();
+console.log(await loginSession.getAllSession());
 
 const CMD = GLib.getenv('ASZTAL_DM_CMD') || 'Hyprland';
 
@@ -19,7 +18,7 @@ const ENV = GLib.getenv('ASZTAL_DM_ENV') || 'WLR_NO_HARDWARE_CURSORS=1 _JAVA_AWT
 async function login(pw: string): Promise<void> {
     loggingin.value = true;
     const greetd = await Service.import('greetd');
-    return greetd.login(userName, pw, CMD, ENV.split(/\s+/)).catch((res) => {
+    return greetd.login(userName.value, pw, CMD, ENV.split(/\s+/)).catch((res) => {
         loggingin.value = false;
         response.label = res?.description || JSON.stringify(res);
         password.text = '';
@@ -58,6 +57,7 @@ const revealer = Widget.Revealer({
 
 export default Widget.Box({
     class_name: 'auth',
+    expand: true,
     attribute: { password },
     vertical: true,
     children: [
@@ -69,7 +69,7 @@ export default Widget.Box({
                 },
                 Widget.Box({
                     class_name: 'wallpaper',
-                    css: `background-image: url('${WALLPAPER}')`,
+                    expand: true,
                 }),
                 Widget.Box({
                     class_name: 'wallpaper-contrast',
@@ -84,7 +84,12 @@ export default Widget.Box({
                 avatar,
                 Widget.Box({
                     hpack: 'center',
-                    children: [Widget.Icon(icons.ui.avatar), Widget.Label(userName)],
+                    children: [
+                        Widget.Icon(icons.ui.avatar),
+                        Widget.Label({
+                            label: userName.bind('value'),
+                        }),
+                    ],
                 }),
                 Widget.Box(
                     {
