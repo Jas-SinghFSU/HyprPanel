@@ -24,6 +24,7 @@ import {
     Submap,
     Weather,
     Power,
+    Hyprsunset,
 } from './Exports';
 
 import { BarItemBox as WidgetContainer } from '../shared/barItemBox.js';
@@ -64,7 +65,8 @@ type Section =
     | 'submap'
     | 'weather'
     | 'power'
-    | 'systray';
+    | 'systray'
+    | 'hyprsunset';
 
 type Layout = {
     left: Section[];
@@ -121,6 +123,7 @@ const widget = {
     submap: (): Button<Child, Attribute> => WidgetContainer(Submap()),
     weather: (): Button<Child, Attribute> => WidgetContainer(Weather()),
     power: (): Button<Child, Attribute> => WidgetContainer(Power()),
+    hyprsunset: (): Button<Child, Attribute> => WidgetContainer(Hyprsunset()),
 };
 
 type GdkMonitors = {
