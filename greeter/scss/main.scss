@@ -1,6 +1,13 @@
+* {
+    font-family: Ubuntu Nerd Font;
+}
 @import 'style/palettes';
 @import 'style/index';
-@import 'style/auth';
-@import 'style/profileName';
-@import 'style/profilePicture';
-@import 'style/passwordInput';
+
+@import 'style/auth/auth';
+@import 'style/auth/profileName';
+@import 'style/auth/profilePicture';
+@import 'style/auth/passwordInput';
+@import 'style/auth/sessions';
+
+@import 'style/clock/clock';

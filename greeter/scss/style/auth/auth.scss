@@ -1,0 +1,8 @@
+.greeter-window {
+    .auth {
+        background: transparentize($base, 0);
+        border-radius: 0.4em;
+        min-width: 34em;
+        min-height: 42em;
+    }
+}

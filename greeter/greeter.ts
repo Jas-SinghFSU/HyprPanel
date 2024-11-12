@@ -2,7 +2,9 @@ import 'greeter/scss/style.ts';
 import './session';
 import GLib from 'gi://GLib?version=2.0';
 import RegularWindow from 'widget/RegularWindow';
-import auth from './components/auth/index';
+import { auth } from './components/auth/index';
+import { sessionTime } from './components/time/index';
+import { loginControls } from './components/controls/index';
 
 const win = RegularWindow({
     name: 'greeter',
@@ -13,12 +15,14 @@ const win = RegularWindow({
         self.show_all();
     },
     child: Widget.Overlay({
+        className: 'sessionOverlay',
         child: Widget.Box({ expand: true }),
         overlays: [
             Widget.Box({
-                vpack: 'center',
-                hpack: 'center',
-                child: auth,
+                vertical: true,
+                vpack: 'fill',
+                hpack: 'fill',
+                children: [sessionTime(), auth(), loginControls()],
             }),
         ],
     }),

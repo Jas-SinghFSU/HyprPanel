@@ -1,15 +1,23 @@
-import loginSession from '../../services/loginSession';
+import { GtkWidget } from 'lib/types/widget';
 import { passwordInput } from './input/index';
 import { profileName } from './profile/name';
 import { profilePicture } from './profile/picture';
+import { sessionSelector } from './sessions/index';
 
-console.log(loginSession.getUsers());
-console.log(loginSession.getSessions());
-console.log(loginSession.getProfilePicture('jaskirs'));
-
-export default Widget.Box({
-    class_name: 'auth',
-    expand: true,
-    vertical: true,
-    children: [profilePicture(), profileName(), passwordInput()],
-});
+export const auth = (): GtkWidget => {
+    return Widget.Box({
+        class_name: 'auth',
+        hpack: 'center',
+        vpack: 'center',
+        vertical: true,
+        children: [
+            Widget.Box({
+                vertical: true,
+                expand: true,
+                hpack: 'center',
+                vpack: 'center',
+                children: [profilePicture(), profileName(), passwordInput(), sessionSelector()],
+            }),
+        ],
+    });
+};

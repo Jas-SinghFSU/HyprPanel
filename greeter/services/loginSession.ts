@@ -13,16 +13,26 @@ class LoginSession {
     /**
      * Array of desktop sessions.
      */
-    private readonly sessions: DesktopSessions[] = [];
+    private sessions: DesktopSessions[] = [];
 
     /**
      * Whether the user in logging in.
      */
     public loggingIn = Variable(false);
+
+    public profilePic = Variable(`${App.configDir}/assets/images/avatar.png`);
+
     public userName = Variable('');
     public password = Variable('');
 
-    private constructor() {}
+    public currentSession = Variable<DesktopSessions>([]);
+
+    private constructor() {
+        this.userName.connect('changed', () => {
+            this.profilePic.value = this.getProfilePicture(this.users[0]);
+            this.password.value = '';
+        });
+    }
 
     /**
      * Factory method to create and initialize a Login instance.
@@ -43,6 +53,10 @@ class LoginSession {
         await this.getAllSessions();
 
         this.userName.value = this.users[0];
+
+        const firstSessionInList = this.sessions[0];
+        this.currentSession.value = firstSessionInList as DesktopSessions;
+        console.log(this.currentSession.value);
     }
 
     /**
@@ -169,6 +183,7 @@ class LoginSession {
         try {
             const allSessionPaths = await this.getAllSessionPaths();
 
+            const sessionArray = [];
             for (const sessionPath of allSessionPaths) {
                 const fileContent = this.getSessionFileContent(sessionPath);
 
@@ -176,11 +191,13 @@ class LoginSession {
                 const sessionExec = this.getSessionExecCommand(fileContent);
 
                 if (sessionName && sessionExec) {
-                    this.sessions.push({
-                        [sessionName]: sessionExec,
-                    });
+                    sessionArray.push([sessionName, sessionExec]);
                 }
             }
+
+            const sortedSessionArray = sessionArray.sort((a, b) => a[0].localeCompare(b[0]));
+
+            this.sessions = sortedSessionArray as DesktopSessions[];
         } catch (error) {
             console.error(`Error fetching all sessions: ${error}`);
             throw error;
@@ -235,44 +252,45 @@ class LoginSession {
     }
 
     /**
-     * Retrieves the profile picture of the currently selected user.
-     *
-     * @returns  A path to the profile picture of the user or a
-     * default avatar if user profile picture doesn't exist.
+     * Sets the userName to the next user in the users array.
+     * If the current user is the last in the array, it wraps around to the first user.
      */
-    public getCurrentProfilePicture(): string {
-        const defaultAvatar = `${App.configDir}/assets/images/avatar.png`;
-        const userProfilePicture = `/var/lib/AccountsService/icons/${this.userName}`;
+    public getNextUser(): void {
+        const indexOfCurrentUser = this.users.indexOf(this.userName.value);
+        const totalUsers = this.users.length;
+        const nextUserIndex = (indexOfCurrentUser + 1) % totalUsers;
 
-        const file = Gio.File.new_for_path(userProfilePicture);
+        this.userName.value = this.users[nextUserIndex];
+    }
 
-        if (!file.query_exists(null)) {
-            return defaultAvatar;
-        }
+    /**
+     * Sets the userName to the previous user in the users array.
+     * If the current user is the first in the array, it wraps around to the last user.
+     */
+    public getPrevUser(): void {
+        const indexOfCurrentUser = this.users.indexOf(this.userName.value);
+        const totalUsers = this.users.length;
+        const prevUserIndex = (indexOfCurrentUser - 1 + totalUsers) % totalUsers;
 
-        try {
-            const pixbuf = GdkPixbuf.Pixbuf.new_from_file(userProfilePicture);
-
-            if (pixbuf) {
-                return userProfilePicture;
-            }
-        } catch (error) {
-            console.error(`Failed to load image from ${userProfilePicture}: ${error}`);
-        }
-
-        return defaultAvatar;
+        this.userName.value = this.users[prevUserIndex];
     }
 
     /**
      * Logs in the user with the provided password and session execution command.
      *
-     * @param sessionExec - The session execution command.
      * @returns A promise that resolves when the login process is complete.
      */
-    async login(sessionExec: string): Promise<void> {
+    async login(): Promise<void> {
         this.loggingIn.value = true;
-        return greetd.login(this.userName.value, this.password.value, sessionExec).catch((res) => {
+
+        if (this.currentSession.value.length === 0) {
+            return;
+        }
+
+        return greetd.login(this.userName.value, this.password.value, this.currentSession.value[1]).catch((res) => {
             this.loggingIn.value = false;
+            this.password.value = '';
+
             return res?.description || JSON.stringify(res);
         });
     }

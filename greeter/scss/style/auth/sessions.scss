@@ -1,0 +1,42 @@
+.sessionContainer {
+    margin-top: 3em;
+    .sessionsButton {
+        background: $highlight-low;
+        border-radius: 0.2em;
+        font-size: 1.1em;
+
+        &:active,
+        &:focus {
+            box-shadow: 0 0 0 0.1em $pine;
+        }
+    }
+    .loginButton {
+        background: $highlight-low;
+        margin-left: 0.4em;
+        border-radius: 0.2em;
+        font-size: 1.5em;
+        &:active,
+        &:focus {
+            box-shadow: 0 0 0 0.1em $pine;
+        }
+    }
+}
+.sessionMenu {
+    border-radius: 0.3em;
+    background: $highlight-low;
+    // box-shadow: 0 0 0 0 $pine;
+}
+
+.sessionMenuItem {
+    font-size: 1.2em;
+    font-family: Ubuntu Nerd Font;
+    transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+    padding: 0.3em;
+    border-radius: 0.1em;
+    color: $text;
+
+    &:hover,
+    &:active {
+        background-color: transparentize($pine, 0.6);
+    }
+}

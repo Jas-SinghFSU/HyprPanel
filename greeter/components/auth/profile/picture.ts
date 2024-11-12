@@ -4,7 +4,14 @@ import Box from 'types/widgets/box';
 
 export const profilePicture = (): Box<Child, Attribute> => {
     return Widget.Box({
-        className: 'profilePicture',
-        css: `background-image: url("${loginSession.getCurrentProfilePicture()}")`,
+        expand: false,
+        hpack: 'center',
+        vpack: 'center',
+        children: [
+            Widget.Box({
+                className: 'profilePicture',
+                css: `background-image: url("${loginSession.profilePic.value}")`,
+            }),
+        ],
     });
 };
