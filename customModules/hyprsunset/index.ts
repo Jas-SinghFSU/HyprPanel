@@ -1,56 +1,49 @@
 import options from 'options';
 import { module } from '../module';
 
-import { inputHandler } from 'customModules/utils';
+import { inputHandler, throttleInput } from 'customModules/utils';
 import Button from 'types/widgets/button';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
 import { pollVariable } from 'customModules/PollVar';
+import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 
 const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hyprsunset;
 
-const isActive = Variable(false);
+const dummyVar = Variable(undefined);
 
-const isActiveCommand = `bash -c "pgrep -x "hyprsunset" > /dev/null && echo "yes" || echo "no""`;
+checkSunsetStatus();
 
-const checkSunsetStatus = (): boolean => {
-    const isRunning = Utils.exec(isActiveCommand);
-    console.log(isRunning);
-    return isRunning === 'yes';
-};
+pollVariable(dummyVar, [], pollingInterval.bind('value'), checkSunsetStatus);
 
-const toggleSunset = (): void => {
-    Utils.execAsync(isActiveCommand).then((res) => {
-        if (res === 'no') {
-            Utils.execAsync(`bash -c "hyprsunset"`).then(() => {
-                Utils.execAsync(isActiveCommand).then((res) => {
-                    isActive.value = res === 'yes';
-                });
-            });
-        } else {
-            Utils.execAsync(`bash -c "pkill -SIGTERM hyprsunset"`).then(() => {
-                Utils.execAsync(isActiveCommand).then((res) => {
-                    isActive.value = res === 'yes';
-                });
-            });
-        }
-    });
-};
-
-pollVariable(isActive, [], pollingInterval.bind('value'), checkSunsetStatus);
+const throttledToggleSunset = throttleInput(() => toggleSunset(isActive), 1000);
 
 export const Hyprsunset = (): BarBoxChild => {
     const hyprsunsetModule = module({
-        textIcon: isActive.bind('value').as((active) => (active ? onIcon.value : offIcon.value)),
-        tooltipText: isActive.bind('value').as((v) => `${v} updates available`),
+        textIcon: Utils.merge(
+            [isActive.bind('value'), onIcon.bind('value'), offIcon.bind('value')],
+            (active, onIcn, offIcn) => {
+                return active ? onIcn : offIcn;
+            },
+        ),
+        tooltipText: isActive.bind('value').as((active) => `Hyprsunset ${active ? 'enabled' : 'disabled'}`),
         boxClass: 'hyprsunset',
-        label: isActive.bind('value').as((active) => (active ? onLabel : offLabel)),
+        label: Utils.merge(
+            [isActive.bind('value'), onLabel.bind('value'), offLabel.bind('value')],
+            (active, onLbl, offLbl) => {
+                return active ? onLbl : offLbl;
+            },
+        ),
         showLabelBinding: label.bind('value'),
         props: {
-            onPrimaryClick: toggleSunset,
             setup: (self: Button<Child, Attribute>) => {
                 inputHandler(self, {
+                    onPrimaryClick: {
+                        fn: () => {
+                            throttledToggleSunset();
+                        },
+                    },
                     onSecondaryClick: {
                         cmd: rightClick,
                     },
