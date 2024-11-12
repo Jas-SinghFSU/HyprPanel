@@ -12,15 +12,15 @@ import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js'
 
 const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 
-const Volume = (): BarBoxChild => {
-    const icons: VolumeIcons = {
-        101: '󰕾',
-        66: '󰕾',
-        34: '󰖀',
-        1: '󰕿',
-        0: '󰝟',
-    };
+export const volumeLevelIcons: VolumeIcons = {
+    101: '󰕾',
+    66: '󰕾',
+    34: '󰖀',
+    1: '󰕿',
+    0: '󰝟',
+};
 
+const Volume = (): BarBoxChild => {
     const getIcon = (): Bind => {
         const icon: Binding<number> = Utils.merge(
             [audio.speaker.bind('is_muted'), audio.speaker.bind('volume')],
@@ -37,7 +37,7 @@ const Volume = (): BarBoxChild => {
             },
         );
 
-        return icon.as((i: number) => (i !== undefined ? icons[i] : icons[101]));
+        return icon.as((i: number) => (i !== undefined ? volumeLevelIcons[i] : volumeLevelIcons[101]));
     };
 
     const volIcn = Widget.Label({
