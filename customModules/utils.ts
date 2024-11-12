@@ -36,7 +36,7 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
         .catch((err) => console.error(`Error running command "${cmd}": ${err})`));
 };
 
-export function throttle<T extends ThrottleFn>(func: T, limit: number): T {
+export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
     let inThrottle: boolean;
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
         if (!inThrottle) {
@@ -50,9 +50,12 @@ export function throttle<T extends ThrottleFn>(func: T, limit: number): T {
 }
 
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
-    throttle((cmd: string, events: EventArgs, fn: ThrottleFnCallback, postInputUpdater?: VariableType<boolean>) => {
-        runAsyncCommand(cmd, events, fn, postInputUpdater);
-    }, 200 / interval);
+    throttleInput(
+        (cmd: string, events: EventArgs, fn: ThrottleFnCallback, postInputUpdater?: VariableType<boolean>) => {
+            runAsyncCommand(cmd, events, fn, postInputUpdater);
+        },
+        200 / interval,
+    );
 
 const dummyVar = Variable('');
 

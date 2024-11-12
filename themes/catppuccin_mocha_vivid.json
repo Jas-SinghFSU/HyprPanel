@@ -344,5 +344,10 @@
     "theme.notification.actions.text": "#181825",
     "theme.notification.actions.background": "#b4befd",
     "theme.notification.background": "#181826",
-    "theme.bar.border.color": "#b4befe"
+    "theme.bar.border.color": "#b4befe",
+    "theme.bar.buttons.modules.hyprsunset.icon": "#242438",
+    "theme.bar.buttons.modules.hyprsunset.background": "#fab387",
+    "theme.bar.buttons.modules.hyprsunset.icon_background": "#fab387",
+    "theme.bar.buttons.modules.hyprsunset.text": "#242438",
+    "theme.bar.buttons.modules.hyprsunset.border": "#fab387"
 }

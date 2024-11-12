@@ -344,5 +344,10 @@
   "theme.bar.buttons.systray.customIcon": "#c0caf5",
   "theme.bar.border.color": "#bb9af7",
   "theme.bar.menus.menu.media.timestamp": "#c0caf5",
-  "theme.bar.buttons.borderColor": "#bb9af7"
+  "theme.bar.buttons.borderColor": "#bb9af7",
+  "theme.bar.buttons.modules.hyprsunset.icon_background": "#e0af68",
+  "theme.bar.buttons.modules.hyprsunset.background": "#272a3d",
+  "theme.bar.buttons.modules.hyprsunset.icon": "#181825",
+  "theme.bar.buttons.modules.hyprsunset.text": "#e0af68",
+  "theme.bar.buttons.modules.hyprsunset.border": "#e0af68"
 }

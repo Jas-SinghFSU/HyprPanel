@@ -394,3 +394,30 @@
     // custom font size
     1.3em //
 );
+
+/* 
+ * #################################
+ * #      Hyprsunset Styling       #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'hyprsunset',
+    // label color
+    $bar-buttons-modules-hyprsunset-text,
+    // icon color
+    $bar-buttons-modules-hyprsunset-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-hyprsunset-icon_background,
+    // label background
+    $bar-buttons-modules-hyprsunset-background,
+    // inner spacing
+    $bar-buttons-modules-hyprsunset-spacing,
+    // if border enabled
+    $bar-buttons-modules-hyprsunset-enableBorder,
+    // border color
+    $bar-buttons-modules-hyprsunset-border,
+    // custom font size
+    1.3em //
+);
