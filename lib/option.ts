@@ -31,8 +31,41 @@ export class Opt<T = unknown> extends Variable<T> {
         return super.getValue();
     };
     init(cacheFile: string): void {
-        const cacheV = JSON.parse(Utils.readFile(cacheFile) || '{}')[this.id];
-        if (cacheV !== undefined) this.value = cacheV;
+        // Find the configuration key based on either dot notation, or JavaScript objects.
+        const findKey = (obj: unknown, path: string[]): T | undefined => {
+            const top = path.shift();
+            if (!top) {
+                // The path is empty, so this is our value.
+                return obj as T;
+            }
+
+            if(!(obj instanceof Object || obj instanceof Array)) {
+                // Not an array, not an object, but we need to go deeper.
+                // This is invalid, so return.
+                return undefined;
+            }
+
+            const mergedPath = [top, ...path].join(".");
+            if (mergedPath in obj) {
+                // The key exists on this level with dot-notation, so we return that.
+                // Typescript does not know what to do with an untyped object, hence the any.
+                return (obj as any)[mergedPath] as T;
+            }
+
+            if (top in obj) {
+                // The value exists but we are not there yet, so we recurse.
+                // Typescript does not know what to do with an untyped object, hence the any.
+                return findKey((obj as any)[top] as object, path);
+            }
+
+            // Key does not exist :(
+            return undefined;
+        }
+
+        const cacheV = findKey(JSON.parse(Utils.readFile(cacheFile) || '{}'), this.id.split("."));
+        if (cacheV !== undefined) {
+            this.value = cacheV;
+        }
 
         this.connect('changed', () => {
             const cache = JSON.parse(Utils.readFile(cacheFile) || '{}');
