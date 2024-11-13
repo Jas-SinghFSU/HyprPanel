@@ -32,14 +32,14 @@ const BatteryLabel = (): BarBoxChild => {
 
     const generateTooltip = (timeSeconds: number, isCharging: boolean, isCharged: boolean): string => {
         if (isCharged) {
-            return 'Full';
+            return 'Fully Charged!!!';
         }
 
         const { hours, minutes } = formatTime(timeSeconds);
         if (isCharging) {
-            return `Time to full: ${hours} h ${minutes} min`;
+            return `${hours} hours ${minutes} minutes until full`;
         } else {
-            return `Time to empty: ${hours} h ${minutes} min`;
+            return `${hours} hours ${minutes} minutes left`;
         }
     };
 
