@@ -13,6 +13,8 @@ import { Window } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
 import { namedColors } from './constants/colors';
 import { distroIcons } from './constants/distro';
 import { distro } from './variables';
+const battery = await Service.import('battery');
+import options from 'options';
 
 export type Binding<T> = import('types/service').Binding<any, any, T>;
 
@@ -200,3 +202,22 @@ export function getDistroIcon(): string {
     const icon = distroIcons.find(([id]) => id === distro.id);
     return icon ? icon[1] : ''; // default icon if not found
 }
+
+export const warnOnLowBattery = (): void => {
+    battery.connect('notify::percent', () => {
+        const { lowBatteryThreshold, lowBatteryNotification, lowBatteryNotificationText, lowBatteryNotificationTitle } =
+            options.menus.power;
+        if (!lowBatteryNotification.value || battery.charging) return;
+        const lowThreshold = lowBatteryThreshold.value;
+
+        if (battery.percent === lowThreshold || battery.percent === lowThreshold / 2) {
+            Notify({
+                summary: lowBatteryNotificationTitle.value.replace('/$POWER_LEVEL/g', battery.percent.toString()),
+                body: lowBatteryNotificationText.value.replace('/$POWER_LEVEL/g', battery.percent.toString()),
+                iconName: icons.ui.warning,
+                urgency: 'critical',
+                timeout: 7000,
+            });
+        }
+    });
+};
