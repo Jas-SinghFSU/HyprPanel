@@ -25,6 +25,7 @@ import {
     Weather,
     Power,
     Hyprsunset,
+    Hypridle,
 } from './Exports';
 
 import { BarItemBox as WidgetContainer } from '../shared/barItemBox.js';
@@ -66,6 +67,7 @@ type Section =
     | 'weather'
     | 'power'
     | 'systray'
+    | 'hypridle'
     | 'hyprsunset';
 
 type Layout = {
@@ -124,6 +126,7 @@ const widget = {
     weather: (): Button<Child, Attribute> => WidgetContainer(Weather()),
     power: (): Button<Child, Attribute> => WidgetContainer(Power()),
     hyprsunset: (): Button<Child, Attribute> => WidgetContainer(Hyprsunset()),
+    hypridle: (): Button<Child, Attribute> => WidgetContainer(Hypridle()),
 };
 
 type GdkMonitors = {
