@@ -41,20 +41,17 @@ const Volume = (): BarBoxChild => {
     };
 
     const volIcn = Widget.Label({
-        hexpand: true,
         label: getIcon(),
         class_name: 'bar-button-icon volume txt-icon bar',
     });
 
     const volPct = Widget.Label({
-        hexpand: true,
         label: audio.speaker.bind('volume').as((v) => `${Math.round(v * 100)}%`),
         class_name: 'bar-button-label volume',
     });
 
     return {
         component: Widget.Box({
-            hexpand: true,
             vexpand: true,
             tooltip_text: Utils.merge(
                 [audio.speaker.bind('description'), getIcon()],
