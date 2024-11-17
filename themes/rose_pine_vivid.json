@@ -349,5 +349,10 @@
   "theme.bar.buttons.modules.hyprsunset.background": "#eb6f92",
   "theme.bar.buttons.modules.hyprsunset.icon_background": "#eb6f92",
   "theme.bar.buttons.modules.hyprsunset.text": "#21202e",
-  "theme.bar.buttons.modules.hyprsunset.border": "#eb6f92"
+  "theme.bar.buttons.modules.hyprsunset.border": "#eb6f92",
+  "theme.bar.buttons.modules.hypridle.icon": "#21202e",
+  "theme.bar.buttons.modules.hypridle.background": "#eb6f92",
+  "theme.bar.buttons.modules.hypridle.icon_background": "#eb6f92",
+  "theme.bar.buttons.modules.hypridle.text": "#21202e",
+  "theme.bar.buttons.modules.hypridle.border": "#eb6f92"
 }
