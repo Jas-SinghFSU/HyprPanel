@@ -184,6 +184,23 @@ export const CustomModuleTheme = (): Scrollable<GtkWidget, Attribute> => {
                 }),
                 Option({ opt: options.theme.bar.buttons.modules.hyprsunset.border, title: 'Border', type: 'color' }),
 
+                Header('Hypridle'),
+                Option({ opt: options.theme.bar.buttons.modules.hypridle.text, title: 'Text', type: 'color' }),
+                Option({ opt: options.theme.bar.buttons.modules.hypridle.icon, title: 'Icon', type: 'color' }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.hypridle.background,
+                    title: 'Label Background',
+                    type: 'color',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.hypridle.icon_background,
+                    title: 'Icon Background',
+                    subtitle:
+                        "Applies a background color to the icon section of the button.\nRequires 'split' button styling.",
+                    type: 'color',
+                }),
+                Option({ opt: options.theme.bar.buttons.modules.hypridle.border, title: 'Border', type: 'color' }),
+
                 Header('Power'),
                 Option({ opt: options.theme.bar.buttons.modules.power.icon, title: 'Icon', type: 'color' }),
                 Option({

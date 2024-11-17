@@ -6,42 +6,29 @@ import Button from 'types/widgets/button';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
 import { pollVariable } from 'customModules/PollVar';
-import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
+import { checkIdleStatus, isActive, toggleIdle } from './helpers';
 
-const {
-    label,
-    pollingInterval,
-    onIcon,
-    offIcon,
-    onLabel,
-    offLabel,
-    rightClick,
-    middleClick,
-    scrollUp,
-    scrollDown,
-    temperature,
-} = options.bar.customModules.hyprsunset;
+const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
+    options.bar.customModules.hypridle;
 
 const dummyVar = Variable(undefined);
 
-checkSunsetStatus();
+checkIdleStatus();
 
-pollVariable(dummyVar, [], pollingInterval.bind('value'), checkSunsetStatus);
+pollVariable(dummyVar, [], pollingInterval.bind('value'), checkIdleStatus);
 
-const throttledToggleSunset = throttleInput(() => toggleSunset(isActive), 1000);
+const throttledToggleIdle = throttleInput(() => toggleIdle(isActive), 1000);
 
-export const Hyprsunset = (): BarBoxChild => {
-    const hyprsunsetModule = module({
+export const Hypridle = (): BarBoxChild => {
+    const hypridleModule = module({
         textIcon: Utils.merge(
             [isActive.bind('value'), onIcon.bind('value'), offIcon.bind('value')],
             (active, onIcn, offIcn) => {
                 return active ? onIcn : offIcn;
             },
         ),
-        tooltipText: Utils.merge([isActive.bind('value'), temperature.bind('value')], (active, temp) => {
-            return `Hyprsunset ${active ? 'enabled' : 'disabled'}\nTemperature: ${temp}`;
-        }),
-        boxClass: 'hyprsunset',
+        tooltipText: isActive.bind('value').as((active) => `Hypridle ${active ? 'enabled' : 'disabled'}`),
+        boxClass: 'hypridle',
         label: Utils.merge(
             [isActive.bind('value'), onLabel.bind('value'), offLabel.bind('value')],
             (active, onLbl, offLbl) => {
@@ -54,7 +41,7 @@ export const Hyprsunset = (): BarBoxChild => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         fn: () => {
-                            throttledToggleSunset();
+                            throttledToggleIdle();
                         },
                     },
                     onSecondaryClick: {
@@ -74,5 +61,5 @@ export const Hyprsunset = (): BarBoxChild => {
         },
     });
 
-    return hyprsunsetModule;
+    return hypridleModule;
 };
