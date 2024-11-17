@@ -118,7 +118,7 @@ const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
         ['^$', '󰇄', 'Desktop'],
 
         // Fallback icon
-        ['(.+)', '󰣆', `${capitalizeFirstLetter(windowtitle.class)}}`],
+        ['(.+)', '󰣆', `${capitalizeFirstLetter(windowtitle.class)}`],
     ];
 
     const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle.class.toLowerCase()));
