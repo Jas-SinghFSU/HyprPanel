@@ -8,8 +8,19 @@ import { BarBoxChild } from 'lib/types/bar';
 import { pollVariable } from 'customModules/PollVar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 
-const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
-    options.bar.customModules.hyprsunset;
+const {
+    label,
+    pollingInterval,
+    onIcon,
+    offIcon,
+    onLabel,
+    offLabel,
+    rightClick,
+    middleClick,
+    scrollUp,
+    scrollDown,
+    temperature,
+} = options.bar.customModules.hyprsunset;
 
 const dummyVar = Variable(undefined);
 
@@ -27,7 +38,9 @@ export const Hyprsunset = (): BarBoxChild => {
                 return active ? onIcn : offIcn;
             },
         ),
-        tooltipText: isActive.bind('value').as((active) => `Hyprsunset ${active ? 'enabled' : 'disabled'}`),
+        tooltipText: Utils.merge([isActive.bind('value'), temperature.bind('value')], (active, temp) => {
+            return `Hyprsunset ${active ? 'enabled' : 'disabled'}\nTemperature: ${temp}`;
+        }),
         boxClass: 'hyprsunset',
         label: Utils.merge(
             [isActive.bind('value'), onLabel.bind('value'), offLabel.bind('value')],
