@@ -684,7 +684,6 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                     opt: options.bar.customModules.hyprsunset.pollingInterval,
                     title: 'Polling Interval',
                     type: 'number',
-                    subtitle: "WARNING: Be careful of your package manager's rate limit.",
                     min: 100,
                     max: 60 * 24 * 1000,
                     increment: 1000,
@@ -706,6 +705,76 @@ export const CustomModuleSettings = (): Scrollable<GtkWidget, Attribute> =>
                 }),
                 Option({
                     opt: options.bar.customModules.hyprsunset.scrollDown,
+                    title: 'Scroll Down',
+                    type: 'string',
+                }),
+
+                /*
+                 ************************************
+                 *            HYPRIDLE            *
+                 ************************************
+                 */
+                Header('Hypridle'),
+                Option({
+                    opt: options.theme.bar.buttons.modules.hypridle.enableBorder,
+                    title: 'Button Border',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.onIcon,
+                    title: 'Enabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.offIcon,
+                    title: 'Disabled Icon',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.onLabel,
+                    title: 'Enabled Label',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.offLabel,
+                    title: 'Disabled Label',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.label,
+                    title: 'Show Label',
+                    type: 'boolean',
+                }),
+                Option({
+                    opt: options.theme.bar.buttons.modules.hypridle.spacing,
+                    title: 'Spacing',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.pollingInterval,
+                    title: 'Polling Interval',
+                    type: 'number',
+                    min: 100,
+                    max: 60 * 24 * 1000,
+                    increment: 1000,
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.rightClick,
+                    title: 'Right Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.middleClick,
+                    title: 'Middle Click',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.scrollUp,
+                    title: 'Scroll Up',
+                    type: 'string',
+                }),
+                Option({
+                    opt: options.bar.customModules.hypridle.scrollDown,
                     title: 'Scroll Down',
                     type: 'string',
                 }),

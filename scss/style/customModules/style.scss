@@ -1,4 +1,4 @@
-/* 
+/*
  * #################################
  * #       Default Styling         #
  * #################################
@@ -31,7 +31,7 @@
     }
 }
 
-/* 
+/*
  * #################################
  * #        Styling Function       #
  * #################################
@@ -126,7 +126,7 @@
     }
 }
 
-/* 
+/*
  * #################################
  * #      Ram Module Styling       #
  * #################################
@@ -152,7 +152,7 @@
     $bar-buttons-modules-ram-border
 );
 
-/* 
+/*
  * #################################
  * #      Cpu Module Styling       #
  * #################################
@@ -179,7 +179,7 @@
     1.05em //
 );
 
-/* 
+/*
  * #################################
  * #    Cpu Temp Module Styling    #
  * #################################
@@ -206,7 +206,7 @@
     1.05em //
 );
 
-/* 
+/*
  * #################################
  * #    Storage Module Styling     #
  * #################################
@@ -233,7 +233,7 @@
     1.3em //
 );
 
-/* 
+/*
  * #################################
  * #    Netstat Module Styling     #
  * #################################
@@ -260,7 +260,7 @@
     1.2em //
 );
 
-/* 
+/*
  * #################################
  * #    KB Layout Module Styling   #
  * #################################
@@ -287,7 +287,7 @@
     1.2em //
 );
 
-/* 
+/*
  * #################################
  * #    Updates Module Styling     #
  * #################################
@@ -314,7 +314,7 @@
     1.2em //
 );
 
-/* 
+/*
  * #################################
  * #    Submap Module Styling      #
  * #################################
@@ -341,7 +341,7 @@
     1.2em //
 );
 
-/* 
+/*
  * #################################
  * #    Weather Module Styling     #
  * #################################
@@ -368,7 +368,7 @@
     1.2em //
 );
 
-/* 
+/*
  * #################################
  * #    Power Module Styling       #
  * #################################
@@ -395,7 +395,7 @@
     1.3em //
 );
 
-/* 
+/*
  * #################################
  * #      Hyprsunset Styling       #
  * #################################
@@ -420,4 +420,32 @@
     $bar-buttons-modules-hyprsunset-border,
     // custom font size
     1.3em //
+);
+
+
+/*
+ * #################################
+ * #      Hypridle Styling       #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'hypridle',
+    // label color
+    $bar-buttons-modules-hypridle-text,
+    // icon color
+    $bar-buttons-modules-hypridle-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-hypridle-icon_background,
+    // label background
+    $bar-buttons-modules-hypridle-background,
+    // inner spacing
+    $bar-buttons-modules-hypridle-spacing,
+    // if border enabled
+    $bar-buttons-modules-hypridle-enableBorder,
+    // border color
+    $bar-buttons-modules-hypridle-border,
+    // custom font size
+    1em //
 );
