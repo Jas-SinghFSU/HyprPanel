@@ -1,0 +1,11 @@
+.greeter-window {
+    .profilePicture {
+        border-radius: 0.4em;
+        min-height: 13em;
+        min-width: 13em;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        box-shadow: 0 0.15em 0 0 $highlight-high;
+    }
+}

@@ -1,2 +1,5 @@
 .weather.json
 node_modules
+
+greeter/greeter.js
+greeter/dist
