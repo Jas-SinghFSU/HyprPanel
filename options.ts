@@ -388,10 +388,10 @@ const options = mkOptions(OPTIONS, {
                     },
                     hypridle: {
                         enableBorder: opt(false),
-                        border: opt(colors.peach),
+                        border: opt(colors.pink),
                         background: opt(colors.base2),
-                        text: opt(colors.peach),
-                        icon: opt(colors.peach),
+                        text: opt(colors.pink),
+                        icon: opt(colors.pink),
                         icon_background: opt(colors.base2),
                         spacing: opt('0.45em'),
                     },
