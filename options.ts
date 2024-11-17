@@ -1160,6 +1160,12 @@ const options = mkOptions(OPTIONS, {
             raiseMaximumVolume: opt(false),
         },
         power: {
+            lowBatteryNotification: opt(false),
+            lowBatteryThreshold: opt(20),
+            lowBatteryNotificationTitle: opt('Warning: Low battery'),
+            lowBatteryNotificationText: opt(
+                'Your battery is running low ($POWER_LEVEL %).\n\nPlease plug in your charger.',
+            ),
             showLabel: opt(true),
             confirmation: opt(true),
             sleep: opt('systemctl suspend'),

@@ -11,12 +11,12 @@ import { Bar } from 'modules/bar/Bar';
 import MenuWindows from './modules/menus/main.js';
 import SettingsDialog from 'widget/settings/SettingsDialog';
 import Notifications from './modules/notifications/index.js';
-import { bash, forMonitors } from 'lib/utils';
+import { bash, forMonitors, warnOnLowBattery } from 'lib/utils';
 import options from 'options.js';
 import OSD from 'modules/osd/index';
 
 App.config({
-    onConfigParsed: () => Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`),
+    onConfigParsed: () => [Utils.execAsync(`python3 ${App.configDir}/services/bluetooth.py`), warnOnLowBattery()],
     windows: [...MenuWindows, Notifications(), SettingsDialog(), ...forMonitors(Bar), OSD()],
     closeWindowDelay: {
         sideright: 350,
