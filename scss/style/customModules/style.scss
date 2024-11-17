@@ -422,10 +422,9 @@
     1.3em //
 );
 
-
 /*
  * #################################
- * #      Hypridle Styling       #
+ * #       Hypridle Styling        #
  * #################################
  */
 @include styleModule(
@@ -447,5 +446,5 @@
     // border color
     $bar-buttons-modules-hypridle-border,
     // custom font size
-    1em //
+    1.075em //
 );
