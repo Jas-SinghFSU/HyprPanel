@@ -386,6 +386,15 @@ const options = mkOptions(OPTIONS, {
                         icon_background: opt(colors.base2),
                         spacing: opt('0.45em'),
                     },
+                    hypridle: {
+                        enableBorder: opt(false),
+                        border: opt(colors.pink),
+                        background: opt(colors.base2),
+                        text: opt(colors.pink),
+                        icon: opt(colors.pink),
+                        icon_background: opt(colors.base2),
+                        spacing: opt('0.45em'),
+                    },
                 },
             },
             menus: {
@@ -1117,6 +1126,18 @@ const options = mkOptions(OPTIONS, {
                 scrollUp: opt(''),
                 scrollDown: opt(''),
             },
+            hypridle: {
+                label: opt(true),
+                onIcon: opt(''),
+                offIcon: opt(''),
+                onLabel: opt('On'),
+                offLabel: opt('Off'),
+                pollingInterval: opt(1000 * 2),
+                rightClick: opt(''),
+                middleClick: opt(''),
+                scrollUp: opt(''),
+                scrollDown: opt(''),
+            },
         },
     },
 
@@ -1139,6 +1160,12 @@ const options = mkOptions(OPTIONS, {
             raiseMaximumVolume: opt(false),
         },
         power: {
+            lowBatteryNotification: opt(false),
+            lowBatteryThreshold: opt(20),
+            lowBatteryNotificationTitle: opt('Warning: Low battery'),
+            lowBatteryNotificationText: opt(
+                'Your battery is running low ($POWER_LEVEL %).\n\nPlease plug in your charger.',
+            ),
             showLabel: opt(true),
             confirmation: opt(true),
             sleep: opt('systemctl suspend'),

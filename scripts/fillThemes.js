@@ -398,7 +398,11 @@ const main = () => {
     // Define special key mappings
     // Format: "target_key": "source_key"
     const specialKeyMappings = {
-        'theme.bar.menus.menu.network.switch.enabled': 'theme.bar.menus.menu.network.iconbuttons.active',
+        'theme.bar.buttons.modules.hypridle.icon': 'theme.bar.buttons.modules.storage.icon',
+        'theme.bar.buttons.modules.hypridle.background': 'theme.bar.buttons.modules.storage.background',
+        'theme.bar.buttons.modules.hypridle.icon_background': 'theme.bar.buttons.modules.storage.icon_background',
+        'theme.bar.buttons.modules.hypridle.text': 'theme.bar.buttons.modules.storage.text',
+        'theme.bar.buttons.modules.hypridle.border': 'theme.bar.buttons.modules.storage.border',
         // Add more special mappings here if needed
     };
 
