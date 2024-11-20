@@ -45,7 +45,7 @@ export const TodayTemperature = (theWeather: Variable<Weather>): BoxWidget => {
             Widget.Box({
                 hpack: 'center',
                 child: Widget.Label({
-                    max_width_chars: 17,
+                    maxWidthChars: 15,
                     truncate: 'end',
                     lines: 2,
                     class_name: theWeather
