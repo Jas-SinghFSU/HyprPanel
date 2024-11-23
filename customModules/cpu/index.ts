@@ -8,7 +8,7 @@ import { inputHandler } from 'customModules/utils';
 import { computeCPU } from './computeCPU';
 import { BarBoxChild } from 'lib/types/bar';
 import { Attribute, Child } from 'lib/types/widget';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 
 // All the user configurable options for the cpu module that are needed
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =

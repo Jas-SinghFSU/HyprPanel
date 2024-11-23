@@ -5,9 +5,9 @@ import { BarModule } from 'lib/types/options';
 import { Poller } from './Poller';
 
 /**
- * A class that manages polling of a variable by executing a bash command at specified intervals.
+ * A class that manages polling of a variable by executing a generic function at specified intervals.
  */
-export class BashPoller<Value, Parameters extends unknown[]> {
+export class FunctionPoller<Value, Parameters extends unknown[] = []> {
     private poller: Poller;
 
     private params: Parameters;
@@ -16,8 +16,7 @@ export class BashPoller<Value, Parameters extends unknown[]> {
         private targetVariable: VariableType<Value>,
         private trackers: Bind[],
         private pollingInterval: Bind,
-        private updateCommand: string,
-        private pollingFunction: GenericFunction<Value, [string, ...Parameters]>,
+        private pollingFunction: GenericFunction<Value, Parameters>,
         ...params: Parameters
     ) {
         this.params = params;
@@ -26,17 +25,16 @@ export class BashPoller<Value, Parameters extends unknown[]> {
     }
 
     /**
-     * Executes the bash command specified in the updateCommand property.
+     * Executes the polling function with the provided parameters.
      *
-     * The result of the command is processed by the pollingFunction and
-     * assigned to the targetVariable.
+     * The result of the function is assigned to the target variable.
      */
-    public execute = async (): Promise<void> => {
+    private execute = async (): Promise<void> => {
         try {
-            const res = await Utils.execAsync(`bash -c "${this.updateCommand}"`);
-            this.targetVariable.value = this.pollingFunction(res, ...this.params);
+            const result = await this.pollingFunction(...this.params);
+            this.targetVariable.value = result;
         } catch (error) {
-            console.error(`Error executing bash command "${this.updateCommand}":`, error);
+            console.error('Error executing polling function:', error);
         }
     };
 

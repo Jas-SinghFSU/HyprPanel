@@ -2,7 +2,7 @@
 
 const GLib = imports.gi.GLib;
 
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 
 class Ram {

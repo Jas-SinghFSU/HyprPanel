@@ -1,46 +1,28 @@
 import GLib from 'gi://GLib?version=2.0';
-import { GenericFunction } from 'lib/types/customModules/generic';
 import { Bind } from 'lib/types/variable';
-import { Variable as VariableType } from 'types/variable';
-import { Poller } from './poller.interface';
-import { getLayoutItems } from 'lib/utils';
 import { BarModule } from 'lib/types/options';
+import { getLayoutItems } from 'lib/utils';
 
 const { layouts } = options.bar;
 
 /**
- * A class that manages polling of a variable by executing a function or a bash command at specified intervals.
+ * A class that manages the polling lifecycle, including interval management and execution state.
  */
-export class FunctionPoller<Value, Parameters extends unknown[]> implements Poller {
+export class Poller {
     private intervalInstance: number | null = null;
     private isExecuting: boolean = false;
-
-    private targetVariable: VariableType<Value>;
-
-    private trackers: Bind[];
-
-    private pollingInterval: Bind;
-
-    private pollingFunction: GenericFunction<Value, Parameters>;
-    private params: Parameters;
+    private pollingFunction: () => Promise<void>;
 
     constructor(
-        targetVariable: VariableType<Value>,
-        trackers: Bind[],
-        pollingInterval: Bind,
-        func: GenericFunction<Value, Parameters>,
-        ...params: Parameters
+        private pollingInterval: Bind,
+        private trackers: Bind[],
+        pollingFunction: () => Promise<void>,
     ) {
-        this.targetVariable = targetVariable;
-        this.trackers = trackers;
-        this.pollingInterval = pollingInterval;
-        this.params = params;
-
-        this.pollingFunction = func;
+        this.pollingFunction = pollingFunction;
     }
 
     /**
-     * Starts the polling process.
+     * Starts the polling process by setting up the interval.
      */
     public start(): void {
         Utils.merge([this.pollingInterval, ...this.trackers], (intervalMs: number) => {
@@ -59,39 +41,11 @@ export class FunctionPoller<Value, Parameters extends unknown[]> implements Poll
     }
 
     /**
-     * Executes the polling logic based on the type (function or bash command).
-     *
-     * @param intervalMs - The polling interval in milliseconds.
-     */
-    private executePolling(intervalMs: number): void {
-        if (this.intervalInstance !== null) {
-            GLib.source_remove(this.intervalInstance);
-        }
-
-        this.intervalInstance = Utils.interval(intervalMs, async () => {
-            if (this.isExecuting) {
-                return;
-            }
-
-            this.isExecuting = true;
-
-            try {
-                const result = this.pollingFunction(...this.params);
-                this.targetVariable.value = result;
-            } catch (error) {
-                console.error('Error during polling execution:', error);
-            } finally {
-                this.isExecuting = false;
-            }
-        });
-    }
-
-    /**
-     * Initializes the poller with the specified module.
+     * Initializes the polling based on module usage.
      *
      * @param moduleName - The name of the module to initialize.
      */
-    public initialize = (moduleName: BarModule): void => {
+    public initialize(moduleName: BarModule): void {
         const initialModules = getLayoutItems();
 
         if (initialModules.includes(moduleName)) {
@@ -109,5 +63,32 @@ export class FunctionPoller<Value, Parameters extends unknown[]> implements Poll
                 this.stop();
             }
         });
-    };
+    }
+
+    /**
+     * Executes the polling function at the specified interval.
+     *
+     * @param intervalMs - The polling interval in milliseconds.
+     */
+    private executePolling(intervalMs: number): void {
+        if (this.intervalInstance !== null) {
+            GLib.source_remove(this.intervalInstance);
+        }
+
+        this.intervalInstance = Utils.interval(intervalMs, async () => {
+            if (this.isExecuting) {
+                return;
+            }
+
+            this.isExecuting = true;
+
+            try {
+                await this.pollingFunction();
+            } catch (error) {
+                console.error('Error during polling execution:', error);
+            } finally {
+                this.isExecuting = false;
+            }
+        });
+    }
 }

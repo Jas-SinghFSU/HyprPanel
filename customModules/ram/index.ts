@@ -17,7 +17,7 @@ import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
 // Global Constants
 import { LABEL_TYPES } from 'lib/types/defaults/bar';
 import { Attribute, Child } from 'lib/types/widget';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { Variable as TVariable } from 'types/variable';
 
 // All the user configurable options for the ram module that are needed

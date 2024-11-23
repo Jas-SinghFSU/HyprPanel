@@ -6,7 +6,7 @@ import Button from 'types/widgets/button';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 
 const {
     label,

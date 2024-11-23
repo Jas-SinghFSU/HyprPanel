@@ -10,7 +10,7 @@ import { inputHandler } from 'customModules/utils';
 import { getCPUTemperature } from './helpers';
 import { BarBoxChild } from 'lib/types/bar';
 import { Attribute, Child } from 'lib/types/widget';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { Variable as VariableType } from 'types/variable';
 import { UnitType } from 'lib/types/weather';
 

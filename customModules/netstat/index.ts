@@ -9,7 +9,7 @@ import { NetworkResourceData } from 'lib/types/customModules/network';
 import { NETWORK_LABEL_TYPES } from 'lib/types/defaults/bar';
 import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
 import { Attribute, Child } from 'lib/types/widget';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { Variable as TVariable } from 'types/variable';
 
 const {

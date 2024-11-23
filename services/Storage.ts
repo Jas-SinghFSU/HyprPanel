@@ -3,7 +3,7 @@
 // @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
 
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 
 class Storage {

@@ -7,7 +7,7 @@ import { GenericResourceData } from 'lib/types/customModules/generic';
 import Button from 'types/widgets/button';
 import { LABEL_TYPES } from 'lib/types/defaults/bar';
 import { Attribute, Child } from 'lib/types/widget';
-import { FunctionPoller } from 'lib/poller/Poller';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { Variable as TVariable } from 'types/variable';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
