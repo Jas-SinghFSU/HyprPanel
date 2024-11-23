@@ -1,6 +1,6 @@
 import { Variable as TVariable } from 'types/variable';
 
-export const isActiveCommand = `bash -c "pgrep -x 'hypridle' > /dev/null && echo 'yes' || echo 'no'"`;
+export const isActiveCommand = `bash -c "pgrep -x 'hypridle' &>/dev/null && echo 'yes' || echo 'no'"`;
 
 export const isActive = Variable(false);
 
@@ -23,7 +23,9 @@ export const toggleIdle = (isActive: TVariable<boolean>): void => {
 };
 
 export const checkIdleStatus = (): undefined => {
+    console.time('hypridle');
     Utils.execAsync(isActiveCommand).then((res) => {
+        console.timeEnd('hypridle');
         isActive.value = res === 'yes';
     });
 };

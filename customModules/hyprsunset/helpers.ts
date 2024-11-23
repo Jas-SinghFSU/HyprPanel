@@ -4,7 +4,7 @@ import { Variable as TVariable } from 'types/variable';
 
 const { temperature } = options.bar.customModules.hyprsunset;
 
-export const isActiveCommand = `bash -c "pgrep -x "hyprsunset" > /dev/null && echo "yes" || echo "no""`;
+export const isActiveCommand = `bash -c "pgrep -x 'hyprsunset' > /dev/null && echo 'yes' || echo 'no'"`;
 
 export const isActive = Variable(false);
 
