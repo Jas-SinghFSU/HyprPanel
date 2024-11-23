@@ -1,7 +1,7 @@
 const GLib = imports.gi.GLib;
 
 import { divide } from 'customModules/utils';
-import { GenericResourceData } from 'lib/types/customModules/generic';
+import { GenericResourceData } from 'common/lib/types/customModules/generic';
 import { Variable as VariableType } from 'types/variable';
 
 // FIX: Consolidate with Ram service class

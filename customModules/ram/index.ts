@@ -4,7 +4,7 @@ import options from 'options';
 import { module } from '../module';
 
 // Types
-import { GenericResourceData } from 'lib/types/customModules/generic';
+import { GenericResourceData } from 'common/lib/types/customModules/generic';
 import Button from 'types/widgets/button';
 
 // Helper Methods
@@ -12,12 +12,13 @@ import { calculateRamUsage } from './computeRam';
 
 // Utility Methods
 import { formatTooltip, inputHandler, renderResourceLabel } from 'customModules/utils';
-import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
+import { BarBoxChild, ResourceLabelType } from 'common/lib/types/bar';
 
 // Global Constants
-import { LABEL_TYPES } from 'lib/types/defaults/bar';
-import { pollVariable } from 'customModules/PollVar';
-import { Attribute, Child } from 'lib/types/widget';
+import { LABEL_TYPES } from 'common/lib/types/defaults/bar';
+import { Attribute, Child } from 'common/lib/types/widget';
+import { Poller } from 'customModules/Poller';
+import { Variable as TVariable } from 'types/variable';
 
 // All the user configurable options for the ram module that are needed
 const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
@@ -26,7 +27,15 @@ const { label, labelType, round, leftClick, rightClick, middleClick, pollingInte
 const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
 const ramUsage = Variable<GenericResourceData>(defaultRamData);
 
-pollVariable(ramUsage, [round.bind('value')], pollingInterval.bind('value'), calculateRamUsage, round);
+const ramPoller = new Poller<GenericResourceData, [TVariable<boolean>]>(
+    ramUsage,
+    [round.bind('value')],
+    pollingInterval.bind('value'),
+    calculateRamUsage,
+    round,
+);
+
+ramPoller.start();
 
 export const Ram = (): BarBoxChild => {
     const ramModule = module({

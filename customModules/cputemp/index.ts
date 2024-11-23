@@ -8,9 +8,11 @@ import Button from 'types/widgets/button';
 // Utility Methods
 import { inputHandler } from 'customModules/utils';
 import { getCPUTemperature } from './helpers';
-import { pollVariable } from 'customModules/PollVar';
 import { BarBoxChild } from 'lib/types/bar';
 import { Attribute, Child } from 'lib/types/widget';
+import { Poller } from 'customModules/Poller';
+import { Variable as VariableType } from 'types/variable';
+import { UnitType } from 'common/lib/types/weather';
 
 // All the user configurable options for the cpu module that are needed
 const {
@@ -30,7 +32,7 @@ const {
 
 export const cpuTemp = Variable(0);
 
-pollVariable(
+const cpuTempPoller = new Poller<number, [VariableType<boolean>, VariableType<UnitType>]>(
     // Variable to poll and update with the result of the function passed in
     cpuTemp,
     // Variables that should trigger the polling function to update when they change
@@ -42,6 +44,8 @@ pollVariable(
     round,
     unit,
 );
+
+cpuTempPoller.start();
 
 export const CpuTemp = (): BarBoxChild => {
     const cpuTempModule = module({

@@ -3,9 +3,9 @@ import { module } from '../module';
 
 import { inputHandler } from 'customModules/utils';
 import Button from 'types/widgets/button';
-import { getWeatherStatusTextIcon, globalWeatherVar } from 'globals/weather';
-import { Attribute, Child } from 'lib/types/widget';
-import { BarBoxChild } from 'lib/types/bar';
+import { getWeatherStatusTextIcon, globalWeatherVar } from 'common/globals/weather';
+import { Attribute, Child } from 'common/lib/types/widget';
+import { BarBoxChild } from 'common/lib/types/bar';
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.weather;
 

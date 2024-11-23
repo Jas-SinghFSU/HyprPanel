@@ -8,8 +8,8 @@ import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import Label from 'types/widgets/label';
 import { getKeyboardLayout } from './getLayout';
-import { BarBoxChild } from 'lib/types/bar';
-import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'common/lib/types/bar';
+import { Attribute, Child } from 'common/lib/types/widget';
 
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.kbLayout;

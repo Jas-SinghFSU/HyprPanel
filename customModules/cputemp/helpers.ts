@@ -2,14 +2,14 @@ import GLib from 'gi://GLib?version=2.0';
 import { convertCelsiusToFahrenheit } from 'globals/weather';
 import { UnitType } from 'lib/types/weather';
 import options from 'options';
-import { Variable } from 'types/variable';
+import { Variable as VariableType } from 'types/variable';
 const { sensor } = options.bar.customModules.cpuTemp;
 
 /**
  * Retrieves the current CPU temperature.
  * @returns CPU temperature in degrees Celsius
  */
-export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitType>): number => {
+export const getCPUTemperature = (round: VariableType<boolean>, unit: VariableType<UnitType>): number => {
     try {
         if (sensor.value.length === 0) {
             return 0;
@@ -23,13 +23,13 @@ export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitT
             return 0;
         }
 
-        let decimalTemp = parseInt(tempInfo) / 1000;
+        let decimalTemp = parseInt(tempInfo, 10) / 1000;
 
         if (unit.value === 'imperial') {
             decimalTemp = convertCelsiusToFahrenheit(decimalTemp);
         }
 
-        return round ? Math.round(decimalTemp) : parseFloat(decimalTemp.toFixed(2));
+        return round.value ? Math.round(decimalTemp) : parseFloat(decimalTemp.toFixed(2));
     } catch (error) {
         console.error('Error calculating CPU Temp:', error);
         return 0;

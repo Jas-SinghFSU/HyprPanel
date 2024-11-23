@@ -3,10 +3,10 @@ import { module } from '../module';
 
 import { inputHandler, throttleInput } from 'customModules/utils';
 import Button from 'types/widgets/button';
-import { Attribute, Child } from 'lib/types/widget';
-import { BarBoxChild } from 'lib/types/bar';
-import { pollVariable } from 'customModules/PollVar';
+import { Attribute, Child } from 'common/lib/types/widget';
+import { BarBoxChild } from 'common/lib/types/bar';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
+import { Poller } from 'customModules/Poller';
 
 const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;
@@ -15,7 +15,9 @@ const dummyVar = Variable(undefined);
 
 checkIdleStatus();
 
-pollVariable(dummyVar, [], pollingInterval.bind('value'), checkIdleStatus);
+const idleStatusPoller = new Poller<undefined, []>(dummyVar, [], pollingInterval.bind('value'), checkIdleStatus);
+
+idleStatusPoller.start();
 
 const throttledToggleIdle = throttleInput(() => toggleIdle(isActive), 1000);
 
