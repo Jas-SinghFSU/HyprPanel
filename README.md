@@ -1,3 +1,9 @@
+# 🚧 Migrating to Astal and AGSv2 🚧
+
+Hyprpanel is upgrading to AGSv2 and Astal
+
+🔧 No new features will be worked on until maintenance is complete. Similarly most bugs will not be worked until the migration is finished.
+
 <p align="center">
   <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
     <img width="180" src="./assets/hyprpanel.png" alt="Hyprpanel logo">
