@@ -2,7 +2,7 @@
 
 Hyprpanel is upgrading to AGSv2 and Astal
 
-🔧 No new features will be worked on until maintenance is complete. Similarly most bugs will not be worked until the migration is finished.
+🔧 No new features or most bugs will be worked on until migration is complete.
 
 <p align="center">
   <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
