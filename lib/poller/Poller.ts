@@ -8,11 +8,17 @@ const { layouts } = options.bar;
 /**
  * A class that manages the polling lifecycle, including interval management and execution state.
  */
-export class ModulePoller {
+export class Poller {
     private intervalInstance: number | null = null;
     private isExecuting: boolean = false;
     private pollingFunction: () => Promise<void>;
 
+    /**
+     * Creates an instance of Poller.
+     * @param pollingInterval - The interval at which polling occurs.
+     * @param trackers - An array of trackers to monitor.
+     * @param pollingFunction - The function to execute during each poll.
+     */
     constructor(
         private pollingInterval: Bind,
         private trackers: Bind[],
@@ -43,9 +49,16 @@ export class ModulePoller {
     /**
      * Initializes the polling based on module usage.
      *
+     * If not module is provided then we can safely assume that we want
+     * to always run the pollig interval.
+     *
      * @param moduleName - The name of the module to initialize.
      */
-    public initialize(moduleName: BarModule): void {
+    public initialize(moduleName?: BarModule): void {
+        if (moduleName === undefined) {
+            return this.start();
+        }
+
         const initialModules = getLayoutItems();
 
         if (initialModules.includes(moduleName)) {
