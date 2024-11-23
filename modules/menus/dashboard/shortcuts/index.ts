@@ -21,6 +21,7 @@ const Shortcuts = (): BoxWidget => {
             },
         ],
     });
+
     const handleClick = (action: string, tOut: number = 250): void => {
         App.closeWindow('dashboardmenu');
 

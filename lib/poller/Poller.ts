@@ -8,7 +8,7 @@ const { layouts } = options.bar;
 /**
  * A class that manages the polling lifecycle, including interval management and execution state.
  */
-export class Poller {
+export class ModulePoller {
     private intervalInstance: number | null = null;
     private isExecuting: boolean = false;
     private pollingFunction: () => Promise<void>;

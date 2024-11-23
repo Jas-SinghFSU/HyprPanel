@@ -2,13 +2,13 @@ import { Variable as VariableType } from 'types/variable';
 import { Bind } from 'lib/types/variable';
 import { GenericFunction } from 'lib/types/customModules/generic';
 import { BarModule } from 'lib/types/options';
-import { Poller } from './Poller';
+import { ModulePoller } from './Poller';
 
 /**
  * A class that manages polling of a variable by executing a generic function at specified intervals.
  */
 export class FunctionPoller<Value, Parameters extends unknown[] = []> {
-    private poller: Poller;
+    private poller: ModulePoller;
 
     private params: Parameters;
 
@@ -21,7 +21,7 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
     ) {
         this.params = params;
 
-        this.poller = new Poller(this.pollingInterval, this.trackers, this.execute);
+        this.poller = new ModulePoller(this.pollingInterval, this.trackers, this.execute);
     }
 
     /**
