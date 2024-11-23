@@ -1,8 +1,6 @@
-import options from 'options';
-
-// Module initializer
 import { module } from '../module';
 
+import options from 'options';
 import Button from 'types/widgets/button';
 
 // Utility Methods
@@ -10,7 +8,7 @@ import { inputHandler } from 'customModules/utils';
 import { computeCPU } from './computeCPU';
 import { BarBoxChild } from 'lib/types/bar';
 import { Attribute, Child } from 'lib/types/widget';
-import { Poller } from 'customModules/Poller';
+import { FunctionPoller } from 'lib/poller/Poller';
 
 // All the user configurable options for the cpu module that are needed
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
@@ -19,7 +17,7 @@ const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, 
 export const cpuUsage = Variable(0);
 
 // Instantiate the Poller class for CPU usage polling
-const cpuPoller = new Poller<number, []>(
+const cpuPoller = new FunctionPoller<number, []>(
     // Variable to poll and update with the result of the function passed in
     cpuUsage,
     // Variables that should trigger the polling function to update when they change
@@ -30,7 +28,7 @@ const cpuPoller = new Poller<number, []>(
     computeCPU,
 );
 
-cpuPoller.start();
+cpuPoller.initialize('cpu');
 
 export const Cpu = (): BarBoxChild => {
     const renderLabel = (cpuUsg: number, rnd: boolean): string => {

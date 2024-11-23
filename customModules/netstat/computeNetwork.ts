@@ -1,8 +1,8 @@
 import GLib from 'gi://GLib';
 import { Variable as VariableType } from 'types/variable';
-import { NetworkResourceData } from 'common/lib/types/customModules/network';
-import { GET_DEFAULT_NETSTAT_DATA } from 'common/lib/types/defaults/netstat';
-import { RateUnit } from 'common/lib/types/bar';
+import { NetworkResourceData } from 'lib/types/customModules/network';
+import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
+import { RateUnit } from 'lib/types/bar';
 
 let previousNetUsage = { rx: 0, tx: 0, time: 0 };
 

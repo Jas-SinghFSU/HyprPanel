@@ -4,7 +4,7 @@ import {
     KbLabelType,
     LayoutKeys,
     LayoutValues,
-} from 'common/lib/types/customModules/kbLayout';
+} from 'lib/types/customModules/kbLayout';
 import { layoutMap } from './layouts';
 
 export const getKeyboardLayout = (obj: string, format: KbLabelType): LayoutKeys | LayoutValues => {

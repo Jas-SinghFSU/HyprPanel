@@ -3,13 +3,13 @@ import options from 'options';
 import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
 import { computeNetwork } from './computeNetwork';
-import { BarBoxChild, NetstatLabelType, RateUnit } from 'common/lib/types/bar';
+import { BarBoxChild, NetstatLabelType, RateUnit } from 'lib/types/bar';
 import Button from 'types/widgets/button';
-import { NetworkResourceData } from 'common/lib/types/customModules/network';
-import { NETWORK_LABEL_TYPES } from 'common/lib/types/defaults/bar';
-import { GET_DEFAULT_NETSTAT_DATA } from 'common/lib/types/defaults/netstat';
-import { Attribute, Child } from 'common/lib/types/widget';
-import { Poller } from 'customModules/Poller';
+import { NetworkResourceData } from 'lib/types/customModules/network';
+import { NETWORK_LABEL_TYPES } from 'lib/types/defaults/bar';
+import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
+import { Attribute, Child } from 'lib/types/widget';
+import { FunctionPoller } from 'lib/poller/Poller';
 import { Variable as TVariable } from 'types/variable';
 
 const {
@@ -28,7 +28,7 @@ const {
 
 export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.value));
 
-const netstatPoller = new Poller<
+const netstatPoller = new FunctionPoller<
     NetworkResourceData,
     [round: TVariable<boolean>, interfaceNameVar: TVariable<string>, dataType: TVariable<RateUnit>]
 >(
@@ -52,7 +52,7 @@ const netstatPoller = new Poller<
     rateUnit,
 );
 
-netstatPoller.start();
+netstatPoller.initialize('netstat');
 
 export const Netstat = (): BarBoxChild => {
     const renderNetworkLabel = (lblType: NetstatLabelType, network: NetworkResourceData): string => {

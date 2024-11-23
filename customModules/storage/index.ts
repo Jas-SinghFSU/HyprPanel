@@ -2,12 +2,12 @@ import options from 'options';
 import { module } from '../module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'customModules/utils';
 import { computeStorage } from './computeStorage';
-import { BarBoxChild, ResourceLabelType } from 'common/lib/types/bar';
-import { GenericResourceData } from 'common/lib/types/customModules/generic';
+import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
+import { GenericResourceData } from 'lib/types/customModules/generic';
 import Button from 'types/widgets/button';
-import { LABEL_TYPES } from 'common/lib/types/defaults/bar';
-import { Attribute, Child } from 'common/lib/types/widget';
-import { Poller } from 'customModules/Poller';
+import { LABEL_TYPES } from 'lib/types/defaults/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { FunctionPoller } from 'lib/poller/Poller';
 import { Variable as TVariable } from 'types/variable';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
@@ -17,7 +17,7 @@ const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
 
 const storageUsage = Variable<GenericResourceData>(defaultStorageData);
 
-const storagePoller = new Poller<GenericResourceData, [TVariable<boolean>]>(
+const storagePoller = new FunctionPoller<GenericResourceData, [TVariable<boolean>]>(
     storageUsage,
     [round.bind('value')],
     pollingInterval.bind('value'),
@@ -25,7 +25,7 @@ const storagePoller = new Poller<GenericResourceData, [TVariable<boolean>]>(
     round,
 );
 
-storagePoller.start();
+storagePoller.initialize('storage');
 
 export const Storage = (): BarBoxChild => {
     const storageModule = module({

@@ -1,19 +1,28 @@
 import GLib from 'gi://GLib?version=2.0';
-import { GenericFunction } from 'common/lib/types/customModules/generic';
-import { Bind } from 'common/lib/types/variable';
+import { GenericFunction } from 'lib/types/customModules/generic';
+import { Bind } from 'lib/types/variable';
 import { Variable as VariableType } from 'types/variable';
+import { Poller } from './poller.interface';
+import { getLayoutItems } from 'lib/utils';
+import { BarModule } from 'lib/types/options';
+
+const { layouts } = options.bar;
 
 /**
  * A class that manages polling of a variable by executing a function or a bash command at specified intervals.
  */
-export class Poller<Value, Parameters extends unknown[]> {
-    private targetVariable: VariableType<Value>;
-    private trackers: Bind[];
-    private pollingInterval: Bind;
-    private pollingFunction: GenericFunction<Value, Parameters>;
-    private params: Parameters;
+export class FunctionPoller<Value, Parameters extends unknown[]> implements Poller {
     private intervalInstance: number | null = null;
     private isExecuting: boolean = false;
+
+    private targetVariable: VariableType<Value>;
+
+    private trackers: Bind[];
+
+    private pollingInterval: Bind;
+
+    private pollingFunction: GenericFunction<Value, Parameters>;
+    private params: Parameters;
 
     constructor(
         targetVariable: VariableType<Value>,
@@ -55,9 +64,6 @@ export class Poller<Value, Parameters extends unknown[]> {
      * @param intervalMs - The polling interval in milliseconds.
      */
     private executePolling(intervalMs: number): void {
-        console.log(this.params);
-        console.log(this.pollingFunction?.name ?? '');
-
         if (this.intervalInstance !== null) {
             GLib.source_remove(this.intervalInstance);
         }
@@ -79,4 +85,29 @@ export class Poller<Value, Parameters extends unknown[]> {
             }
         });
     }
+
+    /**
+     * Initializes the poller with the specified module.
+     *
+     * @param moduleName - The name of the module to initialize.
+     */
+    public initialize = (moduleName: BarModule): void => {
+        const initialModules = getLayoutItems();
+
+        if (initialModules.includes(moduleName)) {
+            this.start();
+        } else {
+            this.stop();
+        }
+
+        layouts.connect('changed', () => {
+            const usedModules = getLayoutItems();
+
+            if (usedModules.includes(moduleName)) {
+                this.start();
+            } else {
+                this.stop();
+            }
+        });
+    };
 }

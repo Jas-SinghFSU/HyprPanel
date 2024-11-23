@@ -3,8 +3,8 @@ import { module } from '../module';
 
 import { inputHandler } from 'customModules/utils';
 import Button from 'types/widgets/button';
-import { Attribute, Child } from 'common/lib/types/widget';
-import { BarBoxChild } from 'common/lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'lib/types/bar';
 
 const { icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.power;
 

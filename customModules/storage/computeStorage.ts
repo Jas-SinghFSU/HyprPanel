@@ -3,7 +3,7 @@ import GTop from 'gi://GTop';
 
 import { divide } from 'customModules/utils';
 import { Variable as VariableType } from 'types/variable';
-import { GenericResourceData } from 'common/lib/types/customModules/generic';
+import { GenericResourceData } from 'lib/types/customModules/generic';
 
 // FIX: Consolidate with Storage service class
 export const computeStorage = (round: VariableType<boolean>): GenericResourceData => {

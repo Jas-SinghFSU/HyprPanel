@@ -23,9 +23,7 @@ export const toggleIdle = (isActive: TVariable<boolean>): void => {
 };
 
 export const checkIdleStatus = (): undefined => {
-    console.time('hypridle');
     Utils.execAsync(isActiveCommand).then((res) => {
-        console.timeEnd('hypridle');
         isActive.value = res === 'yes';
     });
 };

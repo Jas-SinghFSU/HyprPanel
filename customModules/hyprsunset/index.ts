@@ -3,10 +3,10 @@ import { module } from '../module';
 
 import { inputHandler, throttleInput } from 'customModules/utils';
 import Button from 'types/widgets/button';
-import { Attribute, Child } from 'common/lib/types/widget';
-import { BarBoxChild } from 'common/lib/types/bar';
+import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'lib/types/bar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
-import { Poller } from 'customModules/Poller';
+import { FunctionPoller } from 'lib/poller/Poller';
 
 const {
     label,
@@ -26,9 +26,9 @@ const dummyVar = Variable(undefined);
 
 checkSunsetStatus();
 
-const sunsetPoller = new Poller<undefined, []>(dummyVar, [], pollingInterval.bind('value'), checkSunsetStatus);
+const sunsetPoller = new FunctionPoller<undefined, []>(dummyVar, [], pollingInterval.bind('value'), checkSunsetStatus);
 
-sunsetPoller.start();
+sunsetPoller.initialize('hyprsunset');
 
 const throttledToggleSunset = throttleInput(() => toggleSunset(isActive), 1000);
 

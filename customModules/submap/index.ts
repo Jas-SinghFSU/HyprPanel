@@ -5,9 +5,9 @@ import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
 import Button from 'types/widgets/button';
 import { Variable as VariableType } from 'types/variable';
-import { Attribute, Child } from 'common/lib/types/widget';
-import { BarBoxChild } from 'common/lib/types/bar';
-import { capitalizeFirstLetter } from 'common/lib/utils';
+import { Attribute, Child } from 'lib/types/widget';
+import { BarBoxChild } from 'lib/types/bar';
+import { capitalizeFirstLetter } from 'lib/utils';
 import { getInitialSubmap, isSubmapEnabled } from './helpers';
 
 const {
