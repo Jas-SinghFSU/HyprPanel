@@ -1,4 +1,5 @@
 const hyprland = await Service.import('hyprland');
+import { BashPoller } from 'lib/poller/BashPoller';
 import { Attribute, BoxWidget, Child } from 'lib/types/widget';
 import options from 'options';
 import { Variable as VarType } from 'types/variable';
@@ -9,18 +10,26 @@ import Label from 'types/widgets/label';
 const { left, right } = options.menus.dashboard.shortcuts;
 
 const Shortcuts = (): BoxWidget => {
-    const isRecording = Variable(false, {
-        poll: [
-            1000,
-            `${App.configDir}/services/screen_record.sh status`,
-            (out): boolean => {
-                if (out === 'recording') {
-                    return true;
-                }
-                return false;
-            },
-        ],
-    });
+    const pollingInterval = Variable(1000);
+    const isRecording = Variable(false);
+
+    const handleRecorder = (commandOutput: string): boolean => {
+        if (commandOutput === 'recording') {
+            return true;
+        }
+        return false;
+    };
+
+    const recordingPoller = new BashPoller<boolean, []>(
+        isRecording,
+        [],
+        pollingInterval.bind('value'),
+        `${App.configDir}/services/screen_record.sh status`,
+        handleRecorder,
+    );
+
+    recordingPoller.initialize();
+
     const handleClick = (action: string, tOut: number = 250): void => {
         App.closeWindow('dashboardmenu');
 

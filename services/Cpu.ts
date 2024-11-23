@@ -2,8 +2,7 @@
 
 // @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
-
-import { pollVariable } from 'customModules/PollVar';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 
 class Cpu {
     private updateFrequency = Variable(2000);
@@ -15,7 +14,14 @@ class Cpu {
         GTop.glibtop_get_cpu(this.previousCpuData);
 
         this.calculateUsage = this.calculateUsage.bind(this);
-        pollVariable(this.cpu, [], this.updateFrequency.bind('value'), this.calculateUsage);
+        const cpuPoller = new FunctionPoller<number, []>(
+            this.cpu,
+            [],
+            this.updateFrequency.bind('value'),
+            this.calculateUsage,
+        );
+
+        cpuPoller.start();
     }
 
     public calculateUsage(): number {

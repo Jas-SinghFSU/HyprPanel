@@ -16,8 +16,9 @@ import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
 
 // Global Constants
 import { LABEL_TYPES } from 'lib/types/defaults/bar';
-import { pollVariable } from 'customModules/PollVar';
 import { Attribute, Child } from 'lib/types/widget';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
+import { Variable as TVariable } from 'types/variable';
 
 // All the user configurable options for the ram module that are needed
 const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
@@ -26,7 +27,15 @@ const { label, labelType, round, leftClick, rightClick, middleClick, pollingInte
 const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
 const ramUsage = Variable<GenericResourceData>(defaultRamData);
 
-pollVariable(ramUsage, [round.bind('value')], pollingInterval.bind('value'), calculateRamUsage, round);
+const ramPoller = new FunctionPoller<GenericResourceData, [TVariable<boolean>]>(
+    ramUsage,
+    [round.bind('value')],
+    pollingInterval.bind('value'),
+    calculateRamUsage,
+    round,
+);
+
+ramPoller.initialize('ram');
 
 export const Ram = (): BarBoxChild => {
     const ramModule = module({

@@ -1,4 +1,4 @@
-export type GenericFunction<T, P extends unknown[] = unknown[]> = (...args: P) => T;
+export type GenericFunction<Value, Parameters extends unknown[]> = (...args: Parameters) => Promise<Value> | Value;
 
 export type GenericResourceMetrics = {
     total: number;

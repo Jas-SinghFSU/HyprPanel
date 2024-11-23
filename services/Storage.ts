@@ -3,7 +3,7 @@
 // @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
 
-import { pollVariable } from 'customModules/PollVar';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 
 class Storage {
@@ -14,7 +14,14 @@ class Storage {
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        pollVariable(this.storage, [], this.updateFrequency.bind('value'), this.calculateUsage);
+        const storagePoller = new FunctionPoller<GenericResourceData, []>(
+            this.storage,
+            [],
+            this.updateFrequency.bind('value'),
+            this.calculateUsage,
+        );
+
+        storagePoller.start();
     }
 
     public calculateUsage(): GenericResourceData {

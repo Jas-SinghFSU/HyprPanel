@@ -2,7 +2,7 @@
 
 const GLib = imports.gi.GLib;
 
-import { pollVariable } from 'customModules/PollVar';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 
 class Ram {
@@ -13,7 +13,14 @@ class Ram {
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        pollVariable(this.ram, [], this.updateFrequency.bind('value'), this.calculateUsage);
+        const ramPoller = new FunctionPoller<GenericResourceData, []>(
+            this.ram,
+            [],
+            this.updateFrequency.bind('value'),
+            this.calculateUsage,
+        );
+
+        ramPoller.start();
     }
 
     public calculateUsage(): GenericResourceData {

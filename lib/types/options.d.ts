@@ -15,8 +15,38 @@ export type RecursiveOptionsObject = {
 };
 
 export type BarLocation = 'top' | 'bottom';
+export type BarModule =
+    | 'battery'
+    | 'dashboard'
+    | 'workspaces'
+    | 'windowtitle'
+    | 'media'
+    | 'notifications'
+    | 'volume'
+    | 'network'
+    | 'bluetooth'
+    | 'clock'
+    | 'ram'
+    | 'cpu'
+    | 'cputemp'
+    | 'storage'
+    | 'netstat'
+    | 'kbinput'
+    | 'updates'
+    | 'submap'
+    | 'weather'
+    | 'power'
+    | 'systray'
+    | 'hypridle'
+    | 'hyprsunset';
+
 export type BarLayout = {
-    [key: string]: Layout;
+    left: BarModule[];
+    middle: BarModule[];
+    right: BarModule[];
+};
+export type BarLayouts = {
+    [key: string]: BarLayout;
 };
 
 export type Unit = 'imperial' | 'metric';

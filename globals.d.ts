@@ -1,4 +1,3 @@
-// globals.d.ts
 /* eslint-disable no-var */
 
 import { Options, Variable as VariableType } from 'types/variable';

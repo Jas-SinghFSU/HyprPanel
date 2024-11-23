@@ -3,10 +3,10 @@ import { module } from '../module';
 
 import { inputHandler } from 'customModules/utils';
 import Button from 'types/widgets/button';
-import { Variable as VariableType } from 'types/variable';
-import { pollVariableBash } from 'customModules/PollVar';
+import { Variable as TVariable } from 'types/variable';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
+import { BashPoller } from 'lib/poller/BashPoller';
 
 const {
     updateCommand,
@@ -21,7 +21,7 @@ const {
     scrollDown,
 } = options.bar.customModules.updates;
 
-const pendingUpdates: VariableType<string> = Variable('0');
+const pendingUpdates: TVariable<string> = Variable('0');
 const postInputUpdater = Variable(true);
 
 const processUpdateCount = (updateCount: string): string => {
@@ -29,13 +29,15 @@ const processUpdateCount = (updateCount: string): string => {
     return `${updateCount.padStart(2, '0')}`;
 };
 
-pollVariableBash(
+const updatesPoller = new BashPoller<string, []>(
     pendingUpdates,
     [padZero.bind('value'), postInputUpdater.bind('value')],
     pollingInterval.bind('value'),
     updateCommand.value,
     processUpdateCount,
 );
+
+updatesPoller.initialize('updates');
 
 export const Updates = (): BarBoxChild => {
     const updatesModule = module({

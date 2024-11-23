@@ -3,13 +3,14 @@ import options from 'options';
 import { module } from '../module';
 import { inputHandler } from 'customModules/utils';
 import { computeNetwork } from './computeNetwork';
-import { BarBoxChild, NetstatLabelType } from 'lib/types/bar';
+import { BarBoxChild, NetstatLabelType, RateUnit } from 'lib/types/bar';
 import Button from 'types/widgets/button';
 import { NetworkResourceData } from 'lib/types/customModules/network';
 import { NETWORK_LABEL_TYPES } from 'lib/types/defaults/bar';
 import { GET_DEFAULT_NETSTAT_DATA } from 'lib/types/defaults/netstat';
-import { pollVariable } from 'customModules/PollVar';
 import { Attribute, Child } from 'lib/types/widget';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
+import { Variable as TVariable } from 'types/variable';
 
 const {
     label,
@@ -27,7 +28,10 @@ const {
 
 export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.value));
 
-pollVariable(
+const netstatPoller = new FunctionPoller<
+    NetworkResourceData,
+    [round: TVariable<boolean>, interfaceNameVar: TVariable<string>, dataType: TVariable<RateUnit>]
+>(
     // Variable to poll and update with the result of the function passed in
     networkUsage,
     // Variables that should trigger the polling function to update when they change
@@ -47,6 +51,8 @@ pollVariable(
     // e.g. KiB, MiB, GiB, etc.
     rateUnit,
 );
+
+netstatPoller.initialize('netstat');
 
 export const Netstat = (): BarBoxChild => {
     const renderNetworkLabel = (lblType: NetstatLabelType, network: NetworkResourceData): string => {

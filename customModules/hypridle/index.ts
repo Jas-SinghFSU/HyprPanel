@@ -5,8 +5,8 @@ import { inputHandler, throttleInput } from 'customModules/utils';
 import Button from 'types/widgets/button';
 import { Attribute, Child } from 'lib/types/widget';
 import { BarBoxChild } from 'lib/types/bar';
-import { pollVariable } from 'customModules/PollVar';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
 
 const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;
@@ -15,7 +15,14 @@ const dummyVar = Variable(undefined);
 
 checkIdleStatus();
 
-pollVariable(dummyVar, [], pollingInterval.bind('value'), checkIdleStatus);
+const idleStatusPoller = new FunctionPoller<undefined, []>(
+    dummyVar,
+    [],
+    pollingInterval.bind('value'),
+    checkIdleStatus,
+);
+
+idleStatusPoller.initialize('hypridle');
 
 const throttledToggleIdle = throttleInput(() => toggleIdle(isActive), 1000);
 

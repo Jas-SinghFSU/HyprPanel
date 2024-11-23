@@ -1,14 +1,14 @@
 import options from 'options';
 import { module } from '../module';
-
 import { formatTooltip, inputHandler, renderResourceLabel } from 'customModules/utils';
 import { computeStorage } from './computeStorage';
 import { BarBoxChild, ResourceLabelType } from 'lib/types/bar';
 import { GenericResourceData } from 'lib/types/customModules/generic';
 import Button from 'types/widgets/button';
 import { LABEL_TYPES } from 'lib/types/defaults/bar';
-import { pollVariable } from 'customModules/PollVar';
 import { Attribute, Child } from 'lib/types/widget';
+import { FunctionPoller } from 'lib/poller/FunctionPoller';
+import { Variable as TVariable } from 'types/variable';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
@@ -17,7 +17,15 @@ const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
 
 const storageUsage = Variable<GenericResourceData>(defaultStorageData);
 
-pollVariable(storageUsage, [round.bind('value')], pollingInterval.bind('value'), computeStorage, round);
+const storagePoller = new FunctionPoller<GenericResourceData, [TVariable<boolean>]>(
+    storageUsage,
+    [round.bind('value')],
+    pollingInterval.bind('value'),
+    computeStorage,
+    round,
+);
+
+storagePoller.initialize('storage');
 
 export const Storage = (): BarBoxChild => {
     const storageModule = module({
