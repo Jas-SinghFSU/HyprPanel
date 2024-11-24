@@ -55,24 +55,27 @@ const Wifi = (): BoxWidget => {
                     }),
                 ],
             }),
-            Widget.Box({
-                class_name: 'menu-items-section',
-                vertical: true,
-                children: [
-                    Widget.Box({
-                        class_name: 'wap-staging',
-                        setup: (self) => {
-                            renderWapStaging(self, network, Staging, Connecting);
-                        },
-                    }),
-                    Widget.Box({
-                        class_name: 'available-waps',
-                        vertical: true,
-                        setup: (self) => {
-                            renderWAPs(self, network, Staging, Connecting);
-                        },
-                    }),
-                ],
+            Widget.Scrollable({
+                css: 'min-height: 300px;',
+                child: Widget.Box({
+                    class_name: 'menu-items-section',
+                    vertical: true,
+                    children: [
+                        Widget.Box({
+                            class_name: 'wap-staging',
+                            setup: (self) => {
+                                renderWapStaging(self, network, Staging, Connecting);
+                            },
+                        }),
+                        Widget.Box({
+                            class_name: 'available-waps',
+                            vertical: true,
+                            setup: (self) => {
+                                renderWAPs(self, network, Staging, Connecting);
+                            },
+                        }),
+                    ],
+                }),
             }),
         ],
     });
