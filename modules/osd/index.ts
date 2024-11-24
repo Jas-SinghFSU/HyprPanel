@@ -10,7 +10,7 @@ import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
 const hyprland = await Service.import('hyprland');
 const audio = await Service.import('audio');
 
-const { enable, duration, orientation, location, active_monitor, monitor } = options.theme.osd;
+const { enable, duration, orientation, location, active_monitor, monitor, transition } = options.theme.osd;
 
 const curMonitor = Variable(monitor.value);
 
@@ -67,7 +67,7 @@ const handleReveal = (
 
 const renderOSD = (): Revealer<Child, Attribute> => {
     return Widget.Revealer({
-        transition: 'crossfade',
+        transition: transition.bind('value'),
         reveal_child: false,
         setup: (self) => {
             self.hook(
