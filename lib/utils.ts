@@ -4,7 +4,7 @@ import { BarModule, NotificationAnchor } from './types/options';
 import { OSDAnchor } from 'lib/types/options';
 import icons, { substitutes } from './icons';
 import Gtk from 'gi://Gtk?version=3.0';
-import Gdk from 'gi://Gdk';
+import { Gdk } from 'astal/gtk3';
 import GLib from 'gi://GLib?version=2.0';
 import GdkPixbuf from 'gi://GdkPixbuf';
 import { NotificationArgs } from 'types/utils/notify';
@@ -15,6 +15,7 @@ import { distroIcons } from './constants/distro';
 import { distro } from './variables';
 const battery = await Service.import('battery');
 import options from 'options';
+import { Gio } from 'astal';
 
 export type Binding<T> = import('types/service').Binding<any, any, T>;
 
@@ -243,4 +244,8 @@ export const warnOnLowBattery = (): void => {
             });
         }
     });
+};
+
+export const ensureDirectory = (path: string): void => {
+    if (!GLib.file_test(path, GLib.FileTest.EXISTS)) Gio.File.new_for_path(path).make_directory_with_parents(null);
 };

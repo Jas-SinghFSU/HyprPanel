@@ -2,8 +2,7 @@ import { Action } from 'lib/types/power.js';
 import PopupWindow from '../shared/popup/index.js';
 import powermenu from './helpers/actions.js';
 import icons from '../../icons/index.js';
-import Window from 'types/widgets/window.js';
-import { Attribute, Child, GButton } from 'lib/types/widget.js';
+import { GButton, GtkWidget } from 'lib/types/widget.js';
 import options from 'options.js';
 
 const SysButton = (action: Action, label: string): GButton =>
@@ -25,7 +24,7 @@ const SysButton = (action: Action, label: string): GButton =>
             ],
         }),
     });
-export default (): Window<Child, Attribute> =>
+export default (): GtkWidget =>
     PopupWindow({
         name: 'powermenu',
         transition: options.menus.transition.bind('value'),

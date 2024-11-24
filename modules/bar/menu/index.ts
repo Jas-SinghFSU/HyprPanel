@@ -1,9 +1,8 @@
 import { runAsyncCommand, throttledScrollHandler } from 'customModules/utils.js';
-import Gdk from 'gi://Gdk?version=3.0';
+import { Gdk } from 'astal/gtk3';
 import { BarBoxChild } from 'lib/types/bar.js';
-import { Attribute, Child } from 'lib/types/widget.js';
+import { GtkWidget } from 'lib/types/widget.js';
 import options from 'options';
-import Button from 'types/widgets/button.js';
 import { openMenu } from '../utils.js';
 import { getDistroIcon } from 'lib/utils.js';
 
@@ -31,23 +30,23 @@ const Menu = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            on_primary_click: (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+            on_primary_click: (clicked: GtkWidget, event: Gdk.Event): void => {
                 openMenu(clicked, event, 'dashboardmenu');
             },
-            setup: (self: Button<Child, Attribute>): void => {
+            setup: (self: GtkWidget): void => {
                 self.hook(options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
-                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                    self.on_secondary_click = (clicked: GtkWidget, event: Gdk.Event): void => {
                         runAsyncCommand(rightClick.value, { clicked, event });
                     };
-                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                    self.on_middle_click = (clicked: GtkWidget, event: Gdk.Event): void => {
                         runAsyncCommand(middleClick.value, { clicked, event });
                     };
-                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                    self.on_scroll_up = (clicked: GtkWidget, event: Gdk.Event): void => {
                         throttledHandler(scrollUp.value, { clicked, event });
                     };
-                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
+                    self.on_scroll_down = (clicked: GtkWidget, event: Gdk.Event): void => {
                         throttledHandler(scrollDown.value, { clicked, event });
                     };
                 });

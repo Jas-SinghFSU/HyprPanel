@@ -1,4 +1,4 @@
-import Gdk from 'gi://Gdk?version=3.0';
+import { Gdk } from 'astal/gtk3';
 import { BarBoxChild, SelfButton } from 'lib/types/bar';
 import { Notify } from 'lib/utils';
 const systemtray = await Service.import('systemtray');

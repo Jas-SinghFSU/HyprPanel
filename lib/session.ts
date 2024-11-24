@@ -1,4 +1,6 @@
 import GLib from 'gi://GLib?version=2.0';
+import { ensureDirectory } from './utils';
+import { App } from 'astal/gtk3';
 
 declare global {
     const OPTIONS: string;
@@ -12,5 +14,5 @@ Object.assign(globalThis, {
     USER: GLib.get_user_name(),
 });
 
-Utils.ensureDirectory(TMP);
-App.addIcons(`${App.configDir}/assets`);
+ensureDirectory(TMP);
+App.add_icons(`${SRC}/assets`);

@@ -1,3 +1,4 @@
+import { readFile } from 'astal';
 import { opt, mkOptions } from 'lib/option';
 import { NetstatLabelType, RateUnit, ResourceLabelType } from 'lib/types/bar';
 import { KbLabelType } from 'lib/types/customModules/kbLayout';
@@ -1272,9 +1273,7 @@ const options = mkOptions(OPTIONS, {
                 interval: opt(60000),
                 unit: opt<UnitType>('imperial'),
                 location: opt('Los Angeles'),
-                key: opt<string>(
-                    JSON.parse(Utils.readFile(`${App.configDir}/.weather.json`) || '{}')?.weather_api_key || '',
-                ),
+                key: opt<string>(JSON.parse(readFile(`${SRC}/.weather.json`) || '{}')?.weather_api_key || ''),
             },
         },
     },

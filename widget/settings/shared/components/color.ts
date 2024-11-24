@@ -1,4 +1,4 @@
-import Gdk from 'gi://Gdk';
+import { Gdk } from 'astal/gtk3';
 import { Opt } from 'lib/option';
 import { Attribute, BoxWidget } from 'lib/types/widget';
 

@@ -1,4 +1,4 @@
-import Gdk from 'gi://Gdk?version=3.0';
+import { Gdk } from 'astal/gtk3';
 import { Attribute, Child } from 'lib/types/widget';
 import { calculateMenuPosition } from 'modules/menus/shared/dropdown/locationHandler/index';
 import Button from 'types/widgets/button';

@@ -1,4 +1,4 @@
-import Gdk from 'gi://Gdk?version=3.0';
+import { Gdk } from 'astal/gtk3';
 import GLib from 'gi://GLib';
 import { openMenu } from '../utils.js';
 import options from 'options';

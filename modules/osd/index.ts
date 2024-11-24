@@ -5,8 +5,8 @@ import { OSDBar } from './bar/index';
 import { OSDIcon } from './icon/index';
 import { getPosition } from 'lib/utils';
 import { Attribute, Child } from 'lib/types/widget';
-import { Revealer } from 'resource:///com/github/Aylur/ags/widgets/revealer.js';
-import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
+import Revealer from 'types/widgets/revealer';
+import Window from 'types/widgets/window';
 const hyprland = await Service.import('hyprland');
 const audio = await Service.import('audio');
 

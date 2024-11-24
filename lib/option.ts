@@ -1,16 +1,14 @@
 import { isHexColor } from 'globals/variables';
-import { Variable } from 'resource:///com/github/Aylur/ags/variable.js';
 import { MkOptionsResult } from './types/options';
+import { Binding, monitorFile, readFile, register, Variable, writeFile } from 'astal';
+import { ensureDirectory } from './utils';
 
 type OptProps = {
     persistent?: boolean;
 };
 
+@register()
 export class Opt<T = unknown> extends Variable<T> {
-    static {
-        Service.register(this);
-    }
-
     constructor(initial: T, { persistent = false }: OptProps = {}) {
         super(initial);
         this.initial = initial;
@@ -18,45 +16,64 @@ export class Opt<T = unknown> extends Variable<T> {
     }
 
     initial: T;
-    id = '';
+    private _id = '';
     persistent: boolean;
-    toString(): string {
-        return `${this.value}`;
-    }
     toJSON(): string {
-        return `opt:${this.value}`;
+        return `opt:${this.get()}`;
     }
 
     getValue = (): T => {
-        return super.getValue();
+        return this.get();
     };
-    init(cacheFile: string): void {
-        const cacheV = JSON.parse(Utils.readFile(cacheFile) || '{}')[this.id];
-        if (cacheV !== undefined) this.value = cacheV;
 
-        this.connect('changed', () => {
-            const cache = JSON.parse(Utils.readFile(cacheFile) || '{}');
-            cache[this.id] = this.value;
-            Utils.writeFileSync(JSON.stringify(cache, null, 2), cacheFile);
+    public get value(): T {
+        return this.get();
+    }
+
+    public set value(val: T) {
+        this.set(val);
+    }
+
+    public get id(): string {
+        return this._id;
+    }
+
+    public set id(newId: string) {
+        this._id = newId;
+    }
+
+    bind<R = T>(transform?: (value: T) => R): Binding<R> {
+        const b = Binding.bind(this);
+        return transform ? b.as(transform) : (b as unknown as Binding<R>);
+    }
+
+    init(cacheFile: string): void {
+        const cacheV = JSON.parse(readFile(cacheFile) || '{}')[this._id];
+        if (cacheV !== undefined) this.set(cacheV);
+
+        this.subscribe((newVal) => {
+            const cache = JSON.parse(readFile(cacheFile) || '{}');
+            cache[this._id] = newVal;
+            writeFile(JSON.stringify(cache, null, 2), cacheFile);
         });
     }
 
     reset(): string | undefined {
         if (this.persistent) return;
 
-        if (JSON.stringify(this.value) !== JSON.stringify(this.initial)) {
-            this.value = this.initial;
-            return this.id;
+        if (JSON.stringify(this.get()) !== JSON.stringify(this.initial)) {
+            this.set(this.initial);
+            return this._id;
         }
     }
 
     doResetColor(): string | undefined {
         if (this.persistent) return;
 
-        const isColor = isHexColor(this.value as string);
-        if (JSON.stringify(this.value) !== JSON.stringify(this.initial) && isColor) {
-            this.value = this.initial;
-            return this.id;
+        const isColor = isHexColor(this.get() as string);
+        if (JSON.stringify(this.get()) !== JSON.stringify(this.initial) && isColor) {
+            this.set(this.initial);
+            return this._id;
         }
         return;
     }
@@ -90,18 +107,20 @@ export function mkOptions<T extends object>(
 ): T & MkOptionsResult {
     for (const opt of getOptions(object as Record<string, unknown>)) opt.init(cacheFile);
 
-    Utils.ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
+    ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
 
     const configFile = `${TMP}/${confFile}`;
+
     const values = getOptions(object as Record<string, unknown>).reduce(
         (obj, { id, value }) => ({ [id]: value, ...obj }),
         {},
     );
-    Utils.writeFileSync(JSON.stringify(values, null, 2), configFile);
-    Utils.monitorFile(configFile, () => {
-        const cache = JSON.parse(Utils.readFile(configFile) || '{}');
+
+    writeFile(JSON.stringify(values, null, 2), configFile);
+    monitorFile(configFile, () => {
+        const cache = JSON.parse(readFile(configFile) || '{}');
         for (const opt of getOptions(object as Record<string, unknown>)) {
-            if (JSON.stringify(cache[opt.id]) !== JSON.stringify(opt.value)) opt.value = cache[opt.id];
+            if (JSON.stringify(cache[opt.id]) !== JSON.stringify(opt.get())) opt.set(cache[opt.id]);
         }
     });
 
@@ -140,7 +159,7 @@ export function mkOptions<T extends object>(
         },
         handler(deps: string[], callback: () => void) {
             for (const opt of getOptions(object as Record<string, unknown>)) {
-                if (deps.some((i) => opt.id.startsWith(i))) opt.connect('changed', callback);
+                if (deps.some((i) => opt.id.startsWith(i))) opt.subscribe(callback);
             }
         },
     });
