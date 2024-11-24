@@ -1,7 +1,7 @@
 import { readFile } from 'astal';
-import { opt, mkOptions } from 'lib/option';
-import { NetstatLabelType, RateUnit, ResourceLabelType } from 'lib/types/bar';
-import { KbLabelType } from 'lib/types/customModules/kbLayout';
+import { opt, mkOptions } from 'src/lib/option';
+import { NetstatLabelType, RateUnit, ResourceLabelType } from 'src/lib/types/bar';
+import { KbLabelType } from 'src/lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
@@ -14,12 +14,12 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
-} from 'lib/types/options';
-import { MatugenScheme, MatugenTheme, MatugenVariations } from 'lib/types/options';
-import { SystrayIconMap } from 'lib/types/systray';
-import { UnitType } from 'lib/types/weather';
-import { Transition } from 'lib/types/widget';
-import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'lib/types/workspace';
+} from 'src/lib/types/options';
+import { MatugenScheme, MatugenTheme, MatugenVariations } from 'src/lib/types/options';
+import { SystrayIconMap } from 'src/lib/types/systray';
+import { UnitType } from 'src/lib/types/weather';
+import { Transition } from 'src/lib/types/widget';
+import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'src/lib/types/workspace';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {

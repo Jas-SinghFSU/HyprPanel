@@ -14,7 +14,7 @@
         "alwaysStrict": true,
         "noImplicitThis": true,
         "baseUrl": "./",
-        "typeRoots": ["@girs", "lib/types/globals"],
+        "typeRoots": ["@girs", "src/lib/types/globals"],
         "skipLibCheck": true,
         "types": [],
         "experimentalDecorators": true,

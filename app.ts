@@ -1,4 +1,4 @@
-import './lib/session';
+import './src/lib/session';
 // import 'scss/style';
 // import 'globals/useTheme';
 // import 'globals/wallpaper';
@@ -7,11 +7,11 @@ import './lib/session';
 // import 'globals/utilities';
 
 import Hyprland from 'gi://AstalHyprland';
-import { Bar } from 'modules/bar/Bar';
+import { Bar } from 'src/components/bar';
 // import MenuWindows from './modules/menus/main.js';
 // import SettingsDialog from 'widget/settings/SettingsDialog';
 // import Notifications from './modules/notifications/index.js';
-import { bash, forMonitors, warnOnLowBattery } from 'lib/utils';
+import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 // import options from 'options.js';
 // import OSD from 'modules/osd/index';
 import { App } from 'astal/gtk3';
