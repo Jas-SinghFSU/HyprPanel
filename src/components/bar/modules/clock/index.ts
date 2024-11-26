@@ -6,7 +6,7 @@ import { DateTime } from 'types/@girs/glib-2.0/glib-2.0.cjs';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'src/lib/types/widget.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;

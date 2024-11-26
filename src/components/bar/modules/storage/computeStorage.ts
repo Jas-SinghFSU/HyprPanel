@@ -1,7 +1,7 @@
 // @ts-expect-error is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
 
-import { divide } from 'src/components/bar/utils/bar';
+import { divide } from 'src/components/bar/utils/helpers';
 import { Variable as VariableType } from 'types/variable';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 

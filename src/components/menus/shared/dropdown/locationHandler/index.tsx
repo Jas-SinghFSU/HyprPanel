@@ -13,7 +13,7 @@ const { scalingPriority } = options;
 
 export const calculateMenuPosition = async (pos: number[], windowName: string): Promise<void> => {
     const self = globalEventBoxes.get()[windowName] as GtkWidget;
-    const curHyprlandMonitor = hyprland.monitors.find((m) => m.id === hyprland.focusedMonitor.id);
+    const curHyprlandMonitor = hyprland.get_monitors().find((m) => m.id === hyprland.focusedMonitor.id);
     const dropdownWidth = self.child.get_allocation().width;
     const dropdownHeight = self.child.get_allocation().height;
 

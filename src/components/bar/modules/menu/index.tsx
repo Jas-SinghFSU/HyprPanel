@@ -1,17 +1,23 @@
-import { runAsyncCommand, throttledScrollHandler } from '../../utils/bar.js';
-import { Gdk } from 'astal/gtk3';
+import { runAsyncCommand, throttledScrollHandler } from '../../utils/helpers.js';
 import options from '../../../../options.js';
 import { openMenu } from '../../utils/menu.js';
 import { getDistroIcon } from '../../../../lib/utils.js';
-import { GdkEvent, GtkWidget } from '../../../../lib/types/widget.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
+import { GtkWidget, GtkWidgetExtended } from 'src/lib/types/widget.js';
+import {
+    connectMiddleClick,
+    connectPrimaryClick,
+    connectScroll,
+    connectSecondaryClick,
+} from 'src/lib/shared/eventHandlers.js';
+import { useHook } from 'src/lib/shared/hookHandler.js'; // Ensure correct import
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
-const Menu = (): GtkWidget => {
-    const componentClassName = bind(options.theme.bar.buttons.style).as((style) => {
-        const styleMap = {
+const Menu = (): GtkWidgetExtended => {
+    const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
+        const styleMap: Record<string, string> = {
             default: 'style1',
             split: 'style2',
             wave: 'style3',
@@ -22,11 +28,13 @@ const Menu = (): GtkWidget => {
 
     const component = (
         <box className={componentClassName}>
-            <label className={'bar-menu_label bar-button_icon txt-icon bar'}>
-                {Variable.derive([autoDetectIcon.bind(), icon.bind()], (autoDetect, icon): string =>
-                    autoDetect ? getDistroIcon() : icon,
-                )}
-            </label>
+            <label
+                className={'bar-menu_label bar-button_icon txt-icon bar'}
+                label={Variable.derive(
+                    [autoDetectIcon.bind(), icon.bind()],
+                    (autoDetect: boolean, iconValue: string): string => (autoDetect ? getDistroIcon() : iconValue),
+                )()}
+            />
         </box>
     );
 
@@ -35,24 +43,29 @@ const Menu = (): GtkWidget => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            on_primary_click: (clicked: GtkWidget, event: GdkEvent): void => {
-                openMenu(clicked, event, 'dashboardmenu');
-            },
             setup: (self: GtkWidget): void => {
-                self.hook(options.bar.scrollSpeed, () => {
+                useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
-                    self.on_secondary_click = (clicked: GtkWidget, event: Gdk.Event): void => {
+                    const disconnectPrimary = connectPrimaryClick(self, (clicked, event) => {
+                        openMenu(clicked, event, 'dashboardmenu');
+                    });
+
+                    const disconnectSecondary = connectSecondaryClick(self, (clicked, event) => {
                         runAsyncCommand(rightClick.value, { clicked, event });
-                    };
-                    self.on_middle_click = (clicked: GtkWidget, event: Gdk.Event): void => {
+                    });
+
+                    const disconnectMiddle = connectMiddleClick(self, (clicked, event) => {
                         runAsyncCommand(middleClick.value, { clicked, event });
-                    };
-                    self.on_scroll_up = (clicked: GtkWidget, event: Gdk.Event): void => {
-                        throttledHandler(scrollUp.value, { clicked, event });
-                    };
-                    self.on_scroll_down = (clicked: GtkWidget, event: Gdk.Event): void => {
-                        throttledHandler(scrollDown.value, { clicked, event });
+                    });
+
+                    const disconnectScroll = connectScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+
+                    return (): void => {
+                        disconnectPrimary();
+                        disconnectSecondary();
+                        disconnectMiddle();
+                        disconnectScroll();
                     };
                 });
             },

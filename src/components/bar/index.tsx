@@ -1,7 +1,7 @@
 import {
     Menu,
     // Workspaces,
-    // ClientTitle,
+    ClientTitle,
     // Media,
     // Notifications,
     // Volume,
@@ -28,7 +28,7 @@ import {
 
 import { BarItemBox as WidgetContainer } from 'src/components/bar/utils/barItemBox';
 import options from 'src/options';
-import { Gdk, Widget } from 'astal/gtk3/index';
+import { Gdk, Gtk } from 'astal/gtk3/index';
 
 import { BarLayout, BarLayouts } from '../../lib/types/options';
 import { GtkWidget } from '../../lib/types/widget';
@@ -71,7 +71,7 @@ const widget = {
     // battery: (): GtkWidget => WidgetContainer(BatteryLabel()),
     dashboard: (): GtkWidget => WidgetContainer(Menu()),
     // workspaces: (monitor: number): GtkWidget => WidgetContainer(Workspaces(monitor)),
-    // windowtitle: (): GtkWidget => WidgetContainer(ClientTitle()),
+    windowtitle: (): GtkWidget => WidgetContainer(ClientTitle()),
     // media: (): GtkWidget => WidgetContainer(Media()),
     // notifications: (): GtkWidget => WidgetContainer(Notifications()),
     // volume: (): GtkWidget => WidgetContainer(Volume()),
@@ -170,19 +170,14 @@ function getGdkMonitors(): GdkMonitors {
  */
 
 const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: Set<number>): number => {
-    console.log(monitor);
-
     const gdkMonitors = getGdkMonitors();
-    console.log(gdkMonitors);
 
     if (Object.keys(gdkMonitors).length === 0) {
-        console.error('No GDK monitors were found.');
         return monitor;
     }
 
     // Get the GDK monitor for the given monitor index
     const gdkMonitor = gdkMonitors[monitor];
-    console.log(gdkMonitor);
 
     // First pass: Strict matching including the monitor index (i.e., hypMon.id === monitor + resolution+scale criteria)
     const directMatch = hyprland.get_monitors().find((hypMon) => {
@@ -240,18 +235,58 @@ export const Bar = (() => {
 
         const computeAnchor = bind(options.theme.bar.location).as((loc) => {
             if (loc === 'bottom') {
-                return Astal.WindowAnchor.BOTTOM;
+                return Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
             }
 
-            return Astal.WindowAnchor.TOP;
+            return Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
         });
 
         const computeLayer = Variable.derive([bind(options.theme.bar.layer), bind(options.tear)], (barLayer, tear) => {
             if (tear && barLayer === 'overlay') {
                 return Astal.Layer.TOP;
             }
-            return Astal.Layer.OVERLAY;
+            const layerMap = {
+                overlay: Astal.Layer.OVERLAY,
+                top: Astal.Layer.TOP,
+                bottom: Astal.Layer.BOTTOM,
+                background: Astal.Layer.BACKGROUND,
+            };
+
+            return layerMap[barLayer];
         });
+
+        const computeBorderLocation = borderLocation
+            .bind()
+            .as((brdrLcn) => (brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel'));
+
+        const leftSection = (self: GtkWidget): void => {
+            // self.hook(layouts, (self: GtkWidget) => {
+            const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
+
+            self.children = foundLayout.left
+                .filter((mod) => Object.keys(widget).includes(mod))
+                .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+            // });
+        };
+
+        const middleSection = (self: GtkWidget): void => {
+            self.hook(layouts, (self: GtkWidget) => {
+                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
+
+                self.children = foundLayout.middle
+                    .filter((mod) => Object.keys(widget).includes(mod))
+                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+            });
+        };
+
+        const rightSection = (self: GtkWidget): void => {
+            self.hook(layouts, (self: GtkWidget) => {
+                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
+                self.children = foundLayout.right
+                    .filter((mod) => Object.keys(widget).includes(mod))
+                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+            });
+        };
 
         return (
             <window
@@ -260,73 +295,28 @@ export const Bar = (() => {
                 monitor={monitor}
                 visible={computeVisibility}
                 anchor={computeAnchor}
-                layer={computeLayer}
-            ></window>
+                layer={computeLayer()}
+                exclusivity={Astal.Exclusivity.EXCLUSIVE}
+            >
+                <box className={'bar-panel-container'}>
+                    <centerbox
+                        css={'padding: 1px;'}
+                        hexpand={true}
+                        className={computeBorderLocation}
+                        startWidget={<box className={'box-left'} hexpand={true} setup={leftSection}></box>}
+                        centerWidget={
+                            <box
+                                className={'box-center'}
+                                halign={Gtk.Align.CENTER}
+                                setup={(self) => {
+                                    middleSection(self);
+                                }}
+                            ></box>
+                        }
+                        endWidget={<box className={'box-right'} halign={Gtk.Align.END} setup={rightSection}></box>}
+                    />
+                </box>
+            </window>
         );
-
-        return new Widget.Window({
-            name: `bar-${hyprlandMonitor}`,
-            className: 'bar',
-            monitor,
-            // anchor: location.bind().as((ln) => [ln, 'left', 'right']),
-            // exclusivity: 'exclusive',
-            // layer: Utils.merge(
-            //     [options.theme.bar.layer.bind(), options.tear.bind()],
-            //     (barLayer: WindowLayer, tear: boolean) => {
-            //         if (tear && barLayer === 'overlay') {
-            //             return 'top';
-            //         }
-            //         return barLayer;
-            //     },
-            // ),
-            anchor: Astal.WindowAnchor.TOP,
-            exclusivity: Astal.Exclusivity.EXCLUSIVE,
-            layer: Astal.Layer.TOP,
-            child: new Widget.Box({
-                className: 'bar-panel-container',
-                child: new Widget.CenterBox({
-                    className: borderLocation
-                        .bind()
-                        .as((brdrLcn) => (brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel')),
-                    css: 'padding: 1px',
-                    startWidget: new Widget.Box({
-                        className: 'box-left',
-                        hexpand: true,
-                        setup: (self: GtkWidget): void => {
-                            self.hook(layouts, (self: GtkWidget) => {
-                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
-                                self.children = foundLayout.left
-                                    .filter((mod) => Object.keys(widget).includes(mod))
-                                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
-                            });
-                        },
-                    }),
-                    centerWidget: new Widget.Box({
-                        className: 'box-center',
-                        // hpack: 'center',
-                        setup: (self: GtkWidget): void => {
-                            self.hook(layouts, (self: GtkWidget) => {
-                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
-                                self.children = foundLayout.middle
-                                    .filter((mod) => Object.keys(widget).includes(mod))
-                                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
-                            });
-                        },
-                    }),
-                    endWidget: new Widget.Box({
-                        className: 'box-right',
-                        // hpack: 'end',
-                        setup: (self: GtkWidget): void => {
-                            self.hook(layouts, (self: GtkWidget) => {
-                                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
-                                self.children = foundLayout.right
-                                    .filter((mod) => Object.keys(widget).includes(mod))
-                                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
-                            });
-                        },
-                    }),
-                }),
-            }),
-        });
     };
 })();

@@ -1,6 +1,6 @@
-import { Menu } from '../../components/bar/modules/menu';
+import { Menu } from './modules/menu';
 // import { Workspaces } from '../../components/bar/modules/workspaces/index';
-// import { ClientTitle } from '../../components/bar/modules/window_title/index';
+import { ClientTitle } from '../../components/bar/modules/window_title/index';
 // import { Media } from '../../components/bar/modules/media/index';
 // import { Notifications } from '../../components/bar/modules/notifications/index';
 // import { Volume } from '../../components/bar/modules/volume/index';
@@ -27,7 +27,7 @@ import { Menu } from '../../components/bar/modules/menu';
 export {
     Menu,
     // Workspaces,
-    // ClientTitle,
+    ClientTitle,
     // Media,
     // Notifications,
     // Volume,

@@ -1,12 +1,12 @@
 import { ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData, Postfix } from 'src/lib/types/customModules/generic';
 import { InputHandlerEvents, RunAsyncCommand } from 'src/lib/types/customModules/utils';
-import { ThrottleFn, ThrottleFnCallback } from 'src/lib/types/utils';
-import { Attribute, Child, EventArgs, GtkWidget } from 'src/lib/types/widget';
+import { ThrottleFn } from 'src/lib/types/utils';
 import { bind, Binding, execAsync, Variable } from 'astal';
 import { openMenu } from 'src/components/bar/utils/menu';
 import options from 'src/options';
 import { Gdk } from 'astal/gtk3';
+import { GtkWidget } from 'src/lib/types/widget';
 
 const { scrollSpeed } = options.bar.customModules;
 
@@ -34,8 +34,11 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
         .catch((err) => console.error(`Error running command "${cmd}": ${err})`));
 };
 
+/**
+ * Generic throttle function to limit the rate at which a function can be called.
+ */
 export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
-    let inThrottle: boolean;
+    let inThrottle = false;
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
         if (!inThrottle) {
             func.apply(this, args);
@@ -47,9 +50,14 @@ export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
     } as T;
 }
 
+/**
+ * Creates a throttled scroll handler with the given interval.
+ */
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
-    throttleInput((cmd: string, events: EventArgs, fn: ThrottleFnCallback, postInputUpdater?: Variable<boolean>) => {
-        runAsyncCommand(cmd, events, fn, postInputUpdater);
+    throttleInput((cmd: string, args, fn, postInputUpdater) => {
+        console.log('input command');
+
+        runAsyncCommand(cmd, args, fn, postInputUpdater);
     }, 200 / interval);
 
 const dummyVar = Variable('');

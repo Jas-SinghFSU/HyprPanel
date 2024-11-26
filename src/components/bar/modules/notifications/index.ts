@@ -5,7 +5,7 @@ import { filterNotifications } from 'src/lib/shared/notifications.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'src/lib/types/widget.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
 const { ignore } = options.notifications;

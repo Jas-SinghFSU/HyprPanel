@@ -1,7 +1,7 @@
 const network = await Service.import('network');
 import options from 'options';
 import { module } from '../../utils/module';
-import { inputHandler } from 'src/components/bar/utils/bar';
+import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './computeNetwork';
 import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
 import Button from 'types/widgets/button';

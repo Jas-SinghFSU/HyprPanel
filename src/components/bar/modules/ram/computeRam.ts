@@ -1,6 +1,6 @@
 const GLib = imports.gi.GLib;
 
-import { divide } from 'src/components/bar/utils/bar';
+import { divide } from 'src/components/bar/utils/helpers';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 import { Variable as VariableType } from 'types/variable';
 

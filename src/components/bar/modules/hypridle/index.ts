@@ -1,7 +1,7 @@
 import options from '../../../../options';
 import { module } from '../../utils/module';
 
-import { inputHandler, throttleInput } from '../../utils/bar';
+import { inputHandler, throttleInput } from '../../utils/helpers';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
 import { FunctionPoller } from '../../../../lib/poller/FunctionPoller';
 import Variable from 'astal/variable';

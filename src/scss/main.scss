@@ -29,6 +29,7 @@
 @import 'style/bar/notifications';
 @import 'style/bar/power';
 @import 'style/bar/battery';
+@import 'style/bar/style';
 
 //notifications
 @import 'style/notifications/popups';
@@ -51,5 +52,3 @@
 
 //settings dialog
 @import 'style/settings/dialog';
-
-@import 'style/customModules/style';

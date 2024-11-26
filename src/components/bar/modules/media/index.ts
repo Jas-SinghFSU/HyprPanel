@@ -6,7 +6,7 @@ import { getCurrentPlayer } from 'src/lib/shared/media.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'src/lib/types/widget.js';
-import { runAsyncCommand } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand } from 'src/components/bar/utils/helpers.js';
 import { generateMediaLabel } from './helpers.js';
 
 const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =

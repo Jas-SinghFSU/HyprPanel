@@ -1,6 +1,6 @@
 import options from 'options';
 import { module } from '../../utils/module';
-import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/bar';
+import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './computeStorage';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';

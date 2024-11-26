@@ -14,7 +14,7 @@
         "alwaysStrict": true,
         "noImplicitThis": true,
         "baseUrl": ".",
-        "typeRoots": ["types", "lib/types/globals"],
+        "typeRoots": ["types", "src/lib/types"],
         "skipLibCheck": true,
         "types": [],
         "experimentalDecorators": true,
@@ -26,4 +26,3 @@
         }
     }
 }
-

@@ -1,5 +1,4 @@
-import { substitutes } from 'src/lib/icons/icons';
-import { EventArgs } from './widget';
+import { EventArgs } from './eventArgs';
 import { Variable } from 'types/variable';
 
 export type ThrottleFn = (
@@ -8,4 +7,5 @@ export type ThrottleFn = (
     fn?: (output: string) => void,
     postInputUpdated?: Variable<boolean>,
 ) => void;
+
 export type ThrottleFnCallback = ((output: string) => void) | undefined;

@@ -8,7 +8,7 @@ import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Bind } from 'src/lib/types/variable.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'src/lib/types/widget.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 

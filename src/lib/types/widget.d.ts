@@ -28,4 +28,29 @@ export type GLabel = Gtk.Label;
 export type GCenterBox = Gtk.Box;
 
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;
-export type EventArgs = { clicked: Button<Child, Attribute>; event: Gdk.Event };
+export type EventArgs = {
+    clicked: GtkWidget;
+    event: Gdk.EventButton | Gdk.EventScroll;
+};
+
+export interface WidgetProps {
+    onPrimaryClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
+    onSecondaryClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
+    onMiddleClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
+    onScrollUp?: (clicked: GtkWidget, event: Gdk.EventScroll) => void;
+    onScrollDown?: (clicked: GtkWidget, event: Gdk.EventScroll) => void;
+    setup?: (self: GtkWidget) => void;
+}
+
+export interface GtkWidgetExtended extends Gtk.Widget {
+    props?: WidgetProps;
+    component?: JSX.Element;
+    primaryClick?: (clicked: GtkWidget, event: Astal.ClickEvent) => void;
+    isVisible?: boolean;
+    boxClass?: string;
+    isVis?: {
+        bind: (key: string) => Bind;
+    };
+}
+
+export type GtkWidget = GtkWidgetExtended;

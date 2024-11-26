@@ -11,7 +11,7 @@ import Button from 'types/widgets/button';
 import { calculateRamUsage } from './computeRam';
 
 // Utility Methods
-import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/bar';
+import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
 
 // Global Constants

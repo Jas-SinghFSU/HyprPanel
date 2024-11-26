@@ -1,7 +1,7 @@
 import options from 'options';
 import { module } from '../../utils/module';
 
-import { inputHandler } from 'src/components/bar/utils/bar';
+import { inputHandler } from 'src/components/bar/utils/helpers';
 import Button from 'types/widgets/button';
 import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/globals/weather';
 import { Attribute, Child } from 'src/lib/types/widget';

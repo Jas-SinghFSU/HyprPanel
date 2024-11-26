@@ -5,7 +5,7 @@ import { openMenu } from '../bar/utils.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import Button from 'types/widgets/button.js';
 import { Attribute, Child } from 'src/lib/types/widget.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 
 const { label, rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 

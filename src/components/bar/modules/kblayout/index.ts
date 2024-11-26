@@ -3,7 +3,7 @@ const hyprland = await Service.import('hyprland');
 import options from 'options';
 import { module } from '../../utils/module';
 
-import { inputHandler } from 'src/components/bar/utils/bar';
+import { inputHandler } from 'src/components/bar/utils/helpers';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Button from 'types/widgets/button';
 import Label from 'types/widgets/label';

@@ -6,7 +6,7 @@ import { module } from '../../utils/module';
 import Button from 'types/widgets/button';
 
 // Utility Methods
-import { inputHandler } from 'src/components/bar/utils/bar';
+import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getCPUTemperature } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Attribute, Child } from 'src/lib/types/widget';

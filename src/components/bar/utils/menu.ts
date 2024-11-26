@@ -21,6 +21,7 @@ export const closeAllMenus = (): void => {
 };
 
 export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: string): Promise<void> => {
+    log('test');
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
@@ -43,13 +44,14 @@ export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: str
     const clickPos = event.get_root_coords();
     const adjustedXCoord = clickPos[1] + middleOffset;
     const coords = [adjustedXCoord, clickPos[2]];
+    console.log(coords);
 
     try {
-        await calculateMenuPosition(coords, window);
+        // await calculateMenuPosition(coords, window);
     } catch (error) {
-        console.error(`Error calculating menu position: ${error}`);
+        console.error(`Error calculating menu position: ${error.stack}`);
     }
 
-    closeAllMenus();
-    App.toggle_window(window);
+    // closeAllMenus();
+    // App.toggle_window(window);
 };

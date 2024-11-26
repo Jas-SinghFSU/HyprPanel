@@ -25,7 +25,7 @@ export const BarItemBox = (child: GtkWidget): GtkWidget => {
     });
 
     return (
-        <button className={buttonClassName} visible={computeVisible(child)} {...child.props}>
+        <button onClick={() => {}} className={buttonClassName} visible={computeVisible(child)} {...child.props}>
             {child.component}
         </button>
     );

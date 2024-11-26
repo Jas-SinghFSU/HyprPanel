@@ -5,7 +5,7 @@ import { dependencies } from 'src/lib/utils';
 import { BoxWidget } from 'src/lib/types/widget';
 import Cpu from 'src/services/Cpu';
 import Storage from 'src/services/Storage';
-import { renderResourceLabel } from 'src/components/bar/utils/bar';
+import { renderResourceLabel } from 'src/components/bar/utils/helpers';
 
 const { terminal } = options;
 const { enable_gpu, interval } = options.menus.dashboard.stats;

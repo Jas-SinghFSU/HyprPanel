@@ -1,11 +1,8 @@
 import GObject, { GLib, property, register, signal } from 'astal/gobject';
 import { dependencies, sh } from '../lib/utils';
 import options from '../options';
-import Hyprland from 'gi://AstalHyprland';
 import { execAsync } from 'astal/process';
 import { monitorFile } from 'astal/file';
-
-const hyprland = Hyprland.get_default();
 
 const WP = `${GLib.get_home_dir()}/.config/background`;
 
@@ -17,10 +14,6 @@ class Wallpaper extends GObject.Object {
     // Define the wallpaper update method
     #wallpaper(): void {
         if (!dependencies('swww')) return;
-
-        // Log monitor names for debugging
-        const monitorNames = hyprland.monitors.map((m) => m.name);
-        console.log('Monitors:', monitorNames);
 
         // Get cursor position
         sh('hyprctl cursorpos')

@@ -4,7 +4,7 @@ import options from 'options';
 import Button from 'types/widgets/button';
 
 // Utility Methods
-import { inputHandler } from 'src/components/bar/utils/bar';
+import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './computeCPU';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Attribute, Child } from 'src/lib/types/widget';

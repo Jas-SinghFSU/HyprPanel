@@ -1,6 +1,5 @@
-import options from './src/options.js';
 import './src/lib/session';
-// import './src/scss/style';
+import './src/scss/style';
 import './src/globals/useTheme';
 import './src/globals/wallpaper';
 import './src/globals/systray';
@@ -26,7 +25,6 @@ import { App } from 'astal/gtk3';
 // // warnOnLowBattery();
 App.start({
     main() {
-        console.log('in app');
         // MenuWindows.forEach((window) => window());
         // Notifications();
         // SettingsDialog();

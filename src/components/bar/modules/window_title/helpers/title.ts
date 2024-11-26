@@ -1,17 +1,8 @@
-const hyprland = await Service.import('hyprland');
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar';
-import { BarBoxChild } from 'src/lib/types/bar';
-import { Attribute, Child } from 'src/lib/types/widget';
+import options from 'src/options';
 import { capitalizeFirstLetter } from 'src/lib/utils';
-import options from 'options';
-import Gdk from 'types/@girs/gdk-3.0/gdk-3.0';
-import { ActiveClient } from 'types/service/hyprland';
-import Button from 'types/widgets/button';
-import Label from 'types/widgets/label';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
-const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
-
-const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
+export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string, string> => {
     const windowTitleMap = [
         // user provided values
         ...options.bar.windowtitle.title_map.value,
@@ -138,8 +129,8 @@ const filterTitle = (windowtitle: ActiveClient): Record<string, string> => {
     };
 };
 
-const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: boolean): string => {
-    if (useCustomTitle) return filterTitle(client).label;
+export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, useClassName: boolean): string => {
+    if (useCustomTitle) return getWindowMatch(client).label;
     if (useClassName) return client.class;
 
     const title = client.title;
@@ -150,93 +141,9 @@ const getTitle = (client: ActiveClient, useCustomTitle: boolean, useClassName: b
     return title;
 };
 
-const truncateTitle = (title: string, max_size: number): string => {
+export const truncateTitle = (title: string, max_size: number): string => {
     if (max_size > 0 && title.length > max_size) {
         return title.substring(0, max_size).trim() + '...';
     }
     return title;
 };
-
-const ClientTitle = (): BarBoxChild => {
-    const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
-
-    return {
-        component: Widget.Box({
-            className: Utils.merge(
-                [options.theme.bar.buttons.style.bind('value'), label.bind('value')],
-                (style, showLabel) => {
-                    const styleMap = {
-                        default: 'style1',
-                        split: 'style2',
-                        wave: 'style3',
-                        wave2: 'style3',
-                    };
-                    return `windowtitle-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
-                },
-            ),
-            children: Utils.merge(
-                [
-                    hyprland.active.bind('client'),
-                    custom_title.bind('value'),
-                    class_name.bind('value'),
-                    label.bind('value'),
-                    icon.bind('value'),
-                    truncation.bind('value'),
-                    truncation_size.bind('value'),
-                ],
-                (client, useCustomTitle, useClassName, showLabel, showIcon, truncate, truncationSize) => {
-                    const children: Label<Child>[] = [];
-                    if (showIcon) {
-                        children.push(
-                            Widget.Label({
-                                class_name: 'bar-button-icon windowtitle txt-icon bar',
-                                label: filterTitle(client).icon,
-                            }),
-                        );
-                    }
-
-                    if (showLabel) {
-                        children.push(
-                            Widget.Label({
-                                class_name: `bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`,
-                                label: truncateTitle(
-                                    getTitle(client, useCustomTitle, useClassName),
-                                    truncate ? truncationSize : -1,
-                                ),
-                            }),
-                        );
-                    }
-
-                    return children;
-                },
-            ),
-        }),
-        isVisible: true,
-        boxClass: 'windowtitle',
-        props: {
-            setup: (self: Button<Child, Attribute>): void => {
-                self.hook(options.bar.scrollSpeed, () => {
-                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
-
-                    self.on_primary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
-                        runAsyncCommand(leftClick.value, { clicked, event });
-                    };
-                    self.on_secondary_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
-                        runAsyncCommand(rightClick.value, { clicked, event });
-                    };
-                    self.on_middle_click = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
-                        runAsyncCommand(middleClick.value, { clicked, event });
-                    };
-                    self.on_scroll_up = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
-                        throttledHandler(scrollUp.value, { clicked, event });
-                    };
-                    self.on_scroll_down = (clicked: Button<Child, Attribute>, event: Gdk.Event): void => {
-                        throttledHandler(scrollDown.value, { clicked, event });
-                    };
-                });
-            },
-        },
-    };
-};
-
-export { ClientTitle };
