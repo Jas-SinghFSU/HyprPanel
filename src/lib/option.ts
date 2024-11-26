@@ -1,13 +1,14 @@
-import { isHexColor } from 'src/globals/variables';
+import { isHexColor } from '../globals/variables';
 import { MkOptionsResult } from './types/options';
-import { Binding, monitorFile, readFile, register, Variable, writeFile } from 'astal';
-import { ensureDirectory } from './utils';
+import { ensureDirectory } from './session';
+import Variable from 'astal/variable';
+import Binding from 'astal/binding';
+import { monitorFile, readFile, writeFile } from 'astal/file';
 
 type OptProps = {
     persistent?: boolean;
 };
 
-@register()
 export class Opt<T = unknown> extends Variable<T> {
     constructor(initial: T, { persistent = false }: OptProps = {}) {
         super(initial);
@@ -54,7 +55,7 @@ export class Opt<T = unknown> extends Variable<T> {
         this.subscribe((newVal) => {
             const cache = JSON.parse(readFile(cacheFile) || '{}');
             cache[this._id] = newVal;
-            writeFile(JSON.stringify(cache, null, 2), cacheFile);
+            writeFile(cacheFile, JSON.stringify(cache, null, 2));
         });
     }
 
@@ -79,7 +80,9 @@ export class Opt<T = unknown> extends Variable<T> {
     }
 }
 
-export const opt = <T>(initial: T, opts?: OptProps): Opt<T> => new Opt(initial, opts);
+export function opt<T>(initial: T, opts?: OptProps): Opt<T> {
+    return new Opt(initial, opts);
+}
 
 const getOptions = (object: Record<string, unknown>, path = ''): Opt[] => {
     return Object.keys(object).flatMap((key) => {
@@ -116,7 +119,8 @@ export function mkOptions<T extends object>(
         {},
     );
 
-    writeFile(JSON.stringify(values, null, 2), configFile);
+    writeFile(configFile, JSON.stringify(values, null, 2));
+
     monitorFile(configFile, () => {
         const cache = JSON.parse(readFile(configFile) || '{}');
         for (const opt of getOptions(object as Record<string, unknown>)) {

@@ -1,9 +1,11 @@
-import options from 'options';
-import { bash, dependencies } from 'src/lib/utils';
-import { MatugenColors, RecursiveOptionsObject } from 'src/lib/types/options';
+import options from '../options';
+import { bash, dependencies } from '../lib/utils';
+import { MatugenColors, RecursiveOptionsObject } from '../lib/types/options';
 import { initializeTrackers } from './optionsTrackers';
 import { generateMatugenColors, replaceHexValues } from '../services/matugen/index';
-import { isHexColor } from 'src/globals/variables';
+import { isHexColor } from '../globals/variables';
+import { monitorFile, readFile, writeFile } from 'astal/file';
+import { App } from 'astal/gtk3';
 
 const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
 
@@ -50,23 +52,23 @@ const resetCss = async (): Promise<void> => {
         const vars = `${TMP}/variables.scss`;
         const css = `${TMP}/main.css`;
         const scss = `${TMP}/entry.scss`;
-        const localScss = `${App.configDir}/scss/main.scss`;
+        const localScss = `${SRC}/scss/main.scss`;
 
         const themeVariables = variables;
         const integratedVariables = themeVariables;
 
         const imports = [vars].map((f) => `@import '${f}';`);
 
-        await Utils.writeFile(integratedVariables.join('\n'), vars);
+        writeFile(vars, integratedVariables.join('\n'));
 
-        let mainScss = Utils.readFile(localScss);
+        let mainScss = readFile(localScss);
         mainScss = `${imports}\n${mainScss}`;
 
-        await Utils.writeFile(mainScss, scss);
+        writeFile(scss, mainScss);
 
-        await bash(`sass --load-path=${App.configDir}/scss/ ${scss} ${css}`);
+        await bash(`sass --load-path=${SRC}/scss/ ${scss} ${css}`);
 
-        App.applyCss(css, true);
+        App.apply_css(css, true);
     } catch (error) {
         console.error(error);
     }
@@ -74,6 +76,6 @@ const resetCss = async (): Promise<void> => {
 
 initializeTrackers(resetCss);
 
-Utils.monitorFile(`${App.configDir}/scss/style`, resetCss);
+monitorFile(`${SRC}/scss/style`, resetCss);
 options.handler(deps, resetCss);
 await resetCss();

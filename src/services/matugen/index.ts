@@ -1,15 +1,15 @@
-import { defaultColorMap } from 'src/lib/types/defaults/options';
-import { ColorMapValue, ColorMapKey, HexColor, MatugenColors } from 'src/lib/types/options';
+import { defaultColorMap } from '../../lib/types/defaults/options';
+import { ColorMapValue, ColorMapKey, HexColor, MatugenColors } from '../../lib/types/options';
 import { getMatugenVariations } from './variations';
-import { bash, dependencies, Notify, isAnImage } from 'src/lib/utils';
-import options from 'options';
-import icons from 'src/lib/icons/icons';
-import { Variable } from 'types/variable';
+import { bash, dependencies, Notify, isAnImage } from '../../lib/utils';
+import options from '../../options';
+import icons from '../../lib/icons/icons';
+import Variable from 'astal/variable';
 const { scheme_type, contrast } = options.theme.matugen_settings;
 const { matugen } = options.theme;
 
 const updateOptColor = (color: HexColor, opt: Variable<HexColor>): void => {
-    opt.value = color;
+    opt.set(color);
 };
 
 export async function generateMatugenColors(): Promise<MatugenColors | undefined> {

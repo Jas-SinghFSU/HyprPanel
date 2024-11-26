@@ -1,30 +1,32 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { type Application } from 'types/service/applications';
 import { BarModule, NotificationAnchor } from './types/options';
-import { OSDAnchor } from 'src/lib/types/options';
+import { OSDAnchor } from './types/options';
 import icons, { substitutes } from './icons/icons';
-import Gtk from 'gi://Gtk?version=3.0';
-import { Gdk } from 'astal/gtk3';
 import GLib from 'gi://GLib?version=2.0';
 import GdkPixbuf from 'gi://GdkPixbuf';
-import { NotificationArgs } from 'types/utils/notify';
-import { SubstituteKeys } from './types/utils';
-import { Window } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
+import { NotificationArgs } from './types/notification';
 import { namedColors } from './constants/colors';
 import { distroIcons } from './constants/distro';
 import { distro } from './variables';
-const battery = await Service.import('battery');
-import options from 'options';
-import { Gio } from 'astal';
+import options from '../options';
+import { Gdk, Gtk } from 'astal/gtk3';
+import AstalApps from 'gi://AstalApps?version=0.1';
+import { exec, execAsync } from 'astal/process';
+import AstalBattery from 'gi://AstalBattery?version=0.1';
 
-export type Binding<T> = import('types/service').Binding<any, any, T>;
+const battery = AstalBattery.get_default();
+
+export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
+    if (!name) return null;
+
+    return Gtk.IconTheme.get_default().lookup_icon(name, size, Gtk.IconLookupFlags.USE_BUILTIN);
+}
 
 /**
  * Retrieves all unique layout items from the bar options.
  *
  * @returns An array of unique layout items.
  */
-export const getLayoutItems = (): BarModule[] => {
+export function getLayoutItems(): BarModule[] {
     const { layouts } = options.bar;
 
     const itemsInLayout: BarModule[] = [];
@@ -40,13 +42,13 @@ export const getLayoutItems = (): BarModule[] => {
     });
 
     return [...new Set(itemsInLayout)];
-};
+}
 
 /**
  * @returns substitute icon || name || fallback icon
  */
 export function icon(name: string | null, fallback = icons.missing): string {
-    const validateSubstitute = (name: string): name is SubstituteKeys => name in substitutes;
+    const validateSubstitute = (name: string): name is keyof typeof substitutes => name in substitutes;
 
     if (!name) return fallback || '';
 
@@ -58,7 +60,7 @@ export function icon(name: string | null, fallback = icons.missing): string {
         icon = substitutes[name];
     }
 
-    if (Utils.lookUpIcon(icon)) return icon;
+    if (lookUpIcon(icon)) return icon;
 
     print(`no icon substitute "${icon}" for "${name}", fallback: "${fallback}"`);
     return fallback;
@@ -71,7 +73,7 @@ export async function bash(strings: TemplateStringsArray | string, ...values: un
     const cmd =
         typeof strings === 'string' ? strings : strings.flatMap((str, i) => str + `${values[i] ?? ''}`).join('');
 
-    return Utils.execAsync(['bash', '-c', cmd]).catch((err) => {
+    return execAsync(['bash', '-c', cmd]).catch((err) => {
         console.error(cmd, err);
         return '';
     });
@@ -81,13 +83,13 @@ export async function bash(strings: TemplateStringsArray | string, ...values: un
  * @returns execAsync(cmd)
  */
 export async function sh(cmd: string | string[]): Promise<string> {
-    return Utils.execAsync(cmd).catch((err) => {
+    return execAsync(cmd).catch((err) => {
         console.error(typeof cmd === 'string' ? cmd : cmd.join(' '), err);
         return '';
     });
 }
 
-export function forMonitors(widget: (monitor: number) => Gtk.Window): Window[] {
+export function forMonitors(widget: (monitor: number) => Gtk.Window): Gtk.Window[] {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
     return range(n, 0).flatMap(widget);
 }
@@ -103,13 +105,15 @@ export function range(length: number, start = 1): number[] {
  * @returns true if all of the `bins` are found
  */
 export function dependencies(...bins: string[]): boolean {
-    const missing = bins.filter((bin) =>
-        Utils.exec({
-            cmd: `which ${bin}`,
-            out: () => false,
-            err: () => true,
-        }),
-    );
+    const missing = bins.filter((bin) => {
+        try {
+            exec(`which ${bin}`);
+            return false;
+        } catch (e) {
+            console.error(e);
+            return true;
+        }
+    });
 
     if (missing.length > 0) {
         console.warn(Error(`missing dependencies: ${missing.join(', ')}`));
@@ -127,7 +131,7 @@ export function dependencies(...bins: string[]): boolean {
 /**
  * run app detached
  */
-export function launchApp(app: Application): void {
+export function launchApp(app: AstalApps.Application): void {
     const exe = app.executable
         .split(/\s+/)
         .filter((str) => !str.startsWith('%') && !str.startsWith('@'))
@@ -138,25 +142,9 @@ export function launchApp(app: Application): void {
 }
 
 /**
- * to use with drag and drop
- */
-export function createSurfaceFromWidget(widget: Gtk.Widget): GdkPixbuf.Pixbuf {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cairo = imports.gi.cairo as any;
-    const alloc = widget.get_allocation();
-    const surface = new cairo.ImageSurface(cairo.Format.ARGB32, alloc.width, alloc.height);
-    const cr = new cairo.Context(surface);
-    cr.setSourceRGBA(255, 255, 255, 0);
-    cr.rectangle(0, 0, alloc.width, alloc.height);
-    cr.fill();
-    widget.draw(cr);
-    return surface;
-}
-
-/**
  * Ensure that the provided filepath is a valid image
  */
-export const isAnImage = (imgFilePath: string): boolean => {
+export function isAnImage(imgFilePath: string): boolean {
     try {
         GdkPixbuf.Pixbuf.new_from_file(imgFilePath);
         return true;
@@ -164,9 +152,9 @@ export const isAnImage = (imgFilePath: string): boolean => {
         console.error(error);
         return false;
     }
-};
+}
 
-export const Notify = (notifPayload: NotificationArgs): void => {
+export function Notify(notifPayload: NotificationArgs): void {
     let command = 'notify-send';
     command += ` "${notifPayload.summary} "`;
     if (notifPayload.body) command += ` "${notifPayload.body}" `;
@@ -178,10 +166,10 @@ export const Notify = (notifPayload: NotificationArgs): void => {
     if (notifPayload.transient) command += ` -e`;
     if (notifPayload.id !== undefined) command += ` -r ${notifPayload.id}`;
 
-    Utils.execAsync(command);
-};
+    execAsync(command);
+}
 
-export const getPosition = (pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] => {
+export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] {
     const positionMap: { [key: string]: ('top' | 'bottom' | 'left' | 'right')[] } = {
         top: ['top'],
         'top right': ['top', 'right'],
@@ -194,8 +182,8 @@ export const getPosition = (pos: NotificationAnchor | OSDAnchor): ('top' | 'bott
     };
 
     return positionMap[pos] || ['top'];
-};
-export const isValidGjsColor = (color: string): boolean => {
+}
+export function isValidGjsColor(color: string): boolean {
     const colorLower = color.toLowerCase().trim();
 
     if (namedColors.has(colorLower)) {
@@ -216,36 +204,32 @@ export const isValidGjsColor = (color: string): boolean => {
     }
 
     return false;
-};
+}
 
-export const capitalizeFirstLetter = (str: string): string => {
+export function capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
-};
+}
 
 export function getDistroIcon(): string {
     const icon = distroIcons.find(([id]) => id === distro.id);
     return icon ? icon[1] : ''; // default icon if not found
 }
 
-export const warnOnLowBattery = (): void => {
+export function warnOnLowBattery(): void {
     battery.connect('notify::percent', () => {
         const { lowBatteryThreshold, lowBatteryNotification, lowBatteryNotificationText, lowBatteryNotificationTitle } =
             options.menus.power;
         if (!lowBatteryNotification.value || battery.charging) return;
         const lowThreshold = lowBatteryThreshold.value;
 
-        if (battery.percent === lowThreshold || battery.percent === lowThreshold / 2) {
+        if (battery.percentage === lowThreshold || battery.percentage === lowThreshold / 2) {
             Notify({
-                summary: lowBatteryNotificationTitle.value.replace('/$POWER_LEVEL/g', battery.percent.toString()),
-                body: lowBatteryNotificationText.value.replace('/$POWER_LEVEL/g', battery.percent.toString()),
+                summary: lowBatteryNotificationTitle.value.replace('/$POWER_LEVEL/g', battery.percentage.toString()),
+                body: lowBatteryNotificationText.value.replace('/$POWER_LEVEL/g', battery.percentage.toString()),
                 iconName: icons.ui.warning,
                 urgency: 'critical',
                 timeout: 7000,
             });
         }
     });
-};
-
-export const ensureDirectory = (path: string): void => {
-    if (!GLib.file_test(path, GLib.FileTest.EXISTS)) Gio.File.new_for_path(path).make_directory_with_parents(null);
-};
+}

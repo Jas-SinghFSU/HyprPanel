@@ -2,8 +2,6 @@ import { substitutes } from 'src/lib/icons/icons';
 import { EventArgs } from './widget';
 import { Variable } from 'types/variable';
 
-type SubstituteKeys = keyof typeof substitutes;
-
 export type ThrottleFn = (
     cmd: string,
     args: EventArgs,

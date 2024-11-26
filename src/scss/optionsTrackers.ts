@@ -1,7 +1,7 @@
-import icons from 'src/lib/icons/icons';
-import { bash, dependencies, Notify, isAnImage } from 'src/lib/utils';
-import options from 'options';
-import Wallpaper from 'src/services/Wallpaper';
+import icons from '../lib/icons/icons';
+import { bash, dependencies, Notify, isAnImage } from '../lib/utils';
+import options from '../options';
+import Wallpaper from '../services/Wallpaper';
 
 const { matugen } = options.theme;
 const { mode, scheme_type, contrast } = options.theme.matugen_settings;
@@ -21,18 +21,18 @@ const ensureMatugenWallpaper = (): void => {
 };
 
 export const initializeTrackers = (resetCssFunc: () => void): void => {
-    matugen.connect('changed', () => {
+    matugen.subscribe(() => {
         ensureMatugenWallpaper();
         options.resetTheme();
     });
 
-    mode.connect('changed', () => {
+    mode.subscribe(() => {
         options.resetTheme();
     });
-    scheme_type.connect('changed', () => {
+    scheme_type.subscribe(() => {
         options.resetTheme();
     });
-    contrast.connect('changed', () => {
+    contrast.subscribe(() => {
         options.resetTheme();
     });
 
@@ -44,7 +44,7 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
         }
     });
 
-    options.wallpaper.image.connect('changed', () => {
+    options.wallpaper.image.subscribe(() => {
         if ((!Wallpaper.isRunning() && options.theme.matugen.value) || !options.wallpaper.enable.value) {
             console.info('Wallpaper path changed, regenerating Matugen colors...');
             options.resetTheme();

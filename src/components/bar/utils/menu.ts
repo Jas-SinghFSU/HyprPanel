@@ -1,7 +1,6 @@
-import { Gdk } from 'astal/gtk3';
-import { Attribute, Child } from 'src/lib/types/widget';
-import { calculateMenuPosition } from 'src/modules/menus/shared/dropdown/locationHandler/index';
-import Button from 'types/widgets/button';
+import { App, Gdk } from 'astal/gtk3';
+import { GtkWidget } from 'src/lib/types/widget';
+import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/locationHandler';
 
 export const closeAllMenus = (): void => {
     const menuWindows = App.windows
@@ -12,16 +11,16 @@ export const closeAllMenus = (): void => {
 
             return false;
         })
-        .map((w) => w.name);
+        .map((window) => window.name);
 
-    menuWindows.forEach((w) => {
-        if (w) {
-            App.closeWindow(w);
+    menuWindows.forEach((window) => {
+        if (window) {
+            App.get_window(window)?.close();
         }
     });
 };
 
-export const openMenu = async (clicked: Button<Child, Attribute>, event: Gdk.Event, window: string): Promise<void> => {
+export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: string): Promise<void> => {
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
@@ -52,5 +51,5 @@ export const openMenu = async (clicked: Button<Child, Attribute>, event: Gdk.Eve
     }
 
     closeAllMenus();
-    App.toggleWindow(window);
+    App.toggle_window(window);
 };

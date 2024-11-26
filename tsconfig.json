@@ -13,15 +13,17 @@
         "strictNullChecks": true,
         "alwaysStrict": true,
         "noImplicitThis": true,
-        "baseUrl": "./",
-        "typeRoots": ["@girs", "src/lib/types/globals"],
+        "baseUrl": ".",
+        "typeRoots": ["types", "lib/types/globals"],
         "skipLibCheck": true,
         "types": [],
         "experimentalDecorators": true,
         "jsx": "react-jsx",
         "jsxImportSource": "/usr/share/astal/gjs/gtk3",
         "paths": {
+            "astal": ["/usr/share/astal/gjs"],
             "astal/*": ["/usr/share/astal/gjs/*"]
         }
     }
 }
+

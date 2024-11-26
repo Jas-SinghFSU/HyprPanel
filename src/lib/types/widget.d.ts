@@ -1,3 +1,4 @@
+import { Gdk } from 'astal/gtk3';
 import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
 import Box from 'types/widgets/box';
 
@@ -19,6 +20,7 @@ export type Attribute = unknown;
 export type Child = Gtk.Widget;
 export type GtkWidget = Gtk.Widget;
 export type BoxWidget = Box<GtkWidget, Child>;
+export type GdkEvent = Gdk.Event;
 
 export type GButton = Gtk.Button;
 export type GBox = Gtk.Box;

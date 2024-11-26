@@ -1,11 +1,11 @@
-import options from 'options';
+import options from '../../../options';
 import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
-import { bash, Notify } from 'src/lib/utils';
-import icons from 'src/lib/icons/icons';
-import { Config } from 'src/lib/types/filechooser';
-import { hexColorPattern } from 'src/globals/useTheme';
-import { isHexColor } from 'src/globals/variables';
+import { bash, Notify } from '../../../lib/utils';
+import icons from '../../../lib/icons/icons';
+import { Config } from '../../../lib/types/filechooser';
+import { hexColorPattern } from '../../../globals/useTheme';
+import { isHexColor } from '../../../globals/variables';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
@@ -183,7 +183,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
         title: `Import ${themeOnly ? 'Theme' : 'Config'}`,
         action: Gtk.FileChooserAction.OPEN,
     });
-    dialog.set_current_folder(`${App.configDir}/themes`);
+    dialog.set_current_folder(`${SRC}/../themes`);
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
 

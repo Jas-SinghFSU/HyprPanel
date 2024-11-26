@@ -1,4 +1,4 @@
-import { Opt } from 'src/lib/option';
+import { Opt } from '../lib/option';
 import { HexColor, MatugenTheme, RecursiveOptionsObject } from 'src/lib/types/options';
 
 export const isOpt = <T>(value: unknown): value is Opt<T> =>

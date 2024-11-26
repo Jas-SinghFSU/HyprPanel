@@ -1,36 +1,41 @@
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/bar.js';
+import { runAsyncCommand, throttledScrollHandler } from '../../utils/bar.js';
 import { Gdk } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
-import options from 'options';
-import { openMenu } from '../bar/utils.js';
-import { getDistroIcon } from 'src/lib/utils.js';
+import options from '../../../../options.js';
+import { openMenu } from '../../utils/menu.js';
+import { getDistroIcon } from '../../../../lib/utils.js';
+import { GdkEvent, GtkWidget } from '../../../../lib/types/widget.js';
+import { bind } from 'astal/binding.js';
+import Variable from 'astal/variable.js';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
-const Menu = (): BarBoxChild => {
+const Menu = (): GtkWidget => {
+    const componentClassName = bind(options.theme.bar.buttons.style).as((style) => {
+        const styleMap = {
+            default: 'style1',
+            split: 'style2',
+            wave: 'style3',
+            wave2: 'style3',
+        };
+        return `dashboard ${styleMap[style]}`;
+    });
+
+    const component = (
+        <box className={componentClassName}>
+            <label className={'bar-menu_label bar-button_icon txt-icon bar'}>
+                {Variable.derive([autoDetectIcon.bind(), icon.bind()], (autoDetect, icon): string =>
+                    autoDetect ? getDistroIcon() : icon,
+                )}
+            </label>
+        </box>
+    );
+
     return {
-        component: Widget.Box({
-            className: Utils.merge([options.theme.bar.buttons.style.bind('value')], (style) => {
-                const styleMap = {
-                    default: 'style1',
-                    split: 'style2',
-                    wave: 'style3',
-                    wave2: 'style3',
-                };
-                return `dashboard ${styleMap[style]}`;
-            }),
-            child: Widget.Label({
-                class_name: 'bar-menu_label bar-button_icon txt-icon bar',
-                label: Utils.merge([autoDetectIcon.bind('value'), icon.bind('value')], (autoDetect, icon): string => {
-                    return autoDetect ? getDistroIcon() : icon;
-                }),
-            }),
-        }),
+        component,
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            on_primary_click: (clicked: GtkWidget, event: Gdk.Event): void => {
+            on_primary_click: (clicked: GtkWidget, event: GdkEvent): void => {
                 openMenu(clicked, event, 'dashboardmenu');
             },
             setup: (self: GtkWidget): void => {

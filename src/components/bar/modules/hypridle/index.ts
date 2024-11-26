@@ -1,12 +1,11 @@
-import options from 'options';
+import options from '../../../../options';
 import { module } from '../../utils/module';
 
-import { inputHandler, throttleInput } from 'src/components/bar/utils/bar';
-import Button from 'types/widgets/button';
-import { Attribute, Child } from 'src/lib/types/widget';
-import { BarBoxChild } from 'src/lib/types/bar';
+import { inputHandler, throttleInput } from '../../utils/bar';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
+import { FunctionPoller } from '../../../../lib/poller/FunctionPoller';
+import Variable from 'astal/variable';
+import { GtkWidget } from '../../../../lib/types/widget';
 
 const { label, pollingInterval, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;
@@ -15,18 +14,13 @@ const dummyVar = Variable(undefined);
 
 checkIdleStatus();
 
-const idleStatusPoller = new FunctionPoller<undefined, []>(
-    dummyVar,
-    [],
-    pollingInterval.bind('value'),
-    checkIdleStatus,
-);
+const idleStatusPoller = new FunctionPoller<undefined, []>(dummyVar, [], pollingInterval.bind(), checkIdleStatus);
 
 idleStatusPoller.initialize('hypridle');
 
 const throttledToggleIdle = throttleInput(() => toggleIdle(isActive), 1000);
 
-export const Hypridle = (): BarBoxChild => {
+export const Hypridle = (): GtkWidget => {
     const hypridleModule = module({
         textIcon: Utils.merge(
             [isActive.bind('value'), onIcon.bind('value'), offIcon.bind('value')],

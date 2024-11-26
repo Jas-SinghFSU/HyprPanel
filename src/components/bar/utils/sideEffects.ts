@@ -1,14 +1,14 @@
-import options from 'options';
+import options from '../../../options';
 
 const { showIcon, showTime } = options.bar.clock;
 
-showIcon.connect('changed', () => {
+showIcon.subscribe(() => {
     if (!showTime.value && !showIcon.value) {
         showTime.value = true;
     }
 });
 
-showTime.connect('changed', () => {
+showTime.subscribe(() => {
     if (!showTime.value && !showIcon.value) {
         showIcon.value = true;
     }
@@ -16,13 +16,13 @@ showTime.connect('changed', () => {
 
 const { label, icon } = options.bar.windowtitle;
 
-label.connect('changed', () => {
+label.subscribe(() => {
     if (!label.value && !icon.value) {
         icon.value = true;
     }
 });
 
-icon.connect('changed', () => {
+icon.subscribe(() => {
     if (!label.value && !icon.value) {
         label.value = true;
     }

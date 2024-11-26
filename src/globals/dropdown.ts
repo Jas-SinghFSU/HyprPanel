@@ -1,6 +1,6 @@
-import { Variable as VariableType } from 'types/variable';
+import Variable from 'astal/variable';
 
 type GlobalEventBoxes = {
     [key: string]: unknown;
 };
-export const globalEventBoxes: VariableType<GlobalEventBoxes> = Variable({});
+export const globalEventBoxes: Variable<GlobalEventBoxes> = Variable({});

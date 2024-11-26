@@ -1,7 +1,6 @@
-import { readFile } from 'astal';
-import { opt, mkOptions } from 'src/lib/option';
-import { NetstatLabelType, RateUnit, ResourceLabelType } from 'src/lib/types/bar';
-import { KbLabelType } from 'src/lib/types/customModules/kbLayout';
+import { opt, mkOptions } from './lib/option';
+import { NetstatLabelType, RateUnit, ResourceLabelType } from './lib/types/bar';
+import { KbLabelType } from './lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
     BarButtonStyles,
@@ -14,12 +13,13 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
-} from 'src/lib/types/options';
-import { MatugenScheme, MatugenTheme, MatugenVariations } from 'src/lib/types/options';
-import { SystrayIconMap } from 'src/lib/types/systray';
-import { UnitType } from 'src/lib/types/weather';
-import { Transition } from 'src/lib/types/widget';
-import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from 'src/lib/types/workspace';
+} from './lib/types/options';
+import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/types/options';
+import { SystrayIconMap } from './lib/types/systray';
+import { UnitType } from './lib/types/weather';
+import { Transition } from './lib/types/widget';
+import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from './lib/types/workspace';
+import { GLib } from 'astal/gobject';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -90,7 +90,7 @@ const tertiary_colors = {
     surface2: '#585b71',
 };
 
-const options = mkOptions(OPTIONS, {
+const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.json`, {
     theme: {
         tooltip: {
             scaling: opt(100),
@@ -1273,7 +1273,7 @@ const options = mkOptions(OPTIONS, {
                 interval: opt(60000),
                 unit: opt<UnitType>('imperial'),
                 location: opt('Los Angeles'),
-                key: opt<string>(JSON.parse(readFile(`${SRC}/.weather.json`) || '{}')?.weather_api_key || ''),
+                key: opt<string>(''),
             },
         },
     },

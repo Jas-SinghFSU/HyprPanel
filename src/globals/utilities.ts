@@ -1,12 +1,13 @@
-import options from 'options';
+import { App } from 'astal/gtk3';
+import options from '../options';
 
 globalThis.isWindowVisible = (windowName: string): boolean => {
-    const appWindow = App.getWindow(windowName);
+    const appWindow = App.get_window(windowName);
 
     if (appWindow === undefined) {
         return false;
     }
-    return appWindow.visible;
+    return appWindow?.visible ?? false;
 };
 
 globalThis.setLayout = (layout: string): string => {
