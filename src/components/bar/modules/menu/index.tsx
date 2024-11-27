@@ -5,12 +5,7 @@ import { getDistroIcon } from '../../../../lib/utils.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
 import { GtkWidget, GtkWidgetExtended } from 'src/lib/types/widget.js';
-import {
-    connectMiddleClick,
-    connectPrimaryClick,
-    connectScroll,
-    connectSecondaryClick,
-} from 'src/lib/shared/eventHandlers.js';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { useHook } from 'src/lib/shared/hookHandler.js'; // Ensure correct import
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
@@ -30,9 +25,8 @@ const Menu = (): GtkWidgetExtended => {
         <box className={componentClassName}>
             <label
                 className={'bar-menu_label bar-button_icon txt-icon bar'}
-                label={Variable.derive(
-                    [autoDetectIcon.bind(), icon.bind()],
-                    (autoDetect: boolean, iconValue: string): string => (autoDetect ? getDistroIcon() : iconValue),
+                label={Variable.derive([autoDetectIcon, icon], (autoDetect: boolean, iconValue: string): string =>
+                    autoDetect ? getDistroIcon() : iconValue,
                 )()}
             />
         </box>
@@ -47,19 +41,19 @@ const Menu = (): GtkWidgetExtended => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
-                    const disconnectPrimary = connectPrimaryClick(self, (clicked, event) => {
+                    const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
                         openMenu(clicked, event, 'dashboardmenu');
                     });
 
-                    const disconnectSecondary = connectSecondaryClick(self, (clicked, event) => {
+                    const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
                         runAsyncCommand(rightClick.value, { clicked, event });
                     });
 
-                    const disconnectMiddle = connectMiddleClick(self, (clicked, event) => {
+                    const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
                         runAsyncCommand(middleClick.value, { clicked, event });
                     });
 
-                    const disconnectScroll = connectScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
 
                     return (): void => {
                         disconnectPrimary();

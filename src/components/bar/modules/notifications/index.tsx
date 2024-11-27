@@ -8,12 +8,7 @@ import { GtkWidget } from 'src/lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
-import {
-    connectMiddleClick,
-    connectPrimaryClick,
-    connectScroll,
-    connectSecondaryClick,
-} from 'src/lib/shared/eventHandlers';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 
 const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
 const { ignore } = options.notifications;
@@ -98,19 +93,19 @@ export const Notifications = (): BarBoxChild => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
-                    const disconnectPrimary = connectPrimaryClick(self, (clicked, event) => {
+                    const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
                         openMenu(clicked, event, 'dashboardmenu');
                     });
 
-                    const disconnectSecondary = connectSecondaryClick(self, (clicked, event) => {
+                    const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
                         runAsyncCommand(rightClick.value, { clicked, event });
                     });
 
-                    const disconnectMiddle = connectMiddleClick(self, (clicked, event) => {
+                    const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
                         runAsyncCommand(middleClick.value, { clicked, event });
                     });
 
-                    const disconnectScroll = connectScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
 
                     return (): void => {
                         disconnectPrimary();

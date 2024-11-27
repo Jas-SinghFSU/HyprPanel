@@ -1,4 +1,4 @@
-import { hyprland } from 'src/lib/constants/hyprland';
+import { hyprland } from 'src/lib/constants/services';
 import { Gdk } from 'astal/gtk3';
 import { BarLayout, BarLayouts } from 'src/lib/types/options';
 

@@ -1,14 +1,14 @@
 import { Menu } from './modules/menu';
 // import { Workspaces } from '../../components/bar/modules/workspaces/index';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
-// import { Media } from '../../components/bar/modules/media/index';
+import { Media } from '../../components/bar/modules/media/index';
 import { Notifications } from '../../components/bar/modules/notifications/index';
 // import { Volume } from '../../components/bar/modules/volume/index';
 // import { Network } from '../../components/bar/modules/network/index';
 // import { Bluetooth } from '../../components/bar/modules/bluetooth/index';
 // import { BatteryLabel } from '../../components/bar/modules/battery/index';
 import { Clock } from '../../components/bar/modules/clock/index';
-// import { SysTray } from '../../components/bar/modules/systray/index';
+import { SysTray } from '../../components/bar/modules/systray/index';
 //
 // // Custom Modules
 // import { Ram } from '../../components/bar/modules/ram/index';
@@ -28,14 +28,14 @@ export {
     Menu,
     // Workspaces,
     ClientTitle,
-    // Media,
+    Media,
     Notifications,
     // Volume,
     // Network,
     // Bluetooth,
     // BatteryLabel,
     Clock,
-    // SysTray,
+    SysTray,
     //
     // // Custom Modules
     // Ram,

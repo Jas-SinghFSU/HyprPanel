@@ -1,23 +1,26 @@
-import { MprisPlayer } from 'types/service/mpris';
-const mpris = await Service.import('mpris');
+import AstalMpris from 'gi://AstalMpris?version=0.1';
+import { mpris } from '../constants/services';
 
-export const getCurrentPlayer = (activePlayer: MprisPlayer = mpris.players[0]): MprisPlayer => {
+export const getCurrentPlayer = (activePlayer: AstalMpris.Player = mpris.get_players()[0]): AstalMpris.Player => {
     const statusOrder = {
-        Playing: 1,
-        Paused: 2,
-        Stopped: 3,
+        [AstalMpris.PlaybackStatus.PLAYING]: 1,
+        [AstalMpris.PlaybackStatus.PAUSED]: 2,
+        [AstalMpris.PlaybackStatus.STOPPED]: 3,
     };
 
-    if (mpris.players.length === 0) {
-        return mpris.players[0];
+    const mprisPlayers = mpris.get_players();
+    if (mprisPlayers.length === 0) {
+        return mprisPlayers[0];
     }
 
-    const isPlaying = mpris.players.some((p: MprisPlayer) => p.play_back_status === 'Playing');
+    const isPlaying = mprisPlayers.some(
+        (p: AstalMpris.Player) => p.playbackStatus === AstalMpris.PlaybackStatus.PLAYING,
+    );
 
-    const playerStillExists = mpris.players.some((p) => activePlayer.bus_name === p.bus_name);
+    const playerStillExists = mprisPlayers.some((p) => activePlayer.bus_name === p.bus_name);
 
-    const nextPlayerUp = mpris.players.sort(
-        (a: MprisPlayer, b: MprisPlayer) => statusOrder[a.play_back_status] - statusOrder[b.play_back_status],
+    const nextPlayerUp = mprisPlayers.sort(
+        (a: AstalMpris.Player, b: AstalMpris.Player) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus],
     )[0];
 
     if (isPlaying || !playerStillExists) {

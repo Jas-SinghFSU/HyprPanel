@@ -1,7 +1,7 @@
 import { MediaTags } from 'src/lib/types/audio.js';
 import { Opt } from 'src/lib/option';
-import { Variable } from 'types/variable';
-import { MprisPlayer } from 'types/service/mpris';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
+import { Variable } from 'astal';
 
 const getIconForPlayer = (playerName: string): string => {
     const windowTitleMap = [
@@ -44,18 +44,19 @@ export const generateMediaLabel = (
     show_label: Opt<boolean>,
     format: Opt<string>,
     songIcon: Variable<string>,
-    activePlayer: Variable<MprisPlayer>,
+    activePlayer: Variable<AstalMpris.Player>,
 ): string => {
-    if (activePlayer.value && show_label.value) {
-        const { track_title, identity, track_artists, track_album, name } = activePlayer.value;
-        songIcon.value = getIconForPlayer(identity);
+    if (activePlayer.get() && show_label.value) {
+        const { title, identity, artist, album, busName } = activePlayer.get();
+        songIcon.set(getIconForPlayer(identity));
+        log(activePlayer.get());
 
         const mediaTags: MediaTags = {
-            title: track_title,
-            artists: track_artists.join(', '),
-            artist: track_artists[0] || '',
-            album: track_album,
-            name: name,
+            title: title,
+            artists: artist,
+            artist: artist,
+            album: album,
+            name: busName,
             identity: identity,
         };
 
@@ -83,7 +84,7 @@ export const generateMediaLabel = (
 
         return mediaLabel.length ? mediaLabel : 'Media';
     } else {
-        songIcon.value = getIconForPlayer(activePlayer.value?.identity || '');
+        songIcon.set(getIconForPlayer(activePlayer.get()?.identity || ''));
         return `Media`;
     }
 };

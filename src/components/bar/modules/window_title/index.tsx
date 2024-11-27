@@ -2,15 +2,10 @@ import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/util
 import { BarBoxChild } from 'src/lib/types/bar';
 import { GtkWidget } from 'src/lib/types/widget';
 import options from 'src/options';
-import { hyprland } from 'src/lib/constants/hyprland';
+import { hyprland } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { useHook } from 'src/lib/shared/hookHandler';
-import {
-    connectMiddleClick,
-    connectPrimaryClick,
-    connectScroll,
-    connectSecondaryClick,
-} from 'src/lib/shared/eventHandlers';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { bind, Variable } from 'astal';
 import { getTitle, getWindowMatch, truncateTitle } from './helpers/title';
 
@@ -89,19 +84,19 @@ const ClientTitle = (): BarBoxChild => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
-                    const disconnectPrimary = connectPrimaryClick(self, (clicked, event) => {
+                    const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
                         runAsyncCommand(leftClick.value, { clicked, event });
                     });
 
-                    const disconnectSecondary = connectSecondaryClick(self, (clicked, event) => {
+                    const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
                         runAsyncCommand(rightClick.value, { clicked, event });
                     });
 
-                    const disconnectMiddle = connectMiddleClick(self, (clicked, event) => {
+                    const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
                         runAsyncCommand(middleClick.value, { clicked, event });
                     });
 
-                    const disconnectScroll = connectScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
 
                     return (): void => {
                         disconnectPrimary();

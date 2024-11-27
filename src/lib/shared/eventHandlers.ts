@@ -5,10 +5,7 @@ import { ThrottleFn } from '../types/utils';
 /**
  * Connects a primary click handler and returns a disconnect function.
  */
-export function connectPrimaryClick(
-    widget: GtkWidget,
-    handler: (self: GtkWidget, event: Gdk.Event) => void,
-): () => void {
+export function onPrimaryClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_PRIMARY) {
@@ -21,10 +18,7 @@ export function connectPrimaryClick(
 /**
  * Connects a secondary click handler and returns a disconnect function.
  */
-export function connectSecondaryClick(
-    widget: GtkWidget,
-    handler: (self: GtkWidget, event: Gdk.Event) => void,
-): () => void {
+export function onSecondaryClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_SECONDARY) {
@@ -37,10 +31,7 @@ export function connectSecondaryClick(
 /**
  * Connects a middle click handler and returns a disconnect function.
  */
-export function connectMiddleClick(
-    widget: GtkWidget,
-    handler: (self: GtkWidget, event: Gdk.Event) => void,
-): () => void {
+export function onMiddleClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_MIDDLE) {
@@ -53,7 +44,7 @@ export function connectMiddleClick(
 /**
  * Connects a scroll handler and returns a disconnect function.
  */
-export function connectScroll(
+export function onScroll(
     widget: GtkWidget,
     throttledHandler: ThrottleFn,
     scrollUpAction: string,
