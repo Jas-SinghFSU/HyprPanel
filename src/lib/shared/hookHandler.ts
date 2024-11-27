@@ -1,4 +1,3 @@
-// hookHandler.ts
 import { GtkWidget } from 'src/lib/types/widget.js';
 import { Connectable, Subscribable } from 'astal/binding';
 
@@ -13,26 +12,34 @@ import { Connectable, Subscribable } from 'astal/binding';
 export function useHook(
     widget: GtkWidget,
     hookTarget: Connectable | Subscribable,
-    setup: () => () => void,
+    setup: (() => void) | (() => () => void),
     signal?: string,
 ): void {
     let currentDisconnect: () => void = () => {};
 
-    const wrappedSetup = (): void => {
-        // Disconnect previous handlers
+    const executeSetup = (): void => {
         currentDisconnect();
-
-        // Run the setup and store the disconnect function
-        currentDisconnect = setup();
+        if (typeof setup === 'function') {
+            currentDisconnect = setup() || ((): void => {});
+        }
     };
 
-    // Initial setup
-    wrappedSetup();
+    const isConnectable = (target: Connectable | Subscribable): target is Connectable => {
+        return 'connect' in target;
+    };
 
-    // Hook into the target to re-run setup on dependency change
-    if (signal && typeof (hookTarget as Connectable).connect === 'function') {
-        widget.hook(hookTarget as Connectable, signal, wrappedSetup);
-    } else if (typeof (hookTarget as Subscribable).subscribe === 'function') {
-        widget.hook(hookTarget as Subscribable, wrappedSetup);
-    }
+    const isSubscribable = (target: Connectable | Subscribable): target is Subscribable => {
+        return 'subscribe' in target;
+    };
+
+    const hookIntoTarget = (): void => {
+        if (signal && isConnectable(hookTarget)) {
+            widget.hook(hookTarget, signal, executeSetup);
+        } else if (isSubscribable(hookTarget)) {
+            widget.hook(hookTarget, executeSetup);
+        }
+    };
+
+    executeSetup();
+    hookIntoTarget();
 }

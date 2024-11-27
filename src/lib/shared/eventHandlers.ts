@@ -1,4 +1,3 @@
-// eventHandlers.ts
 import { GtkWidget } from 'src/lib/types/widget.js';
 import { Gdk } from 'astal/gtk3';
 import { ThrottleFn } from '../types/utils';
