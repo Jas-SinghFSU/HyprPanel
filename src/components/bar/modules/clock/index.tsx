@@ -15,9 +15,6 @@ import {
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
-// const date = Variable(GLib.DateTime.new_now_local(), {
-//     poll: [1000, (): DateTime => GLib.DateTime.new_now_local()],
-// });
 const date = Variable(GLib.DateTime.new_now_local()).poll(1000, (): GLib.DateTime => GLib.DateTime.new_now_local());
 const time = Variable.derive([date, format], (c, f) => c.format(f) || '');
 
