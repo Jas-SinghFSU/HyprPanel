@@ -3,8 +3,8 @@ import { Menu } from './modules/menu';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
 import { Media } from '../../components/bar/modules/media/index';
 import { Notifications } from '../../components/bar/modules/notifications/index';
-// import { Volume } from '../../components/bar/modules/volume/index';
-// import { Network } from '../../components/bar/modules/network/index';
+import { Volume } from '../../components/bar/modules/volume/index';
+import { Network } from '../../components/bar/modules/network/index';
 // import { Bluetooth } from '../../components/bar/modules/bluetooth/index';
 // import { BatteryLabel } from '../../components/bar/modules/battery/index';
 import { Clock } from '../../components/bar/modules/clock/index';
@@ -30,8 +30,8 @@ export {
     ClientTitle,
     Media,
     Notifications,
-    // Volume,
-    // Network,
+    Volume,
+    Network,
     // Bluetooth,
     // BatteryLabel,
     Clock,

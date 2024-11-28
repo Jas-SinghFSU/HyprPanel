@@ -9,7 +9,6 @@ import Variable from 'astal/variable.js';
 import { GtkWidget } from 'src/lib/types/widget.js';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { bind } from 'astal/binding.js';
-import AstalMpris from 'gi://AstalMpris?version=0.1';
 
 const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =
     options.bar.media;
@@ -22,35 +21,19 @@ const Media = (): GtkWidget => {
         isVis.set(!show_active_only.value || mpris.get_players().length > 0);
     });
 
-    Variable.derive([bind(activePlayer.get(), 'playbackStatus')], (status: AstalMpris.PlaybackStatus) => {
-        console.log('in');
-
-        const curPlayer = getCurrentPlayer(activePlayer.get());
-        activePlayer.set(curPlayer);
-        isVis.set(!show_active_only.value || mpris.get_players().length > 0);
-    });
-
     mpris.connect('player-added', () => {
-        console.log('test');
-
         const curPlayer = getCurrentPlayer(activePlayer.get());
         activePlayer.set(curPlayer);
         isVis.set(!show_active_only.value || mpris.get_players().length > 0);
     });
 
     mpris.connect('player-closed', () => {
-        console.log('closed');
-
         const curPlayer = getCurrentPlayer(activePlayer.get());
         activePlayer.set(curPlayer);
         isVis.set(!show_active_only.value || mpris.get_players().length > 0);
     });
 
     const songIcon = Variable('');
-
-    activePlayer.subscribe((player: AstalMpris.Player) => {
-        console.log(player);
-    });
 
     const mediaLabel = Variable.derive(
         [bind(mpris, 'players'), truncation, truncation_size, show_label, format],
