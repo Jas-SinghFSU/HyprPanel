@@ -12,7 +12,7 @@ import { Bar } from './src/components/bar';
 // // import MenuWindows from './modules/menus/main.js';
 // // import SettingsDialog from 'widget/settings/SettingsDialog';
 // // import Notifications from './modules/notifications/index.js';
-// import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
+import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 // // import options from 'options.js';
 // // import OSD from 'modules/osd/index';
 import { App } from 'astal/gtk3';
@@ -29,8 +29,7 @@ App.start({
         // Notifications();
         // SettingsDialog();
         // OSD();
-        Bar(0);
-        // forMonitors(Bar).forEach((bar) => bar());
+        forMonitors(Bar).forEach((bar) => bar());
     },
 });
 //

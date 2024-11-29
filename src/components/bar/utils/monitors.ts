@@ -117,7 +117,12 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // First pass: Strict matching including the monitor index (i.e., hypMon.id === monitor + resolution+scale criteria)
     const directMatch = hyprlandService.get_monitors().find((hypMon) => {
-        const hyprlandKey = `${hypMon.model}_${hypMon.width}x${hypMon.height}_${hypMon.scale}`;
+        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
+
+        const width = isVertical ? hypMon.height : hypMon.width;
+        const height = isVertical ? hypMon.width : hypMon.height;
+
+        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
         return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
 
@@ -128,7 +133,12 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // Second pass: Relaxed matching without considering the monitor index
     const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
-        const hyprlandKey = `${hypMon.model}_${hypMon.width}x${hypMon.height}_${hypMon.scale}`;
+        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
+
+        const width = isVertical ? hypMon.height : hypMon.width;
+        const height = isVertical ? hypMon.width : hypMon.height;
+
+        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
         return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id);
     });
 

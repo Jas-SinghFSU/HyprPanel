@@ -12,6 +12,7 @@ import { Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
 import AstalBattery from 'gi://AstalBattery?version=0.1';
+import { GtkWidget } from './types/widget';
 
 const battery = AstalBattery.get_default();
 
@@ -89,7 +90,7 @@ export async function sh(cmd: string | string[]): Promise<string> {
     });
 }
 
-export function forMonitors(widget: (monitor: number) => Gtk.Window): Gtk.Window[] {
+export function forMonitors(widget: (monitor: number) => GtkWidget): GtkWidget[] {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
     return range(n, 0).flatMap(widget);
 }
