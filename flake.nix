@@ -43,7 +43,7 @@
               pkgsFor.${system}.grimblast
               pkgsFor.${system}.gpu-screen-recorder
               pkgsFor.${system}.brightnessctl
-              pkgsFor.${system}.gnome.gnome-bluetooth
+              pkgsFor.${system}.gnome-bluetooth
               pkgsFor.${system}.python3
               pkgsFor.${system}.matugen
               inputs.ags.packages.${system}.agsWithTypes
