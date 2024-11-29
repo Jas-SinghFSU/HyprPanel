@@ -1,7 +1,7 @@
 import { module } from '../../utils/module';
 import options from 'src/options';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { computeCPU } from './computeCPU';
+import { computeCPU } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';

@@ -6,7 +6,7 @@ import { bind } from 'astal';
 
 const computeVisible = (child: BarBoxChild): Bind | boolean => {
     if (child.isVis !== undefined) {
-        return child.isVis.bind('value');
+        return bind(child.isVis);
     }
     return child.isVisible;
 };

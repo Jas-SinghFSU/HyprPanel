@@ -2,7 +2,7 @@ import { openMenu } from '../../utils/menu.js';
 import options from 'src/options.js';
 import { getCurrentPlayer } from 'src/lib/shared/media.js';
 import { runAsyncCommand } from 'src/components/bar/utils/helpers.js';
-import { generateMediaLabel } from './helpers.js';
+import { generateMediaLabel } from './helpers/index.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
 import { mprisService } from 'src/lib/constants/services.js';
 import Variable from 'astal/variable.js';

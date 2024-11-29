@@ -7,7 +7,7 @@ import Variable from 'astal/variable.js';
 import { bind } from 'astal/binding.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
-import { getIcon } from './helpers.js';
+import { getIcon } from './helpers/index.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
 

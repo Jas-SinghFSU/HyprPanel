@@ -1,6 +1,6 @@
 import options from 'src/options';
 import { module } from '../../utils/module';
-import { calculateRamUsage } from './computeRam';
+import { calculateRamUsage } from './helpers';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';

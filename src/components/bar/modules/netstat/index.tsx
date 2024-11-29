@@ -2,7 +2,7 @@ import { networkService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { module } from '../../utils/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { computeNetwork } from './computeNetwork';
+import { computeNetwork } from './helpers';
 import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
 import { NetworkResourceData } from 'src/lib/types/customModules/network';
 import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar';

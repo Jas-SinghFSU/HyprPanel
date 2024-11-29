@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { module } from '../../utils/module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
-import { computeStorage } from './computeStorage';
+import { computeStorage } from './helpers';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar';

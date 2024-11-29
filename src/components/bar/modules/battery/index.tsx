@@ -10,28 +10,19 @@ import AstalBattery from 'gi://AstalBattery?version=0.1';
 import { GtkWidget } from 'src/lib/types/widget';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { getBatteryIcon } from './helpers';
 
 const { label: show_label, rightClick, middleClick, scrollUp, scrollDown, hideLabelWhenFull } = options.bar.battery;
 
 const BatteryLabel = (): BarBoxChild => {
-    const isVis = Variable(batteryService.isPresent);
-
     const batIcon = Variable.derive(
         [bind(batteryService, 'percentage'), bind(batteryService, 'charging'), bind(batteryService, 'state')],
         (batPercent: number, batCharging: boolean, state: AstalBattery.State) => {
             const batCharged = state === AstalBattery.State.FULLY_CHARGED;
 
-            if (batCharged) {
-                return `battery-level-100-charged-symbolic`;
-            } else {
-                return `battery-level-${Math.floor(batPercent / 10) * 10}${batCharging ? '-charging' : ''}-symbolic`;
-            }
+            return getBatteryIcon(batPercent, batCharging, batCharged);
         },
     );
-
-    batteryService.connect('notify', () => {
-        isVis.set(batteryService.isPresent);
-    });
 
     const formatTime = (seconds: number): Record<string, number> => {
         const hours = Math.floor(seconds / 3600);
@@ -77,23 +68,14 @@ const BatteryLabel = (): BarBoxChild => {
     );
 
     const componentChildren = Variable.derive(
-        [
-            bind(batteryService, 'isPresent'),
-            bind(show_label),
-            bind(batteryService, 'percentage'),
-            bind(hideLabelWhenFull),
-        ],
-        (isPresent, showLabel, percentage, hideLabelWhenFull) => {
+        [bind(show_label), bind(batteryService, 'percentage'), bind(hideLabelWhenFull)],
+        (showLabel, percentage, hideLabelWhenFull) => {
             const isCharged = Math.round(percentage) === 100;
 
-            const children: GtkWidget = [];
-
-            const icon = <icon className={'bar-button-icon battery'} icon={batIcon()} />;
+            const icon = <label className={'bar-button-icon battery txt-icon'} label={batIcon()} />;
             const label = <label className={'bar-button-label battery'} label={`${Math.round(percentage)}%`} />;
 
-            if (!isPresent) {
-                return children;
-            }
+            const children: GtkWidget = [icon];
 
             children.push(icon);
 
@@ -104,10 +86,10 @@ const BatteryLabel = (): BarBoxChild => {
             return children;
         },
     );
+
     const component = (
         <box
             className={componentClassName()}
-            visible={bind(batteryService, 'isPresent')}
             tooltipText={componentTooltip()}
             setup={(self: GtkWidget) => {
                 useHook(self, batteryService, () => {
@@ -123,7 +105,7 @@ const BatteryLabel = (): BarBoxChild => {
 
     return {
         component,
-        isVis,
+        isVisible: true,
         boxClass: 'battery',
         props: {
             setup: (self: Astal.Button): void => {

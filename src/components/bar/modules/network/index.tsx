@@ -7,7 +7,7 @@ import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/l
 import { Astal, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { useHook } from 'src/lib/shared/hookHandler';
-import { formatWifiInfo } from './helpers.js';
+import { formatWifiInfo } from './helpers/index.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 
 const { label, truncation, truncation_size, rightClick, middleClick, scrollDown, scrollUp, showWifiInfo } =

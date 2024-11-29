@@ -2,7 +2,7 @@ import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { module } from '../../utils/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { getKeyboardLayout } from './getLayout';
+import { getKeyboardLayout } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { bind, execAsync } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';

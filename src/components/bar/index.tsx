@@ -41,7 +41,7 @@ const { layouts } = options.bar;
 const { location: borderLocation } = options.theme.bar.border;
 
 const widget = {
-    // battery: (): GtkWidget => WidgetContainer(BatteryLabel()),
+    battery: (): GtkWidget => WidgetContainer(BatteryLabel()),
     dashboard: (): GtkWidget => WidgetContainer(Menu()),
     // workspaces: (monitor: number): GtkWidget => WidgetContainer(Workspaces(monitor)),
     windowtitle: (): GtkWidget => WidgetContainer(ClientTitle()),
