@@ -1,5 +1,5 @@
 import { Menu } from './modules/menu';
-// import { Workspaces } from '../../components/bar/modules/workspaces/index';
+import { Workspaces } from '../../components/bar/modules/workspaces/index';
 import { ClientTitle } from '../../components/bar/modules/window_title/index';
 import { Media } from '../../components/bar/modules/media/index';
 import { Notifications } from '../../components/bar/modules/notifications/index';
@@ -26,7 +26,7 @@ import { Hypridle } from '../../components/bar/modules/hypridle/index';
 
 export {
     Menu,
-    // Workspaces,
+    Workspaces,
     ClientTitle,
     Media,
     Notifications,

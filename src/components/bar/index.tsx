@@ -1,6 +1,6 @@
 import {
     Menu,
-    // Workspaces,
+    Workspaces,
     ClientTitle,
     Media,
     Notifications,
@@ -43,7 +43,7 @@ const { location: borderLocation } = options.theme.bar.border;
 const widget = {
     battery: (): GtkWidget => WidgetContainer(BatteryLabel()),
     dashboard: (): GtkWidget => WidgetContainer(Menu()),
-    // workspaces: (monitor: number): GtkWidget => WidgetContainer(Workspaces(monitor)),
+    workspaces: (monitor: number): GtkWidget => WidgetContainer(Workspaces(monitor)),
     windowtitle: (): GtkWidget => WidgetContainer(ClientTitle()),
     media: (): GtkWidget => WidgetContainer(Media()),
     notifications: (): GtkWidget => WidgetContainer(Notifications()),

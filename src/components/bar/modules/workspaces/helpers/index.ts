@@ -1,8 +1,9 @@
-const hyprland = await Service.import('hyprland');
-
+import { exec, Variable } from 'astal';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import { hyprlandService } from 'src/lib/constants/services';
 import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'src/lib/types/workspace';
-import options from 'options';
-import { Variable } from 'types/variable';
+import { range } from 'src/lib/utils';
+import options from 'src/options';
 
 const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
 
@@ -12,12 +13,16 @@ export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, mo
     }
 
     const monitorMap: MonitorMap = {};
-    const workspaceMonitorList = hyprland?.workspaces?.map((m) => ({ id: m.monitorID, name: m.monitor }));
+    const workspaceMonitorList = hyprlandService
+        .get_workspaces()
+        .map((m) => ({ id: m.monitor.id, name: m.monitor.name }));
     const monitors = [
-        ...new Map([...workspaceMonitorList, ...hyprland.monitors].map((item) => [item.id, item])).values(),
+        ...new Map(
+            [...workspaceMonitorList, ...hyprlandService.get_monitors()].map((item) => [item.id, item]),
+        ).values(),
     ];
 
-    monitors.forEach((m) => (monitorMap[m.id] = m.name));
+    monitors.forEach((mon) => (monitorMap[mon.id] = mon.name));
 
     const currentMonitorName = monitorMap[monitor];
     const monitorWSRules = wsRules[currentMonitorName];
@@ -30,7 +35,7 @@ export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, mo
 
 export const getWorkspaceRules = (): WorkspaceMap => {
     try {
-        const rules = Utils.exec('hyprctl workspacerules -j');
+        const rules = exec('hyprctl workspacerules -j');
 
         const workspaceRules: WorkspaceMap = {};
 
@@ -54,13 +59,13 @@ export const getWorkspaceRules = (): WorkspaceMap => {
 };
 
 export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
-    if (hyprland.monitors.length === 1) {
+    if (hyprlandService.get_monitors().length === 1) {
         return Array.from({ length: workspaces.value }, (_, i) => i + 1);
     }
 
     const monitorWorkspaces = getWorkspaceRules();
     const monitorMap: MonitorMap = {};
-    hyprland.monitors.forEach((m) => (monitorMap[m.id] = m.name));
+    hyprlandService.get_monitors().forEach((m) => (monitorMap[m.id] = m.name));
 
     const currentMonitorName = monitorMap[monitor];
 
@@ -73,9 +78,9 @@ type ThrottledScrollHandlers = {
 };
 
 export const isWorkspaceIgnored = (ignoredWorkspaces: Variable<string>, workspaceNumber: number): boolean => {
-    if (ignoredWorkspaces.value === '') return false;
+    if (ignoredWorkspaces.get() === '') return false;
 
-    const ignoredWsRegex = new RegExp(ignoredWorkspaces.value);
+    const ignoredWsRegex = new RegExp(ignoredWorkspaces.get());
 
     return ignoredWsRegex.test(workspaceNumber.toString());
 };
@@ -87,12 +92,15 @@ const navigateWorkspace = (
     ignoredWorkspaces: Variable<string>,
 ): void => {
     const workspacesList = activeWorkspaces
-        ? hyprland.workspaces.filter((ws) => hyprland.active.monitor.id === ws.monitorID).map((ws) => ws.id)
-        : currentMonitorWorkspaces.value || Array.from({ length: workspaces.value }, (_, i) => i + 1);
+        ? hyprlandService
+              .get_workspaces()
+              .filter((ws) => hyprlandService.focusedMonitor.id === ws.monitor.id)
+              .map((ws) => ws.id)
+        : currentMonitorWorkspaces.get() || Array.from({ length: workspaces.value }, (_, i) => i + 1);
 
     if (workspacesList.length === 0) return;
 
-    const currentIndex = workspacesList.indexOf(hyprland.active.workspace.id);
+    const currentIndex = workspacesList.indexOf(hyprlandService.focusedWorkspace.id);
     const step = direction === 'next' ? 1 : -1;
     let newIndex = (currentIndex + step + workspacesList.length) % workspacesList.length;
     let attempts = 0;
@@ -100,7 +108,7 @@ const navigateWorkspace = (
     while (attempts < workspacesList.length) {
         const targetWS = workspacesList[newIndex];
         if (!isWorkspaceIgnored(ignoredWorkspaces, targetWS)) {
-            hyprland.messageAsync(`dispatch workspace ${targetWS}`);
+            hyprlandService.message_async(`dispatch workspace ${targetWS}`);
             return;
         }
         newIndex = (newIndex + step + workspacesList.length) % workspacesList.length;
@@ -140,7 +148,7 @@ export function throttle<T extends (...args: unknown[]) => void>(func: T, limit:
 export const createThrottledScrollHandlers = (
     scrollSpeed: number,
     currentMonitorWorkspaces: Variable<number[]>,
-    activeWorkspaces: boolean = false,
+    activeWorkspaces: boolean = true,
 ): ThrottledScrollHandlers => {
     const throttledScrollUp = throttle(() => {
         if (reverse_scroll.value) {
@@ -159,4 +167,51 @@ export const createThrottledScrollHandlers = (
     }, 200 / scrollSpeed);
 
     return { throttledScrollUp, throttledScrollDown };
+};
+
+export const getWorkspacesToRender = (
+    totalWorkspaces: number,
+    workspaceList: AstalHyprland.Workspace[],
+    workspaceRules: WorkspaceMap,
+    monitor: number,
+    isMonitorSpecific: boolean,
+): number[] => {
+    let allWorkspaces = range(totalWorkspaces || 8);
+    const activeWorkspaces = workspaceList.map((ws) => ws.id);
+
+    const workspaceMonitorList = hyprlandService.get_workspaces().map((ws) => ({
+        id: ws.monitor.id,
+        name: ws.monitor.name,
+    }));
+
+    const curMonitor =
+        hyprlandService.get_monitors().find((mon) => mon.id === monitor) ||
+        workspaceMonitorList.find((mon) => mon.id === monitor);
+
+    const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
+        return [...acc, ...workspaceRules[k]];
+    }, []);
+
+    const activesForMonitor = activeWorkspaces.filter((w) => {
+        if (
+            curMonitor &&
+            Object.hasOwnProperty.call(workspaceRules, curMonitor.name) &&
+            workspacesWithRules.includes(w)
+        ) {
+            return workspaceRules[curMonitor.name].includes(w);
+        }
+        return true;
+    });
+
+    if (isMonitorSpecific) {
+        const workspacesInRange = range(totalWorkspaces).filter((ws) => {
+            return getWorkspacesForMonitor(ws, workspaceRules, monitor);
+        });
+
+        allWorkspaces = [...new Set([...activesForMonitor, ...workspacesInRange])];
+    } else {
+        allWorkspaces = [...new Set([...allWorkspaces, ...activeWorkspaces])];
+    }
+
+    return allWorkspaces.sort((a, b) => a - b);
 };

@@ -77,8 +77,6 @@ const BatteryLabel = (): BarBoxChild => {
 
             const children: GtkWidget = [icon];
 
-            children.push(icon);
-
             if (showLabel && !(isCharged && hideLabelWhenFull)) {
                 children.push(label);
             }
