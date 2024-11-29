@@ -1,7 +1,7 @@
-import GLib from 'gi://GLib?version=2.0';
 import { Bind } from 'src/lib/types/variable';
 import { BarModule } from 'src/lib/types/options';
 import { getLayoutItems } from 'src/lib/utils';
+import { AstalIO, interval, Variable } from 'astal';
 
 const { layouts } = options.bar;
 
@@ -9,7 +9,7 @@ const { layouts } = options.bar;
  * A class that manages the polling lifecycle, including interval management and execution state.
  */
 export class Poller {
-    private intervalInstance: number | null = null;
+    private intervalInstance: AstalIO.Time | null = null;
     private isExecuting: boolean = false;
     private pollingFunction: () => Promise<void>;
 
@@ -31,9 +31,9 @@ export class Poller {
      * Starts the polling process by setting up the interval.
      */
     public start(): void {
-        Utils.merge([this.pollingInterval, ...this.trackers], (intervalMs: number) => {
+        Variable.derive([this.pollingInterval, ...this.trackers], (intervalMs: number) => {
             this.executePolling(intervalMs);
-        });
+        })();
     }
 
     /**
@@ -41,7 +41,7 @@ export class Poller {
      */
     public stop(): void {
         if (this.intervalInstance !== null) {
-            GLib.source_remove(this.intervalInstance);
+            this.intervalInstance.cancel();
             this.intervalInstance = null;
         }
     }
@@ -67,7 +67,7 @@ export class Poller {
             this.stop();
         }
 
-        layouts.connect('changed', () => {
+        layouts.subscribe(() => {
             const usedModules = getLayoutItems();
 
             if (usedModules.includes(moduleName)) {
@@ -85,10 +85,10 @@ export class Poller {
      */
     private executePolling(intervalMs: number): void {
         if (this.intervalInstance !== null) {
-            GLib.source_remove(this.intervalInstance);
+            this.intervalInstance.cancel();
         }
 
-        this.intervalInstance = Utils.interval(intervalMs, async () => {
+        this.intervalInstance = interval(intervalMs, async () => {
             if (this.isExecuting) {
                 return;
             }

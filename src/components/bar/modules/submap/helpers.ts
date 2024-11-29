@@ -1,13 +1,12 @@
-import { Variable } from 'types/variable';
-
-const hyprland = await Service.import('hyprland');
+import { Variable } from 'astal';
+import { hyprlandService } from 'src/lib/constants/services';
 
 export const isSubmapEnabled = (submap: string, enabled: string, disabled: string): string => {
     return submap !== 'default' ? enabled : disabled;
 };
 
 export const getInitialSubmap = (submapStatus: Variable<string>): void => {
-    let submap = hyprland.message('submap');
+    let submap = hyprlandService.message('submap');
 
     const newLineCarriage = /\n/g;
     submap = submap.replace(newLineCarriage, '');
@@ -16,5 +15,5 @@ export const getInitialSubmap = (submapStatus: Variable<string>): void => {
         submap = 'default';
     }
 
-    submapStatus.value = submap;
+    submapStatus.set(submap);
 };

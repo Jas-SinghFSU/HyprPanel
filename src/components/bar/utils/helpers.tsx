@@ -1,5 +1,5 @@
 import { ResourceLabelType } from 'src/lib/types/bar';
-import { GenericResourceData, Postfix } from 'src/lib/types/customModules/generic';
+import { GenericResourceData, Postfix, UpdateHandlers } from 'src/lib/types/customModules/generic';
 import { InputHandlerEvents, RunAsyncCommand } from 'src/lib/types/customModules/utils';
 import { ThrottleFn } from 'src/lib/types/utils';
 import { bind, Binding, execAsync, Variable } from 'astal';
@@ -7,6 +7,7 @@ import { openMenu } from 'src/components/bar/utils/menu';
 import options from 'src/options';
 import { Gdk } from 'astal/gtk3';
 import { GtkWidget } from 'src/lib/types/widget';
+import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 
 const { scrollSpeed } = options.bar.customModules;
 
@@ -64,7 +65,13 @@ const dummyVar = Variable('');
 
 export const inputHandler = (
     self: GtkWidget,
-    { onPrimaryClick, onSecondaryClick, onMiddleClick, onScrollUp, onScrollDown }: InputHandlerEvents,
+    {
+        onPrimaryClick: onPrimaryClickInput,
+        onSecondaryClick: onSecondaryClickInput,
+        onMiddleClick: onMiddleClickInput,
+        onScrollUp: onScrollUpInput,
+        onScrollDown: onScrollDownInput,
+    }: InputHandlerEvents,
     postInputUpdater?: Variable<boolean>,
 ): void => {
     const sanitizeInput = (input: Variable<string>): string => {
@@ -74,53 +81,61 @@ export const inputHandler = (
         return input.get();
     };
 
-    const updateHandlers = (): void => {
+    const updateHandlers = (): UpdateHandlers => {
         const interval = scrollSpeed.value;
         const throttledHandler = throttledScrollHandler(interval);
 
-        self.on_primary_click = (clicked: GtkWidget, event: Gdk.Event): void => {
+        const disconnectPrimaryClick = onPrimaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
             runAsyncCommand(
-                sanitizeInput(onPrimaryClick?.cmd || dummyVar),
+                sanitizeInput(onPrimaryClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onPrimaryClick.fn,
+                onPrimaryClickInput.fn,
                 postInputUpdater,
             );
-        };
+        });
 
-        self.on_secondary_click = (clicked: GtkWidget, event: Gdk.Event): void => {
+        const disconnectSecondaryClick = onSecondaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
             runAsyncCommand(
-                sanitizeInput(onSecondaryClick?.cmd || dummyVar),
+                sanitizeInput(onSecondaryClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onSecondaryClick.fn,
+                onSecondaryClickInput.fn,
                 postInputUpdater,
             );
-        };
+        });
 
-        self.on_middle_click = (clicked: GtkWidget, event: Gdk.Event): void => {
+        const disconnectMiddleClick = onMiddleClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
             runAsyncCommand(
-                sanitizeInput(onMiddleClick?.cmd || dummyVar),
+                sanitizeInput(onMiddleClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onMiddleClick.fn,
+                onMiddleClickInput.fn,
                 postInputUpdater,
             );
-        };
+        });
 
-        self.on_scroll_up = (clicked: GtkWidget, event: Gdk.Event): void => {
-            throttledHandler(
-                sanitizeInput(onScrollUp?.cmd || dummyVar),
-                { clicked, event },
-                onScrollUp.fn,
-                postInputUpdater,
-            );
-        };
+        const id = self.connect('scroll-event', (self: GtkWidget, event: Gdk.Event) => {
+            const eventDirection = event.get_scroll_direction()[1];
+            if (eventDirection === Gdk.ScrollDirection.UP) {
+                throttledHandler(
+                    sanitizeInput(onScrollUpInput?.cmd),
+                    { clicked: self, event },
+                    onScrollUpInput.fn,
+                    postInputUpdater,
+                );
+            } else if (eventDirection === Gdk.ScrollDirection.DOWN) {
+                throttledHandler(
+                    sanitizeInput(onScrollDownInput?.cmd),
+                    { clicked: self, event },
+                    onScrollDownInput.fn,
+                    postInputUpdater,
+                );
+            }
+        });
 
-        self.on_scroll_down = (clicked: GtkWidget, event: Gdk.Event): void => {
-            throttledHandler(
-                sanitizeInput(onScrollDown?.cmd || dummyVar),
-                { clicked, event },
-                onScrollDown.fn,
-                postInputUpdater,
-            );
+        return {
+            disconnectPrimary: disconnectPrimaryClick,
+            disconnectSecondary: disconnectSecondaryClick,
+            disconnectMiddle: disconnectMiddleClick,
+            disconnectScroll: () => self.disconnect(id),
         };
     };
 
@@ -138,14 +153,21 @@ export const inputHandler = (
     Variable.derive(
         [
             bind(scrollSpeed),
-            sanitizeVariable(onPrimaryClick),
-            sanitizeVariable(onSecondaryClick),
-            sanitizeVariable(onMiddleClick),
-            sanitizeVariable(onScrollUp),
-            sanitizeVariable(onScrollDown),
+            sanitizeVariable(onPrimaryClickInput),
+            sanitizeVariable(onSecondaryClickInput),
+            sanitizeVariable(onMiddleClickInput),
+            sanitizeVariable(onScrollUpInput),
+            sanitizeVariable(onScrollDownInput),
         ],
-        updateHandlers,
-    );
+        () => {
+            const handlers = updateHandlers();
+
+            handlers.disconnectPrimary();
+            handlers.disconnectSecondary();
+            handlers.disconnectMiddle();
+            handlers.disconnectScroll();
+        },
+    )();
 };
 
 export const divide = ([total, used]: number[], round: boolean): number => {

@@ -1,4 +1,4 @@
-import { hyprland } from 'src/lib/constants/services';
+import { hyprlandService } from 'src/lib/constants/services';
 import { Gdk } from 'astal/gtk3';
 import { BarLayout, BarLayouts } from 'src/lib/types/options';
 
@@ -116,7 +116,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     const gdkMonitor = gdkMonitors[monitor];
 
     // First pass: Strict matching including the monitor index (i.e., hypMon.id === monitor + resolution+scale criteria)
-    const directMatch = hyprland.get_monitors().find((hypMon) => {
+    const directMatch = hyprlandService.get_monitors().find((hypMon) => {
         const hyprlandKey = `${hypMon.model}_${hypMon.width}x${hypMon.height}_${hypMon.scale}`;
         return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
@@ -127,7 +127,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     }
 
     // Second pass: Relaxed matching without considering the monitor index
-    const hyprlandMonitor = hyprland.get_monitors().find((hypMon) => {
+    const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
         const hyprlandKey = `${hypMon.model}_${hypMon.width}x${hypMon.height}_${hypMon.scale}`;
         return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id);
     });
@@ -138,7 +138,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     }
 
     // Fallback: Find the first available monitor ID that hasn't been used
-    const fallbackMonitor = hyprland.get_monitors().find((hypMon) => !usedHyprlandMonitors.has(hypMon.id));
+    const fallbackMonitor = hyprlandService.get_monitors().find((hypMon) => !usedHyprlandMonitors.has(hypMon.id));
 
     if (fallbackMonitor) {
         usedHyprlandMonitors.add(fallbackMonitor.id);
@@ -146,7 +146,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     }
 
     // Ensure we return a valid monitor ID that actually exists
-    for (let i = 0; i < hyprland.get_monitors().length; i++) {
+    for (let i = 0; i < hyprlandService.get_monitors().length; i++) {
         if (!usedHyprlandMonitors.has(i)) {
             usedHyprlandMonitors.add(i);
             return i;

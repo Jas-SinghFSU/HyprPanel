@@ -4,39 +4,40 @@ import { getCurrentPlayer } from 'src/lib/shared/media.js';
 import { runAsyncCommand } from 'src/components/bar/utils/helpers.js';
 import { generateMediaLabel } from './helpers.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
-import { mpris } from 'src/lib/constants/services.js';
+import { mprisService } from 'src/lib/constants/services.js';
 import Variable from 'astal/variable.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { bind } from 'astal/binding.js';
+import { BarBoxChild } from 'src/lib/types/bar.js';
+import { Astal } from 'astal/gtk3';
 
 const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =
     options.bar.media;
 
-const Media = (): GtkWidget => {
-    const activePlayer = Variable(mpris.get_players()[0]);
+const Media = (): BarBoxChild => {
+    const activePlayer = Variable(mprisService.get_players()[0]);
     const isVis = Variable(!show_active_only.value);
 
     show_active_only.subscribe(() => {
-        isVis.set(!show_active_only.value || mpris.get_players().length > 0);
+        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
     });
 
-    mpris.connect('player-added', () => {
+    mprisService.connect('player-added', () => {
         const curPlayer = getCurrentPlayer(activePlayer.get());
         activePlayer.set(curPlayer);
-        isVis.set(!show_active_only.value || mpris.get_players().length > 0);
+        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
     });
 
-    mpris.connect('player-closed', () => {
+    mprisService.connect('player-closed', () => {
         const curPlayer = getCurrentPlayer(activePlayer.get());
         activePlayer.set(curPlayer);
-        isVis.set(!show_active_only.value || mpris.get_players().length > 0);
+        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
     });
 
     const songIcon = Variable('');
 
     const mediaLabel = Variable.derive(
-        [bind(mpris, 'players'), truncation, truncation_size, show_label, format],
+        [bind(mprisService, 'players'), truncation, truncation_size, show_label, format],
         () => {
             return generateMediaLabel(truncation_size, show_label, format, songIcon, activePlayer);
         },
@@ -63,7 +64,7 @@ const Media = (): GtkWidget => {
         isVis,
         boxClass: 'media',
         props: {
-            setup: (self: GtkWidget): void => {
+            setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
                         openMenu(clicked, event, 'dashboardmenu');

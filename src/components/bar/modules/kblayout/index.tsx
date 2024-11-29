@@ -1,28 +1,26 @@
-const hyprland = await Service.import('hyprland');
-
-import options from 'options';
+import { hyprlandService } from 'src/lib/constants/services';
+import options from 'src/options';
 import { module } from '../../utils/module';
-
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
-import Button from 'types/widgets/button';
-import Label from 'types/widgets/label';
 import { getKeyboardLayout } from './getLayout';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { Attribute, Child } from 'src/lib/types/widget';
+import { bind, execAsync } from 'astal';
+import { useHook } from 'src/lib/shared/hookHandler';
+import { Astal } from 'astal/gtk3';
 
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.kbLayout;
 
 export const KbInput = (): BarBoxChild => {
     const keyboardModule = module({
-        textIcon: icon.bind('value'),
+        textIcon: bind(icon),
         tooltipText: '',
-        labelHook: (self: Label<Gtk.Widget>): void => {
-            self.hook(
-                hyprland,
+        labelHook: (self: Astal.Label): void => {
+            useHook(
+                self,
+                hyprlandService,
                 () => {
-                    Utils.execAsync('hyprctl devices -j')
+                    execAsync('hyprctl devices -j')
                         .then((obj) => {
                             self.label = getKeyboardLayout(obj, labelType.value);
                         })
@@ -33,8 +31,8 @@ export const KbInput = (): BarBoxChild => {
                 'keyboard-layout',
             );
 
-            self.hook(labelType, () => {
-                Utils.execAsync('hyprctl devices -j')
+            useHook(self, labelType, () => {
+                execAsync('hyprctl devices -j')
                     .then((obj) => {
                         self.label = getKeyboardLayout(obj, labelType.value);
                     })
@@ -43,11 +41,10 @@ export const KbInput = (): BarBoxChild => {
                     });
             });
         },
-
         boxClass: 'kblayout',
-        showLabelBinding: label.bind('value'),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

@@ -4,11 +4,12 @@ import AstalTray from 'gi://AstalTray?version=0.1';
 import { GtkWidget } from '../../../../lib/types/widget';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { BarBoxChild } from 'src/lib/types/bar';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
 
-const SysTray = (): GtkWidget => {
+const SysTray = (): BarBoxChild => {
     const isVis = Variable(false);
 
     const customIcon = (iconLabel: string, iconColor: string, item: AstalTray.TrayItem): GtkWidget => {

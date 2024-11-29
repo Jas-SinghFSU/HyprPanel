@@ -1,32 +1,31 @@
-import options from 'options';
+import options from 'src/options';
 import { module } from '../../utils/module';
-
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import Button from 'types/widgets/button';
 import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/globals/weather';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { BarBoxChild } from 'src/lib/types/bar';
+import { bind, Variable } from 'astal';
+import { Astal } from 'astal/gtk3';
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
     const weatherModule = module({
-        textIcon: Utils.merge([globalWeatherVar.bind('value')], (wthr) => {
+        textIcon: Variable.derive([bind(globalWeatherVar)], (wthr) => {
             const weatherStatusIcon = getWeatherStatusTextIcon(wthr);
             return weatherStatusIcon;
-        }),
-        tooltipText: globalWeatherVar.bind('value').as((v) => `Weather Status: ${v.current.condition.text}`),
+        })(),
+        tooltipText: bind(globalWeatherVar).as((v) => `Weather Status: ${v.current.condition.text}`),
         boxClass: 'weather-custom',
-        label: Utils.merge([globalWeatherVar.bind('value'), unit.bind('value')], (wthr, unt) => {
+        label: Variable.derive([bind(globalWeatherVar), bind(unit)], (wthr, unt) => {
             if (unt === 'imperial') {
                 return `${Math.ceil(wthr.current.temp_f)}° F`;
             } else {
                 return `${Math.ceil(wthr.current.temp_c)}° C`;
             }
-        }),
-        showLabelBinding: label.bind('value'),
+        })(),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

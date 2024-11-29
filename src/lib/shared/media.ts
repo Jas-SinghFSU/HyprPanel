@@ -1,14 +1,16 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { mpris } from '../constants/services';
+import { mprisService } from '../constants/services';
 
-export const getCurrentPlayer = (activePlayer: AstalMpris.Player = mpris.get_players()[0]): AstalMpris.Player => {
+export const getCurrentPlayer = (
+    activePlayer: AstalMpris.Player = mprisService.get_players()[0],
+): AstalMpris.Player => {
     const statusOrder = {
         [AstalMpris.PlaybackStatus.PLAYING]: 1,
         [AstalMpris.PlaybackStatus.PAUSED]: 2,
         [AstalMpris.PlaybackStatus.STOPPED]: 3,
     };
 
-    const mprisPlayers = mpris.get_players();
+    const mprisPlayers = mprisService.get_players();
     if (mprisPlayers.length === 0) {
         return mprisPlayers[0];
     }

@@ -1,11 +1,11 @@
 import { openMenu } from '../../utils/menu';
 import options from 'src/options';
 import { BarBoxChild } from 'src/lib/types/bar.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, GLib, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { Astal } from 'astal/gtk3';
 
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
@@ -45,7 +45,7 @@ const Clock = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'clock',
         props: {
-            setup: (self: GtkWidget): void => {
+            setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 

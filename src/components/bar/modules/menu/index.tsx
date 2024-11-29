@@ -4,13 +4,14 @@ import { openMenu } from '../../utils/menu.js';
 import { getDistroIcon } from '../../../../lib/utils.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
-import { GtkWidget, GtkWidgetExtended } from 'src/lib/types/widget.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { useHook } from 'src/lib/shared/hookHandler.js'; // Ensure correct import
+import { BarBoxChild } from 'src/lib/types/bar.js';
+import { Astal } from 'astal/gtk3';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
-const Menu = (): GtkWidgetExtended => {
+const Menu = (): BarBoxChild => {
     const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
         const styleMap: Record<string, string> = {
             default: 'style1',
@@ -37,7 +38,7 @@ const Menu = (): GtkWidgetExtended => {
         isVisible: true,
         boxClass: 'dashboard',
         props: {
-            setup: (self: GtkWidget): void => {
+            setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 

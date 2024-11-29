@@ -1,10 +1,9 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { Gtk } from 'astal/gtk3';
+import { Astal, Gtk } from 'astal/gtk3';
 import { openMenu } from '../../utils/menu';
 import options from 'src/options';
 import { filterNotifications } from 'src/lib/shared/notifications.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
@@ -89,7 +88,7 @@ export const Notifications = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'notifications',
         props: {
-            setup: (self: GtkWidget): void => {
+            setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 

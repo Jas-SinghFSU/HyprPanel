@@ -1,8 +1,8 @@
-import { Variable as VariableType } from 'types/variable';
 import { Bind } from 'src/lib/types/variable';
 import { GenericFunction } from 'src/lib/types/customModules/generic';
 import { BarModule } from 'src/lib/types/options';
 import { Poller } from './Poller';
+import { execAsync, Variable } from 'astal';
 
 /**
  * A class that manages polling of a variable by executing a bash command at specified intervals.
@@ -38,7 +38,7 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      * ```
      */
     constructor(
-        private targetVariable: VariableType<Value>,
+        private targetVariable: Variable<Value>,
         private trackers: Bind[],
         private pollingInterval: Bind,
         private updateCommand: string,
@@ -58,8 +58,8 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      */
     public execute = async (): Promise<void> => {
         try {
-            const res = await Utils.execAsync(`bash -c "${this.updateCommand}"`);
-            this.targetVariable.value = await this.pollingFunction(res, ...this.params);
+            const res = await execAsync(`bash -c "${this.updateCommand}"`);
+            this.targetVariable.set(await this.pollingFunction(res, ...this.params));
         } catch (error) {
             console.error(`Error executing bash command "${this.updateCommand}":`, error);
         }

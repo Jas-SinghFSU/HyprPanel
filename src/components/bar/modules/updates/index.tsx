@@ -1,12 +1,10 @@
-import options from 'options';
+import options from 'src/options';
 import { module } from '../../utils/module';
-
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import Button from 'types/widgets/button';
-import { Variable as TVariable } from 'types/variable';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { BashPoller } from 'src/lib/poller/BashPoller';
+import { bind, Variable } from 'astal';
+import { Astal } from 'astal/gtk3';
 
 const {
     updateCommand,
@@ -21,7 +19,7 @@ const {
     scrollDown,
 } = options.bar.customModules.updates;
 
-const pendingUpdates: TVariable<string> = Variable('0');
+const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
 
 const processUpdateCount = (updateCount: string): string => {
@@ -31,8 +29,8 @@ const processUpdateCount = (updateCount: string): string => {
 
 const updatesPoller = new BashPoller<string, []>(
     pendingUpdates,
-    [padZero.bind('value'), postInputUpdater.bind('value')],
-    pollingInterval.bind('value'),
+    [bind(padZero), bind(postInputUpdater)],
+    bind(pollingInterval),
     updateCommand.value,
     processUpdateCount,
 );
@@ -41,13 +39,13 @@ updatesPoller.initialize('updates');
 
 export const Updates = (): BarBoxChild => {
     const updatesModule = module({
-        textIcon: icon.bind('value'),
-        tooltipText: pendingUpdates.bind('value').as((v) => `${v} updates available`),
+        textIcon: bind(icon),
+        tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
         boxClass: 'updates',
-        label: pendingUpdates.bind('value'),
-        showLabelBinding: label.bind('value'),
+        label: bind(pendingUpdates),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(
                     self,
                     {

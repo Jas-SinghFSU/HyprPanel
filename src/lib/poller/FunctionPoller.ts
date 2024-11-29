@@ -1,8 +1,8 @@
-import { Variable as VariableType } from 'types/variable';
 import { Bind } from 'src/lib/types/variable';
 import { GenericFunction } from 'src/lib/types/customModules/generic';
 import { BarModule } from 'src/lib/types/options';
 import { Poller } from './Poller';
+import { Variable } from 'astal';
 
 /**
  * A class that manages polling of a variable by executing a generic function at specified intervals.
@@ -36,7 +36,7 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      * ```
      */
     constructor(
-        private targetVariable: VariableType<Value>,
+        private targetVariable: Variable<Value>,
         private trackers: Bind[],
         private pollingInterval: Bind,
         private pollingFunction: GenericFunction<Value, Parameters>,
@@ -55,7 +55,7 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
     private execute = async (): Promise<void> => {
         try {
             const result = await this.pollingFunction(...this.params);
-            this.targetVariable.value = result;
+            this.targetVariable.set(result);
         } catch (error) {
             console.error('Error executing polling function:', error);
         }

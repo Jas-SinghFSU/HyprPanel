@@ -1,20 +1,21 @@
-import options from 'options';
+import options from 'src/options';
 import { UnitType, Weather, WeatherIconTitle, WeatherIcon } from 'src/lib/types/weather.js';
 import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.js';
 import GLib from 'gi://GLib?version=2.0';
 import { weatherIcons } from 'src/lib/icons/weather.js';
+import { AstalIO, bind, execAsync, interval, Variable } from 'astal';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 
-const { key, interval, location } = options.menus.clock.weather;
+const { key, interval: weatherInterval, location } = options.menus.clock.weather;
 
 export const globalWeatherVar = Variable<Weather>(DEFAULT_WEATHER);
 
-let weatherIntervalInstance: null | number = null;
+let weatherIntervalInstance: null | AstalIO.Time = null;
 
-key.connect('changed', () => {
+key.subscribe(() => {
     const fetchedKey = getWeatherKey(key.value);
-    weatherApiKey.value = fetchedKey;
+    weatherApiKey.set(fetchedKey);
 });
 
 /**
@@ -65,49 +66,46 @@ const weatherApiKey = Variable(fetchedApiKey);
  */
 const weatherIntervalFn = (weatherInterval: number, loc: string, weatherKey: string): void => {
     if (weatherIntervalInstance !== null) {
-        GLib.source_remove(weatherIntervalInstance);
+        weatherIntervalInstance.cancel();
     }
 
     const formattedLocation = loc.replace(' ', '%20');
 
-    weatherIntervalInstance = Utils.interval(weatherInterval, () => {
-        Utils.execAsync(
+    weatherIntervalInstance = interval(weatherInterval, () => {
+        execAsync(
             `curl "https://api.weatherapi.com/v1/forecast.json?key=${weatherKey}&q=${formattedLocation}&days=1&aqi=no&alerts=no"`,
         )
             .then((res) => {
                 try {
                     if (typeof res !== 'string') {
-                        return (globalWeatherVar.value = DEFAULT_WEATHER);
+                        return globalWeatherVar.set(DEFAULT_WEATHER);
                     }
 
                     const parsedWeather = JSON.parse(res);
 
                     if (Object.keys(parsedWeather).includes('error')) {
-                        return (globalWeatherVar.value = DEFAULT_WEATHER);
+                        return globalWeatherVar.set(DEFAULT_WEATHER);
                     }
 
-                    return (globalWeatherVar.value = parsedWeather);
+                    return globalWeatherVar.set(parsedWeather);
                 } catch (error) {
-                    globalWeatherVar.value = DEFAULT_WEATHER;
+                    globalWeatherVar.set(DEFAULT_WEATHER);
                     console.warn(`Failed to parse weather data: ${error}`);
                 }
             })
             .catch((err) => {
                 console.error(`Failed to fetch weather: ${err}`);
-                globalWeatherVar.value = DEFAULT_WEATHER;
+                globalWeatherVar.set(DEFAULT_WEATHER);
             });
     });
 };
 
-Utils.merge(
-    [weatherApiKey.bind('value'), interval.bind('value'), location.bind('value')],
-    (weatherKey, weatherInterval, loc) => {
-        if (!weatherKey) {
-            return (globalWeatherVar.value = DEFAULT_WEATHER);
-        }
-        weatherIntervalFn(weatherInterval, loc, weatherKey);
-    },
-);
+Variable.derive([bind(weatherApiKey), bind(weatherInterval), bind(location)], (weatherKey, weatherInterval, loc) => {
+    if (!weatherKey) {
+        return globalWeatherVar.set(DEFAULT_WEATHER);
+    }
+    weatherIntervalFn(weatherInterval, loc, weatherKey);
+})();
 
 /**
  * Gets the temperature from the weather data in the specified unit.

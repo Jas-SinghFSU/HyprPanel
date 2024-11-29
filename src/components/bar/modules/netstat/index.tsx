@@ -1,16 +1,16 @@
-const network = await Service.import('network');
-import options from 'options';
+import { networkService } from 'src/lib/constants/services';
+import options from 'src/options';
 import { module } from '../../utils/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './computeNetwork';
 import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
-import Button from 'types/widgets/button';
 import { NetworkResourceData } from 'src/lib/types/customModules/network';
 import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar';
 import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { Variable as TVariable } from 'types/variable';
+import { bind, Variable } from 'astal';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+import { Astal } from 'astal/gtk3';
 
 const {
     label,
@@ -30,62 +30,55 @@ export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DA
 
 const netstatPoller = new FunctionPoller<
     NetworkResourceData,
-    [round: TVariable<boolean>, interfaceNameVar: TVariable<string>, dataType: TVariable<RateUnit>]
+    [round: Variable<boolean>, interfaceNameVar: Variable<string>, dataType: Variable<RateUnit>]
 >(
-    // Variable to poll and update with the result of the function passed in
     networkUsage,
-    // Variables that should trigger the polling function to update when they change
-    [rateUnit.bind('value'), networkInterface.bind('value'), round.bind('value')],
-    // Interval at which to poll
-    pollingInterval.bind('value'),
-    // Function to execute to get the network data
+    [bind(rateUnit), bind(networkInterface), bind(round)],
+    bind(pollingInterval),
     computeNetwork,
-    // Optional parameters to pass to the function
-    // round is a boolean that determines whether to round the values
     round,
-    // Optional parameters to pass to the function
-    // networkInterface is the interface name to filter the data
     networkInterface,
-    // Optional parameters to pass to the function
-    // rateUnit is the unit to display the data in
-    // e.g. KiB, MiB, GiB, etc.
     rateUnit,
 );
 
 netstatPoller.initialize('netstat');
 
 export const Netstat = (): BarBoxChild => {
-    const renderNetworkLabel = (lblType: NetstatLabelType, network: NetworkResourceData): string => {
+    const renderNetworkLabel = (lblType: NetstatLabelType, networkService: NetworkResourceData): string => {
         switch (lblType) {
             case 'in':
-                return `↓ ${network.in}`;
+                return `↓ ${networkService.in}`;
             case 'out':
-                return `↑ ${network.out}`;
+                return `↑ ${networkService.out}`;
             default:
-                return `↓ ${network.in} ↑ ${network.out}`;
+                return `↓ ${networkService.in} ↑ ${networkService.out}`;
         }
     };
 
     const netstatModule = module({
-        useTextIcon: dynamicIcon.bind('value').as((useDynamicIcon) => !useDynamicIcon),
-        icon: Utils.merge([network.bind('primary'), network.bind('wifi'), network.bind('wired')], (pmry, wfi, wrd) => {
-            if (pmry === 'wired') {
-                return wrd.icon_name;
-            }
-            return wfi.icon_name;
-        }),
-        textIcon: icon.bind('value'),
-        label: Utils.merge(
-            [networkUsage.bind('value'), labelType.bind('value')],
-            (network: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, network),
-        ),
-        tooltipText: labelType.bind('value').as((lblTyp) => {
+        useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
+        icon: Variable.derive(
+            [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
+            (pmry, wfi, wrd) => {
+                if (pmry === AstalNetwork.Primary.WIRED) {
+                    return wrd.icon_name;
+                }
+                return wfi.icon_name;
+            },
+        )(),
+        textIcon: bind(icon),
+        label: Variable.derive(
+            [bind(networkUsage), bind(labelType)],
+            (networkService: NetworkResourceData, lblTyp: NetstatLabelType) =>
+                renderNetworkLabel(lblTyp, networkService),
+        )(),
+        tooltipText: bind(labelType).as((lblTyp) => {
             return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
         }),
         boxClass: 'netstat',
-        showLabelBinding: label.bind('value'),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

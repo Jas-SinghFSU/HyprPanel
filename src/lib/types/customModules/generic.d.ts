@@ -11,3 +11,10 @@ export type GenericResourceData = GenericResourceMetrics & {
 };
 
 export type Postfix = 'TiB' | 'GiB' | 'MiB' | 'KiB' | 'B';
+
+export type UpdateHandlers = {
+    disconnectPrimary: () => void;
+    disconnectSecondary: () => void;
+    disconnectMiddle: () => void;
+    disconnectScroll: () => void;
+};

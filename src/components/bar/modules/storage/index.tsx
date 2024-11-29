@@ -1,14 +1,13 @@
-import options from 'options';
+import options from 'src/options';
 import { module } from '../../utils/module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './computeStorage';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
-import Button from 'types/widgets/button';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { Variable as TVariable } from 'types/variable';
+import { bind, Variable } from 'astal';
+import { Astal } from 'astal/gtk3';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
@@ -17,10 +16,10 @@ const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
 
 const storageUsage = Variable<GenericResourceData>(defaultStorageData);
 
-const storagePoller = new FunctionPoller<GenericResourceData, [TVariable<boolean>]>(
+const storagePoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
     storageUsage,
-    [round.bind('value')],
-    pollingInterval.bind('value'),
+    [bind(round)],
+    bind(pollingInterval),
     computeStorage,
     round,
 );
@@ -29,20 +28,17 @@ storagePoller.initialize('storage');
 
 export const Storage = (): BarBoxChild => {
     const storageModule = module({
-        textIcon: icon.bind('value'),
-        label: Utils.merge(
-            [storageUsage.bind('value'), labelType.bind('value'), round.bind('value')],
-            (storage: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
-                return renderResourceLabel(lblTyp, storage, round);
-            },
-        ),
-        tooltipText: labelType.bind('value').as((lblTyp) => {
+        textIcon: bind(icon),
+        label: Variable.derive([bind(storageUsage), bind(labelType), bind(round)], (storage, lblTyp, round) => {
+            return renderResourceLabel(lblTyp, storage, round);
+        })(),
+        tooltipText: bind(labelType).as((lblTyp) => {
             return formatTooltip('Storage', lblTyp);
         }),
         boxClass: 'storage',
-        showLabelBinding: label.bind('value'),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

@@ -2,12 +2,13 @@ import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/util
 import { BarBoxChild } from 'src/lib/types/bar';
 import { GtkWidget } from 'src/lib/types/widget';
 import options from 'src/options';
-import { hyprland } from 'src/lib/constants/services';
+import { hyprlandService } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { bind, Variable } from 'astal';
 import { getTitle, getWindowMatch, truncateTitle } from './helpers/title';
+import { Astal } from 'astal/gtk3';
 
 const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
 
@@ -29,7 +30,7 @@ const ClientTitle = (): BarBoxChild => {
 
     const componentChildren = Variable.derive(
         [
-            bind(hyprland, 'focusedClient'),
+            bind(hyprlandService, 'focusedClient'),
             bind(custom_title),
             bind(class_name),
             bind(label),
@@ -80,7 +81,7 @@ const ClientTitle = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'windowtitle',
         props: {
-            setup: (self: GtkWidget): void => {
+            setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 

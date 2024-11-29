@@ -1,20 +1,13 @@
-import options from 'options';
-
-// Module initializer
+import options from 'src/options';
 import { module } from '../../utils/module';
-
-import Button from 'types/widgets/button';
-
-// Utility Methods
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getCPUTemperature } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { Variable as VariableType } from 'types/variable';
 import { UnitType } from 'src/lib/types/weather';
+import { bind, Variable } from 'astal';
+import { Astal } from 'astal/gtk3';
 
-// All the user configurable options for the cpu module that are needed
 const {
     label,
     sensor,
@@ -32,14 +25,10 @@ const {
 
 export const cpuTemp = Variable(0);
 
-const cpuTempPoller = new FunctionPoller<number, [VariableType<boolean>, VariableType<UnitType>]>(
-    // Variable to poll and update with the result of the function passed in
+const cpuTempPoller = new FunctionPoller<number, [Variable<boolean>, Variable<UnitType>]>(
     cpuTemp,
-    // Variables that should trigger the polling function to update when they change
-    [sensor.bind('value'), round.bind('value'), unit.bind('value')],
-    // Interval at which to poll
-    pollingInterval.bind('value'),
-    // Function to execute to get the network data
+    [bind(sensor), bind(round), bind(unit)],
+    bind(pollingInterval),
     getCPUTemperature,
     round,
     unit,
@@ -49,21 +38,20 @@ cpuTempPoller.initialize('cputemp');
 
 export const CpuTemp = (): BarBoxChild => {
     const cpuTempModule = module({
-        textIcon: icon.bind('value'),
-        label: Utils.merge(
-            [cpuTemp.bind('value'), unit.bind('value'), showUnit.bind('value'), round.bind('value')],
+        textIcon: bind(icon),
+        label: Variable.derive(
+            [bind(cpuTemp), bind(unit), bind(showUnit), bind(round)],
             (cpuTmp, tempUnit, shwUnit) => {
                 const unitLabel = tempUnit === 'imperial' ? 'F' : 'C';
                 const unit = shwUnit ? ` ${unitLabel}` : '';
-
                 return `${cpuTmp.toString()}°${unit}`;
             },
-        ),
+        )(),
         tooltipText: 'CPU Temperature',
         boxClass: 'cpu-temp',
-        showLabelBinding: label.bind('value'),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

@@ -1,37 +1,31 @@
-import { audioService } from 'src/lib/constants/services.js';
+import { bluetoothService } from 'src/lib/constants/services.js';
+import options from 'src/options.js';
 import { openMenu } from '../../utils/menu.js';
-import options from 'src/options';
+import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
-import Variable from 'astal/variable.js';
 import { bind } from 'astal/binding.js';
+import Variable from 'astal/variable.js';
+import { GtkWidget } from 'src/lib/types/widget.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
-import { getIcon } from './helpers.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { Astal } from 'astal/gtk3';
 
-const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
+const { rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
-const Volume = (): BarBoxChild => {
-    const volumeIcon = (isMuted: boolean, vol: number): GtkWidget => {
-        return <label className={'bar-button-icon volume txt-icon bar'} label={getIcon(isMuted, vol)} />;
-    };
-
-    const volumeLabel = (vol: number): GtkWidget => {
-        return <label className={'bar-button-label volume'} label={`${Math.round(vol * 100)}%`} />;
-    };
-
-    const componentTooltip = Variable.derive(
-        [
-            bind(audioService.defaultSpeaker, 'description'),
-            bind(audioService.defaultSpeaker, 'volume'),
-            bind(audioService.defaultSpeaker, 'mute'),
-        ],
-        (desc, vol, isMuted) => {
-            return `${getIcon(isMuted, vol)} ${desc}`;
-        },
+const Bluetooth = (): BarBoxChild => {
+    const btIcon = (isPowered: boolean): GtkWidget => (
+        <label className={'bar-button-icon bluetooth txt-icon bar'} label={isPowered ? '󰂯' : '󰂲'} />
     );
+    const btText = (isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget => {
+        const connectDevices = devices.filter((device) => device.connected);
+
+        const label =
+            isPowered && connectDevices.length ? ` Connected (${connectDevices.length})` : isPowered ? 'On' : 'Off';
+
+        return <label label={label} className={'bar-button-label bluetooth'} />;
+    };
+
     const componentClassName = Variable.derive(
         [options.theme.bar.buttons.style, options.bar.volume.label],
         (style, showLabel) => {
@@ -41,32 +35,32 @@ const Volume = (): BarBoxChild => {
                 wave: 'style3',
                 wave2: 'style3',
             };
-            return `volume-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+            return `bluetooth-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
         },
     );
-    const componentChildren = Variable.derive(
-        [
-            bind(options.bar.volume.label),
-            bind(audioService.defaultSpeaker, 'volume'),
-            bind(audioService.defaultSpeaker, 'mute'),
-        ],
-        (showLabel, vol, isMuted) => {
-            if (showLabel) {
-                return [volumeIcon(isMuted, vol), volumeLabel(vol)];
-            }
-            return [volumeIcon(isMuted, vol)];
-        },
-    );
+
     const component = (
-        <box vexpand={true} tooltipText={componentTooltip()} className={componentClassName()}>
-            {componentChildren()}
+        <box className={componentClassName()}>
+            {Variable.derive(
+                [
+                    bind(options.bar.volume.label),
+                    bind(bluetoothService, 'isPowered'),
+                    bind(bluetoothService, 'devices'),
+                ],
+                (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget[] => {
+                    if (showLabel) {
+                        return [btIcon(isPowered), btText(isPowered, devices)];
+                    }
+                    return [btIcon(isPowered)];
+                },
+            )()}
         </box>
     );
 
     return {
         component,
         isVisible: true,
-        boxClass: 'volume',
+        boxClass: 'bluetooth',
         props: {
             setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
@@ -97,4 +91,4 @@ const Volume = (): BarBoxChild => {
     };
 };
 
-export { Volume };
+export { Bluetooth };

@@ -1,32 +1,18 @@
 import { module } from '../../utils/module';
-
-import options from 'options';
-import Button from 'types/widgets/button';
-
-// Utility Methods
+import options from 'src/options';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './computeCPU';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { Attribute, Child } from 'src/lib/types/widget';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
+import { bind, Variable } from 'astal';
+import { Astal } from 'astal/gtk3';
 
-// All the user configurable options for the cpu module that are needed
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;
 
 export const cpuUsage = Variable(0);
 
-// Instantiate the Poller class for CPU usage polling
-const cpuPoller = new FunctionPoller<number, []>(
-    // Variable to poll and update with the result of the function passed in
-    cpuUsage,
-    // Variables that should trigger the polling function to update when they change
-    [round.bind('value')],
-    // Interval at which to poll
-    pollingInterval.bind('value'),
-    // Function to execute to get the network data
-    computeCPU,
-);
+const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(pollingInterval), computeCPU);
 
 cpuPoller.initialize('cpu');
 
@@ -36,15 +22,15 @@ export const Cpu = (): BarBoxChild => {
     };
 
     const cpuModule = module({
-        textIcon: icon.bind('value'),
-        label: Utils.merge([cpuUsage.bind('value'), round.bind('value')], (cpuUsg, rnd) => {
+        textIcon: bind(icon),
+        label: Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg, rnd) => {
             return renderLabel(cpuUsg, rnd);
-        }),
+        })(),
         tooltipText: 'CPU',
         boxClass: 'cpu',
-        showLabelBinding: label.bind('value'),
+        showLabelBinding: bind(label),
         props: {
-            setup: (self: Button<Child, Attribute>) => {
+            setup: (self: Astal.Button) => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         cmd: leftClick,

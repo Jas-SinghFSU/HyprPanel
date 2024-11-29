@@ -1,16 +1,17 @@
+import { BarBoxChild } from 'src/lib/types/bar';
 import { Bind } from '../../../lib/types/variable';
 import { GtkWidget } from '../../../lib/types/widget';
 import options from '../../../options';
 import { bind } from 'astal';
 
-const computeVisible = (child: GtkWidget): Bind | boolean => {
+const computeVisible = (child: BarBoxChild): Bind | boolean => {
     if (child.isVis !== undefined) {
         return child.isVis.bind('value');
     }
     return child.isVisible;
 };
 
-export const BarItemBox = (child: GtkWidget): GtkWidget => {
+export const BarItemBox = (child: BarBoxChild): GtkWidget => {
     const buttonClassName = bind(options.theme.bar.buttons.style).as((style) => {
         const styleMap = {
             default: 'style1',
