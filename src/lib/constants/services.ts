@@ -13,3 +13,6 @@ export const networkService = AstalNetwork.get_default();
 
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 export const bluetoothService = AstalBluetooth.get_default();
+
+import AstalBattery from 'gi://AstalBattery?version=0.1';
+export const batteryService = AstalBattery.get_default();

@@ -56,8 +56,6 @@ export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
  */
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
     throttleInput((cmd: string, args, fn, postInputUpdater) => {
-        console.log('input command');
-
         runAsyncCommand(cmd, args, fn, postInputUpdater);
     }, 200 / interval);
 

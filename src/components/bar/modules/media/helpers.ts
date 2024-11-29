@@ -49,7 +49,6 @@ export const generateMediaLabel = (
     if (activePlayer.get() && show_label.value) {
         const { title, identity, artist, album, busName } = activePlayer.get();
         songIcon.set(getIconForPlayer(identity));
-        log(activePlayer.get());
 
         const mediaTags: MediaTags = {
             title: title,

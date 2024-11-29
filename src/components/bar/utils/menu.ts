@@ -44,7 +44,6 @@ export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: str
     const clickPos = event.get_root_coords();
     const adjustedXCoord = clickPos[1] + middleOffset;
     const coords = [adjustedXCoord, clickPos[2]];
-    console.log(coords);
 
     try {
         // await calculateMenuPosition(coords, window);

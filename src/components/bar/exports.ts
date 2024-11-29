@@ -6,11 +6,11 @@ import { Notifications } from '../../components/bar/modules/notifications/index'
 import { Volume } from '../../components/bar/modules/volume/index';
 import { Network } from '../../components/bar/modules/network/index';
 import { Bluetooth } from '../../components/bar/modules/bluetooth/index';
-// import { BatteryLabel } from '../../components/bar/modules/battery/index';
+import { BatteryLabel } from '../../components/bar/modules/battery/index';
 import { Clock } from '../../components/bar/modules/clock/index';
 import { SysTray } from '../../components/bar/modules/systray/index';
-//
-// // Custom Modules
+
+// Custom Modules
 import { Ram } from '../../components/bar/modules/ram/index';
 import { Cpu } from '../../components/bar/modules/cpu/index';
 import { CpuTemp } from '../../components/bar/modules/cputemp/index';
@@ -33,7 +33,7 @@ export {
     Volume,
     Network,
     Bluetooth,
-    // BatteryLabel,
+    BatteryLabel,
     Clock,
     SysTray,
 

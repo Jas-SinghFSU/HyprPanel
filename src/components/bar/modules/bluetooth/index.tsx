@@ -79,6 +79,7 @@ const Bluetooth = (): BarBoxChild => {
                     });
 
                     const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+
                     return (): void => {
                         disconnectPrimary();
                         disconnectSecondary();

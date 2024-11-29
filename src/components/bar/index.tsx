@@ -7,7 +7,7 @@ import {
     Volume,
     Network,
     Bluetooth,
-    // BatteryLabel,
+    BatteryLabel,
     Clock,
     SysTray,
 
