@@ -9,13 +9,15 @@ import './src/components/bar/utils/sideEffects';
 
 import Hyprland from 'gi://AstalHyprland';
 import { Bar } from './src/components/bar';
-// // import MenuWindows from './modules/menus/main.js';
+import MenuWindows from './src/components/menus/exports';
 // // import SettingsDialog from 'widget/settings/SettingsDialog';
 // // import Notifications from './modules/notifications/index.js';
 import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 // // import options from 'options.js';
 // // import OSD from 'modules/osd/index';
 import { App } from 'astal/gtk3';
+import { GtkWidget } from 'src/lib/types/widget.js';
+import powerDropdown from 'src/components/menus/powerDropdown';
 // import { execAsync, exec } from 'astal/process.js';
 //
 // const hyprland = Hyprland.get_default();
@@ -25,11 +27,11 @@ import { App } from 'astal/gtk3';
 // // warnOnLowBattery();
 App.start({
     main() {
-        // MenuWindows.forEach((window) => window());
+        MenuWindows.forEach((window) => window());
         // Notifications();
         // SettingsDialog();
         // OSD();
-        forMonitors(Bar).forEach((bar) => bar());
+        forMonitors(Bar).forEach((bar: GtkWidget) => bar);
     },
 });
 //

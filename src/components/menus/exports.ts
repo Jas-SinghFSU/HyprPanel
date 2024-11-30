@@ -11,15 +11,15 @@ import DashboardMenu from './dashboard/index.js';
 import PowerDropdown from './powerDropdown/index.js';
 
 export default [
-    PowerMenu(),
-    Verification(),
-    AudioMenu(),
-    NetworkMenu(),
-    BluetoothMenu(),
-    MediaMenu(),
-    NotificationsMenu(),
-    CalendarMenu(),
-    EnergyMenu(),
-    DashboardMenu(),
-    PowerDropdown(),
+    // PowerMenu,
+    Verification,
+    // AudioMenu,
+    // NetworkMenu,
+    // BluetoothMenu,
+    // MediaMenu,
+    // NotificationsMenu,
+    // CalendarMenu,
+    // EnergyMenu,
+    // DashboardMenu,
+    PowerDropdown,
 ];

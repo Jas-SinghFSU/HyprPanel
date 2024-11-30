@@ -1,6 +1,6 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { module } from '../../utils/module';
+import { module } from '../../shared/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getKeyboardLayout } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';

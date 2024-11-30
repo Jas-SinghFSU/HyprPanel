@@ -71,7 +71,7 @@ const componentClassName = Variable.derive(
 const componentChildren = [networkIcon, networkLabel()];
 
 const component = (
-    <box vexpand={true} valign={Gtk.Align.FILL} className={componentClassName()}>
+    <box vexpand valign={Gtk.Align.FILL} className={componentClassName()}>
         {componentChildren}
     </box>
 );

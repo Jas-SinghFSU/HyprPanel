@@ -3,7 +3,7 @@ import { GtkWidget } from 'src/lib/types/widget';
 import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/locationHandler';
 
 export const closeAllMenus = (): void => {
-    const menuWindows = App.windows
+    const menuWindows = App.get_windows()
         .filter((w) => {
             if (w.name) {
                 return /.*menu/.test(w.name);
@@ -15,13 +15,12 @@ export const closeAllMenus = (): void => {
 
     menuWindows.forEach((window) => {
         if (window) {
-            App.get_window(window)?.close();
+            App.get_window(window)?.set_visible(false);
         }
     });
 };
 
 export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: string): Promise<void> => {
-    log('test');
     /*
      * NOTE: We have to make some adjustments so the menu pops up relatively
      * to the center of the button clicked. We don't want the menu to spawn
@@ -37,20 +36,24 @@ export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: str
      * icon click.
      */
 
-    const middleOfButton = Math.floor(clicked.get_allocated_width() / 2);
-    const xAxisOfButtonClick = clicked.get_pointer()[0];
-    const middleOffset = middleOfButton - xAxisOfButtonClick;
-
-    const clickPos = event.get_root_coords();
-    const adjustedXCoord = clickPos[1] + middleOffset;
-    const coords = [adjustedXCoord, clickPos[2]];
-
     try {
-        // await calculateMenuPosition(coords, window);
-    } catch (error) {
-        console.error(`Error calculating menu position: ${error.stack}`);
-    }
+        const middleOfButton = Math.floor(clicked.get_allocated_width() / 2);
+        const xAxisOfButtonClick = clicked.get_pointer()[0];
+        const middleOffset = middleOfButton - xAxisOfButtonClick;
 
-    // closeAllMenus();
-    // App.toggle_window(window);
+        const clickPos = event.get_root_coords();
+        const adjustedXCoord = clickPos[1] + middleOffset;
+        const coords = [adjustedXCoord, clickPos[2]];
+
+        await calculateMenuPosition(coords, window);
+
+        closeAllMenus();
+        App.toggle_window(window);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`Error calculating menu position: ${error.stack}`);
+        } else {
+            console.error(`Unknown error occurred: ${error}`);
+        }
+    }
 };

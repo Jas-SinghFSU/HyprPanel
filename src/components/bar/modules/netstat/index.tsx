@@ -1,6 +1,6 @@
 import { networkService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { module } from '../../utils/module';
+import { module } from '../../shared/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './helpers';
 import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';

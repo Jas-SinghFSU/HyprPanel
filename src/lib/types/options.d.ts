@@ -1,6 +1,7 @@
 import { Opt } from 'src/lib/option';
 import { Variable } from 'types/variable';
 import { defaultColorMap } from './defaults/options';
+import { Astal } from 'astal/gtk3';
 
 export type MkOptionsResult = {
     configFile: string;
@@ -14,7 +15,7 @@ export type RecursiveOptionsObject = {
     [key: string]: RecursiveOptionsObject | Opt<string> | Opt<number> | Opt<boolean>;
 };
 
-export type BarLocation = 'top' | 'bottom';
+export type BarLocation = Astal.WindowAnchor.TOP | ASTAL.WindowAnchor.BOTTOM;
 export type BarModule =
     | 'battery'
     | 'dashboard'

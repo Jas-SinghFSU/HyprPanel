@@ -1,6 +1,7 @@
 import { Widget } from 'types/widgets/widget';
 import { WindowProps } from 'types/widgets/window';
 import { Transition } from './widget';
+import { Gtk } from 'astal/gtk3';
 
 export type PopupWindowProps = {
     name: string;
@@ -13,7 +14,7 @@ export type PopupWindowProps = {
 export type LayoutFunction = (
     name: string,
     child: Widget,
-    transition: Transition,
+    transition: Gtk.RevealerTransitionType,
 ) => {
     center: () => Widget;
     top: () => Widget;

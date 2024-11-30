@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../utils/module';
+import { module } from '../../shared/module';
 import { inputHandler, throttleInput } from '../../utils/helpers';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
 import { FunctionPoller } from '../../../../lib/poller/FunctionPoller';

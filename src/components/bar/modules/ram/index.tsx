@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../utils/module';
+import { module } from '../../shared/module';
 import { calculateRamUsage } from './helpers';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar';

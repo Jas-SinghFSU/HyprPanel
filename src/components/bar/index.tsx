@@ -26,7 +26,7 @@ import {
     Hypridle,
 } from './exports';
 
-import { BarItemBox as WidgetContainer } from 'src/components/bar/utils/barItemBox';
+import { BarItemBox as WidgetContainer } from 'src/components/bar/shared/barItemBox';
 import options from 'src/options';
 import { Gtk } from 'astal/gtk3/index';
 
@@ -145,9 +145,9 @@ export const Bar = (() => {
                 <box className={'bar-panel-container'}>
                     <centerbox
                         css={'padding: 1px;'}
-                        hexpand={true}
+                        hexpand
                         className={computeBorderLocation}
-                        startWidget={<box className={'box-left'} hexpand={true} setup={leftSection}></box>}
+                        startWidget={<box className={'box-left'} hexpand setup={leftSection}></box>}
                         centerWidget={
                             <box
                                 className={'box-center'}

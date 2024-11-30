@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../utils/module';
+import { module } from '../../shared/module';
 import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';

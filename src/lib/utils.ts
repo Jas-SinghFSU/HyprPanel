@@ -8,7 +8,7 @@ import { namedColors } from './constants/colors';
 import { distroIcons } from './constants/distro';
 import { distro } from './variables';
 import options from '../options';
-import { Gdk, Gtk } from 'astal/gtk3';
+import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
 import AstalBattery from 'gi://AstalBattery?version=0.1';
@@ -234,3 +234,9 @@ export function warnOnLowBattery(): void {
         }
     });
 }
+
+export const isPrimaryClick = (event: Astal.ClickEvent): boolean => event.button === Gdk.BUTTON_PRIMARY;
+export const isSecondaryClick = (event: Astal.ClickEvent): boolean => event.button === Gdk.BUTTON_SECONDARY;
+export const isMiddleClick = (event: Astal.ClickEvent): boolean => event.button === Gdk.BUTTON_MIDDLE;
+export const isScrollUp = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.UP;
+export const isScrollDown = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.DOWN;

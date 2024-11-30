@@ -1,24 +1,22 @@
 import { Action } from 'src/lib/types/power';
-import options from 'options';
+import options from 'src/options';
+import { execAsync, GObject, property, register } from 'astal';
+import { App } from 'astal/gtk3';
 const { sleep, reboot, logout, shutdown } = options.menus.dashboard.powermenu;
 
-class PowerMenu extends Service {
-    static {
-        Service.register(
-            this,
-            {},
-            {
-                title: ['string'],
-                cmd: ['string'],
-            },
-        );
-    }
-
+@register({ GTypeName: 'PowerMenu' })
+class PowerMenu extends GObject.Object {
     #title = '';
     #cmd = '';
 
+    @property(String)
     get title(): string {
         return this.#title;
+    }
+
+    @property(String)
+    get cmd(): string {
+        return this.#cmd;
     }
 
     action(action: Action): void {
@@ -31,9 +29,11 @@ class PowerMenu extends Service {
 
         this.notify('cmd');
         this.notify('title');
+
         this.emit('changed');
-        App.closeWindow('powermenu');
-        App.openWindow('verification');
+
+        App.get_window('powermenu')?.set_visible(false);
+        App.get_window('verification')?.set_visible(true);
     }
 
     customAction(action: Action, cmnd: string): void {
@@ -41,9 +41,11 @@ class PowerMenu extends Service {
 
         this.notify('cmd');
         this.notify('title');
+
         this.emit('changed');
-        App.closeWindow('powermenu');
-        App.openWindow('verification');
+
+        App.get_window('powermenu')?.set_visible(false);
+        App.get_window('verification')?.set_visible(true);
     }
 
     shutdown = (): void => {
@@ -51,8 +53,8 @@ class PowerMenu extends Service {
     };
 
     exec = (): void => {
-        App.closeWindow('verification');
-        Utils.execAsync(this.#cmd);
+        App.get_window('verification')?.set_visible(false);
+        execAsync(this.#cmd);
     };
 }
 

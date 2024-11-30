@@ -58,7 +58,7 @@ const Volume = (): BarBoxChild => {
         },
     );
     const component = (
-        <box vexpand={true} tooltipText={componentTooltip()} className={componentClassName()}>
+        <box vexpand tooltipText={componentTooltip()} className={componentClassName()}>
             {componentChildren()}
         </box>
     );
