@@ -1,8 +1,8 @@
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Bind } from '../../../lib/types/variable';
-import { GtkWidget } from '../../../lib/types/widget';
 import options from '../../../options';
 import { bind } from 'astal';
+import { Astal } from 'astal/gtk3';
 
 const computeVisible = (child: BarBoxChild): Bind | boolean => {
     if (child.isVis !== undefined) {
@@ -11,7 +11,7 @@ const computeVisible = (child: BarBoxChild): Bind | boolean => {
     return child.isVisible;
 };
 
-export const BarItemBox = (child: BarBoxChild): GtkWidget => {
+export const BarItemBox = (child: BarBoxChild): Partial<Astal.Button> => {
     const buttonClassName = bind(options.theme.bar.buttons.style).as((style) => {
         const styleMap = {
             default: 'style1',

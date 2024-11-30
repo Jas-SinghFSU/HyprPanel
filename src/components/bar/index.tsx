@@ -109,7 +109,7 @@ export const Bar = (() => {
 
                 self.children = foundLayout.left
                     .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+                    .map((w) => widget[w](hyprlandMonitor));
             });
         };
 
@@ -119,7 +119,7 @@ export const Bar = (() => {
 
                 self.children = foundLayout.middle
                     .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+                    .map((w) => widget[w](hyprlandMonitor));
             });
         };
 
@@ -128,7 +128,7 @@ export const Bar = (() => {
                 const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.value);
                 self.children = foundLayout.right
                     .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor) as GtkWidget);
+                    .map((w) => widget[w](hyprlandMonitor));
             });
         };
 

@@ -4,6 +4,7 @@ import Box from 'types/widgets/box';
 import Button, { ButtonProps } from 'types/widgets/button';
 import Label from 'types/widgets/label';
 import { Attribute, Child } from './widget';
+import { Widget } from 'astal/gtk3';
 
 export type BarBoxChild = {
     component: Box<Gtk.Widget, unknown>;
@@ -11,7 +12,7 @@ export type BarBoxChild = {
     isVis?: Variable<boolean>;
     boxClass: string;
     tooltip_text?: string | Binding<string>;
-    props: ButtonProps;
+    props: Widget.ButtonProps;
 };
 
 export type SelfButton = Button<Child, Attribute>;
@@ -28,7 +29,7 @@ export type Module = {
     boundLabel?: string;
     tooltipText?: string | Binding<string>;
     boxClass: string;
-    props?: ButtonProps;
+    props?: Widget.ButtonProps;
     showLabel?: boolean;
     showLabelBinding?: Binding;
     hook?: BoxHook;

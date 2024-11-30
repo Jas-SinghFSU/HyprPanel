@@ -1,10 +1,10 @@
-import { Notify } from '../../../../lib/utils';
+import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
 import options from '../../../../options';
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { GtkWidget } from '../../../../lib/types/widget';
 import { bind, Variable } from 'astal';
-import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { BarBoxChild } from 'src/lib/types/bar';
+import { Gdk } from 'astal/gtk3';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
@@ -18,10 +18,18 @@ const SysTray = (): BarBoxChild => {
         return (
             <button
                 cursor={'pointer'}
-                setup={(self) => {
-                    onPrimaryClick(self, () => item.activate(0, 0));
-                    onSecondaryClick(self, (_, event) => menu?.popup_at_pointer(event));
-                    onMiddleClick(self, () => Notify({ summary: 'App Name', body: item.id }));
+                onClick={(self, event) => {
+                    if (isPrimaryClick(event)) {
+                        item.activate(0, 0);
+                    }
+
+                    if (isSecondaryClick(event)) {
+                        menu?.popup_at_widget(self, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, null);
+                    }
+
+                    if (isMiddleClick(event)) {
+                        Notify({ summary: 'App Name', body: item.id });
+                    }
                 }}
             >
                 <label
@@ -40,13 +48,19 @@ const SysTray = (): BarBoxChild => {
         return (
             <button
                 cursor={'pointer'}
-                onClick={(_, self) => {}}
-                setup={(self) => {
-                    onPrimaryClick(self, () => item.activate(0, 0));
-                    onSecondaryClick(self, (_, event) => menu?.popup_at_pointer(event));
-                    onMiddleClick(self, () => Notify({ summary: 'App Name', body: item.id }));
+                onClick={(self, event) => {
+                    if (isPrimaryClick(event)) {
+                        item.activate(0, 0);
+                    }
+
+                    if (isSecondaryClick(event)) {
+                        menu?.popup_at_widget(self, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, null);
+                    }
+
+                    if (isMiddleClick(event)) {
+                        Notify({ summary: 'App Name', body: item.id });
+                    }
                 }}
-                onScroll={(_, self: string) => {}}
             >
                 <icon
                     className={'systray-icon'}
