@@ -15,9 +15,9 @@ const { location } = options.theme.bar;
 // for the first time we open a menu of each type.
 const initRender = Variable(true);
 
-// setTimeout(() => {
-//     initRender.set(false);
-// }, 2000);
+setTimeout(() => {
+    initRender.set(false);
+}, 2000);
 
 export default ({
     name,
@@ -55,15 +55,11 @@ export default ({
         >
             <eventbox
                 className="parent-event"
-                onClick={(_, event) => {
-                    if (event.button === Gdk.BUTTON_PRIMARY) {
-                        log('clicked parent-event');
-                        return App.get_window(name)?.set_visible(false);
-                    }
+                onButtonPressEvent={(_, event) => {
+                    const buttonClicked = event.get_button()[1];
 
-                    if (event.button === Gdk.BUTTON_SECONDARY) {
-                        log('clicked parent-event');
-                        return App.get_window(name)?.set_visible(false);
+                    if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
+                        App.get_window(name)?.set_visible(false);
                     }
                 }}
             >
@@ -80,13 +76,10 @@ export default ({
                     />
                     <eventbox
                         className="in-eb menu-event-box"
-                        onClick={(_, event) => {
-                            if (event.button === Gdk.BUTTON_PRIMARY) {
-                                log('clicked in-eb');
-                                return true;
-                            }
-                            if (event.button === Gdk.BUTTON_SECONDARY) {
-                                log('clicked in-eb');
+                        onButtonPressEvent={(_, event) => {
+                            const buttonClicked = event.get_button()[1];
+
+                            if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
                                 return true;
                             }
                         }}
