@@ -13,7 +13,7 @@ import PowerDropdown from './powerDropdown/index.js';
 export default [
     // PowerMenu,
     Verification,
-    // AudioMenu,
+    AudioMenu,
     // NetworkMenu,
     // BluetoothMenu,
     // MediaMenu,
