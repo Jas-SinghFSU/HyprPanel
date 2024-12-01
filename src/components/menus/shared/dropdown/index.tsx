@@ -1,11 +1,11 @@
 import options from 'src/options';
 import { DropdownMenuProps } from 'src/lib/types/dropdownmenu';
-import { Exclusivity } from 'src/lib/types/widget';
-import { barEventMargins } from './eventBoxes/index';
+import { BarEventMargins } from './eventBoxes/index';
 import { globalEventBoxes } from 'src/globals/dropdown';
 import { bind, Variable } from 'astal';
 import { App, Astal, Gdk } from 'astal/gtk3';
 import { Revealer } from 'astal/gtk3/widget';
+import { locationMap } from 'src/lib/types/defaults/bar';
 
 const { location } = options.theme.bar;
 
@@ -23,7 +23,7 @@ export default ({
     name,
     child,
     transition,
-    exclusivity = 'ignore' as Exclusivity,
+    exclusivity = Astal.Exclusivity.IGNORE,
     ...props
 }: DropdownMenuProps): JSX.Element => {
     return (
@@ -43,11 +43,11 @@ export default ({
             exclusivity={exclusivity}
             layer={Astal.Layer.TOP}
             anchor={bind(location).as((ln) => {
-                if (ln === Astal.WindowAnchor.TOP) {
+                if (locationMap[ln] === Astal.WindowAnchor.TOP) {
                     return Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT;
                 }
 
-                if (ln === Astal.WindowAnchor.BOTTOM) {
+                if (locationMap[ln] === Astal.WindowAnchor.BOTTOM) {
                     return Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT;
                 }
             })}
@@ -64,16 +64,11 @@ export default ({
                 }}
             >
                 <box className="top-eb" vertical>
-                    <box
-                        className="event-box-container"
-                        children={bind(location).as((lcn) => {
-                            if (lcn === Astal.WindowAnchor.TOP) {
-                                return barEventMargins(name);
-                            } else {
-                                return [];
-                            }
-                        })}
-                    />
+                    {bind(location).as((lcn) => {
+                        if (locationMap[lcn] === Astal.WindowAnchor.TOP) {
+                            return <BarEventMargins windowName={name} />;
+                        }
+                    })}
                     <eventbox
                         className="in-eb menu-event-box"
                         onButtonPressEvent={(_, event) => {
@@ -112,16 +107,11 @@ export default ({
                             </revealer>
                         </box>
                     </eventbox>
-                    <box
-                        className="event-box-container"
-                        children={bind(location).as((lcn) => {
-                            if (lcn === Astal.WindowAnchor.BOTTOM) {
-                                return barEventMargins(name);
-                            } else {
-                                return [];
-                            }
-                        })}
-                    />
+                    {bind(location).as((lcn) => {
+                        if (locationMap[lcn] === Astal.WindowAnchor.BOTTOM) {
+                            return <BarEventMargins windowName={name} />;
+                        }
+                    })}
                 </box>
             </eventbox>
         </window>

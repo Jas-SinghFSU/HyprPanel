@@ -20,9 +20,6 @@ export const calculateMenuPosition = async (pos: number[], windowName: string): 
         const dropdownWidth = self.get_child()?.get_allocation().width ?? 0;
         const dropdownHeight = self.get_child()?.get_allocation().height ?? 0;
 
-        console.log(dropdownWidth);
-        console.log(dropdownHeight);
-
         let hyprScaling = 1;
         const monitorInfo = await bash('hyprctl monitors -j');
         const parsedMonitorInfo = JSON.parse(monitorInfo);

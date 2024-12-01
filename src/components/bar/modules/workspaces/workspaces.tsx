@@ -8,6 +8,8 @@ import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
 
+// FIX: Icon not updating when a client is opened on a workspace
+
 const {
     workspaces,
     monitorSpecific,
