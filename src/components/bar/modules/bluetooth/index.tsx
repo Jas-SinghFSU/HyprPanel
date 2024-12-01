@@ -67,7 +67,7 @@ const Bluetooth = (): BarBoxChild => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
-                        openMenu(clicked, event, 'audiomenu');
+                        openMenu(clicked, event, 'bluetoothmenu');
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {

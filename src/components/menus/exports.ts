@@ -14,7 +14,7 @@ export default [
     // PowerMenu,
     Verification,
     AudioMenu,
-    // NetworkMenu,
+    NetworkMenu,
     // BluetoothMenu,
     // MediaMenu,
     // NotificationsMenu,
