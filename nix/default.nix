@@ -17,6 +17,7 @@
   gpu-screen-recorder,
   networkmanager,
   brightnessctl,
+  gnome-bluetooth,
   matugen,
   swww,
   python3,
@@ -56,7 +57,7 @@ in {
   desktop = {
     inherit config;
     script = writeShellScriptBin pname ''
-      export PATH=$PATH:${lib.makeBinPath [dart-sass fd btop pipewire bluez bluez-tools networkmanager matugen swww grimblast gpu-screen-recorder brightnessctl pkgs.gnome-bluetooth python3]}
+      export PATH=$PATH:${lib.makeBinPath [dart-sass fd btop pipewire bluez bluez-tools networkmanager matugen swww grimblast gpu-screen-recorder brightnessctl gnome-bluetooth python3]}
       export GI_TYPELIB_PATH=${libgtop}/lib/girepository-1.0:${glib}/lib/girepository-1.0:$GI_TYPELIB_PATH
       ${ags}/bin/ags -b hyprpanel -c ${config}/config.js $@
     '';
