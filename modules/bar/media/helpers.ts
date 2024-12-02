@@ -39,6 +39,30 @@ const isValidMediaTag = (tag: unknown): tag is keyof MediaTags => {
     return (mediaTagKeys as readonly string[]).includes(tag);
 };
 
+const fullWidthRegex = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\uFF00-\uFFEF]/u;
+
+const truncateByLength = (str: string, maxLength: number): string => {
+    if (maxLength <= 0) {
+        return str;
+    }
+
+    let length = 0;
+    let isTruncated = false;
+    let truncatedStr = '';
+
+    for (const char of str) {
+        length += fullWidthRegex.test(char) ? 2 : 1;
+
+        if (length > maxLength) {
+            isTruncated = true;
+            break;
+        }
+        truncatedStr += char;
+    }
+
+    return isTruncated ? truncatedStr + '...' : str;
+};
+
 export const generateMediaLabel = (
     truncation_size: Opt<number>,
     show_label: Opt<boolean>,
@@ -75,11 +99,7 @@ export const generateMediaLabel = (
 
         const maxLabelSize = truncation_size.value;
 
-        let mediaLabel = truncatedLabel;
-
-        if (maxLabelSize > 0 && truncatedLabel.length > maxLabelSize) {
-            mediaLabel = `${truncatedLabel.substring(0, maxLabelSize)}...`;
-        }
+        let mediaLabel = truncateByLength(truncatedLabel, maxLabelSize);
 
         return mediaLabel.length ? mediaLabel : 'Media';
     } else {
