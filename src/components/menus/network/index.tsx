@@ -5,7 +5,7 @@ import { Wifi } from './wifi/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal/binding.js';
 import { networkService } from 'src/lib/constants/services.js';
-import { NoWifi } from './wifi/disabled.js';
+import { NoWifi } from './wifi/WirelessAPs/NoWifi.js';
 
 export default (): GtkWidget => {
     return (

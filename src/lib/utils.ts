@@ -167,7 +167,11 @@ export function Notify(notifPayload: NotificationArgs): void {
     if (notifPayload.transient) command += ` -e`;
     if (notifPayload.id !== undefined) command += ` -r ${notifPayload.id}`;
 
-    execAsync(command);
+    execAsync(command)
+        .then()
+        .catch((err) => {
+            console.error(`Failed to send notification: ${err.message}`);
+        });
 }
 
 export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] {

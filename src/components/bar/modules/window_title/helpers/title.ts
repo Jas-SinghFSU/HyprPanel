@@ -120,8 +120,6 @@ export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string
     }
     const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle.class.toLowerCase()));
 
-    // return the default icon if no match is found or
-    // if the array element matched is not of size 3
     if (!foundMatch || foundMatch.length !== 3) {
         return {
             icon: windowTitleMap[windowTitleMap.length - 1][1],
