@@ -3,16 +3,18 @@ import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { getBluetoothIcon } from '../utils';
 import Spinner from 'src/components/shared/Spinner';
 import { isPrimaryClick } from 'src/lib/utils';
+import { bind, Variable } from 'astal';
 
 export const BluetoothDevice = ({ device, connectedDevices }: BluetoothDeviceProps): JSX.Element => {
     const DeviceIcon = (): JSX.Element => {
         return (
             <label
                 valign={Gtk.Align.START}
-                className={`menu-button-icon bluetooth ${
-                    connectedDevices.includes(device.address) ? 'active' : ''
-                } txt-icon`}
-                label={getBluetoothIcon(`${device.icon}-symbolic`)}
+                className={bind(device, 'address').as(
+                    (address) =>
+                        `menu-button-icon bluetooth ${connectedDevices.includes(address) ? 'active' : ''} txt-icon`,
+                )}
+                label={bind(device, 'icon').as((icon) => getBluetoothIcon(`${icon}-symbolic`))}
             />
         );
     };
@@ -24,17 +26,25 @@ export const BluetoothDevice = ({ device, connectedDevices }: BluetoothDevicePro
                 className="menu-button-name bluetooth"
                 truncate
                 wrap
-                label={device.alias}
+                label={bind(device, 'alias')}
             />
         );
     };
     const DeviceStatus = (): JSX.Element => {
         return (
-            <revealer halign={Gtk.Align.START} revealChild={device.connected || device.paired}>
+            <revealer
+                halign={Gtk.Align.START}
+                reveal_child={Variable.derive(
+                    [bind(device, 'connected'), bind(device, 'paired')],
+                    (connected, paired) => {
+                        return connected || paired;
+                    },
+                )()}
+            >
                 <label
                     halign={Gtk.Align.START}
                     className={'connection-status dim'}
-                    label={device.connected ? 'Connected' : 'Paired'}
+                    label={bind(device, 'connected').as((connected) => (connected ? 'Connected' : 'Paired'))}
                 />
             </revealer>
         );
@@ -42,7 +52,7 @@ export const BluetoothDevice = ({ device, connectedDevices }: BluetoothDevicePro
 
     const IsConnectingSpinner = (): JSX.Element => {
         return (
-            <revealer revealChild={device.connecting}>
+            <revealer revealChild={bind(device, 'connecting')}>
                 <Spinner valign={Gtk.Align.START} className="spinner bluetooth" />
             </revealer>
         );

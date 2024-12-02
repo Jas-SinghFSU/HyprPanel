@@ -3,11 +3,14 @@ import { ButtonProps } from 'astal/gtk3/widget';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { isPrimaryClick } from 'src/lib/utils';
 import { forgetBluetoothDevice } from './helpers';
+import { bind } from 'astal';
+import { Binding } from 'astal';
 
 export const DeviceControls = ({ device, connectedDevices }: DeviceControlsProps): JSX.Element => {
     if (!connectedDevices.includes(device.address)) {
         return <box />;
     }
+
     const ActionButton = ({ name = '', tooltipText = '', label = '', ...props }: ActionButtonProps): JSX.Element => {
         return (
             <button className={`menu-icon-button ${name} bluetooth`} {...props}>
@@ -24,8 +27,8 @@ export const DeviceControls = ({ device, connectedDevices }: DeviceControlsProps
         <box valign={Gtk.Align.START} className={'bluetooth-controls'}>
             <ActionButton
                 name={'unpair'}
-                tooltipText={device.paired ? 'Unpair' : 'Pair'}
-                label={device.paired ? '' : ''}
+                tooltipText={bind(device, 'paired').as((paired) => (paired ? 'Unpair' : 'Pair'))}
+                label={bind(device, 'paired').as((paired) => (paired ? '' : ''))}
                 onClick={(_, self) => {
                     if (!isPrimaryClick(self)) {
                         return;
@@ -40,18 +43,24 @@ export const DeviceControls = ({ device, connectedDevices }: DeviceControlsProps
             />
             <ActionButton
                 name={'disconnect'}
-                tooltipText={device.connected ? 'Disconnect' : 'Connect'}
-                label={device.connected ? '󱘖' : ''}
+                tooltipText={bind(device, 'connected').as((connected) => (connected ? 'Disconnect' : 'Connect'))}
+                label={bind(device, 'connected').as((connected) => (connected ? '󱘖' : ''))}
                 onClick={(_, self) => {
                     if (isPrimaryClick(self) && device.connected) {
-                        device.disconnect_device();
+                        device.disconnect_device((res) => {
+                            console.info(res);
+                        });
+                    } else {
+                        device.connect_device((res) => {
+                            console.info(res);
+                        });
                     }
                 }}
             />
             <ActionButton
                 name={'untrust'}
-                tooltipText={device.trusted ? 'Untrust' : 'Trust'}
-                label={device.trusted ? '' : '󱖡'}
+                tooltipText={bind(device, 'trusted').as((trusted) => (trusted ? 'Untrust' : 'Trust'))}
+                label={bind(device, 'trusted').as((trusted) => (trusted ? '' : '󱖡'))}
                 onClick={(_, self) => {
                     if (isPrimaryClick(self)) {
                         console.log('setting trusted');
@@ -81,6 +90,6 @@ interface DeviceControlsProps {
 
 interface ActionButtonProps extends ButtonProps {
     name: string;
-    tooltipText: string;
-    label: string;
+    tooltipText: string | Binding<string>;
+    label: string | Binding<string>;
 }

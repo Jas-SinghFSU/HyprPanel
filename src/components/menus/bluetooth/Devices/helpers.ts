@@ -28,7 +28,9 @@ export const getConnectedBluetoothDevices = (): string[] => {
 };
 
 export const forgetBluetoothDevice = (device: AstalBluetooth.Device): void => {
-    execAsync(['bash', '-c', `bluetoothctl remove ${device.address}`]).catch((err) =>
-        console.error('Bluetooth Remove', err),
-    );
+    execAsync(['bash', '-c', `bluetoothctl remove ${device.address}`])
+        .catch((err) => console.error('Bluetooth Remove', err))
+        .then(() => {
+            bluetoothService.emit('device-removed', device);
+        });
 };
