@@ -7,7 +7,6 @@ import { OSDSettings } from './osd/index';
 import { CustomModuleSettings } from 'src/components/bar/settings/config';
 import { PowerMenuSettings } from './menus/power';
 import { MediaMenuSettings } from './menus/media';
-import { BluetoothMenuSettings } from './menus/bluetooth';
 import { VolumeMenuSettings } from './menus/volume';
 
 export const configPages = {
@@ -20,7 +19,6 @@ export const configPages = {
     'Clock Menu': ClockMenuSettings(),
     'Dashboard Menu': DashboardMenuSettings(),
     'Custom Modules': CustomModuleSettings(),
-    'Bluetooth Menu': BluetoothMenuSettings(),
     'Power Menu': PowerMenuSettings(),
 } as const;
 

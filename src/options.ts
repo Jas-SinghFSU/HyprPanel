@@ -1152,11 +1152,6 @@ const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.js
             displayTimeTooltip: opt(false),
             noMediaText: opt('No Media Currently Playing'),
         },
-        bluetooth: {
-            showBattery: opt(false),
-            batteryState: opt<BluetoothBatteryState>('connected'),
-            batteryIcon: opt('󰥉'),
-        },
         volume: {
             raiseMaximumVolume: opt(false),
         },
