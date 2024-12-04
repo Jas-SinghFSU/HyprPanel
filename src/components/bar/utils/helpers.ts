@@ -111,21 +111,29 @@ export const inputHandler = (
         });
 
         const id = self.connect('scroll-event', (self: GtkWidget, event: Gdk.Event) => {
-            const eventDirection = event.get_scroll_direction()[1];
-            if (eventDirection === Gdk.ScrollDirection.UP) {
-                throttledHandler(
-                    sanitizeInput(onScrollUpInput?.cmd),
-                    { clicked: self, event },
-                    onScrollUpInput.fn,
-                    postInputUpdater,
-                );
-            } else if (eventDirection === Gdk.ScrollDirection.DOWN) {
-                throttledHandler(
-                    sanitizeInput(onScrollDownInput?.cmd),
-                    { clicked: self, event },
-                    onScrollDownInput.fn,
-                    postInputUpdater,
-                );
+            const [directionSuccess, direction] = event.get_scroll_direction();
+            const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
+
+            const handleScroll = (input?: { cmd: Variable<string>; fn: (output: string) => void }): void => {
+                if (input) {
+                    throttledHandler(sanitizeInput(input.cmd), { clicked: self, event }, input.fn, postInputUpdater);
+                }
+            };
+
+            if (directionSuccess) {
+                if (direction === Gdk.ScrollDirection.UP) {
+                    handleScroll(onScrollUpInput);
+                } else if (direction === Gdk.ScrollDirection.DOWN) {
+                    handleScroll(onScrollDownInput);
+                }
+            }
+
+            if (deltaSuccess) {
+                if (yScroll > 0) {
+                    handleScroll(onScrollUpInput);
+                } else if (yScroll < 0) {
+                    handleScroll(onScrollDownInput);
+                }
             }
         });
 
@@ -137,7 +145,6 @@ export const inputHandler = (
         };
     };
 
-    // Initial setup of event handlers
     updateHandlers();
 
     const sanitizeVariable = (someVar: Variable<string> | undefined): Binding<string> => {
@@ -147,7 +154,6 @@ export const inputHandler = (
         return bind(someVar);
     };
 
-    // Re-run the update whenever scrollSpeed changes
     Variable.derive(
         [
             bind(scrollSpeed),
