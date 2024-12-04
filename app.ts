@@ -11,7 +11,7 @@ import Hyprland from 'gi://AstalHyprland';
 import { Bar } from './src/components/bar';
 import MenuWindows from './src/components/menus/exports';
 // // import SettingsDialog from 'widget/settings/SettingsDialog';
-// // import Notifications from './modules/notifications/index.js';
+import Notifications from './src/components/notifications';
 import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 // // import options from 'options.js';
 // // import OSD from 'modules/osd/index';
@@ -28,7 +28,7 @@ import powerDropdown from 'src/components/menus/powerDropdown';
 App.start({
     main() {
         MenuWindows.forEach((window) => window());
-        // Notifications();
+        Notifications();
         // SettingsDialog();
         // OSD();
         forMonitors(Bar).forEach((bar: GtkWidget) => bar);

@@ -16,3 +16,6 @@ export const bluetoothService = AstalBluetooth.get_default();
 
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 export const batteryService = AstalBattery.get_default();
+
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
+export const notifdService = AstalNotifd.get_default();

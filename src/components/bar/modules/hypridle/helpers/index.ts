@@ -4,21 +4,18 @@ export const isActiveCommand = `bash -c "pgrep -x 'hypridle' &>/dev/null && echo
 
 export const isActive = Variable(false);
 
+const updateIsActive = (isActive: Variable<boolean>): void => {
+    execAsync(isActiveCommand).then((res) => {
+        isActive.set(res === 'yes');
+    });
+};
+
 export const toggleIdle = (isActive: Variable<boolean>): void => {
     execAsync(isActiveCommand).then((res) => {
-        if (res === 'no') {
-            execAsync(`bash -c "nohup hypridle > /dev/null 2>&1 &"`).then(() => {
-                execAsync(isActiveCommand).then((res) => {
-                    isActive.set(res === 'yes');
-                });
-            });
-        } else {
-            execAsync(`bash -c "pkill hypridle "`).then(() => {
-                execAsync(isActiveCommand).then((res) => {
-                    isActive.set(res === 'yes');
-                });
-            });
-        }
+        const toggleIdleCommand =
+            res === 'no' ? `bash -c "nohup hypridle > /dev/null 2>&1 &"` : `bash -c "pkill hypridle"`;
+
+        execAsync(toggleIdleCommand).then(() => updateIsActive(isActive));
     });
 };
 

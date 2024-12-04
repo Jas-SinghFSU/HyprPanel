@@ -1,4 +1,4 @@
-import { BarModule, NotificationAnchor } from './types/options';
+import { BarModule, NotificationAnchor, PositionAnchor } from './types/options';
 import { OSDAnchor } from './types/options';
 import icons, { substitutes } from './icons/icons';
 import GLib from 'gi://GLib?version=2.0';
@@ -174,20 +174,21 @@ export function Notify(notifPayload: NotificationArgs): void {
         });
 }
 
-export function getPosition(pos: NotificationAnchor | OSDAnchor): ('top' | 'bottom' | 'left' | 'right')[] {
-    const positionMap: { [key: string]: ('top' | 'bottom' | 'left' | 'right')[] } = {
-        top: ['top'],
-        'top right': ['top', 'right'],
-        'top left': ['top', 'left'],
-        bottom: ['bottom'],
-        'bottom right': ['bottom', 'right'],
-        'bottom left': ['bottom', 'left'],
-        right: ['right'],
-        left: ['left'],
+export function getPosition(pos: NotificationAnchor | OSDAnchor): Astal.WindowAnchor {
+    const positionMap: PositionAnchor = {
+        top: Astal.WindowAnchor.TOP,
+        'top right': Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
+        'top left': Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT,
+        bottom: Astal.WindowAnchor.BOTTOM,
+        'bottom right': Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT,
+        'bottom left': Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT,
+        right: Astal.WindowAnchor.RIGHT,
+        left: Astal.WindowAnchor.LEFT,
     };
 
-    return positionMap[pos] || ['top'];
+    return positionMap[pos] || Astal.WindowAnchor.TOP;
 }
+
 export function isValidGjsColor(color: string): boolean {
     const colorLower = color.toLowerCase().trim();
 

@@ -1,7 +1,7 @@
-import { Notification } from 'types/service/notifications';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
-const notifHasImg = (notif: Notification): boolean => {
-    return notif.image !== undefined && notif.image.length ? true : false;
+const notifHasImg = (notification: AstalNotifd.Notification): boolean => {
+    return notification.image && notification.image.length ? true : false;
 };
 
 export { notifHasImg };

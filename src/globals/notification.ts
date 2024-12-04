@@ -1,7 +1,9 @@
-const notifs = await Service.import('notifications');
+import { notifdService } from 'src/lib/constants/services';
 import icons from 'src/lib/icons/icons2';
-import options from 'options';
-import { Notification } from 'types/service/notifications';
+import options from 'src/options';
+import { lookUpIcon } from 'src/lib/utils';
+import { Variable } from 'astal';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
 const { clearDelay } = options.notifications;
 
@@ -10,36 +12,32 @@ export const removingNotifications = Variable<boolean>(false);
 export const getNotificationIcon = (app_name: string, app_icon: string, app_entry: string): string => {
     let icon: string = icons.fallback.notification;
 
-    if (Utils.lookUpIcon(app_name) || Utils.lookUpIcon(app_name.toLowerCase() || '')) {
-        icon = Utils.lookUpIcon(app_name)
-            ? app_name
-            : Utils.lookUpIcon(app_name.toLowerCase())
-              ? app_name.toLowerCase()
-              : '';
+    if (lookUpIcon(app_name) || lookUpIcon(app_name.toLowerCase() || '')) {
+        icon = lookUpIcon(app_name) ? app_name : lookUpIcon(app_name.toLowerCase()) ? app_name.toLowerCase() : '';
     }
 
-    if (Utils.lookUpIcon(app_icon) && icon === '') {
+    if (lookUpIcon(app_icon) && icon === '') {
         icon = app_icon;
     }
 
-    if (Utils.lookUpIcon(app_entry || '') && icon === '') {
+    if (lookUpIcon(app_entry || '') && icon === '') {
         icon = app_entry || '';
     }
 
     return icon;
 };
 
-export const clearNotifications = async (notifications: Notification[], delay: number): Promise<void> => {
-    removingNotifications.value = true;
-    for (const notif of notifications) {
-        notif.close();
+export const clearNotifications = async (notifications: AstalNotifd.Notification[], delay: number): Promise<void> => {
+    removingNotifications.set(true);
+    for (const notification of notifications) {
+        notification.dismiss();
         await new Promise((resolve) => setTimeout(resolve, delay));
     }
-    removingNotifications.value = false;
+    removingNotifications.set(false);
 };
 
 const clearAllNotifications = async (): Promise<void> => {
-    clearNotifications(notifs.notifications, clearDelay.value);
+    clearNotifications(notifdService.notifications, clearDelay.value);
 };
 
 globalThis['removingNotifications'] = removingNotifications;

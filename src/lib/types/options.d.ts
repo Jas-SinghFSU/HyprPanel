@@ -1,6 +1,7 @@
 import { Opt } from 'src/lib/option';
 import { Variable } from 'types/variable';
 import { defaultColorMap } from './defaults/options';
+import { Astal } from 'astal/gtk3';
 
 export type MkOptionsResult = {
     configFile: string;
@@ -252,3 +253,5 @@ export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
 export type BluetoothBatteryState = 'paired' | 'connected' | 'always';
 
 export type BorderLocation = 'none' | 'top' | 'right' | 'bottom' | 'left' | 'horizontal' | 'vertical' | 'full';
+
+export type PositionAnchor = { [key: string]: Astal.WindowAnchor };

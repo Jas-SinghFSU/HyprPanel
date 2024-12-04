@@ -6,7 +6,6 @@ import {
     BarButtonStyles,
     BarLayouts,
     BarLocation,
-    BluetoothBatteryState,
     BorderLocation,
     NotificationAnchor,
     OSDAnchor,
