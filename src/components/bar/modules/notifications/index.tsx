@@ -93,7 +93,7 @@ export const Notifications = (): BarBoxChild => {
                     const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
 
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
-                        openMenu(clicked, event, 'dashboardmenu');
+                        openMenu(clicked, event, 'notificationsmenu');
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {

@@ -17,7 +17,7 @@ export default [
     NetworkMenu,
     BluetoothMenu,
     // MediaMenu,
-    // NotificationsMenu,
+    NotificationsMenu,
     // CalendarMenu,
     // EnergyMenu,
     // DashboardMenu,

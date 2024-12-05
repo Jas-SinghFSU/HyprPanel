@@ -1,5 +1,5 @@
 import { BoxWidget } from 'src/lib/types/widget.js';
-import { notifHasImg } from '../../utils.js';
+import { notifHasImg } from '../../helpers.js';
 import { Notification } from 'types/service/notifications';
 
 export const Body = (notif: Notification): BoxWidget => {

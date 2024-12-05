@@ -1,5 +1,5 @@
 import { Notifications, Notification } from 'types/service/notifications';
-import { notifHasImg } from '../utils.js';
+import { notifHasImg } from '../helpers.js';
 import { Header } from './header/index.js';
 import { Actions } from './actions/index.js';
 import { Image } from './image/index.js';

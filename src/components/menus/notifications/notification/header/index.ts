@@ -1,7 +1,7 @@
 import GLib from 'gi://GLib';
 import { Notification } from 'types/service/notifications';
 import { NotificationIcon } from './icon.js';
-import { notifHasImg } from '../../utils.js';
+import { notifHasImg } from '../../helpers.js';
 import options from 'options.js';
 import { BoxWidget } from 'src/lib/types/widget.js';
 

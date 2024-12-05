@@ -6,7 +6,7 @@ import { Header } from './header';
 import { Image } from './image';
 import { Gtk } from 'astal/gtk3';
 import { isSecondaryClick } from 'src/lib/utils';
-import { notifHasImg } from '../menus/notifications/utils';
+import { notifHasImg } from './helpers';
 
 const NotificationContent = ({ actionBox, notification }: NotificationContentProps): JSX.Element => {
     return (

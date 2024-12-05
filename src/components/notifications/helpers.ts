@@ -6,6 +6,10 @@ import { isNotificationIgnored } from 'src/lib/shared/notifications';
 
 const { ignore, timeout: popupTimeout } = options.notifications;
 
+export const notifHasImg = (notification: AstalNotifd.Notification): boolean => {
+    return notification.image && notification.image.length ? true : false;
+};
+
 export const trackActiveMonitor = (curMonitor: Variable<number>): void => {
     Variable.derive([bind(hyprlandService, 'focusedMonitor')], (monitor) => {
         curMonitor.set(monitor.id);

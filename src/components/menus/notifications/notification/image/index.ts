@@ -1,5 +1,5 @@
 import { Notification } from 'types/service/notifications';
-import { notifHasImg } from '../../utils.js';
+import { notifHasImg } from '../../helpers.js';
 import { BoxWidget } from 'src/lib/types/widget.js';
 
 const Image = (notif: Notification): BoxWidget => {
