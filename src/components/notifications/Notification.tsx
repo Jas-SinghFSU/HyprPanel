@@ -31,12 +31,12 @@ export const NotificationCard = ({ notification, showActions, ...props }: Notifi
                 }
             }}
             onHover={() => {
-                if (actionBox && showActions) {
+                if (actionBox !== null && showActions === true) {
                     actionBox.revealChild = true;
                 }
             }}
             onHoverLost={() => {
-                if (actionBox && showActions) {
+                if (actionBox !== null && showActions === true) {
                     actionBox.revealChild = false;
                 }
             }}

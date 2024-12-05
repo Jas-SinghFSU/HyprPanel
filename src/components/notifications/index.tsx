@@ -1,21 +1,22 @@
-import { notifdService } from 'src/lib/constants/services.js';
 import { hyprlandService } from 'src/lib/constants/services.js';
 import options from 'src/options.js';
 import { getPosition } from 'src/lib/utils.js';
-import { filterNotifications } from 'src/lib/shared/notifications.js';
 import Variable from 'astal/variable.js';
 import { bind } from 'astal/binding.js';
 import { GtkWidget } from 'src/lib/types/widget.js';
-import { trackActiveMonitor } from './helpers.js';
+import { trackActiveMonitor, trackPopupNotifications } from './helpers.js';
 import { Astal } from 'astal/gtk3';
 import { NotificationCard } from './Notification.js';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
-const { position, monitor, active_monitor, ignore, showActionsOnHover, displayedTotal } = options.notifications;
+const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;
 const { tear } = options;
 
 const curMonitor = Variable(monitor.value);
+const popupNotifications: Variable<AstalNotifd.Notification[]> = Variable([]);
 
 trackActiveMonitor(curMonitor);
+trackPopupNotifications(popupNotifications);
 
 export default (): GtkWidget => {
     return (
@@ -36,17 +37,13 @@ export default (): GtkWidget => {
             )()}
         >
             <box vertical hexpand className={'notification-card-container'}>
-                {Variable.derive(
-                    [bind(notifdService, 'notifications'), bind(ignore), bind(showActionsOnHover)],
-                    (notifications, ignore, showActions) => {
-                        const filteredNotifications = filterNotifications(notifications, ignore);
-                        const maxDisplayed = filteredNotifications.slice(0, displayedTotal.get());
+                {Variable.derive([bind(popupNotifications), bind(showActionsOnHover)], (notifications, showActions) => {
+                    const maxDisplayed = notifications.slice(0, displayedTotal.get());
 
-                        return maxDisplayed.map((notification) => {
-                            return <NotificationCard notification={notification} showActions={showActions} />;
-                        });
-                    },
-                )()}
+                    return maxDisplayed.map((notification) => {
+                        return <NotificationCard notification={notification} showActions={showActions} />;
+                    });
+                })()}
             </box>
         </window>
     );

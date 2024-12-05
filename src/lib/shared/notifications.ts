@@ -1,11 +1,20 @@
-import { Notification } from 'types/service/notifications';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
-export const filterNotifications = (notifications: Notification[], filter: string[]): Notification[] => {
-    const notifFilter = new Set(filter.map((name: string) => name.toLowerCase().replace(/\s+/g, '_')));
+const normalizeName = (name: string): string => name.toLowerCase().replace(/\s+/g, '_');
 
-    const filteredNotifications = notifications.filter((notif: Notification) => {
-        const normalizedAppName = notif.app_name.toLowerCase().replace(/\s+/g, '_');
-        return !notifFilter.has(normalizedAppName);
+export const isNotificationIgnored = (notification: AstalNotifd.Notification, filter: string[]): boolean => {
+    const notificationFilters = new Set(filter.map(normalizeName));
+    const normalizedAppName = normalizeName(notification.app_name);
+
+    return notificationFilters.has(normalizedAppName);
+};
+
+export const filterNotifications = (
+    notifications: AstalNotifd.Notification[],
+    filter: string[],
+): AstalNotifd.Notification[] => {
+    const filteredNotifications = notifications.filter((notif: AstalNotifd.Notification) => {
+        return !isNotificationIgnored(notif, filter);
     });
 
     return filteredNotifications;
