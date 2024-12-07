@@ -20,6 +20,6 @@ export default [
     NotificationsMenu,
     // CalendarMenu,
     // EnergyMenu,
-    // DashboardMenu,
-    PowerDropdown,
+    DashboardMenu,
+    // PowerDropdown,
 ];

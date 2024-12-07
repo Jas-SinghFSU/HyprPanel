@@ -68,6 +68,7 @@ export default ({
                         if (locationMap[lcn] === Astal.WindowAnchor.TOP) {
                             return <BarEventMargins windowName={name} />;
                         }
+                        return <box />;
                     })}
                     <eventbox
                         className="in-eb menu-event-box"
@@ -111,6 +112,7 @@ export default ({
                         if (locationMap[lcn] === Astal.WindowAnchor.BOTTOM) {
                             return <BarEventMargins windowName={name} />;
                         }
+                        return <box />;
                     })}
                 </box>
             </eventbox>

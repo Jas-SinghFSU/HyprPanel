@@ -7,6 +7,8 @@ import './src/globals/dropdown';
 import './src/globals/utilities';
 import './src/components/bar/utils/sideEffects';
 
+import DashboardMenu from './src/components/menus/dashboard';
+
 import Hyprland from 'gi://AstalHyprland';
 import { Bar } from './src/components/bar';
 import MenuWindows from './src/components/menus/exports';
@@ -27,7 +29,8 @@ import powerDropdown from 'src/components/menus/powerDropdown';
 // // warnOnLowBattery();
 App.start({
     main() {
-        MenuWindows.forEach((window) => window());
+        // MenuWindows.forEach((window) => window());
+        DashboardMenu();
         Notifications();
         // SettingsDialog();
         // OSD();

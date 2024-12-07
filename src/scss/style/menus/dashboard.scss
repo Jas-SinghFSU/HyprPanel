@@ -69,7 +69,7 @@
                 }
             }
 
-            &.restart {
+            &.reboot {
                 background: if(
                     $bar-menus-monochrome,
                     $bar-menus-buttons-default,
@@ -81,7 +81,7 @@
                 }
             }
 
-            &.lock {
+            &.logout {
                 background: if(
                     $bar-menus-monochrome,
                     $bar-menus-buttons-default,
@@ -109,7 +109,7 @@
                     );
                 }
 
-                &.restart {
+                &.reboot {
                     background: transparentize(
                         if(
                             $bar-menus-monochrome,
@@ -120,7 +120,7 @@
                     );
                 }
 
-                &.lock {
+                &.logout {
                     background: transparentize(
                         if(
                             $bar-menus-monochrome,
