@@ -11,7 +11,7 @@ import DashboardMenu from './dashboard/index.js';
 import PowerDropdown from './powerDropdown/index.js';
 
 export default [
-    // PowerMenu,
+    PowerMenu,
     Verification,
     AudioMenu,
     NetworkMenu,

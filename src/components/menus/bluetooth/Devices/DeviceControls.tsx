@@ -63,8 +63,6 @@ export const DeviceControls = ({ device, connectedDevices }: DeviceControlsProps
                 label={bind(device, 'trusted').as((trusted) => (trusted ? '' : '󱖡'))}
                 onClick={(_, self) => {
                     if (isPrimaryClick(self)) {
-                        console.log('setting trusted');
-
                         device.set_trusted(!device.trusted);
                     }
                 }}

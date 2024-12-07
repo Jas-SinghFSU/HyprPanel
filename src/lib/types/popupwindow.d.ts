@@ -34,3 +34,19 @@ export type Layouts =
     | 'bottom-left'
     | 'bottom-center'
     | 'bottom-right';
+
+export type Opts = {
+    className: string;
+    vexpand: boolean;
+};
+
+export type PaddingProps = {
+    name: string;
+    opts?: Opts;
+};
+
+export type PopupRevealerProps = {
+    name: string;
+    child: GtkWidget;
+    transition: Gtk.RevealerTransitionType;
+};
