@@ -44,10 +44,12 @@
     }
 
     .notification-card-content-container {
-        margin-bottom: 0.65em;
+        .notification-card {
+            margin-bottom: 0.65em;
 
-        &:last-child {
-            margin-bottom: 1em;
+            &:last-child {
+                margin-bottom: 1em;
+            }
         }
     }
 

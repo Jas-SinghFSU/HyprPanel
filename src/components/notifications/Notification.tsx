@@ -4,7 +4,7 @@ import { Body } from './body';
 import { CloseButton } from './close';
 import { Header } from './header';
 import { Image } from './image';
-import { Gtk } from 'astal/gtk3';
+import { Gtk, Widget } from 'astal/gtk3';
 import { isSecondaryClick } from 'src/lib/utils';
 import { notifHasImg } from './helpers';
 
@@ -18,7 +18,7 @@ const NotificationContent = ({ actionBox, notification }: NotificationContentPro
     );
 };
 
-export const NotificationCard = ({ notification, showActions, ...props }: NotificationProps): JSX.Element => {
+export const NotificationCard = ({ notification, showActions, ...props }: NotificationCardProps): JSX.Element => {
     const actionBox: IActionBox | null = notification.get_actions().length ? (
         <Actions notification={notification} showActions={showActions} />
     ) : null;
@@ -41,7 +41,7 @@ export const NotificationCard = ({ notification, showActions, ...props }: Notifi
                 }
             }}
         >
-            <box className={'notification-card'} valign={Gtk.Align.START} hexpand {...props}>
+            <box className={'notification-card'} {...props} hexpand valign={Gtk.Align.START}>
                 <Image notification={notification} />
                 <NotificationContent notification={notification} actionBox={actionBox} />
                 <CloseButton notification={notification} />
@@ -50,7 +50,7 @@ export const NotificationCard = ({ notification, showActions, ...props }: Notifi
     );
 };
 
-interface NotificationProps {
+interface NotificationCardProps extends Widget.BoxProps {
     notification: AstalNotifd.Notification;
     showActions: boolean;
 }

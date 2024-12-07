@@ -1,6 +1,6 @@
 import DropdownMenu from '../shared/dropdown/index.js';
 import { Controls } from './controls/index.js';
-import { NotificationCard } from './notification/index.js';
+import { NotificationsContainer } from './notification/index.js';
 import { NotificationPager } from './pager/index.js';
 import options from 'src/options.js';
 import { GtkWidget } from 'src/lib/types/widget.js';
@@ -22,8 +22,8 @@ export default (): GtkWidget => {
             <box className={'notification-menu-content'} css={'padding: 1px; margin: -1px;'} hexpand vexpand>
                 <box className={'notification-card-container menu'} hexpand vexpand vertical>
                     <Controls />
-                    {/* <NotificationCard curPage={curPage} /> */}
-                    {/* <NotificationPager curPage={curPage} /> */}
+                    <NotificationsContainer curPage={curPage} />
+                    <NotificationPager curPage={curPage} />
                 </box>
             </box>
         }
