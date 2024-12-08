@@ -1,6 +1,5 @@
 import { openMenu } from '../../utils/menu.js';
 import options from 'src/options.js';
-import { getCurrentPlayer } from 'src/lib/shared/media.js';
 import { runAsyncCommand } from 'src/components/bar/utils/helpers.js';
 import { generateMediaLabel } from './helpers/index.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
@@ -10,34 +9,31 @@ import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/
 import { bind } from 'astal/binding.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
+import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/globals/media.js';
 
 const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =
     options.bar.media;
 
 const Media = (): BarBoxChild => {
-    const activePlayer = Variable(mprisService.get_players()[0]);
     const isVis = Variable(!show_active_only.value);
 
     show_active_only.subscribe(() => {
         isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
     });
 
-    mprisService.connect('player-added', () => {
-        const curPlayer = getCurrentPlayer(activePlayer.get());
-        activePlayer.set(curPlayer);
-        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
-    });
-
-    mprisService.connect('player-closed', () => {
-        const curPlayer = getCurrentPlayer(activePlayer.get());
-        activePlayer.set(curPlayer);
-        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
-    });
-
     const songIcon = Variable('');
 
     const mediaLabel = Variable.derive(
-        [bind(mprisService, 'players'), truncation, truncation_size, show_label, format],
+        [
+            bind(activePlayer),
+            bind(truncation),
+            bind(truncation_size),
+            bind(show_label),
+            bind(format),
+            bind(mediaTitle),
+            bind(mediaAlbum),
+            bind(mediaArtist),
+        ],
         () => {
             return generateMediaLabel(truncation_size, show_label, format, songIcon, activePlayer);
         },

@@ -40,7 +40,11 @@ class Gpu {
 
             return this.divide([totalGpu, usedGpu]);
         } catch (error) {
-            console.error('Error getting GPU stats:', error);
+            if (error instanceof Error) {
+                console.error('Error getting GPU stats:', error.message);
+            } else {
+                console.error('Unknown error getting GPU stats');
+            }
             return 0;
         }
     }

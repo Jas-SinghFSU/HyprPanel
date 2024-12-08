@@ -1,35 +1,29 @@
-import { mprisService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { getTimeStamp } from './helpers';
-import { bind } from 'astal';
+import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
+import { activePlayer, currentPosition, timeStamp } from 'src/globals/media';
 
 const { displayTimeTooltip } = options.menus.media;
 
 export const MediaSlider = (): JSX.Element => {
-    const sliderTooltip = bind(mprisService.players[0], 'position').as((position) => {
-        if (mprisService.players[0].length > 0) {
-            return getTimeStamp(position, mprisService.players[0].length);
-        }
-        return '00:00';
-    });
-
-    const sliderValue = bind(mprisService.players[0], 'position').as((position) => {
-        if (mprisService.players[0].length > 0) {
-            return position / mprisService.players[0].length;
+    const sliderValue = Variable.derive([bind(activePlayer), bind(currentPosition)], (player, position) => {
+        if (player.length > 0) {
+            return position / player.length;
         }
         return 0;
-    });
+    })();
 
-    const dragHandler = ({ value }: Widget.Slider): void =>
-        mprisService.players[0].set_position(value * mprisService.players[0].length);
+    const dragHandler = ({ value }: Widget.Slider): void => {
+        const currentPlayer = activePlayer.get();
+        currentPlayer.set_position(value * currentPlayer.length);
+    };
 
     return (
         <box className={'media-indicator-current-progress-bar'} hexpand>
             <slider
                 className={'menu-slider media progress'}
                 hasTooltip={bind(displayTimeTooltip)}
-                tooltipText={sliderTooltip}
+                tooltipText={bind(timeStamp)}
                 value={sliderValue}
                 onDragged={dragHandler}
                 drawValue={false}

@@ -1,7 +1,6 @@
 import options from 'src/options';
 import { bind } from 'astal';
-import { mprisService } from 'src/lib/constants/services';
-import { getTimeStamp } from '../timebar/helpers';
+import { timeStamp } from 'src/globals/media';
 
 const { displayTime } = options.menus.media;
 
@@ -10,16 +9,9 @@ export const MediaTimeStamp = (): JSX.Element => {
         return <box />;
     }
 
-    const label = bind(mprisService.players[0], 'position').as((position) => {
-        if (mprisService.players[0].length > 0) {
-            return getTimeStamp(position, mprisService.players[0].length);
-        }
-        return '00:00';
-    });
-
     return (
-        <box className={'media-indicator-current-time-label'} hexpand>
-            <label className={'time-label'} label={label} hexpand />
+        <box className="media-indicator-current-time-label" hexpand>
+            <label className="time-label" label={bind(timeStamp)} hexpand />
         </box>
     );
 };

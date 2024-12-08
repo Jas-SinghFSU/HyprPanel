@@ -1,6 +1,7 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
+import { mediaArtUrl } from 'src/globals/media';
 import { mprisService } from 'src/lib/constants/services';
 import options from 'src/options';
 
@@ -50,13 +51,7 @@ export const initializeActivePlayerHook = (): void => {
 };
 
 export const getBackground = (): Binding<string> => {
-    return Variable.derive([bind(color), bind(tint), bind(mprisService.players[0], 'artUrl')], () => {
-        const currentPlayer = mprisService.get_players()[0];
-
-        if (currentPlayer !== undefined) {
-            return generateAlbumArt(currentPlayer.artUrl);
-        }
-
-        return '';
+    return Variable.derive([bind(color), bind(tint), bind(mediaArtUrl)], (_, __, artUrl) => {
+        return generateAlbumArt(artUrl);
     })();
 };
