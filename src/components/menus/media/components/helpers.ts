@@ -50,7 +50,7 @@ export const initializeActivePlayerHook = (): void => {
 };
 
 export const getBackground = (): Binding<string> => {
-    return Variable.derive([bind(color), bind(tint), bind(mprisService, 'players')], () => {
+    return Variable.derive([bind(color), bind(tint), bind(mprisService.players[0], 'artUrl')], () => {
         const currentPlayer = mprisService.get_players()[0];
 
         if (currentPlayer !== undefined) {

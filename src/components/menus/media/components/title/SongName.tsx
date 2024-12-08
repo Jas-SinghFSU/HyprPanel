@@ -9,15 +9,18 @@ export const SongName = (): JSX.Element => {
         <box className={'media-indicator-current-song-name'} halign={Gtk.Align.CENTER}>
             <label
                 className={'media-indicator-current-song-name-label'}
-                label={Variable.derive([bind(noMediaText), bind(mprisService, 'players')], (noMediaTxt, players) => {
-                    const currentPlayer = players[0];
+                label={Variable.derive(
+                    [bind(noMediaText), bind(mprisService.players[0], 'title')],
+                    (noMediaTxt, title) => {
+                        const currentPlayer = mprisService.players[0];
 
-                    if (currentPlayer !== undefined && currentPlayer.title.length) {
-                        return currentPlayer.title;
-                    }
+                        if (currentPlayer !== undefined && title.length) {
+                            return title;
+                        }
 
-                    return noMediaTxt;
-                })()}
+                        return noMediaTxt;
+                    },
+                )()}
                 maxWidthChars={31}
                 truncate
                 wrap

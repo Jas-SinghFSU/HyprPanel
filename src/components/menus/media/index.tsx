@@ -1,8 +1,11 @@
 import { bind } from 'astal/binding.js';
 import DropdownMenu from '../shared/dropdown/index.js';
-import { Media } from './components/index.js';
 import options from 'src/options.js';
-import { Gtk } from 'astal/gtk3';
+import { MediaContainer } from './components/MediaContainer.js';
+import { MediaInfo } from './components/title/index.js';
+import { MediaControls } from './components/controls/index.js';
+import { MediaSlider } from './components/timebar/index.js';
+import { MediaTimeStamp } from './components/timelabel/index.js';
 
 const { transition } = options.menus;
 
@@ -12,11 +15,12 @@ export default (): JSX.Element => {
             name="mediamenu"
             transition={bind(transition)}
             child={
-                <box className="menu-items media" halign={Gtk.Align.FILL} hexpand>
-                    <box className="menu-items-container media" halign={Gtk.Align.FILL} hexpand>
-                        <Media />
-                    </box>
-                </box>
+                <MediaContainer>
+                    <MediaInfo />
+                    <MediaControls />
+                    <MediaSlider />
+                    <MediaTimeStamp />
+                </MediaContainer>
             }
         />
     );

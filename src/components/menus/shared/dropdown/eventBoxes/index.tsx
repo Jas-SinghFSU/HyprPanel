@@ -21,15 +21,14 @@ export const BarEventMargins = ({ windowName, location = 'top' }: BarEventMargin
     if (location === 'top') {
         return (
             <box className="event-box-container">
-                <EventBoxPadding className="mid-eb event-top-padding-static" windowName={windowName} />,
-                <EventBoxPadding className="mid-eb event-top-padding" windowName={windowName} />,
+                <EventBoxPadding className="mid-eb event-top-padding-static" windowName={windowName} />
+                <EventBoxPadding className="mid-eb event-top-padding" windowName={windowName} />
             </box>
         );
     } else {
         return (
             <box className="event-box-container">
-                {/* <EventBoxPadding className="mid-eb event-bottom-padding" windowName={windowName} />, */}
-                <EventBoxPadding className="mid-eb event-bottom-padding-static" windowName={windowName} />,
+                <EventBoxPadding className="mid-eb event-bottom-padding-static" windowName={windowName} />
             </box>
         );
     }

@@ -14,11 +14,11 @@ export const SongAlbum = (): JSX.Element => {
         <box className={'media-indicator-current-song-album'} halign={Gtk.Align.CENTER}>
             <label
                 className={'media-indicator-current-song-album-label'}
-                label={bind(mprisService, 'players').as((players) => {
-                    const currentPlayer = players[0];
+                label={bind(mprisService.players[0], 'album').as((album) => {
+                    const currentPlayer = mprisService.players[0];
 
-                    if (currentPlayer !== undefined && currentPlayer.album.length) {
-                        return currentPlayer.album;
+                    if (currentPlayer !== undefined && album.length) {
+                        return album;
                     }
                     return '-----';
                 })}
