@@ -13,9 +13,12 @@ export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, mo
     }
 
     const monitorMap: MonitorMap = {};
-    const workspaceMonitorList = hyprlandService
-        .get_workspaces()
-        .map((m) => ({ id: m.monitor.id, name: m.monitor.name }));
+
+    const workspaceList = hyprlandService.get_workspaces() || [];
+    const workspaceMonitorList = workspaceList.map((m) => {
+        return { id: m.monitor.id, name: m.monitor.name };
+    });
+
     const monitors = [
         ...new Map(
             [...workspaceMonitorList, ...hyprlandService.get_monitors()].map((item) => [item.id, item]),
@@ -91,11 +94,13 @@ const navigateWorkspace = (
     activeWorkspaces: boolean,
     ignoredWorkspaces: Variable<string>,
 ): void => {
+    const hyprlandWorkspaces = hyprlandService.get_workspaces() || [];
+    const occupiedWorkspaces = hyprlandWorkspaces
+        .filter((ws) => hyprlandService.focusedMonitor.id === ws.monitor?.id)
+        .map((ws) => ws.id);
+
     const workspacesList = activeWorkspaces
-        ? hyprlandService
-              .get_workspaces()
-              .filter((ws) => hyprlandService.focusedMonitor.id === ws.monitor.id)
-              .map((ws) => ws.id)
+        ? occupiedWorkspaces
         : currentMonitorWorkspaces.get() || Array.from({ length: workspaces.value }, (_, i) => i + 1);
 
     if (workspacesList.length === 0) return;
@@ -179,10 +184,13 @@ export const getWorkspacesToRender = (
     let allWorkspaces = range(totalWorkspaces || 8);
     const activeWorkspaces = workspaceList.map((ws) => ws.id);
 
-    const workspaceMonitorList = hyprlandService.get_workspaces().map((ws) => ({
-        id: ws.monitor.id,
-        name: ws.monitor.name,
-    }));
+    const hyprlandWorkspaces = hyprlandService.get_workspaces() || [];
+    const workspaceMonitorList = hyprlandWorkspaces.map((ws) => {
+        return {
+            id: ws.monitor?.id || -1,
+            name: ws.monitor?.name || '',
+        };
+    });
 
     const curMonitor =
         hyprlandService.get_monitors().find((mon) => mon.id === monitor) ||

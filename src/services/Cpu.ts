@@ -1,27 +1,24 @@
 // TODO: Convert to a real service
 
-// @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
+import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 
 class Cpu {
     private updateFrequency = Variable(2000);
-    public cpu = Variable(0);
-
     private previousCpuData = new GTop.glibtop_cpu();
+    private cpuPoller: FunctionPoller<number, []>;
+
+    public cpu = Variable(0);
 
     constructor() {
         GTop.glibtop_get_cpu(this.previousCpuData);
 
         this.calculateUsage = this.calculateUsage.bind(this);
-        const cpuPoller = new FunctionPoller<number, []>(
-            this.cpu,
-            [],
-            this.updateFrequency.bind('value'),
-            this.calculateUsage,
-        );
 
-        cpuPoller.start();
+        this.cpuPoller = new FunctionPoller<number, []>(this.cpu, [], bind(this.updateFrequency), this.calculateUsage);
+
+        this.cpuPoller.initialize();
     }
 
     public calculateUsage(): number {
@@ -40,7 +37,15 @@ class Cpu {
     }
 
     public updateTimer(timerInMs: number): void {
-        this.updateFrequency.value = timerInMs;
+        this.updateFrequency.set(timerInMs);
+    }
+
+    public stopPoller(): void {
+        this.cpuPoller.stop();
+    }
+
+    public startPoller(): void {
+        this.cpuPoller.start();
     }
 }
 

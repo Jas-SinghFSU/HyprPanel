@@ -1,26 +1,26 @@
 // TODO: Convert to a real service
 
-const GLib = imports.gi.GLib;
-
+import { bind, GLib, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 
 class Ram {
     private updateFrequency = Variable(2000);
     private shouldRound = false;
+    private ramPoller: FunctionPoller<GenericResourceData, []>;
 
     public ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        const ramPoller = new FunctionPoller<GenericResourceData, []>(
+        this.ramPoller = new FunctionPoller<GenericResourceData, []>(
             this.ram,
             [],
-            this.updateFrequency.bind('value'),
+            bind(this.updateFrequency),
             this.calculateUsage,
         );
 
-        ramPoller.start();
+        this.ramPoller.initialize('ram');
     }
 
     public calculateUsage(): GenericResourceData {
@@ -73,7 +73,15 @@ class Ram {
     }
 
     updateTimer(timerInMs: number): void {
-        this.updateFrequency.value = timerInMs;
+        this.updateFrequency.set(timerInMs);
+    }
+
+    public stopPoller(): void {
+        this.ramPoller.stop();
+    }
+
+    public startPoller(): void {
+        this.ramPoller.start();
     }
 }
 

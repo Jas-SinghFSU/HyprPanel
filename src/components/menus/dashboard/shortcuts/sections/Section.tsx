@@ -1,7 +1,14 @@
 import { bind, Variable } from 'astal';
 import options from 'src/options';
 import { hasCommand, isRecording, leftCardHidden } from '../helpers';
-import { LeftShortcut1, LeftShortcut2, LeftShortcut3, LeftShortcut4, RightShortcut1 } from '../buttons/ShortcutButtons';
+import {
+    LeftShortcut1,
+    LeftShortcut2,
+    LeftShortcut3,
+    LeftShortcut4,
+    RightShortcut1,
+    RightShortcut3,
+} from '../buttons/ShortcutButtons';
 import { LeftColumn, RightColumn } from './Column';
 import { SettingsButton } from '../buttons/SettingsButton';
 import { RecordingButton } from '../buttons/RecordingButton';
@@ -34,7 +41,7 @@ const rightBindings = [
     bind(isRecording),
 ];
 
-export const LeftSection = (): JSX.Element => {
+export const LeftShortcuts = (): JSX.Element => {
     return (
         <box>
             {Variable.derive(leftBindings, () => {
@@ -65,7 +72,7 @@ export const LeftSection = (): JSX.Element => {
     );
 };
 
-export const RightSection = (): JSX.Element => {
+export const RightShortcuts = (): JSX.Element => {
     return (
         <box>
             {Variable.derive(rightBindings, () => {
@@ -75,8 +82,8 @@ export const RightSection = (): JSX.Element => {
                             <RightShortcut1 />
                             <SettingsButton />
                         </LeftColumn>
-                        <RightColumn visibleClass={false}>
-                            <LeftShortcut3 />
+                        <RightColumn>
+                            <RightShortcut3 />
                             <RecordingButton />
                         </RightColumn>
                     </box>

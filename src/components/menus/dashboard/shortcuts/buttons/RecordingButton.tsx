@@ -14,7 +14,7 @@ const MonitorListDropdown = (): JSX.Element => {
     return (
         <Menu className={'dropdown recording'} halign={Gtk.Align.FILL} hexpand>
             {bind(monitorList).as((monitors) => {
-                return monitors.map((monitor) => {
+                return monitors.map((monitor) => (
                     <MenuItem
                         label={`Display ${monitor.name}`}
                         onButtonPressEvent={(_, event) => {
@@ -30,8 +30,8 @@ const MonitorListDropdown = (): JSX.Element => {
                                 console.error(err),
                             );
                         }}
-                    />;
-                });
+                    />
+                ));
             })}
         </Menu>
     );
@@ -49,6 +49,7 @@ export const RecordingButton = (): JSX.Element => {
                 if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
                     return;
                 }
+
                 if (isRecording.get() === true) {
                     App.get_window('dashboardmenu')?.set_visible(false);
                     return execAsync(`${SRC}/src/services/screen_record.sh stop`).catch((err) => console.error(err));

@@ -1,9 +1,9 @@
 import DropdownMenu from '../shared/dropdown/index.js';
 import { Profile } from './profile/index.js';
 import { Shortcuts } from './shortcuts/index.js';
-// import { Controls } from './controls/index.js';
-// import { Stats } from './stats/index.js';
-// import { Directories } from './directories/index.js';
+import { Controls } from './controls/index.js';
+import { Stats } from './stats/index.js';
+import { Directories } from './directories/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
@@ -31,9 +31,9 @@ export default (): JSX.Element => {
                                     <box className={'dashboard-content-items'} vertical>
                                         <Profile />
                                         <Shortcuts isEnabled={isShortcutsEnabled} />
-                                        {/* {isControlsEnabled ? <Controls /> : null} */}
-                                        {/* {isDirectoriesEnabled ? <Directories /> : null} */}
-                                        {/* {isStatsEnabled ? <Stats /> : null} */}
+                                        <Controls isEnabled={isControlsEnabled} />
+                                        <Directories isEnabled={isDirectoriesEnabled} />
+                                        <Stats isEnabled={isStatsEnabled} />
                                     </box>
                                 </box>,
                             ];

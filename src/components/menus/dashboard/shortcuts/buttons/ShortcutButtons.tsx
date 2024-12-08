@@ -33,7 +33,7 @@ export const LeftShortcut1 = (): JSX.Element => {
 };
 
 export const LeftShortcut2 = (): JSX.Element => {
-    return <ShortcutButton shortcut={left.shortcut2} className={`dashboard-button `} />;
+    return <ShortcutButton shortcut={left.shortcut2} className={`dashboard-button`} />;
 };
 
 export const LeftShortcut3 = (): JSX.Element => {

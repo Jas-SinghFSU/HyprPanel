@@ -1,4 +1,4 @@
-export type GPU_Stat_Process = {
+export type GPUStatProcess = {
     username: string;
     command: string;
     full_command: string[];
@@ -8,7 +8,7 @@ export type GPU_Stat_Process = {
     pid: number;
 };
 
-export type GPU_Stat = {
+export type GPUStat = {
     index: number;
     uuid: string;
     name: string;

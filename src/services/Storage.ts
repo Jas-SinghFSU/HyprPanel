@@ -1,6 +1,6 @@
 // TODO: Convert to a real service
 
-// @ts-expect-error: This import is a special directive that tells the compiler to use the GTop library
+import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
@@ -9,19 +9,20 @@ import { GenericResourceData } from 'src/lib/types/customModules/generic';
 class Storage {
     private updateFrequency = Variable(2000);
     private shouldRound = false;
+    private storagePoller: FunctionPoller<GenericResourceData, []>;
 
     public storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        const storagePoller = new FunctionPoller<GenericResourceData, []>(
+        this.storagePoller = new FunctionPoller<GenericResourceData, []>(
             this.storage,
             [],
-            this.updateFrequency.bind('value'),
+            bind(this.updateFrequency),
             this.calculateUsage,
         );
 
-        storagePoller.start();
+        this.storagePoller.initialize();
     }
 
     public calculateUsage(): GenericResourceData {
@@ -61,7 +62,15 @@ class Storage {
     }
 
     public updateTimer(timerInMs: number): void {
-        this.updateFrequency.value = timerInMs;
+        this.updateFrequency.set(timerInMs);
+    }
+
+    public stopPoller(): void {
+        this.storagePoller.stop();
+    }
+
+    public startPoller(): void {
+        this.storagePoller.start();
     }
 }
 
