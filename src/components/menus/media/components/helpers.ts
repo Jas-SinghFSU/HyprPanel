@@ -1,6 +1,9 @@
-const media = await Service.import('mpris');
-import options from 'options.js';
-import { MprisPlayer } from 'types/service/mpris';
+import { Binding } from 'astal';
+import { bind, Variable } from 'astal';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
+import { mprisService } from 'src/lib/constants/services';
+import options from 'src/options';
+
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
 const curPlayer = Variable('');
@@ -25,30 +28,35 @@ export const generateAlbumArt = (imageUrl: string): string => {
 };
 
 export const initializeActivePlayerHook = (): void => {
-    media.connect('changed', () => {
+    mprisService.connect('changed', () => {
         const statusOrder = {
-            Playing: 1,
-            Paused: 2,
-            Stopped: 3,
+            [AstalMpris.PlaybackStatus.PLAYING]: 1,
+            [AstalMpris.PlaybackStatus.PAUSED]: 2,
+            [AstalMpris.PlaybackStatus.STOPPED]: 3,
         };
 
-        const isPlaying = media.players.find((p) => p['play_back_status'] === 'Playing');
+        const isPlaying = mprisService.players.find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
 
-        const playerStillExists = media.players.some((p) => curPlayer.value === p['bus_name']);
+        const playerStillExists = mprisService.players.some((player) => curPlayer.set(player.busName));
 
-        const nextPlayerUp = media.players.sort(
-            (a, b) => statusOrder[a['play_back_status']] - statusOrder[b['play_back_status']],
+        const nextPlayerUp = mprisService.players.sort(
+            (a, b) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus],
         )[0].bus_name;
 
         if (isPlaying || !playerStillExists) {
-            curPlayer.value = nextPlayerUp;
+            curPlayer.set(nextPlayerUp);
         }
     });
 };
 
-export const getPlayerInfo = (): MprisPlayer | undefined => {
-    if (media.players.length === 0) {
-        return;
-    }
-    return media.players.find((p) => p.bus_name === curPlayer.value) || media.players[0];
+export const getBackground = (): Binding<string> => {
+    return Variable.derive([bind(color), bind(tint), bind(mprisService, 'players')], () => {
+        const currentPlayer = mprisService.get_players()[0];
+
+        if (currentPlayer !== undefined) {
+            return generateAlbumArt(currentPlayer.artUrl);
+        }
+
+        return '';
+    })();
 };

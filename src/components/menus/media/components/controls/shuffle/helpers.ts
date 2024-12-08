@@ -1,5 +1,8 @@
-import { MprisPlayer } from 'types/service/mpris';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
 
-export const isShuffleActive = (player: MprisPlayer): string => {
-    return player['shuffle_status'] !== null && player['shuffle_status'] ? 'active' : '';
+export const isShuffleActive = (player: AstalMpris.Player): string => {
+    if (player.shuffleStatus === AstalMpris.Shuffle.ON) {
+        return 'active';
+    }
+    return '';
 };

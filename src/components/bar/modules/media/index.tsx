@@ -67,7 +67,7 @@ const Media = (): BarBoxChild => {
             setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
-                        openMenu(clicked, event, 'dashboardmenu');
+                        openMenu(clicked, event, 'mediamenu');
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
