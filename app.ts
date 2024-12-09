@@ -13,7 +13,7 @@ import MenuWindows from './src/components/menus/exports';
 import Notifications from './src/components/notifications';
 import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 import options from 'src/options';
-// import OSD from 'modules/osd/index';
+import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
 import { GtkWidget } from 'src/lib/types/widget.js';
 import { exec, execAsync } from 'astal';
@@ -27,7 +27,7 @@ App.start({
         MenuWindows.forEach((window) => window());
         Notifications();
         // SettingsDialog();
-        // OSD();
+        OSD();
         forMonitors(Bar).forEach((bar: GtkWidget) => bar);
     },
 });

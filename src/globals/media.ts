@@ -8,6 +8,12 @@ const { noMediaText } = options.menus.media;
 
 export const activePlayer = Variable(mprisService.players[0]);
 
+mprisService.connect('player-closed', (_, closedPlayer) => {
+    if (closedPlayer.busName === activePlayer.get().busName) {
+        activePlayer.set(mprisService.players[0]);
+    }
+});
+
 export const timeStamp = Variable('00:00');
 export const currentPosition = Variable(0);
 
@@ -24,12 +30,6 @@ export const mediaTitle = Variable(noMediaText.get());
 export const mediaAlbum = Variable('-----');
 export const mediaArtist = Variable('-----');
 export const mediaArtUrl = Variable('');
-
-mprisService.connect('player-closed', (_, closedPlayer) => {
-    if (closedPlayer.busName === activePlayer.get().busName) {
-        activePlayer.set(mprisService.players[0]);
-    }
-});
 
 let positionUnsub: Variable<void>;
 
