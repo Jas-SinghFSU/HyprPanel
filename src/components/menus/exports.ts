@@ -19,7 +19,7 @@ export default [
     MediaMenu,
     NotificationsMenu,
     // CalendarMenu,
-    // EnergyMenu,
+    EnergyMenu,
     DashboardMenu,
-    // PowerDropdown,
+    PowerDropdown,
 ];

@@ -19,3 +19,9 @@ export const batteryService = AstalBattery.get_default();
 
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 export const notifdService = AstalNotifd.get_default();
+
+import Brightness from 'src/services/Brightness';
+export const brightnessService = Brightness.get_default();
+
+import AstalPowerProfiles from 'gi://AstalPowerProfiles?version=0.1';
+export const powerProfilesService = AstalPowerProfiles.get_default();

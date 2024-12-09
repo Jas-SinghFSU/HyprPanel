@@ -15,8 +15,8 @@ export const PreviousPlayer = (): JSX.Element => {
         if (!isPrimaryClick(event)) {
             return;
         }
+
         const isDisabled = mprisService.players.length <= 1;
-        console.log(isDisabled);
 
         if (!isDisabled) {
             getPreviousPlayer();
@@ -47,8 +47,6 @@ export const NextPlayer = (): JSX.Element => {
         }
 
         const isDisabled = mprisService.players.length <= 1;
-
-        console.log(isDisabled);
 
         if (!isDisabled) {
             getNextPlayer();
