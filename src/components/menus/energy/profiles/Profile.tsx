@@ -7,9 +7,11 @@ import { ProfileType } from 'src/lib/types/powerprofiles';
 import { isPrimaryClick } from 'src/lib/utils';
 
 export const PowerProfiles = (): JSX.Element => {
+    const powerProfiles = powerProfilesService.get_profiles();
+
     return (
         <box className="menu-items-section" valign={Gtk.Align.FILL} vexpand vertical>
-            {powerProfilesService.get_profiles().map((powerProfile: AstalPowerProfiles.Profile) => {
+            {powerProfiles.map((powerProfile: AstalPowerProfiles.Profile) => {
                 const profileType = powerProfile.profile as ProfileType;
 
                 return (
@@ -24,7 +26,10 @@ export const PowerProfiles = (): JSX.Element => {
                         }}
                     >
                         <box>
-                            <icon className="power-profile-icon" icon={icons.powerprofile[profileType]} />
+                            <icon
+                                className="power-profile-icon"
+                                icon={icons.powerprofile[profileType] || icons.powerprofile.balanced}
+                            />
                             <label className="power-profile-label" label={profileType} />
                         </box>
                     </button>

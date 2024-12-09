@@ -2,16 +2,16 @@ import { openMenu } from '../../utils/menu';
 import options from 'src/options';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
-import { bind, GLib, Variable } from 'astal';
+import { bind, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
+import { systemTime } from 'src/globals/time';
 
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
-const date = Variable(GLib.DateTime.new_now_local()).poll(1000, (): GLib.DateTime => GLib.DateTime.new_now_local());
-const time = Variable.derive([date, format], (c, f) => c.format(f) || '');
+const time = Variable.derive([systemTime, format], (c, f) => c.format(f) || '');
 
 const Clock = (): BarBoxChild => {
     const clockTime = <label className={'bar-button-label clock bar'} label={bind(time)} />;

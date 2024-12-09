@@ -1,6 +1,7 @@
 /* eslint-disable no-var */
 
-import { Options, Variable as VariableType } from 'types/variable';
+import { Variable } from 'astal';
+import { Options } from 'types/variable';
 
 declare global {
     var useTheme: (filePath: string) => void;
@@ -10,9 +11,9 @@ declare global {
     var clearAllNotifications: () => Promise<void>;
     var setWallpaper: (filePath: string) => void;
 
-    var globalWeatherVar: VariableType<Weather>;
+    var globalWeatherVar: Variable<Weather>;
     var options: Options;
-    var removingNotifications: VariableType<boolean>;
+    var removingNotifications: Variable<boolean>;
 }
 
 export {};

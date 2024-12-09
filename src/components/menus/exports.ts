@@ -18,7 +18,7 @@ export default [
     BluetoothMenu,
     MediaMenu,
     NotificationsMenu,
-    // CalendarMenu,
+    CalendarMenu,
     EnergyMenu,
     DashboardMenu,
     PowerDropdown,
