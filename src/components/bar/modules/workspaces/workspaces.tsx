@@ -61,6 +61,8 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
             bind(ignored),
             bind(showAllActive),
             bind(hyprlandService, 'focusedWorkspace'),
+            bind(hyprlandService.focusedWorkspace, 'clients'),
+            bind(hyprlandService, 'clients'),
         ],
         (
             isMonitorSpecific: boolean,

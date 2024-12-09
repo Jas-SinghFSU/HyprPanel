@@ -6,7 +6,7 @@ import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal/binding.js';
 import { notifdService } from 'src/lib/constants/services.js';
 import { NotificationCard } from 'src/components/notifications/Notification.js';
-import { Placeholder } from './placeholder';
+import { Placeholder } from './Placeholder';
 
 const { displayedTotal, ignore, showActionsOnHover } = options.notifications;
 

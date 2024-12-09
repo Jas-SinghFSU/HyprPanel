@@ -1,9 +1,9 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { Actions } from './actions';
-import { Body } from './body';
-import { CloseButton } from './close';
-import { Header } from './header';
-import { Image } from './image';
+import { Actions } from './Actions';
+import { Body } from './Body';
+import { CloseButton } from './CloseButton';
+import { Header } from './Header';
+import { Image } from './Image';
 import { Gtk, Widget } from 'astal/gtk3';
 import { isSecondaryClick } from 'src/lib/utils';
 import { notifHasImg } from './helpers';

@@ -1,6 +1,6 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Gtk } from 'astal/gtk3';
-import { notifHasImg } from '../helpers';
+import { notifHasImg } from './helpers';
 
 export const Body = ({ notification }: BodyProps): JSX.Element => {
     return (
