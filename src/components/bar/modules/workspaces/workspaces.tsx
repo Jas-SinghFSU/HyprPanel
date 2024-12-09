@@ -1,14 +1,12 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { getWorkspaceRules, getWorkspacesToRender, isWorkspaceIgnored } from './helpers';
+import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnections, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
 import { BoxWidget } from 'src/lib/types/widget';
 import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
-
-// FIX: Icon not updating when a client is opened on a workspace
 
 const {
     workspaces,
@@ -32,9 +30,9 @@ const { available, active, occupied } = options.bar.workspaces.icons;
 const { matugen } = options.theme;
 const { smartHighlight } = options.theme.bar.buttons.workspaces;
 
-export const WorkspaceModule = (monitor: number): BoxWidget => {
-    const workspaceRules = getWorkspaceRules();
+setupConnections();
 
+export const WorkspaceModule = (monitor: number): BoxWidget => {
     const boxChildren = Variable.derive(
         [
             bind(monitorSpecific),
@@ -57,12 +55,13 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
             bind(applicationIconFallback),
             bind(matugen),
             bind(smartHighlight),
+
             bind(hyprlandService, 'monitors'),
             bind(ignored),
             bind(showAllActive),
             bind(hyprlandService, 'focusedWorkspace'),
-            bind(hyprlandService.focusedWorkspace, 'clients'),
-            bind(hyprlandService, 'clients'),
+            bind(workspaceRules),
+            bind(forceUpdater),
         ],
         (
             isMonitorSpecific: boolean,
@@ -91,7 +90,7 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
             const workspacesToRender = getWorkspacesToRender(
                 totalWorkspaces,
                 workspaceList,
-                workspaceRules,
+                workspaceRules.get(),
                 monitor,
                 isMonitorSpecific,
             );

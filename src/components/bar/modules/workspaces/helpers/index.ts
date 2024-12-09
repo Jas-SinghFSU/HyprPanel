@@ -223,3 +223,24 @@ export const getWorkspacesToRender = (
 
     return allWorkspaces.sort((a, b) => a - b);
 };
+
+export const workspaceRules = Variable(getWorkspaceRules());
+export const forceUpdater = Variable(true);
+
+export const setupConnections = (): void => {
+    hyprlandService.connect('config-reloaded', () => {
+        workspaceRules.set(getWorkspaceRules());
+    });
+
+    hyprlandService.connect('client-moved', () => {
+        forceUpdater.set(!forceUpdater.get());
+    });
+
+    hyprlandService.connect('client-added', () => {
+        forceUpdater.set(!forceUpdater.get());
+    });
+
+    hyprlandService.connect('client-removed', () => {
+        forceUpdater.set(!forceUpdater.get());
+    });
+};
