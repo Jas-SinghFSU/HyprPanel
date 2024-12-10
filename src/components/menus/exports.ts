@@ -10,9 +10,7 @@ import EnergyMenu from './energy/index.js';
 import DashboardMenu from './dashboard/index.js';
 import PowerDropdown from './powerDropdown/index.js';
 
-export default [
-    PowerMenu,
-    Verification,
+export const DropdownMenus = [
     AudioMenu,
     NetworkMenu,
     BluetoothMenu,
@@ -23,3 +21,5 @@ export default [
     DashboardMenu,
     PowerDropdown,
 ];
+
+export const StandardWindows = [PowerMenu, Verification];

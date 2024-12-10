@@ -2,7 +2,7 @@ import options from 'src/options';
 import { DropdownMenuProps } from 'src/lib/types/dropdownmenu';
 import { BarEventMargins } from './eventBoxes/index';
 import { globalEventBoxes } from 'src/globals/dropdown';
-import { bind, Variable } from 'astal';
+import { bind } from 'astal';
 import { App, Astal, Gdk } from 'astal/gtk3';
 import { Revealer } from 'astal/gtk3/widget';
 import { locationMap } from 'src/lib/types/defaults/bar';
@@ -13,11 +13,6 @@ const { location } = options.theme.bar;
 // elements can allocate their proper dimensions.
 // Otherwise the width that we rely on for menu positioning is set improperly
 // for the first time we open a menu of each type.
-const initRender = Variable(true);
-
-setTimeout(() => {
-    initRender.set(false);
-}, 2000);
 
 export default ({
     name,
@@ -37,7 +32,7 @@ export default ({
                     App.get_window(name)?.set_visible(false);
                 }
             }}
-            visible={bind(initRender)}
+            visible={false}
             application={App}
             keymode={Astal.Keymode.ON_DEMAND}
             exclusivity={exclusivity}
@@ -92,6 +87,7 @@ export default ({
                                 setup={(self: Revealer) => {
                                     App.connect('window-toggled', (app) => {
                                         const targetWindow = app.get_window(name);
+
                                         const visibility = targetWindow?.get_visible();
 
                                         if (targetWindow?.name === name) {

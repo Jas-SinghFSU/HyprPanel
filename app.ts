@@ -8,9 +8,9 @@ import './src/globals/utilities';
 import './src/components/bar/utils/sideEffects';
 
 import { Bar } from './src/components/bar';
-import MenuWindows from './src/components/menus/exports';
-// import SettingsDialog from 'widget/settings/SettingsDialog';
+import { DropdownMenus, StandardWindows } from './src/components/menus/exports';
 import Notifications from './src/components/notifications';
+// import SettingsDialog from 'widget/settings/SettingsDialog';
 import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 import options from 'src/options';
 import OSD from 'src/components/osd/index';
@@ -18,17 +18,37 @@ import { App } from 'astal/gtk3';
 import { GtkWidget } from 'src/lib/types/widget.js';
 import { exec, execAsync } from 'astal';
 import { hyprlandService } from 'src/lib/constants/services';
+import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
+
+const initializeStartupScripts = (): void => {
+    execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
+};
+
+const initializeMenus = (): void => {
+    StandardWindows.forEach((window) => {
+        return window();
+    });
+
+    DropdownMenus.forEach((window) => {
+        return window();
+    });
+
+    DropdownMenus.forEach((window) => {
+        const windowName = window.name.replace('_default', '').concat('menu').toLowerCase();
+
+        handleRealization(windowName);
+    });
+};
 
 App.start({
     main() {
-        execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
+        initializeStartupScripts();
         warnOnLowBattery();
-
-        MenuWindows.forEach((window) => window());
         Notifications();
         // SettingsDialog();
         OSD();
         forMonitors(Bar).forEach((bar: GtkWidget) => bar);
+        initializeMenus();
     },
 });
 
