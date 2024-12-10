@@ -5,11 +5,13 @@ import { App, Gtk } from 'astal/gtk3';
 export const handleRealization = async (name: string): Promise<void> => {
     const appWindow = App.get_window(name);
 
-    const coords = [10000, 10000];
-
-    if (appWindow) {
-        await calculateMenuPosition(coords, name);
+    if (!appWindow) {
+        return;
     }
+
+    const coords = [100000, 100000];
+
+    await calculateMenuPosition(coords, name);
 
     closeAllMenus();
 

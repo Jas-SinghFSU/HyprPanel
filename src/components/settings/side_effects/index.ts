@@ -1,5 +1,5 @@
 import { Opt } from 'src/lib/option';
-import options from 'options';
+import options from 'src/options';
 
 const { show_numbered, show_icons, showWsIcons, showApplicationIcons } = options.bar.workspaces;
 const { monochrome: monoBar } = options.theme.bar.buttons;
@@ -23,12 +23,12 @@ const turnOffOptionVars = (
 
         varsToToggle.forEach((curVar) => {
             if (sourceValue.id !== curVar.id && !varsToNotToggle.includes(curVar.id)) {
-                curVar.value = false;
+                curVar.set(false);
             }
         });
     };
 
-    if (sourceValue.value) {
+    if (sourceValue.get()) {
         const varsToToggleOff = optionsToDisable;
         toggleOffVars(varsToToggleOff);
     }
@@ -39,23 +39,23 @@ const turnOffOptionVars = (
 /* ================================================== */
 const workspaceOptsToDisable = [show_numbered, show_icons, showWsIcons, showApplicationIcons];
 
-show_numbered.connect('changed', (sourceVar) => {
-    turnOffOptionVars(sourceVar, workspaceOptsToDisable);
+show_numbered.subscribe(() => {
+    turnOffOptionVars(show_numbered, workspaceOptsToDisable);
 });
 
-show_icons.connect('changed', (sourceVar) => {
-    turnOffOptionVars(sourceVar, workspaceOptsToDisable);
+show_icons.subscribe(() => {
+    turnOffOptionVars(show_icons, workspaceOptsToDisable);
 });
 
-showWsIcons.connect('changed', (sourceVar) => {
-    turnOffOptionVars(sourceVar, workspaceOptsToDisable, [showApplicationIcons]);
+showWsIcons.subscribe(() => {
+    turnOffOptionVars(showWsIcons, workspaceOptsToDisable, [showApplicationIcons]);
 });
 
-showApplicationIcons.connect('changed', (sourceVar) => {
-    turnOffOptionVars(sourceVar, workspaceOptsToDisable, [showWsIcons]);
+showApplicationIcons.subscribe(() => {
+    turnOffOptionVars(showApplicationIcons, workspaceOptsToDisable, [showWsIcons]);
 
-    if (sourceVar.value) {
-        showWsIcons.value = true;
+    if (showApplicationIcons.get()) {
+        showWsIcons.set(true);
     }
 });
 
@@ -63,9 +63,9 @@ showApplicationIcons.connect('changed', (sourceVar) => {
 /*                MATUGEN SIDE EFFECTS                */
 /* ================================================== */
 
-matugen.connect('changed', ({ value }) => {
-    if (value === true) {
-        monoBar.value = false;
-        monoMenu.value = false;
+matugen.subscribe(() => {
+    if (matugen.get() === true) {
+        monoBar.set(false);
+        monoMenu.set(false);
     }
 });

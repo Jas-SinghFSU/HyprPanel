@@ -10,7 +10,7 @@ import './src/components/bar/utils/sideEffects';
 import { Bar } from './src/components/bar';
 import { DropdownMenus, StandardWindows } from './src/components/menus/exports';
 import Notifications from './src/components/notifications';
-// import SettingsDialog from 'widget/settings/SettingsDialog';
+import SettingsDialog from './src/components/settings/index';
 import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
 import options from 'src/options';
 import OSD from 'src/components/osd/index';
@@ -45,7 +45,7 @@ App.start({
         initializeStartupScripts();
         warnOnLowBattery();
         Notifications();
-        // SettingsDialog();
+        SettingsDialog();
         OSD();
         forMonitors(Bar).forEach((bar: GtkWidget) => bar);
         initializeMenus();

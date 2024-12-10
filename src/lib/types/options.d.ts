@@ -68,24 +68,25 @@ export type ThemeExportData = {
     filePath: string;
     themeOnly: boolean;
 };
-export type RowProps<T> = {
+export type InputType =
+    | 'number'
+    | 'color'
+    | 'float'
+    | 'object'
+    | 'string'
+    | 'enum'
+    | 'boolean'
+    | 'img'
+    | 'wallpaper'
+    | 'export'
+    | 'import'
+    | 'config_import'
+    | 'font';
+
+export interface RowProps<T> {
     opt: Opt<T>;
-    title: string;
     note?: string;
-    type?:
-        | 'number'
-        | 'color'
-        | 'float'
-        | 'object'
-        | 'string'
-        | 'enum'
-        | 'boolean'
-        | 'img'
-        | 'wallpaper'
-        | 'export'
-        | 'import'
-        | 'config_import'
-        | 'font';
+    type?: InputType;
     enums?: T[];
     max?: number;
     min?: number;
@@ -95,7 +96,7 @@ export type RowProps<T> = {
     subtitleLink?: string;
     dependencies?: string[];
     increment?: number;
-};
+}
 
 export type OSDOrientation = 'horizontal' | 'vertical';
 

@@ -1,5 +1,4 @@
-import { Gdk } from 'astal/gtk3';
-import Gtk from 'types/@girs/gtk-3.0/gtk-3.0';
+import { Gdk, Gtk } from 'astal/gtk3';
 import Box from 'types/widgets/box';
 
 export type Exclusivity = 'normal' | 'ignore' | 'exclusive';
