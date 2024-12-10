@@ -14,7 +14,6 @@ export const Body = ({ notification }: BodyProps): JSX.Element => {
                 truncate
                 wrap
                 justify={Gtk.Justification.LEFT}
-                xalign={0}
                 hexpand
                 useMarkup
                 onRealize={(self) => self.set_markup(notification.body)}

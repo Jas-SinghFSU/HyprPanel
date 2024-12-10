@@ -27,8 +27,8 @@ const CurrentPage = Variable<ThemePage>('General Settings');
 
 export const ThemesMenu = (): JSX.Element => {
     return (
-        <box vertical>
-            <box name={'Theming'} className="option-pages-container" halign={Gtk.Align.CENTER} hexpand vertical>
+        <box name={'Theming'} halign={Gtk.Align.FILL} hexpand vertical>
+            <box className="option-pages-container" halign={Gtk.Align.CENTER} hexpand vertical>
                 {[0, 1, 2].map((section) => {
                     return (
                         <box>
@@ -45,7 +45,6 @@ export const ThemesMenu = (): JSX.Element => {
                                                     CurrentPage.set(page as ThemePage);
                                                 }
                                             }}
-                                            xalign={0}
                                             halign={Gtk.Align.CENTER}
                                         />
                                     );

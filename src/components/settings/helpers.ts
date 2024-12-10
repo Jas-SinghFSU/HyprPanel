@@ -1,7 +1,4 @@
-export const settingsPages = [
-    'Theming',
-    // 'Configuration',
-] as const;
+export const settingsPages = ['Configuration', 'Theming'] as const;
 
 export const themePages = [
     'General Settings',
@@ -25,7 +22,6 @@ export const themePages = [
 export const configPages = [
     'General',
     'Bar',
-
     'Media Menu',
     'Notifications',
     'OSD',
