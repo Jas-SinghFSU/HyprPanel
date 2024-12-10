@@ -1,5 +1,4 @@
 import options from 'src/options';
-import { ThemePage, themePages } from './helpers';
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/utils';
@@ -20,6 +19,7 @@ import { SystrayMenuTheme } from './menus/systray';
 import { VolumeMenuTheme } from './menus/volume';
 import { PowerMenuTheme } from './menus/power';
 import { CustomModuleTheme } from 'src/components/bar/settings/theme';
+import { ThemePage, themePages } from '../../helpers';
 
 const { transition, transitionTime } = options.menus;
 
@@ -28,29 +28,33 @@ const CurrentPage = Variable<ThemePage>('General Settings');
 export const ThemesMenu = (): JSX.Element => {
     return (
         <box vertical>
-            <box name={'Theming'} className="option-pages-container" halign={Gtk.Align.CENTER} hexpand>
+            <box name={'Theming'} className="option-pages-container" halign={Gtk.Align.CENTER} hexpand vertical>
                 {[0, 1, 2].map((section) => {
-                    return Object.keys(themePages).map((page, index) => {
-                        if (index >= section * 6 && index < section * 6 + 6) {
-                            return (
-                                <button
-                                    className={bind(CurrentPage).as(
-                                        (pg) => `pager-button ${pg === page ? 'active' : ''}`,
-                                    )}
-                                    label={page}
-                                    onClick={(_, event) => {
-                                        if (isPrimaryClick(event)) {
-                                            CurrentPage.set(page as ThemePage);
-                                        }
-                                    }}
-                                    xalign={0}
-                                    halign={Gtk.Align.CENTER}
-                                />
-                            );
-                        }
+                    return (
+                        <box>
+                            {themePages.map((page, index) => {
+                                if (index >= section * 6 && index < section * 6 + 6) {
+                                    return (
+                                        <button
+                                            className={bind(CurrentPage).as(
+                                                (pg) => `pager-button ${pg === page ? 'active' : ''}`,
+                                            )}
+                                            label={page}
+                                            onClick={(_, event) => {
+                                                if (isPrimaryClick(event)) {
+                                                    CurrentPage.set(page as ThemePage);
+                                                }
+                                            }}
+                                            xalign={0}
+                                            halign={Gtk.Align.CENTER}
+                                        />
+                                    );
+                                }
 
-                        return <box />;
-                    });
+                                return <box />;
+                            })}
+                        </box>
+                    );
                 })}
             </box>
             <stack
