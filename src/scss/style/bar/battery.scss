@@ -1,0 +1,64 @@
+.bar-button-label.battery {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-battery-text);
+    margin-left: $bar-buttons-battery-spacing;
+}
+
+.bar-button-icon.battery {
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-battery-icon);
+    font-size: 1.15em;
+}
+
+.style2 {
+    .bar-button-icon.battery {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $bar-buttons-battery-icon_background);
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-battery-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+            $bar-buttons-radius
+        );
+
+        &:last-child {
+            border-radius: $bar-buttons-radius;
+        }
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-battery-icon);
+    }
+
+    .bar-button-label.battery {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-battery-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.battery-container {
+        .bar-button-icon.battery {
+            border-top-right-radius: if(
+                $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+                $bar-buttons-radius
+            );
+        }
+    }
+}
+
+.bar_item_box_visible.battery {
+    border: if(
+        $bar-buttons-battery-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-battery-border),
+        0em
+    );
+}
