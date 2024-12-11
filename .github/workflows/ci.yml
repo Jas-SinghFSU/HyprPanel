@@ -10,21 +10,17 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout main repository
-              uses: actions/checkout@v3
-
-            - name: Clone ags-types to temp dir
+            - name: Checkout main repository with submodules
               uses: actions/checkout@v3
               with:
-                  repository: Jas-SinghFSU/ags-types
-                  path: temp-ags-types
+                  submodules: true # This ensures submodules are cloned
 
-            - name: Copy types to types/
+            - name: Copy types to @girs/
               run: |
                   rm -rf @girs
                   mkdir -p @girs
-                  cp -R temp-ags-types/types/* @girs/
-                  rm -rf temp-ags-types
+                  cp -R external/ags-types/@girs/* @girs/
+                  rm -rf external/ags-types
 
             - name: Node Setup
               uses: actions/setup-node@v3

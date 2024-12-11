@@ -1,3 +1,4 @@
-[submodule "ags-types"]
-	path = .
-	url = https://github.com/Jas-SinghFSU/ags-types.git
+[submodule "external/ags-types"]
+    path = external/ags-types
+    url = https://github.com/Jas-SinghFSU/ags-types.git
+
