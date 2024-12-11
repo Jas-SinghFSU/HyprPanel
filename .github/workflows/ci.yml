@@ -15,6 +15,11 @@ jobs:
               with:
                   submodules: true
 
+            - name: Clone astal repository to /usr/share/astal/gjs
+              run: |
+                  sudo mkdir -p /usr/share/astal/
+                  sudo git clone https://github.com/Jas-SinghFSU/astalgjs.git /usr/share/astal
+
             - name: Copy types to @girs/
               run: |
                   rm -rf @girs
