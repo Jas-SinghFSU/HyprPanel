@@ -13,7 +13,7 @@ jobs:
             - name: Checkout main repository with submodules
               uses: actions/checkout@v3
               with:
-                  submodules: true # This ensures submodules are cloned
+                  submodules: true
 
             - name: Copy types to @girs/
               run: |
