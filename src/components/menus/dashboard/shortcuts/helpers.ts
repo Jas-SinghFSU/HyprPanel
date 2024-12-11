@@ -25,7 +25,7 @@ export const handleClick = (action: string, tOut: number = 250): void => {
     });
 };
 export const hasCommand = (shortCut: ShortcutVariable): boolean => {
-    return shortCut.command.value.length > 0;
+    return shortCut.command.get().length > 0;
 };
 
 export const leftCardHidden = Variable(

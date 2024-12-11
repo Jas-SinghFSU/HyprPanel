@@ -11,7 +11,7 @@ import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;
 const { tear } = options;
 
-const curMonitor = Variable(monitor.value);
+const curMonitor = Variable(monitor.get());
 const popupNotifications: Variable<AstalNotifd.Notification[]> = Variable([]);
 
 trackActiveMonitor(curMonitor);

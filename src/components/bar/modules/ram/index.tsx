@@ -57,7 +57,7 @@ export const Ram = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 LABEL_TYPES[
-                                    (LABEL_TYPES.indexOf(labelType.value) + 1) % LABEL_TYPES.length
+                                    (LABEL_TYPES.indexOf(labelType.get()) + 1) % LABEL_TYPES.length
                                 ] as ResourceLabelType,
                             );
                         },
@@ -66,7 +66,7 @@ export const Ram = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 LABEL_TYPES[
-                                    (LABEL_TYPES.indexOf(labelType.value) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
+                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
                                 ] as ResourceLabelType,
                             );
                         },

@@ -11,11 +11,9 @@ class Wallpaper extends GObject.Object {
     #blockMonitor = false;
     #isRunning = false;
 
-    // Define the wallpaper update method
     #wallpaper(): void {
         if (!dependencies('swww')) return;
 
-        // Get cursor position
         sh('hyprctl cursorpos')
             .then((pos) => {
                 const transitionCmd = [
@@ -60,17 +58,14 @@ class Wallpaper extends GObject.Object {
         }
     }
 
-    // Renamed from 'set' to 'setWallpaper' to avoid conflict
     setWallpaper(path: string): void {
         this.#setWallpaper(path);
     }
 
-    // Method to check if wallpaper service is running
     isRunning(): boolean {
         return this.#isRunning;
     }
 
-    // Define the wallpaper property with the correct decorator
     @property(String)
     declare wallpaper: string;
 
@@ -80,12 +75,10 @@ class Wallpaper extends GObject.Object {
     constructor() {
         super();
 
-        // Initialize the wallpaper property
         this.wallpaper = WP;
 
-        // Connect to the 'changed' signal of the wallpaper enable option
         options.wallpaper.enable.subscribe(() => {
-            if (options.wallpaper.enable.value) {
+            if (options.wallpaper.enable.get()) {
                 this.#isRunning = true;
                 execAsync('swww-daemon')
                     .then(() => {
@@ -107,15 +100,13 @@ class Wallpaper extends GObject.Object {
             }
         });
 
-        // If dependencies are met and wallpaper is enabled, initialize
-        if (dependencies('swww') && options.wallpaper.enable.value) {
+        if (dependencies('swww') && options.wallpaper.enable.get()) {
             this.#isRunning = true;
 
             monitorFile(WP, () => {
                 if (!this.#blockMonitor) this.#wallpaper();
             });
 
-            // Start the swww-daemon and set the initial wallpaper
             execAsync('swww-daemon')
                 .then(() => {
                     this.#wallpaper();

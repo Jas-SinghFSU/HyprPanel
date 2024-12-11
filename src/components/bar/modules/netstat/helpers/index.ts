@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib';
-import { Variable as VariableType } from 'types/variable';
+import { Variable } from 'astal';
 import { NetworkResourceData } from 'src/lib/types/customModules/network';
 import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
 import { RateUnit } from 'src/lib/types/bar';
@@ -72,12 +72,12 @@ const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
 };
 
 export const computeNetwork = (
-    round: VariableType<boolean>,
-    interfaceNameVar: VariableType<string>,
-    dataType: VariableType<RateUnit>,
+    round: Variable<boolean>,
+    interfaceNameVar: Variable<string>,
+    dataType: Variable<RateUnit>,
 ): NetworkResourceData => {
-    const rateUnit = dataType.value;
-    const interfaceName = interfaceNameVar ? interfaceNameVar.value : '';
+    const rateUnit = dataType.get();
+    const interfaceName = interfaceNameVar ? interfaceNameVar.get() : '';
 
     const DEFAULT_NETSTAT_DATA = GET_DEFAULT_NETSTAT_DATA(rateUnit);
     try {
@@ -100,8 +100,8 @@ export const computeNetwork = (
         previousNetUsage = { rx, tx, time: currentTime };
 
         return {
-            in: formatRate(rxRate, rateUnit, round.value),
-            out: formatRate(txRate, rateUnit, round.value),
+            in: formatRate(rxRate, rateUnit, round.get()),
+            out: formatRate(txRate, rateUnit, round.get()),
         };
     } catch (error) {
         console.error('Error calculating network usage:', error);

@@ -5,13 +5,13 @@ import Wallpaper from 'src/services/Wallpaper';
 export const WallpaperInputter = <T extends string | number | boolean | object>({
     opt,
 }: WallpaperInputterProps<T>): JSX.Element => {
-    if (typeof opt.value === 'string') {
+    if (typeof opt.get() === 'string') {
         return (
             <FileChooserButton
-                on_file_set={({ uri }) => {
-                    const newValue: string = uri!.replace('file://', '');
+                onFileSet={(self) => {
+                    const newValue: string = self.get_uri()!.replace('file://', '');
                     opt.set(newValue as T);
-                    if (options.wallpaper.enable.value) {
+                    if (options.wallpaper.enable.get()) {
                         Wallpaper.setWallpaper(newValue);
                     }
                 }}

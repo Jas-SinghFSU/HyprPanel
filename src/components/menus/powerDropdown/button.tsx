@@ -1,5 +1,4 @@
 import { PowerOptions } from 'src/lib/types/options';
-import { GButton } from 'src/lib/types/widget';
 import { capitalizeFirstLetter } from 'src/lib/utils';
 import options from 'src/options';
 import powermenu from '../power/helpers/actions';
@@ -8,17 +7,17 @@ import { bind, execAsync } from 'astal';
 
 const { confirmation, shutdown, logout, sleep, reboot, showLabel } = options.menus.power;
 
-export const PowerButton = (action: PowerOptions): GButton => {
+export const PowerButton = (action: PowerOptions): JSX.Element => {
     const handleClick = (action: PowerOptions): void => {
         const actions = {
-            shutdown: shutdown.value,
-            reboot: reboot.value,
-            logout: logout.value,
-            sleep: sleep.value,
+            shutdown: shutdown.get(),
+            reboot: reboot.get(),
+            logout: logout.get(),
+            sleep: sleep.get(),
         };
         App.get_window('powerdropdownmenu')?.set_visible(false);
 
-        if (!confirmation.value) {
+        if (!confirmation.get()) {
             execAsync(actions[action]).catch((err) =>
                 console.error(`Failed to execute ${action} command. Error: ${err}`),
             );

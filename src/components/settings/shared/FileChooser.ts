@@ -249,5 +249,5 @@ export const importFiles = (themeOnly: boolean = false): void => {
         saveConfigToFile(optionsConfig, OPTIONS);
     }
     dialog.destroy();
-    bash(restartCommand.value);
+    bash(restartCommand.get());
 };

@@ -7,7 +7,7 @@ import { Attribute, Child } from './widget';
 import { Widget } from 'astal/gtk3';
 
 export type BarBoxChild = {
-    component: Box<Gtk.Widget, unknown>;
+    component: JSX.Element;
     isVisible?: boolean;
     isVis?: Variable<boolean>;
     boxClass: string;

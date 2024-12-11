@@ -8,15 +8,15 @@ const { enable, duration, active_monitor, monitor } = options.theme.osd;
 
 let count = 0;
 
-export const handleRevealRevealer = (self: Widget.Revealer, property: 'reveal_child' | 'visible'): void => {
-    if (!enable.get() || property !== 'reveal_child') {
+export const handleRevealRevealer = (self: Widget.Revealer, property: 'revealChild' | 'visible'): void => {
+    if (!enable.get() || property !== 'revealChild') {
         return;
     }
 
     self.reveal_child = true;
 
     count++;
-    timeout(duration.value, () => {
+    timeout(duration.get(), () => {
         count--;
 
         if (count === 0) {
@@ -25,15 +25,15 @@ export const handleRevealRevealer = (self: Widget.Revealer, property: 'reveal_ch
     });
 };
 
-export const handleRevealWindow = (self: Widget.Window, property: 'reveal_child' | 'visible'): void => {
-    if (!enable.value || property !== 'visible') {
+export const handleRevealWindow = (self: Widget.Window, property: 'revealChild' | 'visible'): void => {
+    if (!enable.get() || property !== 'visible') {
         return;
     }
 
     self.visible = true;
 
     count++;
-    timeout(duration.value, () => {
+    timeout(duration.get(), () => {
         count--;
 
         if (count === 0) {
@@ -42,7 +42,7 @@ export const handleRevealWindow = (self: Widget.Window, property: 'reveal_child'
     });
 };
 
-export const handleReveal = (self: Widget.Revealer | Widget.Window, property: 'reveal_child' | 'visible'): void => {
+export const handleReveal = (self: Widget.Revealer | Widget.Window, property: 'revealChild' | 'visible'): void => {
     if (self instanceof Widget.Revealer) {
         handleRevealRevealer(self, property);
     } else if (self instanceof Widget.Window) {
@@ -90,25 +90,25 @@ export const windowSetup = (self: Widget.Window): void => {
 
 export const revealerSetup = (self: Widget.Revealer): void => {
     self.hook(enable, () => {
-        handleReveal(self, 'reveal_child');
+        handleReveal(self, 'revealChild');
     });
 
     self.hook(brightnessService, 'notify::screen', () => {
-        handleReveal(self, 'reveal_child');
+        handleReveal(self, 'revealChild');
     });
 
     self.hook(brightnessService, 'notify::kbd', () => {
-        handleReveal(self, 'reveal_child');
+        handleReveal(self, 'revealChild');
     });
 
     Variable.derive(
         [bind(audioService.defaultMicrophone, 'volume'), bind(audioService.defaultMicrophone, 'mute')],
         () => {
-            handleReveal(self, 'reveal_child');
+            handleReveal(self, 'revealChild');
         },
     );
 
     Variable.derive([bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')], () => {
-        handleReveal(self, 'reveal_child');
+        handleReveal(self, 'revealChild');
     });
 };

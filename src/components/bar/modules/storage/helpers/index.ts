@@ -1,12 +1,11 @@
-// @ts-expect-error is a special directive that tells the compiler to use the GTop library
 import GTop from 'gi://GTop';
 
 import { divide } from 'src/components/bar/utils/helpers';
-import { Variable as VariableType } from 'types/variable';
+import { Variable } from 'astal';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 
 // FIX: Consolidate with Storage service class
-export const computeStorage = (round: VariableType<boolean>): GenericResourceData => {
+export const computeStorage = (round: Variable<boolean>): GenericResourceData => {
     try {
         const currentFsUsage = new GTop.glibtop_fsusage();
 
@@ -20,7 +19,7 @@ export const computeStorage = (round: VariableType<boolean>): GenericResourceDat
             total,
             used,
             free: available,
-            percentage: divide([total, used], round.value),
+            percentage: divide([total, used], round.get()),
         };
     } catch (error) {
         console.error('Error calculating RAM usage:', error);

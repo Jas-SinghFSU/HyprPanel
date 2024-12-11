@@ -41,5 +41,5 @@ globalThis.useTheme = (filePath: string): void => {
 
     saveConfigToFile(tmpConfig, `${TMP}/config.json`);
     saveConfigToFile(optionsConfig, OPTIONS);
-    bash(restartCommand.value);
+    bash(restartCommand.get());
 };

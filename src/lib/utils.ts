@@ -32,10 +32,10 @@ export function getLayoutItems(): BarModule[] {
 
     const itemsInLayout: BarModule[] = [];
 
-    Object.keys(layouts.value).forEach((monitor) => {
-        const leftItems = layouts.value[monitor].left;
-        const rightItems = layouts.value[monitor].right;
-        const middleItems = layouts.value[monitor].middle;
+    Object.keys(layouts.get()).forEach((monitor) => {
+        const leftItems = layouts.get()[monitor].left;
+        const rightItems = layouts.get()[monitor].right;
+        const middleItems = layouts.get()[monitor].middle;
 
         itemsInLayout.push(...leftItems);
         itemsInLayout.push(...middleItems);
@@ -225,13 +225,13 @@ export function warnOnLowBattery(): void {
     battery.connect('notify::percent', () => {
         const { lowBatteryThreshold, lowBatteryNotification, lowBatteryNotificationText, lowBatteryNotificationTitle } =
             options.menus.power;
-        if (!lowBatteryNotification.value || battery.charging) return;
-        const lowThreshold = lowBatteryThreshold.value;
+        if (!lowBatteryNotification.get() || battery.charging) return;
+        const lowThreshold = lowBatteryThreshold.get();
 
         if (battery.percentage === lowThreshold || battery.percentage === lowThreshold / 2) {
             Notify({
-                summary: lowBatteryNotificationTitle.value.replace('/$POWER_LEVEL/g', battery.percentage.toString()),
-                body: lowBatteryNotificationText.value.replace('/$POWER_LEVEL/g', battery.percentage.toString()),
+                summary: lowBatteryNotificationTitle.get().replace('/$POWER_LEVEL/g', battery.percentage.toString()),
+                body: lowBatteryNotificationText.get().replace('/$POWER_LEVEL/g', battery.percentage.toString()),
                 iconName: icons.ui.warning,
                 urgency: 'critical',
                 timeout: 7000,

@@ -42,14 +42,14 @@ export const calculateMenuPosition = async (pos: number[], windowName: string): 
         // end of the monitor is the 1430th pixel.
         const gdkScale = exec('bash -c "echo $GDK_SCALE"');
 
-        if (scalingPriority.value === 'both') {
+        if (scalingPriority.get() === 'both') {
             const scale = parseFloat(gdkScale);
             monWidth = monWidth / scale;
             monHeight = monHeight / scale;
 
             monWidth = monWidth / hyprScaling;
             monHeight = monHeight / hyprScaling;
-        } else if (/^\d+(.\d+)?$/.test(gdkScale) && scalingPriority.value === 'gdk') {
+        } else if (/^\d+(.\d+)?$/.test(gdkScale) && scalingPriority.get() === 'gdk') {
             const scale = parseFloat(gdkScale);
             monWidth = monWidth / scale;
             monHeight = monHeight / scale;
@@ -84,7 +84,7 @@ export const calculateMenuPosition = async (pos: number[], windowName: string): 
         self.set_margin_left(marginLeft);
         self.set_margin_right(marginRight);
 
-        if (location.value === 'top') {
+        if (location.get() === 'top') {
             self.set_margin_top(0);
             self.set_margin_bottom(monHeight);
         } else {

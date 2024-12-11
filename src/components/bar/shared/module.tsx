@@ -1,8 +1,6 @@
 import { bind, Variable } from 'astal';
-import { Gtk } from 'astal/gtk3';
 import { BarBoxChild, Module } from 'src/lib/types/bar';
 import { BarButtonStyles } from 'src/lib/types/options';
-import { GtkWidget } from 'src/lib/types/widget';
 import options from 'src/options';
 
 const { style } = options.theme.bar.buttons;
@@ -22,8 +20,8 @@ export const module = ({
     labelHook,
     hook,
 }: Module): BarBoxChild => {
-    const getIconWidget = (useTxtIcn: boolean): GtkWidget | undefined => {
-        let iconWidget: Gtk.Widget | undefined;
+    const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
+        let iconWidget: JSX.Element | undefined;
 
         if (icon !== undefined && !useTxtIcn) {
             iconWidget = <icon className={`txt-icon bar-button-icon module-icon ${boxClass}`} icon={icon} />;
@@ -50,8 +48,8 @@ export const module = ({
 
     const componentChildren = Variable.derive(
         [showLabelBinding, useTextIcon],
-        (showLabel: boolean, forceTextIcon: boolean): GtkWidget => {
-            const childrenArray: GtkWidget[] = [];
+        (showLabel: boolean, forceTextIcon: boolean): JSX.Element[] => {
+            const childrenArray = [];
             const iconWidget = getIconWidget(forceTextIcon);
 
             if (iconWidget !== undefined) {
@@ -71,7 +69,7 @@ export const module = ({
         },
     );
 
-    const component = (
+    const component: JSX.Element = (
         <box tooltipText={tooltipText} className={componentClass()} setup={hook}>
             {componentChildren()}
         </box>

@@ -8,7 +8,7 @@ module.exports = {
     plugins: ['@typescript-eslint', 'import'],
     extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
     root: true,
-    ignorePatterns: ['.eslintrc.js', 'types/**/*.ts', 'scripts/**/*.js'],
+    ignorePatterns: ["/*", "!/src"],
     env: {
         es6: true,
         browser: true,

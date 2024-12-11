@@ -80,7 +80,7 @@ export const inputHandler = (
     };
 
     const updateHandlers = (): UpdateHandlers => {
-        const interval = scrollSpeed.value;
+        const interval = scrollSpeed.get();
         const throttledHandler = throttledScrollHandler(interval);
 
         const disconnectPrimaryClick = onPrimaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {

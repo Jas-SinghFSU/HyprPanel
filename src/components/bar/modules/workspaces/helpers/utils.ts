@@ -10,7 +10,7 @@ const { background: wsBackground, active } = options.theme.bar.buttons.workspace
 const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
 
 const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
-    return showAllActive.value && hyprlandService.get_monitor(monitor).activeWorkspace.id === i;
+    return showAllActive.get() && hyprlandService.get_monitor(monitor).activeWorkspace.id === i;
 };
 
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
@@ -46,13 +46,13 @@ export const getWsColor = (
     }
 
     if (
-        showWsIcons.value &&
+        showWsIcons.get() &&
         smartHighlight &&
-        wsActiveIndicator.value === 'highlight' &&
+        wsActiveIndicator.get() === 'highlight' &&
         (hyprlandService.focusedWorkspace.id === i || isWorkspaceActiveOnMonitor(monitor, i))
     ) {
-        const iconColor = monochrome.value ? background.value : wsBackground.value;
-        const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.value;
+        const iconColor = monochrome.get() ? background.get() : wsBackground.get();
+        const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
         const colorCss = `color: ${iconColor};`;
         const backgroundCss = `background: ${iconBackground};`;
 

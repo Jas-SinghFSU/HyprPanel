@@ -26,7 +26,7 @@ const {
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.value));
+export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.get()));
 
 const netstatPoller = new FunctionPoller<
     NetworkResourceData,
@@ -91,17 +91,21 @@ export const Netstat = (): BarBoxChild => {
                     },
                     onScrollUp: {
                         fn: () => {
-                            labelType.value = NETWORK_LABEL_TYPES[
-                                (NETWORK_LABEL_TYPES.indexOf(labelType.value) + 1) % NETWORK_LABEL_TYPES.length
-                            ] as NetstatLabelType;
+                            labelType.set(
+                                NETWORK_LABEL_TYPES[
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
+                                ] as NetstatLabelType,
+                            );
                         },
                     },
                     onScrollDown: {
                         fn: () => {
-                            labelType.value = NETWORK_LABEL_TYPES[
-                                (NETWORK_LABEL_TYPES.indexOf(labelType.value) - 1 + NETWORK_LABEL_TYPES.length) %
-                                    NETWORK_LABEL_TYPES.length
-                            ] as NetstatLabelType;
+                            labelType.set(
+                                NETWORK_LABEL_TYPES[
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
+                                        NETWORK_LABEL_TYPES.length
+                                ] as NetstatLabelType,
+                            );
                         },
                     },
                 });

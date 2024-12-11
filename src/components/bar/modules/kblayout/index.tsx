@@ -22,7 +22,7 @@ export const KbInput = (): BarBoxChild => {
                 () => {
                     execAsync('hyprctl devices -j')
                         .then((obj) => {
-                            self.label = getKeyboardLayout(obj, labelType.value);
+                            self.label = getKeyboardLayout(obj, labelType.get());
                         })
                         .catch((err) => {
                             console.error(err);
@@ -34,7 +34,7 @@ export const KbInput = (): BarBoxChild => {
             useHook(self, labelType, () => {
                 execAsync('hyprctl devices -j')
                     .then((obj) => {
-                        self.label = getKeyboardLayout(obj, labelType.value);
+                        self.label = getKeyboardLayout(obj, labelType.get());
                     })
                     .catch((err) => {
                         console.error(err);

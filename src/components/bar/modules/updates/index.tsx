@@ -23,7 +23,7 @@ const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
 
 const processUpdateCount = (updateCount: string): string => {
-    if (!padZero.value) return updateCount;
+    if (!padZero.get()) return updateCount;
     return `${updateCount.padStart(2, '0')}`;
 };
 
@@ -31,7 +31,7 @@ const updatesPoller = new BashPoller<string, []>(
     pendingUpdates,
     [bind(padZero), bind(postInputUpdater)],
     bind(pollingInterval),
-    updateCommand.value,
+    updateCommand.get(),
     processUpdateCount,
 );
 

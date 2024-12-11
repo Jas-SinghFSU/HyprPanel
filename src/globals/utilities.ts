@@ -15,7 +15,7 @@ globalThis.setLayout = (layout: string): string => {
         const layoutJson = JSON.parse(layout);
         const { layouts } = options.bar;
 
-        layouts.value = layoutJson;
+        layouts.set(layoutJson);
         return 'Successfully updated layout.';
     } catch (error) {
         return `Failed to set layout: ${error}`;

@@ -13,10 +13,10 @@ const updateOptColor = (color: HexColor, opt: Variable<HexColor>): void => {
 };
 
 export async function generateMatugenColors(): Promise<MatugenColors | undefined> {
-    if (!matugen.value || !dependencies('matugen')) {
+    if (!matugen.get() || !dependencies('matugen')) {
         return;
     }
-    const wallpaperPath = options.wallpaper.image.value;
+    const wallpaperPath = options.wallpaper.image.get();
 
     try {
         if (!wallpaperPath.length || !isAnImage(wallpaperPath)) {
@@ -29,12 +29,12 @@ export async function generateMatugenColors(): Promise<MatugenColors | undefined
             return;
         }
 
-        const normalizedContrast = contrast.value > 1 ? 1 : contrast.value < -1 ? -1 : contrast.value;
+        const normalizedContrast = contrast.get() > 1 ? 1 : contrast.get() < -1 ? -1 : contrast.get();
         const contents = await bash(
-            `matugen image ${wallpaperPath} -t scheme-${scheme_type.value} --contrast ${normalizedContrast} --json hex`,
+            `matugen image ${wallpaperPath} -t scheme-${scheme_type.get()} --contrast ${normalizedContrast} --json hex`,
         );
 
-        return JSON.parse(contents).colors[options.theme.matugen_settings.mode.value];
+        return JSON.parse(contents).colors[options.theme.matugen_settings.mode.get()];
     } catch (error) {
         const errMsg = `An error occurred while generating matugen colors: ${error}`;
         console.error(errMsg);
@@ -47,11 +47,11 @@ const isColorValid = (color: string): color is ColorMapKey => {
 };
 
 export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenColors): HexColor => {
-    if (!options.theme.matugen.value) {
+    if (!options.theme.matugen.get()) {
         return incomingHex;
     }
 
-    const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.value);
+    const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.get());
     updateOptColor(matugenVariation.base, options.theme.bar.menus.menu.media.card.color as Variable<HexColor>);
 
     for (const curColor of Object.keys(defaultColorMap)) {

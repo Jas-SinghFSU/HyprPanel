@@ -4,6 +4,7 @@ import { CalendarWidget } from './CalendarWidget.js';
 import { WeatherWidget } from './weather/index';
 import options from 'src/options';
 import { bind } from 'astal';
+import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
 const { transition } = options.menus;
 const { enabled: weatherEnabled } = options.menus.clock.weather;
@@ -12,7 +13,7 @@ export default (): JSX.Element => {
     return (
         <DropdownMenu
             name={'calendarmenu'}
-            transition={bind(transition)}
+            transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
             child={
                 <box css={'padding: 1px; margin: -1px;'}>
                     {bind(weatherEnabled).as((isWeatherEnabled) => {

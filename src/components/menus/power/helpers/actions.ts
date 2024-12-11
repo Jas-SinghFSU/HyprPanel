@@ -21,10 +21,10 @@ class PowerMenu extends GObject.Object {
 
     action(action: Action): void {
         [this.#cmd, this.#title] = {
-            sleep: [sleep.value, 'Sleep'],
-            reboot: [reboot.value, 'Reboot'],
-            logout: [logout.value, 'Log Out'],
-            shutdown: [shutdown.value, 'Shutdown'],
+            sleep: [sleep.get(), 'Sleep'],
+            reboot: [reboot.get(), 'Reboot'],
+            logout: [logout.get(), 'Log Out'],
+            shutdown: [shutdown.get(), 'Shutdown'],
         }[action];
 
         this.notify('cmd');

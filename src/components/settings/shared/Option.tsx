@@ -19,7 +19,7 @@ export const Option = <T extends string | number | boolean | object>({
             </box>
             <Inputter
                 opt={props.opt}
-                type={typeof props.opt.get() as RowProps<T>['type']}
+                type={props.type}
                 enums={props.enums}
                 disabledBinding={props.disabledBinding}
                 dependencies={props.dependencies}

@@ -11,15 +11,15 @@ const { sensor } = options.bar.customModules.cpuTemp;
  */
 export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitType>): number => {
     try {
-        if (sensor.value.length === 0) {
+        if (sensor.get().length === 0) {
             return 0;
         }
 
-        const [success, tempInfoBytes] = GLib.file_get_contents(sensor.value);
+        const [success, tempInfoBytes] = GLib.file_get_contents(sensor.get());
         const tempInfo = new TextDecoder('utf-8').decode(tempInfoBytes);
 
         if (!success || !tempInfoBytes) {
-            console.error(`Failed to read ${sensor.value} or file content is null.`);
+            console.error(`Failed to read ${sensor.get()} or file content is null.`);
             return 0;
         }
 

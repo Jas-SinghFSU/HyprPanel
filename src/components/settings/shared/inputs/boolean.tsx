@@ -1,3 +1,4 @@
+import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
 import { Opt } from 'src/lib/option';
 
@@ -10,6 +11,7 @@ export const BooleanInputter = <T extends string | number | boolean | object>({
 }: BooleanInputterProps<T>): JSX.Element => (
     <switch
         sensitive={disabledBinding !== undefined ? bind(disabledBinding).as((disabled) => !disabled) : true}
+        active={bind(opt) as Binding<boolean>}
         setup={(self) => {
             self.connect('notify::active', () => {
                 if (disabledBinding !== undefined && disabledBinding.get()) {
@@ -22,10 +24,6 @@ export const BooleanInputter = <T extends string | number | boolean | object>({
                 }
 
                 opt.set(self.active as T);
-            });
-
-            self.hook(opt, () => {
-                self.active = opt.get() as boolean;
             });
         }}
     />

@@ -39,7 +39,7 @@ export const SummaryLabel = ({ notification }: HeaderProps): JSX.Element => {
 
 export const TimeLabel = ({ notification }: HeaderProps): JSX.Element => {
     const time = (time: number, format = '%I:%M %p'): string => {
-        return GLib.DateTime.new_from_unix_local(time).format(military.value ? '%H:%M' : format) || '--';
+        return GLib.DateTime.new_from_unix_local(time).format(military.get() ? '%H:%M' : format) || '--';
     };
 
     return (

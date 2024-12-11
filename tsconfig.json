@@ -24,5 +24,6 @@
             "astal": ["/usr/share/astal/gjs"],
             "astal/*": ["/usr/share/astal/gjs/*"]
         }
-    }
+    },
+    "exclude": ["astal/gtk3/jsx-runtime.ts"]
 }

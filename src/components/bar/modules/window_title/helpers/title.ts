@@ -5,7 +5,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string, string> => {
     const windowTitleMap = [
         // user provided values
-        ...options.bar.windowtitle.title_map.value,
+        ...options.bar.windowtitle.title_map.get(),
         // Original Entries
         ['kitty', '󰄛', 'Kitty Terminal'],
         ['firefox', '󰈹', 'Firefox'],

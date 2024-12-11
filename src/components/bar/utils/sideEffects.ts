@@ -3,27 +3,27 @@ import options from '../../../options';
 const { showIcon, showTime } = options.bar.clock;
 
 showIcon.subscribe(() => {
-    if (!showTime.value && !showIcon.value) {
-        showTime.value = true;
+    if (!showTime.get() && !showIcon.get()) {
+        showTime.set(true);
     }
 });
 
 showTime.subscribe(() => {
-    if (!showTime.value && !showIcon.value) {
-        showIcon.value = true;
+    if (!showTime.get() && !showIcon.get()) {
+        showIcon.set(true);
     }
 });
 
 const { label, icon } = options.bar.windowtitle;
 
 label.subscribe(() => {
-    if (!label.value && !icon.value) {
-        icon.value = true;
+    if (!label.get() && !icon.get()) {
+        icon.set(true);
     }
 });
 
 icon.subscribe(() => {
-    if (!label.value && !icon.value) {
-        label.value = true;
+    if (!label.get() && !icon.get()) {
+        label.set(true);
     }
 });

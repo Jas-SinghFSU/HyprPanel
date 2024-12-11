@@ -63,7 +63,7 @@ export const getWorkspaceRules = (): WorkspaceMap => {
 
 export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
     if (hyprlandService.get_monitors().length === 1) {
-        return Array.from({ length: workspaces.value }, (_, i) => i + 1);
+        return Array.from({ length: workspaces.get() }, (_, i) => i + 1);
     }
 
     const monitorWorkspaces = getWorkspaceRules();
@@ -101,7 +101,7 @@ const navigateWorkspace = (
 
     const workspacesList = activeWorkspaces
         ? occupiedWorkspaces
-        : currentMonitorWorkspaces.get() || Array.from({ length: workspaces.value }, (_, i) => i + 1);
+        : currentMonitorWorkspaces.get() || Array.from({ length: workspaces.get() }, (_, i) => i + 1);
 
     if (workspacesList.length === 0) return;
 
@@ -156,7 +156,7 @@ export const createThrottledScrollHandlers = (
     activeWorkspaces: boolean = true,
 ): ThrottledScrollHandlers => {
     const throttledScrollUp = throttle(() => {
-        if (reverse_scroll.value) {
+        if (reverse_scroll.get()) {
             goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         } else {
             goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
@@ -164,7 +164,7 @@ export const createThrottledScrollHandlers = (
     }, 200 / scrollSpeed);
 
     const throttledScrollDown = throttle(() => {
-        if (reverse_scroll.value) {
+        if (reverse_scroll.get()) {
             goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
         } else {
             goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);

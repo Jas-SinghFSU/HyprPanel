@@ -7,16 +7,16 @@ const { matugen } = options.theme;
 const { mode, scheme_type, contrast } = options.theme.matugen_settings;
 
 const ensureMatugenWallpaper = (): void => {
-    const wallpaperPath = options.wallpaper.image.value;
+    const wallpaperPath = options.wallpaper.image.get();
 
-    if (matugen.value && (!options.wallpaper.image.value.length || !isAnImage(wallpaperPath))) {
+    if (matugen.get() && (!options.wallpaper.image.get().length || !isAnImage(wallpaperPath))) {
         Notify({
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
             iconName: icons.ui.warning,
             timeout: 7000,
         });
-        matugen.value = false;
+        matugen.set(false);
     }
 };
 
@@ -38,20 +38,20 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
 
     Wallpaper.connect('changed', () => {
         console.info('Wallpaper changed, regenerating Matugen colors...');
-        if (options.theme.matugen.value) {
+        if (options.theme.matugen.get()) {
             options.resetTheme();
             resetCssFunc();
         }
     });
 
     options.wallpaper.image.subscribe(() => {
-        if ((!Wallpaper.isRunning() && options.theme.matugen.value) || !options.wallpaper.enable.value) {
+        if ((!Wallpaper.isRunning() && options.theme.matugen.get()) || !options.wallpaper.enable.get()) {
             console.info('Wallpaper path changed, regenerating Matugen colors...');
             options.resetTheme();
             resetCssFunc();
         }
-        if (options.wallpaper.pywal.value && dependencies('wal')) {
-            const wallpaperPath = options.wallpaper.image.value;
+        if (options.wallpaper.pywal.get() && dependencies('wal')) {
+            const wallpaperPath = options.wallpaper.image.get();
             bash(`wal -i ${wallpaperPath}`);
         }
     });

@@ -78,7 +78,7 @@ const isNixOS = (): boolean => {
  */
 const getRestartCommand = (): string => {
     const isNix = isNixOS();
-    const command = options.hyprpanel.restartCommand.value;
+    const command = options.hyprpanel.restartCommand.get();
 
     if (isNix) {
         return command.replace(/\bags\b/g, 'hyprpanel');
@@ -88,7 +88,7 @@ const getRestartCommand = (): string => {
 };
 
 hyprlandService.connect('monitor-added', () => {
-    if (options.hyprpanel.restartAgs.value) {
+    if (options.hyprpanel.restartAgs.get()) {
         const restartAgsCommand = getRestartCommand();
         bash(restartAgsCommand);
     }

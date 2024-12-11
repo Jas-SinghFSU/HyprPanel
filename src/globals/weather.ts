@@ -14,7 +14,7 @@ export const globalWeatherVar = Variable<Weather>(DEFAULT_WEATHER);
 let weatherIntervalInstance: null | AstalIO.Time = null;
 
 key.subscribe(() => {
-    const fetchedKey = getWeatherKey(key.value);
+    const fetchedKey = getWeatherKey(key.get());
     weatherApiKey.set(fetchedKey);
 });
 
@@ -54,7 +54,7 @@ const getWeatherKey = (apiKey: string): string => {
     return apiKey;
 };
 
-const fetchedApiKey = getWeatherKey(key.value);
+const fetchedApiKey = getWeatherKey(key.get());
 const weatherApiKey = Variable(fetchedApiKey);
 
 /**

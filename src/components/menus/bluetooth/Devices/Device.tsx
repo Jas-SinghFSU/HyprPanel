@@ -34,7 +34,7 @@ export const BluetoothDevice = ({ device, connectedDevices }: BluetoothDevicePro
         return (
             <revealer
                 halign={Gtk.Align.START}
-                reveal_child={Variable.derive(
+                revealChild={Variable.derive(
                     [bind(device, 'connected'), bind(device, 'paired')],
                     (connected, paired) => {
                         return connected || paired;

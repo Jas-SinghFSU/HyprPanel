@@ -6,6 +6,7 @@ import options from 'src/options.js';
 import Variable from 'astal/variable.js';
 import { handlePageBoundaries } from './helpers.js';
 import { bind } from 'astal/binding.js';
+import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
 const { transition } = options.menus;
 
@@ -17,7 +18,7 @@ export default (): JSX.Element => {
     return (
         <DropdownMenu
             name={'notificationsmenu'}
-            transition={bind(transition)}
+            transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
             child={
                 <box className={'notification-menu-content'} css={'padding: 1px; margin: -1px;'} hexpand vexpand>
                     <box className={'notification-card-container menu'} hexpand vexpand vertical>

@@ -51,16 +51,20 @@ export const Storage = (): BarBoxChild => {
                     },
                     onScrollUp: {
                         fn: () => {
-                            labelType.value = LABEL_TYPES[
-                                (LABEL_TYPES.indexOf(labelType.value) + 1) % LABEL_TYPES.length
-                            ] as ResourceLabelType;
+                            labelType.set(
+                                LABEL_TYPES[
+                                    (LABEL_TYPES.indexOf(labelType.get()) + 1) % LABEL_TYPES.length
+                                ] as ResourceLabelType,
+                            );
                         },
                     },
                     onScrollDown: {
                         fn: () => {
-                            labelType.value = LABEL_TYPES[
-                                (LABEL_TYPES.indexOf(labelType.value) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
-                            ] as ResourceLabelType;
+                            labelType.set(
+                                LABEL_TYPES[
+                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
+                                ] as ResourceLabelType,
+                            );
                         },
                     },
                 });

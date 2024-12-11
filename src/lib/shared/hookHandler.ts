@@ -1,5 +1,5 @@
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { Connectable, Subscribable } from 'astal/binding';
+import { Widget } from 'astal/gtk3';
 
 /**
  * A generic hook utility to manage setup and teardown based on dependencies.
@@ -10,11 +10,13 @@ import { Connectable, Subscribable } from 'astal/binding';
  * @param signal - (Optional) The signal name if hooking into a Connectable.
  */
 export function useHook(
-    widget: GtkWidget,
+    // eslint-disable-next-line  @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+    widget: any,
     hookTarget: Connectable | Subscribable,
     setup: (() => void) | (() => () => void),
     signal?: string,
 ): void {
+    const passedWidget: Widget.Box = widget;
     let currentDisconnect: () => void = () => {};
 
     const executeSetup = (): void => {
@@ -34,9 +36,9 @@ export function useHook(
 
     const hookIntoTarget = (): void => {
         if (signal && isConnectable(hookTarget)) {
-            widget.hook(hookTarget, signal, executeSetup);
+            passedWidget.hook(hookTarget, signal, executeSetup);
         } else if (isSubscribable(hookTarget)) {
-            widget.hook(hookTarget, executeSetup);
+            passedWidget.hook(hookTarget, executeSetup);
         }
     };
 

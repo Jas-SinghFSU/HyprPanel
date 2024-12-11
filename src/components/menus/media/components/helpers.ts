@@ -10,8 +10,8 @@ const { tint, color } = options.theme.bar.menus.menu.media.card;
 const curPlayer = Variable('');
 
 export const generateAlbumArt = (imageUrl: string): string => {
-    const userTint = tint.value;
-    const userHexColor = color.value;
+    const userTint = tint.get();
+    const userHexColor = color.get();
 
     const r = parseInt(userHexColor.slice(1, 3), 16);
     const g = parseInt(userHexColor.slice(3, 5), 16);

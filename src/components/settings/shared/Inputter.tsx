@@ -15,7 +15,7 @@ import { Gtk } from 'astal/gtk3';
 const InputField = <T extends string | number | boolean | object>({
     opt,
     type = typeof opt.get() as RowProps<T>['type'],
-    enums,
+    enums = [],
     disabledBinding,
     dependencies,
     exportData,
@@ -34,7 +34,7 @@ const InputField = <T extends string | number | boolean | object>({
         case 'string':
             return <StringInputter opt={opt} isUnsaved={isUnsaved} />;
         case 'enum':
-            return <EnumInputter opt={opt} enums={enums} />;
+            return <EnumInputter opt={opt} values={enums} />;
         case 'boolean':
             return <BooleanInputter opt={opt} disabledBinding={disabledBinding} dependencies={dependencies} />;
         case 'img':

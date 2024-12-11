@@ -6,14 +6,14 @@ const { confirmation, shutdown, logout, sleep, reboot } = options.menus.dashboar
 
 export const handleClick = (action: PowerOptions): void => {
     const actions = {
-        shutdown: shutdown.value,
-        reboot: reboot.value,
-        logout: logout.value,
-        sleep: sleep.value,
+        shutdown: shutdown.get(),
+        reboot: reboot.get(),
+        logout: logout.get(),
+        sleep: sleep.get(),
     };
     App.get_window('dashboardmenu')?.set_visible(false);
 
-    if (!confirmation.value) {
+    if (!confirmation.get()) {
         execAsync(actions[action]).catch((err) => console.error(`Failed to execute ${action} command. Error: ${err}`));
     } else {
         powermenu.action(action);

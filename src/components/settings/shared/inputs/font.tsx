@@ -11,8 +11,8 @@ export const FontInputter = <T extends string | number | boolean | object>({
             setup={(self) => {
                 self.font = opt.get() as string;
 
-                self.hook(opt, () => (self.font = opt.value as string));
-                self.connect('font-set', ({ font }) => (opt.value = font!.split(' ').slice(0, -1).join(' ') as T));
+                self.hook(opt, () => (self.font = opt.get() as string));
+                self.connect('font-set', ({ font }) => opt.set(font!.split(' ').slice(0, -1).join(' ') as T));
             }}
         />
     );

@@ -3,6 +3,7 @@ import { Gtk } from 'astal/gtk3';
 import SpinButton from 'src/components/shared/SpinButton';
 import icons from 'src/lib/icons/icons';
 import { Opt } from 'src/lib/option';
+import { useHook } from 'src/lib/shared/hookHandler';
 
 export const NumberInputter = <T extends string | number | boolean | object>({
     opt,
@@ -13,7 +14,7 @@ export const NumberInputter = <T extends string | number | boolean | object>({
 }: NumberInputterProps<T>): JSX.Element => {
     return (
         <box>
-            <box className="unsaved-icon-container" halign={Gtk.Align.START} hexpand>
+            <box className="unsaved-icon-container" halign={Gtk.Align.START}>
                 {bind(isUnsaved).as((unsaved) => {
                     if (unsaved) {
                         return (
@@ -29,24 +30,20 @@ export const NumberInputter = <T extends string | number | boolean | object>({
             </box>
             <SpinButton
                 setup={(self) => {
-                    self.value = opt.get() as number;
-                    isUnsaved.set(Number(self.text) !== opt.get());
-
                     self.set_range(min, max);
-
                     self.set_increments(1 * increment, 5 * increment);
 
                     self.connect('value-changed', () => {
                         opt.set(self.value as T);
                     });
 
-                    self.hook(opt, () => {
-                        self.value = opt.get() as number;
-                        isUnsaved.set(Number(self.text) !== opt.get());
+                    useHook(self, opt, () => {
+                        self.set_value(opt.get() as number);
+                        isUnsaved.set(Number(self.get_text()) !== opt.get());
                     });
 
                     self.connect('key-release-event', () => {
-                        isUnsaved.set(Number(self.text) !== opt.get());
+                        isUnsaved.set(Number(self.get_text()) !== opt.get());
                     });
                 }}
             />

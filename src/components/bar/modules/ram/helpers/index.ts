@@ -1,11 +1,9 @@
-const GLib = imports.gi.GLib;
-
 import { divide } from 'src/components/bar/utils/helpers';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
-import { Variable as VariableType } from 'types/variable';
+import { GLib, Variable } from 'astal';
 
 // FIX: Consolidate with Ram service class
-export const calculateRamUsage = (round: VariableType<boolean>): GenericResourceData => {
+export const calculateRamUsage = (round: Variable<boolean>): GenericResourceData => {
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
@@ -29,7 +27,7 @@ export const calculateRamUsage = (round: VariableType<boolean>): GenericResource
         usedRam = isNaN(usedRam) || usedRam < 0 ? 0 : usedRam;
 
         return {
-            percentage: divide([totalRamInBytes, usedRam], round.value),
+            percentage: divide([totalRamInBytes, usedRam], round.get()),
             total: totalRamInBytes,
             used: usedRam,
             free: availableRamInBytes,

@@ -1,36 +1,51 @@
 import { Opt } from 'src/lib/option';
-import { BoxWidget } from 'src/lib/types/widget';
 import icons from 'src/lib/icons/icons';
-import { Box } from 'types/@girs/gtk-3.0/gtk-3.0.cjs';
+import { bind } from 'astal';
+import { isPrimaryClick } from 'src/lib/utils';
 
-export const EnumInputter = <T extends string | number | boolean | object>(
-    self: BoxWidget,
-    opt: Opt<T>,
-    values: T[],
-): Box => {
-    const lbl = Widget.Label({ label: opt.bind().as((v) => `${v}`) });
+export const EnumInputter = <T extends string | number | boolean | object>({
+    opt,
+    values,
+}: EnumInputterProps<T>): JSX.Element => {
     const step = (dir: 1 | -1): void => {
-        const i = values.findIndex((i) => i === lbl.label);
-        opt.setValue(
+        const indexOfCurrentValue = values.findIndex((index) => index === opt.get());
+
+        opt.set(
             dir > 0
-                ? i + dir > values.length - 1
+                ? indexOfCurrentValue + dir > values.length - 1
                     ? values[0]
-                    : values[i + dir]
-                : i + dir < 0
+                    : values[indexOfCurrentValue + dir]
+                : indexOfCurrentValue + dir < 0
                   ? values[values.length - 1]
-                  : values[i + dir],
+                  : values[indexOfCurrentValue + dir],
         );
     };
-    const next = Widget.Button({
-        child: Widget.Icon(icons.ui.arrow.right),
-        on_clicked: () => step(+1),
-    });
-    const prev = Widget.Button({
-        child: Widget.Icon(icons.ui.arrow.left),
-        on_clicked: () => step(-1),
-    });
-    return (self.child = Widget.Box({
-        class_name: 'enum-setter',
-        children: [lbl, prev, next],
-    }));
+    return (
+        <box className={'enum-setter'}>
+            <label label={bind(opt).as((option) => `${option}`)} />
+            <button
+                onClick={(_, event) => {
+                    if (isPrimaryClick(event)) {
+                        step(-1);
+                    }
+                }}
+            >
+                <icon icon={icons.ui.arrow.left} />
+            </button>
+            <button
+                onClick={(_, event) => {
+                    if (isPrimaryClick(event)) {
+                        step(+1);
+                    }
+                }}
+            >
+                <icon icon={icons.ui.arrow.right} />
+            </button>
+        </box>
+    );
 };
+
+interface EnumInputterProps<T> {
+    opt: Opt<T>;
+    values: T[];
+}

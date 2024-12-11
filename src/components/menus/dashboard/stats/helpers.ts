@@ -19,9 +19,9 @@ export const initializePollers = (cpuService: Cpu, ramService: Ram, gpuService: 
     storageService.setShouldRound(true);
 
     interval.subscribe(() => {
-        ramService.updateTimer(interval.value);
-        cpuService.updateTimer(interval.value);
-        storageService.updateTimer(interval.value);
+        ramService.updateTimer(interval.get());
+        cpuService.updateTimer(interval.get());
+        storageService.updateTimer(interval.get());
     });
 
     if (enabled.get()) {

@@ -6,6 +6,7 @@ import { isPrimaryClick } from 'src/lib/utils.js';
 import icons from 'src/lib/icons/icons.js';
 import { bind } from 'astal/binding.js';
 import { Gtk } from 'astal/gtk3';
+import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
 const { transition } = options.menus;
 
@@ -30,7 +31,7 @@ const SysButton = ({ action, label }: SysButtonProps): JSX.Element => {
 export default (): JSX.Element => (
     <PopupWindow
         name={'powermenu'}
-        transition={bind(transition)}
+        transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
         child={
             <box className={'powermenu horizontal'}>
                 <SysButton action={'shutdown'} label={'SHUTDOWN'} />

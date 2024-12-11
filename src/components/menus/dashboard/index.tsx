@@ -7,6 +7,7 @@ import { Directories } from './directories/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
+import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
 const { controls, shortcuts, stats, directories } = options.menus.dashboard;
 const { transition } = options.menus;
@@ -15,7 +16,7 @@ export default (): JSX.Element => {
     return (
         <DropdownMenu
             name={'dashboardmenu'}
-            transition={bind(transition)}
+            transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
             child={
                 <box className={'dashboard-menu-content'} css={'padding: 1px; margin: -1px;'} vexpand={false}>
                     {Variable.derive(

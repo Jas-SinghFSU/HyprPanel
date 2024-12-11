@@ -37,7 +37,7 @@ export const clearNotifications = async (notifications: AstalNotifd.Notification
 };
 
 const clearAllNotifications = async (): Promise<void> => {
-    clearNotifications(notifdService.notifications, clearDelay.value);
+    clearNotifications(notifdService.notifications, clearDelay.get());
 };
 
 globalThis['removingNotifications'] = removingNotifications;

@@ -75,7 +75,7 @@ const BatteryLabel = (): BarBoxChild => {
             const icon = <label className={'bar-button-icon battery txt-icon'} label={batIcon()} />;
             const label = <label className={'bar-button-label battery'} label={`${Math.round(percentage)}%`} />;
 
-            const children: GtkWidget = [icon];
+            const children = [icon];
 
             if (showLabel && !(isCharged && hideLabelWhenFull)) {
                 children.push(label);
@@ -108,21 +108,21 @@ const BatteryLabel = (): BarBoxChild => {
         props: {
             setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
-                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.get());
 
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
                         openMenu(clicked, event, 'energymenu');
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
-                        runAsyncCommand(rightClick.value, { clicked, event });
+                        runAsyncCommand(rightClick.get(), { clicked, event });
                     });
 
                     const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
-                        runAsyncCommand(middleClick.value, { clicked, event });
+                        runAsyncCommand(middleClick.get(), { clicked, event });
                     });
 
-                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get());
                     return (): void => {
                         disconnectPrimary();
                         disconnectSecondary();

@@ -15,10 +15,10 @@ const { truncation, truncation_size, show_label, show_active_only, rightClick, m
     options.bar.media;
 
 const Media = (): BarBoxChild => {
-    const isVis = Variable(!show_active_only.value);
+    const isVis = Variable(!show_active_only.get());
 
     show_active_only.subscribe(() => {
-        isVis.set(!show_active_only.value || mprisService.get_players().length > 0);
+        isVis.set(!show_active_only.get() || mprisService.get_players().length > 0);
     });
 
     const songIcon = Variable('');
@@ -67,11 +67,11 @@ const Media = (): BarBoxChild => {
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
-                        runAsyncCommand(rightClick.value, { clicked, event });
+                        runAsyncCommand(rightClick.get(), { clicked, event });
                     });
 
                     const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
-                        runAsyncCommand(middleClick.value, { clicked, event });
+                        runAsyncCommand(middleClick.get(), { clicked, event });
                     });
 
                     return (): void => {

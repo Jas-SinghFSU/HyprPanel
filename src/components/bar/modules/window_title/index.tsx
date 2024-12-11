@@ -83,21 +83,21 @@ const ClientTitle = (): BarBoxChild => {
         props: {
             setup: (self: Astal.Button): void => {
                 useHook(self, options.bar.scrollSpeed, () => {
-                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.value);
+                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.get());
 
                     const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
-                        runAsyncCommand(leftClick.value, { clicked, event });
+                        runAsyncCommand(leftClick.get(), { clicked, event });
                     });
 
                     const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
-                        runAsyncCommand(rightClick.value, { clicked, event });
+                        runAsyncCommand(rightClick.get(), { clicked, event });
                     });
 
                     const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
-                        runAsyncCommand(middleClick.value, { clicked, event });
+                        runAsyncCommand(middleClick.get(), { clicked, event });
                     });
 
-                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.value, scrollDown.value);
+                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get());
 
                     return (): void => {
                         disconnectPrimary();

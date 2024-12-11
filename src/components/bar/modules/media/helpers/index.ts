@@ -46,7 +46,7 @@ export const generateMediaLabel = (
     songIcon: Variable<string>,
     activePlayer: Variable<AstalMpris.Player>,
 ): string => {
-    if (activePlayer.get() && show_label.value) {
+    if (activePlayer.get() && show_label.get()) {
         const { title, identity, artist, album, busName } = activePlayer.get();
         songIcon.set(getIconForPlayer(identity));
 
@@ -73,7 +73,7 @@ export const generateMediaLabel = (
             },
         );
 
-        const maxLabelSize = truncation_size.value;
+        const maxLabelSize = truncation_size.get();
 
         let mediaLabel = truncatedLabel;
 

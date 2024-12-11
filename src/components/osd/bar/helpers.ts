@@ -25,10 +25,10 @@ export const setupOsdBar = (self: LevelBar): void => {
         self.toggleClassName(
             'overflow',
             audioService.defaultMicrophone.volume > 1 &&
-                (!options.theme.osd.muted_zero.value || audioService.defaultMicrophone.mute === false),
+                (!options.theme.osd.muted_zero.get() || audioService.defaultMicrophone.mute === false),
         );
         self.value =
-            options.theme.osd.muted_zero.value && audioService.defaultMicrophone.mute !== false
+            options.theme.osd.muted_zero.get() && audioService.defaultMicrophone.mute !== false
                 ? 0
                 : audioService.defaultMicrophone.volume <= 1
                   ? audioService.defaultMicrophone.volume
@@ -47,10 +47,10 @@ export const setupOsdBar = (self: LevelBar): void => {
         self.toggleClassName(
             'overflow',
             audioService.defaultSpeaker.volume > 1 &&
-                (!options.theme.osd.muted_zero.value || audioService.defaultSpeaker.mute === false),
+                (!options.theme.osd.muted_zero.get() || audioService.defaultSpeaker.mute === false),
         );
         self.value =
-            options.theme.osd.muted_zero.value && audioService.defaultSpeaker.mute !== false
+            options.theme.osd.muted_zero.get() && audioService.defaultSpeaker.mute !== false
                 ? 0
                 : audioService.defaultSpeaker.volume <= 1
                   ? audioService.defaultSpeaker.volume

@@ -1,22 +1,24 @@
 import { bind } from 'astal/binding.js';
 import DropdownMenu from '../shared/dropdown/index.js';
 import { PowerButton } from './button.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import options from 'src/options.js';
+import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
-export default (): GtkWidget => {
-    <DropdownMenu
-        name="powerdropdownmenu"
-        transition={bind(options.menus.transition)}
-        child={
-            <box className={'menu-items power-dropdown'}>
-                <box className={'menu-items-container power-dropdown'} vertical hexpand>
-                    {PowerButton('shutdown')}
-                    {PowerButton('reboot')}
-                    {PowerButton('logout')}
-                    {PowerButton('sleep')}
+export default (): JSX.Element => {
+    return (
+        <DropdownMenu
+            name="powerdropdownmenu"
+            transition={bind(options.menus.transition).as((transition) => RevealerTransitionMap[transition])}
+            child={
+                <box className={'menu-items power-dropdown'}>
+                    <box className={'menu-items-container power-dropdown'} vertical hexpand>
+                        {PowerButton('shutdown')}
+                        {PowerButton('reboot')}
+                        {PowerButton('logout')}
+                        {PowerButton('sleep')}
+                    </box>
                 </box>
-            </box>
-        }
-    />;
+            }
+        />
+    );
 };

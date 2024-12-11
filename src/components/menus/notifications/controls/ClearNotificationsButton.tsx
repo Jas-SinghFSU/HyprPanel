@@ -16,7 +16,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
                     return;
                 }
 
-                if (removingNotifications.value) {
+                if (removingNotifications.get()) {
                     return;
                 }
 

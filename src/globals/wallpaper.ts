@@ -14,9 +14,9 @@ globalThis.setWallpaper = (filePath: string): void => {
         });
     }
 
-    image.value = filePath;
+    image.set(filePath);
 
-    if (enableWallpaper.value) {
-        Wallpaper.set(filePath);
+    if (enableWallpaper.get()) {
+        Wallpaper.setWallpaper(filePath);
     }
 };

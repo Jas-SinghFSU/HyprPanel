@@ -5,19 +5,19 @@ export const isOpt = <T>(value: unknown): value is Opt<T> =>
     typeof value === 'object' && value !== null && 'value' in value && value instanceof Opt;
 
 export const isOptString = (value: unknown): value is Opt<string> => {
-    return value instanceof Opt && typeof value.value === 'string';
+    return value instanceof Opt && typeof value.get() === 'string';
 };
 
 export const isOptNumber = (value: unknown): value is Opt<number> => {
-    return value instanceof Opt && typeof value.value === 'number';
+    return value instanceof Opt && typeof value.get() === 'number';
 };
 
 export const isOptBoolean = (value: unknown): value is Opt<boolean> => {
-    return value instanceof Opt && typeof value.value === 'boolean';
+    return value instanceof Opt && typeof value.get() === 'boolean';
 };
 
 export const isOptMatugenTheme = (value: unknown): value is Opt<MatugenTheme> => {
-    return value instanceof Opt && typeof value.value === 'object' && 'specificProperty' in value.value; // Replace 'specificProperty' with an actual property of MatugenTheme
+    return value instanceof Opt && typeof value.get() === 'object' && 'specificProperty' in value.get();
 };
 
 export const isRecursiveOptionsObject = (value: unknown): value is RecursiveOptionsObject => {
