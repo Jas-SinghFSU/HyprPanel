@@ -21,9 +21,9 @@ jobs:
 
             - name: Copy types to types/
               run: |
-                  rm -rf types
-                  mkdir -p types
-                  cp -R temp-ags-types/types/* types/
+                  rm -rf @girs
+                  mkdir -p @girs
+                  cp -R temp-ags-types/types/* @girs/
                   rm -rf temp-ags-types
 
             - name: Node Setup
