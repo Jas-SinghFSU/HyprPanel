@@ -1,0 +1,147 @@
+.menu-items.media {
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-media-background-color);
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-media-border-color);
+    opacity: $bar-menus-opacity * 0.01;
+}
+
+.menu-items-container.media {
+    * {
+        font-size: $font-size * $bar-menus-menu-media-scaling * 0.01;
+    }
+
+    min-width: 23em * $bar-menus-menu-media-scaling * 0.01;
+    min-height: 10em * $bar-menus-menu-media-scaling * 0.01;
+
+    .menu-section-container {
+        margin: 1em 0em;
+    }
+
+    .menu-items-section {
+        border-radius: $bar-menus-card_radius;
+        padding: 0em;
+    }
+
+    .menu-content {
+        border-radius: $bar-menus-buttons-radius;
+        background-size: cover;
+        background-position: center;
+        padding: 1em;
+    }
+
+    .media-indicator-current-song-name {
+        margin-bottom: 0.75rem;
+    }
+
+    .media-indicator-current-song-author {
+        margin-bottom: 0.75rem;
+    }
+
+    .media-indicator-current-song-name-label {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-song);
+        font-size: 1.35em;
+    }
+
+    .media-indicator-current-song-author-label {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-artist);
+        font-size: 1em;
+    }
+
+    .media-indicator-current-song-album-label {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-media-album);
+        font-size: 1em;
+    }
+
+    .media-indicator-current-controls {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .media-indicator-control-button {
+        margin: 0rem 0.5rem;
+    }
+
+    .media-indicator-control-button {
+        background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background);
+        color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-media-buttons-text);
+        min-height: 1.8em;
+        min-width: 2.5em;
+        border-radius: $bar-menus-buttons-radius * 0.75;
+
+        &.disabled {
+            background: if($bar-menus-monochrome, $bar-menus-buttons-disabled, $bar-menus-menu-media-buttons-inactive);
+        }
+
+        &.enabled {
+            background: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background);
+
+            &:hover {
+                background: transparentize(
+                    if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-background),
+                    0.5
+                );
+            }
+
+            &.active {
+                background: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-buttons-default,
+                    $bar-menus-menu-media-buttons-enabled
+                );
+
+                &:hover {
+                    background: transparentize(
+                        if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-media-buttons-enabled),
+                        0.5
+                    );
+                }
+            }
+        }
+    }
+
+    image {
+        font-size: 1.1em;
+    }
+
+    .menu-slider.media.progress {
+        margin-top: 1em;
+        margin-bottom: 1em;
+
+        trough {
+            background: if(
+                $bar-menus-monochrome,
+                $bar-menus-slider-background,
+                $bar-menus-menu-media-slider-background
+            );
+            border-radius: $bar-menus-slider-progress-radius;
+
+            highlight,
+            progress {
+                border-radius: $bar-menus-slider-progress-radius;
+                min-height: 0.85em;
+                background: if($bar-menus-monochrome, $bar-menus-slider-primary, $bar-menus-menu-media-slider-primary);
+            }
+        }
+
+        slider {
+            background: if($bar-menus-monochrome, $bar-menus-slider-puck, $bar-menus-menu-media-slider-puck);
+        }
+
+        &:hover {
+            trough {
+                background: transparentize(
+                    if(
+                        $bar-menus-monochrome,
+                        $bar-menus-slider-backgroundhover,
+                        $bar-menus-menu-media-slider-backgroundhover
+                    ),
+                    0.3
+                );
+            }
+        }
+    }
+
+    .time-label {
+        color: $bar-menus-menu-media-timestamp;
+        margin-bottom: 0.25em;
+    }
+}
