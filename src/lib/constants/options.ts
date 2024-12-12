@@ -1,4 +1,5 @@
 import { Gtk } from 'astal/gtk3';
+import { DropdownMenuList } from '../types/options';
 
 export const StackTransitionMap = {
     none: Gtk.StackTransitionType.NONE,
@@ -16,4 +17,21 @@ export const RevealerTransitionMap = {
     slide_left: Gtk.RevealerTransitionType.SLIDE_LEFT,
     slide_up: Gtk.RevealerTransitionType.SLIDE_UP,
     slide_down: Gtk.RevealerTransitionType.SLIDE_DOWN,
+};
+
+export const dropdownMenuList = [
+    'dashboardmenu',
+    'audiomenu',
+    'mediamenu',
+    'networkmenu',
+    'bluetoothmenu',
+    'notificationsmenu',
+    'calendarmenu',
+    'energymenu',
+    'powerdropdownmenu',
+    'settings-dialog',
+] as const;
+
+export const isDropdownMenu = (name: string): name is DropdownMenuList => {
+    return dropdownMenuList.includes(name as DropdownMenuList);
 };

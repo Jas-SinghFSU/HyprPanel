@@ -4,9 +4,10 @@ import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnectio
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
 import { BoxWidget } from 'src/lib/types/widget';
 import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
-import { bind, Variable } from 'astal';
+import { bind, execAsync, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
+import { isPrimaryClick } from 'src/lib/utils';
 
 const {
     workspaces,
@@ -111,7 +112,11 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
                 return (
                     <button
                         className={'workspace-button'}
-                        onClick={() => hyprlandService.message_async(`dispatch workspace ${wsId}`)}
+                        onClick={(_, event) => {
+                            if (isPrimaryClick(event)) {
+                                execAsync(`hyprctl dispatch workspace ${wsId}`);
+                            }
+                        }}
                     >
                         <label
                             valign={Gtk.Align.CENTER}

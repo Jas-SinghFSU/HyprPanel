@@ -44,46 +44,48 @@ export const generateMediaLabel = (
     show_label: Opt<boolean>,
     format: Opt<string>,
     songIcon: Variable<string>,
-    activePlayer: Variable<AstalMpris.Player>,
+    activePlayer: Variable<AstalMpris.Player | undefined>,
 ): string => {
-    if (activePlayer.get() && show_label.get()) {
-        const { title, identity, artist, album, busName } = activePlayer.get();
-        songIcon.set(getIconForPlayer(identity));
+    const currentPlayer = activePlayer.get();
 
-        const mediaTags: MediaTags = {
-            title: title,
-            artists: artist,
-            artist: artist,
-            album: album,
-            name: busName,
-            identity: identity,
-        };
-
-        const mediaFormat = format.getValue();
-
-        const truncatedLabel = mediaFormat.replace(
-            /{(title|artists|artist|album|name|identity)(:[^}]*)?}/g,
-            (_, p1: string | undefined, p2: string | undefined) => {
-                if (!isValidMediaTag(p1)) {
-                    return '';
-                }
-                const value = p1 !== undefined ? mediaTags[p1] : '';
-                const suffix = p2?.length ? p2.slice(1) : '';
-                return value ? value + suffix : '';
-            },
-        );
-
-        const maxLabelSize = truncation_size.get();
-
-        let mediaLabel = truncatedLabel;
-
-        if (maxLabelSize > 0 && truncatedLabel.length > maxLabelSize) {
-            mediaLabel = `${truncatedLabel.substring(0, maxLabelSize)}...`;
-        }
-
-        return mediaLabel.length ? mediaLabel : 'Media';
-    } else {
+    if (!currentPlayer || !show_label.get()) {
         songIcon.set(getIconForPlayer(activePlayer.get()?.identity || ''));
         return `Media`;
     }
+
+    const { title, identity, artist, album, busName } = currentPlayer;
+    songIcon.set(getIconForPlayer(identity));
+
+    const mediaTags: MediaTags = {
+        title: title,
+        artists: artist,
+        artist: artist,
+        album: album,
+        name: busName,
+        identity: identity,
+    };
+
+    const mediaFormat = format.getValue();
+
+    const truncatedLabel = mediaFormat.replace(
+        /{(title|artists|artist|album|name|identity)(:[^}]*)?}/g,
+        (_, p1: string | undefined, p2: string | undefined) => {
+            if (!isValidMediaTag(p1)) {
+                return '';
+            }
+            const value = p1 !== undefined ? mediaTags[p1] : '';
+            const suffix = p2?.length ? p2.slice(1) : '';
+            return value ? value + suffix : '';
+        },
+    );
+
+    const maxLabelSize = truncation_size.get();
+
+    let mediaLabel = truncatedLabel;
+
+    if (maxLabelSize > 0 && truncatedLabel.length > maxLabelSize) {
+        mediaLabel = `${truncatedLabel.substring(0, maxLabelSize)}...`;
+    }
+
+    return mediaLabel.length ? mediaLabel : 'Media';
 };

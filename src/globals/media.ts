@@ -6,10 +6,10 @@ import options from 'src/options';
 
 const { noMediaText } = options.menus.media;
 
-export const activePlayer = Variable(mprisService.players[0]);
+export const activePlayer = Variable<AstalMpris.Player | undefined>(mprisService.players[0]);
 
 mprisService.connect('player-closed', (_, closedPlayer) => {
-    if (closedPlayer.busName === activePlayer.get().busName) {
+    if (closedPlayer.busName === activePlayer.get()?.busName) {
         activePlayer.set(mprisService.players[0]);
     }
 });
@@ -295,6 +295,10 @@ const updateArtUrl = (player: AstalMpris.Player): void => {
 };
 
 Variable.derive([bind(activePlayer)], (player) => {
+    if (player === undefined) {
+        return;
+    }
+
     updatePosition(player);
 
     updateLoop(player);

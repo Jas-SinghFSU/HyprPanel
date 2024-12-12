@@ -7,6 +7,10 @@ const { displayTimeTooltip } = options.menus.media;
 
 export const MediaSlider = (): JSX.Element => {
     const sliderValue = Variable.derive([bind(activePlayer), bind(currentPosition)], (player, position) => {
+        if (player === undefined) {
+            return 0;
+        }
+
         if (player.length > 0) {
             return position / player.length;
         }
@@ -15,7 +19,10 @@ export const MediaSlider = (): JSX.Element => {
 
     const dragHandler = ({ value }: Widget.Slider): void => {
         const currentPlayer = activePlayer.get();
-        currentPlayer.set_position(value * currentPlayer.length);
+
+        if (currentPlayer !== undefined) {
+            currentPlayer.set_position(value * currentPlayer.length);
+        }
     };
 
     return (

@@ -112,13 +112,14 @@ export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string
         ['(.+)', '󰣆', `${capitalizeFirstLetter(windowtitle?.class ?? 'Unknown')}`],
     ];
 
-    if (windowtitle === null) {
+    if (!windowtitle?.class) {
         return {
             icon: '󰇄',
             label: 'Desktop',
         };
     }
-    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle.class.toLowerCase()));
+
+    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle?.class.toLowerCase()));
 
     if (!foundMatch || foundMatch.length !== 3) {
         return {

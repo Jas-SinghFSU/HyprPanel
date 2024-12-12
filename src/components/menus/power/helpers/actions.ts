@@ -30,8 +30,6 @@ class PowerMenu extends GObject.Object {
         this.notify('cmd');
         this.notify('title');
 
-        this.emit('changed');
-
         App.get_window('powermenu')?.set_visible(false);
         App.get_window('verification')?.set_visible(true);
     }
@@ -41,8 +39,6 @@ class PowerMenu extends GObject.Object {
 
         this.notify('cmd');
         this.notify('title');
-
-        this.emit('changed');
 
         App.get_window('powermenu')?.set_visible(false);
         App.get_window('verification')?.set_visible(true);

@@ -2,6 +2,7 @@ import { Opt } from 'src/lib/option';
 import { Variable } from 'types/variable';
 import { defaultColorMap } from './defaults/options';
 import { Astal } from 'astal/gtk3';
+import { dropdownMenuList } from '../constants/options';
 
 export type MkOptionsResult = {
     configFile: string;
@@ -263,3 +264,5 @@ export type BluetoothBatteryState = 'paired' | 'connected' | 'always';
 export type BorderLocation = 'none' | 'top' | 'right' | 'bottom' | 'left' | 'horizontal' | 'vertical' | 'full';
 
 export type PositionAnchor = { [key: string]: Astal.WindowAnchor };
+
+export type DropdownMenuList = (typeof dropdownMenuList)[number];

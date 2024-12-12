@@ -44,9 +44,14 @@ export const isShuffleActive = (status: AstalMpris.Shuffle): string => {
 };
 
 export const getNextPlayer = (): void => {
-    const currentPlayerIndex = mprisService.players.findIndex(
-        (player) => player.busName === activePlayer.get().busName,
-    );
+    const currentPlayer = activePlayer.get();
+
+    if (currentPlayer === undefined) {
+        return;
+    }
+
+    const currentPlayerIndex = mprisService.players.findIndex((player) => player.busName === currentPlayer.busName);
+
     const totalPlayers = mprisService.players.length;
 
     if (totalPlayers === 1) {
@@ -57,12 +62,19 @@ export const getNextPlayer = (): void => {
 };
 
 export const getPreviousPlayer = (): void => {
-    const currentPlayerIndex = mprisService.players.findIndex(
-        (player) => player.busName === activePlayer.get().busName,
-    );
+    const currentPlayer = activePlayer.get();
+
+    if (currentPlayer === undefined) {
+        return;
+    }
+
+    const currentPlayerIndex = mprisService.players.findIndex((player) => player.busName === currentPlayer.busName);
+
     const totalPlayers = mprisService.players.length;
+
     if (totalPlayers === 1) {
         return activePlayer.set(mprisService.players[0]);
     }
+
     return activePlayer.set(mprisService.players[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers]);
 };
