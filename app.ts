@@ -49,12 +49,14 @@ const initializeMenus = (): void => {
 App.start({
     main() {
         initializeStartupScripts();
-        initializeSystemBehaviors();
+
         Notifications();
         SettingsDialog();
         OSD();
         forMonitors(Bar).forEach((bar: GtkWidget) => bar);
         initializeMenus();
+
+        initializeSystemBehaviors();
     },
 });
 

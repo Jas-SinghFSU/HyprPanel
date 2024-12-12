@@ -7,35 +7,51 @@ import options from 'src/options';
 
 const { autoHide } = options.bar;
 
-let currentFocusedClient: Variable<void>;
+export const initializeAutoHide = (): void => {
+    let currentFocusedClient: Variable<void>;
 
-const focusedClient = (focusedClient: AstalHyprland.Client): void => {
-    if (currentFocusedClient) {
-        currentFocusedClient();
-        currentFocusedClient.drop();
-    }
+    const focusedClient = (focusedClient: AstalHyprland.Client): void => {
+        if (currentFocusedClient) {
+            currentFocusedClient();
+            currentFocusedClient.drop();
+        }
 
-    const fullscreenBinding = bind(focusedClient, 'fullscreen');
+        const fullscreenBinding = bind(focusedClient, 'fullscreen');
 
-    if (!focusedClient) {
-        return;
-    }
+        if (!focusedClient) {
+            return;
+        }
 
-    currentFocusedClient = Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
-        if (autoHide.get() === 'fullscreen') {
-            App.get_window(`bar-${focusedClient.monitor.id}`)?.set_visible(!isFullScreen);
+        currentFocusedClient = Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
+            if (autoHide.get() === 'fullscreen') {
+                App.get_window(`bar-${focusedClient.monitor.id}`)?.set_visible(!isFullScreen);
+            }
+        });
+    };
+
+    Variable.derive([bind(autoHide), bind(forceUpdater), bind(hyprlandService, 'workspaces')], (shouldAutohide) => {
+        if (shouldAutohide === 'never') {
+            hyprlandService.monitors.forEach((monitor) => {
+                App.get_window(`bar-${monitor.id}`)?.set_visible(true);
+            });
+        }
+
+        hyprlandService.workspaces.map((workspace) => {
+            if (autoHide.get() === 'single-window') {
+                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.clients.length !== 1);
+            }
+        });
+    });
+
+    Variable.derive([bind(hyprlandService, 'focusedClient')], (currentClient) => {
+        focusedClient(currentClient);
+    });
+
+    Variable.derive([bind(autoHide)], (shouldAutohide) => {
+        if (shouldAutohide === 'fullscreen') {
+            hyprlandService.workspaces.forEach((workspace) => {
+                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(!workspace.hasFullscreen);
+            });
         }
     });
 };
-
-Variable.derive([bind(hyprlandService, 'focusedClient')], (currentClient) => {
-    focusedClient(currentClient);
-});
-
-Variable.derive([bind(forceUpdater), bind(hyprlandService, 'workspaces')], () => {
-    hyprlandService.workspaces.map((workspace) => {
-        if (autoHide.get() === 'single-window') {
-            App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.clients.length !== 1);
-        }
-    });
-});
