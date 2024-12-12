@@ -19,6 +19,7 @@ import { GtkWidget } from 'src/lib/types/widget.js';
 import { exec, execAsync } from 'astal';
 import { hyprlandService } from 'src/lib/constants/services';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
+import { isDropdownMenu } from 'src/lib/constants/options.js';
 
 const initializeStartupScripts = (): void => {
     execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
@@ -35,6 +36,10 @@ const initializeMenus = (): void => {
 
     DropdownMenus.forEach((window) => {
         const windowName = window.name.replace('_default', '').concat('menu').toLowerCase();
+
+        if (!isDropdownMenu(windowName)) {
+            return;
+        }
 
         handleRealization(windowName);
     });
