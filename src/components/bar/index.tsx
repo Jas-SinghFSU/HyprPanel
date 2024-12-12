@@ -28,7 +28,7 @@ import {
 
 import { BarItemBox as WidgetContainer } from 'src/components/bar/shared/barItemBox';
 import options from 'src/options';
-import { Gtk } from 'astal/gtk3/index';
+import { App, Gtk } from 'astal/gtk3/index';
 
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Variable } from 'astal';
@@ -135,6 +135,7 @@ export const Bar = (() => {
             <window
                 name={`bar-${hyprlandMonitor}`}
                 className={'bar'}
+                application={App}
                 monitor={monitor}
                 visible={computeVisibility}
                 anchor={computeAnchor}

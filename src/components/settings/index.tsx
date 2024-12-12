@@ -10,7 +10,7 @@ export default (): JSX.Element => {
             className={'settings-dialog'}
             visible={false}
             name={'settings-dialog'}
-            title={'Settings'}
+            title={'hyprpanel-settings'}
             application={App}
             setup={(self) => {
                 self.connect('delete-event', () => {

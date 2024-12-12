@@ -24,6 +24,7 @@ export type RecursiveOptionsObject = {
 };
 
 export type BarLocation = 'top' | 'bottom';
+export type AutoHide = 'never' | 'fullscreen' | 'single-window';
 export type BarModule =
     | 'battery'
     | 'dashboard'

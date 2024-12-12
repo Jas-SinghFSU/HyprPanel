@@ -11,10 +11,7 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
-import AstalBattery from 'gi://AstalBattery?version=0.1';
 import { GtkWidget } from './types/widget';
-
-const battery = AstalBattery.get_default();
 
 export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
     if (!name) return null;
@@ -219,25 +216,6 @@ export function capitalizeFirstLetter(str: string): string {
 export function getDistroIcon(): string {
     const icon = distroIcons.find(([id]) => id === distro.id);
     return icon ? icon[1] : ''; // default icon if not found
-}
-
-export function warnOnLowBattery(): void {
-    battery.connect('notify::percent', () => {
-        const { lowBatteryThreshold, lowBatteryNotification, lowBatteryNotificationText, lowBatteryNotificationTitle } =
-            options.menus.power;
-        if (!lowBatteryNotification.get() || battery.charging) return;
-        const lowThreshold = lowBatteryThreshold.get();
-
-        if (battery.percentage === lowThreshold || battery.percentage === lowThreshold / 2) {
-            Notify({
-                summary: lowBatteryNotificationTitle.get().replace('/$POWER_LEVEL/g', battery.percentage.toString()),
-                body: lowBatteryNotificationText.get().replace('/$POWER_LEVEL/g', battery.percentage.toString()),
-                iconName: icons.ui.warning,
-                urgency: 'critical',
-                timeout: 7000,
-            });
-        }
-    });
 }
 
 export const isPrimaryClick = (event: Astal.ClickEvent): boolean => event.button === Gdk.BUTTON_PRIMARY;

@@ -61,7 +61,7 @@ export const ThemesMenu = (): JSX.Element => {
                 transitionType={bind(transition).as((transitionType) => StackTransitionMap[transitionType])}
                 transitionDuration={bind(transitionTime)}
                 shown={bind(CurrentPage)}
-                vexpand
+                vexpand={false}
             >
                 <MenuTheme />
                 <Matugen />

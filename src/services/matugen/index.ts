@@ -68,3 +68,21 @@ export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenCo
 
     return incomingHex;
 };
+
+export const getMatugenHex = (incomingHex: HexColor, matugenColors: MatugenColors): HexColor => {
+    const matugenVariation = getMatugenVariations(matugenColors, options.theme.matugen_settings.variation.get());
+
+    for (const curColor of Object.keys(defaultColorMap)) {
+        if (!isColorValid(curColor)) {
+            continue;
+        }
+
+        const curColorValue: ColorMapValue = defaultColorMap[curColor];
+
+        if (curColorValue === incomingHex) {
+            return matugenVariation[curColor];
+        }
+    }
+
+    return incomingHex;
+};

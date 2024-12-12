@@ -3,6 +3,7 @@ import { NetstatLabelType, RateUnit, ResourceLabelType } from './lib/types/bar';
 import { KbLabelType } from './lib/types/customModules/kbLayout';
 import {
     ActiveWsIndicator,
+    AutoHide,
     BarButtonStyles,
     BarLayouts,
     BarLocation,
@@ -872,6 +873,7 @@ const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.js
 
     bar: {
         scrollSpeed: opt(5),
+        autoHide: opt<AutoHide>('never'),
         layouts: opt<BarLayouts>({
             '1': {
                 left: ['dashboard', 'workspaces', 'windowtitle'],

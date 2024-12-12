@@ -4,7 +4,6 @@ import options from '../options';
 import Wallpaper from '../services/Wallpaper';
 
 const { matugen } = options.theme;
-const { mode, scheme_type, contrast } = options.theme.matugen_settings;
 
 const ensureMatugenWallpaper = (): void => {
     const wallpaperPath = options.wallpaper.image.get();
@@ -23,23 +22,11 @@ const ensureMatugenWallpaper = (): void => {
 export const initializeTrackers = (resetCssFunc: () => void): void => {
     matugen.subscribe(() => {
         ensureMatugenWallpaper();
-        options.resetTheme();
-    });
-
-    mode.subscribe(() => {
-        options.resetTheme();
-    });
-    scheme_type.subscribe(() => {
-        options.resetTheme();
-    });
-    contrast.subscribe(() => {
-        options.resetTheme();
     });
 
     Wallpaper.connect('changed', () => {
         console.info('Wallpaper changed, regenerating Matugen colors...');
         if (options.theme.matugen.get()) {
-            options.resetTheme();
             resetCssFunc();
         }
     });
@@ -47,7 +34,6 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
     options.wallpaper.image.subscribe(() => {
         if ((!Wallpaper.isRunning() && options.theme.matugen.get()) || !options.wallpaper.enable.get()) {
             console.info('Wallpaper path changed, regenerating Matugen colors...');
-            options.resetTheme();
             resetCssFunc();
         }
         if (options.wallpaper.pywal.get() && dependencies('wal')) {

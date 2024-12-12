@@ -4,10 +4,13 @@ import { ensureDirectory } from './session';
 import Variable from 'astal/variable';
 import Binding from 'astal/binding';
 import { monitorFile, readFile, writeFile } from 'astal/file';
+import GLib from 'gi://GLib?version=2.0';
 
 type OptProps = {
     persistent?: boolean;
 };
+
+export const defaultFile = `${GLib.get_user_cache_dir()}/ags/hyprpanel/default.json`;
 
 export class Opt<T = unknown> extends Variable<T> {
     constructor(initial: T, { persistent = false }: OptProps = {}) {
@@ -19,6 +22,7 @@ export class Opt<T = unknown> extends Variable<T> {
     initial: T;
     private _id = '';
     persistent: boolean;
+
     toJSON(): string {
         return `opt:${this.get()}`;
     }
@@ -57,6 +61,11 @@ export class Opt<T = unknown> extends Variable<T> {
             cache[this._id] = newVal;
             writeFile(cacheFile, JSON.stringify(cache, null, 2));
         });
+    }
+
+    createDefault(): void {
+        const cacheV = JSON.parse(readFile(defaultFile) || '{}')[this._id];
+        if (cacheV !== undefined) this.set(cacheV);
     }
 
     reset(): string | undefined {
@@ -108,9 +117,12 @@ export function mkOptions<T extends object>(
     object: T,
     confFile: string = 'config.json',
 ): T & MkOptionsResult {
-    for (const opt of getOptions(object as Record<string, unknown>)) opt.init(cacheFile);
+    for (const opt of getOptions(object as Record<string, unknown>)) {
+        opt.init(cacheFile);
+    }
 
     ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
+    ensureDirectory(defaultFile.split('/').slice(0, -1).join('/'));
 
     const configFile = `${TMP}/${confFile}`;
 
@@ -119,6 +131,15 @@ export function mkOptions<T extends object>(
         {},
     );
 
+    const defaultValues = getOptions(object as Record<string, unknown>).reduce((obj, { id, initial, value }) => {
+        if (!isHexColor(value)) {
+            return { [id]: value, ...obj };
+        }
+
+        return { [id]: initial, ...obj };
+    }, {});
+
+    writeFile(defaultFile, JSON.stringify(defaultValues, null, 2));
     writeFile(configFile, JSON.stringify(values, null, 2));
 
     monitorFile(configFile, () => {

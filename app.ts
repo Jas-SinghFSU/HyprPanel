@@ -11,7 +11,7 @@ import { Bar } from './src/components/bar';
 import { DropdownMenus, StandardWindows } from './src/components/menus/exports';
 import Notifications from './src/components/notifications';
 import SettingsDialog from './src/components/settings/index';
-import { bash, forMonitors, warnOnLowBattery } from 'src/lib/utils';
+import { bash, forMonitors } from 'src/lib/utils';
 import options from 'src/options';
 import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
@@ -20,6 +20,7 @@ import { exec, execAsync } from 'astal';
 import { hyprlandService } from 'src/lib/constants/services';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
 import { isDropdownMenu } from 'src/lib/constants/options.js';
+import { initializeSystemBehaviors } from 'src/lib/behaviors';
 
 const initializeStartupScripts = (): void => {
     execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
@@ -48,7 +49,7 @@ const initializeMenus = (): void => {
 App.start({
     main() {
         initializeStartupScripts();
-        warnOnLowBattery();
+        initializeSystemBehaviors();
         Notifications();
         SettingsDialog();
         OSD();

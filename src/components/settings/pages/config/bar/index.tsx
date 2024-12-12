@@ -24,6 +24,13 @@ export const BarSettings = (): JSX.Element => {
                 />
                 <Option opt={options.theme.bar.floating} title="Floating Bar" type="boolean" />
                 <Option opt={options.theme.bar.location} title="Location" type="enum" enums={['top', 'bottom']} />
+
+                <Option
+                    opt={options.bar.autoHide}
+                    title="Auto Hide"
+                    type="enum"
+                    enums={['never', 'fullscreen', 'single-window']}
+                />
                 <Option
                     opt={options.theme.bar.buttons.enableBorders}
                     title="Enable Button Borders"

@@ -1,4 +1,3 @@
-import { closeAllMenus } from 'src/components/bar/utils/menu';
 import { calculateMenuPosition } from './locationHandler';
 import { App, Gtk } from 'astal/gtk3';
 import { DropdownMenuList } from 'src/lib/types/options';
@@ -14,8 +13,6 @@ export const handleRealization = async (name: DropdownMenuList): Promise<void> =
         const coords = [100000, 100000];
 
         await calculateMenuPosition(coords, name);
-
-        closeAllMenus();
 
         appWindow?.set_visible(true);
 
