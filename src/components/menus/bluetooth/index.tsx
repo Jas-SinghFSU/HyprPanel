@@ -1,6 +1,6 @@
 import DropdownMenu from '../shared/dropdown/index.js';
-import { BluetoothDevices } from './Devices/index.js';
-import { Header } from './Header/index.js';
+import { BluetoothDevices } from './devices/index.js';
+import { Header } from './header/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal/binding.js';
 import { Gtk } from 'astal/gtk3';
