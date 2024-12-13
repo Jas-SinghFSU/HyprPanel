@@ -8,8 +8,10 @@ export const DndSwitch = (): JSX.Element => {
             className={'menu-switch notifications'}
             valign={Gtk.Align.CENTER}
             active={bind(notifdService, 'dontDisturb').as((dontDisturb) => !dontDisturb)}
-            onActivate={({ active }) => {
-                notifdService.set_dont_disturb(!active);
+            setup={(self) => {
+                self.connect('notify::active', () => {
+                    notifdService.set_dont_disturb(!self.active);
+                });
             }}
         />
     );

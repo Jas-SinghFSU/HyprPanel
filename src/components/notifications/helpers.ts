@@ -36,6 +36,12 @@ export const trackPopupNotifications = (popupNotifications: Variable<AstalNotifd
             dropNotificationPopup(notification, popupNotifications);
         });
     });
+
+    notifdService.connect('resolved', (_, id) => {
+        const filteredPopups = popupNotifications.get().filter((popupNotif) => popupNotif.id !== id);
+
+        popupNotifications.set(filteredPopups);
+    });
 };
 
 const dropNotificationPopup = (

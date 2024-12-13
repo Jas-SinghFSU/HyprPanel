@@ -2,7 +2,6 @@ import { bind } from 'astal/binding';
 import { Variable } from 'astal';
 import { networkService } from 'src/lib/constants/services';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { PasswordInput } from './PasswordInput';
 import { AccessPoint } from './AccessPoint';
 
 export const APStaging = ({ staging, connecting }: APStagingProps): JSX.Element => {
@@ -16,7 +15,6 @@ export const APStaging = ({ staging, connecting }: APStagingProps): JSX.Element 
                 return (
                     <box className="network-element-item staging" vertical>
                         <AccessPoint connecting={connecting} staging={staging} />
-                        <PasswordInput connecting={connecting} staging={staging} />
                     </box>
                 );
             })()}
