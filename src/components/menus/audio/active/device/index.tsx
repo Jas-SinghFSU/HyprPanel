@@ -5,10 +5,12 @@ import { SliderPercentage } from './SliderPercentage';
 
 export const ActiveDevice = ({ type, device }: ActiveDeviceProps): JSX.Element => {
     return (
-        <box className={`menu-slider-container ${type}`}>
-            <SliderIcon type={type} device={device} />
-            <Slider type={type} device={device} />
-            <SliderPercentage type={type} device={device} />
+        <box className={`menu-active-container ${type}`} vertical>
+            <box className={`menu-slider-container ${type}`}>
+                <SliderIcon type={type} device={device} />
+                <Slider type={type} device={device} />
+                <SliderPercentage type={type} device={device} />
+            </box>
         </box>
     );
 };

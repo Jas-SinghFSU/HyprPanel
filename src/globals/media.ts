@@ -8,9 +8,18 @@ const { noMediaText } = options.menus.media;
 
 export const activePlayer = Variable<AstalMpris.Player | undefined>(mprisService.players[0]);
 
+const forceUpdate = Variable(false);
+
 mprisService.connect('player-closed', (_, closedPlayer) => {
+    // forceUpdate.set(!forceUpdate.get());
+
+    if (mprisService.get_players().length === 1 && closedPlayer.busName === mprisService.get_players()[0]?.busName) {
+        return activePlayer.set(undefined);
+    }
+
     if (closedPlayer.busName === activePlayer.get()?.busName) {
-        activePlayer.set(mprisService.players[0]);
+        const nextPlayer = mprisService.players.find((player) => player.busName !== closedPlayer.busName);
+        activePlayer.set(nextPlayer);
     }
 });
 
@@ -47,22 +56,22 @@ let albumUnsub: Variable<void>;
 let artistUnsub: Variable<void>;
 let artUrlUnsub: Variable<void>;
 
-const updatePosition = (player: AstalMpris.Player): void => {
+const updatePosition = (player: AstalMpris.Player | undefined): void => {
     if (positionUnsub) {
         positionUnsub();
         positionUnsub.drop();
     }
 
-    const loopBinding = bind(player, 'position');
-
-    if (!player) {
+    if (player === undefined) {
         timeStamp.set('00:00');
         currentPosition.set(0);
         return;
     }
 
+    const loopBinding = bind(player, 'position');
+
     positionUnsub = Variable.derive([bind(loopBinding), bind(player, 'playbackStatus')], (pos) => {
-        if (player.length > 0) {
+        if (player?.length > 0) {
             timeStamp.set(getTimeStamp(pos, player.length));
             currentPosition.set(pos);
         } else {
@@ -77,21 +86,21 @@ const updatePosition = (player: AstalMpris.Player): void => {
     currentPosition.set(initialPos);
 };
 
-const updateLoop = (player: AstalMpris.Player): void => {
+const updateLoop = (player: AstalMpris.Player | undefined): void => {
     if (loopUnsub) {
         loopUnsub();
         loopUnsub.drop();
     }
 
-    const loopBinding = bind(player, 'loopStatus');
-
-    if (!player) {
+    if (player === undefined) {
         loopStatus.set(AstalMpris.Loop.NONE);
         return;
     }
 
+    const loopBinding = bind(player, 'loopStatus');
+
     loopUnsub = Variable.derive([bind(loopBinding), bind(player, 'playbackStatus')], (status) => {
-        if (player.length > 0) {
+        if (player?.length > 0) {
             loopStatus.set(status);
         } else {
             currentPosition.set(AstalMpris.Loop.NONE);
@@ -103,34 +112,34 @@ const updateLoop = (player: AstalMpris.Player): void => {
     loopStatus.set(initialStatus);
 };
 
-const updateShuffle = (player: AstalMpris.Player): void => {
+const updateShuffle = (player: AstalMpris.Player | undefined): void => {
     if (shuffleUnsub) {
         shuffleUnsub();
         shuffleUnsub.drop();
     }
 
-    const shuffleBinding = bind(player, 'shuffleStatus');
-
-    if (!player) {
+    if (player === undefined) {
         shuffleStatus.set(AstalMpris.Shuffle.OFF);
         return;
     }
 
+    const shuffleBinding = bind(player, 'shuffleStatus');
+
     shuffleUnsub = Variable.derive([bind(shuffleBinding), bind(player, 'playbackStatus')], (status) => {
-        shuffleStatus.set(status);
+        shuffleStatus.set(status ?? AstalMpris.Shuffle.OFF);
     });
 
     const initialStatus = shuffleBinding.get();
     shuffleStatus.set(initialStatus);
 };
 
-const updateCanPlay = (player: AstalMpris.Player): void => {
+const updateCanPlay = (player: AstalMpris.Player | undefined): void => {
     if (canPlayUnsub) {
         canPlayUnsub();
         canPlayUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         canPlay.set(false);
         return;
     }
@@ -138,20 +147,20 @@ const updateCanPlay = (player: AstalMpris.Player): void => {
     const canPlayBinding = bind(player, 'canPlay');
 
     canPlayUnsub = Variable.derive([canPlayBinding, bind(player, 'playbackStatus')], (playable) => {
-        canPlay.set(playable);
+        canPlay.set(playable ?? false);
     });
 
     const initialCanPlay = canPlay.get();
     canPlay.set(initialCanPlay);
 };
 
-const updatePlaybackStatus = (player: AstalMpris.Player): void => {
+const updatePlaybackStatus = (player: AstalMpris.Player | undefined): void => {
     if (playbackStatusUnsub) {
         playbackStatusUnsub();
         playbackStatusUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         playbackStatus.set(AstalMpris.PlaybackStatus.STOPPED);
         return;
     }
@@ -159,7 +168,7 @@ const updatePlaybackStatus = (player: AstalMpris.Player): void => {
     const playbackStatusBinding = bind(player, 'playbackStatus');
 
     playbackStatusUnsub = Variable.derive([playbackStatusBinding], (status) => {
-        playbackStatus.set(status);
+        playbackStatus.set(status ?? AstalMpris.PlaybackStatus.STOPPED);
     });
 
     const initialStatus = playbackStatus.get();
@@ -167,13 +176,13 @@ const updatePlaybackStatus = (player: AstalMpris.Player): void => {
     playbackStatus.set(initialStatus);
 };
 
-const updateCanGoNext = (player: AstalMpris.Player): void => {
+const updateCanGoNext = (player: AstalMpris.Player | undefined): void => {
     if (canGoNextUnsub) {
         canGoNextUnsub();
         canGoNextUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         canGoNext.set(false);
         return;
     }
@@ -181,20 +190,20 @@ const updateCanGoNext = (player: AstalMpris.Player): void => {
     const canGoNextBinding = bind(player, 'canGoNext');
 
     canGoNextUnsub = Variable.derive([canGoNextBinding, bind(player, 'playbackStatus')], (canNext) => {
-        canGoNext.set(canNext);
+        canGoNext.set(canNext ?? false);
     });
 
     const initialCanNext = canGoNext.get();
     canGoNext.set(initialCanNext);
 };
 
-const updateCanGoPrevious = (player: AstalMpris.Player): void => {
+const updateCanGoPrevious = (player: AstalMpris.Player | undefined): void => {
     if (canGoPreviousUnsub) {
         canGoPreviousUnsub();
         canGoPreviousUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         canGoPrevious.set(false);
         return;
     }
@@ -202,20 +211,20 @@ const updateCanGoPrevious = (player: AstalMpris.Player): void => {
     const canGoPreviousBinding = bind(player, 'canGoPrevious');
 
     canGoPreviousUnsub = Variable.derive([canGoPreviousBinding, bind(player, 'playbackStatus')], (canPrev) => {
-        canGoPrevious.set(canPrev);
+        canGoPrevious.set(canPrev ?? false);
     });
 
     const initialCanPrev = canGoPrevious.get();
     canGoPrevious.set(initialCanPrev);
 };
 
-const updateTitle = (player: AstalMpris.Player): void => {
+const updateTitle = (player: AstalMpris.Player | undefined): void => {
     if (titleUnsub) {
         titleUnsub();
         titleUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         mediaTitle.set(noMediaText.get());
         return;
     }
@@ -224,7 +233,7 @@ const updateTitle = (player: AstalMpris.Player): void => {
 
     titleUnsub = Variable.derive([titleBinding, bind(player, 'playbackStatus')], (newTitle, pbStatus) => {
         if (pbStatus === AstalMpris.PlaybackStatus.STOPPED) {
-            return mediaTitle.set(noMediaText.get());
+            return mediaTitle.set(noMediaText.get() ?? '-----');
         }
 
         mediaTitle.set(newTitle.length > 0 ? newTitle : '-----');
@@ -234,32 +243,32 @@ const updateTitle = (player: AstalMpris.Player): void => {
     mediaTitle.set(initialTitle.length > 0 ? initialTitle : '-----');
 };
 
-const updateAlbum = (player: AstalMpris.Player): void => {
+const updateAlbum = (player: AstalMpris.Player | undefined): void => {
     if (albumUnsub) {
         albumUnsub();
         albumUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         mediaAlbum.set('-----');
         return;
     }
 
     albumUnsub = Variable.derive([bind(player, 'album'), bind(player, 'playbackStatus')], (newAlbum) => {
-        mediaAlbum.set(newAlbum.length > 0 ? newAlbum : '-----');
+        mediaAlbum.set(newAlbum?.length > 0 ? newAlbum : '-----');
     });
 
     const initialAlbum = mediaAlbum.get();
     mediaAlbum.set(initialAlbum.length > 0 ? initialAlbum : '-----');
 };
 
-const updateArtist = (player: AstalMpris.Player): void => {
+const updateArtist = (player: AstalMpris.Player | undefined): void => {
     if (artistUnsub) {
         artistUnsub();
         artistUnsub.drop();
     }
 
-    if (!player) {
+    if (player === undefined) {
         mediaArtist.set('-----');
         return;
     }
@@ -267,19 +276,20 @@ const updateArtist = (player: AstalMpris.Player): void => {
     const artistBinding = bind(player, 'artist');
 
     artistUnsub = Variable.derive([artistBinding, bind(player, 'playbackStatus')], (newArtist) => {
-        mediaArtist.set(newArtist.length > 0 ? newArtist : '-----');
+        mediaArtist.set(newArtist?.length > 0 ? newArtist : '-----');
     });
 
     const initialArtist = mediaArtist.get();
-    mediaArtist.set(initialArtist.length > 0 ? initialArtist : '-----');
+    mediaArtist.set(initialArtist?.length > 0 ? initialArtist : '-----');
 };
 
-const updateArtUrl = (player: AstalMpris.Player): void => {
+const updateArtUrl = (player: AstalMpris.Player | undefined): void => {
     if (artUrlUnsub) {
         artUrlUnsub();
         artUrlUnsub.drop();
     }
-    if (!player) {
+
+    if (player === undefined) {
         mediaArtUrl.set('');
         return;
     }
@@ -287,18 +297,14 @@ const updateArtUrl = (player: AstalMpris.Player): void => {
     const artUrlBinding = bind(player, 'artUrl');
 
     artUrlUnsub = Variable.derive([artUrlBinding, bind(player, 'playbackStatus')], (newArtUrl) => {
-        mediaArtUrl.set(newArtUrl);
+        mediaArtUrl.set(newArtUrl ?? '');
     });
 
     const initialArtUrl = mediaArtUrl.get();
     mediaArtUrl.set(initialArtUrl);
 };
 
-Variable.derive([bind(activePlayer)], (player) => {
-    if (player === undefined) {
-        return;
-    }
-
+Variable.derive([bind(activePlayer), bind(forceUpdate)], (player) => {
     updatePosition(player);
 
     updateLoop(player);
