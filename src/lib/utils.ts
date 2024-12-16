@@ -13,6 +13,20 @@ import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
 import { GtkWidget } from './types/widget';
 
+/**
+ * Handles errors by throwing a new Error with a message.
+ *
+ * @param error - The error to handle.
+ * @throws Throws a new error with the provided message or a default message.
+ */
+export function errorHandler(error: unknown): never {
+    if (error instanceof Error) {
+        throw new Error(error.message);
+    }
+
+    throw new Error(String(error));
+}
+
 export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
     if (!name) return null;
 

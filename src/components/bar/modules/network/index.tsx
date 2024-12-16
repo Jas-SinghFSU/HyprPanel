@@ -13,70 +13,68 @@ import { BarBoxChild } from 'src/lib/types/bar.js';
 const { label, truncation, truncation_size, rightClick, middleClick, scrollDown, scrollUp, showWifiInfo } =
     options.bar.network;
 
-const networkIcon = (
-    <icon
-        className={'bar-button-icon network-icon'}
-        icon={Variable.derive(
-            [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
-            (primaryNetwork, networkWifi, networkWired) => {
-                let iconName = networkWifi?.icon_name;
-                if (primaryNetwork === AstalNetwork.Primary.WIRED) {
-                    iconName = networkWired.icon_name;
-                }
-                return iconName;
-            },
-        )()}
-    />
-);
-
-const networkLabel = Variable.derive(
-    [
-        bind(networkService, 'primary'),
-        bind(networkService, 'wifi'),
-        bind(label),
-        bind(truncation),
-        bind(truncation_size),
-        bind(showWifiInfo),
-    ],
-    (primaryNetwork, networkWifi, showLabel, trunc, tSize, showWifiInfo) => {
-        if (!showLabel) {
-            return <box />;
-        }
-        if (primaryNetwork === AstalNetwork.Primary.WIRED) {
-            return <label className={'bar-button-label network-label'} label={'Wired'.substring(0, tSize)} />;
-        }
-        return (
-            <label
-                className={'bar-button-label network-label'}
-                label={networkWifi.ssid ? `${trunc ? networkWifi.ssid.substring(0, tSize) : networkWifi.ssid}` : '--'}
-                tooltipText={showWifiInfo ? formatWifiInfo(networkWifi) : ''}
-            />
-        );
-    },
-);
-
-const componentClassName = Variable.derive(
-    [bind(options.theme.bar.buttons.style), bind(options.bar.network.label)],
-    (style, showLabel) => {
-        const styleMap = {
-            default: 'style1',
-            split: 'style2',
-            wave: 'style3',
-            wave2: 'style3',
-        };
-        return `network-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
-    },
-);
-
-const componentChildren = [networkIcon, networkLabel()];
-
-const component = (
-    <box vexpand valign={Gtk.Align.FILL} className={componentClassName()}>
-        {componentChildren}
-    </box>
-);
-
 const Network = (): BarBoxChild => {
+    const iconBinding = Variable.derive(
+        [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
+        (primaryNetwork, networkWifi, networkWired) => {
+            let iconName = networkWifi?.icon_name;
+            if (primaryNetwork === AstalNetwork.Primary.WIRED) {
+                iconName = networkWired.icon_name;
+            }
+            return iconName;
+        },
+    );
+
+    const networkIcon = <icon className={'bar-button-icon network-icon'} icon={iconBinding()} />;
+
+    const networkLabel = Variable.derive(
+        [
+            bind(networkService, 'primary'),
+            bind(networkService, 'wifi'),
+            bind(label),
+            bind(truncation),
+            bind(truncation_size),
+            bind(showWifiInfo),
+        ],
+        (primaryNetwork, networkWifi, showLabel, trunc, tSize, showWifiInfo) => {
+            if (!showLabel) {
+                return <box />;
+            }
+            if (primaryNetwork === AstalNetwork.Primary.WIRED) {
+                return <label className={'bar-button-label network-label'} label={'Wired'.substring(0, tSize)} />;
+            }
+            return (
+                <label
+                    className={'bar-button-label network-label'}
+                    label={
+                        networkWifi.ssid ? `${trunc ? networkWifi.ssid.substring(0, tSize) : networkWifi.ssid}` : '--'
+                    }
+                    tooltipText={showWifiInfo ? formatWifiInfo(networkWifi) : ''}
+                />
+            );
+        },
+    );
+
+    const componentClassName = Variable.derive(
+        [bind(options.theme.bar.buttons.style), bind(options.bar.network.label)],
+        (style, showLabel) => {
+            const styleMap = {
+                default: 'style1',
+                split: 'style2',
+                wave: 'style3',
+                wave2: 'style3',
+            };
+            return `network-container ${styleMap[style]} ${!showLabel ? 'no-label' : ''}`;
+        },
+    );
+
+    const componentChildren = [networkIcon, networkLabel()];
+
+    const component = (
+        <box vexpand valign={Gtk.Align.FILL} className={componentClassName()}>
+            {componentChildren}
+        </box>
+    );
     return {
         component,
         isVisible: true,

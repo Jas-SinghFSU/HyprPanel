@@ -1,7 +1,7 @@
 import { notifdService } from 'src/lib/constants/services';
 import icons from 'src/lib/icons/icons2';
 import options from 'src/options';
-import { lookUpIcon } from 'src/lib/utils';
+import { errorHandler, lookUpIcon } from 'src/lib/utils';
 import { Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
@@ -37,7 +37,11 @@ export const clearNotifications = async (notifications: AstalNotifd.Notification
 };
 
 const clearAllNotifications = async (): Promise<void> => {
-    clearNotifications(notifdService.notifications, clearDelay.get());
+    try {
+        clearNotifications(notifdService.notifications, clearDelay.get());
+    } catch (error) {
+        errorHandler(error);
+    }
 };
 
 globalThis['removingNotifications'] = removingNotifications;

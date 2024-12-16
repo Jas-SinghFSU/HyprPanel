@@ -21,6 +21,7 @@ import { hyprlandService } from 'src/lib/constants/services';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
 import { isDropdownMenu } from 'src/lib/constants/options.js';
 import { initializeSystemBehaviors } from 'src/lib/behaviors';
+import { runCLI } from 'src/cli/commander';
 
 const initializeStartupScripts = (): void => {
     execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
@@ -47,6 +48,9 @@ const initializeMenus = (): void => {
 };
 
 App.start({
+    requestHandler(request: string, res: (response: unknown) => void) {
+        runCLI(request, res);
+    },
     main() {
         initializeStartupScripts();
 
