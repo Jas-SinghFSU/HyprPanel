@@ -6,8 +6,16 @@ import { bind, Variable } from 'astal';
 const { unit } = options.menus.clock.weather;
 
 export const TodayTemperature = (): JSX.Element => {
+    const labelBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], getTemperature);
     return (
-        <box halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} vertical>
+        <box
+            halign={Gtk.Align.CENTER}
+            valign={Gtk.Align.CENTER}
+            vertical
+            onDestroy={() => {
+                labelBinding.drop();
+            }}
+        >
             <box
                 className={'calendar-menu-weather today temp container'}
                 valign={Gtk.Align.CENTER}
@@ -15,10 +23,7 @@ export const TodayTemperature = (): JSX.Element => {
                 hexpand
             >
                 <box halign={Gtk.Align.CENTER} hexpand>
-                    <label
-                        className={'calendar-menu-weather today temp label'}
-                        label={Variable.derive([bind(globalWeatherVar), bind(unit)], getTemperature)()}
-                    />
+                    <label className={'calendar-menu-weather today temp label'} label={labelBinding()} />
                     <label
                         className={bind(globalWeatherVar).as(
                             (weather) =>

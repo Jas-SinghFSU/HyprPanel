@@ -70,7 +70,15 @@ export const module = ({
     );
 
     const component: JSX.Element = (
-        <box tooltipText={tooltipText} className={componentClass()} setup={hook}>
+        <box
+            tooltipText={tooltipText}
+            className={componentClass()}
+            setup={hook}
+            onDestroy={() => {
+                componentChildren.drop();
+                componentClass.drop();
+            }}
+        >
             {componentChildren()}
         </box>
     );

@@ -55,23 +55,26 @@ export const Netstat = (): BarBoxChild => {
         }
     };
 
+    const iconBinding = Variable.derive(
+        [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
+        (pmry, wfi, wrd) => {
+            if (pmry === AstalNetwork.Primary.WIRED) {
+                return wrd.icon_name;
+            }
+            return wfi.icon_name;
+        },
+    );
+
+    const labelBinding = Variable.derive(
+        [bind(networkUsage), bind(labelType)],
+        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, networkService),
+    );
+
     const netstatModule = module({
         useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
-        icon: Variable.derive(
-            [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
-            (pmry, wfi, wrd) => {
-                if (pmry === AstalNetwork.Primary.WIRED) {
-                    return wrd.icon_name;
-                }
-                return wfi.icon_name;
-            },
-        )(),
+        icon: iconBinding(),
         textIcon: bind(icon),
-        label: Variable.derive(
-            [bind(networkUsage), bind(labelType)],
-            (networkService: NetworkResourceData, lblTyp: NetstatLabelType) =>
-                renderNetworkLabel(lblTyp, networkService),
-        )(),
+        label: labelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {
             return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
         }),
@@ -109,6 +112,10 @@ export const Netstat = (): BarBoxChild => {
                         },
                     },
                 });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
+                iconBinding.drop();
             },
         },
     });

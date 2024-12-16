@@ -15,7 +15,7 @@ export const MediaSlider = (): JSX.Element => {
             return position / player.length;
         }
         return 0;
-    })();
+    });
 
     const dragHandler = ({ value }: Widget.Slider): void => {
         const currentPlayer = activePlayer.get();
@@ -26,12 +26,18 @@ export const MediaSlider = (): JSX.Element => {
     };
 
     return (
-        <box className={'media-indicator-current-progress-bar'} hexpand>
+        <box
+            className={'media-indicator-current-progress-bar'}
+            hexpand
+            onDestroy={() => {
+                sliderValue.drop();
+            }}
+        >
             <slider
                 className={'menu-slider media progress'}
                 hasTooltip={bind(displayTimeTooltip)}
                 tooltipText={bind(timeStamp)}
-                value={sliderValue}
+                value={sliderValue()}
                 onDragged={dragHandler}
                 drawValue={false}
                 hexpand

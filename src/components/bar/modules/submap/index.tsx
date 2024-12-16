@@ -34,24 +34,25 @@ hyprlandService.connect('submap', (_, currentSubmap) => {
 
 getInitialSubmap(submapStatus);
 
-const submapLabel = Variable.derive(
-    [bind(submapStatus), bind(enabledText), bind(disabledText), bind(showSubmapName)],
-    (status, enabled, disabled, showSmName) => {
-        if (showSmName) {
-            return capitalizeFirstLetter(status);
-        }
-        return isSubmapEnabled(status, enabled, disabled);
-    },
-);
-
 export const Submap = (): BarBoxChild => {
+    const submapLabel = Variable.derive(
+        [bind(submapStatus), bind(enabledText), bind(disabledText), bind(showSubmapName)],
+        (status, enabled, disabled, showSmName) => {
+            if (showSmName) {
+                return capitalizeFirstLetter(status);
+            }
+            return isSubmapEnabled(status, enabled, disabled);
+        },
+    );
+    const submapIcon = Variable.derive(
+        [bind(submapStatus), bind(enabledIcon), bind(disabledIcon)],
+        (status, enabled, disabled) => {
+            return isSubmapEnabled(status, enabled, disabled);
+        },
+    );
+
     const submapModule = module({
-        textIcon: Variable.derive(
-            [bind(submapStatus), bind(enabledIcon), bind(disabledIcon)],
-            (status, enabled, disabled) => {
-                return isSubmapEnabled(status, enabled, disabled);
-            },
-        )(),
+        textIcon: submapIcon(),
         tooltipText: submapLabel(),
         label: submapLabel(),
         showLabelBinding: bind(label),
@@ -75,6 +76,10 @@ export const Submap = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                submapLabel.drop();
+                submapIcon.drop();
             },
         },
     });

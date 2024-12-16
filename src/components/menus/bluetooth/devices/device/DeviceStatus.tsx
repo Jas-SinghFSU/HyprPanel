@@ -3,12 +3,20 @@ import { Gtk } from 'astal/gtk3';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 
 export const DeviceStatus = ({ device }: DeviceStatusProps): JSX.Element => {
+    const revealerBinding = Variable.derive(
+        [bind(device, 'connected'), bind(device, 'paired')],
+        (connected, paired) => {
+            return connected || paired;
+        },
+    );
+
     return (
         <revealer
             halign={Gtk.Align.START}
-            revealChild={Variable.derive([bind(device, 'connected'), bind(device, 'paired')], (connected, paired) => {
-                return connected || paired;
-            })()}
+            revealChild={revealerBinding()}
+            onDestroy={() => {
+                revealerBinding.drop();
+            }}
         >
             <label
                 halign={Gtk.Align.START}

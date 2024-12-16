@@ -12,6 +12,10 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
+    const iconBinding = Variable.derive([autoDetectIcon, icon], (autoDetect: boolean, iconValue: string): string =>
+        autoDetect ? getDistroIcon() : iconValue,
+    );
+
     const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
         const styleMap: Record<string, string> = {
             default: 'style1',
@@ -23,13 +27,13 @@ const Menu = (): BarBoxChild => {
     });
 
     const component = (
-        <box className={componentClassName}>
-            <label
-                className={'bar-menu_label bar-button_icon txt-icon bar'}
-                label={Variable.derive([autoDetectIcon, icon], (autoDetect: boolean, iconValue: string): string =>
-                    autoDetect ? getDistroIcon() : iconValue,
-                )()}
-            />
+        <box
+            className={componentClassName}
+            onDestroy={() => {
+                iconBinding.drop();
+            }}
+        >
+            <label className={'bar-menu_label bar-button_icon txt-icon bar'} label={iconBinding()} />
         </box>
     );
 

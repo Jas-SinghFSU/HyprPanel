@@ -28,7 +28,18 @@ export default (): JSX.Element => {
             }
             return monitor;
         },
-    )();
+    );
+
+    const notificationsBinding = Variable.derive(
+        [bind(popupNotifications), bind(showActionsOnHover)],
+        (notifications, showActions) => {
+            const maxDisplayed = notifications.slice(0, displayedTotal.get());
+
+            return maxDisplayed.map((notification) => {
+                return <NotificationCard notification={notification} showActions={showActions} />;
+            });
+        },
+    );
 
     return (
         <window
@@ -37,16 +48,14 @@ export default (): JSX.Element => {
             layer={windowLayer}
             anchor={windowAnchor}
             exclusivity={Astal.Exclusivity.NORMAL}
-            monitor={windowMonitor}
+            monitor={windowMonitor()}
+            onDestroy={() => {
+                windowMonitor.drop();
+                notificationsBinding.drop();
+            }}
         >
             <box vertical hexpand className={'notification-card-container'}>
-                {Variable.derive([bind(popupNotifications), bind(showActionsOnHover)], (notifications, showActions) => {
-                    const maxDisplayed = notifications.slice(0, displayedTotal.get());
-
-                    return maxDisplayed.map((notification) => {
-                        return <NotificationCard notification={notification} showActions={showActions} />;
-                    });
-                })()}
+                {notificationsBinding()}
             </box>
         </window>
     );

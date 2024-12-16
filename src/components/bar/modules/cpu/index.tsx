@@ -21,11 +21,13 @@ export const Cpu = (): BarBoxChild => {
         return rnd ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     };
 
+    const labelBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg, rnd) => {
+        return renderLabel(cpuUsg, rnd);
+    });
+
     const cpuModule = module({
         textIcon: bind(icon),
-        label: Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg, rnd) => {
-            return renderLabel(cpuUsg, rnd);
-        })(),
+        label: labelBinding(),
         tooltipText: 'CPU',
         boxClass: 'cpu',
         showLabelBinding: bind(label),
@@ -48,6 +50,9 @@ export const Cpu = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
             },
         },
     });

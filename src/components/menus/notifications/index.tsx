@@ -28,6 +28,9 @@ export default (): JSX.Element => {
                     </box>
                 </box>
             }
+            onDestroy={() => {
+                curPage.drop();
+            }}
         />
     );
 };

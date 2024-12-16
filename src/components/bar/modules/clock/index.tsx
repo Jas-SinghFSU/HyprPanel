@@ -38,7 +38,18 @@ const Clock = (): BarBoxChild => {
         }
         return [clockIcon, clockTime];
     });
-    const component = <box className={componentClassName()}>{componentChildren()}</box>;
+
+    const component = (
+        <box
+            className={componentClassName()}
+            onDestroy={() => {
+                componentClassName.drop();
+                componentChildren.drop();
+            }}
+        >
+            {componentChildren()}
+        </box>
+    );
 
     return {
         component,

@@ -48,8 +48,17 @@ const Media = (): BarBoxChild => {
         };
         return `media-container ${styleMap[style]}`;
     });
+
     const component = (
-        <box className={componentClassName()}>
+        <box
+            className={componentClassName()}
+            onDestroy={() => {
+                isVis.drop();
+                songIcon.drop();
+                mediaLabel.drop();
+                componentClassName.drop();
+            }}
+        >
             <label className={'bar-button-icon media txt-icon bar'} label={bind(songIcon).as((icn) => icn || '󰝚')} />
             <label className={'bar-button-label media'} label={mediaLabel()} />
         </box>

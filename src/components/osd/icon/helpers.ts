@@ -2,7 +2,12 @@ import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import { audioService, brightnessService } from 'src/lib/constants/services';
 
-export const setupOsdIcon = (self: Widget.Label): void => {
+type OSDIcon = {
+    micVariable: Variable<unknown>;
+    speakerVariable: Variable<unknown>;
+};
+
+export const setupOsdIcon = (self: Widget.Label): OSDIcon => {
     self.hook(brightnessService, 'notify::screen', () => {
         self.label = '󱍖';
     });
@@ -11,14 +16,22 @@ export const setupOsdIcon = (self: Widget.Label): void => {
         self.label = '󰥻';
     });
 
-    Variable.derive(
+    const micVariable = Variable.derive(
         [bind(audioService.defaultMicrophone, 'volume'), bind(audioService.defaultMicrophone, 'mute')],
         () => {
             self.label = audioService.defaultMicrophone.mute ? '󰍭' : '󰍬';
         },
     );
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')], () => {
-        self.label = audioService.defaultSpeaker.mute ? '󰝟' : '󰕾';
-    });
+    const speakerVariable = Variable.derive(
+        [bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')],
+        () => {
+            self.label = audioService.defaultSpeaker.mute ? '󰝟' : '󰕾';
+        },
+    );
+
+    return {
+        micVariable,
+        speakerVariable,
+    };
 };

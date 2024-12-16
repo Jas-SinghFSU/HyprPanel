@@ -27,11 +27,15 @@ const storagePoller = new FunctionPoller<GenericResourceData, [Variable<boolean>
 storagePoller.initialize('storage');
 
 export const Storage = (): BarBoxChild => {
+    const labelBinding = Variable.derive(
+        [bind(storageUsage), bind(labelType), bind(round)],
+        (storage, lblTyp, round) => {
+            return renderResourceLabel(lblTyp, storage, round);
+        },
+    );
     const storageModule = module({
         textIcon: bind(icon),
-        label: Variable.derive([bind(storageUsage), bind(labelType), bind(round)], (storage, lblTyp, round) => {
-            return renderResourceLabel(lblTyp, storage, round);
-        })(),
+        label: labelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {
             return formatTooltip('Storage', lblTyp);
         }),
@@ -68,6 +72,9 @@ export const Storage = (): BarBoxChild => {
                         },
                     },
                 });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
             },
         },
     });

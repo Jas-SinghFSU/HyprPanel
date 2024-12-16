@@ -13,7 +13,13 @@ export const Option = <T extends string | number | boolean | object>({
     const isUnsaved = Variable(false);
 
     return (
-        <box className={'option-item'} hexpand>
+        <box
+            className={'option-item'}
+            hexpand
+            onDestroy={() => {
+                isUnsaved.drop();
+            }}
+        >
             <box halign={Gtk.Align.START} valign={Gtk.Align.CENTER} hexpand>
                 <Label title={props.title} subtitle={props.subtitle} subtitleLink={props.subtitleLink} />
             </box>

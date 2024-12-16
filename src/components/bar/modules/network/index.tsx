@@ -71,7 +71,16 @@ const Network = (): BarBoxChild => {
     const componentChildren = [networkIcon, networkLabel()];
 
     const component = (
-        <box vexpand valign={Gtk.Align.FILL} className={componentClassName()}>
+        <box
+            vexpand
+            valign={Gtk.Align.FILL}
+            className={componentClassName()}
+            onDestroy={() => {
+                iconBinding.drop();
+                networkLabel.drop();
+                componentClassName.drop();
+            }}
+        >
             {componentChildren}
         </box>
     );

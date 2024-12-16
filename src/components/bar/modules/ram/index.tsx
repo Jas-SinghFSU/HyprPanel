@@ -26,16 +26,18 @@ const ramPoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
 ramPoller.initialize('ram');
 
 export const Ram = (): BarBoxChild => {
+    const labelBinding = Variable.derive(
+        [bind(ramUsage), bind(labelType), bind(round)],
+        (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
+            const returnValue = renderResourceLabel(lblTyp, rmUsg, round);
+
+            return returnValue;
+        },
+    );
+
     const ramModule = module({
         textIcon: bind(icon),
-        label: Variable.derive(
-            [bind(ramUsage), bind(labelType), bind(round)],
-            (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
-                const returnValue = renderResourceLabel(lblTyp, rmUsg, round);
-
-                return returnValue;
-            },
-        )(),
+        label: labelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {
             return formatTooltip('RAM', lblTyp);
         }),
@@ -72,6 +74,9 @@ export const Ram = (): BarBoxChild => {
                         },
                     },
                 });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
             },
         },
     });

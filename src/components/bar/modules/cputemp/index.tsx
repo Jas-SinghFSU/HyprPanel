@@ -37,16 +37,17 @@ const cpuTempPoller = new FunctionPoller<number, [Variable<boolean>, Variable<Un
 cpuTempPoller.initialize('cputemp');
 
 export const CpuTemp = (): BarBoxChild => {
+    const labelBinding = Variable.derive(
+        [bind(cpuTemp), bind(unit), bind(showUnit), bind(round)],
+        (cpuTmp, tempUnit, shwUnit) => {
+            const unitLabel = tempUnit === 'imperial' ? 'F' : 'C';
+            const unit = shwUnit ? ` ${unitLabel}` : '';
+            return `${cpuTmp.toString()}°${unit}`;
+        },
+    );
     const cpuTempModule = module({
         textIcon: bind(icon),
-        label: Variable.derive(
-            [bind(cpuTemp), bind(unit), bind(showUnit), bind(round)],
-            (cpuTmp, tempUnit, shwUnit) => {
-                const unitLabel = tempUnit === 'imperial' ? 'F' : 'C';
-                const unit = shwUnit ? ` ${unitLabel}` : '';
-                return `${cpuTmp.toString()}°${unit}`;
-            },
-        )(),
+        label: labelBinding(),
         tooltipText: 'CPU Temperature',
         boxClass: 'cpu-temp',
         showLabelBinding: bind(label),
@@ -69,6 +70,9 @@ export const CpuTemp = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
             },
         },
     });

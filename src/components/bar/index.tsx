@@ -141,6 +141,9 @@ export const Bar = (() => {
                 anchor={computeAnchor}
                 layer={computeLayer()}
                 exclusivity={Astal.Exclusivity.EXCLUSIVE}
+                onDestroy={() => {
+                    computeLayer.drop();
+                }}
             >
                 <box className={'bar-panel-container'}>
                     <centerbox

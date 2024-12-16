@@ -22,15 +22,18 @@ idleStatusPoller.initialize('hypridle');
 const throttledToggleIdle = throttleInput(() => toggleIdle(isActive), 1000);
 
 export const Hypridle = (): BarBoxChild => {
+    const iconBinding = Variable.derive([bind(isActive), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
+        return active ? onIcn : offIcn;
+    });
+    const labelBinding = Variable.derive([bind(isActive), bind(onLabel), bind(offLabel)], (active, onLbl, offLbl) => {
+        return active ? onLbl : offLbl;
+    });
+
     const hypridleModule = module({
-        textIcon: Variable.derive([bind(isActive), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
-            return active ? onIcn : offIcn;
-        })(),
+        textIcon: iconBinding(),
         tooltipText: bind(isActive).as((active) => `Hypridle ${active ? 'enabled' : 'disabled'}`),
         boxClass: 'hypridle',
-        label: Variable.derive([bind(isActive), bind(onLabel), bind(offLabel)], (active, onLbl, offLbl) => {
-            return active ? onLbl : offLbl;
-        })(),
+        label: labelBinding(),
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
@@ -53,6 +56,10 @@ export const Hypridle = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                iconBinding.drop();
+                labelBinding.drop();
             },
         },
     });

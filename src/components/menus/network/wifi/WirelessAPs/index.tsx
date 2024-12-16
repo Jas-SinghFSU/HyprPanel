@@ -8,44 +8,52 @@ import { Controls } from './Controls';
 import { Variable } from 'astal';
 
 export const WirelessAPs = ({ staging, connecting }: WirelessAPsProps): JSX.Element => {
-    return (
-        <box className="available-waps" vertical>
-            {Variable.derive(
-                [
-                    bind(staging),
-                    bind(connecting),
-                    bind(networkService.wifi, 'accessPoints'),
-                    bind(networkService.wifi, 'enabled'),
-                ],
-                () => {
-                    const filteredWAPs = getFilteredWirelessAPs(staging);
+    const wapBinding = Variable.derive(
+        [
+            bind(staging),
+            bind(connecting),
+            bind(networkService.wifi, 'accessPoints'),
+            bind(networkService.wifi, 'enabled'),
+        ],
+        () => {
+            const filteredWAPs = getFilteredWirelessAPs(staging);
 
-                    if (filteredWAPs.length <= 0 && Object.keys(staging.get()).length === 0) {
+            if (filteredWAPs.length <= 0 && Object.keys(staging.get()).length === 0) {
+                return (
+                    <label
+                        className="waps-not-found dim"
+                        expand
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                        label="No Wi-Fi Networks Found"
+                    />
+                );
+            }
+
+            return (
+                <box className="available-waps-list" vertical>
+                    {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
                         return (
-                            <label
-                                className="waps-not-found dim"
-                                expand
-                                halign={Gtk.Align.CENTER}
-                                valign={Gtk.Align.CENTER}
-                                label="No Wi-Fi Networks Found"
-                            />
+                            <box className="network-element-item">
+                                <AccessPoint connecting={connecting} accessPoint={ap} staging={staging} />
+                                <Controls connecting={connecting} accessPoint={ap} />
+                            </box>
                         );
-                    }
+                    })}
+                </box>
+            );
+        },
+    );
 
-                    return (
-                        <box className="available-waps-list" vertical>
-                            {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
-                                return (
-                                    <box className="network-element-item">
-                                        <AccessPoint connecting={connecting} accessPoint={ap} staging={staging} />
-                                        <Controls connecting={connecting} accessPoint={ap} />
-                                    </box>
-                                );
-                            })}
-                        </box>
-                    );
-                },
-            )()}
+    return (
+        <box
+            className="available-waps"
+            vertical
+            onDestroy={() => {
+                wapBinding.drop();
+            }}
+        >
+            {wapBinding()}
         </box>
     );
 };

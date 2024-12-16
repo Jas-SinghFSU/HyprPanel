@@ -58,7 +58,16 @@ const Volume = (): BarBoxChild => {
         },
     );
     const component = (
-        <box vexpand tooltipText={componentTooltip()} className={componentClassName()}>
+        <box
+            vexpand
+            tooltipText={componentTooltip()}
+            className={componentClassName()}
+            onDestroy={() => {
+                componentTooltip.drop();
+                componentClassName.drop();
+                componentChildren.drop();
+            }}
+        >
             {componentChildren()}
         </box>
     );

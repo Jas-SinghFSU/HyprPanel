@@ -29,20 +29,26 @@ export const StandardTime = (): JSX.Element => {
         );
     };
 
-    return (
-        <box>
-            {Variable.derive([bind(military), bind(hideSeconds)], (is24hr, hideSeconds) => {
-                if (is24hr) {
-                    return <box />;
-                }
+    const timeBinding = Variable.derive([bind(military), bind(hideSeconds)], (is24hr, hideSeconds) => {
+        if (is24hr) {
+            return <box />;
+        }
 
-                return (
-                    <box>
-                        <CurrentTime hideSeconds={hideSeconds} />
-                        <CurrentPeriod />
-                    </box>
-                );
-            })()}
+        return (
+            <box>
+                <CurrentTime hideSeconds={hideSeconds} />
+                <CurrentPeriod />
+            </box>
+        );
+    });
+
+    return (
+        <box
+            onDestroy={() => {
+                timeBinding.drop();
+            }}
+        >
+            {timeBinding()}
         </box>
     );
 };

@@ -96,6 +96,12 @@ const BatteryLabel = (): BarBoxChild => {
                     self.tooltipText = generateTooltip(batteryService.timeToFull, batteryService.charging, isCharged);
                 });
             }}
+            onDestroy={() => {
+                batIcon.drop();
+                componentClassName.drop();
+                componentTooltip.drop();
+                componentChildren.drop();
+            }}
         >
             {componentChildren()}
         </box>

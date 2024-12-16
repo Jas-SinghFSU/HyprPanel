@@ -17,6 +17,7 @@ const Bluetooth = (): BarBoxChild => {
     const btIcon = (isPowered: boolean): GtkWidget => (
         <label className={'bar-button-icon bluetooth txt-icon bar'} label={isPowered ? '󰂯' : '󰂲'} />
     );
+
     const btText = (isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget => {
         const connectDevices = devices.filter((device) => device.connected);
 
@@ -39,23 +40,17 @@ const Bluetooth = (): BarBoxChild => {
         },
     );
 
-    const component = (
-        <box className={componentClassName()}>
-            {Variable.derive(
-                [
-                    bind(options.bar.volume.label),
-                    bind(bluetoothService, 'isPowered'),
-                    bind(bluetoothService, 'devices'),
-                ],
-                (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget[] => {
-                    if (showLabel) {
-                        return [btIcon(isPowered), btText(isPowered, devices)];
-                    }
-                    return [btIcon(isPowered)];
-                },
-            )()}
-        </box>
+    const componentBinding = Variable.derive(
+        [bind(options.bar.volume.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
+        (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget[] => {
+            if (showLabel) {
+                return [btIcon(isPowered), btText(isPowered, devices)];
+            }
+            return [btIcon(isPowered)];
+        },
     );
+
+    const component = <box className={componentClassName()}>{componentBinding()}</box>;
 
     return {
         component,
@@ -87,6 +82,10 @@ const Bluetooth = (): BarBoxChild => {
                         disconnectScroll();
                     };
                 });
+            },
+            onDestroy: (): void => {
+                componentClassName.drop();
+                componentBinding.drop();
             },
         },
     };

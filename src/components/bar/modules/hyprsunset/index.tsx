@@ -32,17 +32,23 @@ sunsetPoller.initialize('hyprsunset');
 const throttledToggleSunset = throttleInput(() => toggleSunset(isActive), 1000);
 
 export const Hyprsunset = (): BarBoxChild => {
+    const iconBinding = Variable.derive([bind(isActive), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
+        return active ? onIcn : offIcn;
+    });
+
+    const tooltipBinding = Variable.derive([isActive, temperature], (active, temp) => {
+        return `Hyprsunset ${active ? 'enabled' : 'disabled'}\nTemperature: ${temp}`;
+    });
+
+    const labelBinding = Variable.derive([bind(isActive), bind(onLabel), bind(offLabel)], (active, onLbl, offLbl) => {
+        return active ? onLbl : offLbl;
+    });
+
     const hyprsunsetModule = module({
-        textIcon: Variable.derive([bind(isActive), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
-            return active ? onIcn : offIcn;
-        })(),
-        tooltipText: Variable.derive([isActive, temperature], (active, temp) => {
-            return `Hyprsunset ${active ? 'enabled' : 'disabled'}\nTemperature: ${temp}`;
-        })(),
+        textIcon: iconBinding(),
+        tooltipText: tooltipBinding(),
         boxClass: 'hyprsunset',
-        label: Variable.derive([bind(isActive), bind(onLabel), bind(offLabel)], (active, onLbl, offLbl) => {
-            return active ? onLbl : offLbl;
-        })(),
+        label: labelBinding(),
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
@@ -65,6 +71,11 @@ export const Hyprsunset = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                iconBinding.drop();
+                tooltipBinding.drop();
+                labelBinding.drop();
             },
         },
     });

@@ -31,6 +31,9 @@ const SysTray = (): BarBoxChild => {
                         Notify({ summary: 'App Name', body: item.id });
                     }
                 }}
+                onDestroy={() => {
+                    isVis.drop();
+                }}
             >
                 <label
                     className={'systray-icon txt-icon'}
@@ -92,7 +95,18 @@ const SysTray = (): BarBoxChild => {
             });
         },
     );
-    const component = <box className={'systray-container'}>{componentChildren()}</box>;
+
+    const component = (
+        <box
+            className={'systray-container'}
+            onDestroy={() => {
+                isVis.drop();
+                componentChildren.drop();
+            }}
+        >
+            {componentChildren()}
+        </box>
+    );
 
     return {
         component,

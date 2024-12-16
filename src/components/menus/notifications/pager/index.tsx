@@ -20,42 +20,47 @@ const PageDisplay = ({ notifications, currentPage, dispTotal }: PageDisplayProps
 };
 
 export const NotificationPager = ({ curPage }: NotificationPagerProps): JSX.Element => {
-    return (
-        <box className={'notification-menu-pager'} hexpand={true} vexpand={false}>
-            {Variable.derive(
-                [bind(curPage), bind(displayedTotal), bind(notifdService, 'notifications'), bind(showPager)],
-                (currentPage, dispTotal, notifications, showPgr) => {
-                    if (showPgr === false || (currentPage === 1 && notifications.length <= dispTotal)) {
-                        return <box />;
-                    }
+    const pagerBinding = Variable.derive(
+        [bind(curPage), bind(displayedTotal), bind(notifdService, 'notifications'), bind(showPager)],
+        (currentPage, dispTotal, notifications, showPgr) => {
+            if (showPgr === false || (currentPage === 1 && notifications.length <= dispTotal)) {
+                return <box />;
+            }
 
-                    return (
-                        <box>
-                            <FirstPageButton curPage={curPage} currentPage={currentPage} />
-                            <PreviousPageButton curPage={curPage} currentPage={currentPage} />
-                            <PageDisplay
-                                notifications={notifications}
-                                currentPage={currentPage}
-                                dispTotal={dispTotal}
-                            />
-                            <NextPageButton
-                                curPage={curPage}
-                                currentPage={currentPage}
-                                notifications={notifications}
-                                displayedTotal={displayedTotal}
-                                dispTotal={dispTotal}
-                            />
-                            <LastPageButton
-                                curPage={curPage}
-                                currentPage={currentPage}
-                                notifications={notifications}
-                                displayedTotal={displayedTotal}
-                                dispTotal={dispTotal}
-                            />
-                        </box>
-                    );
-                },
-            )()}
+            return (
+                <box>
+                    <FirstPageButton curPage={curPage} currentPage={currentPage} />
+                    <PreviousPageButton curPage={curPage} currentPage={currentPage} />
+                    <PageDisplay notifications={notifications} currentPage={currentPage} dispTotal={dispTotal} />
+                    <NextPageButton
+                        curPage={curPage}
+                        currentPage={currentPage}
+                        notifications={notifications}
+                        displayedTotal={displayedTotal}
+                        dispTotal={dispTotal}
+                    />
+                    <LastPageButton
+                        curPage={curPage}
+                        currentPage={currentPage}
+                        notifications={notifications}
+                        displayedTotal={displayedTotal}
+                        dispTotal={dispTotal}
+                    />
+                </box>
+            );
+        },
+    );
+
+    return (
+        <box
+            className={'notification-menu-pager'}
+            hexpand={true}
+            vexpand={false}
+            onDestroy={() => {
+                pagerBinding.drop();
+            }}
+        >
+            {pagerBinding()}
         </box>
     );
 };
