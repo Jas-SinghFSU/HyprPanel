@@ -9,7 +9,7 @@ export const WifiSwitch = (): JSX.Element => (
         tooltipText="Toggle Wifi"
         setup={(self) => {
             useHook(self, networkService, () => {
-                self.set_active(networkService.wifi.enabled);
+                self.set_active(networkService.wifi?.enabled || false);
             });
         }}
         onButtonPressEvent={(_, event) => {
@@ -19,7 +19,7 @@ export const WifiSwitch = (): JSX.Element => (
                 return;
             }
 
-            networkService.wifi.set_enabled(!networkService.wifi.enabled);
+            networkService.wifi?.set_enabled(!networkService.wifi?.enabled);
         }}
     />
 );

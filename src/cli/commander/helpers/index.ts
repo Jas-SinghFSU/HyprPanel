@@ -3,9 +3,6 @@
 import { CommandRegistry } from '../Registry';
 import { CategoryMap, Command, PositionalArg } from '../types';
 
-/**
- * ANSI escape codes for formatting and coloring terminal output.
- */
 const ANSI_RESET = '\x1b[0m';
 const ANSI_BOLD = '\x1b[1m';
 const ANSI_UNDERLINE = '\x1b[4m';
@@ -29,20 +26,20 @@ const ANSI_BG_CYAN = '\x1b[46m';
 const ANSI_BG_WHITE = '\x1b[47m';
 
 /**
- * Creates the help command.
+ * Creates the explain command.
  *
  * This command displays all available commands categorized by their respective
  * categories. If a specific command name is provided as an argument, it displays
  * detailed information about that command, including its positional parameters and aliases.
  *
  * @param registry - The command registry to use.
- * @returns The help command.
+ * @returns The explain command.
  */
-export function createHelpCommand(registry: CommandRegistry): Command {
+export function createExplainCommand(registry: CommandRegistry): Command {
     return {
-        name: 'help',
-        aliases: ['h'],
-        description: 'Displays help information for all commands or a specific command.',
+        name: 'explain',
+        aliases: ['e'],
+        description: 'Displays explain information for all commands or a specific command.',
         category: 'General',
         args: [
             {
@@ -53,34 +50,34 @@ export function createHelpCommand(registry: CommandRegistry): Command {
             },
         ],
         /**
-         * Handler for the help command.
+         * Handler for the explain command.
          *
          * @param args - The arguments passed to the command.
-         * @returns The formatted help message.
+         * @returns The formatted explain message.
          */
         handler: (args: Record<string, unknown>): string => {
             const commandName = args['commandName'] as string | undefined;
 
             if (commandName) {
-                return formatCommandHelp(registry, commandName);
+                return formatCommandExplain(registry, commandName);
             }
 
-            return formatGlobalHelp(registry);
+            return formatGlobalExplain(registry);
         },
     };
 }
 
 /**
- * Formats the detailed help message for a specific command.
+ * Formats the detailed explain message for a specific command.
  *
  * @param registry - The command registry to retrieve the command.
- * @param commandName - The name of the command to get detailed help for.
- * @returns The formatted detailed help message.
+ * @param commandName - The name of the command to get detailed explain for.
+ * @returns The formatted detailed explain message.
  */
-function formatCommandHelp(registry: CommandRegistry, commandName: string): string {
+function formatCommandExplain(registry: CommandRegistry, commandName: string): string {
     const cmd = registry.get(commandName);
     if (!cmd) {
-        return `${ANSI_FG_RED}✖ No such command: "${commandName}". Use "help" to see all commands.${ANSI_RESET}\n`;
+        return `${ANSI_FG_RED}✖ No such command: "${commandName}". Use "explain" to see all commands.${ANSI_RESET}\n`;
     }
 
     let message = `${ANSI_BOLD}${ANSI_FG_YELLOW}Command: ${cmd.name}${ANSI_RESET}\n`;
@@ -105,26 +102,26 @@ function formatCommandHelp(registry: CommandRegistry, commandName: string): stri
 }
 
 /**
- * Formats the global help message listing all available commands categorized by their categories.
+ * Formats the global explain message listing all available commands categorized by their categories.
  *
  * @param registry - The command registry to retrieve all commands.
- * @returns The formatted global help message.
+ * @returns The formatted global explain message.
  */
-function formatGlobalHelp(registry: CommandRegistry): string {
+function formatGlobalExplain(registry: CommandRegistry): string {
     const allCommands = registry.getAll();
     const categoryMap: CategoryMap = organizeCommandsByCategory(allCommands);
 
-    let helpMessage = `${ANSI_BOLD}${ANSI_FG_CYAN}Available Commands:${ANSI_RESET}\n`;
+    let explainMessage = `${ANSI_BOLD}${ANSI_FG_CYAN}Available HyprPanel Commands:${ANSI_RESET}\n`;
 
     for (const [category, cmds] of Object.entries(categoryMap)) {
-        helpMessage += `\n${ANSI_BOLD}${ANSI_FG_BLUE}${category}${ANSI_RESET}\n`;
+        explainMessage += `\n${ANSI_BOLD}${ANSI_FG_BLUE}${category}${ANSI_RESET}\n`;
         const formattedCommands = formatCommandList(cmds);
-        helpMessage += formattedCommands;
+        explainMessage += formattedCommands;
     }
 
-    helpMessage += `\n${ANSI_FG_MAGENTA}Use "astal help <commandName>" to get detailed information about a specific command.${ANSI_RESET}\n`;
+    explainMessage += `\n${ANSI_FG_MAGENTA}Use "astal explain <commandName>" to get detailed information about a specific hyprpanel command.${ANSI_RESET}\n`;
 
-    return helpMessage.trim();
+    return explainMessage.trim();
 }
 
 /**

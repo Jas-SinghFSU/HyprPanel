@@ -17,7 +17,7 @@ export const BluetoothDevices = (): JSX.Element => {
                 return <NoBluetoothDevices />;
             }
 
-            if (!bluetoothService.adapter.powered) {
+            if (!bluetoothService.adapter?.powered) {
                 return <BluetoothDisabled />;
             }
 

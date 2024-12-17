@@ -14,7 +14,9 @@ import { ResponseCallback } from './types';
  */
 
 const registry = new CommandRegistry();
+
 initializeCommands(registry);
+
 const parser = new CommandParser(registry);
 const handler = new RequestHandler(parser);
 
@@ -30,7 +32,4 @@ export function runCLI(input: string, response: ResponseCallback): void {
     });
 }
 
-/**
- * Optionally, you can export `registry` or `handler` if needed.
- */
 export { registry };

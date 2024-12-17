@@ -15,14 +15,10 @@ const { label, truncation, truncation_size, rightClick, middleClick, scrollDown,
 
 const Network = (): BarBoxChild => {
     const iconBinding = Variable.derive(
-        [
-            bind(networkService, 'primary'),
-            bind(networkService.wired, 'iconName'),
-            bind(networkService.wifi, 'iconName'),
-        ],
-        (primaryNetwork, wiredIcon, wifiIcon) => {
+        [bind(networkService, 'primary'), bind(networkService, 'wired'), bind(networkService, 'wifi')],
+        (primaryNetwork, wired, wifi) => {
             const isWired = primaryNetwork === AstalNetwork.Primary.WIRED;
-            const iconName = isWired ? wiredIcon : wifiIcon;
+            const iconName = isWired ? wired.iconName : wifi?.iconName;
 
             return iconName;
         },
@@ -50,7 +46,7 @@ const Network = (): BarBoxChild => {
                 <label
                     className={'bar-button-label network-label'}
                     label={
-                        networkWifi.ssid ? `${trunc ? networkWifi.ssid.substring(0, tSize) : networkWifi.ssid}` : '--'
+                        networkWifi?.ssid ? `${trunc ? networkWifi.ssid.substring(0, tSize) : networkWifi.ssid}` : '--'
                     }
                     tooltipText={showWifiInfo ? formatWifiInfo(networkWifi) : ''}
                 />

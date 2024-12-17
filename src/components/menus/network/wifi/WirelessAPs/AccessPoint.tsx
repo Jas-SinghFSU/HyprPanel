@@ -27,7 +27,7 @@ export const AccessPoint = ({ connecting, accessPoint, staging }: AccessPointPro
                     wrap
                     label={accessPoint.ssid ?? ''}
                 />
-                <revealer revealChild={isApActive(accessPoint) && isApEnabled(networkService.wifi.state)}>
+                <revealer revealChild={isApActive(accessPoint) && isApEnabled(networkService.wifi?.state)}>
                     <label className="connection-status dim" halign={Gtk.Align.START} label={getWifiStatus()} />
                 </revealer>
             </box>

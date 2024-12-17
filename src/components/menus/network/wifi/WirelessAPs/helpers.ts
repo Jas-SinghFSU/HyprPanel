@@ -1,9 +1,50 @@
-import { execAsync, Variable } from 'astal';
+import { bind, execAsync, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { DEVICE_STATES } from 'src/lib/constants/network';
 import { networkService } from 'src/lib/constants/services';
 import { isPrimaryClick, Notify } from 'src/lib/utils';
+
+export const isWifiEnabled: Variable<boolean> = Variable(false);
+export const wifiAccessPoints: Variable<AstalNetwork.AccessPoint[]> = Variable([]);
+
+let wifiEnabledBinding: Variable<void>;
+let accessPointBinding: Variable<void>;
+
+const wifiEnabled = (): void => {
+    if (wifiEnabledBinding) {
+        wifiEnabledBinding();
+        wifiEnabledBinding.drop();
+    }
+
+    if (!networkService.wifi) {
+        return;
+    }
+
+    wifiEnabledBinding = Variable.derive([bind(networkService.wifi, 'enabled')], (isEnabled) => {
+        isWifiEnabled.set(isEnabled);
+    });
+};
+
+const accessPoints = (): void => {
+    if (accessPointBinding) {
+        accessPointBinding();
+        accessPointBinding.drop();
+    }
+
+    if (!networkService.wifi) {
+        return;
+    }
+
+    Variable.derive([bind(networkService.wifi, 'accessPoints')], (axsPoints) => {
+        wifiAccessPoints.set(axsPoints);
+    });
+};
+
+Variable.derive([bind(networkService, 'wifi')], () => {
+    wifiEnabled();
+    accessPoints();
+});
 
 /**
  * Removes duplicate access points based on their SSID.
@@ -11,6 +52,10 @@ import { isPrimaryClick, Notify } from 'src/lib/utils';
  * @returns An array of deduplicated access points.
  */
 const dedupeWAPs = (): AstalNetwork.AccessPoint[] => {
+    if (!networkService.wifi) {
+        return [];
+    }
+
     const WAPs = networkService.wifi.accessPoints;
     const dedupMap: Record<string, AstalNetwork.AccessPoint> = {};
 
@@ -72,7 +117,11 @@ export const getFilteredWirelessAPs = (staging: Variable<AstalNetwork.AccessPoin
  * @param state - The current state of the device.
  * @returns - Returns true if the status should be shown, false otherwise.
  */
-export const isApEnabled = (state: AstalNetwork.DeviceState): boolean => {
+export const isApEnabled = (state: AstalNetwork.DeviceState | undefined): boolean => {
+    if (!state) {
+        return false;
+    }
+
     return !(
         state === AstalNetwork.DeviceState.DISCONNECTED ||
         state === AstalNetwork.DeviceState.UNAVAILABLE ||
@@ -98,7 +147,7 @@ export const isApActive = (accessPoint: AstalNetwork.AccessPoint): boolean => {
  */
 export const isDisconnecting = (accessPoint: AstalNetwork.AccessPoint): boolean => {
     if (isApActive(accessPoint)) {
-        return networkService.wifi.state === AstalNetwork.DeviceState.DEACTIVATING;
+        return networkService.wifi?.state === AstalNetwork.DeviceState.DEACTIVATING;
     }
     return false;
 };
@@ -126,7 +175,7 @@ export const getIdFromSsid = (ssid: string, nmcliOutput: string): string | undef
  * @returns A string representing the current Wi-Fi status.
  */
 export const getWifiStatus = (): string => {
-    const wifiState = networkService.wifi.state;
+    const wifiState = networkService.wifi?.state;
 
     if (wifiState) {
         return DEVICE_STATES[wifiState];

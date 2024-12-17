@@ -4,25 +4,21 @@ import { bluetoothService } from 'src/lib/constants/services';
 import { notifdService } from 'src/lib/constants/services';
 import { audioService } from 'src/lib/constants/services';
 import { isPrimaryClick } from 'src/lib/utils';
+import { isWifiEnabled } from './helpers';
 
 export const WifiButton = (): JSX.Element => {
     return (
         <button
-            className={bind(networkService.wifi, 'enabled').as(
-                (isEnabled) => `dashboard-button wifi ${!isEnabled ? 'disabled' : ''}`,
-            )}
+            className={bind(isWifiEnabled).as((isEnabled) => `dashboard-button wifi ${!isEnabled ? 'disabled' : ''}`)}
             onClick={(_, event) => {
                 if (isPrimaryClick(event)) {
-                    networkService.wifi.set_enabled(!networkService.wifi.enabled);
+                    networkService.wifi?.set_enabled(!networkService.wifi.enabled);
                 }
             }}
             tooltipText={'Toggle Wifi'}
             expand
         >
-            <label
-                className={'txt-icon'}
-                label={bind(networkService.wifi, 'enabled').as((isEnabled) => (isEnabled ? '󰤨' : '󰤭'))}
-            />
+            <label className={'txt-icon'} label={bind(isWifiEnabled).as((isEnabled) => (isEnabled ? '󰤨' : '󰤭'))} />
         </button>
     );
 };

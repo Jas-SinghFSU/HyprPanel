@@ -1,6 +1,6 @@
 import { CommandRegistry } from './Registry';
 import { Command } from './types';
-import { createHelpCommand } from './helpers';
+import { createExplainCommand } from './helpers';
 import { errorHandler } from 'src/lib/utils';
 import { BarLayouts } from 'src/lib/types/options';
 
@@ -129,5 +129,5 @@ export function initializeCommands(registry: CommandRegistry): void {
     ];
 
     commandList.forEach((command) => registry.register(command));
-    registry.register(createHelpCommand(registry));
+    registry.register(createExplainCommand(registry));
 }

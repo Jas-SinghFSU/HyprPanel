@@ -19,7 +19,7 @@ export const ToggleSwitch = (): JSX.Element => (
                 return;
             }
 
-            bluetoothService.adapter.set_powered(!bluetoothService.adapter.powered);
+            bluetoothService.adapter?.set_powered(!bluetoothService.adapter.powered);
         }}
     />
 );

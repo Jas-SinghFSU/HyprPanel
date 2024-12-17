@@ -61,7 +61,7 @@ export const Netstat = (): BarBoxChild => {
             if (pmry === AstalNetwork.Primary.WIRED) {
                 return wrd.icon_name;
             }
-            return wfi.icon_name;
+            return wfi?.icon_name;
         },
     );
 

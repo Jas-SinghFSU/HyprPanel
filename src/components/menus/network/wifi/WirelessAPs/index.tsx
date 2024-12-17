@@ -1,20 +1,14 @@
-import { networkService } from 'src/lib/constants/services';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal/binding';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { getFilteredWirelessAPs } from './helpers';
+import { getFilteredWirelessAPs, isWifiEnabled, wifiAccessPoints } from './helpers';
 import { AccessPoint } from './AccessPoint';
 import { Controls } from './Controls';
 import { Variable } from 'astal';
 
 export const WirelessAPs = ({ staging, connecting }: WirelessAPsProps): JSX.Element => {
     const wapBinding = Variable.derive(
-        [
-            bind(staging),
-            bind(connecting),
-            bind(networkService.wifi, 'accessPoints'),
-            bind(networkService.wifi, 'enabled'),
-        ],
+        [bind(staging), bind(connecting), bind(wifiAccessPoints), bind(isWifiEnabled)],
         () => {
             const filteredWAPs = getFilteredWirelessAPs(staging);
 

@@ -1,3 +1,10 @@
+/**
+ * NOTE: This approach is not recommended if the program is going to be
+ * running as a client.
+ * ---------------------------------------
+ * Hyprpanel will not be, so this is fine.
+ * ---------------------------------------
+ */
 import Hyprland from 'gi://AstalHyprland';
 export const hyprlandService = Hyprland.get_default();
 
