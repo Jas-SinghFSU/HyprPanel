@@ -18,7 +18,7 @@ const Network = (): BarBoxChild => {
         [bind(networkService, 'primary'), bind(networkService, 'wired'), bind(networkService, 'wifi')],
         (primaryNetwork, wired, wifi) => {
             const isWired = primaryNetwork === AstalNetwork.Primary.WIRED;
-            const iconName = isWired ? wired.iconName : wifi?.iconName;
+            const iconName = isWired ? wired?.iconName : wifi?.iconName;
 
             return iconName;
         },

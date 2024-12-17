@@ -59,7 +59,7 @@ export const Netstat = (): BarBoxChild => {
         [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
         (pmry, wfi, wrd) => {
             if (pmry === AstalNetwork.Primary.WIRED) {
-                return wrd.icon_name;
+                return wrd?.icon_name;
             }
             return wfi?.icon_name;
         },

@@ -1,8 +1,8 @@
-import { networkService } from 'src/lib/constants/services.js';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal/binding';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { DEVICE_STATES } from 'src/lib/constants/network';
+import { wiredIcon, wiredInternet, wiredSpeed, wiredState } from './helpers';
 
 export const Ethernet = (): JSX.Element => {
     return (
@@ -15,13 +15,13 @@ export const Ethernet = (): JSX.Element => {
                     <box className={'network-element-item'}>
                         <box halign={Gtk.Align.START}>
                             <icon
-                                className={bind(networkService.wired, 'state').as((state) => {
+                                className={bind(wiredState).as((state) => {
                                     return `network-icon ethernet ${state === AstalNetwork.DeviceState.ACTIVATED ? 'active' : ''}`;
                                 })}
-                                tooltipText={bind(networkService.wired, 'internet').as((internet) => {
+                                tooltipText={bind(wiredInternet).as((internet) => {
                                     return internet.toString();
                                 })}
-                                icon={bind(networkService.wired, 'iconName')}
+                                icon={bind(wiredIcon)}
                             />
                             <box className={'connection-container'} vertical>
                                 <label
@@ -29,8 +29,8 @@ export const Ethernet = (): JSX.Element => {
                                     halign={Gtk.Align.START}
                                     truncate
                                     wrap
-                                    label={bind(networkService.wired, 'speed').as((speed) => {
-                                        return `Ethernet Connection (${speed} Gbps)`;
+                                    label={bind(wiredSpeed).as((speed) => {
+                                        return `Ethernet Connection (${speed} Mbps)`;
                                     })}
                                 />
                                 <label
@@ -38,7 +38,7 @@ export const Ethernet = (): JSX.Element => {
                                     halign={Gtk.Align.START}
                                     truncate
                                     wrap
-                                    label={bind(networkService.wired, 'state').as((state) => {
+                                    label={bind(wiredState).as((state) => {
                                         return DEVICE_STATES[state];
                                     })}
                                 />
