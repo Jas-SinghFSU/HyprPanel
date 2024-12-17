@@ -9,6 +9,14 @@ import { renderResourceLabel } from 'src/components/bar/utils/helpers';
 
 const { enable_gpu } = options.menus.dashboard.stats;
 
+enable_gpu.subscribe((enabled) => {
+    if (enabled) {
+        gpuService.startPoller();
+    }
+
+    gpuService.stopPoller();
+});
+
 const StatBar = ({ icon, value, label, stat }: StatBarProps): JSX.Element => {
     return (
         <box vertical>
