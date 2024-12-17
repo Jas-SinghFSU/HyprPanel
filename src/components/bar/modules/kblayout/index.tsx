@@ -1,6 +1,6 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getKeyboardLayout } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
@@ -12,7 +12,7 @@ const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, sc
     options.bar.customModules.kbLayout;
 
 export const KbInput = (): BarBoxChild => {
-    const keyboardModule = module({
+    const keyboardModule = Module({
         textIcon: bind(icon),
         tooltipText: '',
         labelHook: (self: Astal.Label): void => {

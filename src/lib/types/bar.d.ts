@@ -10,17 +10,17 @@ export type BarBoxChild = {
     component: JSX.Element;
     isVisible?: boolean;
     isVis?: Variable<boolean>;
+    isBox?: boolean;
     boxClass: string;
     tooltip_text?: string | Binding<string>;
-    props: Widget.ButtonProps;
-};
+} & ({ isBox: true; props: Widget.BoxProps } | { isBox?: false; props: Widget.ButtonProps });
 
 export type SelfButton = Button<Child, Attribute>;
 
 export type BoxHook = (self: Box<Gtk.Widget, Gtk.Widget>) => void;
 export type LabelHook = (self: Label<Gtk.Widget>) => void;
 
-export type Module = {
+export type BarModule = {
     icon?: string | Binding<string>;
     textIcon?: string | Binding<string>;
     useTextIcon?: Binding<boolean>;

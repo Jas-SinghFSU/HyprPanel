@@ -13,15 +13,15 @@ export const handleRecorder = (commandOutput: string): boolean => {
     return false;
 };
 
-export const handleClick = (action: string, tOut: number = 250): void => {
+export const handleClick = (action: string, tOut: number = 0): void => {
     App.get_window('dashboardmenu')?.set_visible(false);
 
     timeout(tOut, () => {
-        execAsync(action)
+        execAsync(`bash -c "${action}"`)
             .then((res) => {
                 return res;
             })
-            .catch((err) => err);
+            .catch((err) => logError(err));
     });
 };
 export const hasCommand = (shortCut: ShortcutVariable): boolean => {

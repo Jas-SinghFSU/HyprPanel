@@ -26,14 +26,13 @@ import {
     Hypridle,
 } from './exports';
 
-import { BarItemBox as WidgetContainer } from 'src/components/bar/shared/barItemBox';
+import { WidgetContainer } from './shared/WidgetContainer';
 import options from 'src/options';
 import { App, Gtk } from 'astal/gtk3/index';
 
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Variable } from 'astal';
 import { gdkMonitorIdToHyprlandId, getLayoutForMonitor, isLayoutEmpty } from './utils/monitors';
-import { useHook } from 'src/lib/shared/hookHandler';
 
 const { layouts } = options.bar;
 const { location } = options.theme.bar;
@@ -102,34 +101,27 @@ export const Bar = (() => {
             .bind()
             .as((brdrLcn) => (brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel'));
 
-        const leftSection = (self: Astal.Box): void => {
-            useHook(self, layouts, () => {
-                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.get());
+        const leftBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
+            const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
-                self.children = foundLayout.left
-                    .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor));
-            });
-        };
+            return foundLayout.left
+                .filter((mod) => Object.keys(widget).includes(mod))
+                .map((w) => widget[w](hyprlandMonitor));
+        });
+        const middleBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
+            const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
-        const middleSection = (self: Astal.Box): void => {
-            useHook(self, layouts, () => {
-                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.get());
+            return foundLayout.middle
+                .filter((mod) => Object.keys(widget).includes(mod))
+                .map((w) => widget[w](hyprlandMonitor));
+        });
+        const rightBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
+            const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
-                self.children = foundLayout.middle
-                    .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor));
-            });
-        };
-
-        const rightSection = (self: Astal.Box): void => {
-            useHook(self, layouts, () => {
-                const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.get());
-                self.children = foundLayout.right
-                    .filter((mod) => Object.keys(widget).includes(mod))
-                    .map((w) => widget[w](hyprlandMonitor));
-            });
-        };
+            return foundLayout.right
+                .filter((mod) => Object.keys(widget).includes(mod))
+                .map((w) => widget[w](hyprlandMonitor));
+        });
 
         return (
             <window
@@ -143,6 +135,9 @@ export const Bar = (() => {
                 exclusivity={Astal.Exclusivity.EXCLUSIVE}
                 onDestroy={() => {
                     computeLayer.drop();
+                    leftBinding.drop();
+                    middleBinding.drop();
+                    rightBinding.drop();
                 }}
             >
                 <box className={'bar-panel-container'}>
@@ -150,17 +145,21 @@ export const Bar = (() => {
                         css={'padding: 1px;'}
                         hexpand
                         className={computeBorderLocation}
-                        startWidget={<box className={'box-left'} hexpand setup={leftSection}></box>}
-                        centerWidget={
-                            <box
-                                className={'box-center'}
-                                halign={Gtk.Align.CENTER}
-                                setup={(self) => {
-                                    middleSection(self);
-                                }}
-                            ></box>
+                        startWidget={
+                            <box className={'box-left'} hexpand>
+                                {leftBinding()}
+                            </box>
                         }
-                        endWidget={<box className={'box-right'} halign={Gtk.Align.END} setup={rightSection}></box>}
+                        centerWidget={
+                            <box className={'box-center'} halign={Gtk.Align.CENTER}>
+                                {middleBinding()}
+                            </box>
+                        }
+                        endWidget={
+                            <box className={'box-right'} halign={Gtk.Align.END}>
+                                {rightBinding()}
+                            </box>
+                        }
                     />
                 </box>
             </window>

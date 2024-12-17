@@ -1,5 +1,5 @@
 import { bind, Variable } from 'astal';
-import { BarBoxChild, Module } from 'src/lib/types/bar';
+import { BarBoxChild, BarModule } from 'src/lib/types/bar';
 import { BarButtonStyles } from 'src/lib/types/options';
 import options from 'src/options';
 
@@ -7,7 +7,7 @@ const { style } = options.theme.bar.buttons;
 
 const undefinedVar = Variable(undefined);
 
-export const module = ({
+export const Module = ({
     icon,
     textIcon,
     useTextIcon = bind(Variable(false)),
@@ -19,7 +19,7 @@ export const module = ({
     showLabel,
     labelHook,
     hook,
-}: Module): BarBoxChild => {
+}: BarModule): BarBoxChild => {
     const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
         let iconWidget: JSX.Element | undefined;
 

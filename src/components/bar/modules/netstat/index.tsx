@@ -1,6 +1,6 @@
 import { networkService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './helpers';
 import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
@@ -70,7 +70,7 @@ export const Netstat = (): BarBoxChild => {
         (networkService: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, networkService),
     );
 
-    const netstatModule = module({
+    const netstatModule = Module({
         useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
         icon: iconBinding(),
         textIcon: bind(icon),

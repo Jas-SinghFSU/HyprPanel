@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { calculateRamUsage } from './helpers';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar';
@@ -35,7 +35,7 @@ export const Ram = (): BarBoxChild => {
         },
     );
 
-    const ramModule = module({
+    const ramModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {

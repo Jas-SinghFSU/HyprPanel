@@ -11,8 +11,6 @@ export const activePlayer = Variable<AstalMpris.Player | undefined>(mprisService
 const forceUpdate = Variable(false);
 
 mprisService.connect('player-closed', (_, closedPlayer) => {
-    // forceUpdate.set(!forceUpdate.get());
-
     if (mprisService.get_players().length === 1 && closedPlayer.busName === mprisService.get_players()[0]?.busName) {
         return activePlayer.set(undefined);
     }
@@ -20,6 +18,12 @@ mprisService.connect('player-closed', (_, closedPlayer) => {
     if (closedPlayer.busName === activePlayer.get()?.busName) {
         const nextPlayer = mprisService.players.find((player) => player.busName !== closedPlayer.busName);
         activePlayer.set(nextPlayer);
+    }
+});
+
+mprisService.connect('player-added', (_, addedPlayer) => {
+    if (activePlayer.get() === undefined) {
+        activePlayer.set(addedPlayer);
     }
 });
 

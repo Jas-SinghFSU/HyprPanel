@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/globals/weather';
 import { BarBoxChild } from 'src/lib/types/bar';
@@ -22,7 +22,7 @@ export const Weather = (): BarBoxChild => {
         }
     });
 
-    const weatherModule = module({
+    const weatherModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(globalWeatherVar).as((v) => `Weather Status: ${v.current.condition.text}`),
         boxClass: 'weather-custom',

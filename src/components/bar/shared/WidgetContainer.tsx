@@ -10,7 +10,7 @@ const computeVisible = (child: BarBoxChild): Bind | boolean => {
     return child.isVisible;
 };
 
-export const BarItemBox = (child: BarBoxChild): JSX.Element => {
+export const WidgetContainer = (child: BarBoxChild): JSX.Element => {
     const buttonClassName = bind(options.theme.bar.buttons.style).as((style) => {
         const styleMap = {
             default: 'style1',
@@ -24,8 +24,16 @@ export const BarItemBox = (child: BarBoxChild): JSX.Element => {
         return `bar_item_box_visible ${styleMap[style]} ${boxClassName}`;
     });
 
+    if (child.isBox) {
+        return (
+            <box className={buttonClassName} visible={computeVisible(child)}>
+                {child.component}
+            </box>
+        );
+    }
+
     return (
-        <button onClick={() => {}} className={buttonClassName} visible={computeVisible(child)} {...child.props}>
+        <button className={buttonClassName} visible={computeVisible(child)} {...child.props}>
             {child.component}
         </button>
     );

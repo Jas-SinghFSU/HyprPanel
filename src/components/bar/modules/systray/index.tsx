@@ -31,9 +31,6 @@ const SysTray = (): BarBoxChild => {
                         Notify({ summary: 'App Name', body: item.id });
                     }
                 }}
-                onDestroy={() => {
-                    isVis.drop();
-                }}
             >
                 <label
                     className={'systray-icon txt-icon'}
@@ -113,6 +110,7 @@ const SysTray = (): BarBoxChild => {
         isVisible: true,
         boxClass: 'systray',
         isVis,
+        isBox: true,
         props: {},
     };
 };

@@ -15,12 +15,15 @@ const { label, truncation, truncation_size, rightClick, middleClick, scrollDown,
 
 const Network = (): BarBoxChild => {
     const iconBinding = Variable.derive(
-        [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
-        (primaryNetwork, networkWifi, networkWired) => {
-            let iconName = networkWifi?.icon_name;
-            if (primaryNetwork === AstalNetwork.Primary.WIRED) {
-                iconName = networkWired.icon_name;
-            }
+        [
+            bind(networkService, 'primary'),
+            bind(networkService.wired, 'iconName'),
+            bind(networkService.wifi, 'iconName'),
+        ],
+        (primaryNetwork, wiredIcon, wifiIcon) => {
+            const isWired = primaryNetwork === AstalNetwork.Primary.WIRED;
+            const iconName = isWired ? wiredIcon : wifiIcon;
+
             return iconName;
         },
     );
@@ -84,6 +87,7 @@ const Network = (): BarBoxChild => {
             {componentChildren}
         </box>
     );
+
     return {
         component,
         isVisible: true,

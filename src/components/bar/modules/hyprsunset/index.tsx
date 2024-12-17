@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
@@ -44,7 +44,7 @@ export const Hyprsunset = (): BarBoxChild => {
         return active ? onLbl : offLbl;
     });
 
-    const hyprsunsetModule = module({
+    const hyprsunsetModule = Module({
         textIcon: iconBinding(),
         tooltipText: tooltipBinding(),
         boxClass: 'hyprsunset',

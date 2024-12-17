@@ -122,7 +122,7 @@ function formatGlobalHelp(registry: CommandRegistry): string {
         helpMessage += formattedCommands;
     }
 
-    helpMessage += `\n${ANSI_FG_MAGENTA}Use "help <commandName>" to get detailed information about a specific command.${ANSI_RESET}\n`;
+    helpMessage += `\n${ANSI_FG_MAGENTA}Use "astal help <commandName>" to get detailed information about a specific command.${ANSI_RESET}\n`;
 
     return helpMessage.trim();
 }

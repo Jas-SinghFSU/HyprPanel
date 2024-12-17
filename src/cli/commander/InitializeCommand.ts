@@ -56,12 +56,12 @@ export function initializeCommands(registry: CommandRegistry): void {
         {
             name: 'useTheme',
             aliases: ['ut'],
-            description: 'Sets the theme based on the provided file path input.',
+            description: 'Sets the theme based on the provided input.',
             category: 'Appearance',
             args: [
                 {
                     name: 'path',
-                    description: 'Path to the HyprPanel theme.',
+                    description: 'Path to the JSON file of the HyprPanel theme.',
                     type: 'string',
                     required: true,
                 },

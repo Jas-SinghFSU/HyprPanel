@@ -6,11 +6,9 @@ import { bind } from '../../../../../../../../../usr/share/astal/gjs';
 const DeviceIcon = ({ device, type, icon }: AudioDeviceProps): JSX.Element => {
     return (
         <label
-            className={bind(device, 'description').as((currentDesc) =>
-                device.description === currentDesc
-                    ? `menu-button-icon active ${type} txt-icon`
-                    : `menu-button-icon ${type} txt-icon`,
-            )}
+            className={bind(device, 'isDefault').as((isDefault) => {
+                return `menu-button-icon ${isDefault ? 'active' : ''} ${type} txt-icon`;
+            })}
             label={icon}
         />
     );

@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { BashPoller } from 'src/lib/poller/BashPoller';
@@ -38,7 +38,7 @@ const updatesPoller = new BashPoller<string, []>(
 updatesPoller.initialize('updates');
 
 export const Updates = (): BarBoxChild => {
-    const updatesModule = module({
+    const updatesModule = Module({
         textIcon: bind(icon),
         tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
         boxClass: 'updates',

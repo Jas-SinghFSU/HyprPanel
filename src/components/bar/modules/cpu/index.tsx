@@ -1,4 +1,4 @@
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import options from 'src/options';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './helpers';
@@ -25,7 +25,7 @@ export const Cpu = (): BarBoxChild => {
         return renderLabel(cpuUsg, rnd);
     });
 
-    const cpuModule = module({
+    const cpuModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
         tooltipText: 'CPU',

@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler, throttleInput } from '../../utils/helpers';
 import { checkIdleStatus, isActive, toggleIdle } from './helpers';
 import { FunctionPoller } from '../../../../lib/poller/FunctionPoller';
@@ -29,7 +29,7 @@ export const Hypridle = (): BarBoxChild => {
         return active ? onLbl : offLbl;
     });
 
-    const hypridleModule = module({
+    const hypridleModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(isActive).as((active) => `Hypridle ${active ? 'enabled' : 'disabled'}`),
         boxClass: 'hypridle',

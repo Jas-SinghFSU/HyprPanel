@@ -4,7 +4,10 @@ const systemtray = AstalTray.get_default();
 
 globalThis.getSystrayItems = (): string => {
     try {
-        const items = systemtray.items.map((systrayItem) => systrayItem.id).join('\n');
+        const items = systemtray
+            .get_items()
+            .map((systrayItem) => systrayItem.id)
+            .join('\n');
 
         return items;
     } catch (error) {

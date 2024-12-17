@@ -24,7 +24,7 @@ window.settings-dialog {
         button.close {
             color: $bar-menus-iconbuttons-passive;
 
-            image {
+            * {
                 font-size: 2em;
             }
 
@@ -37,7 +37,7 @@ window.settings-dialog {
             color: $bar-menus-iconbuttons-passive;
             padding: $padding * 0.5;
 
-            image {
+            * {
                 font-size: 1.25em;
             }
 
@@ -239,14 +239,12 @@ window.settings-dialog {
     .reset-options {
         color: $bar-menus-text;
 
-        image:disabled {
+        &:disabled {
             color: $bar-menus-buttons-disabled;
         }
 
         &:hover {
-            image {
-                color: transparentize($bar-menus-text, 0.5);
-            }
+            color: transparentize($bar-menus-text, 0.5);
         }
     }
 

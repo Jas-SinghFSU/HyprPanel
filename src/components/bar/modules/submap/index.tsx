@@ -1,6 +1,6 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { capitalizeFirstLetter } from 'src/lib/utils';
@@ -51,7 +51,7 @@ export const Submap = (): BarBoxChild => {
         },
     );
 
-    const submapModule = module({
+    const submapModule = Module({
         textIcon: submapIcon(),
         tooltipText: submapLabel(),
         label: submapLabel(),

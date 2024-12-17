@@ -1218,12 +1218,12 @@ const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.js
                     shortcut1: {
                         icon: opt(''),
                         tooltip: opt('Color Picker'),
-                        command: opt('hyprpicker -a'),
+                        command: opt('sleep 0.5 && hyprpicker -a'),
                     },
                     shortcut3: {
                         icon: opt('󰄀'),
                         tooltip: opt('Screenshot'),
-                        command: opt('bash -c "$HOME/.config/ags/services/snapshot.sh"'),
+                        command: opt('bash -c "$HOME/.config/ags/src/services/snapshot.sh"'),
                     },
                 },
             },

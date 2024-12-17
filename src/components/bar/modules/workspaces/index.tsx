@@ -21,6 +21,7 @@ const Workspaces = (monitor = -1): BarBoxChild => {
         component,
         isVisible: true,
         boxClass: 'workspaces',
+        isBox: true,
         props: {
             setup: (self: SelfButton): void => {
                 Variable.derive([bind(scroll_speed)], (scroll_speed) => {

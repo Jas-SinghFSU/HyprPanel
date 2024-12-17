@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './helpers';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
@@ -33,7 +33,7 @@ export const Storage = (): BarBoxChild => {
             return renderResourceLabel(lblTyp, storage, round);
         },
     );
-    const storageModule = module({
+    const storageModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {

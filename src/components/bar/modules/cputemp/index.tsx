@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { module } from '../../shared/module';
+import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getCPUTemperature } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
@@ -45,7 +45,7 @@ export const CpuTemp = (): BarBoxChild => {
             return `${cpuTmp.toString()}°${unit}`;
         },
     );
-    const cpuTempModule = module({
+    const cpuTempModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
         tooltipText: 'CPU Temperature',
