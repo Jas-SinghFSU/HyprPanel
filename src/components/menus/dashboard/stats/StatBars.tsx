@@ -34,7 +34,7 @@ const StatBar = ({ icon, value, label, stat }: StatBarProps): JSX.Element => {
 };
 
 export const GpuStat = (): JSX.Element => {
-    if (!enable_gpu) {
+    if (!enable_gpu.get()) {
         return <box />;
     }
 
