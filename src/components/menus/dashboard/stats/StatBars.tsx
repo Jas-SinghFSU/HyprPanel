@@ -11,7 +11,7 @@ const { enable_gpu } = options.menus.dashboard.stats;
 
 enable_gpu.subscribe((enabled) => {
     if (enabled) {
-        gpuService.startPoller();
+        return gpuService.startPoller();
     }
 
     gpuService.stopPoller();
@@ -42,17 +42,23 @@ const StatBar = ({ icon, value, label, stat }: StatBarProps): JSX.Element => {
 };
 
 export const GpuStat = (): JSX.Element => {
-    if (!enable_gpu.get()) {
-        return <box />;
-    }
-
     return (
-        <StatBar
-            icon={'󰢮'}
-            stat={'gpu'}
-            value={bind(gpuService.gpuUsage)}
-            label={bind(gpuService.gpuUsage).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
-        />
+        <box>
+            {bind(enable_gpu).as((enabled) => {
+                if (!enabled) {
+                    return <box />;
+                }
+
+                return (
+                    <StatBar
+                        icon={'󰢮'}
+                        stat={'gpu'}
+                        value={bind(gpuService.gpuUsage)}
+                        label={bind(gpuService.gpuUsage).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
+                    />
+                );
+            })}
+        </box>
     );
 };
 
