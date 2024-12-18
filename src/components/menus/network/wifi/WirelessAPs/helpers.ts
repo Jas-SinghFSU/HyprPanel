@@ -11,6 +11,9 @@ export const wifiAccessPoints: Variable<AstalNetwork.AccessPoint[]> = Variable([
 let wifiEnabledBinding: Variable<void>;
 let accessPointBinding: Variable<void>;
 
+export const staging = Variable<AstalNetwork.AccessPoint | undefined>(undefined);
+export const connecting = Variable<string>('');
+
 const wifiEnabled = (): void => {
     if (wifiEnabledBinding) {
         wifiEnabledBinding();
@@ -72,15 +75,15 @@ const dedupeWAPs = (): AstalNetwork.AccessPoint[] => {
  * Determines if a given access point is currently in the staging area.
  *
  * @param wap - The access point to check.
- * @param staging - A variable holding the staging access point.
  * @returns True if the access point is in staging; otherwise, false.
  */
-const isInStaging = (wap: AstalNetwork.AccessPoint, staging: Variable<AstalNetwork.AccessPoint>): boolean => {
-    if (Object.keys(staging.get()).length === 0) {
+const isInStaging = (wap: AstalNetwork.AccessPoint): boolean => {
+    const wapInStaging = staging.get();
+    if (wapInStaging === undefined) {
         return false;
     }
 
-    return wap.bssid === staging.get().bssid;
+    return wap.bssid === wapInStaging.bssid;
 };
 
 /**
@@ -89,12 +92,12 @@ const isInStaging = (wap: AstalNetwork.AccessPoint, staging: Variable<AstalNetwo
  * @param staging - A variable holding the staging access point.
  * @returns A filtered array of wireless access points.
  */
-export const getFilteredWirelessAPs = (staging: Variable<AstalNetwork.AccessPoint>): AstalNetwork.AccessPoint[] => {
+export const getFilteredWirelessAPs = (): AstalNetwork.AccessPoint[] => {
     const dedupedWAPs = dedupeWAPs();
 
     const filteredWAPs = dedupedWAPs
         .filter((ap: AstalNetwork.AccessPoint) => {
-            return ap.ssid !== 'Unknown' && !isInStaging(ap, staging);
+            return ap.ssid !== 'Unknown' && !isInStaging(ap);
         })
         .sort((a: AstalNetwork.AccessPoint, b: AstalNetwork.AccessPoint) => {
             if (isApActive(a)) {
@@ -188,18 +191,12 @@ export const getWifiStatus = (): string => {
  *
  * @param accessPoint - The access point to connect to.
  * @param connecting - A variable tracking the current connection attempt.
- * @param staging - A variable holding the staging access point.
  * @param event - The click event triggering the connection.
  *
  * BUG: Causes a crash when the user tries to connect to a network in occasion. Remove in favor of
  * the new AstalNetwork connection interface when implemented.
  */
-export const connectToAP = (
-    accessPoint: AstalNetwork.AccessPoint,
-    connecting: Variable<string>,
-    staging: Variable<AstalNetwork.AccessPoint>,
-    event: Astal.ClickEvent,
-): void => {
+export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (accessPoint.bssid === connecting.get() || isApActive(accessPoint) || !isPrimaryClick(event)) {
         return;
     }
@@ -231,11 +228,7 @@ export const connectToAP = (
  * @param connecting - A variable tracking the current connection attempt.
  * @param event - The click event triggering the disconnection.
  */
-export const disconnectFromAP = (
-    accessPoint: AstalNetwork.AccessPoint,
-    connecting: Variable<string>,
-    event: Astal.ClickEvent,
-): void => {
+export const disconnectFromAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (!isPrimaryClick(event)) {
         return;
     }
@@ -267,11 +260,7 @@ export const disconnectFromAP = (
  * @param connecting - A variable tracking the current connection attempt.
  * @param event - The click event triggering the forget action.
  */
-export const forgetAP = (
-    accessPoint: AstalNetwork.AccessPoint,
-    connecting: Variable<string>,
-    event: Astal.ClickEvent,
-): void => {
+export const forgetAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (!isPrimaryClick(event)) {
         return;
     }

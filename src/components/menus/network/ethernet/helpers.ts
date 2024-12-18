@@ -25,6 +25,7 @@ const getWiredState = (): void => {
     }
 
     if (!networkService.wired) {
+        wiredState.set(AstalNetwork.DeviceState.UNAVAILABLE);
         return;
     }
 
@@ -55,6 +56,7 @@ const getWiredIcon = (): void => {
     }
 
     if (!networkService.wired) {
+        wiredIcon.set('network-wired-symbolic');
         return;
     }
 

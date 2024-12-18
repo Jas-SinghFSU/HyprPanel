@@ -6,7 +6,7 @@ import { Gtk } from 'astal/gtk3';
 import { networkService } from 'src/lib/constants/services';
 import Spinner from 'src/components/shared/Spinner';
 
-export const AccessPoint = ({ connecting, accessPoint, staging }: AccessPointProps): JSX.Element => {
+export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.Element => {
     const ConnectionIcon = (): JSX.Element => {
         return (
             <label
@@ -57,7 +57,7 @@ export const AccessPoint = ({ connecting, accessPoint, staging }: AccessPointPro
         <button
             className="network-element-item"
             onClick={(_, event) => {
-                connectToAP(accessPoint, connecting, staging, event);
+                connectToAP(accessPoint, event);
             }}
         >
             <box hexpand>
@@ -72,5 +72,4 @@ export const AccessPoint = ({ connecting, accessPoint, staging }: AccessPointPro
 interface AccessPointProps {
     connecting: Variable<string>;
     accessPoint: AstalNetwork.AccessPoint;
-    staging: Variable<AstalNetwork.AccessPoint>;
 }

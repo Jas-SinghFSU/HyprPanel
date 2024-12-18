@@ -9,7 +9,7 @@ export const Controls = ({ connecting, accessPoint }: ControlsProps): JSX.Elemen
             <button
                 className="menu-icon-button network disconnect"
                 onClick={(_, event) => {
-                    disconnectFromAP(accessPoint, connecting, event);
+                    disconnectFromAP(accessPoint, event);
                 }}
             >
                 <label className="menu-icon-button disconnect-network txt-icon" tooltipText="Disconnect" label="󱘖" />
@@ -23,7 +23,7 @@ export const Controls = ({ connecting, accessPoint }: ControlsProps): JSX.Elemen
                 className="menu-icon-button network disconnect"
                 tooltipText="Delete/Forget Network"
                 onClick={(_, event) => {
-                    forgetAP(accessPoint, connecting, event);
+                    forgetAP(accessPoint, event);
                 }}
             >
                 <label className="txt-icon delete-network" label="󰚃" />

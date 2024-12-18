@@ -1,7 +1,7 @@
 import { Gtk } from 'astal/gtk3';
 import { bluetoothService } from 'src/lib/constants/services';
 import { isPrimaryClick } from 'src/lib/utils';
-import { bind, timeout } from '../../../../../../../../../../usr/share/astal/gjs';
+import { bind, timeout } from 'astal';
 import { isDiscovering } from './helper';
 
 export const DiscoverButton = (): JSX.Element => (

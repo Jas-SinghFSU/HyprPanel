@@ -3,14 +3,13 @@ import { bind } from 'astal/binding';
 import { Variable } from 'astal';
 import Spinner from 'src/components/shared/Spinner';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { PasswordInput } from './PasswordInput';
 
 export const AccessPoint = ({ staging, connecting }: AccessPointProps): JSX.Element => {
-    const ConnectionIcon = (): JSX.Element => <icon className="network-icon wifi" icon={staging.get().iconName} />;
+    const ConnectionIcon = (): JSX.Element => <icon className="network-icon wifi" icon={staging.get()?.iconName} />;
     const ConnectionSpinner = (): JSX.Element => (
         <revealer
             halign={Gtk.Align.END}
-            revealChild={bind(connecting).as((conBssid) => staging.get().bssid === conBssid)}
+            revealChild={bind(connecting).as((conBssid) => staging.get()?.bssid === conBssid)}
         >
             <Spinner className="spinner wap" />
         </revealer>
@@ -22,7 +21,7 @@ export const AccessPoint = ({ staging, connecting }: AccessPointProps): JSX.Elem
                 halign={Gtk.Align.START}
                 truncate
                 wrap
-                label={staging.get().ssid ?? ''}
+                label={staging.get()?.ssid ?? ''}
             />
         </box>
     );
@@ -34,12 +33,11 @@ export const AccessPoint = ({ staging, connecting }: AccessPointProps): JSX.Elem
                 <ConnectionName />
                 <ConnectionSpinner />
             </box>
-            <PasswordInput connecting={connecting} staging={staging} />
         </box>
     );
 };
 
 interface AccessPointProps {
-    staging: Variable<AstalNetwork.AccessPoint>;
+    staging: Variable<AstalNetwork.AccessPoint | undefined>;
     connecting: Variable<string>;
 }

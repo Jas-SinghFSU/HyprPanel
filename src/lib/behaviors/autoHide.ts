@@ -1,4 +1,4 @@
-import { bind, Variable } from '../../../../../../../usr/share/astal/gjs';
+import { bind, Variable } from 'astal';
 import { hyprlandService } from '../constants/services';
 import { App } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';

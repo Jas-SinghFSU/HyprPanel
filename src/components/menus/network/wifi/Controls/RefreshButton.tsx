@@ -1,6 +1,6 @@
 import { Gtk } from 'astal/gtk3';
 import { networkService } from 'src/lib/constants/services';
-import { bind } from '../../../../../../../../../../usr/share/astal/gjs';
+import { bind } from 'astal';
 import { isPrimaryClick } from 'src/lib/utils';
 import { isScanning } from './helpers';
 

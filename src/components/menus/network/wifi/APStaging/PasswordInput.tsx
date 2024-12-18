@@ -1,27 +1,30 @@
 import { Gdk, Gtk } from 'astal/gtk3';
-import { execAsync, Variable } from '../../../../../../../../../../usr/share/astal/gjs';
 import { isPrimaryClick, Notify } from 'src/lib/utils';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+import { execAsync, Variable } from 'astal';
 
 export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.Element => {
+    const shouldMaskPassword = true;
+
     return (
         <box className="network-password-input-container" halign={Gtk.Align.FILL} hexpand>
             <entry
                 className="network-password-input"
                 hexpand
                 halign={Gtk.Align.START}
-                visibility={false}
+                visibility={shouldMaskPassword}
                 placeholderText="Enter Password"
                 onKeyPressEvent={(self, event) => {
                     const keyPressed = event.get_keyval()[1];
 
                     if (keyPressed === Gdk.KEY_Return) {
-                        connecting.set(staging.get().bssid ?? '');
+                        connecting.set(staging.get()?.bssid ?? '');
 
-                        execAsync(`nmcli dev wifi connect ${staging.get().bssid} password ${self.text}`)
+                        const connectCommand = `nmcli device wifi connect "${staging.get()?.ssid}" password "${self.text}"`;
+
+                        execAsync(connectCommand)
                             .catch((err) => {
                                 connecting.set('');
-                                console.error(`Failed to connect to Wi-Fi: ${staging.get().ssid}... ${err}`);
 
                                 Notify({
                                     summary: 'Network',
@@ -56,6 +59,6 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
 };
 
 interface PasswordInputProps {
-    staging: Variable<AstalNetwork.AccessPoint>;
+    staging: Variable<AstalNetwork.AccessPoint | undefined>;
     connecting: Variable<string>;
 }
