@@ -7,7 +7,6 @@ import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/util
 import Variable from 'astal/variable';
 import { bind } from 'astal/binding.js';
 import AstalBattery from 'gi://AstalBattery?version=0.1';
-import { GtkWidget } from 'src/lib/types/widget';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { getBatteryIcon } from './helpers';
@@ -20,7 +19,7 @@ const BatteryLabel = (): BarBoxChild => {
         (batPercent: number, batCharging: boolean, state: AstalBattery.State) => {
             const batCharged = state === AstalBattery.State.FULLY_CHARGED;
 
-            return getBatteryIcon(batPercent, batCharging, batCharged);
+            return getBatteryIcon(Math.floor(batPercent * 100), batCharging, batCharged);
         },
     );
 
@@ -31,7 +30,7 @@ const BatteryLabel = (): BarBoxChild => {
     };
 
     const generateTooltip = (timeSeconds: number, isCharging: boolean, isCharged: boolean): string => {
-        if (isCharged) {
+        if (isCharged === true) {
             return 'Full';
         }
 
@@ -59,11 +58,8 @@ const BatteryLabel = (): BarBoxChild => {
     const componentTooltip = Variable.derive(
         [bind(batteryService, 'charging'), bind(batteryService, 'timeToFull'), bind(batteryService, 'timeToEmpty')],
         (isCharging, timeToFull, timeToEmpty) => {
-            if (isCharging) {
-                return `Time to full: ${timeToFull}`;
-            } else {
-                return `Time to empty: ${timeToEmpty}`;
-            }
+            const timeRemaining = isCharging ? timeToFull : timeToEmpty;
+            return generateTooltip(timeRemaining, isCharging, Math.floor(batteryService.percentage * 100) === 100);
         },
     );
 
@@ -73,7 +69,7 @@ const BatteryLabel = (): BarBoxChild => {
             const isCharged = Math.round(percentage) === 100;
 
             const icon = <label className={'bar-button-icon battery txt-icon'} label={batIcon()} />;
-            const label = <label className={'bar-button-label battery'} label={`${Math.round(percentage)}%`} />;
+            const label = <label className={'bar-button-label battery'} label={`${Math.floor(percentage * 100)}%`} />;
 
             const children = [icon];
 
@@ -89,13 +85,6 @@ const BatteryLabel = (): BarBoxChild => {
         <box
             className={componentClassName()}
             tooltipText={componentTooltip()}
-            setup={(self: GtkWidget) => {
-                useHook(self, batteryService, () => {
-                    const isCharged = Math.round(batteryService.percentage) === 100;
-
-                    self.tooltipText = generateTooltip(batteryService.timeToFull, batteryService.charging, isCharged);
-                });
-            }}
             onDestroy={() => {
                 batIcon.drop();
                 componentClassName.drop();
