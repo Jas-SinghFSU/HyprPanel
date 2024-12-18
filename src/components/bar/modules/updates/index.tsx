@@ -37,9 +37,15 @@ const updatesPoller = new BashPoller<string, []>(
 
 updatesPoller.initialize('updates');
 
+const updatesIcon = Variable.derive(
+    [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
+    (pendingIcon, updatedIcon, pUpdates) => {
+        return pUpdates === '0' ? updatedIcon : pendingIcon;
+    },
+);
 export const Updates = (): BarBoxChild => {
     const updatesModule = Module({
-        textIcon: bind(icon),
+        textIcon: updatesIcon(),
         tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
         boxClass: 'updates',
         label: bind(pendingUpdates),

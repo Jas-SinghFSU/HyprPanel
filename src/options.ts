@@ -1076,7 +1076,10 @@ const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.js
                 updateCommand: opt('$HOME/.config/ags/scripts/checkUpdates.sh -arch'),
                 label: opt(true),
                 padZero: opt(true),
-                icon: opt('󰏖'),
+                icon: {
+                    pending: opt('󰏗'),
+                    updated: opt('󰏖'),
+                },
                 pollingInterval: opt(1000 * 60 * 60 * 6),
                 leftClick: opt(''),
                 rightClick: opt(''),

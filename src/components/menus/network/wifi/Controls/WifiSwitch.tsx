@@ -6,6 +6,7 @@ export const WifiSwitch = (): JSX.Element => (
         className="menu-switch network"
         valign={Gtk.Align.CENTER}
         tooltipText="Toggle Wifi"
+        active={networkService.wifi?.enabled}
         setup={(self) => {
             self.connect('notify::active', () => {
                 networkService.wifi?.set_enabled(self.active);

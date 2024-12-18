@@ -211,7 +211,12 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Check Updates Command"
                     type="string"
                 />
-                <Option opt={options.bar.customModules.updates.icon} title="Updates Icon" type="string" />
+                <Option
+                    opt={options.bar.customModules.updates.icon.pending}
+                    title="Updates Available Icon"
+                    type="string"
+                />
+                <Option opt={options.bar.customModules.updates.icon.updated} title="No Updates Icon" type="string" />
                 <Option opt={options.bar.customModules.updates.label} title="Show Label" type="boolean" />
                 <Option opt={options.bar.customModules.updates.padZero} title="Pad with 0" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.updates.spacing} title="Spacing" type="string" />

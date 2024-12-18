@@ -85,6 +85,7 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
             applicationIconFallback: string,
             matugenEnabled: boolean,
             smartHighlightEnabled: boolean,
+            monitorList: AstalHyprland.Monitor[],
         ) => {
             const activeWorkspace = hyprlandService.focusedWorkspace.id;
 
@@ -94,6 +95,7 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
                 workspaceRules.get(),
                 monitor,
                 isMonitorSpecific,
+                monitorList,
             );
 
             return workspacesToRender.map((wsId, index) => {
@@ -161,5 +163,13 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
         },
     );
 
-    return <box>{boxChildren()}</box>;
+    return (
+        <box
+            onDestroy={() => {
+                boxChildren.drop();
+            }}
+        >
+            {boxChildren()}
+        </box>
+    );
 };

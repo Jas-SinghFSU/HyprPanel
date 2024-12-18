@@ -7,23 +7,24 @@ import options from 'src/options';
 
 const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
 
-export const getWorkspacesForMonitor = (curWs: number, wsRules: WorkspaceMap, monitor: number): boolean => {
+export const getWorkspacesForMonitor = (
+    curWs: number,
+    wsRules: WorkspaceMap,
+    monitor: number,
+    workspaceList: AstalHyprland.Workspace[],
+    monitorList: AstalHyprland.Monitor[],
+): boolean => {
     if (!wsRules || !Object.keys(wsRules).length) {
         return true;
     }
 
     const monitorMap: MonitorMap = {};
 
-    const workspaceList = hyprlandService.get_workspaces() || [];
     const workspaceMonitorList = workspaceList.map((m) => {
         return { id: m.monitor.id, name: m.monitor.name };
     });
 
-    const monitors = [
-        ...new Map(
-            [...workspaceMonitorList, ...hyprlandService.get_monitors()].map((item) => [item.id, item]),
-        ).values(),
-    ];
+    const monitors = [...new Map([...workspaceMonitorList, ...monitorList].map((item) => [item.id, item])).values()];
 
     monitors.forEach((mon) => (monitorMap[mon.id] = mon.name));
 
@@ -180,12 +181,12 @@ export const getWorkspacesToRender = (
     workspaceRules: WorkspaceMap,
     monitor: number,
     isMonitorSpecific: boolean,
+    monitorList: AstalHyprland.Monitor[],
 ): number[] => {
     let allWorkspaces = range(totalWorkspaces || 8);
     const activeWorkspaces = workspaceList.map((ws) => ws.id);
 
-    const hyprlandWorkspaces = hyprlandService.get_workspaces() || [];
-    const workspaceMonitorList = hyprlandWorkspaces.map((ws) => {
+    const workspaceMonitorList = workspaceList.map((ws) => {
         return {
             id: ws.monitor?.id || -1,
             name: ws.monitor?.name || '',
@@ -193,8 +194,7 @@ export const getWorkspacesToRender = (
     });
 
     const curMonitor =
-        hyprlandService.get_monitors().find((mon) => mon.id === monitor) ||
-        workspaceMonitorList.find((mon) => mon.id === monitor);
+        monitorList.find((mon) => mon.id === monitor) || workspaceMonitorList.find((mon) => mon.id === monitor);
 
     const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
         return [...acc, ...workspaceRules[k]];
@@ -213,7 +213,7 @@ export const getWorkspacesToRender = (
 
     if (isMonitorSpecific) {
         const workspacesInRange = range(totalWorkspaces).filter((ws) => {
-            return getWorkspacesForMonitor(ws, workspaceRules, monitor);
+            return getWorkspacesForMonitor(ws, workspaceRules, monitor, workspaceList, monitorList);
         });
 
         allWorkspaces = [...new Set([...activesForMonitor, ...workspacesInRange])];
