@@ -1,25 +1,23 @@
-import { Gdk, Gtk } from 'astal/gtk3';
+import { bind, Variable } from 'astal';
+import { Gtk } from 'astal/gtk3';
 import { bluetoothService } from 'src/lib/constants/services';
-import { useHook } from 'src/lib/shared/hookHandler';
+
+const isPowered = Variable(false);
+
+Variable.derive([bind(bluetoothService, 'isPowered')], (isOn) => {
+    return isPowered.set(isOn);
+});
 
 export const ToggleSwitch = (): JSX.Element => (
     <switch
         className="menu-switch bluetooth"
         halign={Gtk.Align.END}
         hexpand
+        active={bluetoothService.isPowered}
         setup={(self) => {
-            useHook(self, bluetoothService, () => {
-                self.set_active(bluetoothService.isPowered);
+            self.connect('notify::active', () => {
+                bluetoothService.adapter?.set_powered(self.active);
             });
-        }}
-        onButtonPressEvent={(_, event) => {
-            const buttonClicked = event.get_button()[1];
-
-            if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
-                return;
-            }
-
-            bluetoothService.adapter?.set_powered(!bluetoothService.adapter.powered);
         }}
     />
 );
