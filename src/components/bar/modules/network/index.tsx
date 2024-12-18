@@ -7,18 +7,18 @@ import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/l
 import { Astal, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { useHook } from 'src/lib/shared/hookHandler';
-import { formatWifiInfo } from './helpers/index.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
+import { formatWifiInfo, wiredIcon, wirelessIcon } from './helpers';
 
 const { label, truncation, truncation_size, rightClick, middleClick, scrollDown, scrollUp, showWifiInfo } =
     options.bar.network;
 
 const Network = (): BarBoxChild => {
     const iconBinding = Variable.derive(
-        [bind(networkService, 'primary'), bind(networkService, 'wired'), bind(networkService, 'wifi')],
-        (primaryNetwork, wired, wifi) => {
+        [bind(networkService, 'primary'), bind(wiredIcon), bind(wirelessIcon)],
+        (primaryNetwork, wiredIcon, wifiIcon) => {
             const isWired = primaryNetwork === AstalNetwork.Primary.WIRED;
-            const iconName = isWired ? wired?.iconName : wifi?.iconName;
+            const iconName = isWired ? wiredIcon : wifiIcon;
 
             return iconName;
         },
