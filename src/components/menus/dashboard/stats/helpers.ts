@@ -14,26 +14,15 @@ export const handleClick = (): void => {
     execAsync(`bash -c "${terminal} -e btop"`).catch((err) => `Failed to open btop: ${err}`);
 };
 
-export const initializePollers = (cpuService: Cpu, ramService: Ram, gpuService: Gpu, storageService: Storage): void => {
-    ramService.setShouldRound(true);
-    storageService.setShouldRound(true);
-
+const monitorInterval = (cpuService: Cpu, ramService: Ram, storageService: Storage): void => {
     interval.subscribe(() => {
         ramService.updateTimer(interval.get());
         cpuService.updateTimer(interval.get());
         storageService.updateTimer(interval.get());
     });
+};
 
-    if (enabled.get()) {
-        ramService.startPoller();
-        cpuService.startPoller();
-        storageService.startPoller();
-    }
-
-    if (enabled.get() && enable_gpu.get()) {
-        gpuService.startPoller();
-    }
-
+const monitorStatsEnabled = (cpuService: Cpu, ramService: Ram, gpuService: Gpu, storageService: Storage): void => {
     enabled.subscribe(() => {
         if (!enabled.get()) {
             ramService.stopPoller();
@@ -51,4 +40,35 @@ export const initializePollers = (cpuService: Cpu, ramService: Ram, gpuService: 
         cpuService.startPoller();
         storageService.startPoller();
     });
+};
+
+const monitorGpuTrackingEnabled = (gpuService: Gpu): void => {
+    enable_gpu.subscribe((gpuEnabled) => {
+        if (gpuEnabled) {
+            return gpuService.startPoller();
+        }
+
+        gpuService.stopPoller();
+    });
+};
+
+export const initializePollers = (cpuService: Cpu, ramService: Ram, gpuService: Gpu, storageService: Storage): void => {
+    ramService.setShouldRound(true);
+    storageService.setShouldRound(true);
+
+    if (enabled.get()) {
+        ramService.startPoller();
+        cpuService.startPoller();
+        storageService.startPoller();
+    }
+
+    if (enabled.get() && enable_gpu.get()) {
+        gpuService.startPoller();
+    } else {
+        gpuService.stopPoller();
+    }
+
+    monitorInterval(cpuService, ramService, storageService);
+    monitorStatsEnabled(cpuService, ramService, gpuService, storageService);
+    monitorGpuTrackingEnabled(gpuService);
 };
