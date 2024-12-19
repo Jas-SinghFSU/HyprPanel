@@ -65,7 +65,7 @@ export const generateMediaLabel = (
         identity: identity,
     };
 
-    const mediaFormat = format.getValue();
+    const mediaFormat = format.get();
 
     const truncatedLabel = mediaFormat.replace(
         /{(title|artists|artist|album|name|identity)(:[^}]*)?}/g,

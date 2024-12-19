@@ -7,28 +7,21 @@ import options from 'src/options';
 
 const { autoHide } = options.bar;
 
+const focusedClient = (focusedClient: AstalHyprland.Client): void => {
+    const fullscreenBinding = bind(focusedClient, 'fullscreen');
+
+    if (!focusedClient) {
+        return;
+    }
+
+    Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
+        if (autoHide.get() === 'fullscreen') {
+            App.get_window(`bar-${focusedClient.monitor.id}`)?.set_visible(!isFullScreen);
+        }
+    });
+};
+
 export const initializeAutoHide = (): void => {
-    let currentFocusedClient: Variable<void>;
-
-    const focusedClient = (focusedClient: AstalHyprland.Client): void => {
-        if (currentFocusedClient) {
-            currentFocusedClient();
-            currentFocusedClient.drop();
-        }
-
-        const fullscreenBinding = bind(focusedClient, 'fullscreen');
-
-        if (!focusedClient) {
-            return;
-        }
-
-        currentFocusedClient = Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
-            if (autoHide.get() === 'fullscreen') {
-                App.get_window(`bar-${focusedClient.monitor.id}`)?.set_visible(!isFullScreen);
-            }
-        });
-    };
-
     Variable.derive([bind(autoHide), bind(forceUpdater), bind(hyprlandService, 'workspaces')], (shouldAutohide) => {
         if (shouldAutohide === 'never') {
             hyprlandService.monitors.forEach((monitor) => {

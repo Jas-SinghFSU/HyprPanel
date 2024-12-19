@@ -27,8 +27,8 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      * //##################### EXAMPLE ##########################
      *  const cpuPoller = new FunctionPoller<number, []>(
      *    cpuUsage,
-     *    [round.bind('value')],
-     *    pollingInterval.bind('value'),
+     *    [bind(round)],
+     *    bind(pollingInterval),
      *    computeCPU,
      *  );
      * //#######################################################

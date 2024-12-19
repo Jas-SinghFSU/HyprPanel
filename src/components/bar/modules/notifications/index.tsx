@@ -16,7 +16,7 @@ const notifs = AstalNotifd.get_default();
 
 export const Notifications = (): BarBoxChild => {
     const componentClassName = Variable.derive(
-        [options.theme.bar.buttons.style.bind(), show_total.bind()],
+        [bind(options.theme.bar.buttons.style), bind(show_total)],
         (style: string, showTotal: boolean) => {
             const styleMap: Record<string, string> = {
                 default: 'style1',

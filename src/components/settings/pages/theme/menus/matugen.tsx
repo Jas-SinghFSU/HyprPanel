@@ -19,7 +19,6 @@ export const Matugen = (): JSX.Element => {
                 <Option
                     opt={options.theme.matugen}
                     title="Enable Matugen"
-                    subtitle="WARNING: THIS WILL REPLACE YOUR CURRENT COLOR SCHEME!!!"
                     type="boolean"
                     dependencies={['matugen', 'swww']}
                 />

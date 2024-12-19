@@ -16,7 +16,7 @@ const ClientTitle = (): BarBoxChild => {
     const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
 
     const componentClassName = Variable.derive(
-        [options.theme.bar.buttons.style.bind(), label.bind()],
+        [bind(options.theme.bar.buttons.style), bind(label)],
         (style: string, showLabel: boolean) => {
             const styleMap: Record<string, string> = {
                 default: 'style1',

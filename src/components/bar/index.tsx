@@ -97,9 +97,9 @@ export const Bar = (() => {
             return layerMap[barLayer];
         });
 
-        const computeBorderLocation = borderLocation
-            .bind()
-            .as((brdrLcn) => (brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel'));
+        const computeBorderLocation = bind(borderLocation).as((brdrLcn) =>
+            brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel',
+        );
 
         const leftBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
             const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);

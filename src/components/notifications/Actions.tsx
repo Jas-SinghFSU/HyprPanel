@@ -18,6 +18,7 @@ const ActionButton = ({ notification, action }: ActionButtonProps): JSX.Element 
                     notification.dismiss();
                 } else {
                     notification.invoke(action.id);
+                    notification.dismiss();
                 }
             }}
         >

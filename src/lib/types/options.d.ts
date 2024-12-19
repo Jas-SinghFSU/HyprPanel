@@ -8,7 +8,6 @@ export type MkOptionsResult = {
     configFile: string;
     array: () => Opt[];
     reset: () => Promise<string>;
-    resetTheme: () => Promise<string>;
     handler: (deps: string[], callback: () => void) => void;
 };
 

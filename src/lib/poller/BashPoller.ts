@@ -28,8 +28,8 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      * //##################### EXAMPLE ##########################
      *  const updatesPoller = new BashPoller<string, []>(
      *    pendingUpdates,
-     *    [padZero.bind('value'), postInputUpdater.bind('value')],
-     *    pollingInterval.bind('value'),
+     *    [bind(padZero), bind(postInputUpdater)],
+     *    bind(pollingInterval),
      *    updateCommand.value,
      *    processUpdateCount,
      *  );
