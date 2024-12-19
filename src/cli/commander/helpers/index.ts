@@ -119,7 +119,7 @@ function formatGlobalExplain(registry: CommandRegistry): string {
         explainMessage += formattedCommands;
     }
 
-    explainMessage += `\n${ANSI_FG_MAGENTA}Use "astal explain <commandName>" to get detailed information about a specific hyprpanel command.${ANSI_RESET}\n`;
+    explainMessage += `\n${ANSI_FG_MAGENTA}Use "hyprpanel explain <commandName>" to get detailed information about a specific hyprpanel command.${ANSI_RESET}\n`;
 
     return explainMessage.trim();
 }

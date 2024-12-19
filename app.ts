@@ -48,6 +48,7 @@ const initializeMenus = (): void => {
 };
 
 App.start({
+    instanceName: 'hyprpanel',
     requestHandler(request: string, res: (response: unknown) => void) {
         runCLI(request, res);
     },

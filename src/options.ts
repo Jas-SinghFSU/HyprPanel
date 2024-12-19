@@ -1302,7 +1302,7 @@ const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.js
 
     hyprpanel: {
         restartAgs: opt(true),
-        restartCommand: opt('ags -q; ags'),
+        restartCommand: opt('hyprpanel -q; hyprpanel'),
     },
 
     dummy: opt(true),
