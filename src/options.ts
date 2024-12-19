@@ -19,7 +19,6 @@ import { SystrayIconMap } from './lib/types/systray';
 import { UnitType } from './lib/types/weather';
 import { Transition } from './lib/types/widget';
 import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from './lib/types/workspace';
-import { GLib } from 'astal/gobject';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {
@@ -90,7 +89,7 @@ const tertiary_colors = {
     surface2: '#585b71',
 };
 
-const options = mkOptions(`${GLib.get_user_cache_dir()}/ags/hyprpanel/options.json`, {
+const options = mkOptions(CONFIG, {
     theme: {
         tooltip: {
             scaling: opt(100),

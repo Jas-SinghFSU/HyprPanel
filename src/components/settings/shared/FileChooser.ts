@@ -221,7 +221,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
         });
 
         const tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
-        const optionsConfigFile = Gio.File.new_for_path(OPTIONS);
+        const optionsConfigFile = Gio.File.new_for_path(CONFIG);
 
         const [tmpSuccess, tmpContent] = tmpConfigFile.load_contents(null);
         const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
@@ -246,7 +246,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
         }
 
         saveConfigToFile(tmpConfig, `${TMP}/config.json`);
-        saveConfigToFile(optionsConfig, OPTIONS);
+        saveConfigToFile(optionsConfig, CONFIG);
     }
     dialog.destroy();
     bash(restartCommand.get());

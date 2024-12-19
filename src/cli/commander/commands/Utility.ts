@@ -1,5 +1,6 @@
 import { errorHandler } from 'src/lib/utils';
 import { Command } from '../types';
+import { execAsync, Gio, GLib } from 'astal';
 
 export const utilityCommands: Command[] = [
     {
@@ -26,6 +27,60 @@ export const utilityCommands: Command[] = [
             try {
                 clearAllNotifications();
                 return 'Notifications cleared successfully.';
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'migrateConfig',
+        aliases: ['mcfg'],
+        description: 'Migrates the configuration file from the old location to the new one.',
+        category: 'Utility',
+        args: [],
+        handler: (): string => {
+            const oldPath = `${GLib.get_user_cache_dir()}/ags/hyprpanel/options.json`;
+
+            try {
+                const oldFile = Gio.File.new_for_path(oldPath);
+                const newFile = Gio.File.new_for_path(CONFIG);
+
+                if (oldFile.query_exists(null)) {
+                    oldFile.move(newFile, Gio.FileCopyFlags.OVERWRITE, null, null);
+                    return `Configuration file moved to ${CONFIG}`;
+                } else {
+                    return `Old configuration file does not exist at ${oldPath}`;
+                }
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'restart',
+        aliases: ['r'],
+        description: 'Restarts HyprPanel.',
+        category: 'Utility',
+        args: [],
+        handler: (): string => {
+            try {
+                execAsync('bash -c "hyprpanel -q; hyprpanel"');
+                return '';
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'quit',
+        aliases: ['q'],
+        description: 'Quits HyprPanel.',
+        category: 'Utility',
+        args: [],
+        handler: (): string => {
+            try {
+                execAsync('bash -c "hyprpanel -q"');
+                return '';
             } catch (error) {
                 errorHandler(error);
             }

@@ -3,7 +3,7 @@ import { Gio } from 'astal/file';
 import { GLib } from 'astal/gobject';
 
 declare global {
-    const OPTIONS: string;
+    const CONFIG: string;
     const TMP: string;
     const USER: string;
 }
@@ -13,8 +13,8 @@ export function ensureDirectory(path: string): void {
 }
 
 Object.assign(globalThis, {
-    OPTIONS: `${GLib.get_user_cache_dir()}/ags/hyprpanel/options.json`,
-    TMP: `${GLib.get_tmp_dir()}/ags/hyprpanel`,
+    CONFIG: `${GLib.get_user_config_dir()}/hyprpanel/config.json`,
+    TMP: `${GLib.get_tmp_dir()}/hyprpanel`,
     USER: GLib.get_user_name(),
 });
 
