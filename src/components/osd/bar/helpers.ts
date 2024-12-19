@@ -2,6 +2,15 @@ import { bind, Variable } from 'astal';
 import LevelBar from 'src/components/shared/LevelBar';
 import { audioService, brightnessService } from 'src/lib/constants/services';
 
+/**
+ * Sets up the OSD bar for a LevelBar instance.
+ *
+ * This function hooks various services and settings to the LevelBar instance to update its value and class name
+ * based on the brightness and audio services. It handles screen brightness, keyboard brightness, microphone volume,
+ * microphone mute status, speaker volume, and speaker mute status.
+ *
+ * @param self The LevelBar instance to set up.
+ */
 export const setupOsdBar = (self: LevelBar): void => {
     self.hook(brightnessService, 'notify::screen', () => {
         self.className = self.className.replace(/\boverflow\b/, '').trim();

@@ -14,6 +14,12 @@ let accessPointBinding: Variable<void>;
 export const staging = Variable<AstalNetwork.AccessPoint | undefined>(undefined);
 export const connecting = Variable<string>('');
 
+/**
+ * Checks if WiFi is enabled and updates the `isWifiEnabled` variable.
+ *
+ * This function sets up a binding to the `enabled` property of the WiFi service.
+ * If the WiFi service is available, it updates the `isWifiEnabled` variable based on the enabled state.
+ */
 const wifiEnabled = (): void => {
     if (wifiEnabledBinding) {
         wifiEnabledBinding();
@@ -29,6 +35,12 @@ const wifiEnabled = (): void => {
     });
 };
 
+/**
+ * Updates the list of WiFi access points.
+ *
+ * This function sets up a binding to the `accessPoints` property of the WiFi service.
+ * If the WiFi service is available, it updates the `wifiAccessPoints` variable with the list of access points.
+ */
 const accessPoints = (): void => {
     if (accessPointBinding) {
         accessPointBinding();
@@ -44,13 +56,11 @@ const accessPoints = (): void => {
     });
 };
 
-Variable.derive([bind(networkService, 'wifi')], () => {
-    wifiEnabled();
-    accessPoints();
-});
-
 /**
  * Removes duplicate access points based on their SSID.
+ *
+ * This function iterates through the list of access points and removes duplicates based on their SSID.
+ * It returns an array of deduplicated access points.
  *
  * @returns An array of deduplicated access points.
  */
@@ -74,7 +84,10 @@ const dedupeWAPs = (): AstalNetwork.AccessPoint[] => {
 /**
  * Determines if a given access point is currently in the staging area.
  *
- * @param wap - The access point to check.
+ * This function checks if the provided access point is in the staging area by comparing its BSSID with the BSSID of the staged access point.
+ *
+ * @param wap The access point to check.
+ *
  * @returns True if the access point is in staging; otherwise, false.
  */
 const isInStaging = (wap: AstalNetwork.AccessPoint): boolean => {
@@ -89,7 +102,9 @@ const isInStaging = (wap: AstalNetwork.AccessPoint): boolean => {
 /**
  * Retrieves a list of filtered wireless access points by removing duplicates and excluding specific entries.
  *
- * @param staging - A variable holding the staging access point.
+ * This function filters the list of access points by removing duplicates and excluding access points with the SSID 'Unknown' or those in the staging area.
+ * It also sorts the access points by their signal strength and active status.
+ *
  * @returns A filtered array of wireless access points.
  */
 export const getFilteredWirelessAPs = (): AstalNetwork.AccessPoint[] => {
@@ -115,10 +130,13 @@ export const getFilteredWirelessAPs = (): AstalNetwork.AccessPoint[] => {
 };
 
 /**
- * Determines whether the device is in a active state.
+ * Determines whether the device is in an active state.
  *
- * @param state - The current state of the device.
- * @returns - Returns true if the status should be shown, false otherwise.
+ * This function checks if the provided device state is active by comparing it with the disconnected, unavailable, and failed states.
+ *
+ * @param state The current state of the device.
+ *
+ * @returns True if the device is in an active state; otherwise, false.
  */
 export const isApEnabled = (state: AstalNetwork.DeviceState | undefined): boolean => {
     if (!state) {
@@ -135,8 +153,11 @@ export const isApEnabled = (state: AstalNetwork.DeviceState | undefined): boolea
 /**
  * Checks if the given access point is the currently active one.
  *
- * @param accessPoint - The access point to check.
- * @returns - Returns true if the access point is active, false otherwise.
+ * This function compares the SSID of the provided access point with the SSID of the active access point in the WiFi service.
+ *
+ * @param accessPoint The access point to check.
+ *
+ * @returns True if the access point is active; otherwise, false.
  */
 export const isApActive = (accessPoint: AstalNetwork.AccessPoint): boolean => {
     return accessPoint.ssid === networkService.wifi?.activeAccessPoint?.ssid;
@@ -145,7 +166,10 @@ export const isApActive = (accessPoint: AstalNetwork.AccessPoint): boolean => {
 /**
  * Checks if the specified access point is in the process of disconnecting.
  *
- * @param accessPoint - The access point to check.
+ * This function checks if the provided access point is the active one and if the WiFi service state is deactivating.
+ *
+ * @param accessPoint The access point to check.
+ *
  * @returns True if the access point is disconnecting; otherwise, false.
  */
 export const isDisconnecting = (accessPoint: AstalNetwork.AccessPoint): boolean => {
@@ -158,8 +182,11 @@ export const isDisconnecting = (accessPoint: AstalNetwork.AccessPoint): boolean 
 /**
  * Extracts the connection ID associated with a given SSID from the `nmcli` command output.
  *
- * @param ssid - The SSID of the network.
- * @param nmcliOutput - The output string from the `nmcli` command.
+ * This function parses the output of the `nmcli` command to find the connection ID associated with the provided SSID.
+ *
+ * @param ssid The SSID of the network.
+ * @param nmcliOutput The output string from the `nmcli` command.
+ *
  * @returns The connection ID if found; otherwise, undefined.
  */
 export const getIdFromSsid = (ssid: string, nmcliOutput: string): string | undefined => {
@@ -175,6 +202,8 @@ export const getIdFromSsid = (ssid: string, nmcliOutput: string): string | undef
 /**
  * Retrieves the current Wi-Fi status based on the network service state.
  *
+ * This function returns a string representing the current Wi-Fi status based on the state of the WiFi service.
+ *
  * @returns A string representing the current Wi-Fi status.
  */
 export const getWifiStatus = (): string => {
@@ -189,12 +218,11 @@ export const getWifiStatus = (): string => {
 /**
  * Initiates a connection to the specified access point.
  *
- * @param accessPoint - The access point to connect to.
- * @param connecting - A variable tracking the current connection attempt.
- * @param event - The click event triggering the connection.
+ * This function attempts to connect to the provided access point using the `nmcli` command.
+ * It handles connection attempts, updates the `connecting` variable, and manages errors.
  *
- * BUG: Causes a crash when the user tries to connect to a network in occasion. Remove in favor of
- * the new AstalNetwork connection interface when implemented.
+ * @param accessPoint The access point to connect to.
+ * @param event The click event triggering the connection.
  */
 export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (accessPoint.bssid === connecting.get() || isApActive(accessPoint) || !isPrimaryClick(event)) {
@@ -224,9 +252,11 @@ export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.
 /**
  * Disconnects from the specified access point.
  *
- * @param accessPoint - The access point to disconnect from.
- * @param connecting - A variable tracking the current connection attempt.
- * @param event - The click event triggering the disconnection.
+ * This function attempts to disconnect from the provided access point using the `nmcli` command.
+ * It handles disconnection attempts, updates the `connecting` variable, and manages errors.
+ *
+ * @param accessPoint The access point to disconnect from.
+ * @param event The click event triggering the disconnection.
  */
 export const disconnectFromAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (!isPrimaryClick(event)) {
@@ -256,9 +286,11 @@ export const disconnectFromAP = (accessPoint: AstalNetwork.AccessPoint, event: A
 /**
  * Forgets the specified access point by deleting its connection.
  *
- * @param accessPoint - The access point to forget.
- * @param connecting - A variable tracking the current connection attempt.
- * @param event - The click event triggering the forget action.
+ * This function attempts to forget the provided access point by deleting its connection using the `nmcli` command.
+ * It handles the forget action, updates the `connecting` variable, and manages errors.
+ *
+ * @param accessPoint The access point to forget.
+ * @param event The click event triggering the forget action.
  */
 export const forgetAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void => {
     if (!isPrimaryClick(event)) {
@@ -283,3 +315,8 @@ export const forgetAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.Cli
             });
     });
 };
+
+Variable.derive([bind(networkService, 'wifi')], () => {
+    wifiEnabled();
+    accessPoints();
+});

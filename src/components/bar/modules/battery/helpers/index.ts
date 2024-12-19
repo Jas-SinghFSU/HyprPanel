@@ -28,6 +28,18 @@ const batteryIconsCharging: BatteryIcons = {
     100: '󰂅',
 };
 
+/**
+ * Retrieves the appropriate battery icon based on the battery percentage and charging status.
+ *
+ * This function returns the corresponding battery icon based on the provided battery percentage, charging status, and whether the battery is fully charged.
+ * It uses predefined mappings for battery icons and charging battery icons.
+ *
+ * @param percentage The current battery percentage.
+ * @param charging A boolean indicating whether the battery is currently charging.
+ * @param isCharged A boolean indicating whether the battery is fully charged.
+ *
+ * @returns The corresponding battery icon as a string.
+ */
 export const getBatteryIcon = (percentage: number, charging: boolean, isCharged: boolean): string => {
     if (isCharged) {
         return '󱟢';

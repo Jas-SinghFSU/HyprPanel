@@ -8,6 +8,12 @@ export const wirelessIcon: Variable<string> = Variable('');
 let wiredIconBinding: Variable<void>;
 let wirelessIconBinding: Variable<void>;
 
+/**
+ * Handles the wired network icon binding.
+ *
+ * This function sets up the binding for the wired network icon. It first drops any existing binding,
+ * then checks if the wired network service is available. If available, it binds the icon name to the `wiredIcon` variable.
+ */
 const handleWiredIcon = (): void => {
     if (wiredIconBinding) {
         wiredIconBinding();
@@ -23,6 +29,12 @@ const handleWiredIcon = (): void => {
     });
 };
 
+/**
+ * Handles the wireless network icon binding.
+ *
+ * This function sets up the binding for the wireless network icon. It first drops any existing binding,
+ * then checks if the wireless network service is available. If available, it binds the icon name to the `wirelessIcon` variable.
+ */
 const handleWirelessIcon = (): void => {
     if (wirelessIconBinding) {
         wirelessIconBinding();
@@ -38,15 +50,29 @@ const handleWirelessIcon = (): void => {
     });
 };
 
-Variable.derive([bind(networkService, 'wifi')], () => {
-    handleWiredIcon();
-    handleWirelessIcon();
-});
-
+/**
+ * Formats the frequency value to MHz.
+ *
+ * This function takes a frequency value in kHz and formats it to MHz with two decimal places.
+ *
+ * @param frequency The frequency value in kHz.
+ *
+ * @returns The formatted frequency value in MHz as a string.
+ */
 const formatFrequency = (frequency: number): string => {
     return `${(frequency / 1000).toFixed(2)}MHz`;
 };
 
+/**
+ * Formats the WiFi information for display.
+ *
+ * This function takes a WiFi object and formats its SSID, signal strength, and frequency for display.
+ * If any of these values are not available, it provides default values.
+ *
+ * @param wifi The WiFi object containing SSID, signal strength, and frequency information.
+ *
+ * @returns A formatted string containing the WiFi information.
+ */
 export const formatWifiInfo = (wifi: AstalNetwork.Wifi | null): string => {
     const netSsid = wifi?.ssid ? wifi.ssid : 'None';
     const wifiStrength = wifi?.strength ? wifi.strength : '--';
@@ -54,3 +80,8 @@ export const formatWifiInfo = (wifi: AstalNetwork.Wifi | null): string => {
 
     return `Network: ${netSsid} \nSignal Strength: ${wifiStrength}% \nFrequency: ${wifiFreq}`;
 };
+
+Variable.derive([bind(networkService, 'wifi')], () => {
+    handleWiredIcon();
+    handleWirelessIcon();
+});

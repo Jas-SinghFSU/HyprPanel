@@ -1,3 +1,13 @@
+/**
+ * Retrieves the appropriate Bluetooth icon based on the provided icon name.
+ *
+ * This function returns a Bluetooth icon based on the given icon name. If no match is found,
+ * it returns a default Bluetooth icon. It uses a predefined mapping of device icon names to Bluetooth icons.
+ *
+ * @param iconName The name of the icon to look up.
+ *
+ * @returns The corresponding Bluetooth icon as a string. If no match is found, returns the default Bluetooth icon.
+ */
 const getBluetoothIcon = (iconName: string): string => {
     const deviceIconMap = [
         ['^audio-card*', '󰎄'],

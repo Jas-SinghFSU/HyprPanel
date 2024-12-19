@@ -2,6 +2,15 @@ import { calculateMenuPosition } from './locationHandler';
 import { App, Gtk } from 'astal/gtk3';
 import { DropdownMenuList } from 'src/lib/types/options';
 
+/**
+ * Handles the realization of a dropdown menu.
+ *
+ * This function attempts to realize a dropdown menu by calculating its position and setting its visibility.
+ * It also processes any pending GTK events to ensure the menu is properly displayed and then hides it.
+ * If an error occurs during the realization process, it logs the error message.
+ *
+ * @param name The name of the dropdown menu to realize.
+ */
 export const handleRealization = async (name: DropdownMenuList): Promise<void> => {
     try {
         const appWindow = App.get_window(name);

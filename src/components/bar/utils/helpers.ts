@@ -11,12 +11,32 @@ import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/
 
 const { scrollSpeed } = options.bar.customModules;
 
+const dummyVar = Variable('');
+
+/**
+ * Handles the post input updater by toggling its value.
+ *
+ * This function checks if the `postInputUpdater` variable is defined. If it is, it toggles its value.
+ *
+ * @param postInputUpdater An optional Variable<boolean> that tracks the post input update state.
+ */
 const handlePostInputUpdater = (postInputUpdater?: Variable<boolean>): void => {
     if (postInputUpdater !== undefined) {
         postInputUpdater.set(!postInputUpdater.get());
     }
 };
 
+/**
+ * Executes an asynchronous command and handles the result.
+ *
+ * This function runs a given command asynchronously using `execAsync`. If the command starts with 'menu:', it opens the specified menu.
+ * Otherwise, it executes the command in a bash shell. After execution, it handles the post input updater and calls the provided callback function with the command output.
+ *
+ * @param cmd The command to execute.
+ * @param events An object containing the clicked widget and event information.
+ * @param fn An optional callback function to handle the command output.
+ * @param postInputUpdater An optional Variable<boolean> that tracks the post input update state.
+ */
 export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdater?: Variable<boolean>): void => {
     if (cmd.startsWith('menu:')) {
         const menuName = cmd.split(':')[1].trim().toLowerCase();
@@ -37,6 +57,13 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
 
 /**
  * Generic throttle function to limit the rate at which a function can be called.
+ *
+ * This function creates a throttled version of the provided function that can only be called once within the specified limit.
+ *
+ * @param func The function to throttle.
+ * @param limit The time limit in milliseconds.
+ *
+ * @returns The throttled function.
  */
 export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
     let inThrottle = false;
@@ -53,14 +80,28 @@ export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
 
 /**
  * Creates a throttled scroll handler with the given interval.
+ *
+ * This function returns a throttled version of the `runAsyncCommand` function that can be called with the specified interval.
+ *
+ * @param interval The interval in milliseconds.
+ *
+ * @returns The throttled scroll handler function.
  */
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
     throttleInput((cmd: string, args, fn, postInputUpdater) => {
         runAsyncCommand(cmd, args, fn, postInputUpdater);
     }, 200 / interval);
 
-const dummyVar = Variable('');
-
+/**
+ * Handles input events for a GtkWidget.
+ *
+ * This function sets up event handlers for primary, secondary, and middle clicks, as well as scroll events.
+ * It uses the provided input handler events and post input updater to manage the input state.
+ *
+ * @param self The GtkWidget instance to handle input events for.
+ * @param inputHandlerEvents An object containing the input handler events for primary, secondary, and middle clicks, as well as scroll up and down.
+ * @param postInputUpdater An optional Variable<boolean> that tracks the post input update state.
+ */
 export const inputHandler = (
     self: GtkWidget,
     {
@@ -174,6 +215,17 @@ export const inputHandler = (
     )();
 };
 
+/**
+ * Calculates the percentage of used resources.
+ *
+ * This function calculates the percentage of used resources based on the total and used values.
+ * It can optionally round the result to the nearest integer.
+ *
+ * @param totalUsed An array containing the total and used values.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The percentage of used resources as a number.
+ */
 export const divide = ([total, used]: number[], round: boolean): number => {
     const percentageTotal = (used / total) * 100;
     if (round) {
@@ -182,23 +234,76 @@ export const divide = ([total, used]: number[], round: boolean): number => {
     return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
 };
 
+/**
+ * Formats a size in bytes to KiB.
+ *
+ * This function converts a size in bytes to kibibytes (KiB) and optionally rounds the result.
+ *
+ * @param sizeInBytes The size in bytes to format.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The size in KiB as a number.
+ */
 export const formatSizeInKiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 1;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
+
+/**
+ * Formats a size in bytes to MiB.
+ *
+ * This function converts a size in bytes to mebibytes (MiB) and optionally rounds the result.
+ *
+ * @param sizeInBytes The size in bytes to format.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The size in MiB as a number.
+ */
 export const formatSizeInMiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 2;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
+
+/**
+ * Formats a size in bytes to GiB.
+ *
+ * This function converts a size in bytes to gibibytes (GiB) and optionally rounds the result.
+ *
+ * @param sizeInBytes The size in bytes to format.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The size in GiB as a number.
+ */
 export const formatSizeInGiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 3;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
+
+/**
+ * Formats a size in bytes to TiB.
+ *
+ * This function converts a size in bytes to tebibytes (TiB) and optionally rounds the result.
+ *
+ * @param sizeInBytes The size in bytes to format.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The size in TiB as a number.
+ */
 export const formatSizeInTiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 4;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
 
+/**
+ * Automatically formats a size in bytes to the appropriate unit.
+ *
+ * This function converts a size in bytes to the most appropriate unit (TiB, GiB, MiB, KiB, or bytes) and optionally rounds the result.
+ *
+ * @param sizeInBytes The size in bytes to format.
+ * @param round A boolean indicating whether to round the result.
+ *
+ * @returns The formatted size as a number.
+ */
 export const autoFormatSize = (sizeInBytes: number, round: boolean): number => {
     // auto convert to GiB, MiB, KiB, TiB, or bytes
     if (sizeInBytes >= 1024 ** 4) return formatSizeInTiB(sizeInBytes, round);
@@ -209,6 +314,15 @@ export const autoFormatSize = (sizeInBytes: number, round: boolean): number => {
     return sizeInBytes;
 };
 
+/**
+ * Retrieves the appropriate postfix for a size in bytes.
+ *
+ * This function returns the appropriate postfix (TiB, GiB, MiB, KiB, or B) for a given size in bytes.
+ *
+ * @param sizeInBytes The size in bytes to determine the postfix for.
+ *
+ * @returns The postfix as a string.
+ */
 export const getPostfix = (sizeInBytes: number): Postfix => {
     if (sizeInBytes >= 1024 ** 4) return 'TiB';
     if (sizeInBytes >= 1024 ** 3) return 'GiB';
@@ -218,6 +332,18 @@ export const getPostfix = (sizeInBytes: number): Postfix => {
     return 'B';
 };
 
+/**
+ * Renders a resource label based on the label type and resource data.
+ *
+ * This function generates a resource label string based on the provided label type, resource data, and rounding option.
+ * It formats the used, total, and free resource values and calculates the percentage if needed.
+ *
+ * @param lblType The type of label to render (used/total, used, free, or percentage).
+ * @param rmUsg An object containing the resource usage data (used, total, percentage, and free).
+ * @param round A boolean indicating whether to round the values.
+ *
+ * @returns The rendered resource label as a string.
+ */
 export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData, round: boolean): string => {
     const { used, total, percentage, free } = rmUsg;
 
@@ -251,6 +377,16 @@ export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericRe
     return `${percentage}%`;
 };
 
+/**
+ * Formats a tooltip based on the data type and label type.
+ *
+ * This function generates a tooltip string based on the provided data type and label type.
+ *
+ * @param dataType The type of data to include in the tooltip.
+ * @param lblTyp The type of label to format the tooltip for (used, free, used/total, or percentage).
+ *
+ * @returns The formatted tooltip as a string.
+ */
 export const formatTooltip = (dataType: string, lblTyp: ResourceLabelType): string => {
     switch (lblTyp) {
         case 'used':

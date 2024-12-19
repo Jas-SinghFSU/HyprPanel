@@ -6,6 +6,24 @@ import { RateUnit } from 'src/lib/types/bar';
 
 let previousNetUsage = { rx: 0, tx: 0, time: 0 };
 
+interface NetworkUsage {
+    name: string;
+    rx: number;
+    tx: number;
+}
+
+/**
+ * Formats the network rate based on the provided rate, type, and rounding option.
+ *
+ * This function converts the network rate to the appropriate unit (KiB/s, MiB/s, GiB/s, or bytes/s) based on the provided type.
+ * It also rounds the rate to the specified number of decimal places.
+ *
+ * @param rate The network rate to format.
+ * @param type The unit type for the rate (KiB, MiB, GiB).
+ * @param round A boolean indicating whether to round the rate.
+ *
+ * @returns The formatted network rate as a string.
+ */
 const formatRate = (rate: number, type: string, round: boolean): string => {
     const fixed = round ? 0 : 2;
 
@@ -27,12 +45,16 @@ const formatRate = (rate: number, type: string, round: boolean): string => {
     }
 };
 
-interface NetworkUsage {
-    name: string;
-    rx: number;
-    tx: number;
-}
-
+/**
+ * Parses a line of network interface data.
+ *
+ * This function parses a line of network interface data from the /proc/net/dev file.
+ * It extracts the interface name, received bytes, and transmitted bytes.
+ *
+ * @param line The line of network interface data to parse.
+ *
+ * @returns An object containing the interface name, received bytes, and transmitted bytes, or null if the line is invalid.
+ */
 const parseInterfaceData = (line: string): NetworkUsage | null => {
     const trimmedLine = line.trim();
     if (!trimmedLine || trimmedLine.startsWith('Inter-') || trimmedLine.startsWith('face')) {
@@ -47,12 +69,32 @@ const parseInterfaceData = (line: string): NetworkUsage | null => {
     return { name: cleanedIface, rx: rxValue, tx: txValue };
 };
 
+/**
+ * Validates a network interface.
+ *
+ * This function checks if the provided network interface is valid based on the interface name and received/transmitted bytes.
+ *
+ * @param iface The network interface to validate.
+ * @param interfaceName The name of the interface to check.
+ *
+ * @returns True if the interface is valid, false otherwise.
+ */
 const isValidInterface = (iface: NetworkUsage | null, interfaceName: string): boolean => {
     if (!iface) return false;
     if (interfaceName) return iface.name === interfaceName;
     return iface.name !== 'lo' && iface.rx > 0 && iface.tx > 0;
 };
 
+/**
+ * Retrieves the network usage for a specified interface.
+ *
+ * This function reads the /proc/net/dev file to get the network usage data for the specified interface.
+ * If no interface name is provided, it returns the usage data for the first valid interface found.
+ *
+ * @param interfaceName The name of the interface to get the usage data for. Defaults to an empty string.
+ *
+ * @returns An object containing the interface name, received bytes, and transmitted bytes.
+ */
 const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
     const [success, data] = GLib.file_get_contents('/proc/net/dev');
     if (!success) {
@@ -71,6 +113,18 @@ const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
     return { name: '', rx: 0, tx: 0 };
 };
 
+/**
+ * Computes the network usage data.
+ *
+ * This function calculates the network usage data based on the provided rounding option, interface name, and data type.
+ * It returns an object containing the formatted received and transmitted rates.
+ *
+ * @param round A Variable<boolean> indicating whether to round the rates.
+ * @param interfaceNameVar A Variable<string> containing the name of the interface to get the usage data for.
+ * @param dataType A Variable<RateUnit> containing the unit type for the rates.
+ *
+ * @returns An object containing the formatted received and transmitted rates.
+ */
 export const computeNetwork = (
     round: Variable<boolean>,
     interfaceNameVar: Variable<string>,

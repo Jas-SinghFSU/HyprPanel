@@ -2,6 +2,14 @@ import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import { audioService, brightnessService } from 'src/lib/constants/services';
 
+/**
+ * Sets up the OSD label for a given widget.
+ *
+ * This function hooks various services and settings to the widget to update its label based on the brightness and audio services.
+ * It handles screen brightness, keyboard brightness, microphone volume, microphone mute status, speaker volume, and speaker mute status.
+ *
+ * @param self The Widget.Label instance to set up.
+ */
 export const setupOsdLabel = (self: Widget.Label): void => {
     self.hook(brightnessService, 'notify::screen', () => {
         self.className = self.className.replace(/\boverflow\b/, '').trim();

@@ -18,6 +18,12 @@ let wiredInternetBinding: Variable<void>;
 let wiredIconBinding: Variable<void>;
 let wiredSpeedBinding: Variable<void>;
 
+/**
+ * Retrieves the current state of the wired network.
+ *
+ * This function sets up a binding to the `state` property of the wired network service.
+ * If the wired network service is available, it updates the `wiredState` variable with the current state.
+ */
 const getWiredState = (): void => {
     if (wiredStateBinding) {
         wiredStateBinding();
@@ -34,6 +40,12 @@ const getWiredState = (): void => {
     });
 };
 
+/**
+ * Retrieves the current internet status of the wired network.
+ *
+ * This function sets up a binding to the `internet` property of the wired network service.
+ * If the wired network service is available, it updates the `wiredInternet` variable with the current internet status.
+ */
 const getWiredInternet = (): void => {
     if (wiredInternetBinding) {
         wiredInternetBinding();
@@ -49,6 +61,12 @@ const getWiredInternet = (): void => {
     });
 };
 
+/**
+ * Retrieves the current icon for the wired network.
+ *
+ * This function sets up a binding to the `iconName` property of the wired network service.
+ * If the wired network service is available, it updates the `wiredIcon` variable with the current icon name.
+ */
 const getWiredIcon = (): void => {
     if (wiredIconBinding) {
         wiredIconBinding();
@@ -65,6 +83,12 @@ const getWiredIcon = (): void => {
     });
 };
 
+/**
+ * Retrieves the current speed of the wired network.
+ *
+ * This function sets up a binding to the `speed` property of the wired network service.
+ * If the wired network service is available, it updates the `wiredSpeed` variable with the current speed.
+ */
 const getWiredSpeed = (): void => {
     if (wiredSpeedBinding) {
         wiredSpeedBinding();
@@ -79,6 +103,13 @@ const getWiredSpeed = (): void => {
         wiredSpeed.set(speed);
     });
 };
+
+Variable.derive([bind(networkService, 'wired')], () => {
+    getWiredState();
+    getWiredInternet();
+    getWiredIcon();
+    getWiredSpeed();
+});
 
 Variable.derive([bind(networkService, 'wired')], () => {
     getWiredState();
