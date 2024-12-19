@@ -1,0 +1,246 @@
+.notification-menu-content * {
+    font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
+}
+
+.notification-card-container.menu {
+    margin: 0em;
+    min-width: 30.6em * $bar-menus-menu-notifications-scaling * 0.01;
+    min-height: $bar-menus-menu-notifications-height * $bar-menus-menu-notifications-scaling * 0.01;
+    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-notifications-background);
+    border: $bar-menus-border-size solid
+        if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
+    border-radius: $bar-menus-border-radius;
+    margin-right: 0.45em;
+    opacity: $bar-menus-opacity * 0.01;
+
+    .window-content.notificationsmenu-window {
+        margin-right: 0.5em;
+    }
+
+    .menu-content-container.notifications {
+        margin: 1em;
+        margin-bottom: 0em;
+        min-height: 4em;
+    }
+
+    .notification-menu-controls {
+        background: if($bar-menus-monochrome, $bar-menus-cards, $bar-menus-menu-notifications-card);
+        margin: 1em 1em;
+        margin-bottom: 0.5em;
+        border-radius: $bar-menus-card_radius;
+        padding: 0.4em 0.75em;
+    }
+
+    .notification-card.menu {
+        background: $notification-background;
+        min-width: 0em;
+        min-height: 0em;
+        font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
+        border: 0.15em solid $notification-border;
+        border-radius: 0em;
+        border-bottom-left-radius: $notification-border_radius;
+        border-top-left-radius: $notification-border_radius;
+        margin: 0em;
+    }
+
+    .notification-card-content-container {
+        .notification-card {
+            margin-bottom: 0.65em;
+
+            &:last-child {
+                margin-bottom: 1em;
+            }
+        }
+    }
+
+    .notification-card-content {
+        margin-bottom: 0.25em;
+    }
+
+    .menu-label.notifications {
+        margin: 0em;
+        font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-notifications-label);
+    }
+
+    .menu-separator.notification-controls {
+        min-width: 0.1em;
+        background-color: if(
+            $bar-menus-monochrome,
+            $bar-menus-dropdownmenu-divider,
+            $bar-menus-menu-notifications-switch_divider
+        );
+        margin: 0em 1em;
+    }
+
+    .menu-switch.notifications {
+        * {
+            font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
+        }
+
+        background-color: if(
+            $bar-menus-monochrome,
+            $bar-menus-switch-disabled,
+            $bar-menus-menu-notifications-switch-disabled
+        );
+
+        &:checked {
+            background: if(
+                $bar-menus-monochrome,
+                $bar-menus-switch-enabled,
+                $bar-menus-menu-notifications-switch-enabled
+            );
+        }
+
+        slider {
+            background-color: if(
+                $bar-menus-monochrome,
+                $bar-menus-switch-puck,
+                $bar-menus-menu-notifications-switch-puck
+            );
+        }
+
+        &:hover {
+            trough {
+                background: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-switch-disabled,
+                    $bar-menus-menu-notifications-switch-disabled
+                );
+            }
+
+            slider {
+                background: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-switch-puck,
+                    $bar-menus-menu-notifications-switch-puck
+                );
+            }
+        }
+
+        &:active {
+            background: if(
+                $bar-menus-monochrome,
+                $bar-menus-switch-enabled,
+                $bar-menus-menu-notifications-switch-enabled
+            );
+        }
+    }
+
+    .clear-notifications-button {
+        margin-right: 0.3em;
+
+        &:hover label:not(.removing) {
+            color: transparentize(
+                if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear),
+                0.5
+            );
+        }
+    }
+
+    .clear-notifications-label {
+        color: if($bar-menus-monochrome, $bar-menus-buttons-default, $bar-menus-menu-notifications-clear);
+        font-size: 1.5em * $bar-menus-menu-notifications-scaling * 0.01;
+
+        &.removing {
+            color: $bar-menus-buttons-disabled;
+        }
+    }
+
+    scrollbar {
+        margin-right: 0.2em;
+        min-width: $bar-menus-menu-notifications-scrollbar-width * $bar-menus-menu-notifications-scaling * 0.01;
+        border-radius: $bar-menus-menu-notifications-scrollbar-radius;
+        background: transparent;
+
+        slider {
+            min-width: $bar-menus-menu-notifications-scrollbar-width * $bar-menus-menu-notifications-scaling * 0.01;
+            border-radius: $bar-menus-menu-notifications-scrollbar-radius;
+            background: $bar-menus-menu-notifications-scrollbar-color;
+        }
+    }
+
+    .notification-card-header-label {
+        font-size: 0.95em;
+    }
+
+    .notification-card-body-label {
+        font-size: 0.84em;
+    }
+    .notification-icon {
+        font-size: 1.3em;
+    }
+
+    .notification-time {
+        font-size: 0.85em;
+    }
+}
+
+.notification-label-container {
+    margin-bottom: 8em;
+
+    label {
+        color: if($bar-menus-monochrome, $bar-menus-feinttext, $bar-menus-menu-notifications-no_notifications_label);
+    }
+
+    .bell {
+        font-size: 10em * $bar-menus-menu-notifications-scaling * 0.01;
+    }
+
+    .message {
+        font-size: 1.5em * $bar-menus-menu-notifications-scaling * 0.01;
+    }
+}
+
+.close-notification-button.menu {
+    background: $notification-close_button-background;
+    color: $notification-close_button-label;
+    min-width: 2.1em * $bar-menus-menu-notifications-scaling * 0.01;
+    border-radius: 0rem $notification-border_radius $notification-border_radius 0em;
+
+    label {
+        font-size: 1.5em * $bar-menus-menu-notifications-scaling * 0.01;
+    }
+
+    &:hover {
+        background: transparentize($notification-close_button-background, 0.5);
+    }
+}
+
+.notification-menu-pager {
+    background: $bar-menus-menu-notifications-pager-background;
+    border-radius: $bar-menus-border-radius;
+    border-top-left-radius: 0em;
+    border-top-right-radius: 0em;
+
+    .pager-button {
+        margin: 0em;
+        padding: 0.25em 1em;
+        color: $bar-menus-menu-notifications-pager-button;
+
+        .pager-button-label {
+            font-size: 2em * $bar-menus-menu-notifications-scaling * 0.01;
+        }
+
+        &:hover {
+            .pager-button-label {
+                color: transparentize($bar-menus-menu-notifications-pager-button, 0.4);
+                text-decoration: none;
+            }
+        }
+    }
+
+    .pager-label {
+        color: $bar-menus-menu-notifications-pager-label;
+    }
+
+    .disabled {
+        color: transparentize($bar-menus-menu-notifications-pager-button, 0.8);
+
+        &:hover {
+            .pager-button-label {
+                color: transparentize($bar-menus-menu-notifications-pager-button, 0.8);
+            }
+        }
+    }
+}
