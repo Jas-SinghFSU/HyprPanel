@@ -2,123 +2,221 @@ import { isHexColor } from '../globals/variables';
 import { MkOptionsResult } from './types/options';
 import { ensureDirectory } from './session';
 import Variable from 'astal/variable';
-import Binding from 'astal/binding';
 import { monitorFile, readFile, writeFile } from 'astal/file';
 import GLib from 'gi://GLib?version=2.0';
+
+/**
+ * Points to the temp directory
+ */
+const TMP = GLib.get_tmp_dir();
 
 type OptProps = {
     persistent?: boolean;
 };
 
+/**
+ * A file to store default configurations. Placed inside the cache directory.
+ * NOTE: We need to move this out into the .config directory instead.
+ */
 export const defaultFile = `${GLib.get_user_cache_dir()}/ags/hyprpanel/default.json`;
 
 export class Opt<T = unknown> extends Variable<T> {
+    /**
+     * The initial value set when the `Opt` is created.
+     */
+    public readonly initial: T;
+
+    /**
+     * Indicates whether this option should remain unchanged even when reset operations occur.
+     */
+    public readonly persistent: boolean;
+
+    private _id = '';
+
+    /**
+     * Creates an instance of `Opt`.
+     *
+     * @param {T} initial - The initial value of the option.
+     * @param {OptProps} [props={}] - Additional properties for the option.
+     */
     constructor(initial: T, { persistent = false }: OptProps = {}) {
         super(initial);
         this.initial = initial;
         this.persistent = persistent;
     }
 
-    initial: T;
-    private _id = '';
-    persistent: boolean;
-
+    /**
+     * Converts the current value to a JSON-compatible string.
+     *
+     * @returns {string}
+     */
     toJSON(): string {
-        return `opt:${this.get()}`;
+        return `opt:${JSON.stringify(this.get())}`;
     }
-
-    getValue = (): T => {
-        return this.get();
-    };
 
     public get value(): T {
         return this.get();
     }
 
+    /**
+     * Setter for the current value of the option.
+     */
     public set value(val: T) {
         this.set(val);
     }
 
+    /**
+     * Getter for the unique ID of the option.
+     */
     public get id(): string {
         return this._id;
     }
 
+    /**
+     * Setter for the unique ID of the option.
+     */
     public set id(newId: string) {
         this._id = newId;
     }
 
-    bind<R = T>(transform?: (value: T) => R): Binding<R> {
-        const b = Binding.bind(this);
-        return transform ? b.as(transform) : (b as unknown as Binding<R>);
-    }
+    /**
+     * Initializes this option by attempting to read its value from a cache file.
+     * If found, sets the current value. Also sets up a subscription to write updates back.
+     *
+     * @param cacheFile - The path to the cache file.
+     */
+    public init(cacheFile: string): void {
+        const rawData = readFile(cacheFile);
 
-    init(cacheFile: string): void {
-        const cacheV = JSON.parse(readFile(cacheFile) || '{}')[this._id];
-        if (cacheV !== undefined) this.set(cacheV);
+        let cacheData: Record<string, unknown> = {};
+
+        if (rawData && rawData.trim() !== '') {
+            try {
+                cacheData = JSON.parse(rawData) as Record<string, unknown>;
+            } catch {
+                // do nuffin
+            }
+        }
+
+        const cachedVariable = cacheData[this._id];
+
+        if (cachedVariable !== undefined) {
+            this.set(cachedVariable as T);
+        }
 
         this.subscribe((newVal) => {
-            const cache = JSON.parse(readFile(cacheFile) || '{}');
-            cache[this._id] = newVal;
-            writeFile(cacheFile, JSON.stringify(cache, null, 2));
+            const reRaw = readFile(cacheFile);
+            let currentCache: Record<string, unknown> = {};
+            if (reRaw && reRaw.trim() !== '') {
+                try {
+                    currentCache = JSON.parse(reRaw) as Record<string, unknown>;
+                } catch {
+                    // Do nuffin
+                }
+            }
+            currentCache[this._id] = newVal;
+            writeFile(cacheFile, JSON.stringify(currentCache, null, 2));
         });
     }
 
-    createDefault(): void {
-        const cacheV = JSON.parse(readFile(defaultFile) || '{}')[this._id];
-        if (cacheV !== undefined) this.set(cacheV);
-    }
+    /**
+     * Initializes this option by attempting to read its default value from the default file.
+     * If found, sets the current value.
+     */
+    public createDefault(): void {
+        const rawData = readFile(defaultFile);
 
-    reset(): string | undefined {
-        if (this.persistent) return;
+        let defaultData: Record<string, unknown> = {};
 
-        if (JSON.stringify(this.get()) !== JSON.stringify(this.initial)) {
-            this.set(this.initial);
-            return this._id;
+        if (rawData && rawData.trim() !== '') {
+            try {
+                defaultData = JSON.parse(rawData) as Record<string, unknown>;
+            } catch {
+                // do nuffin
+            }
+        }
+
+        const defaultVal = defaultData[this._id];
+
+        if (defaultVal !== undefined) {
+            this.set(defaultVal as T);
         }
     }
 
-    doResetColor(): string | undefined {
-        if (this.persistent) return;
+    /**
+     * Resets the value of this option to its initial value if not persistent and if it differs from the current value.
+     *
+     * @returns Returns the option's ID if reset occurred, otherwise undefined.
+     */
+    public reset(): string | undefined {
+        if (this.persistent) {
+            return undefined;
+        }
 
-        const isColor = isHexColor(this.get() as string);
-        if (JSON.stringify(this.get()) !== JSON.stringify(this.initial) && isColor) {
+        const current = this.get();
+
+        if (JSON.stringify(current) !== JSON.stringify(this.initial)) {
             this.set(this.initial);
             return this._id;
         }
-        return;
+
+        return undefined;
     }
 }
 
-export function opt<T>(initial: T, opts?: OptProps): Opt<T> {
-    return new Opt(initial, opts);
+/**
+ * Creates an `Opt` instance with the given initial value and properties.
+ * @template T
+ * @param initial - The initial value.
+ * @param [props] - Additional properties.
+ */
+export function opt<T>(initial: T, props?: OptProps): Opt<T> {
+    return new Opt(initial, props);
 }
 
-const getOptions = (object: Record<string, unknown>, path = ''): Opt[] => {
-    return Object.keys(object).flatMap((key) => {
-        const obj = object[key];
-        const id = path ? path + '.' + key : key;
+/**
+ * Recursively traverses the provided object to extract all `Opt` instances, assigning IDs to each.
+ *
+ * @param object - The object containing `Opt` instances.
+ * @param [path=''] - The current path (used internally).
+ * @param [arr=[]] - The accumulator array for found `Opt` instances.
+ * @returns An array of all found `Opt` instances.
+ */
+function getOptions(object: Record<string, unknown>, path = '', arr: Opt[] = []): Opt[] {
+    for (const key in object) {
+        const value = object[key];
+        const id = path ? `${path}.${key}` : key;
 
-        if (obj instanceof Variable) {
-            const optValue = obj as Opt;
+        if (value instanceof Variable) {
+            const optValue = value as Opt;
             optValue.id = id;
-            return optValue;
+            arr.push(optValue);
+        } else if (typeof value === 'object' && value !== null) {
+            getOptions(value as Record<string, unknown>, id, arr);
         }
+    }
+    return arr;
+}
 
-        if (typeof obj === 'object' && obj !== null) {
-            return getOptions(obj as Record<string, unknown>, id); // Recursively process nested objects
-        }
-
-        return [];
-    });
-};
-
+/**
+ * Creates and initializes options from a given object structure. The returned object
+ * includes methods to reset values, reset theme colors, and handle dependencies.
+ *
+ * @template T extends object
+ * @param cacheFile - The file path to store cached values.
+ * @param object - The object containing nested `Opt` instances.
+ * @param [confFile='config.json'] - The configuration file name stored in TMP.
+ * @returns The original object extended with additional methods for handling options.
+ */
 export function mkOptions<T extends object>(
     cacheFile: string,
     object: T,
     confFile: string = 'config.json',
 ): T & MkOptionsResult {
-    for (const opt of getOptions(object as Record<string, unknown>)) {
-        opt.init(cacheFile);
+    const allOptions = getOptions(object as Record<string, unknown>);
+
+    for (let i = 0; i < allOptions.length; i++) {
+        allOptions[i].init(cacheFile);
     }
 
     ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
@@ -126,65 +224,102 @@ export function mkOptions<T extends object>(
 
     const configFile = `${TMP}/${confFile}`;
 
-    const values = getOptions(object as Record<string, unknown>).reduce(
-        (obj, { id, value }) => ({ [id]: value, ...obj }),
-        {},
-    );
+    const values: Record<string, unknown> = {};
+    const defaultValues: Record<string, unknown> = {};
 
-    const defaultValues = getOptions(object as Record<string, unknown>).reduce((obj, { id, initial, value }) => {
-        if (!isHexColor(value)) {
-            return { [id]: value, ...obj };
+    for (let i = 0; i < allOptions.length; i++) {
+        const option = allOptions[i];
+        const val = option.value;
+
+        values[option.id] = val;
+
+        if (isHexColor(val as string)) {
+            defaultValues[option.id] = option.initial;
+        } else {
+            defaultValues[option.id] = val;
         }
-
-        return { [id]: initial, ...obj };
-    }, {});
+    }
 
     writeFile(defaultFile, JSON.stringify(defaultValues, null, 2));
     writeFile(configFile, JSON.stringify(values, null, 2));
 
     monitorFile(configFile, () => {
-        const cache = JSON.parse(readFile(configFile) || '{}');
-        for (const opt of getOptions(object as Record<string, unknown>)) {
-            if (JSON.stringify(cache[opt.id]) !== JSON.stringify(opt.get())) opt.set(cache[opt.id]);
+        const raw = readFile(configFile);
+
+        if (!raw || raw.trim() === '') return;
+
+        let cache: Record<string, unknown>;
+
+        try {
+            cache = JSON.parse(raw) as Record<string, unknown>;
+        } catch {
+            return;
+        }
+
+        for (let i = 0; i < allOptions.length; i++) {
+            const opt = allOptions[i];
+            const newVal = cache[opt.id];
+            const oldVal = opt.get();
+
+            if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                opt.set(newVal as T);
+            }
         }
     });
 
+    /**
+     * A simple sleep utility.
+     *
+     * @param [ms=0] - Milliseconds to sleep.
+     */
     function sleep(ms = 0): Promise<T> {
-        return new Promise((r) => setTimeout(r, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    const reset = async (
-        [opt, ...list] = getOptions(object as Record<string, unknown>),
-        id = opt?.reset(),
-    ): Promise<Array<string>> => {
-        if (!opt) return sleep().then(() => []);
+    /**
+     * Resets all options to their initial values if possible.
+     *
+     * @param opts - Array of all option instances.
+     * @returns IDs of all reset options.
+     */
+    async function resetAll(opts: Opt[]): Promise<string[]> {
+        const results: string[] = [];
+        for (let i = 0; i < opts.length; i++) {
+            const id = opts[i].reset();
 
-        return id ? [id, ...(await sleep(50).then(() => reset(list)))] : await sleep().then(() => reset(list));
-    };
-
-    const resetTheme = async (
-        [opt, ...list] = getOptions(object as Record<string, unknown>),
-        id = opt?.doResetColor(),
-    ): Promise<Array<string>> => {
-        if (!opt) return sleep().then(() => []);
-
-        return id
-            ? [id, ...(await sleep(50).then(() => resetTheme(list)))]
-            : await sleep().then(() => resetTheme(list));
-    };
+            if (id) {
+                results.push(id);
+                await sleep(50);
+            }
+        }
+        return results;
+    }
 
     return Object.assign(object, {
         configFile,
-        array: () => getOptions(object as Record<string, unknown>),
-        async reset() {
-            return (await reset()).join('\n');
+        array: (): Opt[] => allOptions,
+        async reset(): Promise<string> {
+            const ids = await resetAll(allOptions);
+
+            return ids.join('\n');
         },
-        async resetTheme() {
-            return (await resetTheme()).join('\n');
-        },
-        handler(deps: string[], callback: () => void) {
-            for (const opt of getOptions(object as Record<string, unknown>)) {
-                if (deps.some((i) => opt.id.startsWith(i))) opt.subscribe(callback);
+
+        /**
+         * Registers a callback that fires when any option whose ID starts with any of the given dependencies changes.
+         *
+         * @param deps - An array of dependency prefixes.
+         * @param callback - The callback function to execute on changes.
+         */
+        handler(deps: string[], callback: () => void): void {
+            for (let i = 0; i < allOptions.length; i++) {
+                const opt = allOptions[i];
+
+                for (let j = 0; j < deps.length; j++) {
+                    if (opt.id.startsWith(deps[j])) {
+                        opt.subscribe(callback);
+                        break;
+                    }
+                }
             }
         },
     });
