@@ -9,11 +9,6 @@ import { locationMap } from 'src/lib/types/defaults/bar';
 
 const { location } = options.theme.bar;
 
-// NOTE: We make the window visible for 2 seconds (on startup) so the child
-// elements can allocate their proper dimensions.
-// Otherwise the width that we rely on for menu positioning is set improperly
-// for the first time we open a menu of each type.
-
 export default ({
     name,
     child,
