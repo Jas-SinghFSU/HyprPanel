@@ -15,14 +15,13 @@ export default (): JSX.Element => {
         <DropdownMenu
             name="mediamenu"
             transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <MediaContainer>
-                    <MediaInfo />
-                    <MediaControls />
-                    <MediaSlider />
-                    <MediaTimeStamp />
-                </MediaContainer>
-            }
-        />
+        >
+            <MediaContainer>
+                <MediaInfo />
+                <MediaControls />
+                <MediaSlider />
+                <MediaTimeStamp />
+            </MediaContainer>
+        </DropdownMenu>
     );
 };

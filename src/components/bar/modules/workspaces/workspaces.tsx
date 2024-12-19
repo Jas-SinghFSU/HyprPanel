@@ -2,9 +2,8 @@ import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnections, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
-import { BoxWidget } from 'src/lib/types/widget';
 import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
-import { bind, execAsync, Variable } from 'astal';
+import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/utils';
@@ -33,7 +32,7 @@ const { smartHighlight } = options.theme.bar.buttons.workspaces;
 
 setupConnections();
 
-export const WorkspaceModule = (monitor: number): BoxWidget => {
+export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element => {
     const boxChildren = Variable.derive(
         [
             bind(monitorSpecific),
@@ -116,7 +115,7 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
                         className={'workspace-button'}
                         onClick={(_, event) => {
                             if (isPrimaryClick(event)) {
-                                execAsync(`hyprctl dispatch workspace ${wsId}`);
+                                hyprlandService.dispatch('workspace', wsId.toString());
                             }
                         }}
                     >
@@ -173,3 +172,7 @@ export const WorkspaceModule = (monitor: number): BoxWidget => {
         </box>
     );
 };
+
+interface WorkspaceModuleProps {
+    monitor: number;
+}

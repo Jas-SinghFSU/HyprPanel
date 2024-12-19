@@ -15,7 +15,11 @@ const Workspaces = (monitor = -1): BarBoxChild => {
         currentMonitorWorkspaces.set(getCurrentMonitorWorkspaces(monitor));
     });
 
-    const component = <box className={'workspaces-box-container'}>{WorkspaceModule(monitor)}</box>;
+    const component = (
+        <box className={'workspaces-box-container'}>
+            <WorkspaceModule monitor={monitor} />
+        </box>
+    );
 
     return {
         component,

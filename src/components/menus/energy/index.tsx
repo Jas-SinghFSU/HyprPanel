@@ -13,14 +13,13 @@ export default (): JSX.Element => {
         <DropdownMenu
             name={'energymenu'}
             transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'menu-items energy'} halign={Gtk.Align.FILL} hexpand>
-                    <box className={'menu-items-container energy'} halign={Gtk.Align.FILL} hexpand vertical>
-                        <Brightness />
-                        <EnergyProfiles />
-                    </box>
+        >
+            <box className={'menu-items energy'} halign={Gtk.Align.FILL} hexpand>
+                <box className={'menu-items-container energy'} halign={Gtk.Align.FILL} hexpand vertical>
+                    <Brightness />
+                    <EnergyProfiles />
                 </box>
-            }
-        />
+            </box>
+        </DropdownMenu>
     );
 };

@@ -15,7 +15,6 @@ import { bash, forMonitors } from 'src/lib/utils';
 import options from 'src/options';
 import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { exec, execAsync } from 'astal';
 import { hyprlandService } from 'src/lib/constants/services';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
@@ -58,7 +57,7 @@ App.start({
         Notifications();
         SettingsDialog();
         OSD();
-        forMonitors(Bar).forEach((bar: GtkWidget) => bar);
+        forMonitors(Bar).forEach((bar: JSX.Element) => bar);
         initializeMenus();
 
         initializeSystemBehaviors();

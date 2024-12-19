@@ -2,7 +2,6 @@ import { audioService } from 'src/lib/constants/services.js';
 import { openMenu } from '../../utils/menu.js';
 import options from 'src/options';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import Variable from 'astal/variable.js';
 import { bind } from 'astal/binding.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
@@ -14,11 +13,11 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 
 const Volume = (): BarBoxChild => {
-    const volumeIcon = (isMuted: boolean, vol: number): GtkWidget => {
+    const volumeIcon = (isMuted: boolean, vol: number): JSX.Element => {
         return <label className={'bar-button-icon volume txt-icon bar'} label={getIcon(isMuted, vol)} />;
     };
 
-    const volumeLabel = (vol: number): GtkWidget => {
+    const volumeLabel = (vol: number): JSX.Element => {
         return <label className={'bar-button-label volume'} label={`${Math.round(vol * 100)}%`} />;
     };
 

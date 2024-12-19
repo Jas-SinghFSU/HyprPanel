@@ -14,23 +14,22 @@ export default (): JSX.Element => {
         <DropdownMenu
             name={'calendarmenu'}
             transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box css={'padding: 1px; margin: -1px;'}>
-                    {bind(weatherEnabled).as((isWeatherEnabled) => {
-                        return (
-                            <box className={'calendar-menu-content'} vexpand={false}>
-                                <box className={'calendar-content-container'} vertical>
-                                    <box className={'calendar-content-items'} vertical>
-                                        <TimeWidget />
-                                        <CalendarWidget />
-                                        <WeatherWidget isEnabled={isWeatherEnabled} />
-                                    </box>
+        >
+            <box css={'padding: 1px; margin: -1px;'}>
+                {bind(weatherEnabled).as((isWeatherEnabled) => {
+                    return (
+                        <box className={'calendar-menu-content'} vexpand={false}>
+                            <box className={'calendar-content-container'} vertical>
+                                <box className={'calendar-content-items'} vertical>
+                                    <TimeWidget />
+                                    <CalendarWidget />
+                                    <WeatherWidget isEnabled={isWeatherEnabled} />
                                 </box>
                             </box>
-                        );
-                    })}
-                </box>
-            }
-        />
+                        </box>
+                    );
+                })}
+            </box>
+        </DropdownMenu>
     );
 };

@@ -1,6 +1,5 @@
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { GtkWidget } from 'src/lib/types/widget';
 import options from 'src/options';
 import { hyprlandService } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
@@ -47,7 +46,7 @@ const ClientTitle = (): BarBoxChild => {
             truncate: boolean,
             truncationSize: number,
         ) => {
-            const children: GtkWidget[] = [];
+            const children: JSX.Element[] = [];
 
             if (showIcon) {
                 children.push(

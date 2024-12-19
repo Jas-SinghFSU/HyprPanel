@@ -3,6 +3,7 @@ import { Gtk } from 'astal/gtk3';
 import { notifHasImg } from './helpers';
 
 export const Image = ({ notification }: ImageProps): JSX.Element => {
+    //TODO: Handle appIcon potentially being a system icon name
     if (!notifHasImg(notification)) {
         return <box />;
     }
@@ -19,7 +20,7 @@ export const Image = ({ notification }: ImageProps): JSX.Element => {
                 halign={Gtk.Align.CENTER}
                 vexpand={false}
                 css={`
-                    background-image: url('${notification.image}');
+                    background-image: url('${notification.image || notification.appIcon}');
                 `}
             />
         </box>

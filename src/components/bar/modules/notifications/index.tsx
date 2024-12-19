@@ -72,15 +72,11 @@ export const Notifications = (): BarBoxChild => {
     );
 
     const component = (
-        <box
-            halign={Gtk.Align.START}
-            className={componentClassName()}
-            child={
-                <box halign={Gtk.Align.START} className={'bar-notifications'}>
-                    {boxChildren()}
-                </box>
-            }
-        />
+        <box halign={Gtk.Align.START} className={componentClassName()}>
+            <box halign={Gtk.Align.START} className={'bar-notifications'}>
+                {boxChildren()}
+            </box>
+        </box>
     );
 
     return {

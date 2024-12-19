@@ -11,14 +11,13 @@ export default (): JSX.Element => {
         <DropdownMenu
             name="audiomenu"
             transition={bind(options.menus.transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'menu-items audio'} halign={Gtk.Align.FILL} hexpand>
-                    <box className={'menu-items-container audio'} halign={Gtk.Align.FILL} vertical hexpand>
-                        <SelectedDevices />
-                        <AvailableDevices />
-                    </box>
+        >
+            <box className={'menu-items audio'} halign={Gtk.Align.FILL} hexpand>
+                <box className={'menu-items-container audio'} halign={Gtk.Align.FILL} vertical hexpand>
+                    <SelectedDevices />
+                    <AvailableDevices />
                 </box>
-            }
-        />
+            </box>
+        </DropdownMenu>
     );
 };

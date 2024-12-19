@@ -19,18 +19,17 @@ export default (): JSX.Element => {
         <DropdownMenu
             name={'notificationsmenu'}
             transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'notification-menu-content'} css={'padding: 1px; margin: -1px;'} hexpand vexpand>
-                    <box className={'notification-card-container menu'} hexpand vexpand vertical>
-                        <Controls />
-                        <NotificationsContainer curPage={curPage} />
-                        <NotificationPager curPage={curPage} />
-                    </box>
-                </box>
-            }
             onDestroy={() => {
                 curPage.drop();
             }}
-        />
+        >
+            <box className={'notification-menu-content'} css={'padding: 1px; margin: -1px;'} hexpand vexpand>
+                <box className={'notification-card-container menu'} hexpand vexpand vertical>
+                    <Controls />
+                    <NotificationsContainer curPage={curPage} />
+                    <NotificationPager curPage={curPage} />
+                </box>
+            </box>
+        </DropdownMenu>
     );
 };

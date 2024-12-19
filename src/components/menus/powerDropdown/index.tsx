@@ -9,16 +9,15 @@ export default (): JSX.Element => {
         <DropdownMenu
             name="powerdropdownmenu"
             transition={bind(options.menus.transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'menu-items power-dropdown'}>
-                    <box className={'menu-items-container power-dropdown'} vertical hexpand>
-                        {PowerButton('shutdown')}
-                        {PowerButton('reboot')}
-                        {PowerButton('logout')}
-                        {PowerButton('sleep')}
-                    </box>
+        >
+            <box className={'menu-items power-dropdown'}>
+                <box className={'menu-items-container power-dropdown'} vertical hexpand>
+                    {PowerButton('shutdown')}
+                    {PowerButton('reboot')}
+                    {PowerButton('logout')}
+                    {PowerButton('sleep')}
                 </box>
-            }
-        />
+            </box>
+        </DropdownMenu>
     );
 };

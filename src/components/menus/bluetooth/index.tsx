@@ -11,16 +11,15 @@ export default (): JSX.Element => {
         <DropdownMenu
             name={'bluetoothmenu'}
             transition={bind(options.menus.transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'menu-items bluetooth'} halign={Gtk.Align.FILL} hexpand>
-                    <box className={'menu-items-container bluetooth'} halign={Gtk.Align.FILL} vertical hexpand>
-                        <box className={'menu-section-container bluetooth'} vertical>
-                            <Header />
-                            <BluetoothDevices />
-                        </box>
+        >
+            <box className={'menu-items bluetooth'} halign={Gtk.Align.FILL} hexpand>
+                <box className={'menu-items-container bluetooth'} halign={Gtk.Align.FILL} vertical hexpand>
+                    <box className={'menu-section-container bluetooth'} vertical>
+                        <Header />
+                        <BluetoothDevices />
                     </box>
                 </box>
-            }
-        />
+            </box>
+        </DropdownMenu>
     );
 };

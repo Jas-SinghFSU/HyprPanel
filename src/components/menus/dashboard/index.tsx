@@ -34,14 +34,13 @@ export default (): JSX.Element => {
         <DropdownMenu
             name={'dashboardmenu'}
             transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-            child={
-                <box className={'dashboard-menu-content'} css={'padding: 1px; margin: -1px;'} vexpand={false}>
-                    {dashboardBinding()}
-                </box>
-            }
             onDestroy={() => {
                 dashboardBinding.drop();
             }}
-        />
+        >
+            <box className={'dashboard-menu-content'} css={'padding: 1px; margin: -1px;'} vexpand={false}>
+                {dashboardBinding()}
+            </box>
+        </DropdownMenu>
     );
 };

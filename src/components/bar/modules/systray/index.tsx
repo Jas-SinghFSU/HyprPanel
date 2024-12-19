@@ -1,7 +1,6 @@
 import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
 import options from '../../../../options';
 import AstalTray from 'gi://AstalTray?version=0.1';
-import { GtkWidget } from '../../../../lib/types/widget';
 import { bind, Variable } from 'astal';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Gdk } from 'astal/gtk3';
@@ -12,7 +11,7 @@ const { ignore, customIcons } = options.bar.systray;
 const SysTray = (): BarBoxChild => {
     const isVis = Variable(false);
 
-    const customIcon = (iconLabel: string, iconColor: string, item: AstalTray.TrayItem): GtkWidget => {
+    const customIcon = (iconLabel: string, iconColor: string, item: AstalTray.TrayItem): JSX.Element => {
         const menu = item.create_menu();
 
         return (
@@ -42,7 +41,7 @@ const SysTray = (): BarBoxChild => {
         );
     };
 
-    const defaultIcon = (item: AstalTray.TrayItem): GtkWidget => {
+    const defaultIcon = (item: AstalTray.TrayItem): JSX.Element => {
         const menu = item.create_menu();
 
         return (

@@ -16,7 +16,7 @@ const { ignore, timeout: popupTimeout } = options.notifications;
  * @returns True if the notification has an image, false otherwise.
  */
 export const notifHasImg = (notification: AstalNotifd.Notification): boolean => {
-    return notification.image && notification.image.length ? true : false;
+    return (notification.image && notification.image.length) || notification.appIcon ? true : false;
 };
 
 /**

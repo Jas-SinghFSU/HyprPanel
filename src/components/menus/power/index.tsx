@@ -29,18 +29,14 @@ const SysButton = ({ action, label }: SysButtonProps): JSX.Element => {
 };
 
 export default (): JSX.Element => (
-    <PopupWindow
-        name={'powermenu'}
-        transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
-        child={
-            <box className={'powermenu horizontal'}>
-                <SysButton action={'shutdown'} label={'SHUTDOWN'} />
-                <SysButton action={'logout'} label={'LOG OUT'} />
-                <SysButton action={'reboot'} label={'REBOOT'} />
-                <SysButton action={'sleep'} label={'SLEEP'} />
-            </box>
-        }
-    />
+    <PopupWindow name={'powermenu'} transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}>
+        <box className={'powermenu horizontal'}>
+            <SysButton action={'shutdown'} label={'SHUTDOWN'} />
+            <SysButton action={'logout'} label={'LOG OUT'} />
+            <SysButton action={'reboot'} label={'REBOOT'} />
+            <SysButton action={'sleep'} label={'SLEEP'} />
+        </box>
+    </PopupWindow>
 );
 
 interface SysButtonProps {

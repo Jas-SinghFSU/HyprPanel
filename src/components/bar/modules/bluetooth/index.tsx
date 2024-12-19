@@ -5,7 +5,6 @@ import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind } from 'astal/binding.js';
 import Variable from 'astal/variable.js';
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { useHook } from 'src/lib/shared/hookHandler.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
@@ -14,11 +13,11 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
 const Bluetooth = (): BarBoxChild => {
-    const btIcon = (isPowered: boolean): GtkWidget => (
+    const btIcon = (isPowered: boolean): JSX.Element => (
         <label className={'bar-button-icon bluetooth txt-icon bar'} label={isPowered ? '󰂯' : '󰂲'} />
     );
 
-    const btText = (isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget => {
+    const btText = (isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element => {
         const connectDevices = devices.filter((device) => device.connected);
 
         const label =
@@ -42,7 +41,7 @@ const Bluetooth = (): BarBoxChild => {
 
     const componentBinding = Variable.derive(
         [bind(options.bar.volume.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
-        (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): GtkWidget[] => {
+        (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element[] => {
             if (showLabel) {
                 return [btIcon(isPowered), btText(isPowered, devices)];
             }
