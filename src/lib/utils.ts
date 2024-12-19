@@ -11,6 +11,7 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
+import { Gio } from 'astal';
 
 /**
  * Handles errors by throwing a new Error with a message.
@@ -234,6 +235,11 @@ export function launchApp(app: AstalApps.Application): void {
  */
 export function isAnImage(imgFilePath: string): boolean {
     try {
+        const file = Gio.File.new_for_path(imgFilePath);
+        if (!file.query_exists(null)) {
+            return false;
+        }
+
         GdkPixbuf.Pixbuf.new_from_file(imgFilePath);
         return true;
     } catch (error) {

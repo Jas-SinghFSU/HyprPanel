@@ -30,6 +30,13 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+
+    &.icon {
+        min-width: 0em;
+        padding: 0em;
+        min-height: 0em;
+        font-size: 3em;
+    }
 }
 
 .notification-card-content {
