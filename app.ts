@@ -55,9 +55,9 @@ App.start({
         initializeStartupScripts();
 
         Notifications();
-        SettingsDialog();
         OSD();
         forMonitors(Bar).forEach((bar: JSX.Element) => bar);
+        SettingsDialog();
         initializeMenus();
 
         initializeSystemBehaviors();

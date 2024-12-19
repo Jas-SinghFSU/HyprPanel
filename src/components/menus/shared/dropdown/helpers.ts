@@ -9,6 +9,11 @@ import { DropdownMenuList } from 'src/lib/types/options';
  * It also processes any pending GTK events to ensure the menu is properly displayed and then hides it.
  * If an error occurs during the realization process, it logs the error message.
  *
+ * The primary purpose of this function is to render the menus at least once to generate and calculate their
+ * gemoetry. That way when they're opened later, they'll be displayed at the correct position.
+ *
+ * The menus are originally realized off-screen to prevent flickering when they're opened.
+ *
  * @param name The name of the dropdown menu to realize.
  */
 export const handleRealization = async (name: DropdownMenuList): Promise<void> => {
@@ -30,6 +35,8 @@ export const handleRealization = async (name: DropdownMenuList): Promise<void> =
         }
 
         appWindow?.set_visible(false);
+
+        await calculateMenuPosition([0, 0], name);
     } catch (error) {
         if (error instanceof Error) {
             console.error(`Error realizing ${name}: ${error.message}`);

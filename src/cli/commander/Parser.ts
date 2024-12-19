@@ -43,7 +43,7 @@ export class CommandParser {
         const commandName = tokens.shift()!;
         const command = this.registry.get(commandName);
         if (!command) {
-            throw new Error(`Unknown command: "${commandName}".`);
+            throw new Error(`Unknown command: "${commandName}". Use "hyprpanel explain" for available commands.`);
         }
 
         const args = this.parseArgs(command, tokens);
