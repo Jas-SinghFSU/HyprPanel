@@ -27,7 +27,6 @@ const ImageItem = ({ notification }: ImageProps): JSX.Element => {
     );
 };
 export const Image = ({ notification }: ImageProps): JSX.Element => {
-    //TODO: Handle appIcon potentially being a system icon name
     if (!notifHasImg(notification)) {
         return <box />;
     }
