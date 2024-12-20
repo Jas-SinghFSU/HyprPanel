@@ -1,28 +1,64 @@
+import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
 import options from '../../../../options';
 import AstalTray from 'gi://AstalTray?version=0.1';
-import { bind, Variable } from 'astal';
+import { bind, Gio, Variable } from 'astal';
 import { BarBoxChild } from 'src/lib/types/bar';
+import { Gdk, Gtk } from 'astal/gtk3';
 import { BindableChild } from 'astal/gtk3/astalify';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
 
+const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup): Gtk.Menu => {
+    const menu = Gtk.Menu.new_from_model(menuModel);
+    menu.insert_action_group('dbusmenu', actionGroup);
+
+    return menu;
+};
+
 const SysTray = (): BarBoxChild => {
     const isVis = Variable(false);
 
-    const MenuContainer = ({ item, child }: MenuContainerProps): JSX.Element => {
+    const MenuCustomIcon = ({ iconLabel, iconColor, item }: MenuCustomIconProps): JSX.Element => {
         return (
-            <menubutton
+            <label
+                className={'systray-icon txt-icon'}
+                label={iconLabel}
+                css={iconColor ? `color: ${iconColor}` : ''}
                 tooltipMarkup={bind(item, 'tooltipMarkup')}
-                usePopover={false}
-                actionGroup={bind(item, 'action-group').as((ag) => ['dbusmenu', ag])}
-                menuModel={bind(item, 'menu-model')}
-                onButtonPressEvent={() => {
-                    log('button press');
+            />
+        );
+    };
+
+    const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
+        return (
+            <icon className={'systray-icon'} gIcon={bind(item, 'gicon')} tooltipMarkup={bind(item, 'tooltipMarkup')} />
+        );
+    };
+
+    const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
+        const menu = createMenu(item.menuModel, item.actionGroup);
+
+        return (
+            <button
+                cursor={'pointer'}
+                onClick={(self, event) => {
+                    if (isPrimaryClick(event)) {
+                        item.activate(0, 0);
+                    }
+
+                    if (isSecondaryClick(event)) {
+                        menu?.popup_at_widget(self, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, null);
+                    }
+
+                    if (isMiddleClick(event)) {
+                        Notify({ summary: 'App Name', body: item.id });
+                    }
                 }}
+                onDestroy={() => menu?.destroy()}
             >
                 {child}
-            </menubutton>
+            </button>
         );
     };
 
@@ -41,24 +77,15 @@ const SysTray = (): BarBoxChild => {
                     const iconColor = custIcons[matchedCustomIcon].color;
 
                     return (
-                        <MenuContainer item={item}>
-                            <label
-                                className={'systray-icon txt-icon'}
-                                label={iconLabel}
-                                css={iconColor ? `color: ${iconColor}` : ''}
-                                tooltipMarkup={bind(item, 'tooltipMarkup')}
-                            />
-                        </MenuContainer>
+                        <MenuEntry item={item}>
+                            <MenuCustomIcon iconLabel={iconLabel} iconColor={iconColor} item={item} />
+                        </MenuEntry>
                     );
                 }
                 return (
-                    <MenuContainer item={item}>
-                        <icon
-                            className={'systray-icon'}
-                            gIcon={bind(item, 'gicon')}
-                            tooltipMarkup={bind(item, 'tooltipMarkup')}
-                        />
-                    </MenuContainer>
+                    <MenuEntry item={item}>
+                        <MenuDefaultIcon item={item} />
+                    </MenuEntry>
                 );
             });
         },
@@ -86,7 +113,13 @@ const SysTray = (): BarBoxChild => {
     };
 };
 
-interface MenuContainerProps {
+interface MenuCustomIconProps {
+    iconLabel: string;
+    iconColor: string;
+    item: AstalTray.TrayItem;
+}
+
+interface MenuEntryProps {
     item: AstalTray.TrayItem;
     child?: BindableChild;
 }
