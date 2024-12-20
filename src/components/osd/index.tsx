@@ -12,6 +12,7 @@ export default (): JSX.Element => {
         <window
             monitor={getOsdMonitor()}
             name={'indicator'}
+            namespace={'indicator'}
             className={'indicator'}
             visible={false}
             layer={bind(options.tear).as((tear) => (tear ? Astal.Layer.TOP : Astal.Layer.OVERLAY))}

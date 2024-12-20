@@ -221,7 +221,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
  */
 export const importFiles = (themeOnly: boolean = false): void => {
     const dialog = new Gtk.FileChooserDialog({
-        title: `Import ${themeOnly ? 'Theme' : 'Config'}`,
+        title: `Import Hyprpanel ${themeOnly ? 'Theme' : 'Config'}`,
         action: Gtk.FileChooserAction.OPEN,
     });
     dialog.set_current_folder(`${SRC_DIR}/themes`);

@@ -1072,7 +1072,7 @@ const options = mkOptions(CONFIG, {
                 scrollDown: opt(''),
             },
             updates: {
-                updateCommand: opt('$HOME/.config/ags/scripts/checkUpdates.sh -arch'),
+                updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
                 icon: {

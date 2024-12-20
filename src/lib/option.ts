@@ -5,11 +5,6 @@ import Variable from 'astal/variable';
 import { monitorFile, readFile, writeFile } from 'astal/file';
 import GLib from 'gi://GLib?version=2.0';
 
-/**
- * Points to the temp directory
- */
-const TMP = GLib.get_tmp_dir();
-
 type OptProps = {
     persistent?: boolean;
 };
@@ -18,7 +13,7 @@ type OptProps = {
  * A file to store default configurations. Placed inside the cache directory.
  * NOTE: We need to move this out into the .config directory instead.
  */
-export const defaultFile = `${GLib.get_user_cache_dir()}/ags/hyprpanel/default.json`;
+export const defaultFile = `${GLib.get_tmp_dir()}/ags/hyprpanel/default.json`;
 
 export class Opt<T = unknown> extends Variable<T> {
     /**

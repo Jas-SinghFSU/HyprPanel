@@ -44,6 +44,7 @@ export default (): JSX.Element => {
     return (
         <window
             name={'notifications-window'}
+            namespace={'notifications-window'}
             className={'notifications-window'}
             layer={windowLayer}
             anchor={windowAnchor}

@@ -19,6 +19,7 @@ export default ({
     return (
         <window
             name={name}
+            namespace={name}
             className={`${name} dropdown-menu`}
             onKeyPressEvent={(_, event) => {
                 const key = event.get_keyval()[1];

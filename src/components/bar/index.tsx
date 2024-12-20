@@ -126,6 +126,7 @@ export const Bar = (() => {
         return (
             <window
                 name={`bar-${hyprlandMonitor}`}
+                namespace={`bar-${hyprlandMonitor}`}
                 className={'bar'}
                 application={App}
                 monitor={monitor}
