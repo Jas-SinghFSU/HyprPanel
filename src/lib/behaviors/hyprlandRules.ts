@@ -9,6 +9,15 @@ const floatSettingsDialog = (): void => {
     });
 };
 
+const floatFilePicker = (): void => {
+    execAsync(['bash', '-c', 'hyprctl keyword windowrulev2 "float, title:^((Save|Import) Hyprpanel.*)$"']);
+
+    hyprlandService.connect('config-reloaded', () => {
+        execAsync(['bash', '-c', 'hyprctl keyword windowrulev2 "float, title:^((Save|Import) Hyprpanel.*)$"']);
+    });
+};
+
 export const hyprlandSettings = (): void => {
     floatSettingsDialog();
+    floatFilePicker();
 };

@@ -149,13 +149,14 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
     const dialog = new Gtk.FileChooserDialog({
-        title: 'Save File As',
+        title: `Save Hyprpanel ${themeOnly ? 'Theme' : 'Config'}`,
         action: Gtk.FileChooserAction.SAVE,
     });
 
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.ACCEPT);
     dialog.set_current_name(themeOnly ? 'hyprpanel_theme.json' : 'hyprpanel_config.json');
+    dialog.get_style_context().add_class('hyprpanel-file-chooser');
 
     const response = dialog.run();
 
@@ -227,6 +228,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
     dialog.set_current_folder(`${SRC_DIR}/themes`);
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+    dialog.get_style_context().add_class('hyprpanel-file-chooser');
 
     const response = dialog.run();
 
