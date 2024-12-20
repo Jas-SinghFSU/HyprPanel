@@ -34,7 +34,6 @@ foreach file : src_file_list
   endif
 endforeach
 
-message('All sources:\n' + '\n'.join(all_sources))
 custom_target(
   'hyprpanel_bundle',
   input: all_sources,
