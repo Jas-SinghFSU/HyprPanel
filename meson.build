@@ -22,9 +22,29 @@ foreach file : ts_file_list
   endif
 endforeach
 
+scss_file_list_process = run_command('find', 'src', '-type', 'f', '-name', '*.scss')
+
+if scss_file_list_process.returncode() != 0
+  error('Failed to list Scss files using find command')
+endif
+
+scss_file_list = scss_file_list_process.stdout().split('\n')
+
+all_sources = []
+foreach file : ts_sources
+  all_sources += file
+endforeach
+
+foreach file : scss_file_list
+  file_stripped = file.strip()
+  if file_stripped != ''
+    all_sources += meson.project_source_root() / file_stripped
+  endif
+endforeach
+
 custom_target(
   'hyprpanel_bundle',
-  input: ts_sources,
+  input: all_sources,
   command: [
     ags,
     'bundle',
@@ -45,3 +65,8 @@ configure_file(
   install_dir: bindir,
   install_mode: 'rwxr-xr-x',
 )
+
+install_subdir('scripts', install_dir: datadir)
+install_subdir('themes', install_dir: datadir)
+install_subdir('assets', install_dir: datadir)
+install_subdir('src/scss', install_dir: datadir / 'src')

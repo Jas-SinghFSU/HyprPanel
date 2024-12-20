@@ -88,6 +88,6 @@ export const recordingPoller = new BashPoller<boolean, []>(
     isRecording,
     [],
     bind(pollingInterval),
-    `${SRC}/src/services/screen_record.sh status`,
+    `${SRC_DIR}/scripts/screen_record.sh status`,
     handleRecorder,
 );

@@ -26,7 +26,7 @@ const MonitorListDropdown = (): JSX.Element => {
 
                             App.get_window('dashboardmenu')?.set_visible(false);
 
-                            execAsync(`${SRC}/src/services/screen_record.sh start ${monitor.name}`).catch((err) =>
+                            execAsync(`${SRC_DIR}/scripts/screen_record.sh start ${monitor.name}`).catch((err) =>
                                 console.error(err),
                             );
                         }}
@@ -52,7 +52,7 @@ export const RecordingButton = (): JSX.Element => {
 
                 if (isRecording.get() === true) {
                     App.get_window('dashboardmenu')?.set_visible(false);
-                    return execAsync(`${SRC}/src/services/screen_record.sh stop`).catch((err) => console.error(err));
+                    return execAsync(`${SRC_DIR}/scripts/screen_record.sh stop`).catch((err) => console.error(err));
                 } else {
                     const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
                     monitorDropdownList.popup_at_pointer(event);

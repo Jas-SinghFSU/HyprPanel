@@ -23,7 +23,7 @@ import { initializeSystemBehaviors } from 'src/lib/behaviors';
 import { runCLI } from 'src/cli/commander';
 
 const initializeStartupScripts = (): void => {
-    execAsync(`python3 ${SRC}/src/services/bluetooth.py`).catch((err) => console.error(err));
+    execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => console.error(err));
 };
 
 const initializeMenus = (): void => {

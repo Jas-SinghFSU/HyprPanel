@@ -88,7 +88,7 @@ export const resetCss = async (): Promise<void> => {
         const vars = `${TMP}/variables.scss`;
         const css = `${TMP}/main.css`;
         const scss = `${TMP}/entry.scss`;
-        const localScss = `${SRC}/src/scss/main.scss`;
+        const localScss = `${SRC_DIR}/src/scss/main.scss`;
 
         const themeVariables = variables;
         const integratedVariables = themeVariables;
@@ -102,7 +102,7 @@ export const resetCss = async (): Promise<void> => {
 
         writeFile(scss, mainScss);
 
-        await bash(`sass --load-path=${SRC}/src/scss ${scss} ${css}`);
+        await bash(`sass --load-path=${SRC_DIR}/src/scss ${scss} ${css}`);
 
         App.apply_css(css, true);
     } catch (error) {

@@ -15,7 +15,7 @@ const ProfilePicture = (): JSX.Element => {
                     GdkPixbuf.Pixbuf.new_from_file(img);
                     return `background-image: url("${img}")`;
                 } catch {
-                    return `background-image: url("${SRC}/assets/hyprpanel.png")`;
+                    return `background-image: url("${SRC_DIR}/assets/hyprpanel.png")`;
                 }
             })}
         />

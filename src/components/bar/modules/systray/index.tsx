@@ -30,6 +30,7 @@ const SysTray = (): BarBoxChild => {
                         Notify({ summary: 'App Name', body: item.id });
                     }
                 }}
+                onDestroy={() => menu?.destroy()}
             >
                 <label
                     className={'systray-icon txt-icon'}

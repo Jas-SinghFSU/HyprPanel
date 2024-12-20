@@ -10,6 +10,13 @@ import { isHexColor } from '../../../globals/variables';
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
 
+/**
+ * Loads a JSON file from the specified file path and parses it.
+ * If the file cannot be loaded or parsed, it logs an error and returns null.
+ *
+ * @param filePath - The path to the JSON file to be loaded.
+ * @returns The parsed JavaScript object or null if the file could not be loaded or parsed.
+ */
 export const loadJsonFile = (filePath: string): Config | null => {
     const file = Gio.File.new_for_path(filePath as string);
     const [success, content] = file.load_contents(null);
@@ -23,6 +30,13 @@ export const loadJsonFile = (filePath: string): Config | null => {
     return JSON.parse(jsonString);
 };
 
+/**
+ * Saves an object as a JSON file to the specified file path.
+ * If the file cannot be saved, it logs an error.
+ *
+ * @param config - The JavaScript object to be saved as a JSON file.
+ * @param filePath - The path where the JSON file will be saved.
+ */
 export const saveConfigToFile = (config: object, filePath: string): void => {
     const file = Gio.File.new_for_path(filePath);
     const outputStream = file.replace(null, false, Gio.FileCreateFlags.NONE, null);
@@ -33,6 +47,13 @@ export const saveConfigToFile = (config: object, filePath: string): void => {
     dataOutputStream.close(null);
 };
 
+/**
+ * Filters the given configuration object to include only theme-related properties.
+ * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
+ *
+ * @param config - The configuration object to be filtered.
+ * @returns A new configuration object containing only theme-related properties.
+ */
 export const filterConfigForThemeOnly = (config: Config): Config => {
     const filteredConfig: Config = {};
 
@@ -47,6 +68,13 @@ export const filterConfigForThemeOnly = (config: Config): Config => {
     return filteredConfig;
 };
 
+/**
+ * Filters the given configuration object to exclude theme-related properties.
+ * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
+ *
+ * @param config - The configuration object to be filtered.
+ * @returns A new configuration object excluding theme-related properties.
+ */
 export const filterConfigForNonTheme = (config: Config): Config => {
     const filteredConfig: Config = {};
     for (const key in config) {
@@ -62,6 +90,15 @@ export const filterConfigForNonTheme = (config: Config): Config => {
     return filteredConfig;
 };
 
+/**
+ * Opens a file save dialog to save the current configuration to a specified file path.
+ * The configuration can be filtered to include only theme-related properties if the themeOnly flag is set.
+ * If the file already exists, it increments the file name to avoid overwriting.
+ * Displays a notification upon successful save or logs an error if the save fails.
+ *
+ * @param filePath - The original file path where the configuration is to be saved.
+ * @param themeOnly - A flag indicating whether to save only theme-related properties.
+ */
 export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const original_file_path = filePath;
 
@@ -76,7 +113,6 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     const jsonString = new TextDecoder('utf-8').decode(content);
     const jsonObject = JSON.parse(jsonString);
 
-    // Function to filter hex color pairs
     const filterHexColorPairs = (jsonObject: Config): Config => {
         const filteredObject: Config = {};
 
@@ -92,12 +128,10 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         return filteredObject;
     };
 
-    // Function to filter out hex color pairs (keep only non-hex color value)
     const filterOutHexColorPairs = (jsonObject: Config): Config => {
         const filteredObject: Config = {};
 
         for (const key in jsonObject) {
-            // do not add key-value pair if its in whiteListedThemeProp
             if (whiteListedThemeProp.includes(key)) {
                 continue;
             }
@@ -111,7 +145,6 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         return filteredObject;
     };
 
-    // Filter the JSON object based on the themeOnly flag
     const filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
     const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
@@ -178,12 +211,20 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
     dialog.destroy();
 };
 
+/**
+ * Opens a file chooser dialog to import a configuration file.
+ * The imported configuration can be filtered to include only theme-related properties if the themeOnly flag is set.
+ * Merges the imported configuration with the existing configuration and saves the result.
+ * Displays a notification upon successful import or logs an error if the import fails.
+ *
+ * @param themeOnly - A flag indicating whether to import only theme-related properties.
+ */
 export const importFiles = (themeOnly: boolean = false): void => {
     const dialog = new Gtk.FileChooserDialog({
         title: `Import ${themeOnly ? 'Theme' : 'Config'}`,
         action: Gtk.FileChooserAction.OPEN,
     });
-    dialog.set_current_folder(`${SRC}/../themes`);
+    dialog.set_current_folder(`${SRC_DIR}/themes`);
     dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
     dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
 

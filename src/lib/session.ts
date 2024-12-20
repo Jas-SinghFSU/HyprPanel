@@ -6,6 +6,7 @@ declare global {
     const CONFIG: string;
     const TMP: string;
     const USER: string;
+    const SRC_DIR: string;
 }
 
 export function ensureDirectory(path: string): void {
@@ -16,7 +17,8 @@ Object.assign(globalThis, {
     CONFIG: `${GLib.get_user_config_dir()}/hyprpanel/config.json`,
     TMP: `${GLib.get_tmp_dir()}/hyprpanel`,
     USER: GLib.get_user_name(),
+    SRC_DIR: GLib.getenv('HYPRPANEL_DATADIR') ?? SRC,
 });
 
 ensureDirectory(TMP);
-App.add_icons(`${SRC}/assets`);
+App.add_icons(`${SRC_DIR}/assets`);

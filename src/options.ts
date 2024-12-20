@@ -1225,7 +1225,7 @@ const options = mkOptions(CONFIG, {
                     shortcut3: {
                         icon: opt('󰄀'),
                         tooltip: opt('Screenshot'),
-                        command: opt('bash -c "$HOME/.config/ags/src/services/snapshot.sh"'),
+                        command: opt(`bash -c "${SRC_DIR}/scripts/snapshot.sh"`),
                     },
                 },
             },
