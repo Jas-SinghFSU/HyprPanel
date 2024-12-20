@@ -64,6 +64,7 @@ function colorText(text: string, color: string): string {
 function checkExecutable(executables: string[]): boolean {
     for (const exe of executables) {
         const { exitCode } = runCommand(`which ${exe}`);
+
         if (exitCode === 0) {
             return true;
         }
@@ -237,7 +238,7 @@ export function checkDependencies(): string {
                 check: ['upower.service'],
             },
             {
-                package: 'aylurs-gtk-shell-git',
+                package: 'aylurs-gtk-shell',
                 required: true,
                 type: 'executable',
                 check: ['ags'],
@@ -286,7 +287,7 @@ export function checkDependencies(): string {
                 description: 'Setting wallpapers',
             },
             {
-                package: 'grimblast-git',
+                package: 'grimblast',
                 required: false,
                 type: 'executable',
                 check: ['grimblast'],
@@ -321,7 +322,7 @@ export function checkDependencies(): string {
                 description: 'To use the preset color picker shortcut',
             },
             {
-                package: 'matugen-bin',
+                package: 'matugen',
                 required: false,
                 type: 'executable',
                 check: ['matugen'],
