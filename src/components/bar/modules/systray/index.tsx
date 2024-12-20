@@ -16,51 +16,49 @@ const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup): Gtk
     return menu;
 };
 
+const MenuCustomIcon = ({ iconLabel, iconColor, item }: MenuCustomIconProps): JSX.Element => {
+    return (
+        <label
+            className={'systray-icon txt-icon'}
+            label={iconLabel}
+            css={iconColor ? `color: ${iconColor}` : ''}
+            tooltipMarkup={bind(item, 'tooltipMarkup')}
+        />
+    );
+};
+
+const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
+    return <icon className={'systray-icon'} gIcon={bind(item, 'gicon')} tooltipMarkup={bind(item, 'tooltipMarkup')} />;
+};
+
+const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
+    const menu = createMenu(item.menuModel, item.actionGroup);
+
+    return (
+        <button
+            cursor={'pointer'}
+            onClick={(self, event) => {
+                if (isPrimaryClick(event)) {
+                    item.activate(0, 0);
+                }
+
+                if (isSecondaryClick(event)) {
+                    menu?.popup_at_widget(self, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, null);
+                }
+
+                if (isMiddleClick(event)) {
+                    Notify({ summary: 'App Name', body: item.id });
+                }
+            }}
+            onDestroy={() => menu?.destroy()}
+        >
+            {child}
+        </button>
+    );
+};
+
 const SysTray = (): BarBoxChild => {
     const isVis = Variable(false);
-
-    const MenuCustomIcon = ({ iconLabel, iconColor, item }: MenuCustomIconProps): JSX.Element => {
-        return (
-            <label
-                className={'systray-icon txt-icon'}
-                label={iconLabel}
-                css={iconColor ? `color: ${iconColor}` : ''}
-                tooltipMarkup={bind(item, 'tooltipMarkup')}
-            />
-        );
-    };
-
-    const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
-        return (
-            <icon className={'systray-icon'} gIcon={bind(item, 'gicon')} tooltipMarkup={bind(item, 'tooltipMarkup')} />
-        );
-    };
-
-    const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
-        const menu = createMenu(item.menuModel, item.actionGroup);
-
-        return (
-            <button
-                cursor={'pointer'}
-                onClick={(self, event) => {
-                    if (isPrimaryClick(event)) {
-                        item.activate(0, 0);
-                    }
-
-                    if (isSecondaryClick(event)) {
-                        menu?.popup_at_widget(self, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, null);
-                    }
-
-                    if (isMiddleClick(event)) {
-                        Notify({ summary: 'App Name', body: item.id });
-                    }
-                }}
-                onDestroy={() => menu?.destroy()}
-            >
-                {child}
-            </button>
-        );
-    };
 
     const componentChildren = Variable.derive(
         [bind(systemtray, 'items'), bind(ignore), bind(customIcons)],

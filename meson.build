@@ -6,42 +6,35 @@ datadir = get_option('prefix') / get_option('datadir') / 'hyprpanel'
 ags = find_program('ags', required: true)
 find_program('gjs', required: true)
 
-ts_file_list_process = run_command('find', 'src', '-type', 'f', '-name', '*.ts')
+src_file_list_process = run_command(
+  'find',
+  'src',
+  '-type', 'f',
+  '(',
+  '-name', '*.ts',
+  '-o',
+  '-name', '*.tsx',
+  '-o',
+  '-name', '*.scss',
+  ')',
+)
 
-if ts_file_list_process.returncode() != 0
-  error('Failed to list TypeScript files using find command')
+if src_file_list_process.returncode() != 0
+  error('Failed to find source files.')
 endif
 
-ts_file_list = ts_file_list_process.stdout().split('\n')
-
-ts_sources = []
-foreach file : ts_file_list
-  file_stripped = file.strip()
-  if file_stripped != ''
-    ts_sources += meson.project_source_root() / file_stripped
-  endif
-endforeach
-
-scss_file_list_process = run_command('find', 'src', '-type', 'f', '-name', '*.scss')
-
-if scss_file_list_process.returncode() != 0
-  error('Failed to list Scss files using find command')
-endif
-
-scss_file_list = scss_file_list_process.stdout().split('\n')
+src_file_list = src_file_list_process.stdout().split('\n')
 
 all_sources = []
-foreach file : ts_sources
-  all_sources += file
-endforeach
 
-foreach file : scss_file_list
+foreach file : src_file_list
   file_stripped = file.strip()
   if file_stripped != ''
     all_sources += meson.project_source_root() / file_stripped
   endif
 endforeach
 
+message('All sources:\n' + '\n'.join(all_sources))
 custom_target(
   'hyprpanel_bundle',
   input: all_sources,
