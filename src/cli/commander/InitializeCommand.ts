@@ -1,9 +1,9 @@
 import { CommandRegistry } from './Registry';
 import { Command } from './types';
 import { createExplainCommand } from './helpers';
-import { appearanceCommands } from './commands/Appearance';
-import { utilityCommands } from './commands/Utility';
-import { windowManagementCommands } from './commands/WindowManagement';
+import { appearanceCommands } from './commands/appearance';
+import { utilityCommands } from './commands/utility';
+import { windowManagementCommands } from './commands/windowManagement';
 
 /**
  * Initializes and registers commands in the provided CommandRegistry.

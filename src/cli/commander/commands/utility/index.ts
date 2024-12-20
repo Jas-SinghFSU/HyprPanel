@@ -1,6 +1,7 @@
 import { errorHandler } from 'src/lib/utils';
-import { Command } from '../types';
+import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
+import { checkDependencies } from './checkDependencies';
 
 export const utilityCommands: Command[] = [
     {
@@ -51,6 +52,20 @@ export const utilityCommands: Command[] = [
                 } else {
                     return `Old configuration file does not exist at ${oldPath}`;
                 }
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'checkDependencies',
+        aliases: ['chd'],
+        description: 'Checks the status of required and optional dependencies.',
+        category: 'Utility',
+        args: [],
+        handler: (): string => {
+            try {
+                return checkDependencies();
             } catch (error) {
                 errorHandler(error);
             }
