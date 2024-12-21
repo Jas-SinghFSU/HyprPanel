@@ -1,21 +1,3 @@
-# 🚧 Migrating to Astal and AGSv2 🚧
-
-Hyprpanel is upgrading to AGSv2 and Astal
-
-🔧 No new features or most bugs will be worked on until migration is complete.
-
-<p align="center">
-  <a href="https://hyprpanel.com" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="./assets/hyprpanel.png" alt="Hyprpanel logo">
-  </a>
-</p>
-<br/>
-<p align="center">
-  <a href="https://hyprpanel.com/getting_started/installation.html"><img src="https://img.shields.io/badge/Wiki-hyprpanel-orange?style=flat&logo=wiki" alt="wiki"></a>
-  <a href="https://discord.gg/MNpg7Z2b3a"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
-</p>
-<br/>
-
 # HyprPanel 🚀
 
 A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
@@ -27,46 +9,25 @@ A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 
 ## Installation
 
-The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for installing the panel and all of its dependencies. The instructions below are general instructions for installing the panel.
+The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for configuring and installing the panel and all of its dependencies. The instructions below are just the general instructions for installing the panel.
 
 ## Requirements
-
-Bun
-
-```sh
-curl -fsSL https://bun.sh/install | bash && \
-  sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
-```
 
 ### Required
 
 ```sh
-pipewire
-
-## Resource monitoring modules
+wireplumber
 libgtop
-
-## Bluetooth menu utilities
 bluez
 bluez-utils
-
-## Copy/Paste utilities
-wl-clipboard
-
-## Compiler for sass/scss
-dart-sass
-
-## Brightness module for OSD
-brightnessctl
-
-## AGS requirements
 networkmanager
-gnome-bluetooth-3.0
+dart-sass
+wl-clipboard
+upower
+gvfs
 ```
 
-::: warning
-HyprPanel will not run without the required dependencies.
-:::
+**NOTE: HyprPanel will not run without the required dependencies.**
 
 ### Optional
 
@@ -74,6 +35,9 @@ HyprPanel will not run without the required dependencies.
 ## Used for Tracking GPU Usage in your Dashboard (NVidia only)
 python
 python-gpustat
+
+## To control screen/keyboard brightness
+brightnessctl
 
 ## Only if a pywal hook from wallpaper changes applied through settings is desired
 pywal
@@ -114,13 +78,13 @@ swww
 pacman:
 
 ```bash
-sudo pacman -S pipewire libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python gnome-bluetooth-3.0 pacman-contrib power-profiles-daemon gvfs
+ sudo pacman -S --needed wireplumber libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib power-profiles-daemon gvfs
 ```
 
 AUR:
 
 ```bash
-yay -S grimblast-git gpu-screen-recorder hyprpicker matugen-bin python-gpustat aylurs-gtk-shell-git hyprsunset-git hypridle-git
+yay -S --needed grimblast-git gpu-screen-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git hypridle-git
 ```
 
 ### Fedora
@@ -135,14 +99,14 @@ sudo dnf config-manager --save --setopt=copr:copr.fedorainfracloud.org:heus-sueh
 
 DNF:
 
-```bash
-sudo dnf install pipewire libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager  wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell power-profiles-daemon gvfs
+```sh
+sudo dnf install wireplumber upower libgtop2 bluez bluez-tools grimblast hyprpicker btop NetworkManager wl-clipboard swww brightnessctl gnome-bluetooth aylurs-gtk-shell power-profiles-daemon gvfs nodejs
 ```
 
-bun:
+npm:
 
 ```bash
-bun install -g sass
+npm install -g sass
 ```
 
 flatpak:
@@ -268,92 +232,3 @@ wayland.windowManager.hyprland.settings.exec-once = [
 HyprPanel handles notifications through the AGS built-in notification service. If you're already using a notification daemon such as Dunst or Mako, you may have to stop them to prevent conflicts with HyprPanel.
 
 > NOTE: If your system is in a language other than English, the resource monitor in the dashboard may not work properly.
-
-## Configuration
-
-The HyprPanel comes with a configuration menu which is available by opening the Dashboard menu (click the button in the bar with the default - Arch - icon) and then clicking the Gear icon.
-
-### Size
-
-The panel is automatically scaled based on your font size in `Configuration > General`.
-
-### Specifying bar layouts per monitor
-
-To specify layouts for each monitor you can create a JSON object such as:
-
-```JSON
-{
-    "0": {
-        "left": [
-            "dashboard",
-            "workspaces",
-            "windowtitle"
-        ],
-        "middle": [
-            "media"
-        ],
-        "right": [
-            "volume",
-            "clock",
-            "notifications"
-        ]
-    },
-    "1": {
-        "left": [
-            "dashboard",
-            "workspaces",
-            "windowtitle"
-        ],
-        "middle": [
-            "media"
-        ],
-        "right": [
-            "volume",
-            "clock",
-            "notifications"
-        ]
-    },
-    "2": {
-        "left": [
-            "dashboard",
-            "workspaces",
-            "windowtitle"
-        ],
-        "middle": [
-            "media"
-        ],
-        "right": [
-            "volume",
-            "network",
-            "bluetooth",
-            "systray",
-            "clock",
-            "notifications"
-        ]
-    }
-}
-```
-
-Where each monitor is defined by its index (0, 1, 2 in this case) and each section (left, middle, right) contains one or more of the following modules:
-
-```js
-'battery';
-'dashboard';
-'workspaces';
-'windowtitle';
-'media';
-'notifications';
-'volume';
-'network';
-'bluetooth';
-'clock';
-'systray';
-```
-
-Since the text-box in the options dialog isn't sufficient, it is recommended that you create this JSON configuration in a text editor elsewhere and paste it into the layout text-box under Configuration > Bar > "Bar Layouts for Monitors".
-
-### Additional Configuration
-
-#### GPU Tracking
-
-If you have an NVidia GPU, you can track your GPU usage in your Dashboard by going to your `Settings > Configuration > Dashboard Menu > Track GPU` and turning it on.
