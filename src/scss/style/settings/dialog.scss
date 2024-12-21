@@ -1,0 +1,484 @@
+window.settings-dialog {
+    opacity: $bar-menus-opacity * 0.01;
+    background-color: $bar-menus-cards;
+    color: $bar-menus-text;
+
+    $widget-bg: $bar-menus-cards;
+    $border: none;
+    $fg: $bar-menus-text;
+
+    .settings-dialog-box {
+        min-width: 75em;
+    }
+
+    .header {
+        background-color: transparentize($bar-menus-background, 0.1);
+        border-bottom-left-radius: $bar-menus-border-radius * 0.5;
+        border-bottom-right-radius: $bar-menus-border-radius * 0.5;
+        padding: $padding;
+
+        button {
+            font-weight: bold;
+        }
+
+        button.close {
+            color: $bar-menus-iconbuttons-passive;
+
+            * {
+                font-size: 2em;
+            }
+
+            &:hover {
+                color: $bar-menus-buttons-active;
+            }
+        }
+
+        button.reset {
+            color: $bar-menus-iconbuttons-passive;
+            padding: $padding * 0.5;
+
+            * {
+                font-size: 1.25em;
+            }
+
+            &:hover {
+                color: $bar-menus-buttons-active;
+            }
+        }
+    }
+
+    .page {
+        .page-content {
+            padding: $padding * 2;
+            padding-top: 0;
+        }
+    }
+
+    .group {
+        .group-title {
+            color: $bar-menus-text;
+            margin-bottom: $spacing * 0.5;
+        }
+
+        .group-reset {
+            margin: $spacing * 0.5;
+            padding: $padding * 0.5;
+
+            &:disabled {
+                color: transparent;
+            }
+        }
+
+        &:not(:first-child) {
+            margin-top: $spacing;
+        }
+    }
+
+    .row {
+        background-color: $widget-bg;
+        padding: $padding;
+        border: $border;
+        border-top: none;
+
+        &:first-child {
+            border-radius: $radius $radius 0em 0em;
+            border: $border;
+        }
+
+        &:last-child {
+            border-radius: 0em 0em $radius $radius;
+        }
+
+        &:first-child:last-child {
+            border-radius: $radius;
+            border: $border;
+        }
+
+        button.reset {
+            margin-left: $spacing;
+        }
+
+        label.id,
+        label.note {
+            color: transparentize($fg, 0.4);
+        }
+
+        entry,
+        button {
+            padding: $padding;
+        }
+
+        spinbutton {
+            entry {
+                border-radius: $radius 0em 0em $radius;
+            }
+
+            button {
+                border-radius: 0em;
+            }
+
+            button:last-child {
+                border-radius: 0em $radius $radius 0em;
+            }
+        }
+
+        .enum-setter {
+            label {
+                background-color: $widget-bg;
+                border: $border;
+                padding: 0em $padding;
+                border-radius: $radius 0em 0em $radius;
+            }
+
+            button {
+                border-radius: 0em;
+            }
+
+            button:last-child {
+                border-radius: 0em $radius $radius 0em;
+            }
+        }
+
+        &.wallpaper {
+            button {
+                margin-top: $spacing * 0.5;
+            }
+
+            .preview {
+                border-radius: $radius;
+            }
+        }
+    }
+}
+
+.option-item {
+    margin: 0em 2em;
+    margin-bottom: 1em;
+
+    .reset {
+        color: $bar-menus-iconbuttons-passive;
+    }
+
+    .options-label {
+        color: $bar-menus-text;
+    }
+
+    .options-sublabel {
+        font-size: 0.75em;
+        margin-top: 0.2em;
+        color: $bar-menus-dimtext;
+    }
+
+    .options-sublabel-link {
+        label {
+            font-size: 0.75em;
+            margin-top: 0.2em;
+            color: $bar-menus-dimtext;
+        }
+
+        &:hover label {
+            color: $bar-menus-listitems-active;
+        }
+    }
+
+    .inputter-container {
+        border-radius: $bar-menus-border-radius * 0.5;
+
+        :first-child {
+            border-radius: $bar-menus-border-radius * 0.5;
+        }
+
+        padding: 0.35em 0.35em;
+        background: transparentize($bar-menus-background, 0.6);
+        margin-right: 1em;
+    }
+}
+
+.options-header {
+    margin: 1em 1em;
+
+    .label-name {
+        color: $bar-menus-label;
+        font-size: 0.9em;
+        margin-right: 0.5em;
+    }
+}
+
+.pager-button {
+    color: transparentize($bar-menus-text, 0.4);
+    margin: 0.5em 0.75em;
+
+    &.category label {
+        font-size: 1.4em;
+    }
+
+    &:hover {
+        label {
+            text-decoration: underline;
+            color: $bar-menus-text;
+        }
+    }
+
+    &.active {
+        label {
+            text-decoration: underline;
+            color: $bar-menus-text;
+        }
+    }
+}
+
+.bar-theme-page {
+    min-height: 40em;
+}
+
+.settings-menu-stack {
+    background: $red;
+}
+
+.paged-container {
+    .reset-options {
+        color: $bar-menus-text;
+
+        &:disabled {
+            color: $bar-menus-buttons-disabled;
+        }
+
+        &:hover {
+            color: transparentize($bar-menus-text, 0.5);
+        }
+    }
+
+    scrollbar {
+        margin-right: 0.2em;
+        min-width: 0.6em;
+        border-radius: $bar-menus-border-radius;
+        background: $bar-menus-background;
+
+        slider {
+            min-width: 0.6em;
+            border-radius: $bar-menus-border-radius;
+            background: $bar-menus-buttons-default;
+        }
+    }
+
+    selection {
+        background: $bar-menus-label;
+        color: $bar-menus-cards;
+    }
+
+    switch {
+        font-size: 10px;
+
+        &:checked {
+            background: $bar-menus-switch-enabled;
+        }
+
+        slider {
+            background-color: $bar-menus-switch-puck;
+        }
+
+        &:active {
+            background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-bluetooth-switch-enabled);
+        }
+    }
+
+    entry {
+        min-width: 15em;
+    }
+}
+
+dialog {
+    background: $bar-menus-cards;
+    color: $bar-menus-text;
+
+    :selected {
+        background: transparentize($bar-menus-label, 0.2);
+        color: transparentize($bar-menus-cards, 0.2);
+    }
+
+    headerbar {
+        border-bottom: 0.075em solid $bar-menus-border-color;
+        background: $bar-menus-cards;
+        padding: 0.5em;
+        font-size: 1.5em;
+
+        button {
+            color: $bar-menus-buttons-text;
+            min-width: 4.5em;
+            min-height: 2.5em;
+            border-radius: $bar-menus-border-radius;
+            background: $bar-menus-buttons-default;
+
+            &:hover {
+                background: transparentize($bar-menus-buttons-default, 0.5);
+            }
+        }
+    }
+
+    viewport {
+        border-right: 0.25em solid $bar-menus-border-color;
+
+        list {
+            row {
+                padding: 0em 1.5em;
+
+                &:hover {
+                    background: $bar-menus-buttons-default;
+                    color: $bar-menus-buttons-text;
+                }
+
+                label {
+                    margin: 0.5em 0.5em;
+                    font-size: 0.85em;
+                }
+            }
+        }
+    }
+
+    stack {
+        .horizontal .path-bar {
+            button {
+                background: $bar-menus-iconbuttons-active;
+                min-width: 3em;
+                min-height: 2em;
+                border-radius: $bar-menus-border-radius * 0.5;
+
+                &:disabled {
+                    background: $bar-menus-buttons-disabled;
+                }
+
+                &:hover {
+                    background: transparentize($bar-menus-buttons-active, 0.5);
+                }
+
+                label {
+                    margin: 0em 0.25em;
+                    color: $bar-menus-buttons-text;
+                }
+
+                image {
+                    margin: 0em 0.5em;
+                    color: $bar-menus-buttons-text;
+                }
+
+                margin: 0.25em;
+            }
+        }
+    }
+
+    treeview header button {
+        padding: 0.25em;
+        border: 0.15em solid $bar-menus-border-color;
+    }
+
+    headerbar {
+        color: $bar-menus-label;
+    }
+
+    popover {
+        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
+        border-radius: $bar-buttons-radius;
+
+        modelbutton {
+            margin-bottom: 0.5em;
+        }
+        modelbutton:hover label {
+            color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+        }
+
+        modelbutton:disabled label {
+            color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.5);
+        }
+        separator {
+            margin: 0.5em 0em;
+        }
+    }
+
+    separator {
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-text, $bar-menus-popover-text), 0.7);
+        min-height: 0.075em * $popoverScaling;
+    }
+
+    check,
+    radio {
+        min-height: 0.8em * $popoverScaling;
+        min-width: 0.8em * $popoverScaling;
+        margin-right: 0.5em * $popoverScaling;
+        padding: 0;
+        color: transparent;
+        background-color: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
+        transition:
+            all 100ms cubic-bezier(0, 0, 0.2, 1),
+            box-shadow 150ms cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    radio {
+        border-radius: 9999px;
+        border-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check {
+        border-radius: $bar-buttons-radius;
+        border-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:hover,
+    radio:hover {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+
+    check:active,
+    radio:active {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:checked,
+    check:indeterminate,
+    radio:checked,
+    radio:indeterminate {
+        color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+        background-color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text);
+    }
+
+    check:checked:hover,
+    check:indeterminate:hover,
+    radio:checked:hover,
+    radio:indeterminate:hover {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+
+    check:checked:active,
+    check:indeterminate:active,
+    radio:checked:active,
+    radio:indeterminate:active {
+        box-shadow: 0 0 0 4px transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.8);
+        background-color: transparentize(if($bar-menus-monochrome, $bar-menus-label, $bar-menus-popover-text), 0.4);
+    }
+}
+
+.unsaved-icon {
+    margin-right: 1em;
+    font-size: 1em;
+    color: $yellow;
+}
+
+.options-import,
+.options-export {
+    border-radius: $bar-menus-border-radius * 0.5;
+    color: $bar-menus-buttons-text;
+    padding: 0.35em 0.35em;
+    background: $bar-menus-buttons-default;
+    margin-right: 1em;
+    margin-left: 0.5em;
+
+    &:hover {
+        background: transparentize($bar-menus-buttons-default, 0.8);
+    }
+}
+
+.options-import {
+    margin-right: 0em;
+}

@@ -4,7 +4,8 @@
         "allowImportingTsExtensions": true,
         "target": "ES2022",
         "module": "ES2022",
-        "lib": ["ES2022"],
+        "lib": ["ES2022", "DOM"],
+        "moduleResolution": "Bundler",
         "allowJs": true,
         "checkJs": false,
         "strict": true,
@@ -13,9 +14,16 @@
         "alwaysStrict": true,
         "noImplicitThis": true,
         "baseUrl": ".",
-        "typeRoots": ["types", "lib/types/globals"],
+        "typeRoots": ["types", "src/lib/types"],
         "skipLibCheck": true,
-        "types": []
+        "types": [],
+        "experimentalDecorators": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "/usr/share/astal/gjs/gtk3",
+        "paths": {
+            "astal": ["/usr/share/astal/gjs"],
+            "astal/*": ["/usr/share/astal/gjs/*"]
+        }
     },
-    "exclude": ["types/@girs/**/*.js"]
+    "exclude": ["astal/gtk3/jsx-runtime.ts"]
 }

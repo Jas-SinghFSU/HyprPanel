@@ -1,0 +1,114 @@
+.notification-card {
+    color: $notification-text;
+    background: $notification-background;
+    margin: 0.45em;
+    border: 0.15em solid transparentize($notification-border, 0.5);
+    min-width: 26em;
+    min-height: 4em;
+    border-radius: $notification-border_radius;
+    opacity: $notification-opacity * 0.01;
+}
+
+.notification-card-container {
+    * {
+        font-size: $font-size * $notification-scaling * 0.01;
+    }
+
+    padding: 1px;
+}
+
+.notification-card-image-container {
+    margin: 0.65em 0.65em;
+    border-radius: 0.4em;
+}
+
+.notification-card-image {
+    border-radius: 0.4em;
+    min-width: 2.5em;
+    min-height: 2.5em;
+    padding: 0.85em 0.85em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.icon {
+        min-width: 0em;
+        padding: 0em;
+        min-height: 0em;
+        font-size: 3em;
+    }
+}
+
+.notification-card-content {
+    min-width: 2.9em;
+    min-height: 2.9em;
+    padding: 0.5em 0.5em;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.notification-card-content.noimg {
+    margin-left: 0.5em;
+    margin-top: 0.15em;
+}
+
+.notification-card-header-label {
+    font-size: 0.95em;
+    margin-bottom: 0.5em;
+    color: $notification-label;
+}
+
+.notification-card-body-label {
+    font-size: 0.84em;
+    margin-bottom: 1em;
+    font-weight: 600;
+}
+
+.notification-card-actions {
+    margin-top: 0.25em;
+    margin-bottom: 0.4em;
+}
+
+.notification-action-buttons {
+    color: $notification-actions-text;
+    background: $notification-actions-background;
+    min-width: 4em;
+    min-height: 1.65em;
+    border-radius: $bar-menus-buttons-radius;
+
+    &:not(:last-child) {
+        margin-right: 2rem;
+    }
+
+    &:hover {
+        background: transparentize($notification-actions-background, 0.6);
+    }
+}
+
+.notification-icon {
+    color: $notification-labelicon;
+    margin-bottom: 0.4em;
+    min-width: 1em;
+    min-height: 1em;
+    font-size: 1.3em;
+}
+
+.notification-time {
+    font-size: 0.85em;
+    color: $notification-time;
+}
+
+.close-notification-button {
+    background: $notification-close_button-background;
+    color: $notification-close_button-label;
+    min-width: 2.1em;
+    border-radius: 0rem $notification-border_radius * 0.7 $notification-border_radius * 0.7 0em;
+
+    label {
+        font-size: 1.5em;
+    }
+
+    &:hover {
+        background: transparentize($notification-close_button-background, 0.5);
+    }
+}
