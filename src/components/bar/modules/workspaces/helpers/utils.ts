@@ -258,7 +258,7 @@ export const renderLabel = (
         if (hyprlandService.focusedWorkspace.id === i || isWorkspaceActiveOnMonitor(monitor, i)) {
             return activeIndicator;
         }
-        if ((hyprlandService.get_workspace(i)?.clients.length || 0) > 0) {
+        if ((hyprlandService.get_workspace(i)?.get_clients().length || 0) > 0) {
             return occupiedIndicator;
         }
         if (monitor !== -1) {

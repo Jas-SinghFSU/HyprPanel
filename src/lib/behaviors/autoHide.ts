@@ -31,7 +31,7 @@ export const initializeAutoHide = (): void => {
 
         hyprlandService.workspaces.map((workspace) => {
             if (autoHide.get() === 'single-window') {
-                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.clients.length !== 1);
+                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.get_clients().length !== 1);
             }
         });
     });
