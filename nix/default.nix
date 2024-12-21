@@ -14,12 +14,15 @@
   bluez,
   bluez-tools,
   grimblast,
+  meson,
   gpu-screen-recorder,
   networkmanager,
   brightnessctl,
   gnome-bluetooth,
   matugen,
   swww,
+  gjs,
+  ninja,
   python3,
   libgtop,
   gobject-introspection,
@@ -35,31 +38,37 @@
     version = "latest";
     src = ../.;
 
+    buildInputs = [
+      ags
+      ninja
+      gjs
+    ];
+
     buildPhase = ''
-      ${bun}/bin/bun build ./main.ts \
-        --outfile main.js \
-        --external "resource://*" \
-        --external "gi://*"
+      # cp -r ../assets ../scripts ../src ../themes ../app.ts ../meson.build ../package.json ../package-lock.json ../tsconfig.json .
+      ${meson}/bin/meson setup build
+      ${meson}/bin/meson compile -C build
     '';
 
     installPhase = ''
-      mkdir $out
-      cp -r assets $out
-      cp -r scss $out
-      cp -r widget $out
-      cp -r services $out
-      cp -r themes $out
-      cp -r scripts $out
-      cp -f main.js $out/config.js
+      pwd > pwd
+      echo $out > out
+      ${meson}/bin/meson install -C build --destdir=$out
     '';
   };
 in {
   desktop = {
     inherit config;
     script = writeShellScriptBin pname ''
-      export PATH=$PATH:${lib.makeBinPath [dart-sass fd btop pipewire bluez bluez-tools networkmanager matugen swww grimblast gpu-screen-recorder brightnessctl gnome-bluetooth python3]}
+      export PATH=$PATH:${lib.makeBinPath [dart-sass fd btop pipewire bluez bluez-tools networkmanager matugen swww grimblast gpu-screen-recorder brightnessctl gnome-bluetooth python3 gjs]}
       export GI_TYPELIB_PATH=${libgtop}/lib/girepository-1.0:${glib}/lib/girepository-1.0:$GI_TYPELIB_PATH
-      ${ags}/bin/ags -b hyprpanel -c ${config}/config.js $@
+      export HYPRPANEL_DATADIR="/usr/local/share/hyprpanel"
+
+      if [ "$#" -eq 0 ]; then
+          exec gjs -m "${config}/usr/local/share/hyprpanel/hyprpanel.js"
+      else
+          exec astal -i hyprpanel "$@"
+      fi
     '';
   };
 }

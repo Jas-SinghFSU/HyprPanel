@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     ags.url = "github:Aylur/ags";
+    astal.url = "github:Aylur/astal";
   };
 
   outputs = inputs: let
@@ -27,10 +28,8 @@
         _:
           inputs.nixpkgs.legacyPackages.${system}.mkShell {
             buildInputs = [
-              pkgsFor.${system}.esbuild
               pkgsFor.${system}.fish
               pkgsFor.${system}.typescript
-              pkgsFor.${system}.bun
               pkgsFor.${system}.libnotify
               pkgsFor.${system}.dart-sass
               pkgsFor.${system}.fd
@@ -46,7 +45,20 @@
               pkgsFor.${system}.gnome-bluetooth
               pkgsFor.${system}.python3
               pkgsFor.${system}.matugen
-              inputs.ags.packages.${system}.agsWithTypes
+              pkgsFor.${system}.python312Packages.gpustat
+              pkgsFor.${system}.hyprpicker
+              pkgsFor.${system}.hyprsunset
+              pkgsFor.${system}.hypridle
+              pkgsFor.${system}.wireplumber
+              pkgsFor.${system}.networkmanager
+              pkgsFor.${system}.upower
+              pkgsFor.${system}.gvfs
+              pkgsFor.${system}.swww
+              pkgsFor.${system}.pywal
+              pkgsFor.${system}.gjs
+              pkgsFor.${system}.ninja
+              pkgsFor.${system}.meson
+              inputs.ags.packages.${system}.default
             ];
             nativeBuildInputs = with pkgsFor.${system}; [
               nixfmt-rfc-style
