@@ -33,9 +33,13 @@ export const getWorkspacesForMonitor = (
 
     const monitorMap: MonitorMap = {};
 
-    const workspaceMonitorList = workspaceList.map((m) => {
-        return { id: m.monitor.id, name: m.monitor.name };
-    });
+    const wsList = workspaceList ?? [];
+
+    const workspaceMonitorList = wsList
+        .filter((m) => m !== null)
+        .map((m) => {
+            return { id: m.monitor?.id, name: m.monitor?.name };
+        });
 
     const monitors = [...new Map([...workspaceMonitorList, ...monitorList].map((item) => [item.id, item])).values()];
 
@@ -150,7 +154,7 @@ const navigateWorkspace = (
 
     if (workspacesList.length === 0) return;
 
-    const currentIndex = workspacesList.indexOf(hyprlandService.focusedWorkspace.id);
+    const currentIndex = workspacesList.indexOf(hyprlandService.focusedWorkspace?.id);
     const step = direction === 'next' ? 1 : -1;
     let newIndex = (currentIndex + step + workspacesList.length) % workspacesList.length;
     let attempts = 0;
@@ -283,7 +287,8 @@ export const getWorkspacesToRender = (
     let allWorkspaces = range(totalWorkspaces || 8);
     const activeWorkspaces = workspaceList.map((ws) => ws.id);
 
-    const workspaceMonitorList = workspaceList.map((ws) => {
+    const wsList = workspaceList ?? [];
+    const workspaceMonitorList = wsList.map((ws) => {
         return {
             id: ws.monitor?.id || -1,
             name: ws.monitor?.name || '',
@@ -310,7 +315,7 @@ export const getWorkspacesToRender = (
 
     if (isMonitorSpecific) {
         const workspacesInRange = range(totalWorkspaces).filter((ws) => {
-            return getWorkspacesForMonitor(ws, workspaceRules, monitor, workspaceList, monitorList);
+            return getWorkspacesForMonitor(ws, workspaceRules, monitor, wsList, monitorList);
         });
 
         allWorkspaces = [...new Set([...activesForMonitor, ...workspacesInRange])];
