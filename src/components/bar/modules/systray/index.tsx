@@ -10,7 +10,7 @@ const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
 
 //TODO: Connect to `notify::menu-model` and `notify::action-group` to have up to date menu and action group
-const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup): Gtk.Menu => {
+const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | null): Gtk.Menu => {
     const menu = Gtk.Menu.new_from_model(menuModel);
     menu.insert_action_group('dbusmenu', actionGroup);
 
@@ -38,7 +38,7 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
     const entryBinding = Variable.derive(
         [bind(item, 'menuModel'), bind(item, 'actionGroup')],
         (menuModel, actionGroup) => {
-            if (menuModel && actionGroup) {
+            if (menuModel && actionGroup !== undefined) {
                 menu = createMenu(menuModel, actionGroup);
             }
         },
