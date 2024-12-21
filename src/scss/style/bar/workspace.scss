@@ -3,7 +3,7 @@
         font-size: 0.2em;
         min-width: 4em;
         min-height: 4em;
-        border-radius: 1.9rem * 0.6;
+        border-radius: $bar-buttons-workspaces-radius;
         transition: 300ms * 0.5;
         background-color: $bar-buttons-workspaces-available;
         color: $bar-buttons-workspaces-available;

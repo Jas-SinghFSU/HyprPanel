@@ -152,6 +152,12 @@ export const BarSettings = (): JSX.Element => {
                     subtitle="Only applicable to numbered workspaces and mapped icons. Adjust carefully."
                     type="string"
                 />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.radius}
+                    title="Indicator Radius"
+                    subtitle="Adjust the radius for the default indicator."
+                    type="string"
+                />
                 <Option opt={options.bar.workspaces.show_icons} title="Show Workspace Icons" type="boolean" />
                 <Option opt={options.bar.workspaces.icons.available} title="Workspace Available" type="string" />
                 <Option opt={options.bar.workspaces.icons.active} title="Workspace Active" type="string" />

@@ -205,6 +205,7 @@ const options = mkOptions(CONFIG, {
                     numbered_active_highlight_padding: opt('0.2em'),
                     numbered_active_highlighted_text_color: opt(colors.mantle),
                     numbered_active_underline_color: opt(colors.pink),
+                    radius: opt('1.9rem * 0.6'),
                     spacing: opt('0.5em'),
                     fontSize: opt('1.2em'),
                 },
