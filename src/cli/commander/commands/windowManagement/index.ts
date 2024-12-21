@@ -1,5 +1,5 @@
 import { errorHandler } from 'src/lib/utils';
-import { Command } from '../types';
+import { Command } from '../../types';
 import { App } from 'astal/gtk3';
 
 export const windowManagementCommands: Command[] = [

@@ -6,7 +6,7 @@ import options from 'src/options';
 
 const { noMediaText } = options.menus.media;
 
-export const activePlayer = Variable<AstalMpris.Player | undefined>(mprisService.players[0]);
+export const activePlayer = Variable<AstalMpris.Player | undefined>(undefined);
 
 const forceUpdate = Variable(false);
 
