@@ -40,9 +40,10 @@ updatesPoller.initialize('updates');
 const updatesIcon = Variable.derive(
     [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
     (pendingIcon, updatedIcon, pUpdates) => {
-        return pUpdates === '0' ? updatedIcon : pendingIcon;
+        return parseFloat(pUpdates) === 0 ? updatedIcon : pendingIcon;
     },
 );
+
 export const Updates = (): BarBoxChild => {
     const updatesModule = Module({
         textIcon: updatesIcon(),
