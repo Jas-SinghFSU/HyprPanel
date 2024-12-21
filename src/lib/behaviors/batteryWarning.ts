@@ -3,8 +3,8 @@ import icons from '../icons/icons';
 import { Notify } from '../utils';
 
 export function warnOnLowBattery(): void {
-    var sentLowNotification = false;
-    var sentHalfLowNotification = false;
+    let sentLowNotification = false;
+    let sentHalfLowNotification = false;
 
     batteryService.connect('notify::charging', () => {
         // Reset it when the battery is put to charge
@@ -28,7 +28,7 @@ export function warnOnLowBattery(): void {
 
         // To avoid double notifications, we check each of the thresholds and set the correct `sentNotification`, but then
         // combine them into one notification only
-        var sendNotification = false;
+        let sendNotification = false;
         if (!sentLowNotification && batteryPercentage < lowThreshold) {
             sentLowNotification = true;
             sendNotification = true;
