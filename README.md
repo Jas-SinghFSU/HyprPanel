@@ -1,6 +1,6 @@
 # HyprPanel 🚀
 
-A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
+A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
 
 ![HyprPanel1](./assets/hp1.png)
 ![HyprPanel2](./assets/hp2.png)

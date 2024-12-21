@@ -69,7 +69,7 @@ const dedupeWAPs = (): AstalNetwork.AccessPoint[] => {
         return [];
     }
 
-    const WAPs = networkService.wifi.accessPoints;
+    const WAPs = networkService.wifi.get_access_points();
     const dedupMap: Record<string, AstalNetwork.AccessPoint> = {};
 
     WAPs.forEach((item: AstalNetwork.AccessPoint) => {
