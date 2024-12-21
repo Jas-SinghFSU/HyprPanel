@@ -4,15 +4,17 @@ import Menu from 'src/components/shared/Menu';
 import MenuItem from 'src/components/shared/MenuItem';
 import { hyprlandService } from 'src/lib/constants/services';
 import { isRecording } from '../helpers';
-
-const monitorList = Variable(hyprlandService?.monitors || []);
-
-hyprlandService.connect('monitor-added', () => monitorList.set(hyprlandService.monitors));
-hyprlandService.connect('monitor-removed', () => monitorList.set(hyprlandService.monitors));
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
 const MonitorListDropdown = (): JSX.Element => {
+    const monitorList: Variable<AstalHyprland.Monitor[]> = Variable([]);
+
+    const monitorBinding = Variable.derive([bind(hyprlandService, 'monitors')], () =>
+        monitorList.set(hyprlandService.monitors),
+    );
+
     return (
-        <Menu className={'dropdown recording'} halign={Gtk.Align.FILL} hexpand>
+        <Menu className={'dropdown recording'} halign={Gtk.Align.FILL} onDestroy={() => monitorBinding.drop()} hexpand>
             {bind(monitorList).as((monitors) => {
                 return monitors.map((monitor) => (
                     <MenuItem

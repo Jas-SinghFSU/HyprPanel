@@ -15,6 +15,8 @@ const { truncation, truncation_size, show_label, show_active_only, rightClick, m
     options.bar.media;
 
 const Media = (): BarBoxChild => {
+    activePlayer.set(mprisService.get_players()[0]);
+
     const isVis = Variable(!show_active_only.get());
 
     show_active_only.subscribe(() => {
