@@ -147,26 +147,26 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.indicator.radius}
-                    title="Indicator Radius"
+                    opt={options.theme.bar.buttons.workspaces.pill.radius}
+                    title="Pill Radius"
                     subtitle="Adjust the radius for the default indicator."
                     type="string"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.indicator.height}
-                    title="Indicator Height"
+                    opt={options.theme.bar.buttons.workspaces.pill.height}
+                    title="Pill Height"
                     subtitle="Adjust the height for the default indicator."
                     type="string"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.indicator.width}
-                    title="Indicator Width"
+                    opt={options.theme.bar.buttons.workspaces.pill.width}
+                    title="Pill Width"
                     subtitle="Adjust the width for the default indicator."
                     type="string"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.indicator.active_width}
-                    title="Active Indicator Width"
+                    opt={options.theme.bar.buttons.workspaces.pill.active_width}
+                    title="Active Pill Width"
                     subtitle="Adjust the width for the active default indicator."
                     type="string"
                 />

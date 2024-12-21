@@ -207,7 +207,7 @@ const options = mkOptions(CONFIG, {
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),
                     fontSize: opt('1.2em'),
-                    indicator: {
+                    pill: {
                         radius: opt('1.9rem * 0.6'),
                         height: opt('4em'),
                         width: opt('4em'),
