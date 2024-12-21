@@ -7,15 +7,22 @@ A panel built for Hyprland with [AGS](https://github.com/Aylur/ags)
 
 > NOTE: If you would like to support the project, please instead [donate to Aylur](https://ko-fi.com/aylur) who put in tremendous effort to build AGS. Hyprpanel likely wouldn't exist without it.
 
-## Installation
+## Information
 
 The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for configuring and installing the panel and all of its dependencies. The instructions below are just the general instructions for installing the panel.
 
-## Requirements
+## Arch
+
+```bash
+yay -S ags-hyprpanel-git
+```
+
+## From Source
 
 ### Required
 
 ```sh
+aylurs-gtk-shell-git
 wireplumber
 libgtop
 bluez
@@ -84,7 +91,7 @@ pacman:
 AUR:
 
 ```bash
-yay -S --needed grimblast-git gpu-screen-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git hypridle-git
+yay -S --needed aylurs-gtk-shell-git grimblast-git gpu-screen-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git hypridle-git
 ```
 
 ### Fedora
@@ -127,41 +134,28 @@ sudo dnf install python python3-pip; pip install gpustat pywal
 
 For NixOS/Home-Manager, see [NixOS & Home-Manager instructions](#nixos--home-manager).
 
-## Instructions
+## Installation
 
-### AGS
-
-Once everything is installed you need to put the contents of this repo in `~/.config/ags`.
-If you already have something in `~/.config/ags`, it's recommended that you back it up with:
+To install HyprPanel, you can run the following commands:
 
 ```bash
-mv $HOME/.config/ags $HOME/.config/ags.bkup
+git clone https://github.com/Jas-SinghFSU/HyprPanel.git
+cd HyprPanel
+meson setup build
+meson compile -C build
+meson install -C build
 ```
 
-Otherwise you can use this command to install the panel:
+### Installing NerdFonts
 
-```bash
-git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
-  ln -s $(pwd)/HyprPanel $HOME/.config/ags
+HyprPanel uses [Nerdfonts](https://www.nerdfonts.com/) to display icons. You can install them using the following command from within the HyprPanel's `scripts` directory:
+
+```sh
+# Installs the JetBrainsMono NerdFonts used for icons
+./scripts/install_fonts.sh
 ```
 
-### Nerd Fonts
-
-Additionally, you need to ensure that you have a [Nerd Font](https://www.nerdfonts.com/font-downloads) installed for your icons to render properly.
-
-### Launch the panel
-
-Afterwards you can run the panel with the following command in your terminal:
-
-```bash
-ags
-```
-
-Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
-
-```bash
-exec-once = ags
-```
+If you install the fonts after installing HyperPanel, you will need to restart HyperPanel for the changes to take effect.
 
 ### NixOS & Home-Manager
 
@@ -225,6 +219,20 @@ wayland.windowManager.hyprland.settings.exec-once = [
   "${pkgs.hyprpanel}/bin/hyprpanel"
 ];
 
+```
+
+### Launch the panel
+
+Afterwards you can run the panel with the following command in your terminal:
+
+```bash
+hyprpanel
+```
+
+Or you can add it to your Hyprland config (hyprland.conf) to auto-start with:
+
+```bash
+exec-once = hyprpanel
 ```
 
 ### Notifications
