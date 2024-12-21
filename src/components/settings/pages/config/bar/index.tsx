@@ -147,15 +147,33 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.fontSize}
-                    title="Indicator Size"
-                    subtitle="Only applicable to numbered workspaces and mapped icons. Adjust carefully."
+                    opt={options.theme.bar.buttons.workspaces.indicator.radius}
+                    title="Indicator Radius"
+                    subtitle="Adjust the radius for the default indicator."
                     type="string"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.radius}
-                    title="Indicator Radius"
-                    subtitle="Adjust the radius for the default indicator."
+                    opt={options.theme.bar.buttons.workspaces.indicator.height}
+                    title="Indicator Height"
+                    subtitle="Adjust the height for the default indicator."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.indicator.width}
+                    title="Indicator Width"
+                    subtitle="Adjust the width for the default indicator."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.indicator.active_width}
+                    title="Active Indicator Width"
+                    subtitle="Adjust the width for the active default indicator."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.fontSize}
+                    title="Indicator Size"
+                    subtitle="Only applicable to numbered workspaces and mapped icons. Adjust carefully."
                     type="string"
                 />
                 <Option opt={options.bar.workspaces.show_icons} title="Show Workspace Icons" type="boolean" />
