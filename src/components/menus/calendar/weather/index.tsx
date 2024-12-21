@@ -4,7 +4,11 @@ import { TodayTemperature } from './temperature/index.js';
 import { HourlyTemperature } from './hourly/index.js';
 import Separator from 'src/components/shared/Separator.js';
 
-export const WeatherWidget = (): JSX.Element => {
+export const WeatherWidget = ({ isEnabled }: WeatherWidgetProps): JSX.Element => {
+    if (!isEnabled) {
+        return <box />;
+    }
+
     return (
         <box className={'calendar-menu-item-container weather'}>
             <box className={'weather-container-box'}>
@@ -21,3 +25,7 @@ export const WeatherWidget = (): JSX.Element => {
         </box>
     );
 };
+
+interface WeatherWidgetProps {
+    isEnabled: boolean;
+}
