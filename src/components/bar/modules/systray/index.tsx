@@ -40,6 +40,7 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
     const entryBinding = Variable.derive(
         [bind(item, 'menuModel'), bind(item, 'actionGroup')],
         (menuModel, actionGroup) => {
+            console.log(`menuModel: ${item.menuModel} actionGroup: ${item.actionGroup}`);
             if (menuModel && actionGroup !== undefined) {
                 menu = createMenu(menuModel, actionGroup);
             }
