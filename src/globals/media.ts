@@ -16,7 +16,7 @@ mprisService.connect('player-closed', (_, closedPlayer) => {
     }
 
     if (closedPlayer.busName === activePlayer.get()?.busName) {
-        const nextPlayer = mprisService.players.find((player) => player.busName !== closedPlayer.busName);
+        const nextPlayer = mprisService.get_players().find((player) => player.busName !== closedPlayer.busName);
         activePlayer.set(nextPlayer);
     }
 });

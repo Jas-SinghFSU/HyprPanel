@@ -52,13 +52,15 @@ export const initializeActivePlayerHook = (): void => {
             [AstalMpris.PlaybackStatus.STOPPED]: 3,
         };
 
-        const isPlaying = mprisService.players.find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
+        const isPlaying = mprisService
+            .get_players()
+            .find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
 
-        const playerStillExists = mprisService.players.some((player) => curPlayer.set(player.busName));
+        const playerStillExists = mprisService.get_players().some((player) => curPlayer.set(player.busName));
 
-        const nextPlayerUp = mprisService.players.sort(
-            (a, b) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus],
-        )[0].bus_name;
+        const nextPlayerUp = mprisService
+            .get_players()
+            .sort((a, b) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus])[0].bus_name;
 
         if (isPlaying || !playerStillExists) {
             curPlayer.set(nextPlayerUp);

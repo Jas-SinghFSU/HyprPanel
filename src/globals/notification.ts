@@ -38,7 +38,7 @@ export const clearNotifications = async (notifications: AstalNotifd.Notification
 
 const clearAllNotifications = async (): Promise<void> => {
     try {
-        clearNotifications(notifdService.notifications, clearDelay.get());
+        clearNotifications(notifdService.get_notifications(), clearDelay.get());
     } catch (error) {
         errorHandler(error);
     }
