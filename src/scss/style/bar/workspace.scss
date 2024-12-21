@@ -1,9 +1,9 @@
 .workspaces {
     label {
         font-size: 0.2em;
-        min-width: 4em;
-        min-height: 4em;
-        border-radius: 1.9rem * 0.6;
+        min-width: $bar-buttons-workspaces-pill-width;
+        min-height: $bar-buttons-workspaces-pill-height;
+        border-radius: $bar-buttons-workspaces-pill-radius;
         transition: 300ms * 0.5;
         background-color: $bar-buttons-workspaces-available;
         color: $bar-buttons-workspaces-available;
@@ -11,15 +11,15 @@
         &.occupied {
             background-color: $bar-buttons-workspaces-occupied;
             color: $bar-buttons-workspaces-occupied;
-            min-width: 4em;
-            min-height: 4em;
+            min-width: $bar-buttons-workspaces-pill-width;
+            min-height: $bar-buttons-workspaces-pill-height;
         }
 
         &.active {
             background-color: $bar-buttons-workspaces-active;
             color: $bar-buttons-workspaces-active;
-            min-width: 12em;
-            min-height: 4em;
+            min-width: $bar-buttons-workspaces-pill-active_width;
+            min-height: $bar-buttons-workspaces-pill-height;
         }
 
         &.workspace-icon {

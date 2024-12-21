@@ -207,6 +207,12 @@ const options = mkOptions(CONFIG, {
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),
                     fontSize: opt('1.2em'),
+                    pill: {
+                        radius: opt('1.9rem * 0.6'),
+                        height: opt('4em'),
+                        width: opt('4em'),
+                        active_width: opt('12em'),
+                    },
                 },
                 windowtitle: {
                     background: opt(colors.base2),
