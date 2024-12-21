@@ -33,7 +33,16 @@ const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
 };
 
 const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
-    const menu = createMenu(item.menuModel, item.actionGroup);
+    let menu: Gtk.Menu;
+
+    const entryBinding = Variable.derive(
+        [bind(item, 'menuModel'), bind(item, 'actionGroup')],
+        (menuModel, actionGroup) => {
+            if (menuModel && actionGroup) {
+                menu = createMenu(menuModel, actionGroup);
+            }
+        },
+    );
 
     return (
         <button
@@ -51,7 +60,10 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
                     Notify({ summary: 'App Name', body: item.id });
                 }
             }}
-            onDestroy={() => menu?.destroy()}
+            onDestroy={() => {
+                menu?.destroy();
+                entryBinding.drop();
+            }}
         >
             {child}
         </button>

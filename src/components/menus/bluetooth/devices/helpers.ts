@@ -11,7 +11,9 @@ import { bluetoothService } from 'src/lib/constants/services';
  * @returns An array of available Bluetooth devices.
  */
 export const getAvailableBluetoothDevices = (): AstalBluetooth.Device[] => {
-    const availableDevices = bluetoothService.devices
+    const bluetoothDevices = bluetoothService.get_devices() ?? [];
+
+    const availableDevices = bluetoothDevices
         .filter((btDev) => btDev.name !== null)
         .sort((a, b) => {
             if (a.connected || a.paired) {
