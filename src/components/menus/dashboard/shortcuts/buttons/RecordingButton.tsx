@@ -5,7 +5,7 @@ import MenuItem from 'src/components/shared/MenuItem';
 import { hyprlandService } from 'src/lib/constants/services';
 import { isRecording } from '../helpers';
 
-const monitorList = Variable(hyprlandService.monitors);
+const monitorList = Variable(hyprlandService?.monitors || []);
 
 hyprlandService.connect('monitor-added', () => monitorList.set(hyprlandService.monitors));
 hyprlandService.connect('monitor-removed', () => monitorList.set(hyprlandService.monitors));
