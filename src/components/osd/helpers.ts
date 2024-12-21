@@ -85,10 +85,10 @@ export const handleReveal = (self: Widget.Revealer | Widget.Window, property: 'r
  */
 export const getOsdMonitor = (): Binding<number> => {
     return Variable.derive(
-        [bind(hyprlandService.focusedMonitor, 'id'), bind(monitor), bind(active_monitor)],
+        [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (currentMonitor, defaultMonitor, followMonitor) => {
             if (followMonitor === true) {
-                return currentMonitor;
+                return currentMonitor.id;
             }
 
             return defaultMonitor;
