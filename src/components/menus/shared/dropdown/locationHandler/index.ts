@@ -3,7 +3,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/options';
 import { bash } from 'src/lib/utils';
 import { globalEventBoxes } from 'src/globals/dropdown';
-import { exec } from 'astal';
+import { GLib } from 'astal';
 import { EventBox } from 'astal/gtk3/widget';
 
 const hyprland = AstalHyprland.get_default();
@@ -40,7 +40,7 @@ export const calculateMenuPosition = async (pos: number[], windowName: string): 
         // to get the proper coordinates.
         // Ex: On a 2860px wide monitor... if scaling is set to 2, then the right
         // end of the monitor is the 1430th pixel.
-        const gdkScale = exec('bash -c "echo $GDK_SCALE"');
+        const gdkScale = GLib.getenv('GDK_SCALE') || '1';
 
         if (scalingPriority.get() === 'both') {
             const scale = parseFloat(gdkScale);
