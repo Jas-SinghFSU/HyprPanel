@@ -11,8 +11,6 @@ const { ignore, customIcons } = options.bar.systray;
 
 //TODO: Connect to `notify::menu-model` and `notify::action-group` to have up to date menu and action group
 const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | null): Gtk.Menu => {
-    console.log(`actionGroup: ${actionGroup}`);
-    console.log(`menuModel: ${menuModel}`);
     const menu = Gtk.Menu.new_from_model(menuModel);
     menu.insert_action_group('dbusmenu', actionGroup);
 
@@ -40,10 +38,14 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
     const entryBinding = Variable.derive(
         [bind(item, 'menuModel'), bind(item, 'actionGroup')],
         (menuModel, actionGroup) => {
-            console.log(`menuModel: ${item.menuModel} actionGroup: ${item.actionGroup}`);
-            if (menuModel && actionGroup !== undefined) {
-                menu = createMenu(menuModel, actionGroup);
+            if (!menuModel) {
+                return console.error(`Menu Model not found for ${item.id}`);
             }
+            if (!actionGroup) {
+                return console.error(`Action Group not found for ${item.id}`);
+            }
+
+            menu = createMenu(menuModel, actionGroup);
         },
     );
 

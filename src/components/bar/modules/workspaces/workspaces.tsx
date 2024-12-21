@@ -86,7 +86,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             smartHighlightEnabled: boolean,
             monitorList: AstalHyprland.Monitor[],
         ) => {
-            const activeWorkspace = hyprlandService.focusedWorkspace.id;
+            const activeWorkspace = hyprlandService.focusedWorkspace?.id || -99999;
 
             const workspacesToRender = getWorkspacesToRender(
                 totalWorkspaces,
