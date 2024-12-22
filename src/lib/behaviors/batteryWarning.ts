@@ -44,7 +44,6 @@ export function warnOnLowBattery(): void {
                 body: lowBatteryNotificationText.get().replace('$POWER_LEVEL', batteryPercentage.toString()),
                 iconName: icons.ui.warning,
                 urgency: 'critical',
-                timeout: 7000,
             });
         }
     });
