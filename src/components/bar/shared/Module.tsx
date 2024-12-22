@@ -87,7 +87,6 @@ export const Module = ({
     return {
         component,
         tooltip_text: tooltipText,
-        isVisible: true,
         isVis: isVis,
         boxClass,
         props,
