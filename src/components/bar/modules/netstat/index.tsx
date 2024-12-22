@@ -49,11 +49,11 @@ export const Netstat = (): BarBoxChild => {
     const renderNetworkLabel = (lblType: NetstatLabelType, networkService: NetworkResourceData): string => {
         switch (lblType) {
             case 'in':
-                return `${networkInLabel.value} ${networkService.in}`;
+                return `${networkInLabel.get()} ${networkService.in}`;
             case 'out':
-                return `${networkOutLabel.value} ${networkService.out}`;
+                return `${networkOutLabel.get()} ${networkService.out}`;
             default:
-                return `${networkInLabel.value} ${networkService.in} ${networkOutLabel.value} ${networkService.out}`;
+                return `${networkInLabel.get()} ${networkService.in} ${networkOutLabel.get()} ${networkService.out}`;
         }
     };
 
