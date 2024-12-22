@@ -10,6 +10,7 @@ const {
     updateCommand,
     label,
     padZero,
+    autoHide,
     pollingInterval,
     icon,
     leftClick,
@@ -21,8 +22,10 @@ const {
 
 const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
+const isVis = Variable(!autoHide.get());
 
 const processUpdateCount = (updateCount: string): string => {
+    isVis.set(!autoHide.get() || (autoHide.get() && parseFloat(updateCount) > 0));
     if (!padZero.get()) return updateCount;
     return `${updateCount.padStart(2, '0')}`;
 };
@@ -49,6 +52,7 @@ export const Updates = (): BarBoxChild => {
         textIcon: updatesIcon(),
         tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
         boxClass: 'updates',
+        isVis: isVis,
         label: bind(pendingUpdates),
         showLabelBinding: bind(label),
         props: {

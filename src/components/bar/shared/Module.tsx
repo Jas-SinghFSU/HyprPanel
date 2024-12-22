@@ -14,6 +14,7 @@ export const Module = ({
     label,
     tooltipText,
     boxClass,
+    isVis,
     props = {},
     showLabelBinding = bind(undefinedVar),
     showLabel,
@@ -87,6 +88,7 @@ export const Module = ({
         component,
         tooltip_text: tooltipText,
         isVisible: true,
+        isVis: isVis,
         boxClass,
         props,
     };

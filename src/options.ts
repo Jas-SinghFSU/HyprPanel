@@ -1059,6 +1059,8 @@ const options = mkOptions(CONFIG, {
                 networkInterface: opt(''),
                 dynamicIcon: opt(false),
                 icon: opt('󰖟'),
+                networkInLabel: opt('↓'),
+                networkOutLabel: opt('↑'),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>('full'),
                 rateUnit: opt<RateUnit>('auto'),
@@ -1081,6 +1083,7 @@ const options = mkOptions(CONFIG, {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
+                autoHide: opt(true),
                 icon: {
                     pending: opt('󰏗'),
                     updated: opt('󰏖'),

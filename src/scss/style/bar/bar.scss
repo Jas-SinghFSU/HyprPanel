@@ -1,6 +1,8 @@
 .bar {
     * {
+        font-family: 'JetBrainsMono Nerd Font';
         font-size: $font-size * $bar-scaling * 0.01;
+        font-weight: 800;
     }
 
     .bar-panel-container {
