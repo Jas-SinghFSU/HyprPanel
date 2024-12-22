@@ -2,13 +2,11 @@ import { bind, Variable } from 'astal';
 import { networkService } from 'src/lib/constants/services';
 
 export const isScanning: Variable<boolean> = Variable(false);
-let scanningBinding: Variable<void>;
+let scanningBinding: Variable<void> | undefined;
 
 Variable.derive([bind(networkService, 'wifi')], () => {
-    if (scanningBinding) {
-        scanningBinding();
-        scanningBinding.drop();
-    }
+    scanningBinding?.drop();
+    scanningBinding = undefined;
 
     if (!networkService.wifi) {
         return;

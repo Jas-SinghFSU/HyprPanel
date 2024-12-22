@@ -31,7 +31,7 @@ export async function generateMatugenColors(): Promise<MatugenColors | undefined
 
         const normalizedContrast = contrast.get() > 1 ? 1 : contrast.get() < -1 ? -1 : contrast.get();
         const contents = await bash(
-            `matugen image -q ${wallpaperPath} -t scheme-${scheme_type.get()} --contrast ${normalizedContrast} --json hex`,
+            `matugen image --dry-run -q ${wallpaperPath} -t scheme-${scheme_type.get()} --contrast ${normalizedContrast} --json hex`,
         );
 
         return JSON.parse(contents).colors[options.theme.matugen_settings.mode.get()];

@@ -14,14 +14,14 @@ import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/globals/m
 const { truncation, truncation_size, show_label, show_active_only, rightClick, middleClick, format } =
     options.bar.media;
 
+const isVis = Variable(!show_active_only.get());
+
+Variable.derive([bind(show_active_only), bind(mprisService, 'players')], (showActive, players) => {
+    isVis.set(!showActive || players?.length > 0);
+});
+
 const Media = (): BarBoxChild => {
     activePlayer.set(mprisService.get_players()[0]);
-
-    const isVis = Variable(!show_active_only.get());
-
-    show_active_only.subscribe(() => {
-        isVis.set(!show_active_only.get() || mprisService.get_players().length > 0);
-    });
 
     const songIcon = Variable('');
 
@@ -55,7 +55,6 @@ const Media = (): BarBoxChild => {
         <box
             className={componentClassName()}
             onDestroy={() => {
-                isVis.drop();
                 songIcon.drop();
                 mediaLabel.drop();
                 componentClassName.drop();
