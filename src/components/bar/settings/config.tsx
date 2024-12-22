@@ -227,7 +227,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option
                     opt={options.bar.customModules.updates.autoHide}
                     title="Auto Hide"
-                    subtitle="Update Counts > 0 then show up updates module"
+                    subtitle="Hides module when no updates are available."
                     type="boolean"
                 />
                 <Option opt={options.bar.customModules.updates.padZero} title="Pad with 0" type="boolean" />
