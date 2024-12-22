@@ -1083,7 +1083,7 @@ const options = mkOptions(CONFIG, {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
-                autoHide: opt(true),
+                autoHide: opt(false),
                 icon: {
                     pending: opt('󰏗'),
                     updated: opt('󰏖'),
