@@ -54,6 +54,16 @@
           pkgs.gnome-bluetooth
           pkgs.python3
           pkgs.matugen
+          pkgs.python312Packages.gpustat
+          pkgs.hyprpicker
+          pkgs.hyprsunset
+          pkgs.hypridle
+          pkgs.wireplumber
+          pkgs.networkmanager
+          pkgs.upower
+          pkgs.gvfs
+          pkgs.swww
+          pkgs.pywal
         ];
       };
     });
