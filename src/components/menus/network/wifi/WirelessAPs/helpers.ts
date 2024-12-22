@@ -239,7 +239,6 @@ export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.
                 Notify({
                     summary: 'Network',
                     body: err.message,
-                    timeout: 5000,
                 });
             }
         });

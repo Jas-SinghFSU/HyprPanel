@@ -24,7 +24,6 @@ export async function generateMatugenColors(): Promise<MatugenColors | undefined
                 summary: 'Matugen Failed',
                 body: "Please select a wallpaper in 'Theming > General' first.",
                 iconName: icons.ui.warning,
-                timeout: 7000,
             });
             return;
         }
