@@ -139,6 +139,11 @@ export const MenuTheme = (): JSX.Element => {
                 />
                 <Option opt={options.theme.bar.menus.slider.puck} title="Puck" type="color" />
 
+                {/* Scroller Section */}
+                <Header title="Scroller" />
+                <Option opt={options.theme.bar.menus.scroller.radius} title="Radius" type="string" />
+                <Option opt={options.theme.bar.menus.scroller.width} title="Width" type="string" />
+
                 {/* Dropdown Menu Section */}
                 <Header title="Dropdown Menu" />
                 <Option opt={options.theme.bar.menus.dropdownmenu.background} title="Background" type="color" />

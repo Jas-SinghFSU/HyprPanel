@@ -181,4 +181,16 @@
             background: if($bar-menus-monochrome, $bar-menus-switch-enabled, $bar-menus-menu-network-switch-enabled);
         }
     }
+
+    .menu-scroller.wap {
+        min-height: 16em;
+
+        slider {
+            background: $bar-menus-menu-network-scroller-color;
+        }
+    }
+
+    .network-element-controls-container {
+        margin-right: 0.7em;
+    }
 }

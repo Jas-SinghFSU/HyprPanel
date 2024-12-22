@@ -194,4 +194,16 @@
     .connection-status.txt-icon {
         margin-left: 0.2em;
     }
+
+    .bluetooth-controls {
+        margin-right: 0.5em;
+    }
+
+    .menu-scroller.bluetooth {
+        min-height: 18em;
+
+        slider {
+            background: $bar-menus-menu-bluetooth-scroller-color;
+        }
+    }
 }
