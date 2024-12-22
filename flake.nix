@@ -37,7 +37,6 @@
           astal.packages.${system}.notifd
           astal.packages.${system}.powerprofiles
           astal.packages.${system}.wireplumber
-          pkgs.esbuild
           pkgs.fish
           pkgs.typescript
           pkgs.bun
