@@ -39,7 +39,6 @@
           astal.packages.${system}.wireplumber
           pkgs.fish
           pkgs.typescript
-          pkgs.bun
           pkgs.libnotify
           pkgs.dart-sass
           pkgs.fd
