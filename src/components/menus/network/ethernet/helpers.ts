@@ -13,10 +13,10 @@ export const wiredSpeed: Variable<number> = Variable(0);
 /*******************************************
  *                Bindings                 *
  *******************************************/
-let wiredStateBinding: Variable<void>;
-let wiredInternetBinding: Variable<void>;
-let wiredIconBinding: Variable<void>;
-let wiredSpeedBinding: Variable<void>;
+let wiredStateBinding: Variable<void> | undefined;
+let wiredInternetBinding: Variable<void> | undefined;
+let wiredIconBinding: Variable<void> | undefined;
+let wiredSpeedBinding: Variable<void> | undefined;
 
 /**
  * Retrieves the current state of the wired network.
@@ -25,10 +25,8 @@ let wiredSpeedBinding: Variable<void>;
  * If the wired network service is available, it updates the `wiredState` variable with the current state.
  */
 const getWiredState = (): void => {
-    if (wiredStateBinding) {
-        wiredStateBinding();
-        wiredStateBinding.drop();
-    }
+    wiredStateBinding?.drop();
+    wiredStateBinding = undefined;
 
     if (!networkService.wired) {
         wiredState.set(AstalNetwork.DeviceState.UNAVAILABLE);
@@ -47,10 +45,8 @@ const getWiredState = (): void => {
  * If the wired network service is available, it updates the `wiredInternet` variable with the current internet status.
  */
 const getWiredInternet = (): void => {
-    if (wiredInternetBinding) {
-        wiredInternetBinding();
-        wiredInternetBinding.drop();
-    }
+    wiredInternetBinding?.drop();
+    wiredInternetBinding = undefined;
 
     if (!networkService.wired) {
         return;
@@ -68,10 +64,8 @@ const getWiredInternet = (): void => {
  * If the wired network service is available, it updates the `wiredIcon` variable with the current icon name.
  */
 const getWiredIcon = (): void => {
-    if (wiredIconBinding) {
-        wiredIconBinding();
-        wiredIconBinding.drop();
-    }
+    wiredIconBinding?.drop();
+    wiredIconBinding = undefined;
 
     if (!networkService.wired) {
         wiredIcon.set('network-wired-symbolic');
@@ -90,10 +84,8 @@ const getWiredIcon = (): void => {
  * If the wired network service is available, it updates the `wiredSpeed` variable with the current speed.
  */
 const getWiredSpeed = (): void => {
-    if (wiredSpeedBinding) {
-        wiredSpeedBinding();
-        wiredSpeedBinding.drop();
-    }
+    wiredSpeedBinding?.drop();
+    wiredSpeedBinding = undefined;
 
     if (!networkService.wired) {
         return;
@@ -103,13 +95,6 @@ const getWiredSpeed = (): void => {
         wiredSpeed.set(speed);
     });
 };
-
-Variable.derive([bind(networkService, 'wired')], () => {
-    getWiredState();
-    getWiredInternet();
-    getWiredIcon();
-    getWiredSpeed();
-});
 
 Variable.derive([bind(networkService, 'wired')], () => {
     getWiredState();
