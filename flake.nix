@@ -20,9 +20,10 @@
       default = ags.lib.bundle {
         inherit pkgs;
         src = ./.;
-        name = "hyprpanel";
+        name = "my-shell"; # name of executable
         entry = "app.ts";
 
+        # additional libraries and executables to add to gjs' runtime
         extraPackages = [
           ags.packages.${system}.agsFull
           astal.packages.${system}.tray
@@ -58,5 +59,10 @@
         ];
       };
     });
+
+    # Define .overlay to expose the package as pkgs.hyprpanel based on the system
+    overlay = final: prev: {
+      hyprpanel = self.packages.${prev.stdenv.system}.default;
+    };
   };
 }
