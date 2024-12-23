@@ -140,7 +140,10 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option
                     opt={options.bar.customModules.netstat.networkInterface}
                     title="Network Interface"
-                    subtitle="Wiki: https://hyprpanel.com/configuration/panel.html#custom-modules"
+                    subtitle={
+                        'Name of the network interface to poll.\n' +
+                        "HINT: Get a list of interfaces with 'cat /proc/net/dev"
+                    }
                     type="string"
                 />
                 <Option
@@ -280,6 +283,79 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.weather.middleClick} title="Middle Click" type="string" />
                 <Option opt={options.bar.customModules.weather.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.weather.scrollDown} title="Scroll Down" type="string" />
+
+                {/* Hyprsunset Section */}
+                <Header title="Hyprsunset" />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.temperature}
+                    title="Temperature"
+                    subtitle="Ex: 1000k, 2000k, 5000k, etc."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.modules.hyprsunset.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.hyprsunset.onIcon} title="Enabled Icon" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.offIcon} title="Disabled Icon" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.onLabel} title="Enabled Label" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.offLabel} title="Disabled Label" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.label} title="Show Label" type="boolean" />
+                <Option opt={options.theme.bar.buttons.modules.hyprsunset.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.pollingInterval}
+                    title="Polling Interval"
+                    type="number"
+                    min={100}
+                    max={60 * 24 * 1000}
+                    increment={1000}
+                />
+                <Option opt={options.bar.customModules.hyprsunset.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.hyprsunset.scrollDown} title="Scroll Down" type="string" />
+
+                {/* Hypridle Section */}
+                <Header title="Hypridle" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.hypridle.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.hypridle.onIcon} title="Enabled Icon" type="string" />
+                <Option opt={options.bar.customModules.hypridle.offIcon} title="Disabled Icon" type="string" />
+                <Option opt={options.bar.customModules.hypridle.onLabel} title="Enabled Label" type="string" />
+                <Option opt={options.bar.customModules.hypridle.offLabel} title="Disabled Label" type="string" />
+                <Option opt={options.bar.customModules.hypridle.label} title="Show Label" type="boolean" />
+                <Option opt={options.theme.bar.buttons.modules.hypridle.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.bar.customModules.hypridle.pollingInterval}
+                    title="Polling Interval"
+                    type="number"
+                    min={100}
+                    max={60 * 24 * 1000}
+                    increment={1000}
+                />
+                <Option opt={options.bar.customModules.hypridle.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.hypridle.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.hypridle.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.hypridle.scrollDown} title="Scroll Down" type="string" />
+
+                {/* Power Section */}
+                <Header title="Power" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.power.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.theme.bar.buttons.modules.power.spacing} title="Spacing" type="string" />
+                <Option opt={options.bar.customModules.power.icon} title="Power Button Icon" type="string" />
+                <Option opt={options.bar.customModules.power.leftClick} title="Left Click" type="string" />
+                <Option opt={options.bar.customModules.power.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.power.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.power.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.power.scrollDown} title="Scroll Down" type="string" />
             </box>
         </scrollable>
     );

@@ -1,6 +1,7 @@
 import { bind } from 'astal';
-import { Gtk } from 'astal/gtk3';
+import { Gdk, Gtk } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
+import { capitalizeFirstLetter } from 'src/lib/utils';
 import options from 'src/options';
 
 const { raiseMaximumVolume } = options.menus.volume;
@@ -14,7 +15,9 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                 truncate
                 expand
                 wrap
-                label={bind(device, 'description').as((description) => description ?? `Unknown ${type} Device`)}
+                label={bind(device, 'description').as((description) =>
+                    capitalizeFirstLetter(description ?? `Unknown ${type} Device`),
+                )}
             />
             <slider
                 value={bind(device, 'volume')}
@@ -28,6 +31,18 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                         device.volume = value;
                         device.mute = false;
                     }
+                }}
+                setup={(self) => {
+                    self.connect('scroll-event', (_, event: Gdk.Event) => {
+                        const [directionSuccess, direction] = event.get_scroll_direction();
+                        const [deltasSuccess, , yScroll] = event.get_scroll_deltas();
+
+                        if (directionSuccess) {
+                            device.set_volume(device.volume + (direction === Gdk.ScrollDirection.DOWN ? 0.05 : -0.05));
+                        } else if (deltasSuccess) {
+                            device.set_volume(device.volume - yScroll / 100);
+                        }
+                    });
                 }}
             />
         </box>
