@@ -527,6 +527,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.maroon),
                         },
                         text: opt(colors.text),
+                        scroller: {
+                            color: opt(colors.maroon),
+                        },
                         listitems: {
                             passive: opt(colors.text),
                             active: opt(secondary_colors.maroon),
