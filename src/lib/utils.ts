@@ -228,23 +228,38 @@ export function launchApp(app: AstalApps.Application): void {
  * This function attempts to load an image from the specified filepath using GdkPixbuf.
  * If the image is successfully loaded, it returns true. Otherwise, it logs an error and returns false.
  *
+ * Note: Unlike GdkPixbuf, this function will resolve the given path.
+ *
  * @param imgFilePath The path to the image file.
  *
  * @returns True if the filepath is a valid image, false otherwise.
  */
 export function isAnImage(imgFilePath: string): boolean {
     try {
-        const file = Gio.File.new_for_path(imgFilePath);
-        if (!file.query_exists(null)) {
-            return false;
-        }
-
-        GdkPixbuf.Pixbuf.new_from_file(imgFilePath);
+        GdkPixbuf.Pixbuf.new_from_file(resolvePath(imgFilePath));
         return true;
     } catch (error) {
         console.error(error);
         return false;
     }
+}
+
+/**
+ * Resolve a path to the absolute representation of the path.
+ *
+ * Note: This will only expand '~' if present. Path traversal is not supported.
+ *
+ * @param path The path to resolve.
+ *
+ * @returns The absolute representation of the resolved path.
+ */
+export function resolvePath(path: string): string {
+    if (path.charAt(0) == '~') {
+        const home = GLib.get_home_dir();
+        path = GLib.get_home_dir() + '/' + path.substring(1, path.length);
+    }
+
+    return path;
 }
 
 /**
