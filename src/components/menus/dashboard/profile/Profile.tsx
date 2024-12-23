@@ -1,5 +1,4 @@
 import { bind, exec } from 'astal';
-import GdkPixbuf from 'gi://GdkPixbuf';
 import { Gtk } from 'astal/gtk3';
 import options from 'src/options.js';
 import { resolvePath, isAnImage } from 'src/lib/utils.js';

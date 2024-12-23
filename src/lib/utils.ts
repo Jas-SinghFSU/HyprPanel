@@ -11,7 +11,6 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
-import { Gio } from 'astal';
 
 /**
  * Handles errors by throwing a new Error with a message.
@@ -255,7 +254,6 @@ export function isAnImage(imgFilePath: string): boolean {
  */
 export function resolvePath(path: string): string {
     if (path.charAt(0) == '~') {
-        const home = GLib.get_home_dir();
         path = GLib.get_home_dir() + '/' + path.substring(1, path.length);
     }
 

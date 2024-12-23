@@ -8,7 +8,7 @@ const { matugen } = options.theme;
 const ensureMatugenWallpaper = (): void => {
     const wallpaperPath = options.wallpaper.image.get();
 
-    if (matugen.get() && (!options.wallpaper.image.get().length || !isAnImage(wallpaperPath))) {
+    if (matugen.get() && (!wallpaperPath.length || !isAnImage(resolvePath(wallpaperPath)))) {
         Notify({
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
