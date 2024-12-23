@@ -104,7 +104,7 @@ in
       bar.autoHide = mkStrOption "never";
       bar.customModules.updates.pollingInterval = mkIntOption 1440000;
       bar.customModules.updates.updateCommand = mkOption {
-        type = types.str; default = ""; description = "not usable in nix";
+        type = types.str; default = ""; description = "not applicable with nix";
       };
       bar.launcher.autoDetectIcon = mkBoolOption false;
       bar.launcher.icon = mkStrOption "󰣇";
@@ -173,7 +173,7 @@ in
       menus.dashboard.shortcuts.right.shortcut1.command = mkStrOption "sleep 0.5 && hyprpicker -a";
       menus.dashboard.shortcuts.right.shortcut1.icon = mkStrOption "";
       menus.dashboard.shortcuts.right.shortcut1.tooltip = mkStrOption "Color Picker";
-      menus.dashboard.shortcuts.right.shortcut3.command = mkStrOption "bash -c \"/nix/store/4w82a1c7ypp8zds0yyg4rps44b2dh83i-hyprpanel/share/scripts/snapshot.sh\"";
+      menus.dashboard.shortcuts.right.shortcut3.command = mkStrOption "bash -c \"${./scripts/snapshot.sh}\"";
       menus.dashboard.shortcuts.right.shortcut3.icon = mkStrOption "󰄀";
       menus.dashboard.shortcuts.right.shortcut3.tooltip = mkStrOption "Screenshot";
       menus.dashboard.stats.enable_gpu = mkBoolOption false;
