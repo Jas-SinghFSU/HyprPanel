@@ -29,7 +29,6 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                                 Notify({
                                     summary: 'Network',
                                     body: err.message,
-                                    timeout: 5000,
                                 });
                             })
                             .then(() => {

@@ -354,5 +354,7 @@
   "theme.bar.buttons.modules.hypridle.background": "#e06c75",
   "theme.bar.buttons.modules.hypridle.icon_background": "#e06c75",
   "theme.bar.buttons.modules.hypridle.text": "#21252b",
-  "theme.bar.buttons.modules.hypridle.border": "#e06c75"
+  "theme.bar.buttons.modules.hypridle.border": "#e06c75",
+  "theme.bar.menus.menu.network.scroller.color": "#c678dd",
+  "theme.bar.menus.menu.bluetooth.scroller.color": "#56b6c2"
 }

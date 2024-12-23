@@ -13,7 +13,6 @@ const ensureMatugenWallpaper = (): void => {
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
             iconName: icons.ui.warning,
-            timeout: 7000,
         });
         matugen.set(false);
     }

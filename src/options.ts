@@ -468,6 +468,10 @@ const options = mkOptions(CONFIG, {
                     slider_radius: opt('0.3rem'),
                     progress_radius: opt('0.3rem'),
                 },
+                scroller: {
+                    radius: opt('0.7em'),
+                    width: opt('0.25em'),
+                },
                 dropdownmenu: {
                     background: opt(colors.crust),
                     text: opt(colors.text),
@@ -562,6 +566,9 @@ const options = mkOptions(CONFIG, {
                         label: {
                             color: opt(colors.mauve),
                         },
+                        scroller: {
+                            color: opt(colors.mauve),
+                        },
                         text: opt(colors.text),
                         status: {
                             color: opt(colors.overlay0),
@@ -596,6 +603,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.surface0),
                         },
                         label: {
+                            color: opt(colors.sky),
+                        },
+                        scroller: {
                             color: opt(colors.sky),
                         },
                         text: opt(colors.text),

@@ -198,7 +198,6 @@ export function dependencies(...bins: string[]): boolean {
             summary: 'Dependencies not found!',
             body: `The following dependencies are missing: ${missing.join(', ')}`,
             iconName: icons.ui.warning,
-            timeout: 7000,
         });
     }
 

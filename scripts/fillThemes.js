@@ -13,7 +13,7 @@
  * If no themes_directory is provided, it defaults to '~/.config/ags/themes'.
  */
 
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const os = require('os');
 
@@ -48,14 +48,14 @@ const COLORS = {
 const formatMessage = (color, message) => `${color}${message}${COLORS.RESET}`;
 
 /**
- * Loads and parses a JSON file.
+ * Loads and parses a JSON file asynchronously.
  *
  * @param {string} filePath - The path to the JSON file.
- * @returns {Object} The parsed JSON object.
+ * @returns {Promise<Object>} The parsed JSON object.
  */
-const loadJSON = (filePath) => {
+const loadJSON = async (filePath) => {
     try {
-        const data = fs.readFileSync(filePath, 'utf8');
+        const data = await fs.readFile(filePath, 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error(formatMessage(COLORS.FG_RED, `Error reading or parsing '${filePath}': ${error.message}`));
@@ -64,15 +64,15 @@ const loadJSON = (filePath) => {
 };
 
 /**
- * Saves a JSON object to a file with indentation.
+ * Saves a JSON object to a file with indentation asynchronously.
  *
  * @param {string} filePath - The path to the JSON file.
  * @param {Object} data - The JSON data to save.
  */
-const saveJSON = (filePath, data) => {
+const saveJSON = async (filePath, data) => {
     try {
         const jsonString = JSON.stringify(data, null, 2);
-        fs.writeFileSync(filePath, jsonString, 'utf8');
+        await fs.writeFile(filePath, jsonString, 'utf8');
     } catch (error) {
         console.error(formatMessage(COLORS.FG_RED, `Error writing to '${filePath}': ${error.message}`));
         process.exit(1);
@@ -123,9 +123,7 @@ const findMissingKeys = (baseJSON, targetJSON) => {
  * @returns {boolean} True if the key is excluded, otherwise false.
  */
 const isExcludedKey = (key) => {
-    const excludedPatterns = [
-        // Add any regex patterns for keys to exclude here
-    ];
+    const excludedPatterns = [];
 
     return excludedPatterns.some((pattern) => pattern.test(key));
 };
@@ -175,14 +173,18 @@ const collectBorderColors = (baseJSON) => {
  * @param {Object} targetJSON - The target JSON object.
  * @param {Object} specialKeyMappings - A map of special keys to their source keys.
  * @param {string} currentKey - The key currently being processed.
+ * @param {Object} baseTheme - The base theme JSON object.
  * @returns {*} The best matching value or null if a random selection is needed.
  */
-const determineBestMatchValue = (baseValue, valueToKeysMap, targetJSON, specialKeyMappings, currentKey) => {
-    // Check if the current key is in special mappings
+const determineBestMatchValue = (baseValue, valueToKeysMap, targetJSON, specialKeyMappings, currentKey, baseTheme) => {
     if (specialKeyMappings.hasOwnProperty(currentKey)) {
         const sourceKey = specialKeyMappings[currentKey];
         if (targetJSON.hasOwnProperty(sourceKey)) {
+            console.log(formatMessage(COLORS.FG_CYAN, `🔍 Found source key '${sourceKey}' in target JSON.`));
             return targetJSON[sourceKey];
+        } else if (baseTheme && baseTheme.hasOwnProperty(sourceKey)) {
+            console.log(formatMessage(COLORS.FG_CYAN, `🔍 Found source key '${sourceKey}' in base theme.`));
+            return baseTheme[sourceKey];
         } else {
             console.warn(
                 formatMessage(
@@ -229,14 +231,16 @@ const findExtraKeys = (baseTheme, targetJSON) => {
  *
  * @param {string} themePath - The path to the theme file.
  */
-const backupTheme = (themePath) => {
-    const backupDir = path.join(path.dirname(themePath), 'backup');
-    if (!fs.existsSync(backupDir)) {
-        fs.mkdirSync(backupDir);
+const backupTheme = async (themePath) => {
+    try {
+        const backupDir = path.join(path.dirname(themePath), 'backup');
+        await fs.mkdir(backupDir, { recursive: true });
+        const backupPath = path.join(backupDir, path.basename(themePath));
+        await fs.copyFile(themePath, backupPath);
+        console.log(formatMessage(COLORS.FG_CYAN, `Backup created at '${backupPath}'.`));
+    } catch (error) {
+        console.error(formatMessage(COLORS.FG_RED, `❌ Error creating backup for '${themePath}': ${error.message}`));
     }
-    const backupPath = path.join(backupDir, path.basename(themePath));
-    fs.copyFileSync(themePath, backupPath);
-    console.log(formatMessage(COLORS.FG_CYAN, `Backup created at '${backupPath}'.`));
 };
 
 /**
@@ -246,9 +250,10 @@ const backupTheme = (themePath) => {
  * @param {Object} baseTheme - The base JSON object.
  * @param {boolean} dryRun - If true, no changes will be written to files.
  * @param {Object} specialKeyMappings - A map of special keys to their source keys.
+ * @returns {Promise<void>}
  */
-const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => {
-    const themeJSON = loadJSON(themePath);
+const processTheme = async (themePath, baseTheme, dryRun, specialKeyMappings = {}) => {
+    const themeJSON = await loadJSON(themePath);
     const missingKeys = findMissingKeys(baseTheme, themeJSON);
 
     let hasChanges = false;
@@ -266,14 +271,21 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
         const valueToKeysMap = buildValueToKeysMap(baseTheme);
         const borderColors = collectBorderColors(baseTheme);
 
-        missingKeys.forEach((key) => {
+        for (const key of missingKeys) {
             if (isExcludedKey(key)) {
                 console.log(formatMessage(COLORS.FG_MAGENTA, `❗ Excluded key from addition: "${key}"`));
-                return;
+                continue;
             }
 
             const baseValue = baseTheme[key];
-            const bestValue = determineBestMatchValue(baseValue, valueToKeysMap, themeJSON, specialKeyMappings, key);
+            const bestValue = determineBestMatchValue(
+                baseValue,
+                valueToKeysMap,
+                themeJSON,
+                specialKeyMappings,
+                key,
+                baseTheme,
+            );
 
             if (bestValue !== null) {
                 themeJSON[key] = bestValue;
@@ -281,7 +293,7 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
             } else {
                 if (borderColors.length === 0) {
                     console.error(formatMessage(COLORS.FG_RED, '❌ Error: No border colors available to assign.'));
-                    return;
+                    continue;
                 }
                 const randomColor = borderColors[Math.floor(Math.random() * borderColors.length)];
                 themeJSON[key] = randomColor;
@@ -294,7 +306,7 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
             }
 
             hasChanges = true;
-        });
+        }
     }
 
     const extraKeys = findExtraKeys(baseTheme, themeJSON);
@@ -309,11 +321,11 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
             ),
         );
 
-        extraKeys.forEach((key) => {
+        for (const key of extraKeys) {
             delete themeJSON[key];
             console.log(formatMessage(COLORS.FG_RED, `➖ Removed key: "${key}"`));
             hasChanges = true;
-        });
+        }
     }
 
     if (hasChanges) {
@@ -325,8 +337,8 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
                 ),
             );
         } else {
-            backupTheme(themePath);
-            saveJSON(themePath, themeJSON);
+            await backupTheme(themePath);
+            await saveJSON(themePath, themeJSON);
             console.log(
                 formatMessage(COLORS.FG_GREEN, `✅ Updated '${path.basename(themePath)}' with missing and extra keys.`),
             );
@@ -339,7 +351,7 @@ const processTheme = (themePath, baseTheme, dryRun, specialKeyMappings = {}) => 
 /**
  * The main function that orchestrates the theme comparison and updating.
  */
-const main = () => {
+const main = async () => {
     const args = process.argv.slice(2);
     const dryRunIndex = args.indexOf('--dry-run');
     const dryRun = dryRunIndex !== -1;
@@ -350,7 +362,9 @@ const main = () => {
 
     const themesDir = args[0] || path.join(os.homedir(), '.config', 'ags', 'themes');
 
-    if (!fs.existsSync(themesDir)) {
+    try {
+        await fs.access(themesDir);
+    } catch (error) {
         console.error(formatMessage(COLORS.FG_RED, `❌ Error: Themes directory '${themesDir}' does not exist.`));
         process.exit(1);
     }
@@ -362,72 +376,68 @@ const main = () => {
     const baseThemeSplitPath = path.join(themesDir, baseThemeSplitFile);
     const baseThemeVividPath = path.join(themesDir, baseThemeVividFile);
 
-    if (!fs.existsSync(baseThemePath)) {
-        console.error(
-            formatMessage(COLORS.FG_RED, `❌ Error: Base theme '${baseThemeFile}' does not exist in '${themesDir}'.`),
-        );
-        process.exit(1);
+    const baseThemes = [
+        { file: baseThemeFile, path: baseThemePath },
+        { file: baseThemeSplitFile, path: baseThemeSplitPath },
+        { file: baseThemeVividFile, path: baseThemeVividPath },
+    ];
+
+    for (const theme of baseThemes) {
+        try {
+            await fs.access(theme.path);
+        } catch (error) {
+            console.error(
+                formatMessage(COLORS.FG_RED, `❌ Error: Base theme '${theme.file}' does not exist in '${themesDir}'.`),
+            );
+            process.exit(1);
+        }
     }
 
-    if (!fs.existsSync(baseThemeSplitPath)) {
-        console.error(
-            formatMessage(
-                COLORS.FG_RED,
-                `❌ Error: Base split theme '${baseThemeSplitFile}' does not exist in '${themesDir}'.`,
-            ),
-        );
-        process.exit(1);
-    }
+    const [baseTheme, baseThemeSplit, baseThemeVivid] = await Promise.all([
+        loadJSON(baseThemePath),
+        loadJSON(baseThemeSplitPath),
+        loadJSON(baseThemeVividPath),
+    ]);
 
-    if (!fs.existsSync(baseThemeVividPath)) {
-        console.error(
-            formatMessage(
-                COLORS.FG_RED,
-                `❌ Error: Base vivid theme '${baseThemeVividFile}' does not exist in '${themesDir}'.`,
-            ),
-        );
-        process.exit(1);
-    }
+    const themeFiles = (await fs.readdir(themesDir)).filter((file) => file.endsWith('.json'));
 
-    const baseTheme = loadJSON(baseThemePath);
-    const baseThemeSplit = loadJSON(baseThemeSplitPath);
-    const baseThemeVivid = loadJSON(baseThemeVividPath);
-
-    const themeFiles = fs.readdirSync(themesDir).filter((file) => file.endsWith('.json'));
-
-    // Define special key mappings
-    // Format: "target_key": "source_key"
     const specialKeyMappings = {
-        'theme.bar.buttons.modules.hypridle.icon': 'theme.bar.buttons.modules.storage.icon',
-        'theme.bar.buttons.modules.hypridle.background': 'theme.bar.buttons.modules.storage.background',
-        'theme.bar.buttons.modules.hypridle.icon_background': 'theme.bar.buttons.modules.storage.icon_background',
-        'theme.bar.buttons.modules.hypridle.text': 'theme.bar.buttons.modules.storage.text',
-        'theme.bar.buttons.modules.hypridle.border': 'theme.bar.buttons.modules.storage.border',
-        // Add more special mappings here if needed
+        'theme.bar.menus.menu.bluetooth.scroller.color': 'theme.bar.menus.menu.bluetooth.label.color',
+        'theme.bar.menus.menu.network.scroller.color': 'theme.bar.menus.menu.network.label.color',
     };
 
-    themeFiles.forEach((file) => {
-        if (file === baseThemeFile || file === baseThemeSplitFile || file === baseThemeVividFile) {
-            return;
-        }
+    const queue = [...themeFiles].filter(
+        (file) =>
+            !['catppuccin_mocha.json', 'catppuccin_mocha_split.json', 'catppuccin_mocha_vivid.json'].includes(file),
+    );
 
-        const themePath = path.join(themesDir, file);
-        let correspondingBaseTheme;
+    const processQueue = async () => {
+        while (queue.length > 0) {
+            const promises = [];
+            for (let i = 0; i < concurrencyLimit && queue.length > 0; i++) {
+                const file = queue.shift();
+                const themePath = path.join(themesDir, file);
+                let correspondingBaseTheme;
 
-        if (file.endsWith('_split.json')) {
-            correspondingBaseTheme = baseThemeSplit;
-        } else if (file.endsWith('_vivid.json')) {
-            correspondingBaseTheme = baseThemeVivid;
-        } else {
-            correspondingBaseTheme = baseTheme;
-        }
+                if (file.endsWith('_split.json')) {
+                    correspondingBaseTheme = baseThemeSplit;
+                } else if (file.endsWith('_vivid.json')) {
+                    correspondingBaseTheme = baseThemeVivid;
+                } else {
+                    correspondingBaseTheme = baseTheme;
+                }
 
-        try {
-            processTheme(themePath, correspondingBaseTheme, dryRun, specialKeyMappings);
-        } catch (error) {
-            console.error(formatMessage(COLORS.FG_RED, `❌ Error processing '${file}': ${error.message}`));
+                promises.push(
+                    processTheme(themePath, correspondingBaseTheme, dryRun, specialKeyMappings).catch((error) => {
+                        console.error(formatMessage(COLORS.FG_RED, `❌ Error processing '${file}': ${error.message}`));
+                    }),
+                );
+            }
+            await Promise.all(promises);
         }
-    });
+    };
+
+    await processQueue();
 
     console.log(formatMessage(COLORS.FG_GREEN, '\n🎉 All themes have been processed.'));
 };
