@@ -73,7 +73,13 @@
 
     # Define .overlay to expose the package as pkgs.hyprpanel based on the system
     overlay = final: prev: {
-      hyprpanel = self.packages.${prev.stdenv.system}.default;
+      hyprpanel = prev.writeShellScriptBin "hyprpanel" ''
+        if [ "$#" -eq 0 ]; then
+            exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
+        else
+            exec ${astal.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
+        fi
+      '';
     };
   };
 }
