@@ -75,5 +75,7 @@
     overlay = final: prev: {
       hyprpanel = self.packages.${prev.stdenv.system}.default;
     };
+
+    homeManagerModules.hyprpanel = import ./nix/module.nix self;
   };
 }

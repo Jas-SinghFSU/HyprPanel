@@ -159,6 +159,8 @@ If you install the fonts after installing HyperPanel, you will need to restart H
 
 ### NixOS & Home-Manager
 
+<details>
+<summary>Overlay Method</summary>
 Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS using the provided Nix Flake. First, add the repository to your Flake's inputs, and enable the overlay.
 
 ```nix
@@ -220,6 +222,111 @@ wayland.windowManager.hyprland.settings.exec-once = [
 ];
 
 ```
+</details>
+
+<details>
+<summary>Home Manager Module</summary>
+If you want to configure HyprPanel with the Home Manager module, read this section instead.
+
+First, as with the overlay method, add HyprPanel to your flake.
+```nix
+# flake.nix
+{
+  inputs = {
+    hyprpanel.url = "github:jas-singhfsu/hyprpanel";
+    # Good practice to ensure packages in HyprPanel
+    # are the same version as your system packages.
+    hyprpanel.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  # ...
+}
+```
+
+Then, import the Home Manager module and configure it as you wish.
+Below is an example of some of the options that are available.
+```nix
+# *.nix
+{ inputs, ... }:
+{
+  imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];
+  
+  programs.hyprpanel = {
+
+    # Enable the module.
+    # Default: false
+    enable = true;
+
+    # Automatically restart HyprPanel with systemd.
+    # Useful when updating your config so that you
+    # don't need to manually restart it.
+    # Default: false
+    systemd.enable = true;
+
+    # Adds '/nix/store/.../hyprpanel' to the
+    # 'exec-once' in your Hyprland config.
+    # Default: false
+    hyprland.enable = true;
+
+    # Fixes the overwrite issue with HyprPanel.
+    # See below for more information.
+    # Default: false
+    overwrite.enable = true;
+
+    # Import a specific theme from './themes/*.json'.
+    # Default: ""
+    theme = "gruvbox_split";
+
+    # See 'https://hyprpanel.com/configuration/panel.html'.
+    # Default: null
+    layout = {
+      "bar.layouts" = {
+        "0" = {
+          left = [ "dashboard" "workspaces" ];
+          middle = [ "media" ];
+          right = [ "volume" "systray" "notifications" ];
+        };
+      };
+    };
+
+    # See './nix/module.nix:103'.
+    # Many of the options from the GUI are included.
+    # Default: <same as gui>
+    settings = {
+      bar.launcher.autoDetectIcon = true;
+      bar.workspaces.show_icons = true;
+
+      menus.clock = {
+        time = {
+          military = true;
+          hideSeconds = true;
+        };
+        weather.unit = "metric";
+      };
+
+      menus.dashboard.directories.enabled = false;
+      menus.dashboard.stats.enable_gpu = true;
+
+      theme.bar.transparent = true;
+
+      theme.font = {
+        name = "CaskaydiaCove NF";
+        size = "16px";
+      };
+    };
+  };
+}
+```
+:warning: **Caveat**: Currently, updating the configuration through the GUI will
+overwrite the `config.json` file by deleting it and creating a new one in its
+place. This causes an error with Home Manager as the config must be a symlink to
+the current generation for Home Manager to properly update it. A shorthand fix
+is to delete `config.json` if it is NOT a symlink which can be handled for you
+with the module by setting the `overwrite.enable` option. An obvious caveat to
+this is that you can no longer tweak the configuration through the GUI. The
+recommended workflow is to keep track of the differences and apply it later
+in the module. This will hopefully be improved in a future update - benvonh.
+</details>
 
 ### Launch the panel
 
