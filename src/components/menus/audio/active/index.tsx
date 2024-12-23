@@ -30,7 +30,7 @@ const Header = (): JSX.Element => (
             }}
             halign={Gtk.Align.END}
             hexpand
-            label={bind(activeMenu).as((menu) => (menu === ActiveDeviceMenu.Devices ? '' : '󰕾'))}
+            label={bind(activeMenu).as((menu) => (menu === ActiveDeviceMenu.Devices ? '' : '󰤽'))}
         />
     </box>
 );

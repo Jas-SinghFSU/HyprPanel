@@ -4,7 +4,7 @@ import { SliderItem } from '../sliderItem/SliderItem';
 import { ActiveDeviceMenu } from '..';
 
 const NoStreams = (): JSX.Element => {
-    return <label label={'No active playbacks found.'} expand />;
+    return <label className={'no-playbacks dim'} label={'No active playbacks found.'} expand />;
 };
 
 export const ActivePlaybacks = (): JSX.Element => {
@@ -13,7 +13,7 @@ export const ActivePlaybacks = (): JSX.Element => {
             <scrollable className={'menu-scroller active-playbacks-scrollable'}>
                 <box vertical>
                     {bind(audioService, 'streams').as((streams) => {
-                        if (!streams) {
+                        if (!streams || streams.length === 0) {
                             return <NoStreams />;
                         }
 

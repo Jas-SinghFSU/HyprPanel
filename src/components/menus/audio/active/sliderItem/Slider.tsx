@@ -13,7 +13,7 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                 className={`menu-active ${type}`}
                 halign={Gtk.Align.START}
                 truncate
-                expand
+                hexpand
                 wrap
                 label={bind(device, 'description').as((description) =>
                     capitalizeFirstLetter(description ?? `Unknown ${type} Device`),
@@ -38,9 +38,11 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                         const [deltasSuccess, , yScroll] = event.get_scroll_deltas();
 
                         if (directionSuccess) {
-                            device.set_volume(device.volume + (direction === Gdk.ScrollDirection.DOWN ? 0.05 : -0.05));
+                            const newVolume = device.volume + (direction === Gdk.ScrollDirection.DOWN ? 0.05 : -0.05);
+                            device.set_volume(Math.min(newVolume, 1));
                         } else if (deltasSuccess) {
-                            device.set_volume(device.volume - yScroll / 100);
+                            const newVolume = device.volume - yScroll / 100;
+                            device.set_volume(Math.min(newVolume, 1));
                         }
                     });
                 }}
