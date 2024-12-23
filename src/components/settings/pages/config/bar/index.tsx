@@ -272,7 +272,7 @@ export const BarSettings = (): JSX.Element => {
                 />
                 <Option
                     opt={options.bar.workspaces.workspaceMask}
-                    title="Mask Workspace Numbers On Monitors"
+                    title="Workspace per monitor"
                     subtitle="For monitor-specific numbering"
                     type="boolean"
                 />
