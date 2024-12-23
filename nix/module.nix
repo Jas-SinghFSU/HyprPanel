@@ -3,6 +3,8 @@ let
   inherit (lib) types mkIf mkOption mkEnableOption;
 
   cfg = config.programs.hyprpanel;
+
+  jsonFormat = pkgs.formats.json { };
   
   # No package option
   package = self.packages.${pkgs.system}.default;
@@ -13,7 +15,7 @@ let
   mkBoolOption = default: mkOption { type = types.bool; default = default; };
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
-  #       Do not ask what this does...
+  #       Do not ask what these do...
   flattenAttrs = attrSet: prefix:
     let
       process = key: value:
@@ -74,7 +76,7 @@ in
     };
 
     layout = mkOption {
-      type = lib.formats.json;
+      type = jsonFormat.type;
       default = null;
       example = ''
         {
