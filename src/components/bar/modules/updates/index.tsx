@@ -25,7 +25,6 @@ const postInputUpdater = Variable(true);
 const isVis = Variable(!autoHide.get());
 
 const processUpdateCount = (updateCount: string): string => {
-    isVis.set(!autoHide.get() || (autoHide.get() && parseFloat(updateCount) > 0));
     if (!padZero.get()) return updateCount;
     return `${updateCount.padStart(2, '0')}`;
 };
@@ -43,6 +42,7 @@ updatesPoller.initialize('updates');
 const updatesIcon = Variable.derive(
     [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
     (pendingIcon, updatedIcon, pUpdates) => {
+        isVis.set(!autoHide.get() || (autoHide.get() && parseFloat(pUpdates) > 0));
         return parseFloat(pUpdates) === 0 ? updatedIcon : pendingIcon;
     },
 );
