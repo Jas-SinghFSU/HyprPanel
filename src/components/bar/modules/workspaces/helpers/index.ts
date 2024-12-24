@@ -1,7 +1,7 @@
 import { exec, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { hyprlandService } from 'src/lib/constants/services';
-import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'src/lib/types/workspace';
+import { HyprctlWorkspace, MonitorMap, WorkspaceMap } from 'src/lib/types/workspace';
 import { range } from 'src/lib/utils';
 import options from 'src/options';
 
@@ -63,19 +63,15 @@ export const getWorkspacesForMonitor = (
  */
 export const getWorkspaceRules = (): WorkspaceMap => {
     try {
-        const rules = exec('hyprctl workspacerules -j');
+        const rules = exec('hyprctl workspaces -j');
 
         const workspaceRules: WorkspaceMap = {};
 
-        JSON.parse(rules).forEach((rule: WorkspaceRule) => {
-            const workspaceNum = parseInt(rule.workspaceString, 10);
-            if (isNaN(workspaceNum)) {
-                return;
-            }
+        JSON.parse(rules).forEach((rule: HyprctlWorkspace) => {
             if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                workspaceRules[rule.monitor].push(workspaceNum);
+                workspaceRules[rule.monitor].push(rule.id);
             } else {
-                workspaceRules[rule.monitor] = [workspaceNum];
+                workspaceRules[rule.monitor] = [rule.id];
             }
         });
 
