@@ -70,7 +70,7 @@ in
     
     theme = mkOption {
       type = types.str;
-      default = null;
+      default = "";
       example = "catppuccin_mocha";
       description = "Theme to import (see ./themes/*.json)";
     };
