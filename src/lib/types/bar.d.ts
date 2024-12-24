@@ -29,6 +29,7 @@ export type BarModule = {
     boundLabel?: string;
     tooltipText?: string | Binding<string>;
     boxClass: string;
+    isVis?: Variable<boolean>;
     props?: Widget.ButtonProps;
     showLabel?: boolean;
     showLabelBinding?: Binding;
