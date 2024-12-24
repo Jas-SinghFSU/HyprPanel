@@ -254,8 +254,6 @@ export function isAnImage(imgFilePath: string): boolean {
  */
 export function resolvePath(path: string): string {
     return path.replace('~', GLib.get_home_dir())
-
-    return path;
 }
 
 /**
