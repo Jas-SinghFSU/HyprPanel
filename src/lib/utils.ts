@@ -235,7 +235,7 @@ export function launchApp(app: AstalApps.Application): void {
  */
 export function isAnImage(imgFilePath: string): boolean {
     try {
-        GdkPixbuf.Pixbuf.new_from_file(resolvePath(imgFilePath));
+        GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
         return true;
     } catch (error) {
         console.error(error);
@@ -244,16 +244,21 @@ export function isAnImage(imgFilePath: string): boolean {
 }
 
 /**
- * Resolve a path to the absolute representation of the path.
+ * Normalize a path to the absolute representation of the path.
  *
  * Note: This will only expand '~' if present. Path traversal is not supported.
  *
- * @param path The path to resolve.
+ * @param path The path to normalize.
  *
- * @returns The absolute representation of the resolved path.
+ * @returns The normalized path.
  */
-export function resolvePath(path: string): string {
-    return path.replace('~', GLib.get_home_dir())
+export function normalizePath(path: string): string {
+    if (path.charAt(0) == '~') {
+        // Replace will only replace the first match, in this case, the first character
+        return path.replace('~', GLib.get_home_dir());
+    }
+
+    return path;
 }
 
 /**

@@ -1,5 +1,5 @@
 import icons from '../lib/icons/icons';
-import { bash, dependencies, Notify, isAnImage } from '../lib/utils';
+import { bash, dependencies, Notify, isAnImage, normalizePath } from '../lib/utils';
 import options from '../options';
 import Wallpaper from 'src/services/Wallpaper';
 
@@ -8,7 +8,7 @@ const { matugen } = options.theme;
 const ensureMatugenWallpaper = (): void => {
     const wallpaperPath = options.wallpaper.image.get();
 
-    if (matugen.get() && (!wallpaperPath.length || !isAnImage(resolvePath(wallpaperPath)))) {
+    if (matugen.get() && (!wallpaperPath.length || !isAnImage(normalizePath(wallpaperPath)))) {
         Notify({
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
