@@ -218,7 +218,10 @@ in
 
   config = mkIf cfg.enable {
     # TODO:(benvonh) Nerd font packaging changes in NixOS 25.05
-    home.packages = [ package (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
+    home.packages = [
+      package
+      (pkgs.nerd-fonts.jetbrains-mono.override { fonts = [ "JetBrainsMono" ]; })
+    ];
 
     # NOTE:(benvonh)
     # When changing the configuration through the GUI, HyprPanel will delete the `config.json` file and create a new
