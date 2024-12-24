@@ -221,6 +221,8 @@ wayland.windowManager.hyprland.settings.exec-once = [
 
 ```
 
+For information on the Home Manager module, click [here](https://hyprpanel.com/getting_started/installation.html#nixos-home-manager).
+
 ### Launch the panel
 
 Afterwards you can run the panel with the following command in your terminal:

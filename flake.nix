@@ -80,5 +80,7 @@
         fi
       '';
     };
+
+    homeManagerModules.hyprpanel = import ./nix/module.nix self;
   };
 }
