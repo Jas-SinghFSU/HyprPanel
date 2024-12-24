@@ -47,7 +47,8 @@ export type BarModule =
     | 'power'
     | 'systray'
     | 'hypridle'
-    | 'hyprsunset';
+    | 'hyprsunset'
+      'warp';
 
 export type BarLayout = {
     left: BarModule[];

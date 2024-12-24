@@ -395,6 +395,15 @@ const options = mkOptions(CONFIG, {
                         icon_background: opt(colors.base2),
                         spacing: opt('0.45em'),
                     },
+                    warp: {
+                        enableBorder: opt(false),
+                        border: opt(colors.yellow),
+                        background: opt(colors.base2),
+                        text: opt(colors.yellow),
+                        icon: opt(colors.yellow),
+                        icon_background: opt(colors.base2),
+                        spacing: opt('0.45em'),
+                    }
                 },
             },
             menus: {
@@ -1137,6 +1146,17 @@ const options = mkOptions(CONFIG, {
                 onLabel: opt('On'),
                 offLabel: opt('Off'),
                 pollingInterval: opt(1000 * 2),
+                rightClick: opt(''),
+                middleClick: opt(''),
+                scrollUp: opt(''),
+                scrollDown: opt(''),
+            },
+            warp: {
+                label: opt(true),
+                onIcon: opt(''),
+                offIcon: opt('󰇖'),
+                onLabel: opt('On'),
+                offLabel: opt('Off'),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),

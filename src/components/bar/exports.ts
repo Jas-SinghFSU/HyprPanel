@@ -23,6 +23,7 @@ import { Weather } from '../../components/bar/modules/weather/index';
 import { Power } from '../../components/bar/modules/power/index';
 import { Hyprsunset } from '../../components/bar/modules/hyprsunset/index';
 import { Hypridle } from '../../components/bar/modules/hypridle/index';
+import { Warp } from '../../components/bar/modules/warp/index';
 
 export {
     Menu,
@@ -50,4 +51,5 @@ export {
     Power,
     Hyprsunset,
     Hypridle,
+    Warp,
 };
