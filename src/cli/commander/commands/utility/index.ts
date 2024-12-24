@@ -2,6 +2,7 @@ import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
+import { audioService } from 'src/lib/constants/services';
 
 export const utilityCommands: Command[] = [
     {
@@ -28,6 +29,36 @@ export const utilityCommands: Command[] = [
             try {
                 clearAllNotifications();
                 return 'Notifications cleared successfully.';
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'adjustVolume',
+        aliases: ['vol'],
+        description: 'Adjusts the volume of the default audio output device.',
+        category: 'Utility',
+        args: [
+            {
+                name: 'volume',
+                description: 'A positive or negative number to adjust the volume by.',
+                type: 'number',
+                required: true,
+            },
+        ],
+        handler: (args: Record<string, unknown>): number => {
+            try {
+                const speaker = audioService.defaultSpeaker;
+                const volumeInput = Number(args['volume']) / 100;
+
+                if (options.menus.volume.raiseMaximumVolume.get()) {
+                    speaker.set_volume(Math.min(speaker.volume + volumeInput, 1.5));
+                } else {
+                    speaker.set_volume(Math.min(speaker.volume + volumeInput, 1));
+                }
+
+                return Math.round((speaker.volume + volumeInput) * 100);
             } catch (error) {
                 errorHandler(error);
             }

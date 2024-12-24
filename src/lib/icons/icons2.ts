@@ -192,6 +192,7 @@ export default {
         moderate_or_heavy_showers_of_ice_pellets: 'weather-showers-symbolic',
         patchy_light_rain_with_thunder: 'weather-showers-scattered-symbolic',
         moderate_or_heavy_rain_with_thunder: 'weather-showers-symbolic',
+        moderate_or_heavy_rain_in_area_with_thunder: 'weather-showers-symbolic',
         patchy_light_snow_with_thunder: 'weather-snow-symbolic',
         moderate_or_heavy_snow_with_thunder: 'weather-snow-symbolic',
     },
