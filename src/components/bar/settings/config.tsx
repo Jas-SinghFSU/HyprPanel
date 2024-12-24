@@ -176,7 +176,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.netstat.round} title="Round" type="boolean" />
                 <Option
                     opt={options.bar.customModules.netstat.pollingInterval}
-                    title="Polling Interval"
+                    title="Polling Interval (ms)"
                     type="number"
                     min={100}
                     max={60 * 24 * 1000}
