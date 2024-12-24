@@ -399,7 +399,20 @@ export const isMiddleClick = (event: Astal.ClickEvent): boolean => event.button 
  *
  * @returns True if the event is a scroll up, false otherwise.
  */
-export const isScrollUp = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.UP;
+export const isScrollUp = (event: Gdk.Event): boolean => {
+    const [directionSuccess, direction] = event.get_scroll_direction();
+    const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
+
+    if (directionSuccess && direction === Gdk.ScrollDirection.UP) {
+        return true;
+    }
+
+    if (deltaSuccess && yScroll < 0) {
+        return true;
+    }
+
+    return false;
+};
 
 /**
  * Checks if an event is a scroll down.
@@ -410,4 +423,17 @@ export const isScrollUp = (event: Astal.ScrollEvent): boolean => event.direction
  *
  * @returns True if the event is a scroll down, false otherwise.
  */
-export const isScrollDown = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.DOWN;
+export const isScrollDown = (event: Gdk.Event): boolean => {
+    const [directionSuccess, direction] = event.get_scroll_direction();
+    const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
+
+    if (directionSuccess && direction === Gdk.ScrollDirection.DOWN) {
+        return true;
+    }
+
+    if (deltaSuccess && yScroll > 0) {
+        return true;
+    }
+
+    return false;
+};
