@@ -227,7 +227,7 @@ export function launchApp(app: AstalApps.Application): void {
  * This function attempts to load an image from the specified filepath using GdkPixbuf.
  * If the image is successfully loaded, it returns true. Otherwise, it logs an error and returns false.
  *
- * Note: Unlike GdkPixbuf, this function will resolve the given path.
+ * Note: Unlike GdkPixbuf, this function will normalize the given path.
  *
  * @param imgFilePath The path to the image file.
  *
