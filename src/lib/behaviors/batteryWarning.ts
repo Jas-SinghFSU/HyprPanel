@@ -29,19 +29,19 @@ export function warnOnLowBattery(): void {
         // To avoid double notifications, we check each of the thresholds and set the correct `sentNotification`, but then
         // combine them into one notification only
         let sendNotification = false;
-        if (!sentLowNotification && batteryPercentage < lowThreshold) {
+        if (!sentLowNotification && batteryPercentage <= lowThreshold) {
             sentLowNotification = true;
             sendNotification = true;
         }
-        if (!sentHalfLowNotification && batteryPercentage < lowThreshold / 2) {
+        if (!sentHalfLowNotification && batteryPercentage <= lowThreshold / 2) {
             sentHalfLowNotification = true;
             sendNotification = true;
         }
 
         if (sendNotification) {
             Notify({
-                summary: lowBatteryNotificationTitle.get().replace('$POWER_LEVEL', batteryPercentage.toString()),
-                body: lowBatteryNotificationText.get().replace('$POWER_LEVEL', batteryPercentage.toString()),
+                summary: lowBatteryNotificationTitle.get().replaceAll('$POWER_LEVEL', batteryPercentage.toString()),
+                body: lowBatteryNotificationText.get().replaceAll('$POWER_LEVEL', batteryPercentage.toString()),
                 iconName: icons.ui.warning,
                 urgency: 'critical',
             });

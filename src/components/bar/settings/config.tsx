@@ -154,6 +154,12 @@ export const CustomModuleSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.customModules.netstat.icon} title="Netstat Icon" type="string" />
                 <Option opt={options.bar.customModules.netstat.label} title="Show Label" type="boolean" />
+                <Option opt={options.bar.customModules.netstat.networkInLabel} title="Network In Label" type="string" />
+                <Option
+                    opt={options.bar.customModules.netstat.networkOutLabel}
+                    title="Network Out Label"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.netstat.rateUnit}
                     title="Rate Unit"
@@ -170,7 +176,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.netstat.round} title="Round" type="boolean" />
                 <Option
                     opt={options.bar.customModules.netstat.pollingInterval}
-                    title="Polling Interval"
+                    title="Polling Interval (ms)"
                     type="number"
                     min={100}
                     max={60 * 24 * 1000}
@@ -221,6 +227,12 @@ export const CustomModuleSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.customModules.updates.icon.updated} title="No Updates Icon" type="string" />
                 <Option opt={options.bar.customModules.updates.label} title="Show Label" type="boolean" />
+                <Option
+                    opt={options.bar.customModules.updates.autoHide}
+                    title="Auto Hide"
+                    subtitle="Hides module when no updates are available."
+                    type="boolean"
+                />
                 <Option opt={options.bar.customModules.updates.padZero} title="Pad with 0" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.updates.spacing} title="Spacing" type="string" />
                 <Option

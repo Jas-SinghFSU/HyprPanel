@@ -10,6 +10,7 @@ const {
     updateCommand,
     label,
     padZero,
+    autoHide,
     pollingInterval,
     icon,
     leftClick,
@@ -21,6 +22,7 @@ const {
 
 const pendingUpdates: Variable<string> = Variable('0');
 const postInputUpdater = Variable(true);
+const isVis = Variable(!autoHide.get());
 
 const processUpdateCount = (updateCount: string): string => {
     if (!padZero.get()) return updateCount;
@@ -37,9 +39,14 @@ const updatesPoller = new BashPoller<string, []>(
 
 updatesPoller.initialize('updates');
 
+Variable.derive([bind(autoHide)], (autoHideModule) => {
+    isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
+});
+
 const updatesIcon = Variable.derive(
     [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
     (pendingIcon, updatedIcon, pUpdates) => {
+        isVis.set(!autoHide.get() || (autoHide.get() && parseFloat(pUpdates) > 0));
         return parseFloat(pUpdates) === 0 ? updatedIcon : pendingIcon;
     },
 );
@@ -49,6 +56,7 @@ export const Updates = (): BarBoxChild => {
         textIcon: updatesIcon(),
         tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
         boxClass: 'updates',
+        isVis: isVis,
         label: bind(pendingUpdates),
         showLabelBinding: bind(label),
         props: {

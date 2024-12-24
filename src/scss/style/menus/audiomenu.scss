@@ -31,6 +31,18 @@
         color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-volume-icons-active);
     }
 
+    .menu-icon-button.volume {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
+        padding: 0em 1em;
+
+        label {
+            font-size: 1.25em;
+        }
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
+        }
+    }
+
     .menu-slider.playback {
         trough {
             background: if(
@@ -211,18 +223,6 @@
 
     .menu-items-section.playback {
         border-radius: 0em;
-    }
-
-    .slider-toggle {
-        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
-        padding: 0em 1em;
-        label {
-            font-size: 1.25em;
-        }
-
-        &:hover {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
-        }
     }
 
     .active-playbacks-scrollable {
