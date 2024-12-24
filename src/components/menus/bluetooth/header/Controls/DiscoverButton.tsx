@@ -6,7 +6,7 @@ import { isDiscovering } from './helper';
 
 export const DiscoverButton = (): JSX.Element => (
     <button
-        className="menu-icon-button search"
+        className="menu-icon-button search bluetooth"
         valign={Gtk.Align.CENTER}
         onClick={(_, self) => {
             if (!isPrimaryClick(self)) {

@@ -527,6 +527,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.maroon),
                         },
                         text: opt(colors.text),
+                        scroller: {
+                            color: opt(colors.maroon),
+                        },
                         listitems: {
                             passive: opt(colors.text),
                             active: opt(secondary_colors.maroon),
@@ -1069,6 +1072,8 @@ const options = mkOptions(CONFIG, {
                 networkInterface: opt(''),
                 dynamicIcon: opt(false),
                 icon: opt('󰖟'),
+                networkInLabel: opt('↓'),
+                networkOutLabel: opt('↑'),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>('full'),
                 rateUnit: opt<RateUnit>('auto'),
@@ -1091,6 +1096,7 @@ const options = mkOptions(CONFIG, {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
+                autoHide: opt(false),
                 icon: {
                     pending: opt('󰏗'),
                     updated: opt('󰏖'),
@@ -1196,7 +1202,7 @@ const options = mkOptions(CONFIG, {
                 logout: opt('hyprctl dispatch exit'),
                 shutdown: opt('systemctl poweroff'),
                 avatar: {
-                    image: opt('$HOME/.face.icon'),
+                    image: opt('~/.face.icon'),
                     name: opt<'system' | string>('system'),
                 },
             },

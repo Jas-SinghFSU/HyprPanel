@@ -162,7 +162,7 @@ const navigateWorkspace = (
     while (attempts < workspacesList.length) {
         const targetWS = workspacesList[newIndex];
         if (!isWorkspaceIgnored(ignoredWorkspaces, targetWS)) {
-            hyprlandService.message_async(`dispatch workspace ${targetWS}`);
+            hyprlandService.dispatch('workspace', targetWS.toString());
             return;
         }
         newIndex = (newIndex + step + workspacesList.length) % workspacesList.length;
