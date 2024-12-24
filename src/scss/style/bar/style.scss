@@ -448,3 +448,25 @@
     // custom font size
     1.075em //
 );
+
+@include styleModule(
+    //
+    // class name
+    'warp',
+    // label color
+    $bar-buttons-modules-warp-text,
+    // icon color
+    $bar-buttons-modules-warp-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-warp-icon_background,
+    // label background
+    $bar-buttons-modules-warp-background,
+    // inner spacing
+    $bar-buttons-modules-warp-spacing,
+    // if border enabled
+    $bar-buttons-modules-warp-enableBorder,
+    // border color
+    $bar-buttons-modules-warp-border,
+    // custom font size
+    1.075em //
+);
