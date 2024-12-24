@@ -20,7 +20,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
                     return;
                 }
 
-                clearNotifications(notifdService.notifications, clearDelay.get());
+                clearNotifications(notifdService.get_notifications(), clearDelay.get());
             }}
         >
             <label

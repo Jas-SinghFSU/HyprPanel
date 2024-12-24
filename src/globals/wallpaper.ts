@@ -1,6 +1,6 @@
 import GLib from 'gi://GLib?version=2.0';
 import options from '../options';
-import Wallpaper from '../services/Wallpaper';
+import Wallpaper from 'src/services/Wallpaper';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 const { enable: enableWallpaper, image } = options.wallpaper;

@@ -3,7 +3,7 @@ import { SliderIcon } from './SliderIcon';
 import { Slider } from './Slider';
 import { SliderPercentage } from './SliderPercentage';
 
-export const ActiveDevice = ({ type, device }: ActiveDeviceProps): JSX.Element => {
+export const SliderItem = ({ type, device }: SliderItemProps): JSX.Element => {
     return (
         <box className={`menu-active-container ${type}`} vertical>
             <box className={`menu-slider-container ${type}`}>
@@ -15,7 +15,7 @@ export const ActiveDevice = ({ type, device }: ActiveDeviceProps): JSX.Element =
     );
 };
 
-interface ActiveDeviceProps {
+interface SliderItemProps {
     type: 'playback' | 'input';
     device: AstalWp.Endpoint;
 }

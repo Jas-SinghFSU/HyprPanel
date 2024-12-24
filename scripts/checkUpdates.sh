@@ -3,14 +3,19 @@
 check_arch_updates() {
     official_updates=0
     aur_updates=0
+	if command -v paru &> /dev/null; then
+		aur_helper="paru"
+	else
+		aur_helper="yay"
+	fi
 
     if [ "$1" = "-y" ]; then
-        aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+        aur_updates=$($aur_helper -Qum 2>/dev/null | wc -l)
     elif [ "$1" = "-p" ]; then
         official_updates=$(checkupdates 2>/dev/null | wc -l)
     else
         official_updates=$(checkupdates 2>/dev/null | wc -l)
-        aur_updates=$(yay -Qum 2>/dev/null | wc -l)
+        aur_updates=$($aur_helper -Qum 2>/dev/null | wc -l)
     fi
 
     total_updates=$((official_updates + aur_updates))

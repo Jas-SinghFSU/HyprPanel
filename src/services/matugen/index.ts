@@ -24,14 +24,13 @@ export async function generateMatugenColors(): Promise<MatugenColors | undefined
                 summary: 'Matugen Failed',
                 body: "Please select a wallpaper in 'Theming > General' first.",
                 iconName: icons.ui.warning,
-                timeout: 7000,
             });
             return;
         }
 
         const normalizedContrast = contrast.get() > 1 ? 1 : contrast.get() < -1 ? -1 : contrast.get();
         const contents = await bash(
-            `matugen image ${wallpaperPath} -t scheme-${scheme_type.get()} --contrast ${normalizedContrast} --json hex`,
+            `matugen image --dry-run -q ${wallpaperPath} -t scheme-${scheme_type.get()} --contrast ${normalizedContrast} --json hex`,
         );
 
         return JSON.parse(contents).colors[options.theme.matugen_settings.mode.get()];

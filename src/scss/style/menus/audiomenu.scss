@@ -212,4 +212,33 @@
     .menu-items-section.playback {
         border-radius: 0em;
     }
+
+    .slider-toggle {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
+        padding: 0em 1em;
+        label {
+            font-size: 1.25em;
+        }
+
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
+        }
+    }
+
+    .active-playbacks-scrollable {
+        min-height: 12.5em;
+
+        scrollbar contents trough slider {
+            background: $bar-menus-menu-volume-scroller-color;
+        }
+
+        .menu-active-percentage.playback,
+        .menu-active-percentage.input {
+            margin-right: 0.6em;
+        }
+    }
+
+    .no-playbacks.dim {
+        opacity: 0.5;
+    }
 }

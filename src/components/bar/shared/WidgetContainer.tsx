@@ -26,9 +26,9 @@ export const WidgetContainer = (child: BarBoxChild): JSX.Element => {
 
     if (child.isBox) {
         return (
-            <box className={buttonClassName} visible={computeVisible(child)}>
-                {child.component}
-            </box>
+            <eventbox visible={computeVisible(child)} {...child.props}>
+                <box className={buttonClassName}>{child.component}</box>
+            </eventbox>
         );
     }
 

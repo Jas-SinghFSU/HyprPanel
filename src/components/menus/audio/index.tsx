@@ -1,5 +1,5 @@
 import DropdownMenu from '../shared/dropdown/index.js';
-import { SelectedDevices } from './active/index.js';
+import { VolumeSliders } from './active/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal/binding.js';
 import { Gtk } from 'astal/gtk3';
@@ -14,7 +14,7 @@ export default (): JSX.Element => {
         >
             <box className={'menu-items audio'} halign={Gtk.Align.FILL} hexpand>
                 <box className={'menu-items-container audio'} halign={Gtk.Align.FILL} vertical hexpand>
-                    <SelectedDevices />
+                    <VolumeSliders />
                     <AvailableDevices />
                 </box>
             </box>

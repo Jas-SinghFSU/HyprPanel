@@ -24,14 +24,14 @@ const focusedClient = (focusedClient: AstalHyprland.Client): void => {
 export const initializeAutoHide = (): void => {
     Variable.derive([bind(autoHide), bind(forceUpdater), bind(hyprlandService, 'workspaces')], (shouldAutohide) => {
         if (shouldAutohide === 'never') {
-            hyprlandService.monitors.forEach((monitor) => {
+            hyprlandService.get_monitors().forEach((monitor) => {
                 App.get_window(`bar-${monitor.id}`)?.set_visible(true);
             });
         }
 
-        hyprlandService.workspaces.map((workspace) => {
+        hyprlandService.get_workspaces().map((workspace) => {
             if (autoHide.get() === 'single-window') {
-                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.clients.length !== 1);
+                App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(workspace.get_clients().length !== 1);
             }
         });
     });
@@ -42,7 +42,7 @@ export const initializeAutoHide = (): void => {
 
     Variable.derive([bind(autoHide)], (shouldAutohide) => {
         if (shouldAutohide === 'fullscreen') {
-            hyprlandService.workspaces.forEach((workspace) => {
+            hyprlandService.get_workspaces().forEach((workspace) => {
                 App.get_window(`bar-${workspace.monitor.id}`)?.set_visible(!workspace.hasFullscreen);
             });
         }

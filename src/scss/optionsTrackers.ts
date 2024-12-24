@@ -1,7 +1,7 @@
 import icons from '../lib/icons/icons';
 import { bash, dependencies, Notify, isAnImage } from '../lib/utils';
 import options from '../options';
-import Wallpaper from '../services/Wallpaper';
+import Wallpaper from 'src/services/Wallpaper';
 
 const { matugen } = options.theme;
 
@@ -13,7 +13,6 @@ const ensureMatugenWallpaper = (): void => {
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
             iconName: icons.ui.warning,
-            timeout: 7000,
         });
         matugen.set(false);
     }

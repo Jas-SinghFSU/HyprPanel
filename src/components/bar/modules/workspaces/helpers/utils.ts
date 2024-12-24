@@ -21,7 +21,7 @@ const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator
  * @returns True if the workspace is active on the monitor, false otherwise.
  */
 const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
-    return showAllActive.get() && hyprlandService.get_monitor(monitor).activeWorkspace.id === i;
+    return showAllActive.get() && hyprlandService.get_monitor(monitor)?.activeWorkspace?.id === i;
 };
 
 /**
@@ -84,7 +84,7 @@ export const getWsColor = (
         showWsIcons.get() &&
         smartHighlight &&
         wsActiveIndicator.get() === 'highlight' &&
-        (hyprlandService.focusedWorkspace.id === i || isWorkspaceActiveOnMonitor(monitor, i))
+        (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
     ) {
         const iconColor = monochrome.get() ? background.get() : wsBackground.get();
         const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
@@ -122,7 +122,7 @@ export const getAppIcon = (
 
     const clients = hyprlandService
         .get_clients()
-        .filter((client) => client.workspace.id === workspaceIndex)
+        .filter((client) => client?.workspace?.id === workspaceIndex)
         .map((client) => [client.class, client.title]);
 
     if (!clients.length) {
@@ -200,7 +200,7 @@ export const renderClassnames = (
 
     if (showNumbered || showWsIcons) {
         const numActiveInd =
-            hyprlandService.focusedWorkspace.id === i || isWorkspaceActiveOnMonitor(monitor, i)
+            hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i)
                 ? numberedActiveIndicator
                 : '';
 
@@ -255,10 +255,10 @@ export const renderLabel = (
     }
 
     if (showIcons) {
-        if (hyprlandService.focusedWorkspace.id === i || isWorkspaceActiveOnMonitor(monitor, i)) {
+        if (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i)) {
             return activeIndicator;
         }
-        if ((hyprlandService.get_workspace(i)?.clients.length || 0) > 0) {
+        if ((hyprlandService.get_workspace(i)?.get_clients().length || 0) > 0) {
             return occupiedIndicator;
         }
         if (monitor !== -1) {

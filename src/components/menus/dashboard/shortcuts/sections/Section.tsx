@@ -57,7 +57,7 @@ export const LeftShortcuts = (): JSX.Element => {
 
                 return (
                     <box className={'container most-used dashboard-card'}>
-                        <LeftColumn visibleClass={isVisibleRight && isVisibleLeft}>
+                        <LeftColumn isVisible={isVisibleRight && isVisibleLeft}>
                             <LeftShortcut1 />
                             <LeftShortcut2 />
                         </LeftColumn>
@@ -78,7 +78,7 @@ export const RightShortcuts = (): JSX.Element => {
             {Variable.derive(rightBindings, () => {
                 return (
                     <box className={`container utilities dashboard-card ${!leftCardHidden.get() ? 'paired' : ''}`}>
-                        <LeftColumn visibleClass={!leftCardHidden.get()}>
+                        <LeftColumn isVisible={true}>
                             <RightShortcut1 />
                             <SettingsButton />
                         </LeftColumn>

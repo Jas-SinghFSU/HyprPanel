@@ -27,7 +27,7 @@ const Bluetooth = (): BarBoxChild => {
     };
 
     const componentClassName = Variable.derive(
-        [options.theme.bar.buttons.style, options.bar.volume.label],
+        [options.theme.bar.buttons.style, options.bar.bluetooth.label],
         (style, showLabel) => {
             const styleMap = {
                 default: 'style1',
@@ -40,7 +40,7 @@ const Bluetooth = (): BarBoxChild => {
     );
 
     const componentBinding = Variable.derive(
-        [bind(options.bar.volume.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
+        [bind(options.bar.bluetooth.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
         (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element[] => {
             if (showLabel) {
                 return [btIcon(isPowered), btText(isPowered, devices)];

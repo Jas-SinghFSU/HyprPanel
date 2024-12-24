@@ -10,7 +10,7 @@ const MonitorListDropdown = (): JSX.Element => {
     const monitorList: Variable<AstalHyprland.Monitor[]> = Variable([]);
 
     const monitorBinding = Variable.derive([bind(hyprlandService, 'monitors')], () =>
-        monitorList.set(hyprlandService.monitors),
+        monitorList.set(hyprlandService.get_monitors()),
     );
 
     return (

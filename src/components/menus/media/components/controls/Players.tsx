@@ -5,8 +5,8 @@ import { isPrimaryClick } from 'src/lib/utils';
 import { getNextPlayer, getPreviousPlayer } from './helpers';
 
 export const PreviousPlayer = (): JSX.Element => {
-    const className = bind(mprisService, 'players').as(() => {
-        const isDisabled = mprisService.players.length <= 1 ? 'disabled' : 'enabled';
+    const className = bind(mprisService, 'players').as((players) => {
+        const isDisabled = players.length <= 1 ? 'disabled' : 'enabled';
 
         return `media-indicator-control-button ${isDisabled}`;
     });
@@ -16,7 +16,7 @@ export const PreviousPlayer = (): JSX.Element => {
             return;
         }
 
-        const isDisabled = mprisService.players.length <= 1;
+        const isDisabled = mprisService.get_players().length <= 1;
 
         if (!isDisabled) {
             getPreviousPlayer();
@@ -37,8 +37,8 @@ export const PreviousPlayer = (): JSX.Element => {
 };
 
 export const NextPlayer = (): JSX.Element => {
-    const className = bind(mprisService, 'players').as(() => {
-        const isDisabled = mprisService.players.length <= 1 ? 'disabled' : 'enabled';
+    const className = bind(mprisService, 'players').as((players) => {
+        const isDisabled = players.length <= 1 ? 'disabled' : 'enabled';
         return `media-indicator-control-button ${isDisabled}`;
     });
     const onClick = (_: Widget.Button, event: Astal.ClickEvent): void => {
@@ -46,7 +46,7 @@ export const NextPlayer = (): JSX.Element => {
             return;
         }
 
-        const isDisabled = mprisService.players.length <= 1;
+        const isDisabled = mprisService.get_players().length <= 1;
 
         if (!isDisabled) {
             getNextPlayer();

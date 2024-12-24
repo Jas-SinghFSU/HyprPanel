@@ -8,8 +8,8 @@ import { isPrimaryClick, Notify } from 'src/lib/utils';
 export const isWifiEnabled: Variable<boolean> = Variable(false);
 export const wifiAccessPoints: Variable<AstalNetwork.AccessPoint[]> = Variable([]);
 
-let wifiEnabledBinding: Variable<void>;
-let accessPointBinding: Variable<void>;
+let wifiEnabledBinding: Variable<void> | undefined;
+let accessPointBinding: Variable<void> | undefined;
 
 export const staging = Variable<AstalNetwork.AccessPoint | undefined>(undefined);
 export const connecting = Variable<string>('');
@@ -21,10 +21,8 @@ export const connecting = Variable<string>('');
  * If the WiFi service is available, it updates the `isWifiEnabled` variable based on the enabled state.
  */
 const wifiEnabled = (): void => {
-    if (wifiEnabledBinding) {
-        wifiEnabledBinding();
-        wifiEnabledBinding.drop();
-    }
+    wifiEnabledBinding?.drop();
+    wifiEnabledBinding = undefined;
 
     if (!networkService.wifi) {
         return;
@@ -42,10 +40,8 @@ const wifiEnabled = (): void => {
  * If the WiFi service is available, it updates the `wifiAccessPoints` variable with the list of access points.
  */
 const accessPoints = (): void => {
-    if (accessPointBinding) {
-        accessPointBinding();
-        accessPointBinding.drop();
-    }
+    accessPointBinding?.drop();
+    accessPointBinding = undefined;
 
     if (!networkService.wifi) {
         return;
@@ -243,7 +239,6 @@ export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.
                 Notify({
                     summary: 'Network',
                     body: err.message,
-                    timeout: 5000,
                 });
             }
         });

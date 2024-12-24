@@ -207,6 +207,12 @@ const options = mkOptions(CONFIG, {
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),
                     fontSize: opt('1.2em'),
+                    pill: {
+                        radius: opt('1.9rem * 0.6'),
+                        height: opt('4em'),
+                        width: opt('4em'),
+                        active_width: opt('12em'),
+                    },
                 },
                 windowtitle: {
                     background: opt(colors.base2),
@@ -471,6 +477,10 @@ const options = mkOptions(CONFIG, {
                     slider_radius: opt('0.3rem'),
                     progress_radius: opt('0.3rem'),
                 },
+                scroller: {
+                    radius: opt('0.7em'),
+                    width: opt('0.25em'),
+                },
                 dropdownmenu: {
                     background: opt(colors.crust),
                     text: opt(colors.text),
@@ -526,6 +536,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.maroon),
                         },
                         text: opt(colors.text),
+                        scroller: {
+                            color: opt(colors.maroon),
+                        },
                         listitems: {
                             passive: opt(colors.text),
                             active: opt(secondary_colors.maroon),
@@ -565,6 +578,9 @@ const options = mkOptions(CONFIG, {
                         label: {
                             color: opt(colors.mauve),
                         },
+                        scroller: {
+                            color: opt(colors.mauve),
+                        },
                         text: opt(colors.text),
                         status: {
                             color: opt(colors.overlay0),
@@ -599,6 +615,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.surface0),
                         },
                         label: {
+                            color: opt(colors.sky),
+                        },
+                        scroller: {
                             color: opt(colors.sky),
                         },
                         text: opt(colors.text),
@@ -1062,6 +1081,8 @@ const options = mkOptions(CONFIG, {
                 networkInterface: opt(''),
                 dynamicIcon: opt(false),
                 icon: opt('󰖟'),
+                networkInLabel: opt('↓'),
+                networkOutLabel: opt('↑'),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>('full'),
                 rateUnit: opt<RateUnit>('auto'),
@@ -1084,6 +1105,7 @@ const options = mkOptions(CONFIG, {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
+                autoHide: opt(false),
                 icon: {
                     pending: opt('󰏗'),
                     updated: opt('󰏖'),

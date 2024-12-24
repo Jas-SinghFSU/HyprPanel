@@ -33,9 +33,11 @@ export const BluetoothDevices = (): JSX.Element => {
                 deviceListBinding.drop();
             }}
         >
-            <box className={'menu-content'} vertical>
-                {deviceListBinding()}
-            </box>
+            <scrollable className={'menu-scroller bluetooth'}>
+                <box className={'menu-content'} vertical>
+                    {deviceListBinding()}
+                </box>
+            </scrollable>
         </box>
     );
 };

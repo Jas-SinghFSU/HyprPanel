@@ -2,13 +2,11 @@ import { bind, Variable } from 'astal';
 import { bluetoothService } from 'src/lib/constants/services';
 
 export const isDiscovering: Variable<boolean> = Variable(false);
-let discoveringBinding: Variable<void>;
+let discoveringBinding: Variable<void> | undefined;
 
 Variable.derive([bind(bluetoothService, 'adapter')], () => {
-    if (discoveringBinding) {
-        discoveringBinding();
-        discoveringBinding.drop();
-    }
+    discoveringBinding?.drop();
+    discoveringBinding = undefined;
 
     if (!bluetoothService.adapter) {
         return;

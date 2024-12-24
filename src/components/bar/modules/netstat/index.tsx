@@ -19,6 +19,8 @@ const {
     rateUnit,
     dynamicIcon,
     icon,
+    networkInLabel,
+    networkOutLabel,
     round,
     leftClick,
     rightClick,
@@ -47,11 +49,11 @@ export const Netstat = (): BarBoxChild => {
     const renderNetworkLabel = (lblType: NetstatLabelType, networkService: NetworkResourceData): string => {
         switch (lblType) {
             case 'in':
-                return `↓ ${networkService.in}`;
+                return `${networkInLabel.get()} ${networkService.in}`;
             case 'out':
-                return `↑ ${networkService.out}`;
+                return `${networkOutLabel.get()} ${networkService.out}`;
             default:
-                return `↓ ${networkService.in} ↑ ${networkService.out}`;
+                return `${networkInLabel.get()} ${networkService.in} ${networkOutLabel.get()} ${networkService.out}`;
         }
     };
 

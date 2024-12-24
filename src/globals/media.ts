@@ -16,7 +16,7 @@ mprisService.connect('player-closed', (_, closedPlayer) => {
     }
 
     if (closedPlayer.busName === activePlayer.get()?.busName) {
-        const nextPlayer = mprisService.players.find((player) => player.busName !== closedPlayer.busName);
+        const nextPlayer = mprisService.get_players().find((player) => player.busName !== closedPlayer.busName);
         activePlayer.set(nextPlayer);
     }
 });
@@ -44,27 +44,25 @@ export const mediaAlbum = Variable('-----');
 export const mediaArtist = Variable('-----');
 export const mediaArtUrl = Variable('');
 
-let positionUnsub: Variable<void>;
+let positionUnsub: Variable<void> | undefined;
 
-let loopUnsub: Variable<void>;
-let shuffleUnsub: Variable<void>;
+let loopUnsub: Variable<void> | undefined;
+let shuffleUnsub: Variable<void> | undefined;
 
-let canPlayUnsub: Variable<void>;
-let playbackStatusUnsub: Variable<void>;
+let canPlayUnsub: Variable<void> | undefined;
+let playbackStatusUnsub: Variable<void> | undefined;
 
-let canGoNextUnsub: Variable<void>;
-let canGoPreviousUnsub: Variable<void>;
+let canGoNextUnsub: Variable<void> | undefined;
+let canGoPreviousUnsub: Variable<void> | undefined;
 
-let titleUnsub: Variable<void>;
-let albumUnsub: Variable<void>;
-let artistUnsub: Variable<void>;
-let artUrlUnsub: Variable<void>;
+let titleUnsub: Variable<void> | undefined;
+let albumUnsub: Variable<void> | undefined;
+let artistUnsub: Variable<void> | undefined;
+let artUrlUnsub: Variable<void> | undefined;
 
 const updatePosition = (player: AstalMpris.Player | undefined): void => {
-    if (positionUnsub) {
-        positionUnsub();
-        positionUnsub.drop();
-    }
+    positionUnsub?.drop();
+    positionUnsub = undefined;
 
     if (player === undefined) {
         timeStamp.set('00:00');
@@ -91,10 +89,8 @@ const updatePosition = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateLoop = (player: AstalMpris.Player | undefined): void => {
-    if (loopUnsub) {
-        loopUnsub();
-        loopUnsub.drop();
-    }
+    loopUnsub?.drop();
+    loopUnsub = undefined;
 
     if (player === undefined) {
         loopStatus.set(AstalMpris.Loop.NONE);
@@ -117,10 +113,8 @@ const updateLoop = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateShuffle = (player: AstalMpris.Player | undefined): void => {
-    if (shuffleUnsub) {
-        shuffleUnsub();
-        shuffleUnsub.drop();
-    }
+    shuffleUnsub?.drop();
+    shuffleUnsub = undefined;
 
     if (player === undefined) {
         shuffleStatus.set(AstalMpris.Shuffle.OFF);
@@ -138,10 +132,8 @@ const updateShuffle = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateCanPlay = (player: AstalMpris.Player | undefined): void => {
-    if (canPlayUnsub) {
-        canPlayUnsub();
-        canPlayUnsub.drop();
-    }
+    canPlayUnsub?.drop();
+    canPlayUnsub = undefined;
 
     if (player === undefined) {
         canPlay.set(false);
@@ -159,10 +151,8 @@ const updateCanPlay = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updatePlaybackStatus = (player: AstalMpris.Player | undefined): void => {
-    if (playbackStatusUnsub) {
-        playbackStatusUnsub();
-        playbackStatusUnsub.drop();
-    }
+    playbackStatusUnsub?.drop();
+    playbackStatusUnsub = undefined;
 
     if (player === undefined) {
         playbackStatus.set(AstalMpris.PlaybackStatus.STOPPED);
@@ -181,10 +171,8 @@ const updatePlaybackStatus = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateCanGoNext = (player: AstalMpris.Player | undefined): void => {
-    if (canGoNextUnsub) {
-        canGoNextUnsub();
-        canGoNextUnsub.drop();
-    }
+    canGoNextUnsub?.drop();
+    canGoNextUnsub = undefined;
 
     if (player === undefined) {
         canGoNext.set(false);
@@ -202,10 +190,8 @@ const updateCanGoNext = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateCanGoPrevious = (player: AstalMpris.Player | undefined): void => {
-    if (canGoPreviousUnsub) {
-        canGoPreviousUnsub();
-        canGoPreviousUnsub.drop();
-    }
+    canGoPreviousUnsub?.drop();
+    canGoPreviousUnsub = undefined;
 
     if (player === undefined) {
         canGoPrevious.set(false);
@@ -223,10 +209,8 @@ const updateCanGoPrevious = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateTitle = (player: AstalMpris.Player | undefined): void => {
-    if (titleUnsub) {
-        titleUnsub();
-        titleUnsub.drop();
-    }
+    titleUnsub?.drop();
+    titleUnsub = undefined;
 
     if (player === undefined) {
         mediaTitle.set(noMediaText.get());
@@ -248,10 +232,8 @@ const updateTitle = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateAlbum = (player: AstalMpris.Player | undefined): void => {
-    if (albumUnsub) {
-        albumUnsub();
-        albumUnsub.drop();
-    }
+    albumUnsub?.drop();
+    albumUnsub = undefined;
 
     if (player === undefined) {
         mediaAlbum.set('-----');
@@ -267,10 +249,8 @@ const updateAlbum = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateArtist = (player: AstalMpris.Player | undefined): void => {
-    if (artistUnsub) {
-        artistUnsub();
-        artistUnsub.drop();
-    }
+    artistUnsub?.drop();
+    artistUnsub = undefined;
 
     if (player === undefined) {
         mediaArtist.set('-----');
@@ -288,10 +268,8 @@ const updateArtist = (player: AstalMpris.Player | undefined): void => {
 };
 
 const updateArtUrl = (player: AstalMpris.Player | undefined): void => {
-    if (artUrlUnsub) {
-        artUrlUnsub();
-        artUrlUnsub.drop();
-    }
+    artUrlUnsub?.drop();
+    artUrlUnsub = undefined;
 
     if (player === undefined) {
         mediaArtUrl.set('');

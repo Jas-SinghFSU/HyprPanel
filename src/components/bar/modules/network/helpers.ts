@@ -5,8 +5,8 @@ import { networkService } from 'src/lib/constants/services';
 export const wiredIcon: Variable<string> = Variable('');
 export const wirelessIcon: Variable<string> = Variable('');
 
-let wiredIconBinding: Variable<void>;
-let wirelessIconBinding: Variable<void>;
+let wiredIconBinding: Variable<void> | undefined;
+let wirelessIconBinding: Variable<void> | undefined;
 
 /**
  * Handles the wired network icon binding.
@@ -15,10 +15,8 @@ let wirelessIconBinding: Variable<void>;
  * then checks if the wired network service is available. If available, it binds the icon name to the `wiredIcon` variable.
  */
 const handleWiredIcon = (): void => {
-    if (wiredIconBinding) {
-        wiredIconBinding();
-        wiredIconBinding.drop();
-    }
+    wiredIconBinding?.drop();
+    wiredIconBinding = undefined;
 
     if (!networkService.wired) {
         return;
@@ -36,10 +34,8 @@ const handleWiredIcon = (): void => {
  * then checks if the wireless network service is available. If available, it binds the icon name to the `wirelessIcon` variable.
  */
 const handleWirelessIcon = (): void => {
-    if (wirelessIconBinding) {
-        wirelessIconBinding();
-        wirelessIconBinding.drop();
-    }
+    wirelessIconBinding?.drop();
+    wirelessIconBinding = undefined;
 
     if (!networkService.wifi) {
         return;

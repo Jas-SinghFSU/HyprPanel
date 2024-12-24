@@ -200,7 +200,6 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
                 summary: 'File Saved Successfully',
                 body: `At ${finalFilePath}.`,
                 iconName: icons.ui.info,
-                timeout: 5000,
             });
         } catch (e) {
             if (e instanceof Error) {
@@ -244,7 +243,6 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 summary: 'Failed to import',
                 body: 'No file selected.',
                 iconName: icons.ui.warning,
-                timeout: 5000,
             });
             return;
         }
@@ -260,7 +258,6 @@ export const importFiles = (themeOnly: boolean = false): void => {
             summary: `Importing ${themeOnly ? 'Theme' : 'Config'}`,
             body: `Importing: ${filePath}`,
             iconName: icons.ui.info,
-            timeout: 7000,
         });
 
         const tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
