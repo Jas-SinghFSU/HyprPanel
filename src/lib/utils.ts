@@ -253,9 +253,7 @@ export function isAnImage(imgFilePath: string): boolean {
  * @returns The absolute representation of the resolved path.
  */
 export function resolvePath(path: string): string {
-    if (path.charAt(0) == '~') {
-        path = GLib.get_home_dir() + '/' + path.substring(1, path.length);
-    }
+    return path.replace('~', GLib.get_home_dir())
 
     return path;
 }
