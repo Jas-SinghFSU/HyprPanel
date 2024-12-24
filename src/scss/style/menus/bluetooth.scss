@@ -202,7 +202,7 @@
     .menu-scroller.bluetooth {
         min-height: 18em;
 
-        slider {
+        scrollbar contents trough slider {
             background: $bar-menus-menu-bluetooth-scroller-color;
         }
     }

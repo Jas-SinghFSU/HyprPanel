@@ -13,7 +13,7 @@ export type BarBoxChild = {
     isBox?: boolean;
     boxClass: string;
     tooltip_text?: string | Binding<string>;
-} & ({ isBox: true; props: Widget.BoxProps } | { isBox?: false; props: Widget.ButtonProps });
+} & ({ isBox: true; props: Widget.EventBoxProps } | { isBox?: false; props: Widget.ButtonProps });
 
 export type SelfButton = Button<Child, Attribute>;
 
