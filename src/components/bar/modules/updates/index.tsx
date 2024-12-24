@@ -39,6 +39,10 @@ const updatesPoller = new BashPoller<string, []>(
 
 updatesPoller.initialize('updates');
 
+Variable.derive([bind(autoHide)], (autoHideModule) => {
+    isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
+});
+
 const updatesIcon = Variable.derive(
     [bind(icon.pending), bind(icon.updated), bind(pendingUpdates)],
     (pendingIcon, updatedIcon, pUpdates) => {
