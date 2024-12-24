@@ -2,13 +2,11 @@ import { CommandRegistry } from './Registry';
 import { Command, ParsedCommand } from './types';
 
 /**
- * The CommandParser is responsible for parsing the input string into a command and its positional arguments.
- * It does not handle flags, only positional arguments.
+ * Parses an input string into a command and its positional arguments.
  *
- * Expected command format:
+ * Expected format:
  *   astal <commandName> arg1 arg2 arg3...
  *
- * The parser:
  * 1. Tokenizes the input.
  * 2. Identifies the command by the first token.
  * 3. Parses positional arguments based on the command definition.
@@ -19,23 +17,25 @@ export class CommandParser {
     private registry: CommandRegistry;
 
     /**
-     * Creates an instance of CommandParser.
+     * Constructs a CommandParser with the provided command registry.
      *
-     * @param registry - The command registry to use.
+     * @param registry - The command registry containing available commands.
      */
     constructor(registry: CommandRegistry) {
         this.registry = registry;
     }
 
     /**
-     * Parses the input string into a ParsedCommand object.
+     * Parses the entire input string, returning the matching command and its arguments.
      *
-     * @param input - The input string to parse.
-     * @returns The parsed command and its arguments.
-     * @throws If no command is provided or the command is unknown.
+     * @param input - The raw input string to parse.
+     * @returns A parsed command object, including the command and its arguments.
+     * @throws If no command token is found.
+     * @throws If the command token is not registered.
      */
     parse(input: string): ParsedCommand {
         const tokens = this.tokenize(input);
+
         if (tokens.length === 0) {
             throw new Error('No command provided.');
         }
@@ -51,10 +51,10 @@ export class CommandParser {
     }
 
     /**
-     * Tokenizes the input string into an array of tokens.
+     * Splits the input string into tokens, respecting quotes.
      *
-     * @param input - The input string to tokenize.
-     * @returns The array of tokens.
+     * @param input - The raw input string to break into tokens.
+     * @returns An array of tokens.
      */
     private tokenize(input: string): string[] {
         const regex = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;
@@ -63,78 +63,131 @@ export class CommandParser {
     }
 
     /**
-     * Strips quotes from the beginning and end of a string.
+     * Removes surrounding quotes from a single token, if they exist.
      *
-     * @param str - The string to strip quotes from.
-     * @returns The string without quotes.
+     * @param str - The token from which to strip leading or trailing quotes.
+     * @returns The token without its outer quotes.
      */
     private stripQuotes(str: string): string {
         return str.replace(/^["'](.+(?=["']$))["']$/, '$1');
     }
 
     /**
-     * Parses the positional arguments for a command.
+     * Parses the array of tokens into arguments based on the command's argument definitions.
      *
-     * @param command - The command definition.
-     * @param tokens - The array of argument tokens.
-     * @returns The parsed arguments.
-     * @throws If there are too many arguments or a required argument is missing.
+     * @param command - The command whose arguments are being parsed.
+     * @param tokens - The list of tokens extracted from the input.
+     * @returns An object mapping argument names to their parsed values.
+     * @throws If required arguments are missing.
+     * @throws If there are too many tokens for the command definition.
      */
     private parseArgs(command: Command, tokens: string[]): Record<string, unknown> {
         const args: Record<string, unknown> = {};
-        const argDefs = command.args;
+        let currentIndex = 0;
 
-        if (tokens.length > argDefs.length) {
-            throw new Error(`Too many arguments for command "${command.name}". Expected at most ${argDefs.length}.`);
-        }
-
-        argDefs.forEach((argDef, index) => {
-            const value = tokens[index];
-            if (value === undefined) {
+        for (const argDef of command.args) {
+            if (currentIndex >= tokens.length) {
                 if (argDef.required) {
                     throw new Error(`Missing required argument: "${argDef.name}".`);
                 }
                 if (argDef.default !== undefined) {
                     args[argDef.name] = argDef.default;
                 }
-                return;
+                continue;
             }
 
-            args[argDef.name] = this.convertType(value, argDef.type);
-        });
+            if (argDef.type === 'object') {
+                const { objectValue, nextIndex } = this.parseObjectTokens(tokens, currentIndex);
+                args[argDef.name] = objectValue;
+                currentIndex = nextIndex;
+            } else {
+                const value = tokens[currentIndex];
+                currentIndex++;
+                args[argDef.name] = this.convertType(value, argDef.type);
+            }
+        }
+
+        if (currentIndex < tokens.length) {
+            throw new Error(
+                `Too many arguments for command "${command.name}". Expected at most ${command.args.length}.`,
+            );
+        }
 
         return args;
     }
 
     /**
-     * Converts a string value to the specified type.
+     * Accumulates tokens until braces are balanced to form a valid JSON string,
+     * then parses the result.
      *
-     * @param value - The value to convert.
-     * @param type - The type to convert to.
-     * @returns  The converted value.
-     * @throws If the value cannot be converted to the specified type.
+     * @param tokens - The list of tokens extracted from the input.
+     * @param startIndex - The token index from which to begin JSON parsing.
+     * @returns An object containing the parsed JSON object and the next token index.
+     * @throws If the reconstructed JSON is invalid.
      */
-    private convertType(
-        value: string,
-        type: 'string' | 'number' | 'boolean' | 'object',
-    ): string | number | boolean | Record<string, unknown> {
+    private parseObjectTokens(tokens: string[], startIndex: number): { objectValue: unknown; nextIndex: number } {
+        let braceCount = 0;
+        let started = false;
+        const objectTokens: string[] = [];
+        let currentIndex = startIndex;
+
+        while (currentIndex < tokens.length) {
+            const token = tokens[currentIndex];
+            currentIndex++;
+
+            for (const char of token) {
+                if (char === '{') braceCount++;
+                if (char === '}') braceCount--;
+            }
+
+            objectTokens.push(token);
+
+            // Once we've started and braceCount returns to 0, we assume the object is complete
+            if (started && braceCount === 0) break;
+            if (token.includes('{')) started = true;
+        }
+
+        const objectString = objectTokens.join(' ');
+        let parsed: unknown;
+        try {
+            parsed = JSON.parse(objectString);
+        } catch {
+            throw new Error(`Invalid JSON object: "${objectString}".`);
+        }
+
+        return { objectValue: parsed, nextIndex: currentIndex };
+    }
+
+    /**
+     * Converts a single token to the specified argument type.
+     *
+     * @param value - The raw token to be converted.
+     * @param type - The expected argument type.
+     * @returns The converted value.
+     * @throws If the token cannot be converted to the expected type.
+     */
+    private convertType(value: string, type: 'string' | 'number' | 'boolean' | 'object'): unknown {
         switch (type) {
-            case 'number':
+            case 'number': {
                 const num = Number(value);
                 if (isNaN(num)) {
                     throw new Error(`Expected a number but got "${value}".`);
                 }
                 return num;
-            case 'boolean':
-                if (value.toLowerCase() === 'true') return true;
-                if (value.toLowerCase() === 'false') return false;
+            }
+            case 'boolean': {
+                const lower = value.toLowerCase();
+                if (lower === 'true') return true;
+                if (lower === 'false') return false;
                 throw new Error(`Expected a boolean (true/false) but got "${value}".`);
-            case 'object':
+            }
+            case 'object': {
                 try {
                     return JSON.parse(value);
                 } catch {
                     throw new Error(`Invalid JSON object: "${value}".`);
                 }
+            }
             case 'string':
             default:
                 return value;
