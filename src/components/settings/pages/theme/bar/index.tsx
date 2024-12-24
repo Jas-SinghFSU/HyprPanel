@@ -145,6 +145,77 @@ export const BarTheme = (): JSX.Element => {
                     type="color"
                 />
                 <Option opt={options.theme.bar.buttons.volume.border} title="Border" type="color" />
+
+                {/* Network Section */}
+                <Header title="Network" />
+                <Option opt={options.theme.bar.buttons.network.background} title="Background" type="color" />
+                <Option opt={options.theme.bar.buttons.network.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.network.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.network.icon_background}
+                    title="Button Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.network.border} title="Border" type="color" />
+
+                {/* Bluetooth Section */}
+                <Header title="Bluetooth" />
+                <Option opt={options.theme.bar.buttons.bluetooth.background} title="Background" type="color" />
+                <Option opt={options.theme.bar.buttons.bluetooth.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.bluetooth.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.bluetooth.icon_background}
+                    title="Button Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.bluetooth.border} title="Border" type="color" />
+
+                {/* System Tray Section */}
+                <Header title="System Tray" />
+                <Option opt={options.theme.bar.buttons.systray.border} title="Border" type="color" />
+                <Option opt={options.theme.bar.buttons.systray.customIcon} title="Custom Icons" type="color" />
+                <Option opt={options.theme.bar.buttons.systray.background} title="Background" type="color" />
+
+                {/* Battery Section */}
+                <Header title="Battery" />
+                <Option opt={options.theme.bar.buttons.battery.background} title="Background" type="color" />
+                <Option opt={options.theme.bar.buttons.battery.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.battery.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.battery.icon_background}
+                    title="Button Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.battery.border} title="Border" type="color" />
+
+                {/* Clock Section */}
+                <Header title="Clock" />
+                <Option opt={options.theme.bar.buttons.clock.background} title="Background" type="color" />
+                <Option opt={options.theme.bar.buttons.clock.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.clock.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.clock.icon_background}
+                    title="Button Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.clock.border} title="Border" type="color" />
+
+                {/* Notifications Section */}
+                <Header title="Notifications" />
+                <Option opt={options.theme.bar.buttons.notifications.background} title="Background" type="color" />
+                <Option opt={options.theme.bar.buttons.notifications.total} title="Notification Count" type="color" />
+                <Option opt={options.theme.bar.buttons.notifications.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.notifications.icon_background}
+                    title="Button Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.notifications.border} title="Border" type="color" />
             </box>
         </scrollable>
     );

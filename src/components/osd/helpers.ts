@@ -8,6 +8,14 @@ const { enable, duration, active_monitor, monitor } = options.theme.osd;
 
 let count = 0;
 
+/*
+ * So the OSD doesn't show on startup for no reason
+ */
+let isStartingUp = true;
+timeout(3000, () => {
+    isStartingUp = false;
+});
+
 /**
  * Handles the reveal state of a Widget.Revealer.
  *
@@ -69,6 +77,10 @@ export const handleRevealWindow = (self: Widget.Window, property: 'revealChild' 
  * @param property The property to check, either 'revealChild' or 'visible'.
  */
 export const handleReveal = (self: Widget.Revealer | Widget.Window, property: 'revealChild' | 'visible'): void => {
+    if (isStartingUp) {
+        return;
+    }
+
     if (self instanceof Widget.Revealer) {
         handleRevealRevealer(self, property);
     } else if (self instanceof Widget.Window) {
