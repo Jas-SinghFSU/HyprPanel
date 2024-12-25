@@ -70,7 +70,7 @@ in
     
     theme = mkOption {
       type = types.str;
-      default = null;
+      default = "";
       example = "catppuccin_mocha";
       description = "Theme to import (see ./themes/*.json)";
     };
@@ -235,7 +235,7 @@ in
       };
 
     xdg.configFile.hyprpanel = let
-      theme = if cfg.theme != null then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json) else {};
+      theme = if cfg.theme != "" then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json) else {};
       flatSet = flattenAttrs (lib.attrsets.recursiveUpdate cfg.settings theme) "";
       mergeSet = if cfg.layout == null then flatSet else flatSet // cfg.layout;
     in {

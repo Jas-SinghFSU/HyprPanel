@@ -3,7 +3,6 @@ import { BarBoxChild } from 'src/lib/types/bar';
 import options from 'src/options';
 import { hyprlandService } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { useHook } from 'src/lib/shared/hookHandler';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { bind, Variable } from 'astal';
 import { getTitle, getWindowMatch, truncateTitle } from './helpers/title';
@@ -81,30 +80,43 @@ const ClientTitle = (): BarBoxChild => {
         boxClass: 'windowtitle',
         props: {
             setup: (self: Astal.Button): void => {
-                useHook(self, options.bar.scrollSpeed, () => {
-                    const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.get());
+                let disconnectFunctions: (() => void)[] = [];
 
-                    const disconnectPrimary = onPrimaryClick(self, (clicked, event) => {
-                        runAsyncCommand(leftClick.get(), { clicked, event });
-                    });
+                Variable.derive(
+                    [
+                        bind(rightClick),
+                        bind(middleClick),
+                        bind(scrollUp),
+                        bind(scrollDown),
+                        bind(options.bar.scrollSpeed),
+                    ],
+                    () => {
+                        disconnectFunctions.forEach((disconnect) => disconnect());
+                        disconnectFunctions = [];
 
-                    const disconnectSecondary = onSecondaryClick(self, (clicked, event) => {
-                        runAsyncCommand(rightClick.get(), { clicked, event });
-                    });
+                        const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.get());
 
-                    const disconnectMiddle = onMiddleClick(self, (clicked, event) => {
-                        runAsyncCommand(middleClick.get(), { clicked, event });
-                    });
+                        disconnectFunctions.push(
+                            onPrimaryClick(self, (clicked, event) => {
+                                runAsyncCommand(leftClick.get(), { clicked, event });
+                            }),
+                        );
 
-                    const disconnectScroll = onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get());
+                        disconnectFunctions.push(
+                            onSecondaryClick(self, (clicked, event) => {
+                                runAsyncCommand(rightClick.get(), { clicked, event });
+                            }),
+                        );
 
-                    return (): void => {
-                        disconnectPrimary();
-                        disconnectSecondary();
-                        disconnectMiddle();
-                        disconnectScroll();
-                    };
-                });
+                        disconnectFunctions.push(
+                            onMiddleClick(self, (clicked, event) => {
+                                runAsyncCommand(middleClick.get(), { clicked, event });
+                            }),
+                        );
+
+                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                    },
+                );
             },
         },
     };

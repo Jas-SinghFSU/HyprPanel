@@ -36,7 +36,8 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                     self.connect('scroll-event', (_, event: Gdk.Event) => {
                         if (isScrollUp(event)) {
                             const newVolume = device.volume + 0.05;
-                            device.set_volume(Math.min(newVolume, 1));
+                            const minVolume = raiseMaximumVolume.get() ? 1.5 : 1;
+                            device.set_volume(Math.min(newVolume, minVolume));
                         }
 
                         if (isScrollDown(event)) {
