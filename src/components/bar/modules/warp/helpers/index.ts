@@ -15,3 +15,9 @@ export const toggleWarp = async (isWarpConnect: Variable<boolean>): Promise<void
         await execAsync(`bash -c "notify-send -a 'hyprpanel' 'Warp service not active!' 'Error: ${err}'"`);
     }
 };
+
+export const checkWarpStatus = (): undefined => {
+    execAsync(isWarpConnectCommand).then((res) => {
+        isWarpConnect.set(res === 'Connected');
+    });
+};

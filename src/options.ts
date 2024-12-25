@@ -1157,6 +1157,7 @@ const options = mkOptions(CONFIG, {
                 offIcon: opt('󰇖'),
                 onLabel: opt('On'),
                 offLabel: opt('Off'),
+                pollingInterval: opt(1000 * 2),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),

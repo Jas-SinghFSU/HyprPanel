@@ -2,12 +2,14 @@ import options from "src/options";
 import { Module } from "../../shared/Module";
 import { inputHandler, throttleInput } from "../../utils/helpers";
 import { BarBoxChild } from "src/lib/types/bar";
-import { isWarpConnect, toggleWarp } from "./helpers";
+import { checkWarpStatus, isWarpConnect, toggleWarp } from "./helpers";
 import { bind, Variable } from "astal";
 import { Astal } from "astal/gtk3";
+import { FunctionPoller } from "src/lib/poller/FunctionPoller";
 
 const {
     label,
+    pollingInterval,
     onIcon,
     offIcon,
     onLabel,
@@ -17,6 +19,14 @@ const {
     scrollUp,
     scrollDown,
 } = options.bar.customModules.warp;
+
+const dummyVar = Variable(undefined);
+
+checkWarpStatus();
+
+const warpPoller = new FunctionPoller<undefined, []>(dummyVar, [], bind(pollingInterval), checkWarpStatus);
+
+warpPoller.initialize('warp');
 
 const thorttledToggleWarp = throttleInput(() => toggleWarp(isWarpConnect), 1000);
 
