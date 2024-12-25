@@ -57,6 +57,10 @@ export const BluetoothMenuTheme = (): JSX.Element => {
                 <Option opt={options.theme.bar.menus.menu.bluetooth.iconbutton.active} title="Active" type="color" />
                 <Option opt={options.theme.bar.menus.menu.bluetooth.iconbutton.passive} title="Passive" type="color" />
 
+                {/* Scroller Section */}
+                <Header title="Scroller" />
+                <Option opt={options.theme.bar.menus.menu.bluetooth.scroller.color} title="Color" type="color" />
+
                 {/* Switch Section */}
                 <Header title="Switch" />
                 <Option opt={options.theme.bar.menus.menu.bluetooth.switch.enabled} title="Enabled" type="color" />

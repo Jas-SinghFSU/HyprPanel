@@ -15,33 +15,35 @@ export const WirelessAPs = (): JSX.Element => {
             if (filteredWAPs.length <= 0 && staging.get() === undefined) {
                 return (
                     <label
-                        className="waps-not-found dim"
+                        className={'waps-not-found dim'}
                         expand
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
-                        label="No Wi-Fi Networks Found"
+                        label={'No Wi-Fi Networks Found'}
                     />
                 );
             }
 
             return (
-                <box className="available-waps-list" vertical>
-                    {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
-                        return (
-                            <box className="network-element-item">
-                                <AccessPoint connecting={connecting} accessPoint={ap} />
-                                <Controls connecting={connecting} accessPoint={ap} />
-                            </box>
-                        );
-                    })}
-                </box>
+                <scrollable className={'menu-scroller wap'}>
+                    <box className={'available-waps-list'} vertical>
+                        {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
+                            return (
+                                <box className={'network-element-item'}>
+                                    <AccessPoint connecting={connecting} accessPoint={ap} />
+                                    <Controls connecting={connecting} accessPoint={ap} />
+                                </box>
+                            );
+                        })}
+                    </box>
+                </scrollable>
             );
         },
     );
 
     return (
         <box
-            className="available-waps"
+            className={'available-waps'}
             vertical
             onDestroy={() => {
                 wapBinding.drop();

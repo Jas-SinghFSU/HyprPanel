@@ -1,6 +1,7 @@
 import { bind } from 'astal';
-import { Gtk } from 'astal/gtk3';
+import { Gdk, Gtk } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
+import { capitalizeFirstLetter, isScrollDown, isScrollUp } from 'src/lib/utils';
 import options from 'src/options';
 
 const { raiseMaximumVolume } = options.menus.volume;
@@ -12,9 +13,11 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                 className={`menu-active ${type}`}
                 halign={Gtk.Align.START}
                 truncate
-                expand
+                hexpand
                 wrap
-                label={bind(device, 'description').as((description) => description ?? `Unknown ${type} Device`)}
+                label={bind(device, 'description').as((description) =>
+                    capitalizeFirstLetter(description ?? `Unknown ${type} Device`),
+                )}
             />
             <slider
                 value={bind(device, 'volume')}
@@ -28,6 +31,20 @@ export const Slider = ({ device, type }: SliderProps): JSX.Element => {
                         device.volume = value;
                         device.mute = false;
                     }
+                }}
+                setup={(self) => {
+                    self.connect('scroll-event', (_, event: Gdk.Event) => {
+                        if (isScrollUp(event)) {
+                            const newVolume = device.volume + 0.05;
+                            const minVolume = raiseMaximumVolume.get() ? 1.5 : 1;
+                            device.set_volume(Math.min(newVolume, minVolume));
+                        }
+
+                        if (isScrollDown(event)) {
+                            const newVolume = device.volume - 0.05;
+                            device.set_volume(newVolume);
+                        }
+                    });
                 }}
             />
         </box>

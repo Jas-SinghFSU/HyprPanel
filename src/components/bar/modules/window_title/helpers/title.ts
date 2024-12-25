@@ -8,11 +8,11 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
  * This function searches for a matching window title in the predefined `windowTitleMap` based on the class of the provided window.
  * If a match is found, it returns an object containing the icon and label for the window. If no match is found, it returns a default icon and label.
  *
- * @param windowtitle The window object containing the class information.
+ * @param client The window object containing the class information.
  *
  * @returns An object containing the icon and label for the window.
  */
-export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string, string> => {
+export const getWindowMatch = (client: AstalHyprland.Client): Record<string, string> => {
     const windowTitleMap = [
         // user provided values
         ...options.bar.windowtitle.title_map.get(),
@@ -119,17 +119,17 @@ export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string
         ['^$', '󰇄', 'Desktop'],
 
         // Fallback icon
-        ['(.+)', '󰣆', `${capitalizeFirstLetter(windowtitle?.class ?? 'Unknown')}`],
+        ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],
     ];
 
-    if (!windowtitle?.class) {
+    if (!client?.class) {
         return {
             icon: '󰇄',
             label: 'Desktop',
         };
     }
 
-    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(windowtitle?.class.toLowerCase()));
+    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(client?.class.toLowerCase()));
 
     if (!foundMatch || foundMatch.length !== 3) {
         return {
@@ -157,13 +157,12 @@ export const getWindowMatch = (windowtitle: AstalHyprland.Client): Record<string
  * @returns The title of the window as a string.
  */
 export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, useClassName: boolean): string => {
-    if (client === null) return getWindowMatch(client).label;
-
-    if (useCustomTitle) return getWindowMatch(client).label;
-    if (useClassName) return client.class;
+    if (client === null || useCustomTitle) return getWindowMatch(client).label;
 
     const title = client.title;
-    // If the title is empty or only filled with spaces, fallback to the class name
+
+    if (!title || useClassName) return client.class;
+
     if (title.length === 0 || title.match(/^ *$/)) {
         return client.class;
     }

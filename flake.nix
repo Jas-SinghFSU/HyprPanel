@@ -49,12 +49,14 @@
           pkgs.glib
           pkgs.bluez-tools
           pkgs.grimblast
-          pkgs.gpu-screen-recorder
           pkgs.brightnessctl
           pkgs.gnome-bluetooth
-          pkgs.python3
+          (pkgs.python3.withPackages (python-pkgs: with python-pkgs; [
+            gpustat
+            dbus-python
+            pygobject3
+          ]))
           pkgs.matugen
-          pkgs.python312Packages.gpustat
           pkgs.hyprpicker
           pkgs.hyprsunset
           pkgs.hypridle
@@ -64,13 +66,21 @@
           pkgs.gvfs
           pkgs.swww
           pkgs.pywal
-        ];
+        ] ++ (nixpkgs.lib.optionals (system == "x86_64-linux") [pkgs.gpu-screen-recorder]);
       };
     });
 
     # Define .overlay to expose the package as pkgs.hyprpanel based on the system
     overlay = final: prev: {
-      hyprpanel = self.packages.${prev.stdenv.system}.default;
+      hyprpanel = prev.writeShellScriptBin "hyprpanel" ''
+        if [ "$#" -eq 0 ]; then
+            exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
+        else
+            exec ${astal.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
+        fi
+      '';
     };
+
+    homeManagerModules.hyprpanel = import ./nix/module.nix self;
   };
 }

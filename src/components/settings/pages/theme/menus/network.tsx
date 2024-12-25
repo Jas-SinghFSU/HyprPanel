@@ -58,6 +58,10 @@ export const NetworkMenuTheme = (): JSX.Element => {
                 <Option opt={options.theme.bar.menus.menu.network.icons.active} title="Active" type="color" />
                 <Option opt={options.theme.bar.menus.menu.network.icons.passive} title="Passive" type="color" />
 
+                {/* Scroller Section */}
+                <Header title="Scroller" />
+                <Option opt={options.theme.bar.menus.menu.network.scroller.color} title="Color" type="color" />
+
                 {/* Icon Buttons Section */}
                 <Header title="Icon Buttons" />
                 <Option opt={options.theme.bar.menus.menu.network.iconbuttons.active} title="Active" type="color" />
