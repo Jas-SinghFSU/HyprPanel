@@ -474,6 +474,8 @@ export const BarSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.media.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.media.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.media.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.media.scrollDown} title="Scroll Down" type="string" />
 
                 {/* Notifications Section */}
                 <Header title="Notifications" />

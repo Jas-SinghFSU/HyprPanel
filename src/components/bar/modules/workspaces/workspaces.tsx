@@ -152,7 +152,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 self.toggleClassName('active', activeWorkspace === wsId);
                                 self.toggleClassName(
                                     'occupied',
-                                    (hyprlandService.get_workspace(wsId)?.get_clients().length || 0) > 0,
+                                    (hyprlandService.get_workspace(wsId)?.get_clients()?.length || 0) > 0,
                                 );
                             }}
                         />

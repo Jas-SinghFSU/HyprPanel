@@ -527,6 +527,9 @@ const options = mkOptions(CONFIG, {
                             color: opt(colors.maroon),
                         },
                         text: opt(colors.text),
+                        scroller: {
+                            color: opt(colors.maroon),
+                        },
                         listitems: {
                             passive: opt(colors.text),
                             active: opt(secondary_colors.maroon),
@@ -958,8 +961,8 @@ const options = mkOptions(CONFIG, {
             label: opt(true),
             rightClick: opt(''),
             middleClick: opt(''),
-            scrollUp: opt('pactl set-sink-volume @DEFAULT_SINK@ +5%'),
-            scrollDown: opt('pactl set-sink-volume @DEFAULT_SINK@ -5%'),
+            scrollUp: opt('hyprpanel vol +5'),
+            scrollDown: opt('hyprpanel vol -5'),
         },
         network: {
             truncation: opt(true),
@@ -1008,6 +1011,8 @@ const options = mkOptions(CONFIG, {
             show_active_only: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         notifications: {
             show_total: opt(false),
@@ -1069,6 +1074,8 @@ const options = mkOptions(CONFIG, {
                 networkInterface: opt(''),
                 dynamicIcon: opt(false),
                 icon: opt('󰖟'),
+                networkInLabel: opt('↓'),
+                networkOutLabel: opt('↑'),
                 round: opt(true),
                 labelType: opt<NetstatLabelType>('full'),
                 rateUnit: opt<RateUnit>('auto'),
@@ -1091,12 +1098,13 @@ const options = mkOptions(CONFIG, {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
                 label: opt(true),
                 padZero: opt(true),
+                autoHide: opt(false),
                 icon: {
                     pending: opt('󰏗'),
                     updated: opt('󰏖'),
                 },
                 pollingInterval: opt(1000 * 60 * 60 * 6),
-                leftClick: opt(''),
+                leftClick: opt(`$TERMINAL -e ${SRC_DIR}/scripts/runUpdates.sh -arch`),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),
@@ -1196,7 +1204,7 @@ const options = mkOptions(CONFIG, {
                 logout: opt('hyprctl dispatch exit'),
                 shutdown: opt('systemctl poweroff'),
                 avatar: {
-                    image: opt('$HOME/.face.icon'),
+                    image: opt('~/.face.icon'),
                     name: opt<'system' | string>('system'),
                 },
             },

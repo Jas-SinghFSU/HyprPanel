@@ -11,7 +11,6 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
-import { Gio } from 'astal';
 
 /**
  * Handles errors by throwing a new Error with a message.
@@ -228,23 +227,38 @@ export function launchApp(app: AstalApps.Application): void {
  * This function attempts to load an image from the specified filepath using GdkPixbuf.
  * If the image is successfully loaded, it returns true. Otherwise, it logs an error and returns false.
  *
+ * Note: Unlike GdkPixbuf, this function will normalize the given path.
+ *
  * @param imgFilePath The path to the image file.
  *
  * @returns True if the filepath is a valid image, false otherwise.
  */
 export function isAnImage(imgFilePath: string): boolean {
     try {
-        const file = Gio.File.new_for_path(imgFilePath);
-        if (!file.query_exists(null)) {
-            return false;
-        }
-
-        GdkPixbuf.Pixbuf.new_from_file(imgFilePath);
+        GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
         return true;
     } catch (error) {
-        console.error(error);
+        console.info(error);
         return false;
     }
+}
+
+/**
+ * Normalize a path to the absolute representation of the path.
+ *
+ * Note: This will only expand '~' if present. Path traversal is not supported.
+ *
+ * @param path The path to normalize.
+ *
+ * @returns The normalized path.
+ */
+export function normalizePath(path: string): string {
+    if (path.charAt(0) == '~') {
+        // Replace will only replace the first match, in this case, the first character
+        return path.replace('~', GLib.get_home_dir());
+    }
+
+    return path;
 }
 
 /**
@@ -399,7 +413,20 @@ export const isMiddleClick = (event: Astal.ClickEvent): boolean => event.button 
  *
  * @returns True if the event is a scroll up, false otherwise.
  */
-export const isScrollUp = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.UP;
+export const isScrollUp = (event: Gdk.Event): boolean => {
+    const [directionSuccess, direction] = event.get_scroll_direction();
+    const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
+
+    if (directionSuccess && direction === Gdk.ScrollDirection.UP) {
+        return true;
+    }
+
+    if (deltaSuccess && yScroll < 0) {
+        return true;
+    }
+
+    return false;
+};
 
 /**
  * Checks if an event is a scroll down.
@@ -410,4 +437,17 @@ export const isScrollUp = (event: Astal.ScrollEvent): boolean => event.direction
  *
  * @returns True if the event is a scroll down, false otherwise.
  */
-export const isScrollDown = (event: Astal.ScrollEvent): boolean => event.direction === Gdk.ScrollDirection.DOWN;
+export const isScrollDown = (event: Gdk.Event): boolean => {
+    const [directionSuccess, direction] = event.get_scroll_direction();
+    const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
+
+    if (directionSuccess && direction === Gdk.ScrollDirection.DOWN) {
+        return true;
+    }
+
+    if (deltaSuccess && yScroll > 0) {
+        return true;
+    }
+
+    return false;
+};

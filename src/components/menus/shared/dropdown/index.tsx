@@ -81,14 +81,8 @@ export default ({
                             <revealer
                                 revealChild={false}
                                 setup={(self: Revealer) => {
-                                    App.connect('window-toggled', (app) => {
-                                        const targetWindow = app.get_window(name);
-
-                                        const visibility = targetWindow?.get_visible();
-
-                                        if (targetWindow?.name === name) {
-                                            self.set_reveal_child(visibility ?? false);
-                                        }
+                                    App.connect('window-toggled', (_, window) => {
+                                        self.set_reveal_child(window.visible);
                                     });
                                 }}
                                 transitionType={transition}
