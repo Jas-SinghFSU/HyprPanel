@@ -1,17 +1,6 @@
 export type HyprctlWorkspace = {
-    id: number,
-    name: string,
-    monitor: string,
-    monitorID: number,
-    windows: number,
-    hasFullscreen: boolean,
-    lastwindows: string,
-    lastwindowtitle: string
-};
-
-export type WorkspaceRule = {
-    workspaceString: string;
-    monitor: string;
+    id: number;
+    monitorID: string;
 };
 
 export type WorkspaceMap = {

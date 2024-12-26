@@ -1,6 +1,6 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnections, workspaceRules } from './helpers';
+import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnections, workspaceMapping } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
 import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
@@ -60,7 +60,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(ignored),
             bind(showAllActive),
             bind(hyprlandService, 'focusedWorkspace'),
-            bind(workspaceRules),
+            bind(workspaceMapping),
             bind(forceUpdater),
         ],
         (
@@ -91,7 +91,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             const workspacesToRender = getWorkspacesToRender(
                 totalWorkspaces,
                 workspaceList,
-                workspaceRules.get(),
+                workspaceMapping.get(),
                 monitor,
                 isMonitorSpecific,
                 monitorList,

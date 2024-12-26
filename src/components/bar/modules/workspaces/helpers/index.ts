@@ -55,27 +55,27 @@ export const getWorkspacesForMonitor = (
 };
 
 /**
- * Retrieves the workspace rules.
+ * Retrieves the workspace client mapping.
  *
- * This function fetches and parses the workspace rules from the Hyprland service.
+ * This function fetches and parses the workspaces mapping from the Hyprland service.
  *
- * @returns The workspace rules map.
+ * @returns The workspace client map.
  */
-export const getWorkspaceRules = (): WorkspaceMap => {
+export const getWorkspaceMapping = (): WorkspaceMap => {
     try {
         const rules = exec('hyprctl workspaces -j');
 
-        const workspaceRules: WorkspaceMap = {};
+        const workspaceMap: WorkspaceMap = {};
 
         JSON.parse(rules).forEach((rule: HyprctlWorkspace) => {
-            if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                workspaceRules[rule.monitor].push(rule.id);
+            if (Object.hasOwnProperty.call(workspaceMap, rule.monitor)) {
+                workspaceMap[rule.monitor].push(rule.id);
             } else {
-                workspaceRules[rule.monitor] = [rule.id];
+                workspaceMap[rule.monitor] = [rule.id];
             }
         });
 
-        return workspaceRules;
+        return workspaceMap;
     } catch (err) {
         console.error(err);
         return {};
@@ -96,7 +96,7 @@ export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
         return Array.from({ length: workspaces.get() }, (_, i) => i + 1);
     }
 
-    const monitorWorkspaces = getWorkspaceRules();
+    const monitorWorkspaces = getWorkspaceMapping();
     const monitorMap: MonitorMap = {};
     hyprlandService.get_monitors().forEach((m) => (monitorMap[m.id] = m.name));
 
@@ -265,7 +265,7 @@ export const createThrottledScrollHandlers = (
  *
  * @param totalWorkspaces - The total number of workspaces.
  * @param workspaceList - The list of workspaces.
- * @param workspaceRules - The workspace rules map.
+ * @param workspaceMapping - The workspace mapping.
  * @param monitor - The monitor ID.
  * @param isMonitorSpecific - Whether the workspaces are monitor-specific.
  * @param monitorList - The list of monitors.
@@ -275,7 +275,7 @@ export const createThrottledScrollHandlers = (
 export const getWorkspacesToRender = (
     totalWorkspaces: number,
     workspaceList: AstalHyprland.Workspace[],
-    workspaceRules: WorkspaceMap,
+    workspaceMapping: WorkspaceMap,
     monitor: number,
     isMonitorSpecific: boolean,
     monitorList: AstalHyprland.Monitor[],
@@ -294,24 +294,24 @@ export const getWorkspacesToRender = (
     const curMonitor =
         monitorList.find((mon) => mon.id === monitor) || workspaceMonitorList.find((mon) => mon.id === monitor);
 
-    const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
-        return [...acc, ...workspaceRules[k]];
+    const workspacesWithRules = Object.keys(workspaceMapping).reduce((acc: number[], k: string) => {
+        return [...acc, ...workspaceMapping[k]];
     }, []);
 
     const activesForMonitor = activeWorkspaces.filter((w) => {
         if (
             curMonitor &&
-            Object.hasOwnProperty.call(workspaceRules, curMonitor.name) &&
+            Object.hasOwnProperty.call(workspaceMapping, curMonitor.name) &&
             workspacesWithRules.includes(w)
         ) {
-            return workspaceRules[curMonitor.name].includes(w);
+            return workspaceMapping[curMonitor.name].includes(w);
         }
         return true;
     });
 
     if (isMonitorSpecific) {
         const workspacesInRange = range(totalWorkspaces).filter((ws) => {
-            return getWorkspacesForMonitor(ws, workspaceRules, monitor, wsList, monitorList);
+            return getWorkspacesForMonitor(ws, workspaceMapping, monitor, wsList, monitorList);
         });
 
         allWorkspaces = [...new Set([...activesForMonitor, ...workspacesInRange])];
@@ -323,10 +323,10 @@ export const getWorkspacesToRender = (
 };
 
 /**
- * The workspace rules variable.
- * This variable holds the current workspace rules.
+ * The workspace mapping variable.
+ * This variable holds the current workspace mapping.
  */
-export const workspaceRules = Variable(getWorkspaceRules());
+export const workspaceMapping = Variable(getWorkspaceMapping());
 
 /**
  * The force updater variable.
@@ -340,7 +340,23 @@ export const forceUpdater = Variable(true);
  */
 export const setupConnections = (): void => {
     hyprlandService.connect('config-reloaded', () => {
-        workspaceRules.set(getWorkspaceRules());
+        workspaceMapping.set(getWorkspaceMapping());
+    });
+
+    hyprlandService.connect('workspace-added', () => {
+        workspaceMapping.set(getWorkspaceMapping());
+    });
+
+    hyprlandService.connect('workspace-removed', () => {
+        workspaceMapping.set(getWorkspaceMapping());
+    });
+
+    hyprlandService.connect('monitor-added', () => {
+        workspaceMapping.set(getWorkspaceMapping());
+    });
+
+    hyprlandService.connect('monitor-removed', () => {
+        workspaceMapping.set(getWorkspaceMapping());
     });
 
     hyprlandService.connect('client-moved', () => {
