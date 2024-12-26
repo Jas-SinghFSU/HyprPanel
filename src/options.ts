@@ -1104,7 +1104,7 @@ const options = mkOptions(CONFIG, {
                     updated: opt('󰏖'),
                 },
                 pollingInterval: opt(1000 * 60 * 60 * 6),
-                leftClick: opt(''),
+                leftClick: opt(`$TERMINAL -e ${SRC_DIR}/scripts/runUpdates.sh -arch; exit`),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),
