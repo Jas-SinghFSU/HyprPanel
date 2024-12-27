@@ -549,6 +549,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [
+      package
       (if pkgs ? nerd-fonts.jetbrains-mono
       then pkgs.nerd-fonts.jetbrains-mono
       # NOTE:(benvonh) Remove after next release 25.05
