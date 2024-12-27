@@ -2,7 +2,7 @@
 
 check_flatpak_updates() {
   flatpak_updates=0
-  if [[ ! -x "command -v flatpak" ]]; then
+  if [[ -x "command -v flatpak &> /dev/null" ]]; then
     flatpak_updates=$(flatpak update | grep -E "^[[:blank:]][0-9]{1}\." | wc -l)
   fi
   echo $flatpak_updates
@@ -35,12 +35,14 @@ check_arch_updates() {
 
 check_ubuntu_updates() {
   result=$(apt-get -s -o Debug::NoLocking=true upgrade | grep -c ^Inst)
-  echo "$result"
+  flatpak_updates=$(check_flatpak_updates)
+  echo "$((result + flatpak_updates))"
 }
 
 check_fedora_updates() {
   result=$(dnf check-update -q | grep -v '^Loaded plugins' | grep -v '^No match for' | wc -l)
-  echo "$result"
+  flatpak_updates=$(check_flatpak_updates)
+  echo "$((result + flatpak_updates))"
 }
 
 case "$1" in
