@@ -55,8 +55,9 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(applicationIconFallback),
             bind(matugen),
             bind(smartHighlight),
-
+            bind(hyprlandService, 'clients'),
             bind(hyprlandService, 'monitors'),
+
             bind(ignored),
             bind(showAllActive),
             bind(hyprlandService, 'focusedWorkspace'),
@@ -84,6 +85,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             applicationIconFallback: string,
             matugenEnabled: boolean,
             smartHighlightEnabled: boolean,
+            clients: AstalHyprland.Client[],
             monitorList: AstalHyprland.Monitor[],
         ) => {
             const activeWorkspace = hyprlandService.focusedWorkspace?.id || -99999;
@@ -150,10 +152,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                             )}
                             setup={(self) => {
                                 self.toggleClassName('active', activeWorkspace === wsId);
-                                self.toggleClassName(
-                                    'occupied',
-                                    (hyprlandService.get_workspace(wsId)?.get_clients()?.length || 0) > 0,
-                                );
+                                self.toggleClassName('occupied', clients.length > 0);
                             }}
                         />
                     </button>
