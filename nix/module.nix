@@ -52,7 +52,7 @@ let
         in
           "{ " + inner + " }"
       else
-        abort "Unexpected error! Please post a new issue...";
+        abort "Unexpected error! Please post a new issue and @benvonh...";
 
   toNestedObject = attrSet:
     let
@@ -72,7 +72,21 @@ in
       type = types.str;
       default = "";
       example = "catppuccin_mocha";
-      description = "Theme to import (see ./themes/*.json)";
+      description = "Theme to import (see ../themes/*.json)";
+    };
+
+    override = mkOption {
+      type = types.attrs;
+      default = {};
+      example = ''
+        {
+          theme.bar.menus.text = "#123ABC";
+        }
+      '';
+      description = ''
+        An arbitrary set to override the final config with.
+        Useful for overriding colors in your selected theme.
+      '';
     };
 
     layout = mkOption {
@@ -535,11 +549,11 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [
+      package
       (if pkgs ? nerd-fonts.jetbrains-mono
       then pkgs.nerd-fonts.jetbrains-mono
       # NOTE:(benvonh) Remove after next release 25.05
-      else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }
-      )
+      else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
     # NOTE:(benvonh)
@@ -556,12 +570,15 @@ in
       };
 
     xdg.configFile.hyprpanel = let
-      theme = if cfg.theme != "" then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json) else {};
+      theme = if cfg.theme != ""
+        then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json)
+        else {};
       flatSet = flattenAttrs (lib.attrsets.recursiveUpdate cfg.settings theme) "";
-      mergeSet = if cfg.layout == null then flatSet else flatSet // cfg.layout;
+      mergeSet = flatSet // (flattenAttrs cfg.override "");
+      fullSet = if cfg.layout == null then mergeSet else mergeSet // cfg.layout;
     in {
       target = "hyprpanel/config.json";
-      text = toNestedObject mergeSet;
+      text = toNestedObject fullSet;
       onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
     };
 
