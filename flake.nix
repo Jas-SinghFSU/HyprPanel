@@ -49,7 +49,6 @@
           pkgs.glib
           pkgs.bluez-tools
           pkgs.grimblast
-          pkgs.gpu-screen-recorder
           pkgs.brightnessctl
           pkgs.gnome-bluetooth
           (pkgs.python3.withPackages (python-pkgs: with python-pkgs; [
@@ -67,7 +66,7 @@
           pkgs.gvfs
           pkgs.swww
           pkgs.pywal
-        ];
+        ] ++ (nixpkgs.lib.optionals (system == "x86_64-linux") [pkgs.gpu-screen-recorder]);
       };
     });
 
@@ -81,5 +80,7 @@
         fi
       '';
     };
+
+    homeManagerModules.hyprpanel = import ./nix/module.nix self;
   };
 }

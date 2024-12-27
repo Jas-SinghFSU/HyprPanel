@@ -238,7 +238,7 @@ export function isAnImage(imgFilePath: string): boolean {
         GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
         return true;
     } catch (error) {
-        console.error(error);
+        console.info(error);
         return false;
     }
 }

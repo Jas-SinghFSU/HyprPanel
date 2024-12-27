@@ -1,3 +1,8 @@
+.menu-items.audio {
+    border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
+    opacity: $bar-menus-opacity * 0.01;
+}
+
 .menu-items-container.audio {
     min-width: 18em * $bar-menus-menu-volume-scaling * 0.01;
 
@@ -8,11 +13,6 @@
     }
 
     background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-volume-background-color);
-
-    .menu-items {
-        border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
-        opacity: $bar-menus-opacity * 0.01;
-    }
 
     .menu-dropdown-label.audio {
         color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-volume-label-color);
@@ -29,6 +29,18 @@
 
     .menu-button-isactive.audio {
         color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-volume-icons-active);
+    }
+
+    .menu-icon-button.volume {
+        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
+        padding: 0em 1em;
+
+        label {
+            font-size: 1.25em;
+        }
+        &:hover {
+            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
+        }
     }
 
     .menu-slider.playback {
@@ -211,18 +223,6 @@
 
     .menu-items-section.playback {
         border-radius: 0em;
-    }
-
-    .slider-toggle {
-        color: if($bar-menus-monochrome, $bar-menus-iconbuttons-passive, $bar-menus-menu-volume-iconbutton-passive);
-        padding: 0em 1em;
-        label {
-            font-size: 1.25em;
-        }
-
-        &:hover {
-            color: if($bar-menus-monochrome, $bar-menus-iconbuttons-active, $bar-menus-menu-volume-iconbutton-active);
-        }
     }
 
     .active-playbacks-scrollable {

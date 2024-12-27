@@ -961,8 +961,8 @@ const options = mkOptions(CONFIG, {
             label: opt(true),
             rightClick: opt(''),
             middleClick: opt(''),
-            scrollUp: opt('pactl set-sink-volume @DEFAULT_SINK@ +5%'),
-            scrollDown: opt('pactl set-sink-volume @DEFAULT_SINK@ -5%'),
+            scrollUp: opt('hyprpanel vol +5'),
+            scrollDown: opt('hyprpanel vol -5'),
         },
         network: {
             truncation: opt(true),
@@ -1011,6 +1011,8 @@ const options = mkOptions(CONFIG, {
             show_active_only: opt(false),
             rightClick: opt(''),
             middleClick: opt(''),
+            scrollUp: opt(''),
+            scrollDown: opt(''),
         },
         notifications: {
             show_total: opt(false),
@@ -1102,7 +1104,7 @@ const options = mkOptions(CONFIG, {
                     updated: opt('󰏖'),
                 },
                 pollingInterval: opt(1000 * 60 * 60 * 6),
-                leftClick: opt(''),
+                leftClick: opt(`$TERMINAL -e ${SRC_DIR}/scripts/runUpdates.sh -arch`),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),
