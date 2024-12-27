@@ -4,6 +4,7 @@ import { ensureDirectory } from './session';
 import Variable from 'astal/variable';
 import { monitorFile, readFile, writeFile } from 'astal/file';
 import GLib from 'gi://GLib?version=2.0';
+import { errorHandler } from './utils';
 
 type OptProps = {
     persistent?: boolean;
@@ -88,8 +89,8 @@ export class Opt<T = unknown> extends Variable<T> {
         if (rawData && rawData.trim() !== '') {
             try {
                 cacheData = JSON.parse(rawData) as Record<string, unknown>;
-            } catch {
-                // do nuffin
+            } catch (error) {
+                errorHandler(error);
             }
         }
 
@@ -178,19 +179,23 @@ export function opt<T>(initial: T, props?: OptProps): Opt<T> {
  * @returns An array of all found `Opt` instances.
  */
 function getOptions(object: Record<string, unknown>, path = '', arr: Opt[] = []): Opt[] {
-    for (const key in object) {
-        const value = object[key];
-        const id = path ? `${path}.${key}` : key;
+    try {
+        for (const key in object) {
+            const value = object[key];
+            const id = path ? `${path}.${key}` : key;
 
-        if (value instanceof Variable) {
-            const optValue = value as Opt;
-            optValue.id = id;
-            arr.push(optValue);
-        } else if (typeof value === 'object' && value !== null) {
-            getOptions(value as Record<string, unknown>, id, arr);
+            if (value instanceof Variable) {
+                const optValue = value as Opt;
+                optValue.id = id;
+                arr.push(optValue);
+            } else if (typeof value === 'object' && value !== null) {
+                getOptions(value as Record<string, unknown>, id, arr);
+            }
         }
+        return arr;
+    } catch (error) {
+        errorHandler(error);
     }
-    return arr;
 }
 
 /**
