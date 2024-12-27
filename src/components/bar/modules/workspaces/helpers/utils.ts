@@ -194,25 +194,25 @@ export const renderClassnames = (
     monitor: number,
     i: number,
 ): string => {
+    const isWorkspaceActive = hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
+    const isActive = isWorkspaceActive ? 'active' : '';
+
     if (showIcons) {
-        return 'workspace-icon txt-icon bar';
+        return `workspace-icon txt-icon bar ${isActive}`;
     }
 
     if (showNumbered || showWsIcons) {
-        const numActiveInd =
-            hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i)
-                ? numberedActiveIndicator
-                : '';
+        const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
 
         const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
 
-        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
 
         return className.trim();
     }
 
-    return 'default';
+    return `default ${isActive}`;
 };
 
 /**
