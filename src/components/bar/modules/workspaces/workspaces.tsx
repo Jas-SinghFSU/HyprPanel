@@ -88,8 +88,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             clients: AstalHyprland.Client[],
             monitorList: AstalHyprland.Monitor[],
         ) => {
-            const activeWorkspace = hyprlandService.focusedWorkspace?.id || -99999;
-
             const workspacesToRender = getWorkspacesToRender(
                 totalWorkspaces,
                 workspaceList,
@@ -151,7 +149,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 monitor,
                             )}
                             setup={(self) => {
-                                self.toggleClassName('active', activeWorkspace === wsId);
                                 self.toggleClassName('occupied', clients.length > 0);
                             }}
                         />
