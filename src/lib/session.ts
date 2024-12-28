@@ -28,11 +28,13 @@ export function ensureFile(path: string): void {
     }
 }
 
+const dataDir = typeof DATADIR !== 'undefined' ? DATADIR : SRC;
+
 Object.assign(globalThis, {
     CONFIG: `${GLib.get_user_config_dir()}/hyprpanel/config.json`,
     TMP: `${GLib.get_tmp_dir()}/hyprpanel`,
     USER: GLib.get_user_name(),
-    SRC_DIR: GLib.getenv('HYPRPANEL_DATADIR') ?? SRC,
+    SRC_DIR: dataDir,
 });
 
 ensureDirectory(TMP);

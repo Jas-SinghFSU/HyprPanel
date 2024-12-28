@@ -2,10 +2,7 @@
     "name": "hyprpanel",
     "version": "1.0.0",
     "description": "A customizable panel built for Hyprland.",
-    "main": "config.js",
-    "directories": {
-        "lib": "lib"
-    },
+    "main": "app.ts",
     "scripts": {
         "lint": "eslint --config .eslintrc.js .",
         "lint:fix": "eslint --config .eslintrc.js . --fix",
@@ -14,6 +11,9 @@
     "keywords": [],
     "author": "",
     "license": "MIT",
+    "dependencies": {
+        "astal": "/usr/share/astal/gjs"
+    },
     "devDependencies": {
         "@types/node": "^22.5.4",
         "@typescript-eslint/eslint-plugin": "^8.5.0",

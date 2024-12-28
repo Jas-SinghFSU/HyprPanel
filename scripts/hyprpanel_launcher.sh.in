@@ -1,7 +1,5 @@
 #!/bin/sh
 
-export HYPRPANEL_DATADIR="@DATADIR@"
-
 if [ "$#" -eq 0 ]; then
     exec gjs -m "@DATADIR@/hyprpanel.js"
 else
