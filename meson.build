@@ -1,7 +1,8 @@
 project('hyprpanel')
 
-bindir = get_option('prefix') / get_option('bindir')
-datadir = get_option('prefix') / get_option('datadir') / 'hyprpanel'
+prefix = get_option('prefix')
+bindir = prefix / get_option('bindir')
+datadir = prefix / get_option('datadir') / meson.project_name()
 
 ags = find_program('ags', required: true)
 find_program('gjs', required: true)
@@ -40,11 +41,11 @@ custom_target(
   command: [
     ags,
     'bundle',
+    '--define', 'DATADIR="' + datadir + '"',
     meson.project_source_root() / 'app.ts',
-    '@OUTPUT@',
-    '--src', meson.project_source_root(),
+    meson.project_name(),
   ],
-  output: 'hyprpanel.js',
+  output: meson.project_name() + '.js',
   install: true,
   install_dir: datadir,
 )

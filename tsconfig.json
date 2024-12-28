@@ -19,11 +19,8 @@
         "types": [],
         "experimentalDecorators": true,
         "jsx": "react-jsx",
-        "jsxImportSource": "/usr/share/astal/gjs/gtk3",
+        "jsxImportSource": "astal/gtk3",
         "paths": {
-            "astal": ["/usr/share/astal/gjs"],
-            "astal/*": ["/usr/share/astal/gjs/*"]
         }
-    },
-    "exclude": ["astal/gtk3/jsx-runtime.ts"]
+    }
 }
