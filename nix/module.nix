@@ -7,7 +7,18 @@ let
   jsonFormat = pkgs.formats.json { };
   
   # No package option
-  package = pkgs.hyprpanel;
+  package = if pkgs ? hyprpanel then pkgs.hyprpanel
+  else abort ''
+
+  ******************************************
+  *               HyprPanel                *
+  ******************************************
+  *      You didn't add the overlay!       *
+  *                                        *
+  * Either set 'overlay.enable = true' or  *
+  * manually add it to 'nixpkgs.overlays'. *
+  ******************************************
+  '';
 
   # Shorthand lambda for self-documenting options under settings
   mkStrOption = default: mkOption { type = types.str; default = default; };
@@ -64,6 +75,7 @@ in
 {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
+    overlay.enable = mkEnableOption "script overlay";
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
     overwrite.enable = mkEnableOption "overwrite config fix";
@@ -549,7 +561,8 @@ in
 
   config = let
 
-    theme = if cfg.theme != ""
+    theme =
+      if cfg.theme != ""
       then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json)
       else {};
 
@@ -567,6 +580,7 @@ in
       text = ''
         cd
         echo '------------- HyprPanel -------------'
+        echo 
         echo 'Please ignore the layout diff for now'
         echo '-------------------------------------'
         colordiff ${config.xdg.configFile.hyprpanel.target} \
@@ -576,7 +590,7 @@ in
 
   in mkIf cfg.enable {
 
-    nixpkgs.overlays = [ self.overlay ];
+    nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
 
     home.packages = [
       package
@@ -587,18 +601,15 @@ in
       else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
-    # NOTE:(benvonh)
-    # When changing the configuration through the GUI, HyprPanel will delete the `config.json` file and create a new
-    # one in its place which destroys the original symlink to the current Home Manager generation. To work around this,
-    # we can automatically delete the `config.json` file before generating a new config by enabling the
-    # `overwrite.enable` option. Though, at some point, a proper fix should be implemented.
     home.activation =
-      let path = "${config.xdg.configFile.hyprpanel.target}";
-      in mkIf cfg.overwrite.enable {
-        hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-          [[ -L "${path}" ]] || rm -f "${path}"
-        '';
-      };
+      let
+        path = "${config.xdg.configFile.hyprpanel.target}";
+      in
+        mkIf cfg.overwrite.enable {
+          hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+            [[ -L "${path}" ]] || rm -f "${path}"
+          '';
+        };
 
     xdg.configFile.hyprpanel = {
       target = "hyprpanel/config.json";
