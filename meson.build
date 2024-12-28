@@ -52,7 +52,7 @@ custom_target(
 
 configure_file(
   input: 'scripts/hyprpanel_launcher.sh.in',
-  output: 'hyprpanel',
+  output: meson.project_name(),
   configuration: {'DATADIR': datadir},
   install: true,
   install_dir: bindir,
