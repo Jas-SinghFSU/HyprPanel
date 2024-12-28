@@ -1,57 +1,37 @@
-project('hyprpanel')
+project(
+  'hyprpanel',
+  default_options: [
+    'prefix=/usr',
+  ],
+)
 
-bindir = get_option('prefix') / get_option('bindir')
-datadir = get_option('prefix') / get_option('datadir') / 'hyprpanel'
+prefix = get_option('prefix')
+bindir = prefix / get_option('bindir')
+datadir = prefix / get_option('datadir') / meson.project_name()
 
 ags = find_program('ags', required: true)
 find_program('gjs', required: true)
 
-src_file_list_process = run_command(
-  'find',
-  'src',
-  '-type', 'f',
-  '(',
-  '-name', '*.ts',
-  '-o',
-  '-name', '*.tsx',
-  '-o',
-  '-name', '*.scss',
-  ')',
-)
-
-if src_file_list_process.returncode() != 0
-  error('Failed to find source files.')
-endif
-
-src_file_list = src_file_list_process.stdout().split('\n')
-
-all_sources = []
-
-foreach file : src_file_list
-  file_stripped = file.strip()
-  if file_stripped != ''
-    all_sources += meson.project_source_root() / file_stripped
-  endif
-endforeach
-
 custom_target(
   'hyprpanel_bundle',
-  input: all_sources,
+  input: files('app.ts'),
   command: [
     ags,
     'bundle',
+    '--define', 'DATADIR="' + datadir + '"',
+    '--root', meson.project_source_root(),
     meson.project_source_root() / 'app.ts',
     '@OUTPUT@',
-    '--src', meson.project_source_root(),
   ],
-  output: 'hyprpanel.js',
+  output: meson.project_name() + '.js',
   install: true,
   install_dir: datadir,
+  build_always_stale: true,
 )
 
 configure_file(
   input: 'scripts/hyprpanel_launcher.sh.in',
-  output: 'hyprpanel',
+  output: meson.project_name(),
   configuration: {'DATADIR': datadir},
   install: true,
   install_dir: bindir,
