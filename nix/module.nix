@@ -7,7 +7,18 @@ let
   jsonFormat = pkgs.formats.json { };
   
   # No package option
-  package = self.packages.${pkgs.system}.default;
+  package = if pkgs ? hyprpanel then pkgs.hyprpanel
+  else abort ''
+
+  ******************************************
+  *               HyprPanel                *
+  ******************************************
+  *      You didn't add the overlay!       *
+  *                                        *
+  * Either set 'overlay.enable = true' or  *
+  * manually add it to 'nixpkgs.overlays'. *
+  ******************************************
+  '';
 
   # Shorthand lambda for self-documenting options under settings
   mkStrOption = default: mkOption { type = types.str; default = default; };
@@ -43,14 +54,14 @@ let
         let
           items = builtins.map toNestedValue value;
         in
-          "[" + (builtins.concatStringsSep ", " items) + "]"
+          "[\n" + (builtins.concatStringsSep ", " items) + "\n]"
       else if builtins.isAttrs value then
         let
           keys = builtins.attrNames value;
           toKeyValue = k: "\"${k}\": ${toNestedValue value.${k}}";
           inner = builtins.concatStringsSep ", " (builtins.map toKeyValue keys);
         in
-          "{ " + inner + " }"
+          "{\n" + inner + "\n}"
       else
         abort "Unexpected error! Please post a new issue and @benvonh...";
 
@@ -59,11 +70,12 @@ let
       keys = builtins.attrNames attrSet;
       kvPairs = builtins.map (k: "\"${k}\": ${toNestedValue attrSet.${k}}") keys;
     in
-      "{ " + builtins.concatStringsSep ", " kvPairs + " }";
+      "{\n  " + builtins.concatStringsSep ",\n  " kvPairs + "\n}";
 in
 {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
+    overlay.enable = mkEnableOption "script overlay";
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
     overwrite.enable = mkEnableOption "overwrite config fix";
@@ -547,39 +559,67 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = let
+
+    theme =
+      if cfg.theme != ""
+      then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json)
+      else {};
+
+    flatSet = flattenAttrs (lib.attrsets.recursiveUpdate cfg.settings theme) "";
+
+    mergeSet = flatSet // (flattenAttrs cfg.override "");
+
+    fullSet = if cfg.layout == null then mergeSet else mergeSet // cfg.layout;
+
+    finalConfig = toNestedObject fullSet;
+
+    hyprpanel-diff = pkgs.writeShellApplication {
+      runtimeInputs = [ pkgs.colordiff ];
+      name = "hyprpanel-diff";
+      text = ''
+        cd
+        echo '------------- HyprPanel -------------'
+        echo 
+        echo 'Please ignore the layout diff for now'
+        echo '-------------------------------------'
+        colordiff ${config.xdg.configFile.hyprpanel.target} \
+                  ${config.xdg.configFile.hyprpanel-swap.target}
+      '';
+    };
+
+  in mkIf cfg.enable {
+
+    nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+
     home.packages = [
       package
+      hyprpanel-diff
       (if pkgs ? nerd-fonts.jetbrains-mono
       then pkgs.nerd-fonts.jetbrains-mono
       # NOTE:(benvonh) Remove after next release 25.05
       else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
-    # NOTE:(benvonh)
-    # When changing the configuration through the GUI, HyprPanel will delete the `config.json` file and create a new
-    # one in its place which destroys the original symlink to the current Home Manager generation. To work around this,
-    # we can automatically delete the `config.json` file before generating a new config by enabling the
-    # `overwrite.enable` option. Though, at some point, a proper fix should be implemented.
     home.activation =
-      let path = "${config.xdg.configFile.hyprpanel.target}";
-      in mkIf cfg.overwrite.enable {
-        hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-          [[ -L "${path}" ]] || rm -f "${path}"
-        '';
-      };
+      let
+        path = "${config.xdg.configFile.hyprpanel.target}";
+      in
+        mkIf cfg.overwrite.enable {
+          hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+            [[ -L "${path}" ]] || rm -f "${path}"
+          '';
+        };
 
-    xdg.configFile.hyprpanel = let
-      theme = if cfg.theme != ""
-        then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json)
-        else {};
-      flatSet = flattenAttrs (lib.attrsets.recursiveUpdate cfg.settings theme) "";
-      mergeSet = flatSet // (flattenAttrs cfg.override "");
-      fullSet = if cfg.layout == null then mergeSet else mergeSet // cfg.layout;
-    in {
+    xdg.configFile.hyprpanel = {
       target = "hyprpanel/config.json";
-      text = toNestedObject fullSet;
+      text = finalConfig;
       onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+    };
+
+    xdg.configFile.hyprpanel-swap = {
+      target = "hyprpanel/config.hm.json";
+      text = finalConfig;
     };
 
     systemd.user.services = mkIf cfg.systemd.enable {
