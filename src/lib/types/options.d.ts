@@ -105,6 +105,8 @@ export interface RowProps<T> {
     subtitleLink?: string;
     dependencies?: string[];
     increment?: number;
+    fontStyle?: Opt<string>;
+    fontLabel?: Opt<string>;
 }
 
 export type OSDOrientation = 'horizontal' | 'vertical';
