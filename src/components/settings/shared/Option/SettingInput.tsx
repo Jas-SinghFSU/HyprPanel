@@ -10,6 +10,8 @@ export const SettingInput = <T extends string | number | boolean | object>({
     return (
         <Inputter
             opt={props.opt}
+            fontStyle={props.fontStyle}
+            fontLabel={props.fontLabel}
             type={props.type}
             enums={props.enums}
             disabledBinding={props.disabledBinding}

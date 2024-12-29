@@ -8,7 +8,13 @@ export const BarGeneral = (): JSX.Element => {
         <scrollable name={'General'} className="bar-theme-page paged-container" vscroll={Gtk.PolicyType.AUTOMATIC}>
             <box vertical>
                 <Header title="General Settings" />
-                <Option opt={options.theme.font.name} title="Font" type="font" />
+                <Option
+                    opt={options.theme.font.name}
+                    fontLabel={options.theme.font.label}
+                    fontStyle={options.theme.font.style}
+                    title="Font"
+                    type="font"
+                />
                 <Option opt={options.theme.font.size} title="Font Size" type="string" />
                 <Option
                     opt={options.theme.font.weight}
