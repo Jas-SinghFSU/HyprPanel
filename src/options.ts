@@ -401,6 +401,15 @@ const options = mkOptions(CONFIG, {
                         icon_background: opt(colors.base2),
                         spacing: opt('0.45em'),
                     },
+                    cava: {
+                        enableBorder: opt(false),
+                        border: opt(colors.lavender),
+                        background: opt(colors.base2),
+                        text: opt(colors.lavender),
+                        icon: opt(colors.lavender),
+                        icon_background: opt(colors.base2),
+                        spacing: opt('0.5em'),
+                    },
                 },
             },
             menus: {
@@ -1166,6 +1175,18 @@ const options = mkOptions(CONFIG, {
                 scrollUp: opt(''),
                 scrollDown: opt(''),
             },
+            cava: {
+                label: opt(true),
+                icon: opt(''),
+                showActiveOnly: opt(false),
+                bars: opt(20),
+                channels: opt(2),
+                framerate: opt(60),
+                samplerate: opt(44100),
+                leftClick: opt(''),
+                rightClick: opt(''),
+                middleClick: opt(''),
+            }
         },
     },
 

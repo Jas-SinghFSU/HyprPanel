@@ -354,6 +354,30 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.hypridle.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.hypridle.scrollDown} title="Scroll Down" type="string" />
 
+                {/* Cava Section */}
+                <Header title="Cava" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cava.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.cava.icon} title="Icon" type="string" />
+                <Option opt={options.bar.customModules.cava.label} title="Show Label" type="boolean" />
+                <Option opt={options.theme.bar.buttons.modules.cava.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.bar.customModules.cava.showActiveOnly}
+                    title="Auto Hide"
+                    subtitle="Hide if no media detected."
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.cava.bars} title="Bars" type="number" />
+                <Option opt={options.bar.customModules.cava.channels} title="Channels" type="number" />
+                <Option opt={options.bar.customModules.cava.framerate} title="Framerate" type="number" />
+                <Option opt={options.bar.customModules.cava.samplerate} title="Sample Rate" type="number" />
+                <Option opt={options.bar.customModules.cava.leftClick} title="Left Click" type="string" />
+                <Option opt={options.bar.customModules.cava.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.cava.middleClick} title="Middle Click" type="string" />
+
                 {/* Power Section */}
                 <Header title="Power" />
                 <Option
