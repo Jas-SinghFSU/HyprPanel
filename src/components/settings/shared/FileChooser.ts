@@ -211,7 +211,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
 
         dialog.destroy();
     } catch (error) {
-        let errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
         Notify({
@@ -303,7 +303,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
         dialog.destroy();
         bash(restartCommand.get());
     } catch (error) {
-        let errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
         Notify({
