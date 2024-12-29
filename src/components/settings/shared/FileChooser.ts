@@ -100,19 +100,6 @@ export const filterConfigForNonTheme = (config: Config): Config => {
  * @param themeOnly - A flag indicating whether to save only theme-related properties.
  */
 export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
-    const original_file_path = filePath;
-
-    const file = Gio.File.new_for_path(original_file_path);
-    const [success, content] = file.load_contents(null);
-
-    if (!success) {
-        console.error(`Could not find 'config.json' at ${TMP}`);
-        return;
-    }
-
-    const jsonString = new TextDecoder('utf-8').decode(content);
-    const jsonObject = JSON.parse(jsonString);
-
     const filterHexColorPairs = (jsonObject: Config): Config => {
         const filteredObject: Config = {};
 
@@ -145,9 +132,6 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         return filteredObject;
     };
 
-    const filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
-    const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
-
     const dialog = new Gtk.FileChooserDialog({
         title: `Save Hyprpanel ${themeOnly ? 'Theme' : 'Config'}`,
         action: Gtk.FileChooserAction.SAVE,
@@ -160,55 +144,82 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
 
     const response = dialog.run();
 
-    if (response === Gtk.ResponseType.ACCEPT) {
-        const file_path = dialog.get_filename();
-        console.info(`Original file path: ${file_path}`);
+    try {
+        const original_file_path = filePath;
 
-        const getIncrementedFilePath = (filePath: string): string => {
-            let increment = 1;
-            const baseName = filePath.replace(/(\.\w+)$/, '');
-            const match = filePath.match(/(\.\w+)$/);
-            const extension = match ? match[0] : '';
+        const file = Gio.File.new_for_path(original_file_path);
+        const [success, content] = file.load_contents(null);
 
-            let newFilePath = filePath;
-            let file = Gio.File.new_for_path(newFilePath);
+        if (!success) {
+            console.error(`Could not find 'config.json' at ${TMP}`);
+            return;
+        }
 
-            while (file.query_exists(null)) {
-                newFilePath = `${baseName}_${increment}${extension}`;
-                file = Gio.File.new_for_path(newFilePath);
-                increment++;
-            }
+        const jsonString = new TextDecoder('utf-8').decode(content);
+        const jsonObject = JSON.parse(jsonString);
 
-            return newFilePath;
-        };
+        const filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
+        const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
-        const finalFilePath = getIncrementedFilePath(file_path as string);
-        console.info(`File will be saved at: ${finalFilePath}`);
+        if (response === Gtk.ResponseType.ACCEPT) {
+            const file_path = dialog.get_filename();
+            console.info(`Original file path: ${file_path}`);
 
-        try {
-            const save_file = Gio.File.new_for_path(finalFilePath);
-            const outputStream = save_file.replace(null, false, Gio.FileCreateFlags.NONE, null);
-            const dataOutputStream = new Gio.DataOutputStream({
-                base_stream: outputStream,
-            });
+            const getIncrementedFilePath = (filePath: string): string => {
+                let increment = 1;
+                const baseName = filePath.replace(/(\.\w+)$/, '');
+                const match = filePath.match(/(\.\w+)$/);
+                const extension = match ? match[0] : '';
 
-            dataOutputStream.put_string(filteredContent, null);
+                let newFilePath = filePath;
+                let file = Gio.File.new_for_path(newFilePath);
 
-            dataOutputStream.close(null);
+                while (file.query_exists(null)) {
+                    newFilePath = `${baseName}_${increment}${extension}`;
+                    file = Gio.File.new_for_path(newFilePath);
+                    increment++;
+                }
 
-            Notify({
-                summary: 'File Saved Successfully',
-                body: `At ${finalFilePath}.`,
-                iconName: icons.ui.info,
-            });
-        } catch (e) {
-            if (e instanceof Error) {
-                console.error('Failed to write to file:', e.message);
+                return newFilePath;
+            };
+
+            const finalFilePath = getIncrementedFilePath(file_path as string);
+            console.info(`File will be saved at: ${finalFilePath}`);
+
+            try {
+                const save_file = Gio.File.new_for_path(finalFilePath);
+                const outputStream = save_file.replace(null, false, Gio.FileCreateFlags.NONE, null);
+                const dataOutputStream = new Gio.DataOutputStream({
+                    base_stream: outputStream,
+                });
+
+                dataOutputStream.put_string(filteredContent, null);
+
+                dataOutputStream.close(null);
+
+                Notify({
+                    summary: 'File Saved Successfully',
+                    body: `At ${finalFilePath}.`,
+                    iconName: icons.ui.info,
+                });
+            } catch (e) {
+                if (e instanceof Error) {
+                    console.error('Failed to write to file:', e.message);
+                }
             }
         }
-    }
 
-    dialog.destroy();
+        dialog.destroy();
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        dialog.destroy();
+
+        Notify({
+            summary: `${themeOnly ? 'Theme' : 'Config'} Export Failed`,
+            body: errorMessage ?? 'An unknown error occurred.',
+            iconName: icons.ui.warning,
+        });
+    }
 };
 
 /**
@@ -231,63 +242,74 @@ export const importFiles = (themeOnly: boolean = false): void => {
 
     const response = dialog.run();
 
-    if (response === Gtk.ResponseType.CANCEL) {
-        dialog.destroy();
-        return;
-    }
-    if (response === Gtk.ResponseType.ACCEPT) {
-        const filePath: string | null = dialog.get_filename();
-
-        if (filePath === null) {
-            Notify({
-                summary: 'Failed to import',
-                body: 'No file selected.',
-                iconName: icons.ui.warning,
-            });
-            return;
-        }
-
-        const importedConfig = loadJsonFile(filePath);
-
-        if (!importedConfig) {
+    try {
+        if (response === Gtk.ResponseType.CANCEL) {
             dialog.destroy();
             return;
         }
+        if (response === Gtk.ResponseType.ACCEPT) {
+            const filePath: string | null = dialog.get_filename();
+
+            if (filePath === null) {
+                Notify({
+                    summary: 'Failed to import',
+                    body: 'No file selected.',
+                    iconName: icons.ui.warning,
+                });
+                return;
+            }
+
+            const importedConfig = loadJsonFile(filePath);
+
+            if (!importedConfig) {
+                dialog.destroy();
+                return;
+            }
+
+            Notify({
+                summary: `Importing ${themeOnly ? 'Theme' : 'Config'}`,
+                body: `Importing: ${filePath}`,
+                iconName: icons.ui.info,
+            });
+
+            const tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
+            const optionsConfigFile = Gio.File.new_for_path(CONFIG);
+
+            const [tmpSuccess, tmpContent] = tmpConfigFile.load_contents(null);
+            const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
+
+            if (!tmpSuccess || !optionsSuccess) {
+                console.error('Failed to read existing configuration files.');
+                dialog.destroy();
+                return;
+            }
+
+            let tmpConfig = JSON.parse(new TextDecoder('utf-8').decode(tmpContent));
+            let optionsConfig = JSON.parse(new TextDecoder('utf-8').decode(optionsContent));
+
+            if (themeOnly) {
+                const filteredConfig = filterConfigForThemeOnly(importedConfig);
+                tmpConfig = { ...tmpConfig, ...filteredConfig };
+                optionsConfig = { ...optionsConfig, ...filteredConfig };
+            } else {
+                const filteredConfig = filterConfigForNonTheme(importedConfig);
+                tmpConfig = { ...tmpConfig, ...filteredConfig };
+                optionsConfig = { ...optionsConfig, ...filteredConfig };
+            }
+
+            saveConfigToFile(tmpConfig, `${TMP}/config.json`);
+            saveConfigToFile(optionsConfig, CONFIG);
+        }
+        dialog.destroy();
+        bash(restartCommand.get());
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        dialog.destroy();
 
         Notify({
-            summary: `Importing ${themeOnly ? 'Theme' : 'Config'}`,
-            body: `Importing: ${filePath}`,
-            iconName: icons.ui.info,
+            summary: `${themeOnly ? 'Theme' : 'Config'} Import Failed`,
+            body: errorMessage ?? 'An unknown error occurred.',
+            iconName: icons.ui.warning,
         });
-
-        const tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
-        const optionsConfigFile = Gio.File.new_for_path(CONFIG);
-
-        const [tmpSuccess, tmpContent] = tmpConfigFile.load_contents(null);
-        const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
-
-        if (!tmpSuccess || !optionsSuccess) {
-            console.error('Failed to read existing configuration files.');
-            dialog.destroy();
-            return;
-        }
-
-        let tmpConfig = JSON.parse(new TextDecoder('utf-8').decode(tmpContent));
-        let optionsConfig = JSON.parse(new TextDecoder('utf-8').decode(optionsContent));
-
-        if (themeOnly) {
-            const filteredConfig = filterConfigForThemeOnly(importedConfig);
-            tmpConfig = { ...tmpConfig, ...filteredConfig };
-            optionsConfig = { ...optionsConfig, ...filteredConfig };
-        } else {
-            const filteredConfig = filterConfigForNonTheme(importedConfig);
-            tmpConfig = { ...tmpConfig, ...filteredConfig };
-            optionsConfig = { ...optionsConfig, ...filteredConfig };
-        }
-
-        saveConfigToFile(tmpConfig, `${TMP}/config.json`);
-        saveConfigToFile(optionsConfig, CONFIG);
     }
-    dialog.destroy();
-    bash(restartCommand.get());
 };

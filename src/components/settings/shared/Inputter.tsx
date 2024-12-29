@@ -14,6 +14,8 @@ import { Gtk } from 'astal/gtk3';
 
 const InputField = <T extends string | number | boolean | object>({
     opt,
+    fontStyle,
+    fontLabel,
     type = typeof opt.get() as RowProps<T>['type'],
     enums = [],
     disabledBinding,
@@ -44,7 +46,7 @@ const InputField = <T extends string | number | boolean | object>({
         case 'wallpaper':
             return <WallpaperInputter opt={opt} />;
         case 'font':
-            return <FontInputter opt={opt} />;
+            return <FontInputter fontFamily={opt} fontLabel={fontLabel} fontStyle={fontStyle} />;
         case 'color':
             return <ColorInputter opt={opt} />;
 
@@ -55,6 +57,8 @@ const InputField = <T extends string | number | boolean | object>({
 
 export const Inputter = <T extends string | number | boolean | object>({
     opt,
+    fontStyle,
+    fontLabel,
     type = typeof opt.get() as RowProps<T>['type'],
     enums,
     disabledBinding,
@@ -71,6 +75,8 @@ export const Inputter = <T extends string | number | boolean | object>({
             <InputField
                 type={type}
                 opt={opt}
+                fontStyle={fontStyle}
+                fontLabel={fontLabel}
                 enums={enums}
                 disabledBinding={disabledBinding}
                 dependencies={dependencies}

@@ -3,6 +3,7 @@ import { resetCss } from '../style';
 
 export const initializeHotReload = async (): Promise<void> => {
     const monitorList = [
+        `${SRC_DIR}/src/scss/main.scss`,
         `${SRC_DIR}/src/scss/style/bar`,
         `${SRC_DIR}/src/scss/style/common`,
         `${SRC_DIR}/src/scss/style/menus`,

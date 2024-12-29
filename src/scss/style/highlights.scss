@@ -1,222 +1,210 @@
-@import "colors";
+@import 'colors';
 
-* {
-  color: $default_fg;
-  font-family: "JetBrainsMono NF";
-  font-size: 0.9rem;
+html,
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $primary_bg;
 }
-
-html, body {
-  padding: 0;
-  margin: 0;
-  background-color: $primary_bg;
-}
-
-// scrollbar {
-//   background-color: red;
-//   min-width: 5em;
-// }
 
 .code {
-  background: $light-background;
-  border-radius: 0.5rem;
-
-  .code-header {
     background: $light-background;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    border-bottom: 1px solid $primary_fg;
-    padding: 5px;
+    border-radius: 0.5rem;
 
-    > button {
-      color: $default_fg;
-      background: transparent;
-      float: right;
-      border: none;
+    .code-header {
+        background: $light-background;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        border-bottom: 1px solid $primary_fg;
+        padding: 5px;
 
-      &:before {
-        content: '󰆏';
-        display: inline-block;
-        padding-right: 0.5rem;
-      }
+        > button {
+            color: $default_fg;
+            background: transparent;
+            float: right;
+            border: none;
+
+            &:before {
+                content: '󰆏';
+                display: inline-block;
+                padding-right: 0.5rem;
+            }
+        }
     }
-  }
 }
 
 $languages-map: (
-  arduino: "",
-  armasm: "",
-  avrasm: "",
-  bash: "",
-  c: "",
-  clojure: "",
-  coffeescript: "",
-  cpp: "",
-  csharp: "󰌛",
-  css: "",
-  dockerfile: "󰡨",
-  go: "",
-  gradle: "",
-  haskell: "",
-  html: "",
-  java: "",
-  javascript: "󰌞",
-  json: "",
-  latex: "",
-  lua: "󰢱",
-  makefile: "",
-  markdown: "",
-  mipsasm: "",
-  nginx: "",
-  nix: "󱄅",
-  php: "",
-  prolog: "",
-  python: "",
-  r: "󰟔",
-  ruby: "",
-  rust: "",
-  scss: "",
-  shell: "",
-  typescript: "󰛦",
-  wasm: "",
-  x86asm: "",
-  xml: "󰗀",
+    arduino: '',
+    armasm: '',
+    avrasm: '',
+    bash: '',
+    c: '',
+    clojure: '',
+    coffeescript: '',
+    cpp: '',
+    csharp: '󰌛',
+    css: '',
+    dockerfile: '󰡨',
+    go: '',
+    gradle: '',
+    haskell: '',
+    html: '',
+    java: '',
+    javascript: '󰌞',
+    json: '',
+    latex: '',
+    lua: '󰢱',
+    makefile: '',
+    markdown: '',
+    mipsasm: '',
+    nginx: '',
+    nix: '󱄅',
+    php: '',
+    prolog: '',
+    python: '',
+    r: '󰟔',
+    ruby: '',
+    rust: '',
+    scss: '',
+    shell: '',
+    typescript: '󰛦',
+    wasm: '',
+    x86asm: '',
+    xml: '󰗀',
 );
 
 @each $lang, $content in $languages-map {
-  [data-language="#{$lang}"]:before {
-    content: $content;
-    font-size: 1.1rem;
-    color: $primary_fg;
-    padding-right: 0.5rem;
-  }
+    [data-language='#{$lang}']:before {
+        content: $content;
+        font-size: 1.1rem;
+        color: $primary_fg;
+        padding-right: 0.5rem;
+    }
 }
 
 pre {
-  padding: 5px;
-  overflow-x: scroll;
+    padding: 5px;
+    overflow-x: scroll;
 
-  code.hljs {
-    color: $default_fg;
-    background: transparent;
-  }
+    code.hljs {
+        color: $default_fg;
+        background: transparent;
+    }
 }
 
 code {
-  & .hljs-keyword {
-    color: $mauve;
-  }
+    & .hljs-keyword {
+        color: $mauve;
+    }
 
-  & .hljs-built_in {
-    color: $red;
-  }
+    & .hljs-built_in {
+        color: $red;
+    }
 
-  & .hljs-type {
-    color: $yellow;
-  }
+    & .hljs-type {
+        color: $yellow;
+    }
 
-  & .hljs-literal,
-  & .hljs-number {
-    color: $orange;
-  }
+    & .hljs-literal,
+    & .hljs-number {
+        color: $orange;
+    }
 
-  & .hljs-operator {
-    color: $teal;
-  }
+    & .hljs-operator {
+        color: $teal;
+    }
 
-  & .hljs-punctuation {
-    color: $lightteal;
-  }
+    & .hljs-punctuation {
+        color: $lightteal;
+    }
 
-  & .hljs-property,
-  & .hljs-variable.language_,
-  & .hljs-symbol {
-    color: $teal;
-  }
+    & .hljs-property,
+    & .hljs-variable.language_,
+    & .hljs-symbol {
+        color: $teal;
+    }
 
-  & .hljs-regexp {
-    color: $pink;
-  }
+    & .hljs-regexp {
+        color: $pink;
+    }
 
-  & .hljs-string,
-  & .hljs-char.escape_,
-  & .hljs-subst {
-    color: $green;
-  }
+    & .hljs-string,
+    & .hljs-char.escape_,
+    & .hljs-subst {
+        color: $green;
+    }
 
-  & .hljs-comment {
-    color: $grey;
-  }
+    & .hljs-comment {
+        color: $grey;
+    }
 
-  & .hljs-doctag {
-    color: $red;
-  }
+    & .hljs-doctag {
+        color: $red;
+    }
 
-  & .hljs-meta,
-  & .hljs-title.function_,
-  & .hljs-section {
-    color: $orange;
-  }
+    & .hljs-meta,
+    & .hljs-title.function_,
+    & .hljs-section {
+        color: $orange;
+    }
 
-  & .hljs-tag,
-  & .hljs-attribute {
-    color: $lightgrey;
-  }
+    & .hljs-tag,
+    & .hljs-attribute {
+        color: $lightgrey;
+    }
 
-  & .hljs-name,
-  & .hljs-selector-attr {
-    color: $mauve;
-  }
+    & .hljs-name,
+    & .hljs-selector-attr {
+        color: $mauve;
+    }
 
-  & .hljs-params,
-  & .hljs-selector-class,
-  & .hljs-template-variable {
-    color: $default_fg;
-  }
+    & .hljs-params,
+    & .hljs-selector-class,
+    & .hljs-template-variable {
+        color: $default_fg;
+    }
 
-  & .hljs-selector-tag {
-    color: $yellow;
-  }
+    & .hljs-selector-tag {
+        color: $yellow;
+    }
 
-  & .hljs-selector-id {
-    color: $blue;
-  }
+    & .hljs-selector-id {
+        color: $blue;
+    }
 
-  & .hljs-bullet,
-  & .hljs-code,
-  & .hljs-formula {
-    color: $teal;
-  }
+    & .hljs-bullet,
+    & .hljs-code,
+    & .hljs-formula {
+        color: $teal;
+    }
 
-  & .hljs-emphasis {
-    color: $red;
-    font-style: italic;
-  }
+    & .hljs-emphasis {
+        color: $red;
+        font-style: italic;
+    }
 
-  & .hljs-strong {
-    color: $red;
-    font-weight: bold;
-  }
+    & .hljs-strong {
+        color: $red;
+        font-weight: bold;
+    }
 
-  & .hljs-link {
-    color: $lightblue;
-    font-style: italic;
-  }
+    & .hljs-link {
+        color: $lightblue;
+        font-style: italic;
+    }
 
-  & .hljs-quote {
-    color: $green;
-    font-style: italic;
-  }
+    & .hljs-quote {
+        color: $green;
+        font-style: italic;
+    }
 
-  & .hljs-addition {
-    color: $green;
-    background: rgba(166, 227, 161, 0.15);
-  }
+    & .hljs-addition {
+        color: $green;
+        background: rgba(166, 227, 161, 0.15);
+    }
 
-  & .hljs-deletion {
-    color: $red;
-    background: rgba(243, 139, 168, 0.15);
-  }
+    & .hljs-deletion {
+        color: $red;
+        background: rgba(243, 139, 168, 0.15);
+    }
 }
-
-
