@@ -24,6 +24,7 @@ export const OsdTheme = (): JSX.Element => {
                     min={0}
                     max={100}
                 />
+                <Option opt={options.theme.osd.border.color} title="Border" type="color" />
                 <Option opt={options.theme.osd.bar_color} title="Bar" type="color" />
                 <Option
                     opt={options.theme.osd.bar_overflow_color}

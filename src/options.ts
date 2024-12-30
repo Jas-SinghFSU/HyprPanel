@@ -134,6 +134,10 @@ const options = mkOptions(CONFIG, {
             enable: opt(true),
             orientation: opt<OSDOrientation>('vertical'),
             opacity: opt(100),
+            border: {
+                size: opt('0em'),
+                color: opt(colors.lavender),
+            },
             bar_container: opt(colors.crust),
             icon_container: opt(tertiary_colors.lavender),
             bar_color: opt(tertiary_colors.lavender),
