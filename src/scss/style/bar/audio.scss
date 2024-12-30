@@ -5,7 +5,6 @@
 
 .bar-button-label.volume {
     color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-volume-text);
-    min-width: 2.2em;
     margin-left: $bar-buttons-volume-spacing;
 }
 
