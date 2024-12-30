@@ -551,6 +551,7 @@ in
       theme.osd.opacity = mkIntOption 100;
       theme.osd.orientation = mkStrOption "vertical";
       theme.osd.radius = mkStrOption "0.4em";
+      theme.osd.border.size = mkStrOption "0em";
       theme.osd.scaling = mkIntOption 100;
       theme.tooltip.scaling = mkIntOption 100;
       wallpaper.enable = mkBoolOption true;
