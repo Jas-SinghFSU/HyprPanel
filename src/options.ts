@@ -1322,6 +1322,7 @@ const options = mkOptions(CONFIG, {
         active_monitor: opt(true),
         showActionsOnHover: opt(false),
         timeout: opt(7000),
+        autoDismiss: opt(false),
         cache_actions: opt(true),
         clearDelay: opt(100),
     },
