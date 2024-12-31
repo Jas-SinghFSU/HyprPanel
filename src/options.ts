@@ -410,10 +410,10 @@ const options = mkOptions(CONFIG, {
                     },
                     cava: {
                         enableBorder: opt(false),
-                        border: opt(colors.lavender),
+                        border: opt(colors.teal),
                         background: opt(colors.base2),
-                        text: opt(colors.lavender),
-                        icon: opt(colors.lavender),
+                        text: opt(colors.teal),
+                        icon: opt(colors.teal),
                         icon_background: opt(colors.base2),
                         spacing: opt('0.5em'),
                     },
