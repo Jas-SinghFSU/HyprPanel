@@ -1,6 +1,5 @@
 import { getBackground } from './helpers.js';
 import { Gtk } from 'astal/gtk3';
-import { BindableChild } from 'astal/gtk3/astalify.js';
 
 export const MediaContainer = ({ children }: MediaContainerProps): JSX.Element => {
     return (
@@ -19,5 +18,5 @@ export const MediaContainer = ({ children }: MediaContainerProps): JSX.Element =
 };
 
 interface MediaContainerProps {
-    children?: BindableChild | BindableChild[];
+    children?: JSX.Element | JSX.Element[];
 }

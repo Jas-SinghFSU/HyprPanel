@@ -28,7 +28,7 @@ import {
 
 import { WidgetContainer } from './shared/WidgetContainer';
 import options from 'src/options';
-import { App, Gtk } from 'astal/gtk3/index';
+import { App, Gtk } from 'astal/gtk3';
 
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Variable } from 'astal';
