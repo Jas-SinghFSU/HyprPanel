@@ -87,7 +87,7 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param value - The new value.
      * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
-    public set(value: T, writeDisk: boolean = true) {
+    public set(value: T, writeDisk: boolean = true): void {
         super.set(value);
 
         if (writeDisk) {
