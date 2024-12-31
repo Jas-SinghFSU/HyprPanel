@@ -387,6 +387,8 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cava.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.cava.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.customModules.cava.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.cava.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.cava.scrollDown} title="Scroll Down" type="string" />
 
                 {/* Power Section */}
                 <Header title="Power" />

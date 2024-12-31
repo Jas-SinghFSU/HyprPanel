@@ -8,6 +8,7 @@ import options from 'src/options';
 import { Gdk } from 'astal/gtk3';
 import { GtkWidget } from 'src/lib/types/widget';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { isScrollDown, isScrollUp } from 'src/lib/utils';
 
 const { scrollSpeed } = options.bar.customModules;
 
@@ -45,7 +46,7 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
         return;
     }
 
-    execAsync(`bash -c "${cmd}"`)
+    execAsync(['bash', '-c', cmd])
         .then((output) => {
             handlePostInputUpdater(postInputUpdater);
             if (fn !== undefined) {
@@ -152,29 +153,18 @@ export const inputHandler = (
         });
 
         const id = self.connect('scroll-event', (self: GtkWidget, event: Gdk.Event) => {
-            const [directionSuccess, direction] = event.get_scroll_direction();
-            const [deltaSuccess, , yScroll] = event.get_scroll_deltas();
-
             const handleScroll = (input?: { cmd: Variable<string>; fn: (output: string) => void }): void => {
                 if (input) {
                     throttledHandler(sanitizeInput(input.cmd), { clicked: self, event }, input.fn, postInputUpdater);
                 }
             };
 
-            if (directionSuccess) {
-                if (direction === Gdk.ScrollDirection.UP) {
-                    handleScroll(onScrollUpInput);
-                } else if (direction === Gdk.ScrollDirection.DOWN) {
-                    handleScroll(onScrollDownInput);
-                }
+            if (isScrollUp(event)) {
+                handleScroll(onScrollUpInput);
             }
 
-            if (deltaSuccess) {
-                if (yScroll > 0) {
-                    handleScroll(onScrollUpInput);
-                } else if (yScroll < 0) {
-                    handleScroll(onScrollDownInput);
-                }
+            if (isScrollDown(event)) {
+                handleScroll(onScrollDownInput);
             }
         });
 

@@ -415,6 +415,7 @@ const main = async () => {
     );
 
     const processQueue = async () => {
+        const concurrencyLimit = 5;
         while (queue.length > 0) {
             const promises = [];
             for (let i = 0; i < concurrencyLimit && queue.length > 0; i++) {

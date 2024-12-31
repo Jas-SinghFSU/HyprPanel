@@ -1199,6 +1199,8 @@ const options = mkOptions(CONFIG, {
                 leftClick: opt(''),
                 rightClick: opt(''),
                 middleClick: opt(''),
+                scrollUp: opt(''),
+                scrollDown: opt(''),
             },
         },
     },

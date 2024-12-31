@@ -16,6 +16,8 @@ const {
     leftClick,
     rightClick,
     middleClick,
+    scrollUp,
+    scrollDown,
 } = options.bar.customModules.cava;
 
 const isVis = Variable(!showActiveOnly.get());
@@ -58,6 +60,12 @@ export const Cava = (): BarBoxChild | JSX.Element => {
                     },
                     onMiddleClick: {
                         cmd: middleClick,
+                    },
+                    onScrollUp: {
+                        cmd: scrollUp,
+                    },
+                    onScrollDown: {
+                        cmd: scrollDown,
                     },
                 });
             },
