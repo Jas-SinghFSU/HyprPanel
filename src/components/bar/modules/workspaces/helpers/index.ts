@@ -68,10 +68,6 @@ function isWorkspaceValidForMonitor(
     workspaceList: AstalHyprland.Workspace[],
     monitorList: AstalHyprland.Monitor[],
 ): boolean {
-    if (!workspaceMonitorRules || !Object.keys(workspaceMonitorRules).length) {
-        return true;
-    }
-
     const monitorNameMap: MonitorMap = {};
     const allWorkspaceInstances = workspaceList ?? [];
 
@@ -101,7 +97,7 @@ function isWorkspaceValidForMonitor(
     const currentMonitorWorkspaceRules = workspaceMonitorRules[currentMonitorName];
 
     if (currentMonitorWorkspaceRules === undefined) {
-        return true;
+        return false;
     }
 
     return currentMonitorWorkspaceRules.includes(workspaceId);
