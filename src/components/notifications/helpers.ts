@@ -4,7 +4,7 @@ import options from 'src/options';
 import { hyprlandService, notifdService } from 'src/lib/constants/services';
 import { isNotificationIgnored } from 'src/lib/shared/notifications';
 
-const { ignore, timeout: popupTimeout } = options.notifications;
+const { ignore, timeout: popupTimeout, autoDismiss } = options.notifications;
 
 /**
  * Checks if a notification has an image.
@@ -84,4 +84,10 @@ const dropNotificationPopup = (
     const undismissedNotifications = currentPopups.filter((popupNotif) => popupNotif.id !== notificationToDismiss.id);
 
     popupNotifications.set(undismissedNotifications);
+};
+
+export const trackAutoTimeout = (): void => {
+    autoDismiss.subscribe((shouldAutoDismiss) => {
+        notifdService.set_ignore_timeout(!shouldAutoDismiss);
+    });
 };

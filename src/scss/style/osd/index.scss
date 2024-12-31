@@ -1,81 +1,100 @@
 .indicator {
-  * {
-    font-size: $font-size * $osd-scaling * 0.01;
-  }
-
-  .osd-container {
-    margin: $osd-margins;
-    opacity: $osd-opacity * 0.01;
-  }
-
-  .osd-label-container {
-    background: $osd-bar_container;
-
-    border-radius: if($osd-orientation =="vertical", $osd-radius $osd-radius 0em 0em, 0em $osd-radius $osd-radius 0em);
-
-    .osd-label {
-      font-size: 1em;
-      padding-top: if($osd-orientation =="vertical", 1em, 0em);
-      padding-right: if($osd-orientation =="horizontal", 1em, 0em);
-      color: $osd-label;
-
-      &.overflow {
-        color: $osd-bar_overflow_color;
-      }
+    * {
+        font-size: $font-size * $osd-scaling * 0.01;
     }
-  }
 
-  .osd-icon-container {
-    background: $osd-icon_container;
-
-    border-radius: if($osd-orientation =="vertical", 0em 0em $osd-radius $osd-radius, $osd-radius 0em 0em $osd-radius );
-
-    .osd-icon {
-      font-size: 2.1em;
-      padding: if($osd-orientation =="vertical", 0.2em 0em, 0em 0.4em);
-      color: $osd-icon;
+    .osd-container {
+        margin: $osd-margins;
+        opacity: $osd-opacity * 0.01;
     }
-  }
 
-  .osd-bar-container {
-    padding: 1.25em;
-    background: $osd-bar_container;
+    .osd-label-container {
+        border-top: $osd-border-size solid $osd-border-color;
+        border-bottom: if($osd-orientation == 'horizontal', $osd-border-size solid $osd-border-color, 0em);
+        border-left: if($osd-orientation == 'vertical', $osd-border-size solid $osd-border-color, 0em);
+        border-right: $osd-border-size solid $osd-border-color;
+        background: $osd-bar_container;
 
-    .osd-bar {
-      levelbar * {
-        transition: 200ms;
-      }
+        border-radius: if(
+            $osd-orientation == 'vertical',
+            $osd-radius $osd-radius 0em 0em,
+            0em $osd-radius $osd-radius 0em
+        );
 
-      trough {
-        min-height: if($osd-orientation =="vertical", 10em, 0);
-        min-width: if($osd-orientation =="horizontal", 10em, 0);
-      }
+        .osd-label {
+            font-size: 1em;
+            padding-top: if($osd-orientation == 'vertical', 1em, 0em);
+            padding-right: if($osd-orientation == 'horizontal', 1em, 0em);
+            color: $osd-label;
 
-      block {
-        border-radius: $osd-radius * 0.5;
-
-        &.empty {
-          background: $osd-bar_empty_color;
-
+            &.overflow {
+                color: $osd-bar_overflow_color;
+            }
         }
-
-        &.filled {
-          background: $osd-bar_color;
-          padding: 0.45em;
-        }
-      }
-
-      &.overflow {
-        block {
-          &.empty {
-            background: $osd-bar_color;
-          }
-
-          &.filled {
-            background: $osd-bar_overflow_color;
-          }
-        }
-      }
     }
-  }
+
+    .osd-icon-container {
+        border-top: if($osd-orientation == 'horizontal', $osd-border-size solid $osd-border-color, 0em);
+        border-bottom: $osd-border-size solid $osd-border-color;
+        border-left: $osd-border-size solid $osd-border-color;
+        border-right: if($osd-orientation == 'vertical', $osd-border-size solid $osd-border-color, 0em);
+        background: $osd-icon_container;
+
+        border-radius: if(
+            $osd-orientation == 'vertical',
+            0em 0em $osd-radius $osd-radius,
+            $osd-radius 0em 0em $osd-radius
+        );
+
+        .osd-icon {
+            font-size: 2.1em;
+            padding: if($osd-orientation == 'vertical', 0.2em 0em, 0em 0.4em);
+            color: $osd-icon;
+        }
+    }
+
+    .osd-bar-container {
+        border-top: if($osd-orientation == 'horizontal', $osd-border-size solid $osd-border-color, 0em);
+        border-bottom: if($osd-orientation == 'horizontal', $osd-border-size solid $osd-border-color, 0em);
+        border-left: if($osd-orientation == 'vertical', $osd-border-size solid $osd-border-color, 0em);
+        border-right: if($osd-orientation == 'vertical', $osd-border-size solid $osd-border-color, 0em);
+        padding: 1.25em;
+        background: $osd-bar_container;
+
+        .osd-bar {
+            levelbar * {
+                transition: 200ms;
+            }
+
+            trough {
+                min-height: if($osd-orientation == 'vertical', 10em, 0);
+                min-width: if($osd-orientation == 'horizontal', 10em, 0);
+            }
+
+            block {
+                border-radius: $osd-radius * 0.5;
+
+                &.empty {
+                    background: $osd-bar_empty_color;
+                }
+
+                &.filled {
+                    background: $osd-bar_color;
+                    padding: 0.45em;
+                }
+            }
+
+            &.overflow {
+                block {
+                    &.empty {
+                        background: $osd-bar_color;
+                    }
+
+                    &.filled {
+                        background: $osd-bar_overflow_color;
+                    }
+                }
+            }
+        }
+    }
 }

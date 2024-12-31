@@ -49,9 +49,15 @@ export const NotificationSettings = (): JSX.Element => {
                 />
                 <Option
                     opt={options.notifications.timeout}
-                    title="Notification Timeout"
-                    subtitle="Duration in ms the notification stays"
+                    title="Popup Timeout"
+                    subtitle="Duration in ms the notification popup stays visible"
                     type="number"
+                />
+                <Option
+                    opt={options.notifications.autoDismiss}
+                    title="Automatically Dismiss"
+                    subtitle="Notifications with a timeout will dismiss automatically."
+                    type="boolean"
                 />
                 <Option
                     opt={options.notifications.cache_actions}
