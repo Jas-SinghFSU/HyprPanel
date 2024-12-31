@@ -33,5 +33,5 @@ export const brightnessService = Brightness.get_default();
 import AstalPowerProfiles from 'gi://AstalPowerProfiles?version=0.1';
 export const powerProfilesService = AstalPowerProfiles.get_default();
 
-import AstalCava from "gi://AstalCava";
+import AstalCava from 'gi://AstalCava';
 export const cavaService = AstalCava.get_default();

@@ -1,63 +1,69 @@
-import { Variable, bind } from "astal";
-import { Astal } from "astal/gtk3";
-import { cavaService, mprisService } from "src/lib/constants/services";
-import { BarBoxChild } from "src/lib/types/bar";
-import { Module } from "../../shared/Module";
-import { inputHandler } from "../../utils/helpers";
+import { Variable, bind } from 'astal';
+import { Astal } from 'astal/gtk3';
+import { cavaService } from 'src/lib/constants/services';
+import { BarBoxChild } from 'src/lib/types/bar';
+import { Module } from '../../shared/Module';
+import { inputHandler } from '../../utils/helpers';
+import options from 'src/options';
+import { initSettingsTracker, initVisibilityTracker } from './helpers';
 
 const {
-  icon,
-  label,
-  showActiveOnly,
-  bars,
-  channels,
-  framerate,
-  samplerate,
-  leftClick,
-  rightClick,
-  middleClick
+    icon,
+    showIcon: label,
+    showActiveOnly,
+    barCharacters,
+    spaceCharacter,
+    leftClick,
+    rightClick,
+    middleClick,
 } = options.bar.customModules.cava;
 
 const isVis = Variable(!showActiveOnly.get());
-Variable.derive([bind(showActiveOnly), bind(mprisService, 'players')], (showActive, players) => {
-  isVis.set(!showActive || players?.length > 0);
-});
 
-Variable.derive([bind(bars)], bars => cavaService.set_bars(bars));
-Variable.derive([bind(channels)], channels => cavaService.set_channels(channels));
-Variable.derive([bind(framerate)], framerate => cavaService.set_framerate(framerate));
-Variable.derive([bind(samplerate)], samplerate => cavaService.set_samplerate(samplerate));
+initVisibilityTracker(isVis);
+initSettingsTracker();
 
-const blockCharacters = [' ', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+export const Cava = (): BarBoxChild | JSX.Element => {
+    if (!cavaService) {
+        return <box />;
+    }
 
-export const Cava = (): BarBoxChild => {
-  const labelBinding = Variable.derive([bind(cavaService, 'values')],
-    values => values.map((v: number) => blockCharacters[Math.round(v * blockCharacters.length)]).join(''));
+    const labelBinding = Variable.derive(
+        [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
+        (values, spacing, blockCharacters) => {
+            const valueMap = values
+                .map((v: number) => {
+                    const index = Math.floor(v * blockCharacters.length);
+                    return blockCharacters[Math.min(index, blockCharacters.length - 1)];
+                })
+                .join(spacing);
+            return valueMap;
+        },
+    );
 
-  return Module({
-    isVis,
-    label: labelBinding(),
-    showLabelBinding: bind(label),
-    textIcon: bind(icon),
-    tooltipText: labelBinding(),
-    boxClass: 'cava',
-    props: {
-      setup: (self: Astal.Button) => {
-        inputHandler(self, {
-          onPrimaryClick: {
-            cmd: leftClick,
-          },
-          onSecondaryClick: {
-            cmd: rightClick,
-          },
-          onMiddleClick: {
-            cmd: middleClick,
-          },
-        });
-      },
-      onDestroy: () => {
-        labelBinding.drop();
-      },
-    },
-  });
-}
+    return Module({
+        isVis,
+        label: labelBinding(),
+        showIconBinding: bind(label),
+        textIcon: bind(icon),
+        boxClass: 'cava',
+        props: {
+            setup: (self: Astal.Button) => {
+                inputHandler(self, {
+                    onPrimaryClick: {
+                        cmd: leftClick,
+                    },
+                    onSecondaryClick: {
+                        cmd: rightClick,
+                    },
+                    onMiddleClick: {
+                        cmd: middleClick,
+                    },
+                });
+            },
+            onDestroy: () => {
+                labelBinding.drop();
+            },
+        },
+    });
+};

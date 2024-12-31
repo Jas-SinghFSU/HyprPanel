@@ -195,13 +195,9 @@ export const CustomModuleTheme = (): JSX.Element => {
 
                 {/* Cava Module Section */}
                 <Header title="Cava" />
-                <Option opt={options.theme.bar.buttons.modules.cava.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.modules.cava.text} title="Bars" type="color" />
                 <Option opt={options.theme.bar.buttons.modules.cava.icon} title="Icon" type="color" />
-                <Option
-                    opt={options.theme.bar.buttons.modules.cava.background}
-                    title="Label Background"
-                    type="color"
-                />
+                <Option opt={options.theme.bar.buttons.modules.cava.background} title="Label Background" type="color" />
                 <Option
                     opt={options.theme.bar.buttons.modules.cava.icon_background}
                     title="Icon Background"
