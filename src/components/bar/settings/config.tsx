@@ -364,6 +364,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cava.icon} title="Icon" type="string" />
                 <Option opt={options.bar.customModules.cava.showIcon} title="Show Icon" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.cava.spacing} title="Spacing" type="string" />
+                <Option opt={options.bar.customModules.cava.barCharacters} title="Bar Characters" type="object" />
                 <Option opt={options.bar.customModules.cava.spaceCharacter} title="Bar Separator" type="string" />
                 <Option
                     opt={options.bar.customModules.cava.showActiveOnly}
