@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { createThrottledScrollHandlers, getCurrentMonitorWorkspaces } from './helpers';
+import { initThrottledScrollHandlers, getWorkspacesForMonitor } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { WorkspaceModule } from './workspaces';
 import { bind, Variable } from 'astal';
@@ -10,10 +10,10 @@ import { isScrollDown, isScrollUp } from 'src/lib/utils';
 const { workspaces, scroll_speed } = options.bar.workspaces;
 
 const Workspaces = (monitor = -1): BarBoxChild => {
-    const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces(monitor));
+    const currentMonitorWorkspaces = Variable(getWorkspacesForMonitor(monitor));
 
     workspaces.subscribe(() => {
-        currentMonitorWorkspaces.set(getCurrentMonitorWorkspaces(monitor));
+        currentMonitorWorkspaces.set(getWorkspacesForMonitor(monitor));
     });
 
     const component = (
@@ -35,7 +35,7 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                         self.disconnect(scrollHandlers);
                     }
 
-                    const { throttledScrollUp, throttledScrollDown } = createThrottledScrollHandlers(
+                    const { throttledScrollUp, throttledScrollDown } = initThrottledScrollHandlers(
                         scroll_speed,
                         currentMonitorWorkspaces,
                     );
