@@ -25,23 +25,23 @@ const isVis = Variable(!showActiveOnly.get());
 initVisibilityTracker(isVis);
 initSettingsTracker();
 
-export const Cava = (): BarBoxChild | JSX.Element => {
-    if (!cavaService) {
-        return <box />;
-    }
+export const Cava = (): BarBoxChild => {
+    let labelBinding: Variable<string> = Variable('');
 
-    const labelBinding = Variable.derive(
-        [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
-        (values, spacing, blockCharacters) => {
-            const valueMap = values
-                .map((v: number) => {
-                    const index = Math.floor(v * blockCharacters.length);
-                    return blockCharacters[Math.min(index, blockCharacters.length - 1)];
-                })
-                .join(spacing);
-            return valueMap;
-        },
-    );
+    if (cavaService) {
+        labelBinding = Variable.derive(
+            [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
+            (values, spacing, blockCharacters) => {
+                const valueMap = values
+                    .map((v: number) => {
+                        const index = Math.floor(v * blockCharacters.length);
+                        return blockCharacters[Math.min(index, blockCharacters.length - 1)];
+                    })
+                    .join(spacing);
+                return valueMap;
+            },
+        );
+    }
 
     return Module({
         isVis,

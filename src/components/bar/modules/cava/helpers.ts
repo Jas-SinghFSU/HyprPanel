@@ -22,7 +22,7 @@ const {
  */
 export function initVisibilityTracker(isVis: Variable<boolean>): void {
     Variable.derive([bind(showActiveOnly), bind(mprisService, 'players')], (showActive, players) => {
-        isVis.set(!showActive || players?.length > 0);
+        isVis.set(cavaService !== null && (!showActive || players?.length > 0));
     });
 }
 
