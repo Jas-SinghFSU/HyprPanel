@@ -169,21 +169,14 @@ function isWorkspaceIgnored(ignoredWorkspacesVariable: Variable<string>, workspa
  * @param onlyActiveWorkspaces - Whether to only include active (occupied) workspaces when navigating.
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-function navigateWorkspace(
-    direction: 'next' | 'prev',
-    currentMonitorWorkspacesVariable: Variable<number[]>,
-    onlyActiveWorkspaces: boolean,
-    ignoredWorkspacesVariable: Variable<string>,
-): void {
+function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable: Variable<string>): void {
     const allHyprlandWorkspaces = hyprlandService.get_workspaces() || [];
 
     const activeWorkspaceIds = allHyprlandWorkspaces
         .filter((workspaceInstance) => hyprlandService.focusedMonitor.id === workspaceInstance.monitor?.id)
         .map((workspaceInstance) => workspaceInstance.id);
 
-    const assignedOrOccupiedWorkspaces = onlyActiveWorkspaces
-        ? activeWorkspaceIds
-        : currentMonitorWorkspacesVariable.get() || Array.from({ length: workspaces.get() }, (_, index) => index + 1);
+    const assignedOrOccupiedWorkspaces = activeWorkspaceIds.sort((a, b) => a - b);
 
     if (assignedOrOccupiedWorkspaces.length === 0) {
         return;
@@ -213,12 +206,8 @@ function navigateWorkspace(
  * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export function goToNextWorkspace(
-    currentMonitorWorkspacesVariable: Variable<number[]>,
-    onlyActiveWorkspaces: boolean,
-    ignoredWorkspacesVariable: Variable<string>,
-): void {
-    navigateWorkspace('next', currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignoredWorkspacesVariable);
+export function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+    navigateWorkspace('next', ignoredWorkspacesVariable);
 }
 
 /**
@@ -228,12 +217,8 @@ export function goToNextWorkspace(
  * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export function goToPreviousWorkspace(
-    currentMonitorWorkspacesVariable: Variable<number[]>,
-    onlyActiveWorkspaces: boolean,
-    ignoredWorkspacesVariable: Variable<string>,
-): void {
-    navigateWorkspace('prev', currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignoredWorkspacesVariable);
+export function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+    navigateWorkspace('prev', ignoredWorkspacesVariable);
 }
 
 /**
@@ -263,29 +248,24 @@ export function throttle<T extends (...args: unknown[]) => void>(func: T, limit:
  * Creates throttled scroll handlers that navigate workspaces upon scrolling, respecting the configured scroll speed.
  *
  * @param scrollSpeed - The factor by which the scroll navigation is throttled.
- * @param currentMonitorWorkspacesVariable - A Variable containing the current monitor's workspace numbers.
  * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  *
  * @returns An object containing two functions (`throttledScrollUp` and `throttledScrollDown`), both throttled.
  */
-export function initThrottledScrollHandlers(
-    scrollSpeed: number,
-    currentMonitorWorkspacesVariable: Variable<number[]>,
-    onlyActiveWorkspaces: boolean = true,
-): ThrottledScrollHandlers {
+export function initThrottledScrollHandlers(scrollSpeed: number): ThrottledScrollHandlers {
     const throttledScrollUp = throttle(() => {
         if (reverse_scroll.get()) {
-            goToPreviousWorkspace(currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignored);
+            goToPreviousWorkspace(ignored);
         } else {
-            goToNextWorkspace(currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignored);
+            goToNextWorkspace(ignored);
         }
     }, 200 / scrollSpeed);
 
     const throttledScrollDown = throttle(() => {
         if (reverse_scroll.get()) {
-            goToNextWorkspace(currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignored);
+            goToNextWorkspace(ignored);
         } else {
-            goToPreviousWorkspace(currentMonitorWorkspacesVariable, onlyActiveWorkspaces, ignored);
+            goToPreviousWorkspace(ignored);
         }
     }, 200 / scrollSpeed);
 
