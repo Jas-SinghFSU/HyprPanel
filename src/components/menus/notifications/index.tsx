@@ -3,9 +3,8 @@ import { Controls } from './controls/index.js';
 import { NotificationsContainer } from './notification/index.js';
 import { NotificationPager } from './pager/index.js';
 import options from 'src/options.js';
-import Variable from 'astal/variable.js';
 import { handlePageBoundaries } from './helpers.js';
-import { bind } from 'astal/binding.js';
+import { bind, Variable } from 'astal';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 
 const { transition } = options.menus;

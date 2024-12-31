@@ -1,8 +1,7 @@
 import { hyprlandService } from 'src/lib/constants/services.js';
 import options from 'src/options.js';
 import { getPosition } from 'src/lib/utils.js';
-import Variable from 'astal/variable.js';
-import { bind } from 'astal/binding.js';
+import { bind, Variable } from 'astal';
 import { trackActiveMonitor, trackAutoTimeout, trackPopupNotifications } from './helpers.js';
 import { Astal } from 'astal/gtk3';
 import { NotificationCard } from './Notification.js';

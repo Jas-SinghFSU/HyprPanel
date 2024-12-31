@@ -1,5 +1,5 @@
 import { audioService } from 'src/lib/constants/services.js';
-import { bind } from 'astal/binding.js';
+import { bind } from 'astal';
 import { AudioDevice } from './Device';
 import { NotFoundButton } from './NotFoundButton';
 

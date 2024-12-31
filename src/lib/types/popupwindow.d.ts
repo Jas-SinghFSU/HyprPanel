@@ -5,7 +5,7 @@ import { Gtk } from 'astal/gtk3';
 
 export type PopupWindowProps = {
     name: string;
-    child?: BindableChild | BindableChild[];
+    child?: JSX.Element | JSX.Element[];
     layout?: Layouts;
     transition?: Transition | Binding<Transition>;
     exclusivity?: Exclusivity;
