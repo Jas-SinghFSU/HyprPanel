@@ -1,20 +1,13 @@
-import { isHexColor } from '../globals/variables';
 import { MkOptionsResult } from './types/options';
-import { ensureDirectory } from './session';
 import Variable from 'astal/variable';
 import { monitorFile, readFile, writeFile } from 'astal/file';
-import GLib from 'gi://GLib?version=2.0';
-import { errorHandler } from './utils';
+import { errorHandler, Notify } from './utils';
+import { ensureDirectory } from './session';
+import icons from './icons/icons';
 
 type OptProps = {
     persistent?: boolean;
 };
-
-/**
- * A file to store default configurations. Placed inside the cache directory.
- * NOTE: We need to move this out into the .config directory instead.
- */
-export const defaultFile = `${GLib.get_tmp_dir()}/ags/hyprpanel/default.json`;
 
 export class Opt<T = unknown> extends Variable<T> {
     /**
@@ -76,66 +69,47 @@ export class Opt<T = unknown> extends Variable<T> {
     }
 
     /**
-     * Initializes this option by attempting to read its value from a cache file.
-     * If found, sets the current value. Also sets up a subscription to write updates back.
+     * Initializes this option based on the provided configuration, if available.
      *
-     * @param cacheFile - The path to the cache file.
+     * @param config - The configuration.
      */
-    public init(cacheFile: string): void {
-        const rawData = readFile(cacheFile);
+    public init(config: Record<string, unknown>): void {
+        const value = config[this._id];
 
-        let cacheData: Record<string, unknown> = {};
-
-        if (rawData && rawData.trim() !== '') {
-            try {
-                cacheData = JSON.parse(rawData) as Record<string, unknown>;
-            } catch (error) {
-                errorHandler(error);
-            }
+        if (value !== undefined) {
+            this.set(value as T);
         }
-
-        const cachedVariable = cacheData[this._id];
-
-        if (cachedVariable !== undefined) {
-            this.set(cachedVariable as T);
-        }
-
-        this.subscribe((newVal) => {
-            const reRaw = readFile(cacheFile);
-            let currentCache: Record<string, unknown> = {};
-            if (reRaw && reRaw.trim() !== '') {
-                try {
-                    currentCache = JSON.parse(reRaw) as Record<string, unknown>;
-                } catch {
-                    // Do nuffin
-                }
-            }
-            currentCache[this._id] = newVal;
-            writeFile(cacheFile, JSON.stringify(currentCache, null, 2));
-        });
     }
 
     /**
-     * Initializes this option by attempting to read its default value from the default file.
-     * If found, sets the current value.
+     * Set the given configuration value and write it to disk, if specified.
+     *
+     * @param value - The new value.
+     * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
-    public createDefault(): void {
-        const rawData = readFile(defaultFile);
+    public set(value: T, writeDisk: boolean = true) {
+        super.set(value);
 
-        let defaultData: Record<string, unknown> = {};
+        if (writeDisk) {
+            const raw = readFile(CONFIG);
+            let currentCache: Record<string, unknown> = {};
+            if (raw && raw.trim() !== '') {
+                try {
+                    currentCache = JSON.parse(raw) as Record<string, unknown>;
+                } catch (error) {
+                    // Last thing we want is to reset someones entire config
+                    // so notify them instead
+                    Notify({
+                        summary: 'Failed to load config file',
+                        body: `${error}`,
+                        iconName: icons.ui.warning,
+                    });
 
-        if (rawData && rawData.trim() !== '') {
-            try {
-                defaultData = JSON.parse(rawData) as Record<string, unknown>;
-            } catch {
-                // do nuffin
+                    errorHandler(error);
+                }
             }
-        }
-
-        const defaultVal = defaultData[this._id];
-
-        if (defaultVal !== undefined) {
-            this.set(defaultVal as T);
+            currentCache[this._id] = value;
+            writeFile(CONFIG, JSON.stringify(currentCache, null, 2));
         }
     }
 
@@ -173,15 +147,15 @@ export function opt<T>(initial: T, props?: OptProps): Opt<T> {
 /**
  * Recursively traverses the provided object to extract all `Opt` instances, assigning IDs to each.
  *
- * @param object - The object containing `Opt` instances.
+ * @param optionsObj - The object containing `Opt` instances.
  * @param [path=''] - The current path (used internally).
  * @param [arr=[]] - The accumulator array for found `Opt` instances.
  * @returns An array of all found `Opt` instances.
  */
-function getOptions(object: Record<string, unknown>, path = '', arr: Opt[] = []): Opt[] {
+function getOptions(optionsObj: Record<string, unknown>, path = '', arr: Opt[] = []): Opt[] {
     try {
-        for (const key in object) {
-            const value = object[key];
+        for (const key in optionsObj) {
+            const value = optionsObj[key];
             const id = path ? `${path}.${key}` : key;
 
             if (value instanceof Variable) {
@@ -203,48 +177,42 @@ function getOptions(object: Record<string, unknown>, path = '', arr: Opt[] = [])
  * includes methods to reset values, reset theme colors, and handle dependencies.
  *
  * @template T extends object
- * @param cacheFile - The file path to store cached values.
- * @param object - The object containing nested `Opt` instances.
- * @param [confFile='config.json'] - The configuration file name stored in TMP.
+ * @param optionsObj - The object containing nested `Opt` instances.
  * @returns The original object extended with additional methods for handling options.
  */
-export function mkOptions<T extends object>(
-    cacheFile: string,
-    object: T,
-    confFile: string = 'config.json',
-): T & MkOptionsResult {
-    const allOptions = getOptions(object as Record<string, unknown>);
+export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult {
+    // Ensure the directory exists
+    ensureDirectory(CONFIG.split('/').slice(0, -1).join('/'));
 
-    for (let i = 0; i < allOptions.length; i++) {
-        allOptions[i].init(cacheFile);
-    }
+    // Read the configuration file
+    const rawConfig = readFile(CONFIG);
 
-    ensureDirectory(cacheFile.split('/').slice(0, -1).join('/'));
-    ensureDirectory(defaultFile.split('/').slice(0, -1).join('/'));
-
-    const configFile = `${TMP}/${confFile}`;
-
-    const values: Record<string, unknown> = {};
-    const defaultValues: Record<string, unknown> = {};
-
-    for (let i = 0; i < allOptions.length; i++) {
-        const option = allOptions[i];
-        const val = option.value;
-
-        values[option.id] = val;
-
-        if (isHexColor(val as string)) {
-            defaultValues[option.id] = option.initial;
-        } else {
-            defaultValues[option.id] = val;
+    let config: Record<string, unknown> = {};
+    if (rawConfig && rawConfig.trim() !== '') {
+        try {
+            config = JSON.parse(rawConfig) as Record<string, unknown>;
+        } catch (error) {
+            errorHandler(error);
         }
     }
 
-    writeFile(defaultFile, JSON.stringify(defaultValues, null, 2));
-    writeFile(configFile, JSON.stringify(values, null, 2));
+    // Initialize the config options
+    const allOptions = getOptions(optionsObj as Record<string, unknown>);
+    for (let i = 0; i < allOptions.length; i++) {
+        allOptions[i].init(config);
+    }
 
-    monitorFile(configFile, () => {
-        const raw = readFile(configFile);
+    // Setup a file monitor to allow live config edit preview from outside
+    // the config menu
+    let lastEventTime = Date.now();
+    monitorFile(CONFIG, () => {
+        if (Date.now() - lastEventTime < 200) {
+            // 200 milliseconds event debounce
+            return;
+        }
+        lastEventTime = Date.now();
+
+        const raw = readFile(CONFIG);
 
         if (!raw || raw.trim() === '') return;
 
@@ -252,17 +220,28 @@ export function mkOptions<T extends object>(
 
         try {
             cache = JSON.parse(raw) as Record<string, unknown>;
-        } catch {
+        } catch (error) {
+            Notify({
+                summary: 'Loading configuration file failed',
+                body: `${error}`,
+                iconName: icons.ui.warning,
+            });
             return;
         }
 
         for (let i = 0; i < allOptions.length; i++) {
             const opt = allOptions[i];
             const newVal = cache[opt.id];
-            const oldVal = opt.get();
 
+            if (newVal === undefined) {
+                continue;
+            }
+
+            const oldVal = opt.get();
             if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                opt.set(newVal as T);
+                // Set the variable but don't write it back to the file,
+                // as we are getting it from there
+                opt.set(newVal, false);
             }
         }
     });
@@ -295,7 +274,7 @@ export function mkOptions<T extends object>(
         return results;
     }
 
-    return Object.assign(object, {
+    return Object.assign(optionsObj, {
         configFile,
         array: (): Opt[] => allOptions,
         async reset(): Promise<string> {
