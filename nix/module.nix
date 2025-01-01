@@ -334,7 +334,8 @@ in
       bar.workspaces.workspaces = mkIntOption 5;
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
-      hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      hyprpanel.restartCommand = mkStrOption "${package}/bin/hyprpanel q; ${package}/bin/hyprpanel";
       menus.clock.time.hideSeconds = mkBoolOption false;
       menus.clock.time.military = mkBoolOption false;
       menus.clock.weather.enabled = mkBoolOption true;
@@ -581,7 +582,6 @@ in
       text = ''
         cd
         echo '------------- HyprPanel -------------'
-        echo 
         echo 'Please ignore the layout diff for now'
         echo '-------------------------------------'
         colordiff ${config.xdg.configFile.hyprpanel.target} \
@@ -615,7 +615,8 @@ in
     xdg.configFile.hyprpanel = {
       target = "hyprpanel/config.json";
       text = finalConfig;
-      onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      onChange = "${package}/bin/hyprpanel r";
     };
 
     xdg.configFile.hyprpanel-swap = {
@@ -623,23 +624,23 @@ in
       text = finalConfig;
     };
 
-    systemd.user.services = mkIf cfg.systemd.enable {
-      hyprpanel = {
-        Unit = {
-          Description = "A Bar/Panel for Hyprland with extensive customizability.";
-          Documentation = "https://hyprpanel.com";
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session-pre.target" ];
-        };
-        Service = {
-          ExecStart = "${package}/bin/hyprpanel";
-          ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
-          Restart = "on-failure";
-          KillMode = "mixed";
-        };
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-      };
-    };
+    # systemd.user.services = mkIf cfg.systemd.enable {
+    #   hyprpanel = {
+    #     Unit = {
+    #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
+    #       Documentation = "https://hyprpanel.com";
+    #       PartOf = [ "graphical-session.target" ];
+    #       After = [ "graphical-session-pre.target" ];
+    #     };
+    #     Service = {
+    #       ExecStart = "${package}/bin/hyprpanel";
+    #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
+    #       Restart = "on-failure";
+    #       KillMode = "mixed";
+    #     };
+    #     Install = { WantedBy = [ "graphical-session.target" ]; };
+    #   };
+    # };
 
     wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
   };
