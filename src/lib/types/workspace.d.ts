@@ -3,7 +3,7 @@ export type WorkspaceRule = {
     monitor: string;
 };
 
-export type WorkspaceMap = {
+export type WorkspaceMonitorMap = {
     [key: string]: number[];
 };
 

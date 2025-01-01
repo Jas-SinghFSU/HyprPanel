@@ -315,7 +315,6 @@ in
       bar.workspaces.applicationIconEmptyWorkspace = mkStrOption "";
       bar.workspaces.applicationIconFallback = mkStrOption "󰣆";
       bar.workspaces.applicationIconOncePerWorkspace = mkBoolOption true;
-      bar.workspaces.hideUnoccupied = mkBoolOption true;
       bar.workspaces.icons.active = mkStrOption "";
       bar.workspaces.icons.available = mkStrOption "";
       bar.workspaces.icons.occupied = mkStrOption "";

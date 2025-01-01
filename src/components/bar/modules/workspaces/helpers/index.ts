@@ -1,350 +1,364 @@
-import { exec, Variable } from 'astal';
+import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { hyprlandService } from 'src/lib/constants/services';
-import { MonitorMap, WorkspaceMap, WorkspaceRule } from 'src/lib/types/workspace';
+import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace';
 import { range } from 'src/lib/utils';
 import options from 'src/options';
 
 const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
 
 /**
- * Retrieves the workspaces for a specific monitor.
- *
- * This function checks if a given workspace is valid for a specified monitor based on the workspace rules.
- *
- * @param curWs - The current workspace number.
- * @param wsRules - The workspace rules map.
- * @param monitor - The monitor ID.
- * @param workspaceList - The list of workspaces.
- * @param monitorList - The list of monitors.
- *
- * @returns Whether the workspace is valid for the monitor.
+ * A Variable that holds the current map of monitors to the workspace numbers assigned to them.
  */
-export const getWorkspacesForMonitor = (
-    curWs: number,
-    wsRules: WorkspaceMap,
-    monitor: number,
+export const workspaceRules = Variable(getWorkspaceMonitorMap());
+
+/**
+ * A Variable used to force UI or other updates when relevant workspace events occur.
+ */
+export const forceUpdater = Variable(true);
+
+/**
+ * Retrieves the workspace numbers associated with a specific monitor.
+ *
+ * If only one monitor exists, this will simply return a list of all possible workspaces.
+ * Otherwise, it will consult the workspace rules to determine which workspace numbers
+ * belong to the specified monitor.
+ *
+ * @param monitorId - The numeric identifier of the monitor.
+ *
+ * @returns An array of workspace numbers belonging to the specified monitor.
+ */
+export function getWorkspacesForMonitor(monitorId: number): number[] {
+    const allMonitors = hyprlandService.get_monitors();
+
+    if (allMonitors.length === 1) {
+        return Array.from({ length: workspaces.get() }, (_, index) => index + 1);
+    }
+
+    const workspaceMonitorRules = getWorkspaceMonitorMap();
+
+    const monitorNameMap: MonitorMap = {};
+    allMonitors.forEach((monitorInstance) => {
+        monitorNameMap[monitorInstance.id] = monitorInstance.name;
+    });
+
+    const currentMonitorName = monitorNameMap[monitorId];
+
+    return workspaceMonitorRules[currentMonitorName];
+}
+
+/**
+ * Checks whether a given workspace is valid (assigned) for the specified monitor.
+ *
+ * This function inspects the workspace rules object to determine if the current workspace belongs
+ * to the target monitor. If no workspace rules exist, the function defaults to returning `true`.
+ *
+ * @param workspaceId - The number representing the current workspace.
+ * @param workspaceMonitorRules - The map of monitor names to assigned workspace numbers.
+ * @param monitorId - The numeric identifier for the monitor.
+ * @param workspaceList - A list of Hyprland workspace objects.
+ * @param monitorList - A list of Hyprland monitor objects.
+ *
+ * @returns `true` if the workspace is assigned to the monitor or if no rules exist. Otherwise, `false`.
+ */
+function isWorkspaceValidForMonitor(
+    workspaceId: number,
+    workspaceMonitorRules: WorkspaceMonitorMap,
+    monitorId: number,
     workspaceList: AstalHyprland.Workspace[],
     monitorList: AstalHyprland.Monitor[],
-): boolean => {
-    if (!wsRules || !Object.keys(wsRules).length) {
-        return true;
-    }
+): boolean {
+    const monitorNameMap: MonitorMap = {};
+    const allWorkspaceInstances = workspaceList ?? [];
 
-    const monitorMap: MonitorMap = {};
-
-    const wsList = workspaceList ?? [];
-
-    const workspaceMonitorList = wsList
-        .filter((m) => m !== null)
-        .map((m) => {
-            return { id: m.monitor?.id, name: m.monitor?.name };
+    const workspaceMonitorReferences = allWorkspaceInstances
+        .filter((workspaceInstance) => workspaceInstance !== null)
+        .map((workspaceInstance) => {
+            return {
+                id: workspaceInstance.monitor?.id,
+                name: workspaceInstance.monitor?.name,
+            };
         });
 
-    const monitors = [...new Map([...workspaceMonitorList, ...monitorList].map((item) => [item.id, item])).values()];
+    const mergedMonitorInstances = [
+        ...new Map(
+            [...workspaceMonitorReferences, ...monitorList].map((monitorCandidate) => [
+                monitorCandidate.id,
+                monitorCandidate,
+            ]),
+        ).values(),
+    ];
 
-    monitors.forEach((mon) => (monitorMap[mon.id] = mon.name));
+    mergedMonitorInstances.forEach((monitorInstance) => {
+        monitorNameMap[monitorInstance.id] = monitorInstance.name;
+    });
 
-    const currentMonitorName = monitorMap[monitor];
-    const monitorWSRules = wsRules[currentMonitorName];
+    const currentMonitorName = monitorNameMap[monitorId];
+    const currentMonitorWorkspaceRules = workspaceMonitorRules[currentMonitorName];
 
-    if (monitorWSRules === undefined) {
-        return true;
+    if (currentMonitorWorkspaceRules === undefined) {
+        return false;
     }
-    return monitorWSRules.includes(curWs);
-};
+
+    return currentMonitorWorkspaceRules.includes(workspaceId);
+}
 
 /**
- * Retrieves the workspace rules.
+ * Fetches a map of monitors to the workspace numbers that belong to them.
  *
- * This function fetches and parses the workspace rules from the Hyprland service.
+ * This function communicates with the Hyprland service to retrieve workspace rules in JSON format.
+ * Those rules are parsed, and a map of monitor names to lists of assigned workspace numbers is constructed.
  *
- * @returns The workspace rules map.
+ * @returns An object where each key is a monitor name, and each value is an array of workspace numbers.
  */
-export const getWorkspaceRules = (): WorkspaceMap => {
+function getWorkspaceMonitorMap(): WorkspaceMonitorMap {
     try {
-        const rules = exec('hyprctl workspacerules -j');
+        const rulesResponse = hyprlandService.message('j/workspacerules');
+        const workspaceMonitorRules: WorkspaceMonitorMap = {};
+        const parsedWorkspaceRules = JSON.parse(rulesResponse);
 
-        const workspaceRules: WorkspaceMap = {};
+        parsedWorkspaceRules.forEach((rule: WorkspaceRule) => {
+            const workspaceNumber = parseInt(rule.workspaceString, 10);
 
-        JSON.parse(rules).forEach((rule: WorkspaceRule) => {
-            const workspaceNum = parseInt(rule.workspaceString, 10);
-            if (isNaN(workspaceNum)) {
+            if (rule.monitor === undefined || isNaN(workspaceNumber)) {
                 return;
             }
-            if (Object.hasOwnProperty.call(workspaceRules, rule.monitor)) {
-                workspaceRules[rule.monitor].push(workspaceNum);
+
+            const doesMonitorExistInRules = Object.hasOwnProperty.call(workspaceMonitorRules, rule.monitor);
+
+            if (doesMonitorExistInRules) {
+                workspaceMonitorRules[rule.monitor].push(workspaceNumber);
             } else {
-                workspaceRules[rule.monitor] = [workspaceNum];
+                workspaceMonitorRules[rule.monitor] = [workspaceNumber];
             }
         });
 
-        return workspaceRules;
-    } catch (err) {
-        console.error(err);
+        return workspaceMonitorRules;
+    } catch (error) {
+        console.error(error);
         return {};
     }
-};
+}
 
 /**
- * Retrieves the current monitor's workspaces.
+ * Checks if a workspace number should be ignored based on a regular expression.
  *
- * This function returns a list of workspace numbers for the specified monitor.
+ * @param ignoredWorkspacesVariable - A Variable object containing a string pattern of ignored workspaces.
+ * @param workspaceNumber - The numeric representation of the workspace to check.
  *
- * @param monitor - The monitor ID.
- *
- * @returns The list of workspace numbers.
+ * @returns `true` if the workspace should be ignored, otherwise `false`.
  */
-export const getCurrentMonitorWorkspaces = (monitor: number): number[] => {
-    if (hyprlandService.get_monitors().length === 1) {
-        return Array.from({ length: workspaces.get() }, (_, i) => i + 1);
+function isWorkspaceIgnored(ignoredWorkspacesVariable: Variable<string>, workspaceNumber: number): boolean {
+    if (ignoredWorkspacesVariable.get() === '') {
+        return false;
     }
 
-    const monitorWorkspaces = getWorkspaceRules();
-    const monitorMap: MonitorMap = {};
-    hyprlandService.get_monitors().forEach((m) => (monitorMap[m.id] = m.name));
-
-    const currentMonitorName = monitorMap[monitor];
-
-    return monitorWorkspaces[currentMonitorName];
-};
+    const ignoredWorkspacesRegex = new RegExp(ignoredWorkspacesVariable.get());
+    return ignoredWorkspacesRegex.test(workspaceNumber.toString());
+}
 
 /**
- * Checks if a workspace is ignored.
+ * Changes the active workspace in the specified direction ('next' or 'prev').
  *
- * This function determines if a given workspace number is in the ignored workspaces list.
- *
- * @param ignoredWorkspaces - The ignored workspaces variable.
- * @param workspaceNumber - The workspace number.
- *
- * @returns Whether the workspace is ignored.
- */
-export const isWorkspaceIgnored = (ignoredWorkspaces: Variable<string>, workspaceNumber: number): boolean => {
-    if (ignoredWorkspaces.get() === '') return false;
-
-    const ignoredWsRegex = new RegExp(ignoredWorkspaces.get());
-
-    return ignoredWsRegex.test(workspaceNumber.toString());
-};
-
-/**
- * Navigates to the next or previous workspace.
- *
- * This function changes the current workspace to the next or previous one, considering active and ignored workspaces.
+ * This function uses the current monitor's set of active or assigned workspaces and
+ * cycles through them in the chosen direction. It also respects the list of ignored
+ * workspaces, skipping any that match the ignored pattern.
  *
  * @param direction - The direction to navigate ('next' or 'prev').
- * @param currentMonitorWorkspaces - The current monitor's workspaces variable.
- * @param activeWorkspaces - Whether to consider only active workspaces.
- * @param ignoredWorkspaces - The ignored workspaces variable.
+ * @param currentMonitorWorkspacesVariable - A Variable containing an array of workspace numbers for the current monitor.
+ * @param onlyActiveWorkspaces - Whether to only include active (occupied) workspaces when navigating.
+ * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-const navigateWorkspace = (
-    direction: 'next' | 'prev',
-    currentMonitorWorkspaces: Variable<number[]>,
-    activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<string>,
-): void => {
-    const hyprlandWorkspaces = hyprlandService.get_workspaces() || [];
-    const occupiedWorkspaces = hyprlandWorkspaces
-        .filter((ws) => hyprlandService.focusedMonitor.id === ws.monitor?.id)
-        .map((ws) => ws.id);
+function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable: Variable<string>): void {
+    const allHyprlandWorkspaces = hyprlandService.get_workspaces() || [];
 
-    const workspacesList = activeWorkspaces
-        ? occupiedWorkspaces
-        : currentMonitorWorkspaces.get() || Array.from({ length: workspaces.get() }, (_, i) => i + 1);
+    const activeWorkspaceIds = allHyprlandWorkspaces
+        .filter((workspaceInstance) => hyprlandService.focusedMonitor.id === workspaceInstance.monitor?.id)
+        .map((workspaceInstance) => workspaceInstance.id);
 
-    if (workspacesList.length === 0) return;
+    const assignedOrOccupiedWorkspaces = activeWorkspaceIds.sort((a, b) => a - b);
 
-    const currentIndex = workspacesList.indexOf(hyprlandService.focusedWorkspace?.id);
+    if (assignedOrOccupiedWorkspaces.length === 0) {
+        return;
+    }
+
+    const workspaceIndex = assignedOrOccupiedWorkspaces.indexOf(hyprlandService.focusedWorkspace?.id);
     const step = direction === 'next' ? 1 : -1;
-    let newIndex = (currentIndex + step + workspacesList.length) % workspacesList.length;
+
+    let newIndex = (workspaceIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
     let attempts = 0;
 
-    while (attempts < workspacesList.length) {
-        const targetWS = workspacesList[newIndex];
-        if (!isWorkspaceIgnored(ignoredWorkspaces, targetWS)) {
-            hyprlandService.dispatch('workspace', targetWS.toString());
+    while (attempts < assignedOrOccupiedWorkspaces.length) {
+        const targetWorkspaceNumber = assignedOrOccupiedWorkspaces[newIndex];
+        if (!isWorkspaceIgnored(ignoredWorkspacesVariable, targetWorkspaceNumber)) {
+            hyprlandService.dispatch('workspace', targetWorkspaceNumber.toString());
             return;
         }
-        newIndex = (newIndex + step + workspacesList.length) % workspacesList.length;
+        newIndex = (newIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
         attempts++;
     }
-};
+}
 
 /**
- * Navigates to the next workspace.
+ * Navigates to the next workspace in the current monitor.
  *
- * This function changes the current workspace to the next one.
- *
- * @param currentMonitorWorkspaces - The current monitor's workspaces variable.
- * @param activeWorkspaces - Whether to consider only active workspaces.
- * @param ignoredWorkspaces - The ignored workspaces variable.
+ * @param currentMonitorWorkspacesVariable - A Variable containing workspace numbers for the current monitor.
+ * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
+ * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export const goToNextWS = (
-    currentMonitorWorkspaces: Variable<number[]>,
-    activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<string>,
-): void => {
-    navigateWorkspace('next', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
-};
+export function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+    navigateWorkspace('next', ignoredWorkspacesVariable);
+}
 
 /**
- * Navigates to the previous workspace.
+ * Navigates to the previous workspace in the current monitor.
  *
- * This function changes the current workspace to the previous one.
- *
- * @param currentMonitorWorkspaces - The current monitor's workspaces variable.
- * @param activeWorkspaces - Whether to consider only active workspaces.
- * @param ignoredWorkspaces - The ignored workspaces variable.
+ * @param currentMonitorWorkspacesVariable - A Variable containing workspace numbers for the current monitor.
+ * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
+ * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export const goToPrevWS = (
-    currentMonitorWorkspaces: Variable<number[]>,
-    activeWorkspaces: boolean,
-    ignoredWorkspaces: Variable<string>,
-): void => {
-    navigateWorkspace('prev', currentMonitorWorkspaces, activeWorkspaces, ignoredWorkspaces);
-};
+export function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+    navigateWorkspace('prev', ignoredWorkspacesVariable);
+}
 
 /**
- * Throttles a function to limit its execution rate.
+ * Limits the execution rate of a given function to prevent it from being called too often.
  *
- * This function ensures that the provided function is not called more often than the specified limit.
+ * @param func - The function to be throttled.
+ * @param limit - The time limit (in milliseconds) during which calls to `func` are disallowed after the first call.
  *
- * @param func - The function to throttle.
- * @param limit - The time limit in milliseconds.
- *
- * @returns The throttled function.
+ * @returns The throttled version of the input function.
  */
 export function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
-    let inThrottle: boolean;
+    let isThrottleActive: boolean;
+
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-        if (!inThrottle) {
+        if (!isThrottleActive) {
             func.apply(this, args);
-            inThrottle = true;
+            isThrottleActive = true;
+
             setTimeout(() => {
-                inThrottle = false;
+                isThrottleActive = false;
             }, limit);
         }
     } as T;
 }
 
 /**
- * Creates throttled scroll handlers for navigating workspaces.
+ * Creates throttled scroll handlers that navigate workspaces upon scrolling, respecting the configured scroll speed.
  *
- * This function returns handlers for scrolling up and down through workspaces, throttled by the specified scroll speed.
+ * @param scrollSpeed - The factor by which the scroll navigation is throttled.
+ * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  *
- * @param scrollSpeed - The scroll speed.
- * @param currentMonitorWorkspaces - The current monitor's workspaces variable.
- * @param activeWorkspaces - Whether to consider only active workspaces.
- *
- * @returns The throttled scroll handlers.
+ * @returns An object containing two functions (`throttledScrollUp` and `throttledScrollDown`), both throttled.
  */
-export const createThrottledScrollHandlers = (
-    scrollSpeed: number,
-    currentMonitorWorkspaces: Variable<number[]>,
-    activeWorkspaces: boolean = true,
-): ThrottledScrollHandlers => {
+export function initThrottledScrollHandlers(scrollSpeed: number): ThrottledScrollHandlers {
     const throttledScrollUp = throttle(() => {
         if (reverse_scroll.get()) {
-            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
+            goToPreviousWorkspace(ignored);
         } else {
-            goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
+            goToNextWorkspace(ignored);
         }
     }, 200 / scrollSpeed);
 
     const throttledScrollDown = throttle(() => {
         if (reverse_scroll.get()) {
-            goToNextWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
+            goToNextWorkspace(ignored);
         } else {
-            goToPrevWS(currentMonitorWorkspaces, activeWorkspaces, ignored);
+            goToPreviousWorkspace(ignored);
         }
     }, 200 / scrollSpeed);
 
     return { throttledScrollUp, throttledScrollDown };
-};
+}
 
 /**
- * Retrieves the workspaces to render.
+ * Computes which workspace numbers should be rendered for a given monitor.
  *
- * This function returns a list of workspace numbers to render based on the total workspaces, workspace list, rules, and monitor.
+ * This function consolidates both active and all possible workspaces (based on rules),
+ * then filters them by the selected monitor if `isMonitorSpecific` is set to `true`.
  *
- * @param totalWorkspaces - The total number of workspaces.
- * @param workspaceList - The list of workspaces.
- * @param workspaceRules - The workspace rules map.
- * @param monitor - The monitor ID.
- * @param isMonitorSpecific - Whether the workspaces are monitor-specific.
- * @param monitorList - The list of monitors.
+ * @param totalWorkspaces - The total number of workspaces (a fallback if workspace rules are not enforced).
+ * @param workspaceInstances - A list of Hyprland workspace objects.
+ * @param workspaceMonitorRules - The map of monitor names to assigned workspace numbers.
+ * @param monitorId - The numeric identifier of the monitor.
+ * @param isMonitorSpecific - If `true`, only include the workspaces that match this monitor.
+ * @param hyprlandMonitorInstances - A list of Hyprland monitor objects.
  *
- * @returns The list of workspace numbers to render.
+ * @returns An array of workspace numbers that should be shown.
  */
-export const getWorkspacesToRender = (
+export function getWorkspacesToRender(
     totalWorkspaces: number,
-    workspaceList: AstalHyprland.Workspace[],
-    workspaceRules: WorkspaceMap,
-    monitor: number,
+    workspaceInstances: AstalHyprland.Workspace[],
+    workspaceMonitorRules: WorkspaceMonitorMap,
+    monitorId: number,
     isMonitorSpecific: boolean,
-    monitorList: AstalHyprland.Monitor[],
-): number[] => {
-    let allWorkspaces = range(totalWorkspaces || 8);
-    const activeWorkspaces = workspaceList.map((ws) => ws.id);
+    hyprlandMonitorInstances: AstalHyprland.Monitor[],
+): number[] {
+    let allPotentialWorkspaces = range(totalWorkspaces || 8);
+    const allWorkspaceInstances = workspaceInstances ?? [];
 
-    const wsList = workspaceList ?? [];
-    const workspaceMonitorList = wsList.map((ws) => {
+    const activeWorkspaceIds = allWorkspaceInstances.map((workspaceInstance) => workspaceInstance.id);
+
+    const monitorReferencesForActiveWorkspaces = allWorkspaceInstances.map((workspaceInstance) => {
         return {
-            id: ws.monitor?.id || -1,
-            name: ws.monitor?.name || '',
+            id: workspaceInstance.monitor?.id ?? -1,
+            name: workspaceInstance.monitor?.name ?? '',
         };
     });
 
-    const curMonitor =
-        monitorList.find((mon) => mon.id === monitor) || workspaceMonitorList.find((mon) => mon.id === monitor);
+    const currentMonitorInstance =
+        hyprlandMonitorInstances.find((monitorObj) => monitorObj.id === monitorId) ||
+        monitorReferencesForActiveWorkspaces.find((monitorObj) => monitorObj.id === monitorId);
 
-    const workspacesWithRules = Object.keys(workspaceRules).reduce((acc: number[], k: string) => {
-        return [...acc, ...workspaceRules[k]];
-    }, []);
+    const allWorkspacesWithRules = Object.keys(workspaceMonitorRules).reduce(
+        (accumulator: number[], monitorName: string) => {
+            return [...accumulator, ...workspaceMonitorRules[monitorName]];
+        },
+        [],
+    );
 
-    const activesForMonitor = activeWorkspaces.filter((w) => {
+    const activeWorkspacesForCurrentMonitor = activeWorkspaceIds.filter((workspaceId) => {
         if (
-            curMonitor &&
-            Object.hasOwnProperty.call(workspaceRules, curMonitor.name) &&
-            workspacesWithRules.includes(w)
+            currentMonitorInstance &&
+            Object.hasOwnProperty.call(workspaceMonitorRules, currentMonitorInstance.name) &&
+            allWorkspacesWithRules.includes(workspaceId)
         ) {
-            return workspaceRules[curMonitor.name].includes(w);
+            return workspaceMonitorRules[currentMonitorInstance.name].includes(workspaceId);
         }
-        return true;
+        const metadataForWorkspace = allWorkspaceInstances.find((workspaceObj) => workspaceObj.id === workspaceId);
+        return metadataForWorkspace?.monitor?.id === monitorId;
     });
 
     if (isMonitorSpecific) {
-        const workspacesInRange = range(totalWorkspaces).filter((ws) => {
-            return getWorkspacesForMonitor(ws, workspaceRules, monitor, wsList, monitorList);
+        const validWorkspaceNumbers = range(totalWorkspaces).filter((workspaceNumber) => {
+            return isWorkspaceValidForMonitor(
+                workspaceNumber,
+                workspaceMonitorRules,
+                monitorId,
+                allWorkspaceInstances,
+                hyprlandMonitorInstances,
+            );
         });
 
-        allWorkspaces = [...new Set([...activesForMonitor, ...workspacesInRange])];
+        allPotentialWorkspaces = [...new Set([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers])];
     } else {
-        allWorkspaces = [...new Set([...allWorkspaces, ...activeWorkspaces])];
+        allPotentialWorkspaces = [...new Set([...allPotentialWorkspaces, ...activeWorkspaceIds])];
     }
 
-    return allWorkspaces.sort((a, b) => a - b);
-};
+    return allPotentialWorkspaces.filter((workspace) => !isWorkspaceIgnored(ignored, workspace)).sort((a, b) => a - b);
+}
 
 /**
- * The workspace rules variable.
- * This variable holds the current workspace rules.
+ * Subscribes to Hyprland service events related to workspaces to keep the local state updated.
+ *
+ * When certain events occur (like a configuration reload or a client being moved/added/removed),
+ * this function updates the workspace rules or toggles the `forceUpdater` variable to ensure
+ * that any dependent UI or logic is re-rendered or re-run.
  */
-export const workspaceRules = Variable(getWorkspaceRules());
-
-/**
- * The force updater variable.
- * This variable is used to force updates when workspace events occur.
- */
-export const forceUpdater = Variable(true);
-
-/**
- * Sets up connections for workspace events.
- * This function sets up event listeners for various workspace-related events to update the workspace rules and force updates.
- */
-export const setupConnections = (): void => {
+export function initWorkspaceEvents(): void {
     hyprlandService.connect('config-reloaded', () => {
-        workspaceRules.set(getWorkspaceRules());
+        workspaceRules.set(getWorkspaceMonitorMap());
     });
 
     hyprlandService.connect('client-moved', () => {
@@ -358,9 +372,19 @@ export const setupConnections = (): void => {
     hyprlandService.connect('client-removed', () => {
         forceUpdater.set(!forceUpdater.get());
     });
-};
+}
 
+/**
+ * Throttled scroll handler functions for navigating workspaces.
+ */
 type ThrottledScrollHandlers = {
+    /**
+     * Scroll up throttled handler.
+     */
     throttledScrollUp: () => void;
+
+    /**
+     * Scroll down throttled handler.
+     */
     throttledScrollDown: () => void;
 };

@@ -4,7 +4,6 @@ import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Gdk, Gtk } from 'astal/gtk3';
-import { BindableChild } from 'astal/gtk3/astalify';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
@@ -137,7 +136,7 @@ interface MenuCustomIconProps {
 
 interface MenuEntryProps {
     item: AstalTray.TrayItem;
-    child?: BindableChild;
+    child?: JSX.Element;
 }
 
 export { SysTray };

@@ -1,5 +1,4 @@
-import Variable from 'astal/variable.js';
-import { bind } from 'astal/binding.js';
+import { bind, Variable } from 'astal';
 import { bluetoothService } from 'src/lib/constants/services.js';
 import { getAvailableBluetoothDevices, getConnectedBluetoothDevices } from './helpers.js';
 import { NoBluetoothDevices } from './NoBluetoothDevices.js';

@@ -4,12 +4,21 @@ import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getKeyboardLayout } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
-import { bind, execAsync } from 'astal';
+import { bind } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { Astal } from 'astal/gtk3';
 
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.kbLayout;
+
+function setLabel(self: Astal.Label): void {
+    try {
+        const devices = hyprlandService.message('j/devices');
+        self.label = getKeyboardLayout(devices, labelType.get());
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const KbInput = (): BarBoxChild => {
     const keyboardModule = Module({
@@ -20,25 +29,13 @@ export const KbInput = (): BarBoxChild => {
                 self,
                 hyprlandService,
                 () => {
-                    execAsync('hyprctl devices -j')
-                        .then((obj) => {
-                            self.label = getKeyboardLayout(obj, labelType.get());
-                        })
-                        .catch((err) => {
-                            console.error(err);
-                        });
+                    setLabel(self);
                 },
                 'keyboard-layout',
             );
 
             useHook(self, labelType, () => {
-                execAsync('hyprctl devices -j')
-                    .then((obj) => {
-                        self.label = getKeyboardLayout(obj, labelType.get());
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    });
+                setLabel(self);
             });
         },
         boxClass: 'kblayout',

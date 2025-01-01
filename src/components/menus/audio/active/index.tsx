@@ -1,8 +1,7 @@
 import { Gtk } from 'astal/gtk3';
 import { ActiveDevices } from './devices/index.js';
-import Variable from 'astal/variable.js';
 import { ActivePlaybacks } from './playbacks/index.js';
-import { bind } from 'astal/binding.js';
+import { bind, Variable } from 'astal';
 import { isPrimaryClick } from 'src/lib/utils.js';
 
 export enum ActiveDeviceMenu {
