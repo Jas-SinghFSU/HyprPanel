@@ -9,6 +9,7 @@ import CalendarMenu from './calendar/index.js';
 import EnergyMenu from './energy/index.js';
 import DashboardMenu from './dashboard/index.js';
 import PowerDropdown from './powerDropdown/index.js';
+import {ApplicationsDropdownMenu, ApplicationsMenu} from './apps/index';
 
 export const DropdownMenus = [
     AudioMenu,
@@ -20,6 +21,7 @@ export const DropdownMenus = [
     EnergyMenu,
     DashboardMenu,
     PowerDropdown,
+    ApplicationsDropdownMenu
 ];
 
-export const StandardWindows = [PowerMenu, Verification];
+export const StandardWindows = [PowerMenu, Verification, ApplicationsMenu];
