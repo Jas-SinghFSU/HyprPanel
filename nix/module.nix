@@ -97,7 +97,7 @@ in
       '';
       description = ''
         An arbitrary set to override the final config with.
-        Useful for overriding colors in your selected theme.
+        Useful for overriding colors in your chosen theme.
       '';
     };
 
@@ -623,6 +623,7 @@ in
       text = finalConfig;
     };
 
+    # NOTE: Deprecated
     # systemd.user.services = mkIf cfg.systemd.enable {
     #   hyprpanel = {
     #     Unit = {
@@ -640,6 +641,7 @@ in
     #     Install = { WantedBy = [ "graphical-session.target" ]; };
     #   };
     # };
+    warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [];
 
     wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
   };
