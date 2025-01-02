@@ -10,7 +10,9 @@ declare global {
 }
 
 export function ensureDirectory(path: string): void {
-    if (!GLib.file_test(path, GLib.FileTest.EXISTS)) Gio.File.new_for_path(path).make_directory_with_parents(null);
+    if (!GLib.file_test(path, GLib.FileTest.EXISTS)) {
+        Gio.File.new_for_path(path).make_directory_with_parents(null);
+    }
 }
 
 export function ensureFile(path: string): void {

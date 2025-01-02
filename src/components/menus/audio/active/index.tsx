@@ -16,7 +16,7 @@ const Header = (): JSX.Element => (
     <box className={'menu-label-container volume selected'} halign={Gtk.Align.FILL}>
         <label className={'menu-label audio volume'} halign={Gtk.Align.START} hexpand label={'Volume'} />
         <button
-            className={'menu-label slider-toggle'}
+            className={'menu-icon-button menu-label slider-toggle volume'}
             onClick={(_, event) => {
                 if (!isPrimaryClick(event)) {
                     return;
