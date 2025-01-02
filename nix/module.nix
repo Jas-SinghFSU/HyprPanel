@@ -10,14 +10,15 @@ let
   package = if pkgs ? hyprpanel then pkgs.hyprpanel
   else abort ''
 
-  ******************************************
-  *               HyprPanel                *
-  ******************************************
-  *      You didn't add the overlay!       *
-  *                                        *
-  * Either set 'overlay.enable = true' or  *
-  * manually add it to 'nixpkgs.overlays'. *
-  ******************************************
+  ********************************************************************************
+  *                                  HyprPanel                                   *
+  *------------------------------------------------------------------------------*
+  *                         You didn't add the overlay!                          *
+  *                                                                              *
+  * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
+  * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
+  *                  you will need to add the overlay yourself.                  *
+  ********************************************************************************
   '';
 
   # Shorthand lambda for self-documenting options under settings
@@ -590,7 +591,8 @@ in
 
   in mkIf cfg.enable {
 
-    nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
 
     home.packages = [
       package
