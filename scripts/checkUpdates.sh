@@ -2,7 +2,7 @@
 
 check_flatpak_updates() {
   flatpak_updates=0
-  if [[ -x "command -v flatpak &> /dev/null" ]]; then
+  if [[ -x "$(command -v flatpak)" ]]; then
     flatpak_updates=$(flatpak update | grep -E "^[[:blank:]][0-9]{1}\." | wc -l)
   fi
   echo $flatpak_updates
