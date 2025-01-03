@@ -1,5 +1,3 @@
-import { BindableChild } from 'astal/gtk3/astalify';
-
 export const LeftColumn = ({ isVisible, children }: LeftColumnProps): JSX.Element => {
     return (
         <box className={`card-button-section-container ${isVisible ? 'visible' : ''}`}>
@@ -26,9 +24,9 @@ export const RightColumn = ({ children }: RightColumnProps): JSX.Element => {
 
 interface LeftColumnProps {
     isVisible?: boolean;
-    children?: BindableChild | BindableChild[];
+    children?: JSX.Element | JSX.Element[];
 }
 
 interface RightColumnProps {
-    children?: BindableChild | BindableChild[];
+    children?: JSX.Element | JSX.Element[];
 }

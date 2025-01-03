@@ -402,8 +402,11 @@ const main = async () => {
     const themeFiles = (await fs.readdir(themesDir)).filter((file) => file.endsWith('.json'));
 
     const specialKeyMappings = {
-        'theme.bar.menus.menu.bluetooth.scroller.color': 'theme.bar.menus.menu.bluetooth.label.color',
-        'theme.bar.menus.menu.network.scroller.color': 'theme.bar.menus.menu.network.label.color',
+        'theme.bar.buttons.modules.cava.text': 'theme.bar.buttons.modules.submap.text',
+        'theme.bar.buttons.modules.cava.background': 'theme.bar.buttons.modules.submap.background',
+        'theme.bar.buttons.modules.cava.icon_background': 'theme.bar.buttons.modules.submap.icon_background',
+        'theme.bar.buttons.modules.cava.icon': 'theme.bar.buttons.modules.submap.icon',
+        'theme.bar.buttons.modules.cava.border': 'theme.bar.buttons.modules.submap.border',
     };
 
     const queue = [...themeFiles].filter(
@@ -412,6 +415,7 @@ const main = async () => {
     );
 
     const processQueue = async () => {
+        const concurrencyLimit = 5;
         while (queue.length > 0) {
             const promises = [];
             for (let i = 0; i < concurrencyLimit && queue.length > 0; i++) {

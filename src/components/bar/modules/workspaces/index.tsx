@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { createThrottledScrollHandlers, getCurrentMonitorWorkspaces } from './helpers';
+import { initThrottledScrollHandlers } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { WorkspaceModule } from './workspaces';
 import { bind, Variable } from 'astal';
@@ -7,15 +7,9 @@ import { GtkWidget } from 'src/lib/types/widget';
 import { Astal, Gdk } from 'astal/gtk3';
 import { isScrollDown, isScrollUp } from 'src/lib/utils';
 
-const { workspaces, scroll_speed } = options.bar.workspaces;
+const { scroll_speed } = options.bar.workspaces;
 
 const Workspaces = (monitor = -1): BarBoxChild => {
-    const currentMonitorWorkspaces = Variable(getCurrentMonitorWorkspaces(monitor));
-
-    workspaces.subscribe(() => {
-        currentMonitorWorkspaces.set(getCurrentMonitorWorkspaces(monitor));
-    });
-
     const component = (
         <box className={'workspaces-box-container'}>
             <WorkspaceModule monitor={monitor} />
@@ -35,18 +29,15 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                         self.disconnect(scrollHandlers);
                     }
 
-                    const { throttledScrollUp, throttledScrollDown } = createThrottledScrollHandlers(
-                        scroll_speed,
-                        currentMonitorWorkspaces,
-                    );
+                    const { throttledScrollUp, throttledScrollDown } = initThrottledScrollHandlers(scroll_speed);
 
                     scrollHandlers = self.connect('scroll-event', (_: GtkWidget, event: Gdk.Event) => {
                         if (isScrollUp(event)) {
-                            throttledScrollDown();
+                            throttledScrollUp();
                         }
 
                         if (isScrollDown(event)) {
-                            throttledScrollUp();
+                            throttledScrollDown();
                         }
                     });
                 });

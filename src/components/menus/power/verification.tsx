@@ -1,11 +1,11 @@
 import PopupWindow from '../shared/popup/index.js';
 import powermenu from './helpers/actions.js';
 import { App, Gtk } from 'astal/gtk3';
-import { bind } from 'astal/binding.js';
+import { bind } from 'astal';
 
 export default (): JSX.Element => (
-    <PopupWindow name="verification" transition="crossfade">
-        <box className="verification">
+    <PopupWindow name="verification" transition="crossfade" layout={'center'}>
+        <box className="verification" expand={false}>
             <box className="verification-content" expand vertical>
                 <box className="text-box" vertical>
                     <label className="title" label={bind(powermenu, 'title').as((t) => t.toUpperCase())} />

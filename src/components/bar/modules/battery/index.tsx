@@ -5,7 +5,7 @@ import options from 'src/options';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import Variable from 'astal/variable';
-import { bind } from 'astal/binding.js';
+import { bind } from 'astal';
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { getBatteryIcon } from './helpers';

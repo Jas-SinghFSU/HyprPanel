@@ -5,8 +5,6 @@ import options from 'src/options';
 
 const { style } = options.theme.bar.buttons;
 
-const undefinedVar = Variable(undefined);
-
 export const Module = ({
     icon,
     textIcon,
@@ -16,7 +14,8 @@ export const Module = ({
     boxClass,
     isVis,
     props = {},
-    showLabelBinding = bind(undefinedVar),
+    showLabelBinding = bind(Variable(true)),
+    showIconBinding = bind(Variable(true)),
     showLabel,
     labelHook,
     hook,
@@ -48,12 +47,12 @@ export const Module = ({
     );
 
     const componentChildren = Variable.derive(
-        [showLabelBinding, useTextIcon],
-        (showLabel: boolean, forceTextIcon: boolean): JSX.Element[] => {
+        [showLabelBinding, showIconBinding, useTextIcon],
+        (showLabel: boolean, showIcon: boolean, forceTextIcon: boolean): JSX.Element[] => {
             const childrenArray = [];
             const iconWidget = getIconWidget(forceTextIcon);
 
-            if (iconWidget !== undefined) {
+            if (showIcon && iconWidget !== undefined) {
                 childrenArray.push(iconWidget);
             }
 

@@ -1,6 +1,6 @@
 import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
-import { forceUpdater, getWorkspacesToRender, isWorkspaceIgnored, setupConnections, workspaceRules } from './helpers';
+import { forceUpdater, getWorkspacesToRender, initWorkspaceEvents, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
 import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
@@ -30,7 +30,7 @@ const { available, active, occupied } = options.bar.workspaces.icons;
 const { matugen } = options.theme;
 const { smartHighlight } = options.theme.bar.buttons.workspaces;
 
-setupConnections();
+initWorkspaceEvents();
 
 export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element => {
     const boxChildren = Variable.derive(
@@ -98,10 +98,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             );
 
             return workspacesToRender.map((wsId, index) => {
-                if (isWorkspaceIgnored(ignored, wsId)) {
-                    return <box />;
-                }
-
                 const appIcons = displayApplicationIcons
                     ? getAppIcon(wsId, appIconOncePerWorkspace, {
                           iconMap: applicationIconMapping,

@@ -14,7 +14,7 @@
         "alwaysStrict": true,
         "noImplicitThis": true,
         "baseUrl": ".",
-        "typeRoots": ["types", "src/lib/types"],
+        "typeRoots": ["src/lib/types"],
         "skipLibCheck": true,
         "types": [],
         "experimentalDecorators": true,

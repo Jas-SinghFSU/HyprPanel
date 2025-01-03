@@ -1,4 +1,4 @@
-import { bind, exec } from 'astal';
+import { bind, GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import options from 'src/options.js';
 import { normalizePath, isAnImage } from 'src/lib/utils.js';
@@ -28,7 +28,8 @@ const ProfileName = (): JSX.Element => {
             halign={Gtk.Align.CENTER}
             label={bind(name).as((profileName) => {
                 if (profileName === 'system') {
-                    return exec('bash -c whoami');
+                    const username = GLib.get_user_name();
+                    return username;
                 }
                 return profileName;
             })}
