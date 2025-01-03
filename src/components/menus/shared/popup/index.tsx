@@ -57,8 +57,7 @@ const Layout: LayoutFunction = (name: string, child: GtkWidget, transition: Gtk.
     'top-right': () => (
         <box>
             <Padding name={name} />
-            <box hexpand vertical>
-                <Padding name={name} opts={{ vexpand: false, className: 'event-top-padding' }} />
+            <box hexpand={false} vertical>
                 <PopupRevealer name={name} child={child} transition={transition} />
                 <Padding name={name} />
             </box>
@@ -77,9 +76,7 @@ const Layout: LayoutFunction = (name: string, child: GtkWidget, transition: Gtk.
     ),
     'top-left': () => (
         <box>
-            <Padding name={name} />
             <box hexpand={false} vertical>
-                <Padding name={name} opts={{ vexpand: false, className: 'event-top-padding' }} />
                 <PopupRevealer name={name} child={child} transition={transition} />
                 <Padding name={name} />
             </box>
