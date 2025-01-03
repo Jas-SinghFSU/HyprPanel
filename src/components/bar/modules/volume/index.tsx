@@ -11,12 +11,12 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 
 const Volume = (): BarBoxChild => {
-    const volumeIcon = (isMuted: boolean, vol: number): JSX.Element => {
-        return <label className={'bar-button-icon volume txt-icon bar'} label={getIcon(isMuted, vol)} />;
+    const VolumeIcon = ({ isMuted, volume }: VolumeIconProps): JSX.Element => {
+        return <label className={'bar-button-icon volume txt-icon bar'} label={getIcon(isMuted, volume)} />;
     };
 
-    const volumeLabel = (vol: number): JSX.Element => {
-        return <label className={'bar-button-label volume'} label={`${Math.round(vol * 100)}%`} />;
+    const VolumeLabel = ({ volume }: VolumeLabelProps): JSX.Element => {
+        return <label className={'bar-button-label volume'} label={`${Math.round(volume * 100)}%`} />;
     };
 
     const componentTooltip = Variable.derive(
@@ -49,9 +49,15 @@ const Volume = (): BarBoxChild => {
         ],
         (showLabel, vol, isMuted) => {
             if (showLabel) {
-                return [volumeIcon(isMuted, vol), volumeLabel(vol)];
+                return (
+                    <box>
+                        <VolumeIcon isMuted={isMuted} volume={vol} />
+                        <VolumeLabel volume={vol} />
+                    </box>
+                );
             }
-            return [volumeIcon(isMuted, vol)];
+
+            return <VolumeIcon isMuted={isMuted} volume={vol} />;
         },
     );
     const component = (
@@ -116,5 +122,14 @@ const Volume = (): BarBoxChild => {
         },
     };
 };
+
+interface VolumeIconProps {
+    isMuted: boolean;
+    volume: number;
+}
+
+interface VolumeLabelProps {
+    volume: number;
+}
 
 export { Volume };

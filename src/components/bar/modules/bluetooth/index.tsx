@@ -11,11 +11,11 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
 const Bluetooth = (): BarBoxChild => {
-    const btIcon = (isPowered: boolean): JSX.Element => (
+    const BluetoothIcon = ({ isPowered }: BluetoothIconProps): JSX.Element => (
         <label className={'bar-button-icon bluetooth txt-icon bar'} label={isPowered ? '󰂯' : '󰂲'} />
     );
 
-    const btText = (isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element => {
+    const BluetoothLabel = ({ isPowered, devices }: BluetoothLabelProps): JSX.Element => {
         const connectDevices = devices.filter((device) => device.connected);
 
         const label =
@@ -39,11 +39,17 @@ const Bluetooth = (): BarBoxChild => {
 
     const componentBinding = Variable.derive(
         [bind(options.bar.bluetooth.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
-        (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element[] => {
+        (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element => {
             if (showLabel) {
-                return [btIcon(isPowered), btText(isPowered, devices)];
+                return (
+                    <box>
+                        <BluetoothIcon isPowered={isPowered} />
+                        <BluetoothLabel isPowered={isPowered} devices={devices} />
+                    </box>
+                );
             }
-            return [btIcon(isPowered)];
+
+            return <BluetoothIcon isPowered={isPowered} />;
         },
     );
 
@@ -100,5 +106,14 @@ const Bluetooth = (): BarBoxChild => {
         },
     };
 };
+
+interface BluetoothIconProps {
+    isPowered: boolean;
+}
+
+interface BluetoothLabelProps {
+    isPowered: boolean;
+    devices: AstalBluetooth.Device[];
+}
 
 export { Bluetooth };

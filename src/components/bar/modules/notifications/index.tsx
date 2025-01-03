@@ -44,7 +44,7 @@ export const Notifications = (): BarBoxChild => {
         ) => {
             const filteredNotifications = filterNotifications(notif, ignoredNotifs);
 
-            const notifIcon = (
+            const NotifIcon = (): JSX.Element => (
                 <label
                     halign={Gtk.Align.CENTER}
                     className={'bar-button-icon notifications txt-icon bar'}
@@ -52,7 +52,7 @@ export const Notifications = (): BarBoxChild => {
                 />
             );
 
-            const notifLabel = (
+            const NotifLabel = (): JSX.Element => (
                 <label
                     halign={Gtk.Align.CENTER}
                     className={'bar-button-label notifications'}
@@ -62,11 +62,16 @@ export const Notifications = (): BarBoxChild => {
 
             if (showTotal) {
                 if (hideCountForZero && filteredNotifications.length === 0) {
-                    return [notifIcon];
+                    return <NotifIcon />;
                 }
-                return [notifIcon, notifLabel];
+                return (
+                    <box>
+                        <NotifIcon />
+                        <NotifLabel />
+                    </box>
+                );
             }
-            return [notifIcon];
+            return <NotifIcon />;
         },
     );
 
