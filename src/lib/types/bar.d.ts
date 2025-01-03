@@ -33,6 +33,7 @@ export type BarModule = {
     props?: Widget.ButtonProps;
     showLabel?: boolean;
     showLabelBinding?: Binding;
+    showIconBinding?: Binding;
     hook?: BoxHook;
     connection?: Binding<Connectable>;
 };
