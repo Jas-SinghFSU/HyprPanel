@@ -6,7 +6,7 @@ import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 import { App, Gtk } from 'astal/gtk3';
 import Separator from 'src/components/shared/Separator.js';
 import AstalApps from 'gi://AstalApps?version=0.1'
-import { icon, launchApp } from 'src/lib/utils.js';
+import { bash, icon } from 'src/lib/utils.js';
 import { Entry, EntryProps, Scrollable } from 'astal/gtk3/widget';
 
 import PopupWindow from '../shared/popup/index.js';
@@ -24,9 +24,19 @@ interface ApplicationItemProps {
     onLaunched?: () => void;
 }
 
+function launch(app: AstalApps.Application): void {
+    const exe = app.executable
+        .split(/\s+/)
+        .filter((str) => !str.startsWith('%') && !str.startsWith('@'))
+        .join(' ');
+
+    bash(`hyprctl dispatch exec "${exe}"`);
+    app.frequency += 1;
+}
+
 const ApplicationItem = ({ app, onLaunched }: ApplicationItemProps): JSX.Element => {
     return (
-        <button className="notification-card" halign={Gtk.Align.FILL} valign={Gtk.Align.START} onClick={() => { launchApp(app); onLaunched?.() }}>
+        <button className="notification-card" halign={Gtk.Align.FILL} valign={Gtk.Align.START} onClick={() => { launch(app); onLaunched?.() }}>
             <box spacing={5}>
                 <icon className="notification-card-image icon" margin={5} halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} vexpand={false} icon={icon(app.iconName)} />
                 <label halign={Gtk.Align.START} valign={Gtk.Align.CENTER} label={app.name} hexpand vexpand truncate wrap />
@@ -93,7 +103,7 @@ const ApplicationLauncher = ({ visible, onLaunched }: ApplicationLauncherProps):
     const onFilterReturn = () => {
         const first = list.get()[0]
         if (!first) return;
-        launchApp(first)
+        launch(first);
         onLaunched?.()
     }
 
