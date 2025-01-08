@@ -36,7 +36,7 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         ['opera', '', 'Opera'],
         ['vivaldi', '󰖟', 'Vivaldi'],
         ['waterfox', '󰖟', 'Waterfox'],
-        ['thorium', '󰖟', 'Waterfox'],
+        ['thorium', '󰖟', 'Thorium'],
         ['tor-browser', '', 'Tor Browser'],
         ['floorp', '󰈹', 'Floorp'],
 
