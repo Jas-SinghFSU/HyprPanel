@@ -208,6 +208,7 @@ const options = mkOptions(CONFIG, {
                     occupied: opt(colors.flamingo),
                     active: opt(colors.pink),
                     hover: opt(colors.pink),
+                    numbered_inactive_padding: opt('0.2em'),
                     numbered_active_highlight_border: opt('0.2em'),
                     numbered_active_highlight_padding: opt('0.2em'),
                     numbered_active_highlighted_text_color: opt(colors.mantle),

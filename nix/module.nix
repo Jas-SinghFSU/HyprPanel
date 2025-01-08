@@ -474,6 +474,7 @@ in
       theme.bar.buttons.windowtitle.spacing = mkStrOption "0.5em";
       theme.bar.buttons.workspaces.enableBorder = mkBoolOption false;
       theme.bar.buttons.workspaces.fontSize = mkStrOption "1.2em";
+      theme.bar.buttons.workspaces.numbered_inactive_padding = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_border = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_padding = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.pill.active_width = mkStrOption "12em";
