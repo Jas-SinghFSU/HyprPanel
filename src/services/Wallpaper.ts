@@ -26,7 +26,7 @@ class Wallpaper extends GObject.Object {
                 '--transition-duration',
                 '1.5',
                 '--transition-fps',
-                '30',
+                '60',
                 '--transition-pos',
                 cursorPosition.replace(' ', ''),
                 WP,
@@ -100,7 +100,7 @@ class Wallpaper extends GObject.Object {
             }
         });
 
-        if (dependencies('swww') && options.wallpaper.enable.get()) {
+        if (options.wallpaper.enable.get() && dependencies('swww')) {
             this.#isRunning = true;
 
             monitorFile(WP, () => {
