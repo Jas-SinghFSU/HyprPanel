@@ -49,6 +49,7 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         ['tilix', '', 'Tilix'],
         ['xterm', '', 'XTerm'],
         ['urxvt', '', 'URxvt'],
+        ['com.mitchellh.ghostty', '󰊠', 'Ghostty'],
         ['st', '', 'st Terminal'],
 
         // Development Tools
