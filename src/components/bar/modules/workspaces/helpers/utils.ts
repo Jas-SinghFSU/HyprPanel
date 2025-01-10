@@ -115,8 +115,6 @@ export const getAppIcon = (
     removeDuplicateIcons: boolean,
     { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
-    const iconMap = { ...userDefinedIconMap, ...defaultApplicationIcons };
-
     const clients = hyprlandService
         .get_clients()
         .filter((client) => client?.workspace?.id === workspaceIndex)
@@ -126,40 +124,45 @@ export const getAppIcon = (
         return emptyIcon;
     }
 
-    let icons = clients
-        .map(([clientClass, clientTitle]) => {
-            const maybeIcon = Object.entries(iconMap).find(([matcher]) => {
-                try {
-                    if (matcher.startsWith('class:')) {
-                        const re = matcher.substring(6);
-                        return new RegExp(re).test(clientClass);
-                    }
+    let icons = [];
+    for (const [clientClass, clientTitle] of clients) {
+        const iconMapIterators = [
+            Object.entries(userDefinedIconMap)[Symbol.iterator](),
+            Object.entries(defaultApplicationIcons)[Symbol.iterator](),
+        ];
 
-                    if (matcher.startsWith('title:')) {
-                        const re = matcher.substring(6);
+        for (const iter of iconMapIterators) {
+            while (true) {
+                const { value, done } = iter.next();
 
-                        return new RegExp(re).test(clientTitle);
-                    }
-
-                    return new RegExp(matcher, 'i').test(clientClass);
-                } catch {
-                    return false;
+                if (done) {
+                    break;
                 }
-            });
 
-            if (!maybeIcon) {
-                return undefined;
+                const [matcher, icon] = value;
+                let result = false;
+                if (matcher.startsWith('class:')) {
+                    const re = matcher.substring(6);
+                    result = new RegExp(re).test(clientClass);
+                } else if (matcher.startsWith('title:')) {
+                    const re = matcher.substring(6);
+                    result = new RegExp(re).test(clientTitle);
+                } else {
+                    result = new RegExp(matcher, 'i').test(clientClass);
+                }
+
+                if (result) {
+                    icons.push(icon);
+                }
             }
-
-            return maybeIcon.at(1);
-        })
-        .filter((x) => x);
-
-    if (removeDuplicateIcons) {
-        icons = [...new Set(icons)];
+        }
     }
 
     if (icons.length) {
+        if (removeDuplicateIcons) {
+            icons = [...new Set(icons)];
+        }
+
         return icons.join(' ');
     }
 

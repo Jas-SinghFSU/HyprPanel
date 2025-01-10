@@ -14,12 +14,9 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
  * @returns An object containing the icon and label for the window.
  */
 export const getWindowMatch = (client: AstalHyprland.Client): Record<string, string> => {
-    const windowTitleMap = [
-        ...options.bar.windowtitle.title_map.get(),
-        ...defaultWindowTitleMap,
-
-        // Fallback icon
-        ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],
+    const windowTitleIterators = [
+        options.bar.windowtitle.title_map.get()[Symbol.iterator](),
+        defaultWindowTitleMap[Symbol.iterator](),
     ];
 
     if (!client?.class) {
@@ -29,18 +26,29 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         };
     }
 
-    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(client?.class.toLowerCase()));
+    for (const iter of windowTitleIterators) {
+        while (true) {
+            const { value, done } = iter.next();
 
-    if (!foundMatch || foundMatch.length !== 3) {
-        return {
-            icon: windowTitleMap[windowTitleMap.length - 1][1],
-            label: windowTitleMap[windowTitleMap.length - 1][2],
-        };
+            if (done) {
+                break;
+            }
+
+            const [re, icon, label] = value;
+
+            if (RegExp(re).test(client?.class.toLowerCase())) {
+                return {
+                    icon: icon,
+                    label: label,
+                };
+            }
+        }
     }
 
+    // Nothing found, return the default
     return {
-        icon: foundMatch[1],
-        label: foundMatch[2],
+        icon: '󰣆',
+        label: `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`,
     };
 };
 
