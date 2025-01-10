@@ -1,5 +1,6 @@
 import options from 'src/options';
 import { capitalizeFirstLetter } from 'src/lib/utils';
+import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
 /**
@@ -14,110 +15,8 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
  */
 export const getWindowMatch = (client: AstalHyprland.Client): Record<string, string> => {
     const windowTitleMap = [
-        // user provided values
         ...options.bar.windowtitle.title_map.get(),
-        // Original Entries
-        ['kitty', '󰄛', 'Kitty Terminal'],
-        ['firefox', '󰈹', 'Firefox'],
-        ['microsoft-edge', '󰇩', 'Edge'],
-        ['discord', '', 'Discord'],
-        ['vesktop', '', 'Vesktop'],
-        ['org.kde.dolphin', '', 'Dolphin'],
-        ['plex', '󰚺', 'Plex'],
-        ['steam', '', 'Steam'],
-        ['spotify', '󰓇', 'Spotify'],
-        ['ristretto', '󰋩', 'Ristretto'],
-        ['obsidian', '󱓧', 'Obsidian'],
-
-        // Browsers
-        ['google-chrome', '', 'Google Chrome'],
-        ['brave-browser', '󰖟', 'Brave Browser'],
-        ['chromium', '', 'Chromium'],
-        ['opera', '', 'Opera'],
-        ['vivaldi', '󰖟', 'Vivaldi'],
-        ['waterfox', '󰖟', 'Waterfox'],
-        ['thorium', '󰖟', 'Thorium'],
-        ['tor-browser', '', 'Tor Browser'],
-        ['floorp', '󰈹', 'Floorp'],
-
-        // Terminals
-        ['gnome-terminal', '', 'GNOME Terminal'],
-        ['konsole', '', 'Konsole'],
-        ['alacritty', '', 'Alacritty'],
-        ['wezterm', '', 'Wezterm'],
-        ['foot', '󰽒', 'Foot Terminal'],
-        ['tilix', '', 'Tilix'],
-        ['xterm', '', 'XTerm'],
-        ['urxvt', '', 'URxvt'],
-        ['com.mitchellh.ghostty', '󰊠', 'Ghostty'],
-        ['st', '', 'st Terminal'],
-
-        // Development Tools
-        ['code', '󰨞', 'Visual Studio Code'],
-        ['vscode', '󰨞', 'VS Code'],
-        ['sublime-text', '', 'Sublime Text'],
-        ['atom', '', 'Atom'],
-        ['android-studio', '󰀴', 'Android Studio'],
-        ['intellij-idea', '', 'IntelliJ IDEA'],
-        ['pycharm', '󱃖', 'PyCharm'],
-        ['webstorm', '󱃖', 'WebStorm'],
-        ['phpstorm', '󱃖', 'PhpStorm'],
-        ['eclipse', '', 'Eclipse'],
-        ['netbeans', '', 'NetBeans'],
-        ['docker', '', 'Docker'],
-        ['vim', '', 'Vim'],
-        ['neovim', '', 'Neovim'],
-        ['neovide', '', 'Neovide'],
-        ['emacs', '', 'Emacs'],
-
-        // Communication Tools
-        ['slack', '󰒱', 'Slack'],
-        ['telegram-desktop', '', 'Telegram'],
-        ['org.telegram.desktop', '', 'Telegram'],
-        ['whatsapp', '󰖣', 'WhatsApp'],
-        ['teams', '󰊻', 'Microsoft Teams'],
-        ['skype', '󰒯', 'Skype'],
-        ['thunderbird', '', 'Thunderbird'],
-
-        // File Managers
-        ['nautilus', '󰝰', 'Files (Nautilus)'],
-        ['thunar', '󰝰', 'Thunar'],
-        ['pcmanfm', '󰝰', 'PCManFM'],
-        ['nemo', '󰝰', 'Nemo'],
-        ['ranger', '󰝰', 'Ranger'],
-        ['doublecmd', '󰝰', 'Double Commander'],
-        ['krusader', '󰝰', 'Krusader'],
-
-        // Media Players
-        ['vlc', '󰕼', 'VLC Media Player'],
-        ['mpv', '', 'MPV'],
-        ['rhythmbox', '󰓃', 'Rhythmbox'],
-
-        // Graphics Tools
-        ['gimp', '', 'GIMP'],
-        ['inkscape', '', 'Inkscape'],
-        ['krita', '', 'Krita'],
-        ['blender', '󰂫', 'Blender'],
-
-        // Video Editing
-        ['kdenlive', '', 'Kdenlive'],
-
-        // Games and Gaming Platforms
-        ['lutris', '󰺵', 'Lutris'],
-        ['heroic', '󰺵', 'Heroic Games Launcher'],
-        ['minecraft', '󰍳', 'Minecraft'],
-        ['csgo', '󰺵', 'CS:GO'],
-        ['dota2', '󰺵', 'Dota 2'],
-
-        // Office and Productivity
-        ['evernote', '', 'Evernote'],
-        ['sioyek', '', 'Sioyek'],
-
-        // Cloud Services and Sync
-        ['dropbox', '󰇣', 'Dropbox'],
-
-        // Desktop
-        ['^$', '󰇄', 'Desktop'],
+        ...defaultWindowTitleMap,
 
         // Fallback icon
         ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],

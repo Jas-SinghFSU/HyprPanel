@@ -1,5 +1,5 @@
+import { defaultApplicationIcons } from 'src/lib/constants/appIcons';
 import { hyprlandService } from 'src/lib/constants/services';
-import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
@@ -38,18 +38,15 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
 
-    if (!iconEntry) {
-        return `${i}`;
-    }
+    if (iconEntry) {
+        if (typeof iconEntry === 'string' && iconEntry !== '') {
+            return iconEntry;
+        }
 
-    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
-
-    if (typeof iconEntry === 'string' && iconEntry !== '') {
-        return iconEntry;
-    }
-
-    if (hasIcon) {
-        return iconEntry.icon;
+        const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+        if (hasIcon) {
+            return iconEntry.icon;
+        }
     }
 
     return `${i}`;
