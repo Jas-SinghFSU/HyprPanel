@@ -76,6 +76,7 @@ in
 {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
+    config.enable = mkBoolOption true; # Generate config
     overlay.enable = mkEnableOption "script overlay";
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
@@ -613,14 +614,14 @@ in
           '';
         };
 
-    xdg.configFile.hyprpanel = {
+    xdg.configFile.hyprpanel = mkIf cfg.config.enable {
       target = "hyprpanel/config.json";
       text = finalConfig;
       # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
       onChange = "${package}/bin/hyprpanel r";
     };
 
-    xdg.configFile.hyprpanel-swap = {
+    xdg.configFile.hyprpanel-swap = mkIf cfg.config.enable {
       target = "hyprpanel/config.hm.json";
       text = finalConfig;
     };
