@@ -38,7 +38,13 @@ const Bluetooth = (): BarBoxChild => {
     );
 
     const componentBinding = Variable.derive(
-        [bind(options.bar.bluetooth.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
+        [
+            bind(options.bar.bluetooth.label),
+            bind(bluetoothService, 'isPowered'),
+            bind(bluetoothService, 'devices'),
+
+            bind(bluetoothService, 'isConnected'),
+        ],
         (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element => {
             if (showLabel) {
                 return (
