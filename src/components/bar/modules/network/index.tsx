@@ -23,7 +23,7 @@ const Network = (): BarBoxChild => {
         },
     );
 
-    const networkIcon = <icon className={'bar-button-icon network-icon'} icon={iconBinding()} />;
+    const NetworkIcon = (): JSX.Element => <icon className={'bar-button-icon network-icon'} icon={iconBinding()} />;
 
     const networkLabel = Variable.derive(
         [
@@ -66,8 +66,6 @@ const Network = (): BarBoxChild => {
         },
     );
 
-    const componentChildren = [networkIcon, networkLabel()];
-
     const component = (
         <box
             vexpand
@@ -79,7 +77,8 @@ const Network = (): BarBoxChild => {
                 componentClassName.drop();
             }}
         >
-            {componentChildren}
+            <NetworkIcon />
+            {networkLabel()}
         </box>
     );
 

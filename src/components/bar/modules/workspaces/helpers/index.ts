@@ -94,13 +94,15 @@ function isWorkspaceValidForMonitor(
     });
 
     const currentMonitorName = monitorNameMap[monitorId];
-    const currentMonitorWorkspaceRules = workspaceMonitorRules[currentMonitorName];
+    const currentMonitorWorkspaceRules = workspaceMonitorRules[currentMonitorName] ?? [];
+    const activeWorkspaceIds = new Set(allWorkspaceInstances.map((ws) => ws.id));
+    const filteredWorkspaceRules = currentMonitorWorkspaceRules.filter((ws) => !activeWorkspaceIds.has(ws));
 
-    if (currentMonitorWorkspaceRules === undefined) {
+    if (filteredWorkspaceRules === undefined) {
         return false;
     }
 
-    return currentMonitorWorkspaceRules.includes(workspaceId);
+    return filteredWorkspaceRules.includes(workspaceId);
 }
 
 /**
@@ -319,6 +321,12 @@ export function getWorkspacesToRender(
     );
 
     const activeWorkspacesForCurrentMonitor = activeWorkspaceIds.filter((workspaceId) => {
+        const metadataForWorkspace = allWorkspaceInstances.find((workspaceObj) => workspaceObj.id === workspaceId);
+
+        if (metadataForWorkspace) {
+            return metadataForWorkspace?.monitor?.id === monitorId;
+        }
+
         if (
             currentMonitorInstance &&
             Object.hasOwnProperty.call(workspaceMonitorRules, currentMonitorInstance.name) &&
@@ -326,8 +334,6 @@ export function getWorkspacesToRender(
         ) {
             return workspaceMonitorRules[currentMonitorInstance.name].includes(workspaceId);
         }
-        const metadataForWorkspace = allWorkspaceInstances.find((workspaceObj) => workspaceObj.id === workspaceId);
-        return metadataForWorkspace?.monitor?.id === monitorId;
     });
 
     if (isMonitorSpecific) {

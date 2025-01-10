@@ -13,6 +13,26 @@ const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar
 const ClientTitle = (): BarBoxChild => {
     const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
 
+    const ClientIcon = ({ client }: ClientIconProps): JSX.Element => {
+        return <label className={'bar-button-icon windowtitle txt-icon bar'} label={getWindowMatch(client).icon} />;
+    };
+
+    const ClientLabel = ({
+        client,
+        useCustomTitle,
+        useClassName,
+        showIcon,
+        truncate,
+        truncationSize,
+    }: ClientLabelProps): JSX.Element => {
+        return (
+            <label
+                className={`bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`}
+                label={truncateTitle(getTitle(client, useCustomTitle, useClassName), truncate ? truncationSize : -1)}
+            />
+        );
+    };
+
     const componentClassName = Variable.derive(
         [bind(options.theme.bar.buttons.style), bind(label)],
         (style: string, showLabel: boolean) => {
@@ -48,22 +68,18 @@ const ClientTitle = (): BarBoxChild => {
             const children: JSX.Element[] = [];
 
             if (showIcon) {
-                children.push(
-                    <label
-                        className={'bar-button-icon windowtitle txt-icon bar'}
-                        label={getWindowMatch(client).icon}
-                    />,
-                );
+                children.push(<ClientIcon client={client} />);
             }
 
             if (showLabel) {
                 children.push(
-                    <label
-                        className={`bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`}
-                        label={truncateTitle(
-                            getTitle(client, useCustomTitle, useClassName),
-                            truncate ? truncationSize : -1,
-                        )}
+                    <ClientLabel
+                        client={client}
+                        useCustomTitle={useCustomTitle}
+                        useClassName={useClassName}
+                        truncate={truncate}
+                        truncationSize={truncationSize}
+                        showIcon={showIcon}
                     />,
                 );
             }
@@ -121,5 +137,18 @@ const ClientTitle = (): BarBoxChild => {
         },
     };
 };
+
+interface ClientIconProps {
+    client: AstalHyprland.Client;
+}
+
+interface ClientLabelProps {
+    client: AstalHyprland.Client;
+    useCustomTitle: boolean;
+    useClassName: boolean;
+    showIcon: boolean;
+    truncate: boolean;
+    truncationSize: number;
+}
 
 export { ClientTitle };

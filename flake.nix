@@ -33,6 +33,7 @@
             battery
             bluetooth
             mpris
+            cava
             network
             notifd
             powerprofiles
