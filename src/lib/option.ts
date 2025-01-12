@@ -81,7 +81,7 @@ export class Opt<T = unknown> extends Variable<T> {
         const value = config[this._id];
 
         if (value !== undefined) {
-            this.set(value as T);
+            this.set(value as T, { writeDisk: false });
         }
     }
 
@@ -202,8 +202,8 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
                 body: `${error}`,
                 iconName: icons.ui.warning,
             });
-
-            errorHandler(error);
+            // Continue with a broken config, the user has
+            // been warned
         }
     }
 
