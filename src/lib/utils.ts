@@ -11,6 +11,7 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
+import { notifdService } from './constants/services.ts';
 
 /**
  * Handles errors by throwing a new Error with a message.
@@ -270,6 +271,12 @@ export function normalizePath(path: string): string {
  * @param notifPayload The notification arguments containing summary, body, appName, iconName, urgency, timeout, category, transient, and id.
  */
 export function Notify(notifPayload: NotificationArgs): void {
+    // This line does nothing useful at runtime, but when bundling, it
+    // ensures that notifdService has been instantiated and, as such,
+    // that the notification daemon is active and the notification
+    // will be handled
+    notifdService;
+
     let command = 'notify-send';
     command += ` "${notifPayload.summary} "`;
     if (notifPayload.body) command += ` "${notifPayload.body}" `;
