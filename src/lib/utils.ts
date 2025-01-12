@@ -275,7 +275,7 @@ export function Notify(notifPayload: NotificationArgs): void {
     // ensures that notifdService has been instantiated and, as such,
     // that the notification daemon is active and the notification
     // will be handled
-    notifdService;
+    notifdService; // eslint-disable-line @typescript-eslint/no-unused-expressions
 
     let command = 'notify-send';
     command += ` "${notifPayload.summary} "`;
