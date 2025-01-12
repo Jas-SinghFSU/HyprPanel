@@ -9,6 +9,10 @@ type OptProps = {
     persistent?: boolean;
 };
 
+type WriteDiskProps = {
+    writeDisk?: boolean;
+};
+
 export class Opt<T = unknown> extends Variable<T> {
     /**
      * The initial value set when the `Opt` is created.
@@ -87,7 +91,7 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param value - The new value.
      * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
-    public set(value: T, writeDisk: boolean = true): void {
+    public set(value: T, { writeDisk = true }: WriteDiskProps = {}): void {
         super.set(value);
 
         if (writeDisk) {
@@ -116,17 +120,18 @@ export class Opt<T = unknown> extends Variable<T> {
     /**
      * Resets the value of this option to its initial value if not persistent and if it differs from the current value.
      *
+     * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      * @returns Returns the option's ID if reset occurred, otherwise undefined.
      */
-    public reset(): string | undefined {
+    public reset(writeDiskProps: WriteDiskProps = {}): string | undefined {
         if (this.persistent) {
             return undefined;
         }
 
         const current = this.get();
 
-        if (JSON.stringify(current) !== JSON.stringify(this.initial)) {
-            this.set(this.initial);
+        if (current !== this.initial) {
+            this.set(this.initial, writeDiskProps);
             return this._id;
         }
 
@@ -192,6 +197,12 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
         try {
             config = JSON.parse(rawConfig) as Record<string, unknown>;
         } catch (error) {
+            Notify({
+                summary: 'Failed to load config file',
+                body: `${error}`,
+                iconName: icons.ui.warning,
+            });
+
             errorHandler(error);
         }
     }
@@ -212,21 +223,20 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
         }
         lastEventTime = Date.now();
 
-        const raw = readFile(CONFIG);
+        let cache: Record<string, unknown> = {};
 
-        if (!raw || raw.trim() === '') return;
-
-        let cache: Record<string, unknown>;
-
-        try {
-            cache = JSON.parse(raw) as Record<string, unknown>;
-        } catch (error) {
-            Notify({
-                summary: 'Loading configuration file failed',
-                body: `${error}`,
-                iconName: icons.ui.warning,
-            });
-            return;
+        const rawConfig = readFile(CONFIG);
+        if (rawConfig && rawConfig.trim() !== '') {
+            try {
+                cache = JSON.parse(rawConfig) as Record<string, unknown>;
+            } catch (error) {
+                Notify({
+                    summary: 'Loading configuration file failed',
+                    body: `${error}`,
+                    iconName: icons.ui.warning,
+                });
+                return;
+            }
         }
 
         for (let i = 0; i < allOptions.length; i++) {
@@ -234,14 +244,17 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
             const newVal = cache[opt.id];
 
             if (newVal === undefined) {
+                // Set the variable but don't write it back to the file,
+                // as we are getting it from there
+                opt.reset({ writeDisk: false });
                 continue;
             }
 
             const oldVal = opt.get();
-            if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+            if (newVal !== oldVal) {
                 // Set the variable but don't write it back to the file,
                 // as we are getting it from there
-                opt.set(newVal, false);
+                opt.set(newVal, { writeDisk: false });
             }
         }
     });
@@ -275,7 +288,6 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
     }
 
     return Object.assign(optionsObj, {
-        configFile,
         array: (): Opt[] => allOptions,
         async reset(): Promise<string> {
             const ids = await resetAll(allOptions);
