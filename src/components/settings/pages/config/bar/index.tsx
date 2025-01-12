@@ -194,12 +194,6 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
-                    opt={options.theme.bar.buttons.workspaces.numbered_inactive_padding}
-                    title="Inactive Padding"
-                    subtitle="Only applicable if Workspace Numbers are enabled"
-                    type="string"
-                />
-                <Option
                     opt={options.theme.bar.buttons.workspaces.numbered_active_highlight_border}
                     title="Highlight Radius"
                     subtitle="Only applicable if Workspace Numbers are enabled"
@@ -208,6 +202,12 @@ export const BarSettings = (): JSX.Element => {
                 <Option
                     opt={options.theme.bar.buttons.workspaces.numbered_active_highlight_padding}
                     title="Highlight Padding"
+                    subtitle="Only applicable if Workspace Numbers are enabled"
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.numbered_inactive_padding}
+                    title="Inactive Padding"
                     subtitle="Only applicable if Workspace Numbers are enabled"
                     type="string"
                 />
