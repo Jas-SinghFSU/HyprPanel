@@ -24,6 +24,8 @@ let
   mkStrOption = default: mkOption { type = types.str; default = default; };
   mkIntOption = default: mkOption { type = types.int; default = default; };
   mkBoolOption = default: mkOption { type = types.bool; default = default; };
+  mkStrListOption = default: mkOption { type = types.listOf types.str; default = default; };
+  mkFloatOption = default: mkOption { type = types.float; default = default; };
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
   #       Do not ask what these do...
@@ -149,6 +151,25 @@ in
       bar.clock.scrollUp = mkStrOption "";
       bar.clock.showIcon = mkBoolOption true;
       bar.clock.showTime = mkBoolOption true;
+      bar.customModules.cava.showIcon = mkBoolOption true;
+      bar.customModules.cava.icon = mkStrOption "";
+      bar.customModules.cava.spaceCharacter = mkStrOption " ";
+      bar.customModules.cava.barCharacters = mkStrListOption [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+      bar.customModules.cava.showActiveOnly = mkBoolOption false;
+      bar.customModules.cava.bars = mkIntOption 10;
+      bar.customModules.cava.channels = mkIntOption 2;
+      bar.customModules.cava.framerate = mkIntOption 60;
+      bar.customModules.cava.samplerate = mkIntOption 44100;
+      bar.customModules.cava.autoSensitivity = mkBoolOption true;
+      bar.customModules.cava.lowCutoff = mkIntOption 50;
+      bar.customModules.cava.highCutoff = mkIntOption 10000;
+      bar.customModules.cava.noiseReduction = mkFloatOption 0.77;
+      bar.customModules.cava.stereo = mkBoolOption false;
+      bar.customModules.cava.leftClick = mkStrOption "";
+      bar.customModules.cava.rightClick = mkStrOption "";
+      bar.customModules.cava.middleClick = mkStrOption "";
+      bar.customModules.cava.scrollUp = mkStrOption "";
+      bar.customModules.cava.scrollDown = mkStrOption "";
       bar.customModules.cpu.icon = mkStrOption "";
       bar.customModules.cpu.label = mkBoolOption true;
       bar.customModules.cpu.leftClick = mkStrOption "";
