@@ -1,4 +1,3 @@
-import { BindableChild } from 'astal/gtk3/astalify';
 import { audioService } from 'src/lib/constants/services';
 import { SliderItem } from '../sliderItem/SliderItem';
 import { ActiveDeviceMenu } from '..';
@@ -21,5 +20,5 @@ export const ActiveDevices = (): JSX.Element => {
 };
 
 interface ActiveDeviceContainerProps {
-    children?: BindableChild | BindableChild[];
+    children?: JSX.Element[];
 }

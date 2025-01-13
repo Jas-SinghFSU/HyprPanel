@@ -1,4 +1,4 @@
-import FileChooserButton from 'src/components/shared/FileChooseButton';
+import FileChooserButton from 'src/components/shared/FileChooserButton';
 import { Opt } from 'src/lib/option';
 import Wallpaper from 'src/services/Wallpaper';
 

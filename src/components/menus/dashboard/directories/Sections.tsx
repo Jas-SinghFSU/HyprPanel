@@ -1,5 +1,3 @@
-import { BindableChild } from 'astal/gtk3/astalify';
-
 export const LeftSection = ({ children }: SectionProps): JSX.Element => {
     return (
         <box className={'section left'} vertical expand>
@@ -17,5 +15,5 @@ export const RightSection = ({ children }: SectionProps): JSX.Element => {
 };
 
 interface SectionProps {
-    children?: BindableChild | BindableChild[];
+    children?: JSX.Element | JSX.Element[];
 }

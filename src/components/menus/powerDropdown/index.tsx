@@ -1,4 +1,4 @@
-import { bind } from 'astal/binding.js';
+import { bind } from 'astal';
 import DropdownMenu from '../shared/dropdown/index.js';
 import { PowerButton } from './button.js';
 import options from 'src/options.js';

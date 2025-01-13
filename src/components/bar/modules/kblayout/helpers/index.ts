@@ -13,13 +13,13 @@ import { layoutMap } from './layouts';
  * This function parses the provided JSON string to extract the keyboard layout information.
  * It returns the layout in the specified format, either as a code or a human-readable string.
  *
- * @param obj The JSON string containing the keyboard layout information.
+ * @param layoutData The JSON string containing the keyboard layout information.
  * @param format The format in which to return the layout, either 'code' or 'label'.
  *
  * @returns The keyboard layout in the specified format. If no keyboards are found, returns 'Unknown' or 'Unknown Layout'.
  */
-export const getKeyboardLayout = (obj: string, format: KbLabelType): LayoutKeys | LayoutValues => {
-    const hyprctlDevices: HyprctlDeviceLayout = JSON.parse(obj);
+export const getKeyboardLayout = (layoutData: string, format: KbLabelType): LayoutKeys | LayoutValues => {
+    const hyprctlDevices: HyprctlDeviceLayout = JSON.parse(layoutData);
     const keyboards = hyprctlDevices['keyboards'];
 
     if (keyboards.length === 0) {

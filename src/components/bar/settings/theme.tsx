@@ -193,6 +193,19 @@ export const CustomModuleTheme = (): JSX.Element => {
                 />
                 <Option opt={options.theme.bar.buttons.modules.hypridle.border} title="Border" type="color" />
 
+                {/* Cava Module Section */}
+                <Header title="Cava" />
+                <Option opt={options.theme.bar.buttons.modules.cava.text} title="Bars" type="color" />
+                <Option opt={options.theme.bar.buttons.modules.cava.icon} title="Icon" type="color" />
+                <Option opt={options.theme.bar.buttons.modules.cava.background} title="Label Background" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cava.icon_background}
+                    title="Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.modules.cava.border} title="Border" type="color" />
+
                 {/* Power Module Section */}
                 <Header title="Power" />
                 <Option opt={options.theme.bar.buttons.modules.power.icon} title="Icon" type="color" />

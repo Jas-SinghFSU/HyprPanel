@@ -7,11 +7,10 @@ import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { notifdService } from 'src/lib/constants/services';
 
 const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
 const { ignore } = options.notifications;
-
-const notifs = AstalNotifd.get_default();
 
 export const Notifications = (): BarBoxChild => {
     const componentClassName = Variable.derive(
@@ -29,8 +28,8 @@ export const Notifications = (): BarBoxChild => {
 
     const boxChildren = Variable.derive(
         [
-            bind(notifs, 'notifications'),
-            bind(notifs, 'dontDisturb'),
+            bind(notifdService, 'notifications'),
+            bind(notifdService, 'dontDisturb'),
             bind(show_total),
             bind(ignore),
             bind(hideCountWhenZero),
@@ -44,7 +43,7 @@ export const Notifications = (): BarBoxChild => {
         ) => {
             const filteredNotifications = filterNotifications(notif, ignoredNotifs);
 
-            const notifIcon = (
+            const NotifIcon = (): JSX.Element => (
                 <label
                     halign={Gtk.Align.CENTER}
                     className={'bar-button-icon notifications txt-icon bar'}
@@ -52,7 +51,7 @@ export const Notifications = (): BarBoxChild => {
                 />
             );
 
-            const notifLabel = (
+            const NotifLabel = (): JSX.Element => (
                 <label
                     halign={Gtk.Align.CENTER}
                     className={'bar-button-label notifications'}
@@ -62,11 +61,16 @@ export const Notifications = (): BarBoxChild => {
 
             if (showTotal) {
                 if (hideCountForZero && filteredNotifications.length === 0) {
-                    return [notifIcon];
+                    return <NotifIcon />;
                 }
-                return [notifIcon, notifLabel];
+                return (
+                    <box>
+                        <NotifIcon />
+                        <NotifLabel />
+                    </box>
+                );
             }
-            return [notifIcon];
+            return <NotifIcon />;
         },
     );
 

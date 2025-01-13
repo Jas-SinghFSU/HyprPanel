@@ -356,5 +356,10 @@
   "theme.bar.buttons.modules.hypridle.text": "#dcdfe8",
   "theme.bar.buttons.modules.hypridle.border": "#d20f39",
   "theme.bar.menus.menu.network.scroller.color": "#8839ef",
-  "theme.bar.menus.menu.bluetooth.scroller.color": "#04a5e5"
+  "theme.bar.menus.menu.bluetooth.scroller.color": "#04a5e5",
+  "theme.bar.buttons.modules.cava.background": "#179299",
+  "theme.bar.buttons.modules.cava.text": "#dcdfe8",
+  "theme.bar.buttons.modules.cava.icon": "#dcdfe8",
+  "theme.bar.buttons.modules.cava.icon_background": "#dcdfe8",
+  "theme.bar.buttons.modules.cava.border": "#179299"
 }

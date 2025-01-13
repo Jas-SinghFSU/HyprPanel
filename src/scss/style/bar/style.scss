@@ -448,3 +448,30 @@
     // custom font size
     1.075em //
 );
+
+/*
+ * #################################
+ * #       Cava Styling            #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'cava',
+    // label color
+    $bar-buttons-modules-cava-text,
+    // icon color
+    $bar-buttons-modules-cava-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-cava-icon_background,
+    // label background
+    $bar-buttons-modules-cava-background,
+    // inner spacing
+    $bar-buttons-modules-cava-spacing,
+    // if border enabled
+    $bar-buttons-modules-cava-enableBorder,
+    // border color
+    $bar-buttons-modules-cava-border,
+    // custom font size
+    1.2em //
+);

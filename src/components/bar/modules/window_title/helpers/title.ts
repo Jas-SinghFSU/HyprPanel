@@ -36,7 +36,7 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         ['opera', '', 'Opera'],
         ['vivaldi', '󰖟', 'Vivaldi'],
         ['waterfox', '󰖟', 'Waterfox'],
-        ['thorium', '󰖟', 'Waterfox'],
+        ['thorium', '󰖟', 'Thorium'],
         ['tor-browser', '', 'Tor Browser'],
         ['floorp', '󰈹', 'Floorp'],
 
@@ -49,6 +49,7 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         ['tilix', '', 'Tilix'],
         ['xterm', '', 'XTerm'],
         ['urxvt', '', 'URxvt'],
+        ['com.mitchellh.ghostty', '󰊠', 'Ghostty'],
         ['st', '', 'st Terminal'],
 
         // Development Tools

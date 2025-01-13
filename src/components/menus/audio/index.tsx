@@ -1,7 +1,7 @@
 import DropdownMenu from '../shared/dropdown/index.js';
 import { VolumeSliders } from './active/index.js';
 import options from 'src/options.js';
-import { bind } from 'astal/binding.js';
+import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { AvailableDevices } from './available/index.js';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
