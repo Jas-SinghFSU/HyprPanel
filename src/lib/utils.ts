@@ -99,7 +99,7 @@ export function icon(name: string | null, fallback = icons.missing): string {
 
     if (lookUpIcon(icon)) return icon;
 
-    print(`no icon substitute "${icon}" for "${name}", fallback: "${fallback}"`);
+    console.log(`no icon substitute "${icon}" for "${name}", fallback: "${fallback}"`);
     return fallback;
 }
 
