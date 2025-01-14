@@ -10,14 +10,15 @@ let
   package = if pkgs ? hyprpanel then pkgs.hyprpanel
   else abort ''
 
-  ******************************************
-  *               HyprPanel                *
-  ******************************************
-  *      You didn't add the overlay!       *
-  *                                        *
-  * Either set 'overlay.enable = true' or  *
-  * manually add it to 'nixpkgs.overlays'. *
-  ******************************************
+  ********************************************************************************
+  *                                  HyprPanel                                   *
+  *------------------------------------------------------------------------------*
+  *                         You didn't add the overlay!                          *
+  *                                                                              *
+  * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
+  * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
+  *                  you will need to add the overlay yourself.                  *
+  ********************************************************************************
   '';
 
   # Shorthand lambda for self-documenting options under settings
@@ -77,6 +78,7 @@ in
 {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
+    config.enable = mkBoolOption true; # Generate config
     overlay.enable = mkEnableOption "script overlay";
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
@@ -99,7 +101,7 @@ in
       '';
       description = ''
         An arbitrary set to override the final config with.
-        Useful for overriding colors in your selected theme.
+        Useful for overriding colors in your chosen theme.
       '';
     };
 
@@ -354,7 +356,8 @@ in
       bar.workspaces.workspaces = mkIntOption 5;
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
-      hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      hyprpanel.restartCommand = mkStrOption "${package}/bin/hyprpanel q; ${package}/bin/hyprpanel";
       menus.clock.time.hideSeconds = mkBoolOption false;
       menus.clock.time.military = mkBoolOption false;
       menus.clock.weather.enabled = mkBoolOption true;
@@ -601,7 +604,6 @@ in
       text = ''
         cd
         echo '------------- HyprPanel -------------'
-        echo 
         echo 'Please ignore the layout diff for now'
         echo '-------------------------------------'
         colordiff ${config.xdg.configFile.hyprpanel.target} \
@@ -611,7 +613,8 @@ in
 
   in mkIf cfg.enable {
 
-    nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
 
     home.packages = [
       package
@@ -632,34 +635,37 @@ in
           '';
         };
 
-    xdg.configFile.hyprpanel = {
+    xdg.configFile.hyprpanel = mkIf cfg.config.enable {
       target = "hyprpanel/config.json";
       text = finalConfig;
-      onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      onChange = "${package}/bin/hyprpanel r";
     };
 
-    xdg.configFile.hyprpanel-swap = {
+    xdg.configFile.hyprpanel-swap = mkIf cfg.config.enable {
       target = "hyprpanel/config.hm.json";
       text = finalConfig;
     };
 
-    systemd.user.services = mkIf cfg.systemd.enable {
-      hyprpanel = {
-        Unit = {
-          Description = "A Bar/Panel for Hyprland with extensive customizability.";
-          Documentation = "https://hyprpanel.com";
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session-pre.target" ];
-        };
-        Service = {
-          ExecStart = "${package}/bin/hyprpanel";
-          ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
-          Restart = "on-failure";
-          KillMode = "mixed";
-        };
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-      };
-    };
+    # NOTE: Deprecated
+    # systemd.user.services = mkIf cfg.systemd.enable {
+    #   hyprpanel = {
+    #     Unit = {
+    #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
+    #       Documentation = "https://hyprpanel.com";
+    #       PartOf = [ "graphical-session.target" ];
+    #       After = [ "graphical-session-pre.target" ];
+    #     };
+    #     Service = {
+    #       ExecStart = "${package}/bin/hyprpanel";
+    #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
+    #       Restart = "on-failure";
+    #       KillMode = "mixed";
+    #     };
+    #     Install = { WantedBy = [ "graphical-session.target" ]; };
+    #   };
+    # };
+    warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [];
 
     wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
   };
