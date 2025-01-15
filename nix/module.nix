@@ -89,17 +89,12 @@ self: {
       in
         "[\n" + (builtins.concatStringsSep ", " items) + "\n]"
       else if builtins.isAttrs value
-      then
-        if value ? _type && value._type == "json"
-        then
-          #Pretty print JSON values from settings
-          lib.generators.toJSON {indent = 2;} value
-        else let
-          keys = builtins.attrNames value;
-          toKeyValue = k: "\"${k}\": ${toNestedValue value.${k}}";
-          inner = builtins.concatStringsSep ", " (builtins.map toKeyValue keys);
-        in
-          "{\n" + inner + "\n}"
+      then let
+        keys = builtins.attrNames value;
+        toKeyValue = k: "\"${k}\": ${toNestedValue value.${k}}";
+        inner = builtins.concatStringsSep ", " (builtins.map toKeyValue keys);
+      in
+        "{\n" + inner + "\n}"
       else abort "Unexpected error! Please post a new issue and @benvonh...";
 
   toNestedObject = attrSet: let
@@ -387,7 +382,7 @@ in {
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       bar.workspaces.workspaceIconMap = mkOption {
-        type = jsonFormat.type;
+        type = types.attrs;
         default = {};
         example = ''
           {
