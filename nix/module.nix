@@ -380,7 +380,7 @@ in {
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       bar.workspaces.workspaceIconMap = mkOption {
-        type = jsonFormat.type;
+        type = types.attrs;
         default = {};
         example = ''
           {
