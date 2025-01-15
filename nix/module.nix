@@ -62,9 +62,12 @@ self: {
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
   #       Do not ask what these do...
+  excludeKeys = [
+    "workspaceIconMap"
+  ];
   flattenAttrs = attrSet: prefix: let
     process = key: value:
-      if key == "workspaceIconMap"
+      if builtins.elem key excludeKeys
       then {"${prefix}${key}" = value;}
       else if builtins.isAttrs value
       then flattenAttrs value "${prefix}${key}."
