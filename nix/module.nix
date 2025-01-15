@@ -1,81 +1,106 @@
-self: { lib, pkgs, config, ... }:
-let
+self: {
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   inherit (lib) types mkIf mkOption mkEnableOption;
 
   cfg = config.programs.hyprpanel;
 
-  jsonFormat = pkgs.formats.json { };
-  
-  # No package option
-  package = if pkgs ? hyprpanel then pkgs.hyprpanel
-  else abort ''
+  jsonFormat = pkgs.formats.json {};
 
-  ********************************************************************************
-  *                                  HyprPanel                                   *
-  *------------------------------------------------------------------------------*
-  *                         You didn't add the overlay!                          *
-  *                                                                              *
-  * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
-  * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
-  *                  you will need to add the overlay yourself.                  *
-  ********************************************************************************
-  '';
+  # No package option
+  package =
+    if pkgs ? hyprpanel
+    then pkgs.hyprpanel
+    else
+      abort ''
+
+        ********************************************************************************
+        *                                  HyprPanel                                   *
+        *------------------------------------------------------------------------------*
+        *                         You didn't add the overlay!                          *
+        *                                                                              *
+        * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
+        * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
+        *                  you will need to add the overlay yourself.                  *
+        ********************************************************************************
+      '';
 
   # Shorthand lambda for self-documenting options under settings
-  mkStrOption = default: mkOption { type = types.str; default = default; };
-  mkIntOption = default: mkOption { type = types.int; default = default; };
-  mkBoolOption = default: mkOption { type = types.bool; default = default; };
-  mkStrListOption = default: mkOption { type = types.listOf types.str; default = default; };
-  mkFloatOption = default: mkOption { type = types.float; default = default; };
+  mkStrOption = default:
+    mkOption {
+      type = types.str;
+      default = default;
+    };
+  mkIntOption = default:
+    mkOption {
+      type = types.int;
+      default = default;
+    };
+  mkBoolOption = default:
+    mkOption {
+      type = types.bool;
+      default = default;
+    };
+  mkStrListOption = default:
+    mkOption {
+      type = types.listOf types.str;
+      default = default;
+    };
+  mkFloatOption = default:
+    mkOption {
+      type = types.float;
+      default = default;
+    };
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
   #       Do not ask what these do...
-  flattenAttrs = attrSet: prefix:
-    let
-      process = key: value:
-        if builtins.isAttrs value then
-          flattenAttrs value "${prefix}${key}."
-        else
-          { "${prefix}${key}" = value; };
-    in
-      builtins.foldl' (acc: key:
+  flattenAttrs = attrSet: prefix: let
+    process = key: value:
+      if builtins.isAttrs value
+      then flattenAttrs value "${prefix}${key}."
+      else {"${prefix}${key}" = value;};
+  in
+    builtins.foldl' (
+      acc: key:
         acc // process key attrSet.${key}
-      ) {} (builtins.attrNames attrSet);
+    ) {} (builtins.attrNames attrSet);
 
-  toNestedValue =
-    let
-      escapeString = s: builtins.replaceStrings [ "\"" ] [ "\\\"" ] s;
-    in
+  toNestedValue = let
+    escapeString = s: builtins.replaceStrings ["\""] ["\\\""] s;
+  in
     value:
-      if builtins.isBool value then
-        if value then "true" else "false"
-      else if (builtins.isInt value || builtins.isFloat value) then
-        builtins.toString value
-      else if builtins.isString value then
-        "\"" + escapeString value + "\""
-      else if builtins.isList value then
-        let
-          items = builtins.map toNestedValue value;
-        in
-          "[\n" + (builtins.concatStringsSep ", " items) + "\n]"
-      else if builtins.isAttrs value then
-        let
-          keys = builtins.attrNames value;
-          toKeyValue = k: "\"${k}\": ${toNestedValue value.${k}}";
-          inner = builtins.concatStringsSep ", " (builtins.map toKeyValue keys);
-        in
-          "{\n" + inner + "\n}"
-      else
-        abort "Unexpected error! Please post a new issue and @benvonh...";
+      if builtins.isBool value
+      then
+        if value
+        then "true"
+        else "false"
+      else if (builtins.isInt value || builtins.isFloat value)
+      then builtins.toString value
+      else if builtins.isString value
+      then "\"" + escapeString value + "\""
+      else if builtins.isList value
+      then let
+        items = builtins.map toNestedValue value;
+      in
+        "[\n" + (builtins.concatStringsSep ", " items) + "\n]"
+      else if builtins.isAttrs value
+      then let
+        keys = builtins.attrNames value;
+        toKeyValue = k: "\"${k}\": ${toNestedValue value.${k}}";
+        inner = builtins.concatStringsSep ", " (builtins.map toKeyValue keys);
+      in
+        "{\n" + inner + "\n}"
+      else abort "Unexpected error! Please post a new issue and @benvonh...";
 
-  toNestedObject = attrSet:
-    let
-      keys = builtins.attrNames attrSet;
-      kvPairs = builtins.map (k: "\"${k}\": ${toNestedValue attrSet.${k}}") keys;
-    in
-      "{\n  " + builtins.concatStringsSep ",\n  " kvPairs + "\n}";
-in
-{
+  toNestedObject = attrSet: let
+    keys = builtins.attrNames attrSet;
+    kvPairs = builtins.map (k: "\"${k}\": ${toNestedValue attrSet.${k}}") keys;
+  in
+    "{\n  " + builtins.concatStringsSep ",\n  " kvPairs + "\n}";
+in {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
     config.enable = mkBoolOption true; # Generate config
@@ -83,7 +108,7 @@ in
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
     overwrite.enable = mkEnableOption "overwrite config fix";
-    
+
     theme = mkOption {
       type = types.str;
       default = "";
@@ -156,7 +181,7 @@ in
       bar.customModules.cava.showIcon = mkBoolOption true;
       bar.customModules.cava.icon = mkStrOption "";
       bar.customModules.cava.spaceCharacter = mkStrOption " ";
-      bar.customModules.cava.barCharacters = mkStrListOption [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+      bar.customModules.cava.barCharacters = mkStrListOption ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
       bar.customModules.cava.showActiveOnly = mkBoolOption false;
       bar.customModules.cava.bars = mkIntOption 10;
       bar.customModules.cava.channels = mkIntOption 2;
@@ -354,6 +379,18 @@ in
       bar.workspaces.spacing = mkIntOption 1;
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
+      bar.workspaces.workspaceIconMap = mkOption {
+        type = jsonFormat.type;
+        default = {};
+        example = ''
+          {
+            "1" = "";
+            "2" = "";
+            "3" = "";
+          }
+        '';
+        description = "Map of workspace number to icon";
+      };
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
       # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
@@ -584,7 +621,6 @@ in
   };
 
   config = let
-
     theme =
       if cfg.theme != ""
       then builtins.fromJSON (builtins.readFile ../themes/${cfg.theme}.json)
@@ -594,12 +630,15 @@ in
 
     mergeSet = flatSet // (flattenAttrs cfg.override "");
 
-    fullSet = if cfg.layout == null then mergeSet else mergeSet // cfg.layout;
+    fullSet =
+      if cfg.layout == null
+      then mergeSet
+      else mergeSet // cfg.layout;
 
     finalConfig = toNestedObject fullSet;
 
     hyprpanel-diff = pkgs.writeShellApplication {
-      runtimeInputs = [ pkgs.colordiff ];
+      runtimeInputs = [pkgs.colordiff];
       name = "hyprpanel-diff";
       text = ''
         cd
@@ -610,63 +649,66 @@ in
                   ${config.xdg.configFile.hyprpanel-swap.target}
       '';
     };
+  in
+    mkIf cfg.enable {
+      # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+      nixpkgs.overlays = lib.optionals cfg.overlay.enable [self.overlay];
 
-  in mkIf cfg.enable {
+      home.packages = [
+        package
+        hyprpanel-diff
+        (
+          if pkgs ? nerd-fonts.jetbrains-mono
+          then pkgs.nerd-fonts.jetbrains-mono
+          # NOTE:(benvonh) Remove after next release 25.05
+          else pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];}
+        )
+      ];
 
-    # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
-    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
-
-    home.packages = [
-      package
-      hyprpanel-diff
-      (if pkgs ? nerd-fonts.jetbrains-mono
-      then pkgs.nerd-fonts.jetbrains-mono
-      # NOTE:(benvonh) Remove after next release 25.05
-      else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    ];
-
-    home.activation =
-      let
+      home.activation = let
         path = "${config.xdg.configFile.hyprpanel.target}";
       in
         mkIf cfg.overwrite.enable {
-          hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+          hyprpanel = lib.hm.dag.entryBefore ["writeBoundary"] ''
             [[ -L "${path}" ]] || rm -f "${path}"
           '';
         };
 
-    xdg.configFile.hyprpanel = mkIf cfg.config.enable {
-      target = "hyprpanel/config.json";
-      text = finalConfig;
-      # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
-      onChange = "${package}/bin/hyprpanel r";
+      xdg.configFile.hyprpanel = mkIf cfg.config.enable {
+        target = "hyprpanel/config.json";
+        text = finalConfig;
+        # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+        onChange = "${package}/bin/hyprpanel r";
+      };
+
+      xdg.configFile.hyprpanel-swap = mkIf cfg.config.enable {
+        target = "hyprpanel/config.hm.json";
+        text = finalConfig;
+      };
+
+      # NOTE: Deprecated
+      # systemd.user.services = mkIf cfg.systemd.enable {
+      #   hyprpanel = {
+      #     Unit = {
+      #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
+      #       Documentation = "https://hyprpanel.com";
+      #       PartOf = [ "graphical-session.target" ];
+      #       After = [ "graphical-session-pre.target" ];
+      #     };
+      #     Service = {
+      #       ExecStart = "${package}/bin/hyprpanel";
+      #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
+      #       Restart = "on-failure";
+      #       KillMode = "mixed";
+      #     };
+      #     Install = { WantedBy = [ "graphical-session.target" ]; };
+      #   };
+      # };
+      warnings =
+        if cfg.systemd.enable
+        then ["The `systemd.enable` option is now obsolete."]
+        else [];
+
+      wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable ["${package}/bin/hyprpanel"];
     };
-
-    xdg.configFile.hyprpanel-swap = mkIf cfg.config.enable {
-      target = "hyprpanel/config.hm.json";
-      text = finalConfig;
-    };
-
-    # NOTE: Deprecated
-    # systemd.user.services = mkIf cfg.systemd.enable {
-    #   hyprpanel = {
-    #     Unit = {
-    #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
-    #       Documentation = "https://hyprpanel.com";
-    #       PartOf = [ "graphical-session.target" ];
-    #       After = [ "graphical-session-pre.target" ];
-    #     };
-    #     Service = {
-    #       ExecStart = "${package}/bin/hyprpanel";
-    #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
-    #       Restart = "on-failure";
-    #       KillMode = "mixed";
-    #     };
-    #     Install = { WantedBy = [ "graphical-session.target" ]; };
-    #   };
-    # };
-    warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [];
-
-    wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
-  };
 }
