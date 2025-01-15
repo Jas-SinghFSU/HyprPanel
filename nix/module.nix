@@ -59,7 +59,9 @@ self: {
   #       Do not ask what these do...
   flattenAttrs = attrSet: prefix: let
     process = key: value:
-      if builtins.isAttrs value
+      if key == "workspaceIconMap"
+      then {"${prefix}${key}" = value;}
+      else if builtins.isAttrs value
       then flattenAttrs value "${prefix}${key}."
       else {"${prefix}${key}" = value;};
   in
@@ -380,7 +382,7 @@ in {
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       bar.workspaces.workspaceIconMap = mkOption {
-        type = types.str;
+        type = jsonFormat.type;
         default = {};
         example = ''
           {
