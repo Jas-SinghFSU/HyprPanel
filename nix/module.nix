@@ -64,7 +64,7 @@ self: {
   #       Do not ask what these do...
   flattenAttrs = attrSet: prefix: let
     process = key: value:
-      if key == "workspaceIconMap1"
+      if key == "workspaceIconMap"
       then {"${prefix}${key}" = value;}
       else if builtins.isAttrs value
       then flattenAttrs value "${prefix}${key}."
