@@ -54,12 +54,17 @@ self: {
       type = types.float;
       default = default;
     };
+  mkJsonOption = default:
+    mkOption {
+      type = types.attrsOf types.str;
+      default = default;
+    };
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
   #       Do not ask what these do...
   flattenAttrs = attrSet: prefix: let
     process = key: value:
-      if key == "workspaceIconMap"
+      if key == "workspaceIconMap1"
       then {"${prefix}${key}" = value;}
       else if builtins.isAttrs value
       then flattenAttrs value "${prefix}${key}."
@@ -381,20 +386,7 @@ in {
       bar.workspaces.spacing = mkIntOption 1;
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
-      bar.workspaces.workspaceIconMap = mkOption {
-        type = types.attrs;
-        default = {};
-        example = ''
-          {
-            "1": "󰄛",
-            "2": "",
-            "3": "󰙯",
-            "4": "󰓇",
-            "5": ""
-          }
-        '';
-        description = "Map of workspace number to icon";
-      };
+      bar.workspaces.workspaceIconMap = mkJsonOption "{}";
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
       # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
