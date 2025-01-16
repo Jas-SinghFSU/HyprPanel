@@ -203,6 +203,9 @@ in
       bar.customModules.hypridle.rightClick = mkStrOption "";
       bar.customModules.hypridle.scrollDown = mkStrOption "";
       bar.customModules.hypridle.scrollUp = mkStrOption "";
+      bar.customModules.hypridle.startCommand = mkStrOption "nohup hypridle > /dev/null 2>&1 &";
+      bar.customModules.hypridle.stopCommand = mkStrOption "pkill hypridle";
+      bar.customModules.hypridle.isActiveCommand = mkStrOption "pgrep -x 'hypridle' &>/dev/null && echo 'yes' || echo 'no'";
       bar.customModules.hyprsunset.label = mkBoolOption true;
       bar.customModules.hyprsunset.middleClick = mkStrOption "";
       bar.customModules.hyprsunset.offIcon = mkStrOption "󰛨";
