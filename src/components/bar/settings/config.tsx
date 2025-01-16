@@ -353,6 +353,21 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.hypridle.middleClick} title="Middle Click" type="string" />
                 <Option opt={options.bar.customModules.hypridle.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.hypridle.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.hypridle.startCommand}
+                    title="Start Hypridle Command"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hypridle.stopCommand}
+                    title="Stop Hypridle Command"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hypridle.isActiveCommand}
+                    title="Hypridle Status Command"
+                    type="string"
+                />
 
                 {/* Cava Section */}
                 <Header title="Cava" />
