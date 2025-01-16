@@ -203,6 +203,9 @@ in
       bar.customModules.hypridle.rightClick = mkStrOption "";
       bar.customModules.hypridle.scrollDown = mkStrOption "";
       bar.customModules.hypridle.scrollUp = mkStrOption "";
+      bar.customModules.hypridle.startCommand = "systemctl --user start hypridle.service";
+      bar.customModules.hypridle.stopCommand = "systemctl --user stop hypridle.service";
+      bar.customModules.hypridle.isActiveCommand = "systemctl --user status hypridle.service | grep -q 'Active: active (running)' && echo 'yes' || echo 'no'";
       bar.customModules.hyprsunset.label = mkBoolOption true;
       bar.customModules.hyprsunset.middleClick = mkStrOption "";
       bar.customModules.hyprsunset.offIcon = mkStrOption "󰛨";

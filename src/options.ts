@@ -1181,6 +1181,9 @@ const options = mkOptions(CONFIG, {
                 middleClick: opt(''),
                 scrollUp: opt(''),
                 scrollDown: opt(''),
+                isActiveCommand: opt("pgrep -x 'hypridle' &>/dev/null && echo 'yes' || echo 'no'"),
+                startCommand: opt('nohup hypridle > /dev/null 2>&1 &'),
+                stopCommand: opt('pkill hypridle'),
             },
             cava: {
                 showIcon: opt(true),

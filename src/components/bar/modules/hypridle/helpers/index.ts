@@ -1,12 +1,15 @@
+import options from 'src/options';
 import { execAsync, Variable } from 'astal';
+
+const { startCommand, stopCommand, isActiveCommand } = options.bar.customModules.hypridle;
 
 /**
  * Checks if the hypridle process is active.
  *
- * This command checks if the hypridle process is currently running by using the `pgrep` command.
+ * This command checks if the hypridle process is currently running by using the configured `isActiveCommand`.
  * It returns 'yes' if the process is found and 'no' otherwise.
  */
-export const isActiveCommand = `bash -c "pgrep -x 'hypridle' &>/dev/null && echo 'yes' || echo 'no'"`;
+export const isActiveCmd = `bash -c "${isActiveCommand.get()}"`;
 
 /**
  * A variable to track the active state of the hypridle process.
@@ -21,8 +24,8 @@ export const isActive = Variable(false);
  * @param isActive A Variable<boolean> that tracks the active state of the hypridle process.
  */
 const updateIsActive = (isActive: Variable<boolean>): void => {
-    execAsync(isActiveCommand).then((res) => {
-        isActive.set(res === 'yes');
+    execAsync(isActiveCmd).then((res) => {
+        isActive.set(res.trim() === 'yes');
     });
 };
 
@@ -35,9 +38,9 @@ const updateIsActive = (isActive: Variable<boolean>): void => {
  * @param isActive A Variable<boolean> that tracks the active state of the hypridle process.
  */
 export const toggleIdle = (isActive: Variable<boolean>): void => {
-    execAsync(isActiveCommand).then((res) => {
+    execAsync(isActiveCmd).then((res) => {
         const toggleIdleCommand =
-            res === 'no' ? `bash -c "nohup hypridle > /dev/null 2>&1 &"` : `bash -c "pkill hypridle"`;
+            res.trim() === 'no' ? `bash -c "${startCommand.get()}"` : `bash -c "${stopCommand.get()}"`;
 
         execAsync(toggleIdleCommand).then(() => updateIsActive(isActive));
     });
@@ -49,7 +52,7 @@ export const toggleIdle = (isActive: Variable<boolean>): void => {
  * This function checks if the hypridle process is currently running and updates the `isActive` variable accordingly.
  */
 export const checkIdleStatus = (): undefined => {
-    execAsync(isActiveCommand).then((res) => {
-        isActive.set(res === 'yes');
+    execAsync(isActiveCmd).then((res) => {
+        isActive.set(res.trim() === 'yes');
     });
 };
