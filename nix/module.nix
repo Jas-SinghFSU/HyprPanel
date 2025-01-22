@@ -536,6 +536,7 @@ in {
       theme.bar.buttons.workspaces.fontSize = mkStrOption "1.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_border = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_padding = mkStrOption "0.2em";
+      theme.bar.buttons.workspaces.numbered_inactive_padding = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.pill.active_width = mkStrOption "12em";
       theme.bar.buttons.workspaces.pill.height = mkStrOption "4em";
       theme.bar.buttons.workspaces.pill.radius = mkStrOption "1.9rem * 0.6";
