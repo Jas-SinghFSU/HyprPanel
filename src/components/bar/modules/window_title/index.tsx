@@ -5,7 +5,7 @@ import { hyprlandService } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { bind, Variable } from 'astal';
-import { getTitle, getWindowMatch, truncateTitle } from './helpers/title';
+import { clientTitle, getTitle, getWindowMatch, truncateTitle } from './helpers/title';
 import { Astal } from 'astal/gtk3';
 
 const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;
@@ -55,6 +55,7 @@ const ClientTitle = (): BarBoxChild => {
             bind(icon),
             bind(truncation),
             bind(truncation_size),
+            bind(clientTitle),
         ],
         (
             client: AstalHyprland.Client,
