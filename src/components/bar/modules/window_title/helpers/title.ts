@@ -16,7 +16,6 @@ function trackClientUpdates(client: AstalHyprland.Client): void {
     }
 
     clientBinding = Variable.derive([bind(client, 'title')], (currentTitle) => {
-        hyprlandService.focusedClient.emit('removed');
         clientTitle.set(currentTitle);
     });
 }
