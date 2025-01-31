@@ -5,6 +5,9 @@ import { BarLayout, BarLayouts } from 'src/lib/types/options';
 type GdkMonitors = {
     [key: string]: {
         key: string;
+        width: number;
+        height: number;
+        scaleFactor: number;
         model: string;
         used: boolean;
     };
@@ -61,7 +64,7 @@ export function getGdkMonitors(): GdkMonitors {
         const scaleFactor = curMonitor.get_scale_factor();
 
         const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
-        gdkMonitors[i] = { key, model, used: false };
+        gdkMonitors[i] = { key, width: geometry.width, height: geometry.height, scaleFactor, model, used: false };
     }
 
     return gdkMonitors;
@@ -120,10 +123,14 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
         const width = isVertical ? hypMon.height : hypMon.width;
+        const widthScaled = Math.trunc(width / gdkMonitor.scaleFactor);
         const height = isVertical ? hypMon.width : hypMon.height;
+        const heightScaled = Math.trunc(height / gdkMonitor.scaleFactor);
 
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
+        const hyprlandKeyStart = `${hypMon.model}_${widthScaled}x${heightScaled}`;
+        return (
+            gdkMonitor.key.startsWith(hyprlandKeyStart) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor
+        );
     });
 
     if (directMatch) {
@@ -136,10 +143,12 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
         const width = isVertical ? hypMon.height : hypMon.width;
+        const widthScaled = width / gdkMonitor.scaleFactor;
         const height = isVertical ? hypMon.width : hypMon.height;
+        const heightScaled = height / gdkMonitor.scaleFactor;
 
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id);
+        const hyprlandKeyStart = `${hypMon.model}_${widthScaled}x${heightScaled}`;
+        return gdkMonitor.key.startsWith(hyprlandKeyStart) && !usedHyprlandMonitors.has(hypMon.id);
     });
 
     if (hyprlandMonitor) {
