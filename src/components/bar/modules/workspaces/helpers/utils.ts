@@ -1,5 +1,5 @@
+import { defaultApplicationIcons } from 'src/lib/constants/appIcons';
 import { hyprlandService } from 'src/lib/constants/services';
-import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
@@ -38,18 +38,15 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
 
-    if (!iconEntry) {
-        return `${i}`;
-    }
+    if (iconEntry) {
+        if (typeof iconEntry === 'string' && iconEntry !== '') {
+            return iconEntry;
+        }
 
-    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
-
-    if (typeof iconEntry === 'string' && iconEntry !== '') {
-        return iconEntry;
-    }
-
-    if (hasIcon) {
-        return iconEntry.icon;
+        const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+        if (hasIcon) {
+            return iconEntry.icon;
+        }
     }
 
     return `${i}`;
@@ -118,8 +115,6 @@ export const getAppIcon = (
     removeDuplicateIcons: boolean,
     { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
-    const iconMap = { ...userDefinedIconMap, ...defaultApplicationIcons };
-
     const clients = hyprlandService
         .get_clients()
         .filter((client) => client?.workspace?.id === workspaceIndex)
@@ -129,40 +124,45 @@ export const getAppIcon = (
         return emptyIcon;
     }
 
-    let icons = clients
-        .map(([clientClass, clientTitle]) => {
-            const maybeIcon = Object.entries(iconMap).find(([matcher]) => {
-                try {
-                    if (matcher.startsWith('class:')) {
-                        const re = matcher.substring(6);
-                        return new RegExp(re).test(clientClass);
-                    }
+    let icons = [];
+    for (const [clientClass, clientTitle] of clients) {
+        const iconMapIterators = [
+            Object.entries(userDefinedIconMap)[Symbol.iterator](),
+            Object.entries(defaultApplicationIcons)[Symbol.iterator](),
+        ];
 
-                    if (matcher.startsWith('title:')) {
-                        const re = matcher.substring(6);
+        for (const iter of iconMapIterators) {
+            while (true) {
+                const { value, done } = iter.next();
 
-                        return new RegExp(re).test(clientTitle);
-                    }
-
-                    return new RegExp(matcher, 'i').test(clientClass);
-                } catch {
-                    return false;
+                if (done) {
+                    break;
                 }
-            });
 
-            if (!maybeIcon) {
-                return undefined;
+                const [matcher, icon] = value;
+                let result = false;
+                if (matcher.startsWith('class:')) {
+                    const re = matcher.substring(6);
+                    result = new RegExp(re).test(clientClass);
+                } else if (matcher.startsWith('title:')) {
+                    const re = matcher.substring(6);
+                    result = new RegExp(re).test(clientTitle);
+                } else {
+                    result = new RegExp(matcher, 'i').test(clientClass);
+                }
+
+                if (result) {
+                    icons.push(icon);
+                }
             }
-
-            return maybeIcon.at(1);
-        })
-        .filter((x) => x);
-
-    if (removeDuplicateIcons) {
-        icons = [...new Set(icons)];
+        }
     }
 
     if (icons.length) {
+        if (removeDuplicateIcons) {
+            icons = [...new Set(icons)];
+        }
+
         return icons.join(' ');
     }
 
