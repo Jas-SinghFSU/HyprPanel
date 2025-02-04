@@ -351,7 +351,7 @@ in
       bar.workspaces.showWsIcons = mkBoolOption false;
       bar.workspaces.show_icons = mkBoolOption false;
       bar.workspaces.show_numbered = mkBoolOption false;
-      bar.workspaces.spacing = mkIntOption 1;
+      bar.workspaces.spacing = mkFloatOption 1.0;
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       dummy = mkBoolOption true;
