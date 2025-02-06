@@ -3,9 +3,10 @@ import { filterNotifications } from 'src/lib/shared/notifications.js';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
-import { notifdService } from 'src/lib/constants/services.js';
 import { NotificationCard } from 'src/components/notifications/Notification.js';
 import { Placeholder } from './Placeholder';
+
+const notifdService = AstalNotifd.get_default();
 
 const { displayedTotal, ignore, showActionsOnHover } = options.notifications;
 

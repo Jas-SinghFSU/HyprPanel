@@ -1,5 +1,7 @@
 import { Gtk } from 'astal/gtk3';
-import { networkService } from 'src/lib/constants/services';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+
+const networkService = AstalNetwork.get_default();
 
 export const WifiSwitch = (): JSX.Element => (
     <switch

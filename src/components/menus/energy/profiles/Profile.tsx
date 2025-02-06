@@ -1,10 +1,11 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import AstalPowerProfiles from 'gi://AstalPowerProfiles?version=0.1';
-import { powerProfilesService } from 'src/lib/constants/services';
 import icons from 'src/lib/icons/icons';
 import { ProfileType } from 'src/lib/types/powerprofiles';
 import { isPrimaryClick } from 'src/lib/utils';
+
+const powerProfilesService = AstalPowerProfiles.get_default();
 
 export const PowerProfiles = (): JSX.Element => {
     const powerProfiles = powerProfilesService.get_profiles();

@@ -3,9 +3,11 @@ import { Ethernet } from './ethernet/index.js';
 import { Wifi } from './wifi/index.js';
 import options from 'src/options.js';
 import { bind } from 'astal';
-import { networkService } from 'src/lib/constants/services.js';
 import { NoWifi } from './wifi/WirelessAPs/NoWifi.js';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+
+const networkService = AstalNetwork.get_default();
 
 export default (): JSX.Element => {
     return (

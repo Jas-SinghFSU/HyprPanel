@@ -1,7 +1,10 @@
 import { bind } from 'astal';
-import { audioService } from 'src/lib/constants/services';
 import { SliderItem } from '../sliderItem/SliderItem';
 import { ActiveDeviceMenu } from '..';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
 
 const NoStreams = (): JSX.Element => {
     return <label className={'no-playbacks dim'} label={'No active playbacks found.'} expand />;

@@ -1,6 +1,7 @@
 import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { networkService } from 'src/lib/constants/services';
+
+const networkService = AstalNetwork.get_default();
 
 /*******************************************
  *                 Values                  *

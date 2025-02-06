@@ -1,9 +1,9 @@
 import { bind, Variable } from 'astal';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { getTimeStamp } from 'src/components/menus/media/components/timebar/helpers';
-import { mprisService } from 'src/lib/constants/services';
 import options from 'src/options';
 
+const mprisService = AstalMpris.get_default();
 const { noMediaText } = options.menus.media;
 
 export const activePlayer = Variable<AstalMpris.Player | undefined>(undefined);

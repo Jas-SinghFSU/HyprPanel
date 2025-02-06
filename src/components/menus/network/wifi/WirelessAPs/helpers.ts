@@ -2,8 +2,9 @@ import { bind, execAsync, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { DEVICE_STATES } from 'src/lib/constants/network';
-import { networkService } from 'src/lib/constants/services';
 import { isPrimaryClick, Notify } from 'src/lib/utils';
+
+const networkService = AstalNetwork.get_default();
 
 export const isWifiEnabled: Variable<boolean> = Variable(false);
 export const wifiAccessPoints: Variable<AstalNetwork.AccessPoint[]> = Variable([]);

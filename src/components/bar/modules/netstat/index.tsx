@@ -1,4 +1,3 @@
-import { networkService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
@@ -12,6 +11,7 @@ import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
 
+const networkService = AstalNetwork.get_default();
 const {
     label,
     labelType,

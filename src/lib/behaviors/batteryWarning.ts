@@ -1,6 +1,8 @@
-import { batteryService } from '../constants/services';
+import AstalBattery from 'gi://AstalBattery?version=0.1';
 import icons from '../icons/icons';
 import { Notify } from '../utils';
+
+const batteryService = AstalBattery.get_default();
 
 export function warnOnLowBattery(): void {
     let sentLowNotification = false;

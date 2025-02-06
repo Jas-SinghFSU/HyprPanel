@@ -1,8 +1,9 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { activePlayer } from 'src/globals/media';
-import { mprisService } from 'src/lib/constants/services';
 import icons2 from 'src/lib/icons/icons2';
 import { PlaybackIconMap } from 'src/lib/types/mpris';
+
+const mprisService = AstalMpris.get_default();
 
 /**
  * Determines if the loop status is active.
