@@ -1,7 +1,8 @@
 import { bind, Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { notifdService } from 'src/lib/constants/services';
 const { displayedTotal } = options.notifications;
+
+const notifdService = AstalNotifd.get_default();
 
 /**
  * Handles page boundaries for notifications.

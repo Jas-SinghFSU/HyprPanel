@@ -1,10 +1,19 @@
 import { bind } from 'astal';
-import { networkService } from 'src/lib/constants/services';
-import { bluetoothService } from 'src/lib/constants/services';
-import { notifdService } from 'src/lib/constants/services';
-import { audioService } from 'src/lib/constants/services';
 import { isPrimaryClick } from 'src/lib/utils';
 import { isWifiEnabled } from './helpers';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
+
+const networkService = AstalNetwork.get_default();
+
+const bluetoothService = AstalBluetooth.get_default();
+
+const notifdService = AstalNotifd.get_default();
 
 export const WifiButton = (): JSX.Element => {
     return (

@@ -1,5 +1,6 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { mprisService } from '../constants/services';
+
+const mprisService = AstalMpris.get_default();
 
 export const getCurrentPlayer = (
     activePlayer: AstalMpris.Player = mprisService.get_players()[0],

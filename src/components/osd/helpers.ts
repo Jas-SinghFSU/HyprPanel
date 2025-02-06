@@ -1,7 +1,14 @@
 import { bind, timeout, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
-import { audioService, brightnessService, hyprlandService } from 'src/lib/constants/services';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import AstalWp from 'gi://AstalWp?version=0.1';
 import options from 'src/options';
+import Brightness from 'src/services/Brightness';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
+const brightnessService = Brightness.get_default();
+const hyprlandService = AstalHyprland.get_default();
 
 const { enable, duration, active_monitor, monitor } = options.theme.osd;
 

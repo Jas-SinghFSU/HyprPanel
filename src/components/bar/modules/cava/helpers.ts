@@ -1,7 +1,10 @@
 import { bind, Variable } from 'astal';
-import { cavaService, mprisService } from 'src/lib/constants/services';
+import AstalCava from 'gi://AstalCava?version=0.1';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
 import options from 'src/options';
 
+const cavaService = AstalCava.get_default();
+const mprisService = AstalMpris.get_default();
 const {
     showActiveOnly,
     bars,

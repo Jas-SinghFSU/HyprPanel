@@ -1,8 +1,10 @@
+import AstalWp from 'gi://AstalWp?version=0.1';
 import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
-import { audioService } from 'src/lib/constants/services';
+
+const audio = AstalWp.get_default();
 
 export const utilityCommands: Command[] = [
     {
@@ -49,7 +51,12 @@ export const utilityCommands: Command[] = [
         ],
         handler: (args: Record<string, unknown>): number => {
             try {
-                const speaker = audioService.defaultSpeaker;
+                const speaker = audio?.defaultSpeaker;
+
+                if (speaker === undefined) {
+                    throw new Error('A default speaker was not found.');
+                }
+
                 const volumeInput = Number(args['volume']) / 100;
 
                 if (options.menus.volume.raiseMaximumVolume.get()) {

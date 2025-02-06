@@ -3,8 +3,9 @@ import { dependencies, sh } from '../lib/utils';
 import options from '../options';
 import { execAsync } from 'astal/process';
 import { monitorFile } from 'astal/file';
-import { hyprlandService } from 'src/lib/constants/services';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
+const hyprlandService = AstalHyprland.get_default();
 const WP = `${GLib.get_home_dir()}/.config/background`;
 
 @register({ GTypeName: 'Wallpaper' })

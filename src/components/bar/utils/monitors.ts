@@ -1,6 +1,8 @@
-import { hyprlandService } from 'src/lib/constants/services';
 import { Gdk } from 'astal/gtk3';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { BarLayout, BarLayouts } from 'src/lib/types/options';
+
+const hyprlandService = AstalHyprland.get_default();
 
 type GdkMonitors = {
     [key: string]: {

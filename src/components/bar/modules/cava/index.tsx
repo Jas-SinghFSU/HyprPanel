@@ -1,12 +1,13 @@
 import { Variable, bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { cavaService } from 'src/lib/constants/services';
 import { BarBoxChild } from 'src/lib/types/bar';
 import { Module } from '../../shared/Module';
 import { inputHandler } from '../../utils/helpers';
 import options from 'src/options';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';
+import AstalCava from 'gi://AstalCava?version=0.1';
 
+const cavaService = AstalCava.get_default();
 const {
     icon,
     showIcon: label,
