@@ -3,7 +3,6 @@ import AstalCava from 'gi://AstalCava?version=0.1';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import options from 'src/options';
 
-const cavaService = AstalCava.get_default();
 const mprisService = AstalMpris.get_default();
 const {
     showActiveOnly,
@@ -23,8 +22,10 @@ const {
  *
  * @param isVis - A variable that holds the visibility status.
  */
-export function initVisibilityTracker(isVis: Variable<boolean>): void {
-    Variable.derive([bind(showActiveOnly), bind(mprisService, 'players')], (showActive, players) => {
+export function initVisibilityTracker(isVis: Variable<boolean>): Variable<void> {
+    const cavaService = AstalCava.get_default();
+
+    return Variable.derive([bind(showActiveOnly), bind(mprisService, 'players')], (showActive, players) => {
         isVis.set(cavaService !== null && (!showActive || players?.length > 0));
     });
 }
@@ -32,14 +33,14 @@ export function initVisibilityTracker(isVis: Variable<boolean>): void {
 /**
  * Initializes a settings tracker that updates the CAVA service settings based on the provided options.
  */
-export function initSettingsTracker(): void {
-    const cava = cavaService;
+export function initSettingsTracker(): Variable<void> | undefined {
+    const cava = AstalCava.get_default();
 
     if (!cava) {
         return;
     }
 
-    Variable.derive(
+    return Variable.derive(
         [
             bind(bars),
             bind(channels),

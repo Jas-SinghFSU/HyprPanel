@@ -7,7 +7,6 @@ import options from 'src/options';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';
 import AstalCava from 'gi://AstalCava?version=0.1';
 
-const cavaService = AstalCava.get_default();
 const {
     icon,
     showIcon: label,
@@ -23,11 +22,12 @@ const {
 
 const isVis = Variable(!showActiveOnly.get());
 
-initVisibilityTracker(isVis);
-initSettingsTracker();
-
 export const Cava = (): BarBoxChild => {
     let labelBinding: Variable<string> = Variable('');
+
+    const visTracker = initVisibilityTracker(isVis);
+    const settingsTracker = initSettingsTracker();
+    const cavaService = AstalCava.get_default();
 
     if (cavaService) {
         labelBinding = Variable.derive(
@@ -72,6 +72,8 @@ export const Cava = (): BarBoxChild => {
             },
             onDestroy: () => {
                 labelBinding.drop();
+                visTracker.drop();
+                settingsTracker?.drop();
             },
         },
     });
