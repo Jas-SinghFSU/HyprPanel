@@ -2,13 +2,14 @@ import { openMenu } from '../../utils/menu.js';
 import options from 'src/options.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { generateMediaLabel } from './helpers/index.js';
-import { mprisService } from 'src/lib/constants/services.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { bind, Variable } from 'astal';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
 import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/globals/media.js';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
 
+const mprisService = AstalMpris.get_default();
 const {
     truncation,
     truncation_size,

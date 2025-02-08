@@ -1,6 +1,11 @@
 import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
-import { audioService, brightnessService } from 'src/lib/constants/services';
+import AstalWp from 'gi://AstalWp?version=0.1';
+import Brightness from 'src/services/Brightness';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
+const brightnessService = Brightness.get_default();
 
 type OSDIcon = {
     micVariable: Variable<unknown>;

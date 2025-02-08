@@ -1,6 +1,12 @@
 import { bind, Variable } from 'astal';
+import AstalWp from 'gi://AstalWp?version=0.1';
 import LevelBar from 'src/components/shared/LevelBar';
-import { audioService, brightnessService } from 'src/lib/constants/services';
+import Brightness from 'src/services/Brightness';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
+
+const brightnessService = Brightness.get_default();
 
 /**
  * Sets up the OSD bar for a LevelBar instance.

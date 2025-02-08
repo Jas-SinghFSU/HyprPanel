@@ -1,8 +1,10 @@
 import { bind } from 'astal';
 import { Astal, Gtk, Widget } from 'astal/gtk3';
-import { mprisService } from 'src/lib/constants/services';
 import { isPrimaryClick } from 'src/lib/utils';
 import { getNextPlayer, getPreviousPlayer } from './helpers';
+import AstalMpris from 'gi://AstalMpris?version=0.1';
+
+const mprisService = AstalMpris.get_default();
 
 export const PreviousPlayer = (): JSX.Element => {
     const className = bind(mprisService, 'players').as((players) => {

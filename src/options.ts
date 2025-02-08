@@ -210,6 +210,7 @@ const options = mkOptions({
                     hover: opt(colors.pink),
                     numbered_active_highlight_border: opt('0.2em'),
                     numbered_active_highlight_padding: opt('0.2em'),
+                    numbered_inactive_padding: opt('0.2em'),
                     numbered_active_highlighted_text_color: opt(colors.mantle),
                     numbered_active_underline_color: opt(colors.pink),
                     spacing: opt('0.5em'),

@@ -2,9 +2,10 @@ import { bind, execAsync, Variable } from 'astal';
 import { App, Gdk, Gtk } from 'astal/gtk3';
 import Menu from 'src/components/shared/Menu';
 import MenuItem from 'src/components/shared/MenuItem';
-import { hyprlandService } from 'src/lib/constants/services';
 import { isRecording } from '../helpers';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+
+const hyprlandService = AstalHyprland.get_default();
 
 const MonitorListDropdown = (): JSX.Element => {
     const monitorList: Variable<AstalHyprland.Monitor[]> = Variable([]);

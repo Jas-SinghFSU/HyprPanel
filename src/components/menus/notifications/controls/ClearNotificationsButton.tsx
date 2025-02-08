@@ -1,8 +1,10 @@
 import { bind } from 'astal';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { clearNotifications } from 'src/globals/notification';
-import { notifdService } from 'src/lib/constants/services';
 import { isPrimaryClick } from 'src/lib/utils';
 import options from 'src/options';
+
+const notifdService = AstalNotifd.get_default();
 
 const { clearDelay } = options.notifications;
 

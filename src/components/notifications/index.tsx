@@ -1,4 +1,3 @@
-import { hyprlandService } from 'src/lib/constants/services.js';
 import options from 'src/options.js';
 import { getPosition } from 'src/lib/utils.js';
 import { bind, Variable } from 'astal';
@@ -6,7 +5,9 @@ import { trackActiveMonitor, trackAutoTimeout, trackPopupNotifications } from '.
 import { Astal } from 'astal/gtk3';
 import { NotificationCard } from './Notification.js';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
+const hyprlandService = AstalHyprland.get_default();
 const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;
 const { tear } = options;
 

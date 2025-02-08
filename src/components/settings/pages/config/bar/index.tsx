@@ -206,6 +206,12 @@ export const BarSettings = (): JSX.Element => {
                     type="string"
                 />
                 <Option
+                    opt={options.theme.bar.buttons.workspaces.numbered_inactive_padding}
+                    title="Inactive Padding"
+                    subtitle="Only applicable if Workspace Numbers are enabled"
+                    type="string"
+                />
+                <Option
                     opt={options.theme.bar.buttons.workspaces.pill.radius}
                     title="Pill Radius"
                     subtitle="Adjust the radius for the default indicator."

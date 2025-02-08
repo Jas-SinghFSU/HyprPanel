@@ -1,5 +1,7 @@
 import { Variable } from 'astal';
-import { hyprlandService } from 'src/lib/constants/services';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+
+const hyprlandService = AstalHyprland.get_default();
 
 /**
  * Determines if a submap is enabled based on the provided submap name.
