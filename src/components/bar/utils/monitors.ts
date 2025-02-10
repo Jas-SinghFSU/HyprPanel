@@ -62,6 +62,8 @@ export function getGdkMonitors(): GdkMonitors {
         const geometry = curMonitor.get_geometry();
         const scaleFactor = curMonitor.get_scale_factor();
 
+        // We can only use the scaleFactor for a scale variable in the key
+        // GDK3 doesn't support the fractional "scale" attribute (available in GDK4)
         const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
         gdkMonitors[i] = { key, model, used: false };
     }
@@ -121,11 +123,26 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     const directMatch = hyprlandService.get_monitors().find((hypMon) => {
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
+        const gdkScaleFactor = Math.ceil(hypMon.scale);
+
         const width = isVertical ? hypMon.height : hypMon.width;
         const height = isVertical ? hypMon.width : hypMon.height;
 
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
+        const scaleFactorWidth = Math.trunc(width / gdkScaleFactor);
+        const scaleFactorHeight = Math.trunc(height / gdkScaleFactor);
+        const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
+
+        const scaleWidth = Math.trunc(width / hypMon.scale);
+        const scaleHeight = Math.trunc(height / hypMon.scale);
+        const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+
+        // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
+        // We try to match against two different possibilities:
+        //  1) The geometry is scaled by the correct fractional scale
+        //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
+        const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
+
+        return keyMatch && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
 
     if (directMatch) {
@@ -137,11 +154,26 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
+        const gdkScaleFactor = Math.ceil(hypMon.scale);
+
         const width = isVertical ? hypMon.height : hypMon.width;
         const height = isVertical ? hypMon.width : hypMon.height;
 
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id);
+        const scaleFactorWidth = Math.trunc(width / gdkScaleFactor);
+        const scaleFactorHeight = Math.trunc(height / gdkScaleFactor);
+        const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
+
+        const scaleWidth = Math.trunc(width / hypMon.scale);
+        const scaleHeight = Math.trunc(height / hypMon.scale);
+        const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+
+        // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
+        // We try to match against two different possibilities:
+        //  1) The geometry is scaled by the correct fractional scale
+        //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
+        const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
+
+        return keyMatch && !usedHyprlandMonitors.has(hypMon.id);
     });
 
     if (hyprlandMonitor) {
