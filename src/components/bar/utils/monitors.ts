@@ -71,6 +71,49 @@ export function getGdkMonitors(): GdkMonitors {
     return gdkMonitors;
 }
 
+export function matchMonitorKey(hypMon: Set, gdkMonitor: Set): boolean {
+    const transform = hypMon?.transform !== undefined ? 0 : hypMon.transform;
+    const isRotated90 = transform % 2 !== 0;
+
+    // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
+    const gdkScaleFactor = Math.ceil(hypMon.scale);
+
+    // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
+    // The GDK width/height will NOT flip regardless of transformation (e.g. 90 degrees will NOT swap the GDK width/height) 
+    const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
+    const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
+    const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
+
+    // When gdk geometry is scaled with the fractional scale, we need to scale the hyprland geometry to match it
+    // However a 90 degree transformation WILL flip the GDK width/height 
+    const transWidth = isRotated90 ? hypMon.height : hypMon.width;
+    const transHeight = isRotated90 ? hypMon.width : hypMon.height;
+    const scaleWidth = Math.trunc(transWidth / hypMon.scale);
+    const scaleHeight = Math.trunc(transHeight / hypMon.scale);
+    const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+
+    // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
+    // We try to match against two different possibilities:
+    //  1) The geometry is scaled by the correct fractional scale
+    //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
+    const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
+    
+    // Adding debug logging
+    console.log('Attempting gdk key match');
+    console.log(`GDK key: ${gdkMonitor.key}`);
+    console.log(`HypMon.width: ${hypMon.width}`);
+    console.log(`HypMon.height: ${hypMon.height}`);
+    console.log(`HypMon.scale: ${hypMon.scale}`);
+    console.log(`HypMon.transform: ${hypMon.transform}`);
+    console.log(`isRotated90: ${isRotated90}`);
+    console.log(`scaleFactor: ${gdkScaleFactor}`);
+    console.log(`scaleFactorKey: ${scaleFactorKey}`);
+    console.log(`scaleKey: ${scaleKey}`);
+    console.log(`match?: ${keyMatch}`);
+
+    return keyMatch
+};
+
 /**
  * NOTE: Some more funky stuff being done by GDK.
  * We render windows/bar based on the monitor ID. So if you have 3 monitors, then your
@@ -110,6 +153,7 @@ export function getGdkMonitors(): GdkMonitors {
  */
 
 export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: Set<number>): number => {
+
     const gdkMonitors = getGdkMonitors();
 
     if (Object.keys(gdkMonitors).length === 0) {
@@ -121,41 +165,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // First pass: Strict matching including the monitor index (i.e., hypMon.id === monitor + resolution+scale criteria)
     const directMatch = hyprlandService.get_monitors().find((hypMon) => {
-        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
-
-        // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
-        const gdkScaleFactor = Math.ceil(hypMon.scale);
-
-        // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
-        // It will be the same REGARDLESS of transformation (e.g. 90 degrees will NOT swap the GDK width/height) 
-        const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
-        const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
-        const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
-
-        // When gdk geometry is scaled with the fractional scale, the hyprland width/height are already scaled similarly
-        // So there's no need to scale it again. However a 90 degree transformation WILL flip width/height
-        const transWidth = isVertical ? hypMon.height : hypMon.width;
-        const transHeight = isVertical ? hypMon.width : hypMon.height;
-        const scaleKey = `${hypMon.model}_${transWidth}x${transHeight}_${gdkScaleFactor}`;
-
-        // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
-        // We try to match against two different possibilities:
-        //  1) The geometry is scaled by the correct fractional scale
-        //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
-        const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
-
-        // Adding debug logging
-        console.log('Attempting 1st gdk key match');
-        console.log(`GDK key: ${gdkMonitor.key}`);
-        console.log(`HypMon.width: ${hypMon.width}`);
-        console.log(`HypMon.height: ${hypMon.height}`);
-        console.log(`HypMon.scale: ${hypMon.scale}`);
-        console.log(`scaleFactor: ${gdkScaleFactor}`);
-        console.log(`scaleFactorKey: ${scaleFactorKey}`);
-        console.log(`scaleKey: ${scaleKey}`);
-        console.log(`match?: ${keyMatch}`);
-
-        return keyMatch && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
+        return matchMonitorKey(hypMon, gdkMonitor) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
 
     if (directMatch) {
@@ -165,41 +175,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // Second pass: Relaxed matching without considering the monitor index
     const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
-        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
-
-        // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
-        const gdkScaleFactor = Math.ceil(hypMon.scale);
-
-        // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
-        // It will be the same REGARDLESS of transformation (e.g. 90 degrees will NOT swap the GDK width/height) 
-        const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
-        const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
-        const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
-
-        // When gdk geometry is scaled with the fractional scale, the hyprland width/height are already scaled similarly
-        // So there's no need to scale it again. However a 90 degree transformation WILL flip width/height
-        const transWidth = isVertical ? hypMon.height : hypMon.width;
-        const transHeight = isVertical ? hypMon.width : hypMon.height;
-        const scaleKey = `${hypMon.model}_${transWidth}x${transHeight}_${gdkScaleFactor}`;
-
-        // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
-        // We try to match against two different possibilities:
-        //  1) The geometry is scaled by the correct fractional scale
-        //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
-        const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
-
-        // Adding debug logging
-        console.log('Attempting 2nd gdk key match');
-        console.log(`GDK key: ${gdkMonitor.key}`);
-        console.log(`HypMon.width: ${hypMon.width}`);
-        console.log(`HypMon.height: ${hypMon.height}`);
-        console.log(`HypMon.scale: ${hypMon.scale}`);
-        console.log(`scaleFactor: ${gdkScaleFactor}`);
-        console.log(`scaleFactorKey: ${scaleFactorKey}`);
-        console.log(`scaleKey: ${scaleKey}`);
-        console.log(`match?: ${keyMatch}`);
-
-        return keyMatch && !usedHyprlandMonitors.has(hypMon.id);
+        return matchMonitorKey(hypMon, gdkMonitor) && !usedHyprlandMonitors.has(hypMon.id);
     });
 
     if (hyprlandMonitor) {
