@@ -144,6 +144,17 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
         //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
         const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
 
+        // Adding debug logging
+        console.log('Attempting 1st gdk key match');
+        console.log(`GDK key: ${gdkMonitor.key}`);
+        console.log(`HypMon.width: ${hypMon.width}`);
+        console.log(`HypMon.height: ${hypMon.height}`);
+        console.log(`HypMon.scale: ${hypMon.scale}`);
+        console.log(`scaleFactor: ${gdkScaleFactor}`);
+        console.log(`scaleFactorKey: ${scaleFactorKey}`);
+        console.log(`scaleKey: ${scaleKey}`);
+        console.log(`match?: ${keyMatch}`);
+
         return keyMatch && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
 
@@ -176,6 +187,17 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
         //  1) The geometry is scaled by the correct fractional scale
         //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
         const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
+
+        // Adding debug logging
+        console.log('Attempting 2nd gdk key match');
+        console.log(`GDK key: ${gdkMonitor.key}`);
+        console.log(`HypMon.width: ${hypMon.width}`);
+        console.log(`HypMon.height: ${hypMon.height}`);
+        console.log(`HypMon.scale: ${hypMon.scale}`);
+        console.log(`scaleFactor: ${gdkScaleFactor}`);
+        console.log(`scaleFactorKey: ${scaleFactorKey}`);
+        console.log(`scaleKey: ${scaleKey}`);
+        console.log(`match?: ${keyMatch}`);
 
         return keyMatch && !usedHyprlandMonitors.has(hypMon.id);
     });
