@@ -72,8 +72,7 @@ export function getGdkMonitors(): GdkMonitors {
 }
 
 export function matchMonitorKey(hypMon: Set, gdkMonitor: Set): boolean {
-    const transform = hypMon?.transform !== undefined ? 0 : hypMon.transform;
-    const isRotated90 = transform % 2 !== 0;
+    const isRotated90 = hypMon.transform % 2 !== 0;
 
     // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
     const gdkScaleFactor = Math.ceil(hypMon.scale);
