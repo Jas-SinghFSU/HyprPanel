@@ -123,18 +123,20 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     const directMatch = hyprlandService.get_monitors().find((hypMon) => {
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
+        // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
         const gdkScaleFactor = Math.ceil(hypMon.scale);
 
-        const width = isVertical ? hypMon.height : hypMon.width;
-        const height = isVertical ? hypMon.width : hypMon.height;
-
-        const scaleFactorWidth = Math.trunc(width / gdkScaleFactor);
-        const scaleFactorHeight = Math.trunc(height / gdkScaleFactor);
+        // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
+        // It will be the same REGARDLESS of transformation (e.g. 90 degrees will NOT swap the GDK width/height) 
+        const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
+        const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
         const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
 
-        const scaleWidth = Math.trunc(width / hypMon.scale);
-        const scaleHeight = Math.trunc(height / hypMon.scale);
-        const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+        // When gdk geometry is scaled with the fractional scale, the hyprland width/height are already scaled similarly
+        // So there's no need to scale it again. However a 90 degree transformation WILL flip width/height
+        const transWidth = isVertical ? hypMon.height : hypMon.width;
+        const transHeight = isVertical ? hypMon.width : hypMon.height;
+        const scaleKey = `${hypMon.model}_${transWidth}x${transHeight}_${gdkScaleFactor}`;
 
         // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
         // We try to match against two different possibilities:
@@ -154,18 +156,20 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
     const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
         const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
 
+        // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
         const gdkScaleFactor = Math.ceil(hypMon.scale);
 
-        const width = isVertical ? hypMon.height : hypMon.width;
-        const height = isVertical ? hypMon.width : hypMon.height;
-
-        const scaleFactorWidth = Math.trunc(width / gdkScaleFactor);
-        const scaleFactorHeight = Math.trunc(height / gdkScaleFactor);
+        // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
+        // It will be the same REGARDLESS of transformation (e.g. 90 degrees will NOT swap the GDK width/height) 
+        const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
+        const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
         const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
 
-        const scaleWidth = Math.trunc(width / hypMon.scale);
-        const scaleHeight = Math.trunc(height / hypMon.scale);
-        const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+        // When gdk geometry is scaled with the fractional scale, the hyprland width/height are already scaled similarly
+        // So there's no need to scale it again. However a 90 degree transformation WILL flip width/height
+        const transWidth = isVertical ? hypMon.height : hypMon.width;
+        const transHeight = isVertical ? hypMon.width : hypMon.height;
+        const scaleKey = `${hypMon.model}_${transWidth}x${transHeight}_${gdkScaleFactor}`;
 
         // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
         // We try to match against two different possibilities:
