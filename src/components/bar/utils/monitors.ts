@@ -5,10 +5,10 @@ import { BarLayout, BarLayouts } from 'src/lib/types/options';
 const hyprlandService = AstalHyprland.get_default();
 
 type GdkMonitor = {
-  key: string;
-  model: string;
-  used: boolean;
-}
+    key: string;
+    model: string;
+    used: boolean;
+};
 
 type GdkMonitors = {
     [key: string]: GdkMonitor;
