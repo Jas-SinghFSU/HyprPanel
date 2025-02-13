@@ -101,7 +101,7 @@ export function matchMonitorKey(hypMon: AstalHyprland.Monitor, gdkMonitor: GdkMo
 
     // Monitor matching debug logging, use if your workspaces are appearing on the wrong screen
     // To use, kill any running HyprPanel instances and then start a terminal, then run:
-    //    G_MESSAGES_DEBUG='GNOME Shell' hyprpanel
+    //    G_MESSAGES_DEBUG=all hyprpanel | grep "hyprpanel-DEBUG"
     // Create an issue in HyprPanel github and post these logs
     console.debug('Attempting gdk key match');
     console.debug(`GDK key: ${gdkMonitor.key}`);
