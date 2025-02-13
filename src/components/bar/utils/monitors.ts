@@ -4,12 +4,14 @@ import { BarLayout, BarLayouts } from 'src/lib/types/options';
 
 const hyprlandService = AstalHyprland.get_default();
 
+type GdkMonitor = {
+  key: string;
+  model: string;
+  used: boolean;
+}
+
 type GdkMonitors = {
-    [key: string]: {
-        key: string;
-        model: string;
-        used: boolean;
-    };
+    [key: string]: GdkMonitor;
 };
 
 export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLayout => {
@@ -71,7 +73,7 @@ export function getGdkMonitors(): GdkMonitors {
     return gdkMonitors;
 }
 
-export function matchMonitorKey(hypMon: Set, gdkMonitor: Set): boolean {
+export function matchMonitorKey(hypMon: AstalHyprland.Monitor, gdkMonitor: GdkMonitor): boolean {
     const isRotated90 = hypMon.transform % 2 !== 0;
 
     // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
