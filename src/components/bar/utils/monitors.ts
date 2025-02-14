@@ -4,12 +4,14 @@ import { BarLayout, BarLayouts } from 'src/lib/types/options';
 
 const hyprlandService = AstalHyprland.get_default();
 
+type GdkMonitor = {
+    key: string;
+    model: string;
+    used: boolean;
+};
+
 type GdkMonitors = {
-    [key: string]: {
-        key: string;
-        model: string;
-        used: boolean;
-    };
+    [key: string]: GdkMonitor;
 };
 
 export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLayout => {
@@ -62,11 +64,58 @@ export function getGdkMonitors(): GdkMonitors {
         const geometry = curMonitor.get_geometry();
         const scaleFactor = curMonitor.get_scale_factor();
 
+        // We can only use the scaleFactor for a scale variable in the key
+        // GDK3 doesn't support the fractional "scale" attribute (available in GDK4)
         const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
         gdkMonitors[i] = { key, model, used: false };
     }
 
     return gdkMonitors;
+}
+
+export function matchMonitorKey(hypMon: AstalHyprland.Monitor, gdkMonitor: GdkMonitor): boolean {
+    const isRotated90 = hypMon.transform % 2 !== 0;
+
+    // Needed for the key regardless of scaling below because GDK3 only has the scale factor for the key
+    const gdkScaleFactor = Math.ceil(hypMon.scale);
+
+    // When gdk is scaled with the scale factor, the hyprland width/height will be the same as the base monitor resolution
+    // The GDK width/height will NOT flip regardless of transformation (e.g. 90 degrees will NOT swap the GDK width/height)
+    const scaleFactorWidth = Math.trunc(hypMon.width / gdkScaleFactor);
+    const scaleFactorHeight = Math.trunc(hypMon.height / gdkScaleFactor);
+    const scaleFactorKey = `${hypMon.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
+
+    // When gdk geometry is scaled with the fractional scale, we need to scale the hyprland geometry to match it
+    // However a 90 degree transformation WILL flip the GDK width/height
+    const transWidth = isRotated90 ? hypMon.height : hypMon.width;
+    const transHeight = isRotated90 ? hypMon.width : hypMon.height;
+    const scaleWidth = Math.trunc(transWidth / hypMon.scale);
+    const scaleHeight = Math.trunc(transHeight / hypMon.scale);
+    const scaleKey = `${hypMon.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
+
+    // In GDK3 the GdkMonitor geometry can change depending on how the compositor handles scaling surface framebuffers
+    // We try to match against two different possibilities:
+    //  1) The geometry is scaled by the correct fractional scale
+    //  2) The geometry is scaled by the scaleFactor (the fractional scale rounded up)
+    const keyMatch = gdkMonitor.key === scaleFactorKey || gdkMonitor.key === scaleKey;
+
+    // Monitor matching debug logging, use if your workspaces are appearing on the wrong screen
+    // To use, kill any running HyprPanel instances and then start a terminal, then run:
+    //    G_MESSAGES_DEBUG=all hyprpanel | grep "hyprpanel-DEBUG"
+    // Create an issue in HyprPanel github and post these logs
+    console.debug('Attempting gdk key match');
+    console.debug(`GDK key: ${gdkMonitor.key}`);
+    console.debug(`HypMon.width: ${hypMon.width}`);
+    console.debug(`HypMon.height: ${hypMon.height}`);
+    console.debug(`HypMon.scale: ${hypMon.scale}`);
+    console.debug(`HypMon.transform: ${hypMon.transform}`);
+    console.debug(`isRotated90: ${isRotated90}`);
+    console.debug(`scaleFactor: ${gdkScaleFactor}`);
+    console.debug(`scaleFactorKey: ${scaleFactorKey}`);
+    console.debug(`scaleKey: ${scaleKey}`);
+    console.debug(`match?: ${keyMatch}`);
+
+    return keyMatch;
 }
 
 /**
@@ -119,13 +168,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // First pass: Strict matching including the monitor index (i.e., hypMon.id === monitor + resolution+scale criteria)
     const directMatch = hyprlandService.get_monitors().find((hypMon) => {
-        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
-
-        const width = isVertical ? hypMon.height : hypMon.width;
-        const height = isVertical ? hypMon.width : hypMon.height;
-
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
+        return matchMonitorKey(hypMon, gdkMonitor) && !usedHyprlandMonitors.has(hypMon.id) && hypMon.id === monitor;
     });
 
     if (directMatch) {
@@ -135,13 +178,7 @@ export const gdkMonitorIdToHyprlandId = (monitor: number, usedHyprlandMonitors: 
 
     // Second pass: Relaxed matching without considering the monitor index
     const hyprlandMonitor = hyprlandService.get_monitors().find((hypMon) => {
-        const isVertical = hypMon?.transform !== undefined ? hypMon.transform % 2 !== 0 : false;
-
-        const width = isVertical ? hypMon.height : hypMon.width;
-        const height = isVertical ? hypMon.width : hypMon.height;
-
-        const hyprlandKey = `${hypMon.model}_${width}x${height}_${hypMon.scale}`;
-        return gdkMonitor.key.startsWith(hyprlandKey) && !usedHyprlandMonitors.has(hypMon.id);
+        return matchMonitorKey(hypMon, gdkMonitor) && !usedHyprlandMonitors.has(hypMon.id);
     });
 
     if (hyprlandMonitor) {
