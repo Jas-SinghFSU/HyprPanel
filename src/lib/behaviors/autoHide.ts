@@ -56,8 +56,6 @@ function showAllBars(): void {
 
 /**
  * Updates bar visibility based on workspace window count
- *
- * @param workspaces - Array of Hyprland workspaces
  */
 function updateBarVisibilityByWindowCount(): void {
     const monitors = hyprlandService.get_monitors();
