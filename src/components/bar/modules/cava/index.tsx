@@ -39,6 +39,7 @@ export const Cava = (): BarBoxChild => {
                         return blockCharacters[Math.min(index, blockCharacters.length - 1)];
                     })
                     .join(spacing);
+
                 return valueMap;
             },
         );
