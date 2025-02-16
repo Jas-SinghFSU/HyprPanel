@@ -1,10 +1,10 @@
 import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { hyprlandService } from 'src/lib/constants/services';
 import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace';
 import { range } from 'src/lib/utils';
 import options from 'src/options';
 
+const hyprlandService = AstalHyprland.get_default();
 const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
 
 /**

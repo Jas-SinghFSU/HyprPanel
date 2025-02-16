@@ -1,9 +1,9 @@
 import options from 'src/options';
 import { capitalizeFirstLetter } from 'src/lib/utils';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { hyprlandService } from 'src/lib/constants/services';
 import { bind, Variable } from 'astal';
 
+const hyprlandService = AstalHyprland.get_default();
 export const clientTitle = Variable('');
 let clientBinding: Variable<void> | undefined;
 

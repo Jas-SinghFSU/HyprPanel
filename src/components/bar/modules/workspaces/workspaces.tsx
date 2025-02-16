@@ -1,4 +1,3 @@
-import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { forceUpdater, getWorkspacesToRender, initWorkspaceEvents, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
@@ -8,6 +7,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/utils';
 
+const hyprlandService = AstalHyprland.get_default();
 const {
     workspaces,
     monitorSpecific,
@@ -145,7 +145,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 monitor,
                             )}
                             setup={(self) => {
-                                const currentWsClients = clients.filter((client) => client.workspace.id === wsId);
+                                const currentWsClients = clients.filter((client) => client?.workspace?.id === wsId);
                                 self.toggleClassName('occupied', currentWsClients.length > 0);
                             }}
                         />

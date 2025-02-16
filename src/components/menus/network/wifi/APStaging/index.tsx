@@ -1,9 +1,11 @@
 import { bind } from 'astal/binding';
 import { Variable } from 'astal';
-import { networkService } from 'src/lib/constants/services';
 import { AccessPoint } from './AccessPoint';
 import { PasswordInput } from './PasswordInput';
 import { connecting, staging } from '../WirelessAPs/helpers';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+
+const networkService = AstalNetwork.get_default();
 
 export const APStaging = (): JSX.Element => {
     const stagingBinding = Variable.derive([bind(networkService, 'wifi'), bind(staging)], () => {

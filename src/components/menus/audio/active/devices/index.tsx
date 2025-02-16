@@ -1,6 +1,9 @@
-import { audioService } from 'src/lib/constants/services';
 import { SliderItem } from '../sliderItem/SliderItem';
 import { ActiveDeviceMenu } from '..';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
 
 const ActiveDeviceContainer = ({ children }: ActiveDeviceContainerProps): JSX.Element => {
     return (

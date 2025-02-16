@@ -1,9 +1,10 @@
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { notifdService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { FirstPageButton, LastPageButton, NextPageButton, PreviousPageButton } from './Buttons';
+
+const notifdService = AstalNotifd.get_default();
 
 const { displayedTotal } = options.notifications;
 const { show: showPager } = options.theme.bar.menus.menu.notifications.pager;

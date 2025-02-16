@@ -1,9 +1,10 @@
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { bind, Variable } from 'astal';
-import { networkService } from 'src/lib/constants/services';
 
 export const wiredIcon: Variable<string> = Variable('');
 export const wirelessIcon: Variable<string> = Variable('');
+
+const networkService = AstalNetwork.get_default();
 
 let wiredIconBinding: Variable<void> | undefined;
 let wirelessIconBinding: Variable<void> | undefined;

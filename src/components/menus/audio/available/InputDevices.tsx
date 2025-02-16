@@ -1,7 +1,10 @@
-import { audioService } from 'src/lib/constants/services.js';
 import { bind } from 'astal';
 import { AudioDevice } from './Device';
 import { NotFoundButton } from './NotFoundButton';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber.audio;
 
 export const InputDevices = (): JSX.Element => {
     const inputDevices = bind(audioService, 'microphones');
