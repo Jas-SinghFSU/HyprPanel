@@ -127,6 +127,7 @@ export const Bar = (() => {
 
         return (
             <window
+                inhibit={bind(idleInhibit)}
                 name={`bar-${hyprlandMonitor}`}
                 namespace={`bar-${hyprlandMonitor}`}
                 className={'bar'}
