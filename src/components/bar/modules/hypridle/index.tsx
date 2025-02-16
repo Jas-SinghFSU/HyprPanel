@@ -1,6 +1,6 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
-import { inputHandler, throttleInput } from '../../utils/helpers';
+import { inputHandler } from '../../utils/helpers';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { BarBoxChild } from 'src/lib/types/bar';
@@ -17,8 +17,6 @@ function toggleInhibit(): void {
  * NOTE: Added a throttle since spamming a button yields duplicate events
  * which undo the toggle.
  */
-const throttledToggleSunset = throttleInput(() => toggleInhibit(), 50);
-
 export const Hypridle = (): BarBoxChild => {
     const iconBinding = Variable.derive([bind(idleInhibit), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
         return active ? onIcn : offIcn;
@@ -42,7 +40,7 @@ export const Hypridle = (): BarBoxChild => {
                 inputHandler(self, {
                     onPrimaryClick: {
                         fn: () => {
-                            throttledToggleSunset();
+                            toggleInhibit();
                         },
                     },
                     onSecondaryClick: {
