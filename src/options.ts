@@ -1172,8 +1172,8 @@ const options = mkOptions(CONFIG, {
             },
             hypridle: {
                 label: opt(true),
-                onIcon: opt(''),
-                offIcon: opt(''),
+                onIcon: opt('󰒳'),
+                offIcon: opt('󰒲'),
                 onLabel: opt('On'),
                 offLabel: opt('Off'),
                 pollingInterval: opt(1000 * 2),
