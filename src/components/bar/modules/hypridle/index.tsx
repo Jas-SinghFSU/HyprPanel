@@ -13,10 +13,6 @@ function toggleInhibit(): void {
     idleInhibit.set(!idleInhibit.get());
 }
 
-/*
- * NOTE: Added a throttle since spamming a button yields duplicate events
- * which will undo the toggle.
- */
 export const Hypridle = (): BarBoxChild => {
     const iconBinding = Variable.derive([bind(idleInhibit), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
         return active ? onIcn : offIcn;
