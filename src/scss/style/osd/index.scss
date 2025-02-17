@@ -6,6 +6,8 @@
     .osd-container {
         margin: $osd-margins;
         opacity: $osd-opacity * 0.01;
+        box-shadow: $osd-shadow;
+        border-radius: $osd-radius;
     }
 
     .osd-label-container {

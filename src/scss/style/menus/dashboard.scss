@@ -3,7 +3,6 @@
 }
 
 .dashboard-content-items {
-    margin-left: 0.5em;
     min-width: 28.5em;
     background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-background-color);
     border: $bar-menus-border-size solid
