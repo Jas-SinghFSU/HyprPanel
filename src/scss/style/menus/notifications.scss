@@ -10,7 +10,6 @@
     border: $bar-menus-border-size solid
         if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-notifications-border);
     border-radius: $bar-menus-border-radius;
-    margin-right: 0.45em;
     opacity: $bar-menus-opacity * 0.01;
 
     .window-content.notificationsmenu-window {

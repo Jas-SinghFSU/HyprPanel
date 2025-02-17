@@ -16,6 +16,9 @@
         background: if($bar-transparent, transparent, transparentize($bar-background, $transparency-value));
         border-radius: if($bar-floating, $bar-border_radius, 0em);
 
+        margin: $bar-shadowMargins;
+        box-shadow: $bar-shadow;
+
         &.withBorder {
             border-top: if(
                 $bar-border_location == 'top' or $bar-border_location == 'horizontal' or $bar-border_location == 'full',

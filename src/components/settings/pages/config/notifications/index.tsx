@@ -23,6 +23,17 @@ export const NotificationSettings = (): JSX.Element => {
                 />
                 <Option opt={options.theme.notification.border_radius} title="Border Radius" type="string" />
                 <Option
+                    opt={options.theme.notification.shadow}
+                    title="Notification Shadow"
+                    subtitle="Requires that sufficient margins have been set to house the shadow."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.notification.shadowMargins}
+                    title="Notification Shadow Margins"
+                    type="string"
+                />
+                <Option
                     opt={options.notifications.monitor}
                     title="Monitor"
                     subtitle="ID of the monitor to display notifications"
