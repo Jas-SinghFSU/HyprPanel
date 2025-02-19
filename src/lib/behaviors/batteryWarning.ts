@@ -1,3 +1,4 @@
+
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import icons from '../icons/icons';
 import { Notify } from '../utils';
@@ -8,14 +9,28 @@ export function warnOnLowBattery(): void {
     let sentLowNotification = false;
     let sentHalfLowNotification = false;
 
+    // Charging state notifications
     batteryService.connect('notify::charging', () => {
-        // Reset it when the battery is put to charge
         if (batteryService.charging) {
-            sentLowNotification = false;
-            sentHalfLowNotification = false;
+            // Charger plugged in
+            Notify({
+                summary: "Charger Plugged In",
+                body: "Your device is now charging.",
+                iconName: icons.battery.charging,
+                urgency: 'normal',
+            });
+        } else {
+            // Charger unplugged
+            Notify({
+                summary: "Charger Unplugged",
+                body: "Your device is no longer charging.",
+                iconName: icons.battery.warning,
+                urgency: 'normal',
+            });
         }
     });
 
+    // Battery percentage notifications
     batteryService.connect('notify::percentage', () => {
         const { lowBatteryThreshold, lowBatteryNotification, lowBatteryNotificationText, lowBatteryNotificationTitle } =
             options.menus.power;
