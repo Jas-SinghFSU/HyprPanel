@@ -170,8 +170,11 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.workspaces.workspacesPerMonitor}
-                    title="Number of workspaces per monitor."
-                    subtitle="Requires 'Zero-Based Workspace Numbers' to be enabled."
+                    title="Number of Workspaces per Monitor"
+                    subtitle={
+                        'Specify the number of workspaces that can exist on each monitor.\n' +
+                        "Requires 'Zero-Based Workspace Numbers' to be enabled."
+                    }
                     type="number"
                 />
                 <Option
