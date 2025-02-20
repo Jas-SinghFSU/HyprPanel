@@ -82,6 +82,37 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param cacheFile - The path to the cache file.
      */
     public init(cacheFile: string): void {
+        // Find the configuration key based on either dot notation, or JavaScript objects.
+        const findKey = (obj: unknown, path: string[]): T | undefined => {
+            const top = path.shift();
+            if (!top) {
+                // The path is empty, so this is our value.
+                return obj as T;
+            }
+
+            if(!(obj instanceof Object || obj instanceof Array)) {
+                // Not an array, not an object, but we need to go deeper.
+                // This is invalid, so return.
+                return undefined;
+            }
+
+            const mergedPath = [top, ...path].join(".");
+            if (mergedPath in obj) {
+                // The key exists on this level with dot-notation, so we return that.
+                // Typescript does not know what to do with an untyped object, hence the any.
+                return (obj as any)[mergedPath] as T;
+            }
+
+            if (top in obj) {
+                // The value exists but we are not there yet, so we recurse.
+                // Typescript does not know what to do with an untyped object, hence the any.
+                return findKey((obj as any)[top] as object, path);
+            }
+
+            // Key does not exist :(
+            return undefined;
+        }
+
         const rawData = readFile(cacheFile);
 
         let cacheData: Record<string, unknown> = {};
@@ -94,7 +125,7 @@ export class Opt<T = unknown> extends Variable<T> {
             }
         }
 
-        const cachedVariable = cacheData[this._id];
+        const cachedVariable = findKey(cacheData, this._id.split("."));
 
         if (cachedVariable !== undefined) {
             this.set(cachedVariable as T);
