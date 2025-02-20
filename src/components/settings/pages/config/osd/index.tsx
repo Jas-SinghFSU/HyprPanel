@@ -49,6 +49,7 @@ export const OSDSettings = (): JSX.Element => {
                     type="string"
                 />
 
+                <Option opt={options.theme.osd.enableShadow} title="Enable Shadow" type="boolean" />
                 <Option
                     opt={options.theme.osd.shadow}
                     title="OSD Shadow"
