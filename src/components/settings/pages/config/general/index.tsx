@@ -65,6 +65,7 @@ export const BarGeneral = (): JSX.Element => {
                     max={10000}
                     increment={25}
                 />
+                <Option opt={options.theme.bar.menus.enableShadow} title="Enable Shadow" type="boolean" />
                 <Option
                     opt={options.theme.bar.menus.shadow}
                     title="Menu Shadow"

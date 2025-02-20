@@ -22,6 +22,7 @@ export const NotificationSettings = (): JSX.Element => {
                     enums={['top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left']}
                 />
                 <Option opt={options.theme.notification.border_radius} title="Border Radius" type="string" />
+                <Option opt={options.theme.notification.enableShadow} title="Enable Shadow" type="boolean" />
                 <Option
                     opt={options.theme.notification.shadow}
                     title="Notification Shadow"

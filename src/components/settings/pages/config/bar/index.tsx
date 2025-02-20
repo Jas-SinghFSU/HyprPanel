@@ -53,6 +53,7 @@ export const BarSettings = (): JSX.Element => {
                     enums={['none', 'full', 'top', 'right', 'bottom', 'left', 'horizontal', 'vertical']}
                 />
                 <Option opt={options.theme.bar.border.width} title="Bar Border Width" type="string" />
+                <Option opt={options.theme.bar.enableShadow} title="Enable Shadow" type="boolean" />
                 <Option
                     opt={options.theme.bar.shadow}
                     title="Bar Shadow"
