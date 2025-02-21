@@ -17,7 +17,7 @@ const { autoHide } = options.bar;
 function setBarVisibility(monitorId: number, isVisible: boolean): void {
     const barName = `bar-${monitorId}`;
 
-    if (BarVisibility.get(barName)) {
+    if (BarVisibility.get(barName) && autoHide.get() !== 'donottouch') {
         App.get_window(barName)?.set_visible(isVisible);
     }
 }
