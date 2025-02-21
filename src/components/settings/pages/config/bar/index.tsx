@@ -29,7 +29,7 @@ export const BarSettings = (): JSX.Element => {
                     opt={options.bar.autoHide}
                     title="Auto Hide"
                     type="enum"
-                    enums={['never', 'fullscreen', 'single-window']}
+                    enums={['never', 'fullscreen', 'single-window', 'donottouch']}
                 />
                 <Option
                     opt={options.theme.bar.buttons.enableBorders}
