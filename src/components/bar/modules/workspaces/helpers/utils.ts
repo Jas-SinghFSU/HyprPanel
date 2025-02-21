@@ -8,7 +8,12 @@ const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
-const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator, workspacesPerMonitor } = options.bar.workspaces;
+const {
+    showWsIcons,
+    showAllActive,
+    numbered_active_indicator: wsActiveIndicator,
+    workspacesPerMonitor,
+} = options.bar.workspaces;
 
 /**
  * Determines if a workspace is active on a given monitor.

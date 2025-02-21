@@ -170,7 +170,8 @@ export const BarSettings = (): JSX.Element => {
                     }
                     type="boolean"
                 />
-                <Option opt={options.bar.workspaces.workspacesPerMonitor}
+                <Option
+                    opt={options.bar.workspaces.workspacesPerMonitor}
                     title="Number of Workspaces per Monitor"
                     subtitle={
                         'Specify the number of workspaces that can exist on each monitor.\n' +
