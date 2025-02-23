@@ -83,35 +83,6 @@ export class Opt<T = unknown> extends Variable<T> {
      */
     public init(cacheFile: string): void {
         // Find the configuration key based on either dot notation, or JavaScript objects.
-        const findKey = (obj: unknown, path: string[]): T | undefined => {
-            const top = path.shift();
-            if (!top) {
-                // The path is empty, so this is our value.
-                return obj as T;
-            }
-
-            if(!(obj instanceof Object || obj instanceof Array)) {
-                // Not an array, not an object, but we need to go deeper.
-                // This is invalid, so return.
-                return undefined;
-            }
-
-            const mergedPath = [top, ...path].join(".");
-            if (mergedPath in obj) {
-                // The key exists on this level with dot-notation, so we return that.
-                // Typescript does not know what to do with an untyped object, hence the any.
-                return (obj as any)[mergedPath] as T;
-            }
-
-            if (top in obj) {
-                // The value exists but we are not there yet, so we recurse.
-                // Typescript does not know what to do with an untyped object, hence the any.
-                return findKey((obj as any)[top] as object, path);
-            }
-
-            // Key does not exist :(
-            return undefined;
-        }
 
         const rawData = readFile(cacheFile);
 
@@ -125,7 +96,7 @@ export class Opt<T = unknown> extends Variable<T> {
             }
         }
 
-        const cachedVariable = findKey(cacheData, this._id.split("."));
+        const cachedVariable = this._findKey(cacheData, this._id.split('.'));
 
         if (cachedVariable !== undefined) {
             this.set(cachedVariable as T);
@@ -187,6 +158,38 @@ export class Opt<T = unknown> extends Variable<T> {
             return this._id;
         }
 
+        return undefined;
+    }
+
+    private _findKey(obj: Record<string, unknown>, path: string[]): T | undefined {
+        const top = path.shift();
+
+        if (!top) {
+            // The path is empty, so this is our value.
+            return obj as T;
+        }
+
+        if (typeof obj !== 'object') {
+            // Not an array, not an object, but we need to go deeper.
+            // This is invalid, so return.
+            return undefined;
+        }
+
+        const mergedPath = [top, ...path].join('.');
+
+        if (mergedPath in obj) {
+            // The key exists on this level with dot-notation, so we return that.
+            // Typescript does not know what to do with an untyped object, hence the any.
+            return obj[mergedPath] as T;
+        }
+
+        if (top in obj) {
+            // The value exists but we are not there yet, so we recurse.
+            // Typescript does not know what to do with an untyped object, hence the any.
+            return this._findKey(obj[top] as Record<string, unknown>, path);
+        }
+
+        // Key does not exist :(
         return undefined;
     }
 }
