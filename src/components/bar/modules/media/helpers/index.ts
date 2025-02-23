@@ -30,7 +30,7 @@ const getIconForPlayer = (playerName: string): string => {
         ['Vivaldi', '󰖟'],
         ['Waterfox', '󰈹'],
         ['Thorium', '󰈹'],
-        ['Zen Browser', '󰈹'],
+        ['Mozilla zen', ''],
         ['Floorp', '󰈹'],
         ['(.*)', '󰝚'],
     ];
