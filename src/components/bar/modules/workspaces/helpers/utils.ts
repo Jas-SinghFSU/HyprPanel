@@ -279,10 +279,9 @@ export const renderLabel = (
 
     if (workspaceMask) {
         const j = zeroBasedModulo.get();
+        const k = i % j == 0 ? `${j}` : `${i % j}`;
         const w = getWorkspacesForMonitor(monitor);
-        return `${w === undefined
-            ? i % j == 0 ? `${j}` : `${i % j}`
-            : (w.indexOf(i) ?? 0) + 1}`;
+        return `${w === undefined ? k : w.indexOf(i) + 1 || k}`;
     }
 
     return `${i}`;
