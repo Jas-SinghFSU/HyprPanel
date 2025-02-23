@@ -171,6 +171,15 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
+                    opt={options.bar.workspaces.zeroBasedModulo}
+                    title="Zero-Based Workspace Modulo"
+                    subtitle={
+                        "Requires 'Zero-Based Workspace Numbers' to be enabled. \n" +
+                        'Define the modulo value for zero-based workspace masking.'
+                    }
+                    type="number"
+                />
+                <Option
                     opt={options.bar.workspaces.showWsIcons}
                     title="Map Workspaces to Icons"
                     subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"

@@ -3,12 +3,18 @@ import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
+import { getWorkspacesForMonitor } from '.';
 
 const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
-const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
+const {
+    showWsIcons,
+    showAllActive,
+    numbered_active_indicator: wsActiveIndicator,
+    zeroBasedModulo,
+} = options.bar.workspaces;
 
 /**
  * Determines if a workspace is active on a given monitor.
@@ -271,5 +277,12 @@ export const renderLabel = (
         return getWsIcon(wsIconMap, i);
     }
 
-    return workspaceMask ? `${index + 1}` : `${i}`;
+    if (workspaceMask) {
+        const j = zeroBasedModulo.get();
+        const k = i % j == 0 ? `${j}` : `${i % j}`;
+        const w = getWorkspacesForMonitor(monitor);
+        return `${w === undefined ? k : w.indexOf(i) + 1 || k}`;
+    }
+
+    return `${i}`;
 };
