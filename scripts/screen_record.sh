@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+# Requires wf-recorder: https://github.com/ammen99/wf-recorder
 
 outputDir="$HOME/Videos/Screencasts"
+defaultSink=$(pactl info | grep "Default Sink" | awk -F ': ' '{print $NF}')
+WF_RECORDER_OPTS="--audio $defaultSink --codec av1_vaapi"
 
 checkRecording() {
-    if pgrep -f "gpu-screen-recorder" >/dev/null; then
+    if pgrep -f "wf-recorder" >/dev/null; then
         return 0
     else
         return 1
@@ -18,24 +21,26 @@ startRecording() {
 
     target="$2"
 
-    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mp4"
-    outputPath="$outputDir/$outputFile"
+    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S)"
+    outputPath="$outputDir/${outputFile}.mp4"
+    logFile="$outputDir/${outputFile}.log"
     mkdir -p "$outputDir"
 
-    if [ -z "$target" ]; then
-        echo "Usage: $0 start screen [screen_name]"
+    if [ "$target" == "screen" ]; then
+        monitor_info=$(hyprctl -j monitors | jq -r ".[] | select(.name == \"$3\")")
+        echo "Monitor Selected: $3" > "$logFile"
+        w=$(echo $monitor_info | jq -r '.width')
+        h=$(echo $monitor_info | jq -r '.height')
+        x=$(echo $monitor_info | jq -r '.x')
+        y=$(echo $monitor_info | jq -r '.y')
+        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${w}x${h}" --file "$outputPath" 1>>"$logFile" 2>&1 &
+    elif [ "$target" == "region" ]; then
+        wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" 1>"$logFile" 2>&1 &
+    else
+        echo "Usage: $0 start {region|screen [screen_name]}"
         exit 1
     fi
-
-    GPU_TYPE=$(lspci | grep -E 'VGA|3D' | grep -Ev '00:02.0|Integrated' >/dev/null && echo "" || echo "-encoder cpu")
-
-    gpu-screen-recorder \
-        -w "$target" \
-        -f 60 \
-        -k h264 \
-        -a "$(pactl get-default-sink).monitor" \
-        -o "$outputPath" \
-        $GPU_TYPE &
+    disown "$(jobs -p | tail -n 1)"
 
     echo "Recording started. Output will be saved to $outputPath"
 }
@@ -46,7 +51,7 @@ stopRecording() {
         exit 1
     fi
 
-    pkill -SIGINT -f gpu-screen-recorder
+    pkill -SIGINT -f wf-recorder
 
     recentFile=$(ls -t "$outputDir"/recording_*.mp4 | head -n 1)
 
@@ -74,7 +79,7 @@ status)
     fi
     ;;
 *)
-    echo "Usage: $0 {start [screen_name|window_id]|stop|status}"
+    echo "Usage: $0 {start [screen screen_name|region]|stop|status}"
     exit 1
     ;;
 esac

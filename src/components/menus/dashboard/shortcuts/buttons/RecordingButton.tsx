@@ -29,13 +29,27 @@ const MonitorListDropdown = (): JSX.Element => {
 
                             App.get_window('dashboardmenu')?.set_visible(false);
 
-                            execAsync(`${SRC_DIR}/scripts/screen_record.sh start ${monitor.name}`).catch((err) =>
+                            execAsync(`${SRC_DIR}/scripts/screen_record.sh start screen ${monitor.name}`).catch((err) =>
                                 console.error(err),
                             );
                         }}
                     />
                 ));
             })}
+            <MenuItem
+                label="Region"
+                onButtonPressEvent={(_, event) => {
+                    const buttonClicked = event.get_button()[1];
+
+                    if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
+                        return;
+                    }
+
+                    App.get_window('dashboardmenu')?.set_visible(false);
+
+                    execAsync(`${SRC_DIR}/scripts/screen_record.sh start region`).catch((err) => console.error(err));
+                }}
+            />
         </Menu>
     );
 };
