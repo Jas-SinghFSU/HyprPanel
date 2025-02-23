@@ -12,7 +12,7 @@ const {
     showWsIcons,
     showAllActive,
     numbered_active_indicator: wsActiveIndicator,
-    workspacesPerMonitor,
+    zeroBasedModulo,
 } = options.bar.workspaces;
 
 /**
@@ -277,7 +277,7 @@ export const renderLabel = (
     }
 
     if (workspaceMask) {
-        const j = workspacesPerMonitor.get();
+        const j = zeroBasedModulo.get();
         return i % j == 0 ? `${j}` : `${i % j}`;
     }
 

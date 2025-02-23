@@ -981,7 +981,7 @@ const options = mkOptions(CONFIG, {
             spacing: opt(1),
             monitorSpecific: opt(true),
             workspaceMask: opt(false),
-            workspacesPerMonitor: opt(10),
+            zeroBasedModulo: opt(10),
             reverse_scroll: opt(false),
             scroll_speed: opt(5),
         },
