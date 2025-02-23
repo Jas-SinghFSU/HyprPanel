@@ -3,6 +3,7 @@ import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
+import { getWorkspacesForMonitor } from '.';
 
 const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
@@ -278,7 +279,10 @@ export const renderLabel = (
 
     if (workspaceMask) {
         const j = zeroBasedModulo.get();
-        return i % j == 0 ? `${j}` : `${i % j}`;
+        const w = getWorkspacesForMonitor(monitor);
+        return `${w === undefined
+            ? i % j == 0 ? `${j}` : `${i % j}`
+            : (w.indexOf(i) ?? 0) + 1}`;
     }
 
     return `${i}`;
