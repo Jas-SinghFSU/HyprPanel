@@ -289,6 +289,16 @@ in
       bar.customModules.weather.scrollDown = mkStrOption "";
       bar.customModules.weather.scrollUp = mkStrOption "";
       bar.customModules.weather.unit = mkStrOption "imperial";
+      bar.customModules.worldclock.format = mkStrOption "%I:%M:%S %p %Z";
+      bar.customModules.worldclock.formatDiffDate = mkStrOption "%a %b %d  %I:%M:%S %p %Z";
+      bar.customModules.worldclock.icon = mkStrOption "󱉊";
+      bar.customModules.worldclock.middleClick = mkStrOption "";
+      bar.customModules.worldclock.rightClick = mkStrOption "";
+      bar.customModules.worldclock.scrollDown = mkStrOption "";
+      bar.customModules.worldclock.scrollUp = mkStrOption "";
+      bar.customModules.worldclock.showIcon = mkBoolOption true;
+      bar.customModules.worldclock.showTime = mkBoolOption true;
+      bar.customModules.worldclock.tz = mkStrListOption ["America/New_York" "Europe/Paris" "Asia/Tokyo"];
       bar.launcher.autoDetectIcon = mkBoolOption false;
       bar.launcher.icon = mkStrOption "󰣇";
       bar.launcher.middleClick = mkStrOption "";
@@ -479,6 +489,8 @@ in
       theme.bar.buttons.modules.updates.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.weather.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.weather.spacing = mkStrOption "0.45em";
+      theme.bar.buttons.modules.worldclock.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.worldclock.spacing = mkStrOption "0.45em";
       theme.bar.buttons.monochrome = mkBoolOption false;
       theme.bar.buttons.network.enableBorder = mkBoolOption false;
       theme.bar.buttons.network.spacing = mkStrOption "0.5em";
@@ -682,3 +694,4 @@ in
     wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
   };
 }
+

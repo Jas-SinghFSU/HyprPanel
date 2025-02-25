@@ -391,6 +391,29 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cava.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.cava.scrollDown} title="Scroll Down" type="string" />
 
+                {/* World Clock Section */}
+                <Header title="World Clock" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.worldclock.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.worldclock.icon} title="Icon" type="string" />
+                <Option opt={options.bar.customModules.worldclock.showIcon} title="Show Icon" type="boolean" />
+                <Option opt={options.theme.bar.buttons.modules.worldclock.spacing} title="Spacing" type="string" />
+                <Option opt={options.bar.customModules.worldclock.showTime} title="Show Time" type="boolean" />
+                <Option opt={options.bar.customModules.worldclock.format} title="Format" type="string" />
+                <Option
+                    opt={options.bar.customModules.worldclock.formatDiffDate}
+                    title="Format (when date different from local date)"
+                    type="string"
+                />
+                <Option opt={options.bar.customModules.worldclock.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.worldclock.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.worldclock.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.worldclock.scrollDown} title="Scroll Down" type="string" />
+                <Option opt={options.bar.customModules.worldclock.tz} title="Timezones Displayed" type="object" />
+
                 {/* Power Section */}
                 <Header title="Power" />
                 <Option
