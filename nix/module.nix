@@ -509,6 +509,7 @@ in
       theme.bar.buttons.workspaces.spacing = mkStrOption "0.5em";
       theme.bar.buttons.y_margins = mkStrOption "0.4em";
       theme.bar.dropdownGap = mkStrOption "2.9em";
+      theme.bar.enableShadow = mkBoolOption false;
       theme.bar.floating = mkBoolOption false;
       theme.bar.label_spacing = mkStrOption "0.5em";
       theme.bar.layer = mkStrOption "top";
@@ -520,6 +521,7 @@ in
       theme.bar.menus.border.size = mkStrOption "0.13em";
       theme.bar.menus.buttons.radius = mkStrOption "0.4em";
       theme.bar.menus.card_radius = mkStrOption "0.4em";
+      theme.bar.menus.enableShadow = mkBoolOption false;
       theme.bar.menus.menu.battery.scaling = mkIntOption 100;
       theme.bar.menus.menu.bluetooth.scaling = mkIntOption 100;
       theme.bar.menus.menu.clock.scaling = mkIntOption 100;
@@ -545,6 +547,8 @@ in
       theme.bar.menus.progressbar.radius = mkStrOption "0.3rem";
       theme.bar.menus.scroller.radius = mkStrOption "0.7em";
       theme.bar.menus.scroller.width = mkStrOption "0.25em";
+      theme.bar.menus.shadow = mkStrOption "0px 0px 3px 1px #16161e";
+      theme.bar.menus.shadowMargins = mkStrOption "5px 5px";
       theme.bar.menus.slider.progress_radius = mkStrOption "0.3rem";
       theme.bar.menus.slider.slider_radius = mkStrOption "0.3rem";
       theme.bar.menus.switch.radius = mkStrOption "0.2em";
@@ -553,6 +557,8 @@ in
       theme.bar.opacity = mkIntOption 100;
       theme.bar.outer_spacing = mkStrOption "1.6em";
       theme.bar.scaling = mkIntOption 100;
+      theme.bar.shadow = mkStrOption "0px 1px 2px 1px #16161e";
+      theme.bar.shadowMargins = mkStrOption "0px 0px 4px 0px";
       theme.bar.transparent = mkBoolOption false;
       theme.font.name = mkStrOption "Ubuntu Nerd Font";
       theme.font.size = mkStrOption "1.2rem";
@@ -563,11 +569,15 @@ in
       theme.matugen_settings.scheme_type = mkStrOption "tonal-spot";
       theme.matugen_settings.variation = mkStrOption "standard_1";
       theme.notification.border_radius = mkStrOption "0.6em";
+      theme.notification.enableShadow = mkBoolOption false;
       theme.notification.opacity = mkIntOption 100;
       theme.notification.scaling = mkIntOption 100;
+      theme.notification.shadow = mkStrOption "0px 1px 2px 1px #16161e";
+      theme.notification.shadowMargins = mkStrOption "4px 4px";
       theme.osd.active_monitor = mkBoolOption true;
       theme.osd.duration = mkIntOption 2500;
       theme.osd.enable = mkBoolOption true;
+      theme.osd.enableShadow = mkBoolOption false;
       theme.osd.location = mkStrOption "right";
       theme.osd.margins = mkStrOption "0px 5px 0px 0px";
       theme.osd.monitor = mkIntOption 0;
@@ -577,6 +587,7 @@ in
       theme.osd.radius = mkStrOption "0.4em";
       theme.osd.border.size = mkStrOption "0em";
       theme.osd.scaling = mkIntOption 100;
+      theme.osd.shadow = mkStrOption "0px 0px 3px 2px #16161e";
       theme.tooltip.scaling = mkIntOption 100;
       wallpaper.enable = mkBoolOption true;
       wallpaper.image = mkStrOption "";
