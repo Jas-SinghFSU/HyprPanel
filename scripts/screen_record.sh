@@ -2,8 +2,8 @@
 # Requires wf-recorder: https://github.com/ammen99/wf-recorder
 
 outputDir="$HOME/Videos/Screencasts"
-defaultSink=$(pactl info | grep "Default Sink" | awk -F ': ' '{print $NF}')
-WF_RECORDER_OPTS="--audio $defaultSink --codec av1_vaapi"
+defaultSink=$(pactl get-default-sink)
+WF_RECORDER_OPTS="--audio=$defaultSink.monitor -c libx264rgb"
 
 checkRecording() {
     if pgrep -f "wf-recorder" >/dev/null; then
