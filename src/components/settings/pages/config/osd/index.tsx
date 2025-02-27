@@ -48,6 +48,14 @@ export const OSDSettings = (): JSX.Element => {
                     subtitle="Format: top right bottom left"
                     type="string"
                 />
+
+                <Option opt={options.theme.osd.enableShadow} title="Enable Shadow" type="boolean" />
+                <Option
+                    opt={options.theme.osd.shadow}
+                    title="OSD Shadow"
+                    subtitle="Requires that sufficient margins have been set to house the shadow."
+                    type="string"
+                />
                 <Option opt={options.theme.osd.border.size} title="Border Size" type="string" />
                 <Option opt={options.theme.osd.radius} title="Radius" subtitle="Radius of the OSD" type="string" />
                 <Option

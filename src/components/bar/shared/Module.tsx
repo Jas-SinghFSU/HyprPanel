@@ -10,7 +10,7 @@ export const Module = ({
     textIcon,
     useTextIcon = bind(Variable(false)),
     label,
-    tooltipText,
+    tooltipText = '',
     boxClass,
     isVis,
     props = {},

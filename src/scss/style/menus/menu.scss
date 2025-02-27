@@ -226,6 +226,12 @@
     min-height: 10em;
 }
 
+.dropdown-content {
+    border-radius: $bar-menus-border-radius;
+    margin: if($bar-menus-enableShadow, $bar-menus-shadowMargins, 0px);
+    box-shadow: if($bar-menus-enableShadow, $bar-menus-shadow, 0 0 0 0);
+}
+
 .menu-label {
     margin: 0.5em 1em;
     color: $sky;

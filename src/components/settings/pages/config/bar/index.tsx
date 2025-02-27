@@ -1,7 +1,7 @@
-import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
 import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
+import { Option } from 'src/components/settings/shared/Option';
 
 export const BarSettings = (): JSX.Element => {
     return (
@@ -53,6 +53,19 @@ export const BarSettings = (): JSX.Element => {
                     enums={['none', 'full', 'top', 'right', 'bottom', 'left', 'horizontal', 'vertical']}
                 />
                 <Option opt={options.theme.bar.border.width} title="Bar Border Width" type="string" />
+                <Option opt={options.theme.bar.enableShadow} title="Enable Shadow" type="boolean" />
+                <Option
+                    opt={options.theme.bar.shadow}
+                    title="Bar Shadow"
+                    subtitle="Requires that sufficient margins have been set to house the shadow."
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.shadowMargins}
+                    title="Bar Shadow Margins"
+                    subtitle="Margins count mouse events as clicks 'inside' the menu."
+                    type="string"
+                />
                 <Option
                     opt={options.theme.bar.border_radius}
                     title="Border Radius"
