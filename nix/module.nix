@@ -466,6 +466,8 @@ in
       theme.bar.buttons.modules.kbLayout.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.kbLayout.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.netstat.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.microphone.enableBorder = mkBoolOption false,
+      theme.bar.buttons.modules.microphone.spacing = mkStrOption "0.45em",
       theme.bar.buttons.modules.netstat.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.power.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.power.spacing = mkStrOption "0.45em";
