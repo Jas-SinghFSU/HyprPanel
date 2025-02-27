@@ -23,19 +23,17 @@ startRecording() {
 
     outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S)"
     outputPath="$outputDir/${outputFile}.mp4"
-    logFile="$outputDir/${outputFile}.log"
     mkdir -p "$outputDir"
 
     if [ "$target" == "screen" ]; then
         monitor_info=$(hyprctl -j monitors | jq -r ".[] | select(.name == \"$3\")")
-        echo "Monitor Selected: $3" > "$logFile"
         w=$(echo $monitor_info | jq -r '.width')
         h=$(echo $monitor_info | jq -r '.height')
         x=$(echo $monitor_info | jq -r '.x')
         y=$(echo $monitor_info | jq -r '.y')
-        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${w}x${h}" --file "$outputPath" 1>>"$logFile" 2>&1 &
+        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${w}x${h}" --file "$outputPath" &
     elif [ "$target" == "region" ]; then
-        wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" 1>"$logFile" 2>&1 &
+        wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" &
     else
         echo "Usage: $0 start {region|screen [screen_name]}"
         exit 1
