@@ -14,7 +14,7 @@ export const CustomModuleTheme = (): JSX.Element => {
             vexpand={false}
         >
             <box vertical>
-                {/* RAM Module Section */}
+                {/* Microphone Module Section */}
                 <Header title="Microphone" />
                 <Option opt={options.theme.bar.buttons.modules.microphone.text} title="Text" type="color" />
                 <Option opt={options.theme.bar.buttons.modules.microphone.icon} title="Icon" type="color" />
