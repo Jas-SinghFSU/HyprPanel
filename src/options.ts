@@ -310,6 +310,15 @@ const options = mkOptions(CONFIG, {
                     spacing: opt('0.5em'),
                 },
                 modules: {
+                    microphone: {
+                        enableBorder: opt(false),
+                        border: opt(colors.green),
+                        background: opt(colors.base2),
+                        text: opt(colors.green),
+                        icon: opt(colors.green),
+                        icon_background: opt(colors.base2),
+                        spacing: opt('0.45em'),
+                    },
                     ram: {
                         enableBorder: opt(false),
                         border: opt(colors.yellow),
@@ -1051,6 +1060,16 @@ const options = mkOptions(CONFIG, {
         },
         customModules: {
             scrollSpeed: opt(5),
+            microphone: {
+                label: opt(true),
+                mutedIcon: opt('󰍭'),
+                unmutedIcon: opt('󰍬'),
+                leftClick: opt('menu:audio'),
+                rightClick: opt(''),
+                middleClick: opt(''),
+                scrollUp: opt(''),
+                scrollDown: opt(''),
+            },
             ram: {
                 icon: opt(''),
                 label: opt(true),

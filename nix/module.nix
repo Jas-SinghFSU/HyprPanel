@@ -242,6 +242,14 @@ in
       bar.customModules.power.scrollDown = mkStrOption "";
       bar.customModules.power.scrollUp = mkStrOption "";
       bar.customModules.power.showLabel = mkBoolOption true;
+      bar.customModules.microphone.label = mkBoolOption true;
+      bar.customModules.microphone.mutedIcon = mkStrOption "󰍭";
+      bar.customModules.microphone.unmutedIcon = mkStrOption "󰍬";
+      bar.customModules.microphone.leftClick = mkStrOption "menu:audio";
+      bar.customModules.microphone.rightClick = mkStrOption "";
+      bar.customModules.microphone.middleClick = mkStrOption "";
+      bar.customModules.microphone.scrollUp = mkStrOption "";
+      bar.customModules.microphone.scrollDown = mkStrOption "";
       bar.customModules.ram.icon = mkStrOption "";
       bar.customModules.ram.label = mkBoolOption true;
       bar.customModules.ram.labelType = mkStrOption "percentage";
@@ -466,6 +474,8 @@ in
       theme.bar.buttons.modules.kbLayout.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.kbLayout.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.netstat.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.microphone.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.microphone.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.netstat.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.power.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.power.spacing = mkStrOption "0.45em";

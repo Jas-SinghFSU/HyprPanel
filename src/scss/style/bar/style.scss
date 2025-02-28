@@ -10,6 +10,7 @@
 
 .module-icon {
     font-size: 1em;
+    min-width: 0.7em;
 }
 
 .style2 {
@@ -125,6 +126,33 @@
         }
     }
 }
+
+/*
+ * #################################
+ * #      Mic Module Styling       #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'mic',
+    // label color
+    $bar-buttons-modules-microphone-text,
+    // icon color
+    $bar-buttons-modules-microphone-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-microphone-icon_background,
+    // label background
+    $bar-buttons-modules-microphone-background,
+    // inner spacing
+    $bar-buttons-modules-microphone-spacing,
+    //
+    // if border enabled
+    $bar-buttons-modules-microphone-enableBorder,
+    // border color
+    $bar-buttons-modules-microphone-border,
+    1.3em
+);
 
 /*
  * #################################
