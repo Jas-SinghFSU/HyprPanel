@@ -29,9 +29,12 @@ startRecording() {
         monitor_info=$(hyprctl -j monitors | jq -r ".[] | select(.name == \"$3\")")
         w=$(echo $monitor_info | jq -r '.width')
         h=$(echo $monitor_info | jq -r '.height')
+        scale=$(echo $monitor_info | jq -r '.scale')
+        scaled_width=$(echo "${w} / ${scale}" | bc)
+        scaled_height=$(echo "${h} / ${scale}" | bc)
         x=$(echo $monitor_info | jq -r '.x')
         y=$(echo $monitor_info | jq -r '.y')
-        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${w}x${h}" --file "$outputPath" &
+        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${scaled_width}x${scaled_height}" --file "$outputPath" &
     elif [ "$target" == "region" ]; then
         wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" &
     else
