@@ -71,7 +71,7 @@
             gvfs
             swww
             pywal
-          ])
+          ]);
       };
     });
 
