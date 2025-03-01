@@ -29,13 +29,17 @@ export const NumberInputter = <T extends string | number | boolean | object>({
                 })}
             </box>
             <SpinButton
+                onChanged={(self) => {
+                    const currentText = self.value;
+                    const optValue = opt.get();
+                    isUnsaved.set(currentText !== optValue);
+                }}
+                onActivate={(self) => {
+                    opt.set(self.value as T);
+                }}
                 setup={(self) => {
                     self.set_range(min, max);
                     self.set_increments(1 * increment, 5 * increment);
-
-                    self.connect('value-changed', () => {
-                        opt.set(self.value as T);
-                    });
 
                     useHook(self, opt, () => {
                         self.set_value(opt.get() as number);
