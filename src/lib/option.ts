@@ -94,7 +94,7 @@ export class Opt<T = unknown> extends Variable<T> {
             }
         }
 
-        const cachedVariable = cacheData[this._id];
+        const cachedVariable = this._findKey(cacheData, this._id.split('.'));
 
         if (cachedVariable !== undefined) {
             this.set(cachedVariable as T);
@@ -156,6 +156,36 @@ export class Opt<T = unknown> extends Variable<T> {
             return this._id;
         }
 
+        return undefined;
+    }
+
+    private _findKey(obj: Record<string, unknown>, path: string[]): T | undefined {
+        const top = path.shift();
+
+        if (!top) {
+            // The path is empty, so this is our value.
+            return obj as T;
+        }
+
+        if (typeof obj !== 'object') {
+            // Not an array, not an object, but we need to go deeper.
+            // This is invalid, so return.
+            return undefined;
+        }
+
+        const mergedPath = [top, ...path].join('.');
+
+        if (mergedPath in obj) {
+            // The key exists on this level with dot-notation, so we return that.
+            return obj[mergedPath] as T;
+        }
+
+        if (top in obj) {
+            // The value exists but we are not there yet, so we recurse.
+            return this._findKey(obj[top] as Record<string, unknown>, path);
+        }
+
+        // Key does not exist :(
         return undefined;
     }
 }
