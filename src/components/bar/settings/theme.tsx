@@ -14,6 +14,23 @@ export const CustomModuleTheme = (): JSX.Element => {
             vexpand={false}
         >
             <box vertical>
+                {/* Microphone Module Section */}
+                <Header title="Microphone" />
+                <Option opt={options.theme.bar.buttons.modules.microphone.text} title="Text" type="color" />
+                <Option opt={options.theme.bar.buttons.modules.microphone.icon} title="Icon" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.microphone.background}
+                    title="Label Background"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.modules.microphone.icon_background}
+                    title="Icon Background"
+                    subtitle="Applies a background color to the icon section of the button.\nRequires 'split' button styling."
+                    type="color"
+                />
+                <Option opt={options.theme.bar.buttons.modules.microphone.border} title="Border" type="color" />
+
                 {/* RAM Module Section */}
                 <Header title="RAM" />
                 <Option opt={options.theme.bar.buttons.modules.ram.text} title="Text" type="color" />
