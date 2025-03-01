@@ -78,7 +78,7 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param config - The configuration.
      */
     public init(config: Record<string, unknown>): void {
-        const value = this._findKey(config, this._id.split('.'));
+        const value = _findVal(config, this._id.split('.'));
 
         if (value !== undefined) {
             this.set(value as T, { writeDisk: false });
@@ -92,17 +92,23 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
     public set(value: T, { writeDisk = true }: WriteDiskProps = {}): void {
+        if (value == this.get()) {
+            // If nothing actually changed, exit quick
+            return;
+        }
+
         super.set(value);
 
         if (writeDisk) {
             const raw = readFile(CONFIG);
-            let currentCache: Record<string, unknown> = {};
+            let config: Record<string, unknown> = {};
             if (raw && raw.trim() !== '') {
                 try {
-                    currentCache = JSON.parse(raw) as Record<string, unknown>;
+                    config = JSON.parse(raw) as Record<string, unknown>;
                 } catch (error) {
                     // Last thing we want is to reset someones entire config
                     // so notify them instead
+                    console.error(`Failed to load config file: ${error}`);
                     Notify({
                         summary: 'Failed to load config file',
                         body: `${error}`,
@@ -112,8 +118,8 @@ export class Opt<T = unknown> extends Variable<T> {
                     errorHandler(error);
                 }
             }
-            currentCache[this._id] = value;
-            writeFile(CONFIG, JSON.stringify(currentCache, null, 2));
+            config[this._id] = value;
+            writeFile(CONFIG, JSON.stringify(config, null, 2));
         }
     }
 
@@ -137,36 +143,36 @@ export class Opt<T = unknown> extends Variable<T> {
 
         return undefined;
     }
+}
 
-    private _findKey(obj: Record<string, unknown>, path: string[]): T | undefined {
-        const top = path.shift();
+function _findVal(obj: Record<string, unknown>, path: string[]): unknown | undefined {
+    const top = path.shift();
 
-        if (!top) {
-            // The path is empty, so this is our value.
-            return obj as T;
-        }
+    if (!top) {
+        // The path is empty, so this is our value.
+        return obj;
+    }
 
-        if (typeof obj !== 'object') {
-            // Not an array, not an object, but we need to go deeper.
-            // This is invalid, so return.
-            return undefined;
-        }
-
-        const mergedPath = [top, ...path].join('.');
-
-        if (mergedPath in obj) {
-            // The key exists on this level with dot-notation, so we return that.
-            return obj[mergedPath] as T;
-        }
-
-        if (top in obj) {
-            // The value exists but we are not there yet, so we recurse.
-            return this._findKey(obj[top] as Record<string, unknown>, path);
-        }
-
-        // Key does not exist :(
+    if (typeof obj !== 'object') {
+        // Not an array, not an object, but we need to go deeper.
+        // This is invalid, so return.
         return undefined;
     }
+
+    const mergedPath = [top, ...path].join('.');
+
+    if (mergedPath in obj) {
+        // The key exists on this level with dot-notation, so we return that.
+        return obj[mergedPath];
+    }
+
+    if (top in obj) {
+        // The value exists but we are not there yet, so we recurse.
+        return _findVal(obj[top] as Record<string, unknown>, path);
+    }
+
+    // Key does not exist :(
+    return undefined;
 }
 
 /**
@@ -253,13 +259,14 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
         }
         lastEventTime = Date.now();
 
-        let cache: Record<string, unknown> = {};
+        let newConfig: Record<string, unknown> = {};
 
         const rawConfig = readFile(CONFIG);
         if (rawConfig && rawConfig.trim() !== '') {
             try {
-                cache = JSON.parse(rawConfig) as Record<string, unknown>;
+                newConfig = JSON.parse(rawConfig) as Record<string, unknown>;
             } catch (error) {
+                console.error(`Error loading configuration file: ${error}`);
                 Notify({
                     summary: 'Loading configuration file failed',
                     body: `${error}`,
@@ -271,7 +278,7 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
 
         for (let i = 0; i < allOptions.length; i++) {
             const opt = allOptions[i];
-            const newVal = cache[opt.id];
+            const newVal = _findVal(newConfig, opt.id.split('.'));
 
             if (newVal === undefined) {
                 // Set the variable but don't write it back to the file,
