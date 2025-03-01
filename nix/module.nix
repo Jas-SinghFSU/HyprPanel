@@ -10,20 +10,23 @@ let
   package = if pkgs ? hyprpanel then pkgs.hyprpanel
   else abort ''
 
-  ******************************************
-  *               HyprPanel                *
-  ******************************************
-  *      You didn't add the overlay!       *
-  *                                        *
-  * Either set 'overlay.enable = true' or  *
-  * manually add it to 'nixpkgs.overlays'. *
-  ******************************************
+  ********************************************************************************
+  *                                  HyprPanel                                   *
+  *------------------------------------------------------------------------------*
+  *                         You didn't add the overlay!                          *
+  *                                                                              *
+  * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
+  * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
+  *                  you will need to add the overlay yourself.                  *
+  ********************************************************************************
   '';
 
   # Shorthand lambda for self-documenting options under settings
   mkStrOption = default: mkOption { type = types.str; default = default; };
   mkIntOption = default: mkOption { type = types.int; default = default; };
   mkBoolOption = default: mkOption { type = types.bool; default = default; };
+  mkStrListOption = default: mkOption { type = types.listOf types.str; default = default; };
+  mkFloatOption = default: mkOption { type = types.float; default = default; };
 
   # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
   #       Do not ask what these do...
@@ -75,6 +78,7 @@ in
 {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
+    config.enable = mkBoolOption true; # Generate config
     overlay.enable = mkEnableOption "script overlay";
     systemd.enable = mkEnableOption "systemd integration";
     hyprland.enable = mkEnableOption "Hyprland integration";
@@ -97,7 +101,7 @@ in
       '';
       description = ''
         An arbitrary set to override the final config with.
-        Useful for overriding colors in your selected theme.
+        Useful for overriding colors in your chosen theme.
       '';
     };
 
@@ -149,6 +153,25 @@ in
       bar.clock.scrollUp = mkStrOption "";
       bar.clock.showIcon = mkBoolOption true;
       bar.clock.showTime = mkBoolOption true;
+      bar.customModules.cava.showIcon = mkBoolOption true;
+      bar.customModules.cava.icon = mkStrOption "";
+      bar.customModules.cava.spaceCharacter = mkStrOption " ";
+      bar.customModules.cava.barCharacters = mkStrListOption [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+      bar.customModules.cava.showActiveOnly = mkBoolOption false;
+      bar.customModules.cava.bars = mkIntOption 10;
+      bar.customModules.cava.channels = mkIntOption 2;
+      bar.customModules.cava.framerate = mkIntOption 60;
+      bar.customModules.cava.samplerate = mkIntOption 44100;
+      bar.customModules.cava.autoSensitivity = mkBoolOption true;
+      bar.customModules.cava.lowCutoff = mkIntOption 50;
+      bar.customModules.cava.highCutoff = mkIntOption 10000;
+      bar.customModules.cava.noiseReduction = mkFloatOption 0.77;
+      bar.customModules.cava.stereo = mkBoolOption false;
+      bar.customModules.cava.leftClick = mkStrOption "";
+      bar.customModules.cava.rightClick = mkStrOption "";
+      bar.customModules.cava.middleClick = mkStrOption "";
+      bar.customModules.cava.scrollUp = mkStrOption "";
+      bar.customModules.cava.scrollDown = mkStrOption "";
       bar.customModules.cpu.icon = mkStrOption "";
       bar.customModules.cpu.label = mkBoolOption true;
       bar.customModules.cpu.leftClick = mkStrOption "";
@@ -219,6 +242,14 @@ in
       bar.customModules.power.scrollDown = mkStrOption "";
       bar.customModules.power.scrollUp = mkStrOption "";
       bar.customModules.power.showLabel = mkBoolOption true;
+      bar.customModules.microphone.label = mkBoolOption true;
+      bar.customModules.microphone.mutedIcon = mkStrOption "󰍭";
+      bar.customModules.microphone.unmutedIcon = mkStrOption "󰍬";
+      bar.customModules.microphone.leftClick = mkStrOption "menu:audio";
+      bar.customModules.microphone.rightClick = mkStrOption "";
+      bar.customModules.microphone.middleClick = mkStrOption "";
+      bar.customModules.microphone.scrollUp = mkStrOption "";
+      bar.customModules.microphone.scrollDown = mkStrOption "";
       bar.customModules.ram.icon = mkStrOption "";
       bar.customModules.ram.label = mkBoolOption true;
       bar.customModules.ram.labelType = mkStrOption "percentage";
@@ -328,12 +359,13 @@ in
       bar.workspaces.showWsIcons = mkBoolOption false;
       bar.workspaces.show_icons = mkBoolOption false;
       bar.workspaces.show_numbered = mkBoolOption false;
-      bar.workspaces.spacing = mkIntOption 1;
+      bar.workspaces.spacing = mkFloatOption 1.0;
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
-      hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
+      hyprpanel.restartCommand = mkStrOption "${package}/bin/hyprpanel q; ${package}/bin/hyprpanel";
       menus.clock.time.hideSeconds = mkBoolOption false;
       menus.clock.time.military = mkBoolOption false;
       menus.clock.weather.enabled = mkBoolOption true;
@@ -442,6 +474,8 @@ in
       theme.bar.buttons.modules.kbLayout.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.kbLayout.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.netstat.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.microphone.enableBorder = mkBoolOption false;
+      theme.bar.buttons.modules.microphone.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.netstat.spacing = mkStrOption "0.45em";
       theme.bar.buttons.modules.power.enableBorder = mkBoolOption false;
       theme.bar.buttons.modules.power.spacing = mkStrOption "0.45em";
@@ -476,6 +510,7 @@ in
       theme.bar.buttons.workspaces.fontSize = mkStrOption "1.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_border = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.numbered_active_highlight_padding = mkStrOption "0.2em";
+      theme.bar.buttons.workspaces.numbered_inactive_padding = mkStrOption "0.2em";
       theme.bar.buttons.workspaces.pill.active_width = mkStrOption "12em";
       theme.bar.buttons.workspaces.pill.height = mkStrOption "4em";
       theme.bar.buttons.workspaces.pill.radius = mkStrOption "1.9rem * 0.6";
@@ -484,6 +519,7 @@ in
       theme.bar.buttons.workspaces.spacing = mkStrOption "0.5em";
       theme.bar.buttons.y_margins = mkStrOption "0.4em";
       theme.bar.dropdownGap = mkStrOption "2.9em";
+      theme.bar.enableShadow = mkBoolOption false;
       theme.bar.floating = mkBoolOption false;
       theme.bar.label_spacing = mkStrOption "0.5em";
       theme.bar.layer = mkStrOption "top";
@@ -495,6 +531,7 @@ in
       theme.bar.menus.border.size = mkStrOption "0.13em";
       theme.bar.menus.buttons.radius = mkStrOption "0.4em";
       theme.bar.menus.card_radius = mkStrOption "0.4em";
+      theme.bar.menus.enableShadow = mkBoolOption false;
       theme.bar.menus.menu.battery.scaling = mkIntOption 100;
       theme.bar.menus.menu.bluetooth.scaling = mkIntOption 100;
       theme.bar.menus.menu.clock.scaling = mkIntOption 100;
@@ -520,6 +557,8 @@ in
       theme.bar.menus.progressbar.radius = mkStrOption "0.3rem";
       theme.bar.menus.scroller.radius = mkStrOption "0.7em";
       theme.bar.menus.scroller.width = mkStrOption "0.25em";
+      theme.bar.menus.shadow = mkStrOption "0px 0px 3px 1px #16161e";
+      theme.bar.menus.shadowMargins = mkStrOption "5px 5px";
       theme.bar.menus.slider.progress_radius = mkStrOption "0.3rem";
       theme.bar.menus.slider.slider_radius = mkStrOption "0.3rem";
       theme.bar.menus.switch.radius = mkStrOption "0.2em";
@@ -528,6 +567,8 @@ in
       theme.bar.opacity = mkIntOption 100;
       theme.bar.outer_spacing = mkStrOption "1.6em";
       theme.bar.scaling = mkIntOption 100;
+      theme.bar.shadow = mkStrOption "0px 1px 2px 1px #16161e";
+      theme.bar.shadowMargins = mkStrOption "0px 0px 4px 0px";
       theme.bar.transparent = mkBoolOption false;
       theme.font.name = mkStrOption "Ubuntu Nerd Font";
       theme.font.size = mkStrOption "1.2rem";
@@ -538,11 +579,15 @@ in
       theme.matugen_settings.scheme_type = mkStrOption "tonal-spot";
       theme.matugen_settings.variation = mkStrOption "standard_1";
       theme.notification.border_radius = mkStrOption "0.6em";
+      theme.notification.enableShadow = mkBoolOption false;
       theme.notification.opacity = mkIntOption 100;
       theme.notification.scaling = mkIntOption 100;
+      theme.notification.shadow = mkStrOption "0px 1px 2px 1px #16161e";
+      theme.notification.shadowMargins = mkStrOption "4px 4px";
       theme.osd.active_monitor = mkBoolOption true;
       theme.osd.duration = mkIntOption 2500;
       theme.osd.enable = mkBoolOption true;
+      theme.osd.enableShadow = mkBoolOption false;
       theme.osd.location = mkStrOption "right";
       theme.osd.margins = mkStrOption "0px 5px 0px 0px";
       theme.osd.monitor = mkIntOption 0;
@@ -552,6 +597,7 @@ in
       theme.osd.radius = mkStrOption "0.4em";
       theme.osd.border.size = mkStrOption "0em";
       theme.osd.scaling = mkIntOption 100;
+      theme.osd.shadow = mkStrOption "0px 0px 3px 2px #16161e";
       theme.tooltip.scaling = mkIntOption 100;
       wallpaper.enable = mkBoolOption true;
       wallpaper.image = mkStrOption "";
@@ -580,7 +626,6 @@ in
       text = ''
         cd
         echo '------------- HyprPanel -------------'
-        echo 
         echo 'Please ignore the layout diff for now'
         echo '-------------------------------------'
         colordiff ${config.xdg.configFile.hyprpanel.target} \
@@ -590,7 +635,8 @@ in
 
   in mkIf cfg.enable {
 
-    nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
+    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
 
     home.packages = [
       package
@@ -611,34 +657,37 @@ in
           '';
         };
 
-    xdg.configFile.hyprpanel = {
+    xdg.configFile.hyprpanel = mkIf cfg.config.enable {
       target = "hyprpanel/config.json";
       text = finalConfig;
-      onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      # onChange = "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel || true";
+      onChange = "${package}/bin/hyprpanel r";
     };
 
-    xdg.configFile.hyprpanel-swap = {
+    xdg.configFile.hyprpanel-swap = mkIf cfg.config.enable {
       target = "hyprpanel/config.hm.json";
       text = finalConfig;
     };
 
-    systemd.user.services = mkIf cfg.systemd.enable {
-      hyprpanel = {
-        Unit = {
-          Description = "A Bar/Panel for Hyprland with extensive customizability.";
-          Documentation = "https://hyprpanel.com";
-          PartOf = [ "graphical-session.target" ];
-          After = [ "graphical-session-pre.target" ];
-        };
-        Service = {
-          ExecStart = "${package}/bin/hyprpanel";
-          ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
-          Restart = "on-failure";
-          KillMode = "mixed";
-        };
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-      };
-    };
+    # NOTE: Deprecated
+    # systemd.user.services = mkIf cfg.systemd.enable {
+    #   hyprpanel = {
+    #     Unit = {
+    #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
+    #       Documentation = "https://hyprpanel.com";
+    #       PartOf = [ "graphical-session.target" ];
+    #       After = [ "graphical-session-pre.target" ];
+    #     };
+    #     Service = {
+    #       ExecStart = "${package}/bin/hyprpanel";
+    #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
+    #       Restart = "on-failure";
+    #       KillMode = "mixed";
+    #     };
+    #     Install = { WantedBy = [ "graphical-session.target" ]; };
+    #   };
+    # };
+    warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [];
 
     wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [ "${package}/bin/hyprpanel" ];
   };

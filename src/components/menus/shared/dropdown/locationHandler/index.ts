@@ -2,9 +2,9 @@ import options from 'src/options';
 import { globalEventBoxes } from 'src/globals/dropdown';
 import { GLib } from 'astal';
 import { EventBox } from 'astal/gtk3/widget';
-import { hyprlandService } from 'src/lib/constants/services';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
+const hyprlandService = AstalHyprland.get_default();
 const { location } = options.theme.bar;
 const { scalingPriority } = options;
 

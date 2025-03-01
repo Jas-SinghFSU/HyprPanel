@@ -308,10 +308,10 @@ export function checkDependencies(): string {
                 description: 'To view system resource usage',
             },
             {
-                package: 'gpu-screen-recorder',
+                package: 'wf-recorder',
                 required: false,
                 type: 'executable',
-                check: ['gpu-screen-recorder'],
+                check: ['wf-recorder'],
                 description: 'To use the built-in screen recorder',
             },
             {

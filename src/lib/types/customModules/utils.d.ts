@@ -1,12 +1,17 @@
+import { Variable } from 'astal';
+import { Opt } from 'src/lib/option';
 import { Binding } from 'src/lib/utils';
-import { Variable } from 'types/variable';
 
+export type InputHandlerEventArgs = {
+    cmd?: Opt<string> | Variable<string>;
+    fn?: (output: string) => void;
+};
 export type InputHandlerEvents = {
-    onPrimaryClick?: Binding;
-    onSecondaryClick?: Binding;
-    onMiddleClick?: Binding;
-    onScrollUp?: Binding;
-    onScrollDown?: Binding;
+    onPrimaryClick?: InputHandlerEventArgs;
+    onSecondaryClick?: InputHandlerEventArgs;
+    onMiddleClick?: InputHandlerEventArgs;
+    onScrollUp?: InputHandlerEventArgs;
+    onScrollDown?: InputHandlerEventArgs;
 };
 
 export type RunAsyncCommand = (

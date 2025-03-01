@@ -24,6 +24,7 @@ export const defaultWindowTitleMap = [
     ['thorium', '󰖟', 'Thorium'],
     ['tor-browser', '', 'Tor Browser'],
     ['floorp', '󰈹', 'Floorp'],
+    ['zen', '', 'Zen Browser'],
 
     // Terminals
     ['gnome-terminal', '', 'GNOME Terminal'],

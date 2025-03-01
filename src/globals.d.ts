@@ -15,6 +15,7 @@ declare global {
     var globalWeatherVar: Variable<Weather>;
     var options: Options;
     var removingNotifications: Variable<boolean>;
+    var idleInhibit: Variable<boolean>;
 }
 
 export {};

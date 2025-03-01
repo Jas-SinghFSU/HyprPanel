@@ -1,4 +1,3 @@
-import { hyprlandService } from 'src/lib/constants/services';
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
@@ -7,7 +6,9 @@ import { capitalizeFirstLetter } from 'src/lib/utils';
 import { getInitialSubmap, isSubmapEnabled } from './helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 
+const hyprlandService = AstalHyprland.get_default();
 const {
     label,
     showSubmapName,

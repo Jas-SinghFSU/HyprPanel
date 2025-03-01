@@ -66,12 +66,12 @@
             hypridle
             wireplumber
             networkmanager
+            wf-recorder
             upower
             gvfs
             swww
             pywal
-          ])
-          ++ (nixpkgs.lib.optionals (system == "x86_64-linux") [pkgs.gpu-screen-recorder]);
+          ]);
       };
     });
 
@@ -81,7 +81,7 @@
         if [ "$#" -eq 0 ]; then
             exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
         else
-            exec ${ags.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
+            exec ${ags.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$*"
         fi
       '';
     };

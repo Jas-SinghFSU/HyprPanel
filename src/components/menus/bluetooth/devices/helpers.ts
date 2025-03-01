@@ -1,6 +1,7 @@
 import { execAsync } from 'astal';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
-import { bluetoothService } from 'src/lib/constants/services';
+
+const bluetoothService = AstalBluetooth.get_default();
 
 /**
  * Retrieves the list of available Bluetooth devices.

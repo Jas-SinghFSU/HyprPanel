@@ -1,4 +1,3 @@
-import { bluetoothService } from 'src/lib/constants/services.js';
 import options from 'src/options.js';
 import { openMenu } from '../../utils/menu.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
@@ -7,6 +6,8 @@ import { Variable, bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { Astal } from 'astal/gtk3';
+
+const bluetoothService = AstalBluetooth.get_default();
 
 const { rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
@@ -38,7 +39,13 @@ const Bluetooth = (): BarBoxChild => {
     );
 
     const componentBinding = Variable.derive(
-        [bind(options.bar.bluetooth.label), bind(bluetoothService, 'isPowered'), bind(bluetoothService, 'devices')],
+        [
+            bind(options.bar.bluetooth.label),
+            bind(bluetoothService, 'isPowered'),
+            bind(bluetoothService, 'devices'),
+
+            bind(bluetoothService, 'isConnected'),
+        ],
         (showLabel: boolean, isPowered: boolean, devices: AstalBluetooth.Device[]): JSX.Element => {
             if (showLabel) {
                 return (

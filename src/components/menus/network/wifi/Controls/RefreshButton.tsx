@@ -1,8 +1,10 @@
 import { Gtk } from 'astal/gtk3';
-import { networkService } from 'src/lib/constants/services';
 import { bind } from 'astal';
 import { isPrimaryClick } from 'src/lib/utils';
 import { isScanning } from './helpers';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+
+const networkService = AstalNetwork.get_default();
 
 export const RefreshButton = (): JSX.Element => {
     return (

@@ -1,6 +1,7 @@
 import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { App } from 'astal/gtk3';
+import { BarVisibility } from 'src/cli/utils/BarVisibility';
 
 export const windowManagementCommands: Command[] = [
     {
@@ -45,6 +46,8 @@ export const windowManagementCommands: Command[] = [
                 const windowStatus = foundWindow.visible ? 'hidden' : 'visible';
 
                 App.toggle_window(windowName);
+
+                BarVisibility.set(windowName, windowStatus === 'visible');
 
                 return windowStatus;
             } catch (error) {

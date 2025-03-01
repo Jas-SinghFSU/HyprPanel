@@ -8,10 +8,9 @@ import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/util
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 
+const notifdService = AstalNotifd.get_default();
 const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
 const { ignore } = options.notifications;
-
-const notifs = AstalNotifd.get_default();
 
 export const Notifications = (): BarBoxChild => {
     const componentClassName = Variable.derive(
@@ -29,8 +28,8 @@ export const Notifications = (): BarBoxChild => {
 
     const boxChildren = Variable.derive(
         [
-            bind(notifs, 'notifications'),
-            bind(notifs, 'dontDisturb'),
+            bind(notifdService, 'notifications'),
+            bind(notifdService, 'dontDisturb'),
             bind(show_total),
             bind(ignore),
             bind(hideCountWhenZero),

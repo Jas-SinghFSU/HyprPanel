@@ -2,6 +2,28 @@ import options from 'src/options';
 import { capitalizeFirstLetter } from 'src/lib/utils';
 import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import { bind, Variable } from 'astal';
+
+const hyprlandService = AstalHyprland.get_default();
+export const clientTitle = Variable('');
+let clientBinding: Variable<void> | undefined;
+
+function trackClientUpdates(client: AstalHyprland.Client): void {
+    clientBinding?.drop();
+    clientBinding = undefined;
+
+    if (!client) {
+        return;
+    }
+
+    clientBinding = Variable.derive([bind(client, 'title')], (currentTitle) => {
+        clientTitle.set(currentTitle);
+    });
+}
+
+Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
+    trackClientUpdates(client);
+});
 
 /**
  * Retrieves the matching window title details for a given window.
