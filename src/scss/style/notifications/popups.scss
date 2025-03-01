@@ -7,6 +7,8 @@
     min-height: 4em;
     border-radius: $notification-border_radius;
     opacity: $notification-opacity * 0.01;
+    margin: if($notification-enableShadow, $notification-shadowMargins, 0px);
+    box-shadow: if($notification-enableShadow, $notification-shadow, 0 0 0 0);
 }
 
 .notification-card-container {

@@ -12,6 +12,7 @@ import {
     SysTray,
 
     // Custom Modules
+    Microphone,
     Ram,
     Cpu,
     CpuTemp,
@@ -51,6 +52,7 @@ const widget = {
     bluetooth: (): JSX.Element => WidgetContainer(Bluetooth()),
     clock: (): JSX.Element => WidgetContainer(Clock()),
     systray: (): JSX.Element => WidgetContainer(SysTray()),
+    microphone: (): JSX.Element => WidgetContainer(Microphone()),
     ram: (): JSX.Element => WidgetContainer(Ram()),
     cpu: (): JSX.Element => WidgetContainer(Cpu()),
     cputemp: (): JSX.Element => WidgetContainer(CpuTemp()),
@@ -127,6 +129,7 @@ export const Bar = (() => {
 
         return (
             <window
+                inhibit={bind(idleInhibit)}
                 name={`bar-${hyprlandMonitor}`}
                 namespace={`bar-${hyprlandMonitor}`}
                 className={'bar'}

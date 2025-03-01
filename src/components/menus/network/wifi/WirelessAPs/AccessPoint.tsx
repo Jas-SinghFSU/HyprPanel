@@ -3,8 +3,9 @@ import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { getWifiIcon } from '../../utils';
 import { connectToAP, getWifiStatus, isDisconnecting, isApEnabled, isApActive } from './helpers';
 import { Gtk } from 'astal/gtk3';
-import { networkService } from 'src/lib/constants/services';
 import Spinner from 'src/components/shared/Spinner';
+
+const networkService = AstalNetwork.get_default();
 
 export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.Element => {
     const ConnectionIcon = (): JSX.Element => {

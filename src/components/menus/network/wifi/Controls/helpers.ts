@@ -1,5 +1,7 @@
 import { bind, Variable } from 'astal';
-import { networkService } from 'src/lib/constants/services';
+import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+
+const networkService = AstalNetwork.get_default();
 
 export const isScanning: Variable<boolean> = Variable(false);
 let scanningBinding: Variable<void> | undefined;

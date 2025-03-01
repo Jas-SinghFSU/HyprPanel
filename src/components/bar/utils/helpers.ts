@@ -1,6 +1,6 @@
 import { ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData, Postfix, UpdateHandlers } from 'src/lib/types/customModules/generic';
-import { InputHandlerEvents, RunAsyncCommand } from 'src/lib/types/customModules/utils';
+import { InputHandlerEventArgs, InputHandlerEvents, RunAsyncCommand } from 'src/lib/types/customModules/utils';
 import { ThrottleFn } from 'src/lib/types/utils';
 import { bind, Binding, execAsync, Variable } from 'astal';
 import { openMenu } from 'src/components/bar/utils/menu';
@@ -56,6 +56,15 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
         .catch((err) => console.error(`Error running command "${cmd}": ${err})`));
 };
 
+/*
+ * NOTE: Added a throttle since spamming a button yields duplicate events
+ * which undo the toggle.
+ */
+const throttledAsyncCommand = throttleInput(
+    (cmd, events, fn, postInputUpdater?: Variable<boolean>) => runAsyncCommand(cmd, events, fn, postInputUpdater),
+    50,
+);
+
 /**
  * Generic throttle function to limit the rate at which a function can be called.
  *
@@ -90,7 +99,7 @@ export function throttleInput<T extends ThrottleFn>(func: T, limit: number): T {
  */
 export const throttledScrollHandler = (interval: number): ThrottleFn =>
     throttleInput((cmd: string, args, fn, postInputUpdater) => {
-        runAsyncCommand(cmd, args, fn, postInputUpdater);
+        throttledAsyncCommand(cmd, args, fn, postInputUpdater);
     }, 200 / interval);
 
 /**
@@ -114,7 +123,7 @@ export const inputHandler = (
     }: InputHandlerEvents,
     postInputUpdater?: Variable<boolean>,
 ): void => {
-    const sanitizeInput = (input: Variable<string>): string => {
+    const sanitizeInput = (input?: Variable<string> | Variable<string>): string => {
         if (input === undefined) {
             return '';
         }
@@ -126,34 +135,34 @@ export const inputHandler = (
         const throttledHandler = throttledScrollHandler(interval);
 
         const disconnectPrimaryClick = onPrimaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
-            runAsyncCommand(
+            throttledAsyncCommand(
                 sanitizeInput(onPrimaryClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onPrimaryClickInput.fn,
+                onPrimaryClickInput?.fn,
                 postInputUpdater,
             );
         });
 
         const disconnectSecondaryClick = onSecondaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
-            runAsyncCommand(
+            throttledAsyncCommand(
                 sanitizeInput(onSecondaryClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onSecondaryClickInput.fn,
+                onSecondaryClickInput?.fn,
                 postInputUpdater,
             );
         });
 
         const disconnectMiddleClick = onMiddleClick(self, (clicked: GtkWidget, event: Gdk.Event) => {
-            runAsyncCommand(
+            throttledAsyncCommand(
                 sanitizeInput(onMiddleClickInput?.cmd || dummyVar),
                 { clicked, event },
-                onMiddleClickInput.fn,
+                onMiddleClickInput?.fn,
                 postInputUpdater,
             );
         });
 
         const id = self.connect('scroll-event', (self: GtkWidget, event: Gdk.Event) => {
-            const handleScroll = (input?: { cmd: Variable<string>; fn: (output: string) => void }): void => {
+            const handleScroll = (input?: InputHandlerEventArgs): void => {
                 if (input) {
                     throttledHandler(sanitizeInput(input.cmd), { clicked: self, event }, input.fn, postInputUpdater);
                 }
@@ -178,8 +187,8 @@ export const inputHandler = (
 
     updateHandlers();
 
-    const sanitizeVariable = (someVar: Variable<string> | undefined): Binding<string> => {
-        if (someVar === undefined || typeof someVar.bind !== 'function') {
+    const sanitizeVariable = (someVar?: Variable<string>): Binding<string> => {
+        if (someVar === undefined) {
             return bind(dummyVar);
         }
         return bind(someVar);
@@ -188,11 +197,11 @@ export const inputHandler = (
     Variable.derive(
         [
             bind(scrollSpeed),
-            sanitizeVariable(onPrimaryClickInput),
-            sanitizeVariable(onSecondaryClickInput),
-            sanitizeVariable(onMiddleClickInput),
-            sanitizeVariable(onScrollUpInput),
-            sanitizeVariable(onScrollDownInput),
+            sanitizeVariable(onPrimaryClickInput?.cmd),
+            sanitizeVariable(onSecondaryClickInput?.cmd),
+            sanitizeVariable(onMiddleClickInput?.cmd),
+            sanitizeVariable(onScrollUpInput?.cmd),
+            sanitizeVariable(onScrollDownInput?.cmd),
         ],
         () => {
             const handlers = updateHandlers();

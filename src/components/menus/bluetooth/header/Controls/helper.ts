@@ -1,5 +1,7 @@
 import { bind, Variable } from 'astal';
-import { bluetoothService } from 'src/lib/constants/services';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+
+const bluetoothService = AstalBluetooth.get_default();
 
 export const isDiscovering: Variable<boolean> = Variable(false);
 let discoveringBinding: Variable<void> | undefined;

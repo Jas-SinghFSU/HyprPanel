@@ -1,4 +1,3 @@
-import { networkService } from 'src/lib/constants/services.js';
 import options from 'src/options';
 import { openMenu } from '../../utils/menu';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
@@ -9,6 +8,7 @@ import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { formatWifiInfo, wiredIcon, wirelessIcon } from './helpers';
 
+const networkService = AstalNetwork.get_default();
 const { label, truncation, truncation_size, rightClick, middleClick, scrollDown, scrollUp, showWifiInfo } =
     options.bar.network;
 

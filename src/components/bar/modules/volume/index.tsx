@@ -1,4 +1,3 @@
-import { audioService } from 'src/lib/constants/services.js';
 import { openMenu } from '../../utils/menu.js';
 import options from 'src/options';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
@@ -7,6 +6,10 @@ import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/l
 import { getIcon } from './helpers/index.js';
 import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
+import AstalWp from 'gi://AstalWp?version=0.1';
+
+const wireplumber = AstalWp.get_default() as AstalWp.Wp;
+const audioService = wireplumber?.audio;
 
 const { rightClick, middleClick, scrollUp, scrollDown } = options.bar.volume;
 

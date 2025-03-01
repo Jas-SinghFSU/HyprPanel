@@ -1,8 +1,10 @@
+import AstalWp from 'gi://AstalWp?version=0.1';
 import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
-import { audioService } from 'src/lib/constants/services';
+
+const audio = AstalWp.get_default();
 
 export const utilityCommands: Command[] = [
     {
@@ -49,7 +51,12 @@ export const utilityCommands: Command[] = [
         ],
         handler: (args: Record<string, unknown>): number => {
             try {
-                const speaker = audioService.defaultSpeaker;
+                const speaker = audio?.defaultSpeaker;
+
+                if (speaker === undefined) {
+                    throw new Error('A default speaker was not found.');
+                }
+
                 const volumeInput = Number(args['volume']) / 100;
 
                 if (options.menus.volume.raiseMaximumVolume.get()) {
@@ -59,6 +66,44 @@ export const utilityCommands: Command[] = [
                 }
 
                 return Math.round((speaker.volume + volumeInput) * 100);
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'isInhibiting',
+        aliases: ['isi'],
+        description: 'Returns the status of the Idle Inhibitor.',
+        category: 'Utility',
+        args: [],
+        handler: (): boolean => {
+            try {
+                return idleInhibit.get();
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'idleInhibit',
+        aliases: ['idi'],
+        description: 'Enables/Disables the Idle Inhibitor. Toggles the Inhibitor if no parameter is provided.',
+        category: 'Utility',
+        args: [
+            {
+                name: 'shouldInhibit',
+                description: 'The boolean value that enables/disables the inhibitor.',
+                type: 'boolean',
+                required: false,
+            },
+        ],
+        handler: (args: Record<string, unknown>): boolean => {
+            try {
+                const shouldInhibit = args['shouldInhibit'] ?? !idleInhibit.get();
+                idleInhibit.set(Boolean(shouldInhibit));
+
+                return idleInhibit.get();
             } catch (error) {
                 errorHandler(error);
             }

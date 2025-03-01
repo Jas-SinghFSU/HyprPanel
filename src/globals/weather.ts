@@ -33,7 +33,7 @@ const getWeatherKey = (apiKey: string): string => {
             const fileContent = new TextDecoder().decode(fileContentArray);
 
             if (!fileContent) {
-                console.error('File content is empty');
+                console.error('weather_api_key file is empty');
                 return '';
             }
 
@@ -69,7 +69,7 @@ const weatherIntervalFn = (weatherInterval: number, loc: string, weatherKey: str
         weatherIntervalInstance.cancel();
     }
 
-    const formattedLocation = loc.replace(' ', '%20');
+    const formattedLocation = loc.replaceAll(' ', '%20');
 
     weatherIntervalInstance = interval(weatherInterval, () => {
         execAsync(

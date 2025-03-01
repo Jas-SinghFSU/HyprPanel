@@ -7,6 +7,9 @@ import './src/globals/dropdown';
 import './src/globals/utilities';
 import './src/components/bar/utils/sideEffects';
 
+import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+const hyprland = AstalHyprland.get_default();
+
 import { Bar } from './src/components/bar';
 import { DropdownMenus, StandardWindows } from './src/components/menus/exports';
 import Notifications from './src/components/notifications';
@@ -16,7 +19,6 @@ import options from 'src/options';
 import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
 import { execAsync } from 'astal';
-import { hyprlandService } from 'src/lib/constants/services';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
 import { isDropdownMenu } from 'src/lib/constants/options.js';
 import { initializeSystemBehaviors } from 'src/lib/behaviors';
@@ -64,7 +66,7 @@ App.start({
     },
 });
 
-hyprlandService.connect('monitor-added', () => {
+hyprland.connect('monitor-added', () => {
     const { restartCommand } = options.hyprpanel;
 
     if (options.hyprpanel.restartAgs.get()) {
