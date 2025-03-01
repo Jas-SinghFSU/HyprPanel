@@ -11,7 +11,9 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
-import { notifdService } from './constants/services.ts';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
+
+const notifdService = AstalNotifd.get_default();
 
 /**
  * Handles errors by throwing a new Error with a message.
