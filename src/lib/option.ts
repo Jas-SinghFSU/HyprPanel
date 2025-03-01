@@ -78,7 +78,7 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param config - The configuration.
      */
     public init(config: Record<string, unknown>): void {
-        const value = config[this._id];
+        const value = this._findKey(config, this._id.split('.'));
 
         if (value !== undefined) {
             this.set(value as T, { writeDisk: false });
@@ -135,6 +135,36 @@ export class Opt<T = unknown> extends Variable<T> {
             return this._id;
         }
 
+        return undefined;
+    }
+
+    private _findKey(obj: Record<string, unknown>, path: string[]): T | undefined {
+        const top = path.shift();
+
+        if (!top) {
+            // The path is empty, so this is our value.
+            return obj as T;
+        }
+
+        if (typeof obj !== 'object') {
+            // Not an array, not an object, but we need to go deeper.
+            // This is invalid, so return.
+            return undefined;
+        }
+
+        const mergedPath = [top, ...path].join('.');
+
+        if (mergedPath in obj) {
+            // The key exists on this level with dot-notation, so we return that.
+            return obj[mergedPath] as T;
+        }
+
+        if (top in obj) {
+            // The value exists but we are not there yet, so we recurse.
+            return this._findKey(obj[top] as Record<string, unknown>, path);
+        }
+
+        // Key does not exist :(
         return undefined;
     }
 }
