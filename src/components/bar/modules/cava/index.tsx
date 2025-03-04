@@ -10,7 +10,7 @@ import { generateMediaLabel } from '../media/helpers';
 import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/globals/media.js';
 
 const {
-    showIcon: label,
+    showIcon,
     showActiveOnly,
     barCharacters,
     spaceCharacter,
@@ -35,21 +35,14 @@ export const Cava = (): BarBoxChild => {
     const settingsTracker = initSettingsTracker();
     const cavaService = AstalCava.get_default();
 
-    if (cavaService) {
-        labelBinding = Variable.derive(
-            [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
-            (values, spacing, blockCharacters) => {
-                const valueMap = values
-                    .map((v: number) => {
-                        const index = Math.floor(v * blockCharacters.length);
-                        return blockCharacters[Math.min(index, blockCharacters.length - 1)];
-                    })
-                    .join(spacing);
-
-                return valueMap;
-            },
-        );
-    }
+    if (cavaService) labelBinding = Variable.derive(
+        [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
+        (values, spacing, blockCharacters) =>
+            values.map((v: number) => {
+                const index = Math.floor(v * blockCharacters.length);
+                return blockCharacters[Math.min(index, blockCharacters.length - 1)];
+            }).join(spacing),
+    );
 
     const mediaLabel = Variable.derive(
         [
@@ -68,28 +61,18 @@ export const Cava = (): BarBoxChild => {
     return Module({
         isVis,
         label: labelBinding(),
-        showIconBinding: bind(label),
+        showIconBinding: bind(showIcon),
         textIcon: bind(songIcon),
         boxClass: 'cava',
         tooltipText: mediaLabel(),
         props: {
             setup: (self: Astal.Button) => {
                 inputHandler(self, {
-                    onPrimaryClick: {
-                        cmd: leftClick,
-                    },
-                    onSecondaryClick: {
-                        cmd: rightClick,
-                    },
-                    onMiddleClick: {
-                        cmd: middleClick,
-                    },
-                    onScrollUp: {
-                        cmd: scrollUp,
-                    },
-                    onScrollDown: {
-                        cmd: scrollDown,
-                    },
+                    onPrimaryClick: { cmd: leftClick },
+                    onSecondaryClick: { cmd: rightClick },
+                    onMiddleClick: { cmd: middleClick },
+                    onScrollUp: { cmd: scrollUp },
+                    onScrollDown: { cmd: scrollDown },
                 });
             },
             onDestroy: () => {
