@@ -1,5 +1,6 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
+import { WorkspaceFormat } from 'src/lib/types/options';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
@@ -247,12 +248,18 @@ export const renderLabel = (
     workspaceMask: boolean,
     showWorkspaceIcons: boolean,
     wsIconMap: WorkspaceIconMap,
+    customFormat: WorkspaceFormat,
     i: number,
     index: number,
     monitor: number,
 ): string => {
     if (showAppIcons) {
         return appIcons;
+    }
+
+    if (Object.keys(customFormat).length !== 0) {
+        const label = customFormat.overrides?.[i.toString()] || customFormat.format;
+        return label.replace(/{workspace}/g, i.toString()).replace(/{icons}/g, appIcons);
     }
 
     if (showIcons) {

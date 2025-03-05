@@ -12,6 +12,7 @@ const {
     workspaces,
     monitorSpecific,
     workspaceMask,
+    customFormat,
     spacing,
     ignored,
     showAllActive,
@@ -98,13 +99,14 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             );
 
             return workspacesToRender.map((wsId, index) => {
-                const appIcons = displayApplicationIcons
-                    ? getAppIcon(wsId, appIconOncePerWorkspace, {
-                          iconMap: applicationIconMapping,
-                          defaultIcon: applicationIconFallback,
-                          emptyIcon: applicationIconEmptyWorkspace,
-                      })
-                    : '';
+                const appIcons =
+                    displayApplicationIcons || customFormat.get()
+                        ? getAppIcon(wsId, appIconOncePerWorkspace, {
+                              iconMap: applicationIconMapping,
+                              defaultIcon: applicationIconFallback,
+                              emptyIcon: applicationIconEmptyWorkspace,
+                          })
+                        : '';
 
                 return (
                     <button
@@ -140,6 +142,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 workspaceMaskFlag,
                                 displayWorkspaceIcons,
                                 workspaceIconMapping,
+                                customFormat.get(),
                                 wsId,
                                 index,
                                 monitor,
