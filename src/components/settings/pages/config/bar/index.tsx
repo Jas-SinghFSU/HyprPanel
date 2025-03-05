@@ -171,6 +171,13 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
+                    opt={options.bar.workspaces.customFormat}
+                    title="Custom Workspace Label Format"
+                    subtitle="Wiki Link: https://hyprpanel.com/configuration/panel.html#"
+                    type="object"
+                    subtitleLink="https://hyprpanel.com/configuration/panel.html#"
+                />
+                <Option
                     opt={options.bar.workspaces.showWsIcons}
                     title="Map Workspaces to Icons"
                     subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"

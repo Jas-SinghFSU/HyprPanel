@@ -14,6 +14,7 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
+    WorkspaceFormat,
 } from './lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/types/options';
 import { SystrayIconMap } from './lib/types/systray';
@@ -990,6 +991,9 @@ const options = mkOptions(CONFIG, {
             spacing: opt(1),
             monitorSpecific: opt(true),
             workspaceMask: opt(false),
+            customFormat: opt<WorkspaceFormat>({
+                format: '{workspace} {icons}',
+            }),
             reverse_scroll: opt(false),
             scroll_speed: opt(5),
         },
