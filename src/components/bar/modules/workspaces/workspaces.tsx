@@ -20,8 +20,7 @@ const {
     show_numbered,
     numbered_active_indicator,
     workspaceIconMap,
-    showWsIcons,
-    showApplicationIcons,
+    useCustomFormat,
     applicationIconOncePerWorkspace,
     applicationIconMap,
     applicationIconEmptyWorkspace,
@@ -48,8 +47,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(numbered_active_indicator),
             bind(spacing),
             bind(workspaceIconMap),
-            bind(showWsIcons),
-            bind(showApplicationIcons),
+            bind(useCustomFormat),
             bind(applicationIconOncePerWorkspace),
             bind(applicationIconMap),
             bind(applicationIconEmptyWorkspace),
@@ -78,8 +76,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             numberedActiveIndicator: string,
             spacingValue: number,
             workspaceIconMapping: WorkspaceIconMap,
-            displayWorkspaceIcons: boolean,
-            displayApplicationIcons: boolean,
+            useCustomFormat: boolean,
             appIconOncePerWorkspace: boolean,
             applicationIconMapping: ApplicationIcons,
             applicationIconEmptyWorkspace: string,
@@ -100,7 +97,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
 
             return workspacesToRender.map((wsId, index) => {
                 const appIcons =
-                    displayApplicationIcons || customFormat.get()
+                    useCustomFormat || customFormat.get()
                         ? getAppIcon(wsId, appIconOncePerWorkspace, {
                               iconMap: applicationIconMapping,
                               defaultIcon: applicationIconFallback,
@@ -121,13 +118,14 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                             valign={Gtk.Align.CENTER}
                             css={
                                 `margin: 0rem ${0.375 * spacingValue}rem;` +
-                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
+                                `${useCustomFormat && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
                             }
                             className={renderClassnames(
                                 displayIcons,
-                                displayNumbered,
+                                // displayNumbered,
+                                useCustomFormat,
                                 numberedActiveIndicator,
-                                displayWorkspaceIcons,
+                                // displayWorkspaceIcons,
                                 smartHighlightEnabled,
                                 monitor,
                                 wsId,
@@ -138,10 +136,9 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 availableStatus,
                                 activeStatus,
                                 occupiedStatus,
-                                displayApplicationIcons,
+                                useCustomFormat,
                                 appIcons,
                                 workspaceMaskFlag,
-                                displayWorkspaceIcons,
                                 workspaceIconMapping,
                                 customFormat.get(),
                                 wsId,

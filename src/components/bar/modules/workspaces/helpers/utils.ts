@@ -9,7 +9,7 @@ const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
-const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
+const { useCustomFormat, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
 
 /**
  * Determines if a workspace is active on a given monitor.
@@ -83,7 +83,7 @@ export const getWsColor = (
     }
 
     if (
-        showWsIcons.get() &&
+        useCustomFormat.get() &&
         smartHighlight &&
         wsActiveIndicator.get() === 'highlight' &&
         (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
@@ -180,7 +180,7 @@ export const getAppIcon = (
  * @param showIcons A boolean indicating whether to show icons.
  * @param showNumbered A boolean indicating whether to show numbered workspaces.
  * @param numberedActiveIndicator The indicator for active numbered workspaces.
- * @param showWsIcons A boolean indicating whether to show workspace icons.
+ * @param useCustomFormat A boolean indicating whether to use custom workspace formatting.
  * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
  * @param monitor The index of the monitor to check for active workspaces.
  * @param i The index of the workspace for which to render class names.
@@ -189,9 +189,10 @@ export const getAppIcon = (
  */
 export const renderClassnames = (
     showIcons: boolean,
-    showNumbered: boolean,
+    // showNumbered: boolean,
+    useCustomFormat: boolean,
     numberedActiveIndicator: string,
-    showWsIcons: boolean,
+    // showWsIcons: boolean,
     smartHighlight: boolean,
     monitor: number,
     i: number,
@@ -203,13 +204,13 @@ export const renderClassnames = (
         return `workspace-icon txt-icon bar ${isActive}`;
     }
 
-    if (showNumbered || showWsIcons) {
+    if (useCustomFormat) {
         const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
 
-        const wsIconClass = showWsIcons ? 'txt-icon' : '';
+        // const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
 
-        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${smartHighlightClass} ${isActive}`;
 
         return className.trim();
     }
@@ -243,21 +244,16 @@ export const renderLabel = (
     availableIndicator: string,
     activeIndicator: string,
     occupiedIndicator: string,
-    showAppIcons: boolean,
+    useCustomFormat: boolean,
     appIcons: string,
     workspaceMask: boolean,
-    showWorkspaceIcons: boolean,
     wsIconMap: WorkspaceIconMap,
     customFormat: WorkspaceFormat,
     i: number,
     index: number,
     monitor: number,
 ): string => {
-    if (showAppIcons) {
-        return appIcons;
-    }
-
-    if (Object.keys(customFormat).length !== 0) {
+    if (useCustomFormat && Object.keys(customFormat).length !== 0) {
         const label = customFormat.overrides?.[i.toString()] || customFormat.format;
         return label
             .replace(/{workspace}/g, i.toString())
@@ -274,10 +270,6 @@ export const renderLabel = (
         if (monitor !== -1) {
             return availableIndicator;
         }
-    }
-
-    if (showWorkspaceIcons) {
-        return getWsIcon(wsIconMap, i);
     }
 
     return workspaceMask ? `${index + 1}` : `${i}`;
