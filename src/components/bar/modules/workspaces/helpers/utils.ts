@@ -189,7 +189,7 @@ export const getAppIcon = (
  */
 export const renderClassnames = (
     showIcons: boolean,
-    // showNumbered: boolean,
+    showNumbered: boolean,
     useCustomFormat: boolean,
     numberedActiveIndicator: string,
     // showWsIcons: boolean,
@@ -204,7 +204,7 @@ export const renderClassnames = (
         return `workspace-icon txt-icon bar ${isActive}`;
     }
 
-    if (useCustomFormat) {
+    if (showNumbered || useCustomFormat) {
         const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
 
         // const wsIconClass = showWsIcons ? 'txt-icon' : '';

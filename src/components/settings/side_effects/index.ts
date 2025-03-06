@@ -39,9 +39,9 @@ const turnOffOptionVars = (
 /* ================================================== */
 const workspaceOptsToDisable = [show_numbered, show_icons, useCustomFormat];
 
-// show_numbered.subscribe(() => {
-//     turnOffOptionVars(show_numbered, workspaceOptsToDisable);
-// });
+show_numbered.subscribe(() => {
+    turnOffOptionVars(show_numbered, workspaceOptsToDisable);
+});
 
 show_icons.subscribe(() => {
     turnOffOptionVars(show_icons, workspaceOptsToDisable);

@@ -122,7 +122,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                             }
                             className={renderClassnames(
                                 displayIcons,
-                                // displayNumbered,
+                                displayNumbered,
                                 useCustomFormat,
                                 numberedActiveIndicator,
                                 // displayWorkspaceIcons,
