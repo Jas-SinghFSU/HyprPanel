@@ -132,6 +132,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 monitor,
                                 wsId,
                             )}
+                            useMarkup={true}
                             label={renderLabel(
                                 displayIcons,
                                 availableStatus,

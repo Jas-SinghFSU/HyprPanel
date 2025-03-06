@@ -259,7 +259,9 @@ export const renderLabel = (
 
     if (Object.keys(customFormat).length !== 0) {
         const label = customFormat.overrides?.[i.toString()] || customFormat.format;
-        return label.replace(/{workspace}/g, i.toString()).replace(/{icons}/g, appIcons);
+        return label
+            .replace(/{workspace}/g, i.toString())
+            .replace(/{icons}/g, `<span font_family='JetBrainsMono Nerd Font Propo' size='medium'>${appIcons}</span>`);
     }
 
     if (showIcons) {
