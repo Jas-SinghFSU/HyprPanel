@@ -276,12 +276,6 @@ export const BarSettings = (): JSX.Element => {
                     type="string"
                 />
                 <Option
-                    opt={options.bar.workspaces.workspaceIconMap}
-                    title="Workspace Icon & Color Mappings"
-                    subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"
-                    type="object"
-                />
-                <Option
                     opt={options.bar.workspaces.spacing}
                     title="Spacing"
                     subtitle="Spacing between workspace icons"

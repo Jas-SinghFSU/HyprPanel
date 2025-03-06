@@ -985,7 +985,6 @@ const options = mkOptions(CONFIG, {
                 active: opt(''),
                 occupied: opt(''),
             },
-            workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
             workspaces: opt(5),
             spacing: opt(1),
             monitorSpecific: opt(true),

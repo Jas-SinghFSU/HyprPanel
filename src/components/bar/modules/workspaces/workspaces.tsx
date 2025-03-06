@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { forceUpdater, getWorkspacesToRender, initWorkspaceEvents, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
-import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
+import { ApplicationIcons } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
@@ -19,7 +19,6 @@ const {
     show_icons,
     show_numbered,
     numbered_active_indicator,
-    workspaceIconMap,
     useCustomFormat,
     applicationIconOncePerWorkspace,
     applicationIconMap,
@@ -46,7 +45,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(show_numbered),
             bind(numbered_active_indicator),
             bind(spacing),
-            bind(workspaceIconMap),
             bind(useCustomFormat),
             bind(applicationIconOncePerWorkspace),
             bind(applicationIconMap),
@@ -75,7 +73,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             displayNumbered: boolean,
             numberedActiveIndicator: string,
             spacingValue: number,
-            workspaceIconMapping: WorkspaceIconMap,
             useCustomFormat: boolean,
             appIconOncePerWorkspace: boolean,
             applicationIconMapping: ApplicationIcons,
@@ -117,15 +114,14 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                         <label
                             valign={Gtk.Align.CENTER}
                             css={
-                                `margin: 0rem ${0.375 * spacingValue}rem;` +
-                                `${useCustomFormat && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
+                                `margin: 0rem ${0.375 * spacingValue}rem;`// +
+                                // `${useCustomFormat && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
                             }
                             className={renderClassnames(
                                 displayIcons,
                                 displayNumbered,
                                 useCustomFormat,
                                 numberedActiveIndicator,
-                                // displayWorkspaceIcons,
                                 smartHighlightEnabled,
                                 monitor,
                                 wsId,
@@ -139,7 +135,6 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 useCustomFormat,
                                 appIcons,
                                 workspaceMaskFlag,
-                                workspaceIconMapping,
                                 customFormat.get(),
                                 wsId,
                                 index,
