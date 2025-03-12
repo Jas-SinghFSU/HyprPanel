@@ -61,6 +61,7 @@ export const getWindowMatch = (client: AstalHyprland.Client): Record<string, str
         ['thorium', '󰖟', 'Thorium'],
         ['tor-browser', '', 'Tor Browser'],
         ['floorp', '󰈹', 'Floorp'],
+        ['zen', '', 'Zen Browser'],
 
         // Terminals
         ['gnome-terminal', '', 'GNOME Terminal'],
