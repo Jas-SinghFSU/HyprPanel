@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
-# Requires wf-recorder: https://github.com/ammen99/wf-recorder
+# Requires wf-recorder : https://github.com/ammen99/wf-recorder, jq, hyprctl, zenity (for GUI folder picker)
 
-outputDir="$HOME/Videos/Screencasts"
 defaultSink=$(pactl get-default-sink)
 WF_RECORDER_OPTS="--audio=$defaultSink.monitor -c libx264rgb"
+tempDir="/tmp/screencasts"
 
 checkRecording() {
-    if pgrep -f "wf-recorder" >/dev/null; then
-        return 0
-    else
-        return 1
-    fi
+    pgrep -f "wf-recorder" >/dev/null
 }
 
 startRecording() {
@@ -20,10 +16,9 @@ startRecording() {
     fi
 
     target="$2"
-
-    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S)"
-    outputPath="$outputDir/${outputFile}.mp4"
-    mkdir -p "$outputDir"
+    mkdir -p "$tempDir"
+    outputFile="recording_$(date +%Y-%m-%d_%H-%M-%S).mp4"
+    outputPath="$tempDir/$outputFile"
 
     if [ "$target" == "screen" ]; then
         monitor_info=$(hyprctl -j monitors | jq -r ".[] | select(.name == \"$3\")")
@@ -43,7 +38,7 @@ startRecording() {
     fi
     disown "$(jobs -p | tail -n 1)"
 
-    echo "Recording started. Output will be saved to $outputPath"
+    echo "Recording started..."
 }
 
 stopRecording() {
@@ -54,15 +49,17 @@ stopRecording() {
 
     pkill -SIGINT -f wf-recorder
 
-    recentFile=$(ls -t "$outputDir"/recording_*.mp4 | head -n 1)
+    recentFile=$(ls -t "$tempDir"/*.mp4 | head -n 1)
 
-    notify-send "Recording stopped" "Your recording has been saved." \
-        -i video-x-generic \
-        -a "Screen Recorder" \
-        -t 10000 \
-        -u normal \
-        --action="scriptAction:-xdg-open $outputDir=Directory" \
-        --action="scriptAction:-xdg-open $recentFile=Play"
+    # Let the user pick a directory using Zenity
+    saveDir=$(zenity --file-selection --directory --title="Select Directory to Save Recording")
+    
+    if [ -n "$saveDir" ]; then
+        mv "$recentFile" "$saveDir/"
+        notify-send "Recording saved" "File saved to $saveDir."
+    else
+        notify-send "Recording discarded" "File was not saved."
+    fi
 }
 
 case "$1" in
