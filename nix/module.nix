@@ -344,13 +344,15 @@ in
       bar.windowtitle.truncation = mkBoolOption true;
       bar.windowtitle.truncation_size = mkIntOption 50;
       bar.workspaces.applicationIconMap = mkOption {
-        type = types.attrsOf types.str;
-        default = {};
-        example = {
-          "[dD]iscord" = "󰙯";
-          "title:YouTube" = "";
-          "class:wezterm$" = "";
-        };
+        type = jsonFormat.type;
+        default = null;
+        example = ''
+          {
+            "[dD]iscord" = "󰙯";
+            "title:YouTube" = "";
+            "class:wezterm$" = "";
+          }
+        '';
       };
       bar.workspaces.applicationIconEmptyWorkspace = mkStrOption "";
       bar.workspaces.applicationIconFallback = mkStrOption "󰣆";
