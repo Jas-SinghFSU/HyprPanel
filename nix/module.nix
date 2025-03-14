@@ -355,8 +355,7 @@ in
       bar.workspaces.reverse_scroll = mkBoolOption false;
       bar.workspaces.scroll_speed = mkIntOption 5;
       bar.workspaces.showAllActive = mkBoolOption true;
-      bar.workspaces.showApplicationIcons = mkBoolOption false;
-      bar.workspaces.showWsIcons = mkBoolOption false;
+      bar.workspaces.useCustomFormat = mkBoolOption false;
       bar.workspaces.show_icons = mkBoolOption false;
       bar.workspaces.show_numbered = mkBoolOption false;
       bar.workspaces.spacing = mkFloatOption 1.0;

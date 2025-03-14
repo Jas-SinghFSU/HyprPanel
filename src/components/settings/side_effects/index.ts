@@ -1,7 +1,7 @@
 import { Opt } from 'src/lib/option';
 import options from 'src/options';
 
-const { show_numbered, show_icons, showWsIcons, showApplicationIcons } = options.bar.workspaces;
+const { show_numbered, show_icons, useCustomFormat } = options.bar.workspaces;
 const { monochrome: monoBar } = options.theme.bar.buttons;
 const { monochrome: monoMenu } = options.theme.bar.menus;
 const { matugen } = options.theme;
@@ -37,7 +37,7 @@ const turnOffOptionVars = (
 /* ================================================== */
 /*               WORKSPACE SIDE EFFECTS               */
 /* ================================================== */
-const workspaceOptsToDisable = [show_numbered, show_icons, showWsIcons, showApplicationIcons];
+const workspaceOptsToDisable = [show_numbered, show_icons, useCustomFormat];
 
 show_numbered.subscribe(() => {
     turnOffOptionVars(show_numbered, workspaceOptsToDisable);
@@ -47,16 +47,12 @@ show_icons.subscribe(() => {
     turnOffOptionVars(show_icons, workspaceOptsToDisable);
 });
 
-showWsIcons.subscribe(() => {
-    turnOffOptionVars(showWsIcons, workspaceOptsToDisable, [showApplicationIcons]);
-});
+useCustomFormat.subscribe(() => {
+    turnOffOptionVars(useCustomFormat, workspaceOptsToDisable);
 
-showApplicationIcons.subscribe(() => {
-    turnOffOptionVars(showApplicationIcons, workspaceOptsToDisable, [showWsIcons]);
-
-    if (showApplicationIcons.get()) {
-        showWsIcons.set(true);
-    }
+    // if (useCustomFormat.get()) {
+    //     showWsIcons.set(true);
+    // }
 });
 
 /* ================================================== */

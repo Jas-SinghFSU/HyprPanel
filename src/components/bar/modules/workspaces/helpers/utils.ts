@@ -1,6 +1,7 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
-import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
+import { WorkspaceFormat } from 'src/lib/types/options';
+import { AppIconOptions } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
 
@@ -8,7 +9,7 @@ const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
 const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
 
-const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
+const { useCustomFormat, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
 
 /**
  * Determines if a workspace is active on a given monitor.
@@ -36,25 +37,26 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
  *
  * @returns The icon for the workspace as a string. If no icon is found, returns the workspace index as a string.
  */
-const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
-    const iconEntry = wsIconMap[i];
+// Remove later
+// const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
+//     const iconEntry = wsIconMap[i];
 
-    if (!iconEntry) {
-        return `${i}`;
-    }
+//     if (!iconEntry) {
+//         return `${i}`;
+//     }
 
-    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+//     const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
 
-    if (typeof iconEntry === 'string' && iconEntry !== '') {
-        return iconEntry;
-    }
+//     if (typeof iconEntry === 'string' && iconEntry !== '') {
+//         return iconEntry;
+//     }
 
-    if (hasIcon) {
-        return iconEntry.icon;
-    }
+//     if (hasIcon) {
+//         return iconEntry.icon;
+//     }
 
-    return `${i}`;
-};
+//     return `${i}`;
+// };
 
 /**
  * Retrieves the color for a given workspace.
@@ -69,38 +71,39 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
  *
  * @returns A CSS string representing the color and background for the workspace. If no color is found, returns an empty string.
  */
-export const getWsColor = (
-    wsIconMap: WorkspaceIconMap,
-    i: number,
-    smartHighlight: boolean,
-    monitor: number,
-): string => {
-    const iconEntry = wsIconMap[i];
-    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
-    if (!iconEntry) {
-        return '';
-    }
+// Use later
+// export const getWsColor = (
+//     wsIconMap: WorkspaceIconMap,
+//     i: number,
+//     smartHighlight: boolean,
+//     monitor: number,
+// ): string => {
+//     const iconEntry = wsIconMap[i];
+//     const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
+//     if (!iconEntry) {
+//         return '';
+//     }
 
-    if (
-        showWsIcons.get() &&
-        smartHighlight &&
-        wsActiveIndicator.get() === 'highlight' &&
-        (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
-    ) {
-        const iconColor = monochrome.get() ? background.get() : wsBackground.get();
-        const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
-        const colorCss = `color: ${iconColor};`;
-        const backgroundCss = `background: ${iconBackground};`;
+//     if (
+//         useCustomFormat.get() &&
+//         smartHighlight &&
+//         wsActiveIndicator.get() === 'highlight' &&
+//         (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
+//     ) {
+//         const iconColor = monochrome.get() ? background.get() : wsBackground.get();
+//         const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
+//         const colorCss = `color: ${iconColor};`;
+//         const backgroundCss = `background: ${iconBackground};`;
 
-        return colorCss + backgroundCss;
-    }
+//         return colorCss + backgroundCss;
+//     }
 
-    if (hasColor && isValidGjsColor(iconEntry.color)) {
-        return `color: ${iconEntry.color}; border-bottom-color: ${iconEntry.color};`;
-    }
+//     if (hasColor && isValidGjsColor(iconEntry.color)) {
+//         return `color: ${iconEntry.color}; border-bottom-color: ${iconEntry.color};`;
+//     }
 
-    return '';
-};
+//     return '';
+// };
 
 /**
  * Retrieves the application icon for a given workspace.
@@ -179,7 +182,7 @@ export const getAppIcon = (
  * @param showIcons A boolean indicating whether to show icons.
  * @param showNumbered A boolean indicating whether to show numbered workspaces.
  * @param numberedActiveIndicator The indicator for active numbered workspaces.
- * @param showWsIcons A boolean indicating whether to show workspace icons.
+ * @param useCustomFormat A boolean indicating whether to use custom workspace formatting.
  * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
  * @param monitor The index of the monitor to check for active workspaces.
  * @param i The index of the workspace for which to render class names.
@@ -189,8 +192,8 @@ export const getAppIcon = (
 export const renderClassnames = (
     showIcons: boolean,
     showNumbered: boolean,
+    useCustomFormat: boolean,
     numberedActiveIndicator: string,
-    showWsIcons: boolean,
     smartHighlight: boolean,
     monitor: number,
     i: number,
@@ -202,13 +205,12 @@ export const renderClassnames = (
         return `workspace-icon txt-icon bar ${isActive}`;
     }
 
-    if (showNumbered || showWsIcons) {
+    if (showNumbered || useCustomFormat) {
         const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
 
-        const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
 
-        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${smartHighlightClass} ${isActive}`;
 
         return className.trim();
     }
@@ -242,17 +244,19 @@ export const renderLabel = (
     availableIndicator: string,
     activeIndicator: string,
     occupiedIndicator: string,
-    showAppIcons: boolean,
+    useCustomFormat: boolean,
     appIcons: string,
     workspaceMask: boolean,
-    showWorkspaceIcons: boolean,
-    wsIconMap: WorkspaceIconMap,
+    customFormat: WorkspaceFormat,
     i: number,
     index: number,
     monitor: number,
 ): string => {
-    if (showAppIcons) {
-        return appIcons;
+    if (useCustomFormat && Object.keys(customFormat).length !== 0) {
+        const label = customFormat.overrides?.[i.toString()] || customFormat.format;
+        return label
+            .replace(/{workspace}/g, i.toString())
+            .replace(/{icons}/g, `<span font_family='JetBrainsMono Nerd Font Propo' size='medium'>${appIcons}</span>`);
     }
 
     if (showIcons) {
@@ -265,10 +269,6 @@ export const renderLabel = (
         if (monitor !== -1) {
             return availableIndicator;
         }
-    }
-
-    if (showWorkspaceIcons) {
-        return getWsIcon(wsIconMap, i);
     }
 
     return workspaceMask ? `${index + 1}` : `${i}`;
