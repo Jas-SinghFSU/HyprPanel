@@ -26,18 +26,19 @@ let
   mkIntOption = default: mkOption { type = types.int; default = default; };
   mkBoolOption = default: mkOption { type = types.bool; default = default; };
   mkStrListOption = default: mkOption { type = types.listOf types.str; default = default; };
+  mkJsonOption = default: mkOption { type = jsonFormat.type; default = default; };
   mkFloatOption = default: mkOption { type = types.float; default = default; };
 
-  # TODO: Please merge https://github.com/Jas-SinghFSU/HyprPanel/pull/497
-  #       Do not ask what these do...
   flattenAttrs = attrSet: prefix:
     let
-    process = key: value:
-        if builtins.isAttrs value then
+      process = key: value:
+        # If the value is an attribute set and the key is not one of the exceptions,
+        # recursively flatten the attribute set
+        if builtins.isAttrs value && !(key == "applicationIconMap" || key == "workspaceIconMap") then
           flattenAttrs value "${prefix}${key}."
         else
           { "${prefix}${key}" = value; };
-  in
+    in
       builtins.foldl' (acc: key:
         acc // process key attrSet.${key}
     ) {} (builtins.attrNames attrSet);
@@ -343,19 +344,9 @@ in
       bar.windowtitle.scrollUp = mkStrOption "";
       bar.windowtitle.truncation = mkBoolOption true;
       bar.windowtitle.truncation_size = mkIntOption 50;
-      bar.workspaces.applicationIconMap = mkOption {
-        type = jsonFormat.type;
-        default = null;
-        example = ''
-          {
-            "[dD]iscord" = "󰙯";
-            "title:YouTube" = "";
-            "class:wezterm$" = "";
-          }
-        '';
-      };
       bar.workspaces.applicationIconEmptyWorkspace = mkStrOption "";
       bar.workspaces.applicationIconFallback = mkStrOption "󰣆";
+      bar.workspaces.applicationIconMap = mkJsonOption {};
       bar.workspaces.applicationIconOncePerWorkspace = mkBoolOption true;
       bar.workspaces.icons.active = mkStrOption "";
       bar.workspaces.icons.available = mkStrOption "";
@@ -371,6 +362,7 @@ in
       bar.workspaces.show_icons = mkBoolOption false;
       bar.workspaces.show_numbered = mkBoolOption false;
       bar.workspaces.spacing = mkFloatOption 1.0;
+      bar.workspaces.workspaceIconMap = mkJsonOption {};
       bar.workspaces.workspaceMask = mkBoolOption false;
       bar.workspaces.workspaces = mkIntOption 5;
       dummy = mkBoolOption true;
