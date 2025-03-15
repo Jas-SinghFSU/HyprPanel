@@ -272,32 +272,23 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 iconName: icons.ui.info,
             });
 
-            const tmpConfigFile = Gio.File.new_for_path(`${TMP}/config.json`);
             const optionsConfigFile = Gio.File.new_for_path(CONFIG);
 
-            const [tmpSuccess, tmpContent] = tmpConfigFile.load_contents(null);
             const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
 
-            if (!tmpSuccess || !optionsSuccess) {
-                console.error('Failed to read existing configuration files.');
+            if (!optionsSuccess) {
+                console.error('Failed to read existing configuration file.');
                 dialog.destroy();
                 return;
             }
 
-            let tmpConfig = JSON.parse(new TextDecoder('utf-8').decode(tmpContent));
             let optionsConfig = JSON.parse(new TextDecoder('utf-8').decode(optionsContent));
 
-            if (themeOnly) {
-                const filteredConfig = filterConfigForThemeOnly(importedConfig);
-                tmpConfig = { ...tmpConfig, ...filteredConfig };
-                optionsConfig = { ...optionsConfig, ...filteredConfig };
-            } else {
-                const filteredConfig = filterConfigForNonTheme(importedConfig);
-                tmpConfig = { ...tmpConfig, ...filteredConfig };
-                optionsConfig = { ...optionsConfig, ...filteredConfig };
-            }
+            const filteredConfig = themeOnly
+                ? filterConfigForThemeOnly(importedConfig)
+                : filterConfigForNonTheme(importedConfig);
+            optionsConfig = { ...optionsConfig, ...filteredConfig };
 
-            saveConfigToFile(tmpConfig, `${TMP}/config.json`);
             saveConfigToFile(optionsConfig, CONFIG);
         }
         dialog.destroy();

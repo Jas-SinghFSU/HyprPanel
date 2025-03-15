@@ -1,13 +1,12 @@
 import options from '../options';
 import { bash, dependencies } from '../lib/utils';
-import { MatugenColors, RecursiveOptionsObject } from '../lib/types/options';
+import { HexColor, MatugenColors, RecursiveOptionsObject } from '../lib/types/options';
 import { initializeTrackers } from './optionsTrackers';
 import { generateMatugenColors, getMatugenHex, replaceHexValues } from '../services/matugen/index';
 import { isHexColor } from '../globals/variables';
 import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
-import { defaultFile } from 'src/lib/option';
 
 const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
 
@@ -46,23 +45,26 @@ function extractVariables(theme: RecursiveOptionsObject, prefix = '', matugenCol
 async function extractMatugenizedVariables(matugenColors: MatugenColors): Promise<string[]> {
     try {
         const result = [] as string[];
+        const optArray = options.array();
 
-        const defaultFileContent = JSON.parse(readFile(defaultFile) || '{}');
+        for (let i = 0; i < optArray.length; i++) {
+            const opt = optArray[i];
+            const name = opt.id;
 
-        for (const key in defaultFileContent) {
-            if (key.startsWith('theme.') === false) {
-                continue;
-            }
-            const configValue = defaultFileContent[key];
-
-            if (!isHexColor(configValue) && matugenColors !== undefined) {
-                result.push(`$${key.replace('theme.', '').split('.').join('-')}: ${configValue};`);
+            if (name.startsWith('theme.') === false) {
                 continue;
             }
 
-            const matugenColor = getMatugenHex(configValue, matugenColors);
+            const initialValue = opt.initial;
 
-            result.push(`$${key.replace('theme.', '').split('.').join('-')}: ${matugenColor};`);
+            if (!isHexColor(initialValue) && matugenColors !== undefined) {
+                result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${initialValue};`);
+                continue;
+            }
+
+            const matugenColor = getMatugenHex(initialValue as HexColor, matugenColors);
+
+            result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${matugenColor};`);
         }
 
         return result;
