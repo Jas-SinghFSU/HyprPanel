@@ -127,7 +127,7 @@ case "$1" in
         fi
         ;;
     *)
-        echo "Usage: $0 {start [screen monitor_name output_directory | region output_directory] | stop | status}"
+        echo "Usage: $0 {start [screen <monitor_name> | region] <output_directory> | stop | status}"
         exit 1
         ;;
 esac
