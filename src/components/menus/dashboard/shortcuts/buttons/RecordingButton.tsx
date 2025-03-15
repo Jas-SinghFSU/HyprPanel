@@ -9,14 +9,12 @@ import options from 'src/options';
 const hyprlandService = AstalHyprland.get_default();
 
 // Function to get the latest recording path
-const getRecordingPath = () => options.menus.dashboard.recording.path.get();
+const getRecordingPath = (): string => options.menus.dashboard.recording.path.get();
 
 // Execute shell commands safely with path expansion
-const executeCommand = async (command: string) => {
+const executeCommand = async (command: string): Promise<void> => {
     try {
-        console.log('Executing command:', command);
-        const output = await execAsync(`/bin/bash -c '${command}'`);
-        console.log('Command output:', output);
+        await execAsync(`/bin/bash -c '${command}'`);
     } catch (err) {
         console.error('Command failed:', command);
         console.error('Error:', err);
