@@ -77,7 +77,7 @@ stopRecording() {
     fi
 
     pkill -SIGINT -f wf-recorder
-    sleep 1
+    sleep 1 # Give wf-recorder time to properly terminate before proceeding  
 
     outputPath=$(cat /tmp/last_recording_path 2>/dev/null)
 
