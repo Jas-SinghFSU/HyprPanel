@@ -46,7 +46,8 @@ const MonitorListDropdown = (): JSX.Element => {
 
                                 App.get_window('dashboardmenu')?.set_visible(false);
 
-                                const command = `${SRC_DIR}/scripts/screen_record.sh start screen "${sanitizedPath}" "${monitor.name}"`;
+                                // Update command to match new script argument order
+                                const command = `${SRC_DIR}/scripts/screen_record.sh start screen "${monitor.name}" "${sanitizedPath}"`;
                                 executeCommand(command);
                             }}
                         />
