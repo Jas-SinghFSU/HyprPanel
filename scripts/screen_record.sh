@@ -27,7 +27,7 @@ startRecording() {
     elif [ "$target" == "region" ]; then
         outputDir="$3"
     else
-        echo "Usage: $0 start {screen [monitor_name] [output_directory] | region [output_directory]}"
+        echo "Usage: $0 start {screen <monitor_name> | region} <output_directory>"
         exit 1
     fi
 
