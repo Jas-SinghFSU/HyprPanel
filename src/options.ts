@@ -1281,7 +1281,7 @@ const options = mkOptions(CONFIG, {
                 enable_gpu: opt(false),
             },
             recording: {
-                path: opt('$HOME/Videos/Screencasts')
+                path: opt('$HOME/Videos/Screencasts'),
             },
             controls: {
                 enabled: opt(true),
