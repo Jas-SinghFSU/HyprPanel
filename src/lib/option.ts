@@ -91,8 +91,8 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param value - The new value.
      * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
-    public set(value: T, { writeDisk = true }: WriteDiskProps = {}): void {
-        if (value == this.get()) {
+    public set = (value: T, { writeDisk = true }: WriteDiskProps = {}): void {
+        if (value === this.get()) {
             // If nothing actually changed, exit quick
             return;
         }
@@ -134,9 +134,12 @@ export class Opt<T = unknown> extends Variable<T> {
             return undefined;
         }
 
-        const current = this.get();
+        const currentValue: string | T = this.get();
+        currentValue = typeof currentValue === 'object' ? JSON.stringify(currentValue) : currentValue;
+        let initialValue: string | T = this.initial;
+        initialValue = typeof initialValue === 'object' ? JSON.stringify(initialValue) : initialValue;
 
-        if (current !== this.initial) {
+        if (currentValue !== initialValue) {
             this.set(this.initial, writeDiskProps);
             return this._id;
         }
@@ -222,10 +225,8 @@ function getOptions(optionsObj: Record<string, unknown>, path = '', arr: Opt[] =
  * @returns The original object extended with additional methods for handling options.
  */
 export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult {
-    // Ensure the directory exists
     ensureDirectory(CONFIG.split('/').slice(0, -1).join('/'));
 
-    // Read the configuration file
     const rawConfig = readFile(CONFIG);
 
     let config: Record<string, unknown> = {};
@@ -251,10 +252,10 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
 
     // Setup a file monitor to allow live config edit preview from outside
     // the config menu
+    const debounceTimeMs = 200;
     let lastEventTime = Date.now();
     monitorFile(CONFIG, () => {
-        if (Date.now() - lastEventTime < 200) {
-            // 200 milliseconds event debounce
+        if (Date.now() - lastEventTime < debounceTimeMs) {
             return;
         }
         lastEventTime = Date.now();
