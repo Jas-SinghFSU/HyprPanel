@@ -134,7 +134,7 @@ export class Opt<T = unknown> extends Variable<T> {
             return undefined;
         }
 
-        const currentValue: string | T = this.get();
+        let currentValue: string | T = this.get();
         currentValue = typeof currentValue === 'object' ? JSON.stringify(currentValue) : currentValue;
         let initialValue: string | T = this.initial;
         initialValue = typeof initialValue === 'object' ? JSON.stringify(initialValue) : initialValue;
