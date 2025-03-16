@@ -39,15 +39,17 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
 
-    if (iconEntry) {
-        if (typeof iconEntry === 'string' && iconEntry !== '') {
-            return iconEntry;
-        }
+    if (!iconEntry) {
+        return `${i}`;
+    }
 
-        const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
-        if (hasIcon) {
-            return iconEntry.icon;
-        }
+    if (typeof iconEntry === 'string' && iconEntry !== '') {
+        return iconEntry;
+    }
+
+    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+    if (hasIcon) {
+        return iconEntry.icon;
     }
 
     return `${i}`;
