@@ -91,7 +91,7 @@ export class Opt<T = unknown> extends Variable<T> {
      * @param value - The new value.
      * @param writeDisk - Whether to write the changes to disk. Defaults to true.
      */
-    public set = (value: T, { writeDisk = true }: WriteDiskProps = {}): void {
+    public set = (value: T, { writeDisk = true }: WriteDiskProps = {}): void => {
         if (value === this.get()) {
             // If nothing actually changed, exit quick
             return;
@@ -121,7 +121,7 @@ export class Opt<T = unknown> extends Variable<T> {
             config[this._id] = value;
             writeFile(CONFIG, JSON.stringify(config, null, 2));
         }
-    }
+    };
 
     /**
      * Resets the value of this option to its initial value if not persistent and if it differs from the current value.
