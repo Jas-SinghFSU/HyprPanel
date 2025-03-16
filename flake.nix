@@ -66,12 +66,12 @@
             hypridle
             wireplumber
             networkmanager
+            wf-recorder
             upower
             gvfs
             swww
             pywal
-          ])
-          ++ (nixpkgs.lib.optionals (system == "x86_64-linux") [pkgs.gpu-screen-recorder]);
+          ]);
       };
     });
 

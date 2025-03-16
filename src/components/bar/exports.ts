@@ -11,6 +11,7 @@ import { Clock } from '../../components/bar/modules/clock/index';
 import { SysTray } from '../../components/bar/modules/systray/index';
 
 // Custom Modules
+import { Microphone } from '../../components/bar/modules/microphone/index';
 import { Ram } from '../../components/bar/modules/ram/index';
 import { Cpu } from '../../components/bar/modules/cpu/index';
 import { CpuTemp } from '../../components/bar/modules/cputemp/index';
@@ -40,6 +41,7 @@ export {
     SysTray,
 
     // Custom Modules
+    Microphone,
     Ram,
     Cpu,
     CpuTemp,

@@ -361,5 +361,10 @@
     "theme.bar.buttons.modules.cava.background": "#242438",
     "theme.bar.buttons.modules.cava.icon": "#242438",
     "theme.bar.buttons.modules.cava.icon_background": "#94e2d5",
-    "theme.bar.buttons.modules.cava.border": "#94e2d5"
+    "theme.bar.buttons.modules.cava.border": "#94e2d5",
+    "theme.bar.buttons.modules.microphone.border": "#a6e3a1",
+    "theme.bar.buttons.modules.microphone.background": "#242438",
+    "theme.bar.buttons.modules.microphone.text": "#a6e3a1",
+    "theme.bar.buttons.modules.microphone.icon": "#242438",
+    "theme.bar.buttons.modules.microphone.icon_background": "#a6e3a1"
 }

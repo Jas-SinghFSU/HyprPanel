@@ -16,6 +16,23 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Header title="General" />
                 <Option opt={options.bar.customModules.scrollSpeed} title="Scrolling Speed" type="number" />
 
+                {/* Microphone Section */}
+                <Header title="Microphone" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.microphone.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
+                <Option opt={options.bar.customModules.microphone.label} title="Show Label" type="boolean" />
+                <Option opt={options.bar.customModules.microphone.mutedIcon} title="Muted Icon" type="string" />
+                <Option opt={options.bar.customModules.microphone.unmutedIcon} title="Unmuted Icon" type="string" />
+                <Option opt={options.theme.bar.buttons.modules.microphone.spacing} title="Spacing" type="string" />
+                <Option opt={options.bar.customModules.microphone.leftClick} title="Left Click" type="string" />
+                <Option opt={options.bar.customModules.microphone.rightClick} title="Right Click" type="string" />
+                <Option opt={options.bar.customModules.microphone.middleClick} title="Middle Click" type="string" />
+                <Option opt={options.bar.customModules.microphone.scrollUp} title="Scroll Up" type="string" />
+                <Option opt={options.bar.customModules.microphone.scrollDown} title="Scroll Down" type="string" />
+
                 {/* RAM Section */}
                 <Header title="RAM" />
                 <Option opt={options.theme.bar.buttons.modules.ram.enableBorder} title="Button Border" type="boolean" />
