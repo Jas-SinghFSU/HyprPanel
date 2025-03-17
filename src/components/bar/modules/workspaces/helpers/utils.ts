@@ -1,5 +1,5 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { defaultApplicationIcons } from 'src/lib/constants/appIcons';
+import { defaultApplicationIconMap } from 'src/lib/constants/appIcons';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
@@ -38,9 +38,10 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
  */
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
+    const defaultIcon = `${i}`;
 
     if (!iconEntry) {
-        return `${i}`;
+        return defaultIcon;
     }
 
     if (typeof iconEntry === 'string' && iconEntry !== '') {
@@ -48,11 +49,12 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     }
 
     const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+
     if (hasIcon) {
         return iconEntry.icon;
     }
 
-    return `${i}`;
+    return defaultIcon;
 };
 
 /**
@@ -129,13 +131,12 @@ export const getAppIcon = (
 
     let icons = [];
     for (const [clientClass, clientTitle] of clients) {
-        const iconMapIterators = [
-            Object.entries(userDefinedIconMap)[Symbol.iterator](),
-            Object.entries(defaultApplicationIcons)[Symbol.iterator](),
-        ];
+        const appIconMap = { ...defaultApplicationIconMap, ...userDefinedIconMap };
 
+        let totalIterations = 0;
         for (const iter of iconMapIterators) {
             while (true) {
+                totalIterations += 1;
                 const { value, done } = iter.next();
 
                 if (done) {
@@ -143,7 +144,9 @@ export const getAppIcon = (
                 }
 
                 const [matcher, icon] = value;
+
                 let result = false;
+
                 if (matcher.startsWith('class:')) {
                     const re = matcher.substring(6);
                     result = new RegExp(re).test(clientClass);
@@ -155,10 +158,16 @@ export const getAppIcon = (
                 }
 
                 if (result) {
+                    // console.log(`matcher: ${matcher}`);
+                    // console.log(`clientClass: ${clientClass}`);
+                    // console.log(`clientTitle: ${clientTitle}`);
                     icons.push(icon);
                 }
             }
         }
+        console.log(`totalIcons: ${Object.keys(defaultApplicationIconMap).length}`);
+
+        console.log(totalIterations);
     }
 
     if (icons.length) {
