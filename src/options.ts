@@ -90,7 +90,7 @@ const tertiary_colors = {
     surface2: '#585b71',
 };
 
-const options = mkOptions(CONFIG, {
+const options = mkOptions({
     theme: {
         tooltip: {
             scaling: opt(100),

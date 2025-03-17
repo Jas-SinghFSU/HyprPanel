@@ -64,21 +64,16 @@ const formatFrequency = (frequency: number): string => {
  * Formats the WiFi information for display.
  *
  * This function takes a WiFi object and formats its SSID, signal strength, and frequency for display.
- * If any of these values are not available, it provides default values.
  *
  * @param wifi The WiFi object containing SSID, signal strength, and frequency information.
  *
  * @returns A formatted string containing the WiFi information.
  */
-export const formatWifiInfo = (wifi: AstalNetwork.Wifi | null): string => {
-    const netSsid = wifi?.ssid ? wifi.ssid : 'None';
-    const wifiStrength = wifi?.strength ? wifi.strength : '--';
-    const wifiFreq = wifi?.frequency ? formatFrequency(wifi.frequency) : '--';
-
-    return `Network: ${netSsid} \nSignal Strength: ${wifiStrength}% \nFrequency: ${wifiFreq}`;
+export const formatWifiInfo = (wifi: AstalNetwork.Wifi): string => {
+    return `Network: ${wifi.ssid} \nSignal Strength: ${wifi.strength}% \nFrequency: ${formatFrequency(wifi.frequency)}`;
 };
 
-Variable.derive([bind(networkService, 'wifi')], () => {
+Variable.derive([bind(networkService, 'state'), bind(networkService, 'connectivity')], () => {
     handleWiredIcon();
     handleWirelessIcon();
 });
