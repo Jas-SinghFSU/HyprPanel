@@ -171,16 +171,17 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
-                    opt={options.bar.workspaces.showWsIcons}
-                    title="Map Workspaces to Icons"
-                    subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"
+                    opt={options.bar.workspaces.useCustomFormat}
+                    title="Use Custom Workspace Labels"
+                    subtitle="See docs."
                     type="boolean"
                 />
                 <Option
-                    opt={options.bar.workspaces.showApplicationIcons}
-                    title="Map Workspaces to Application Icons"
-                    subtitle="Requires 'Map Workspace to Icons' enabled. See docs."
-                    type="boolean"
+                    opt={options.bar.workspaces.customFormat}
+                    title="Custom Workspace Label Format"
+                    subtitle="Wiki Link: https://hyprpanel.com/configuration/panel.html#"
+                    type="object"
+                    subtitleLink="https://hyprpanel.com/configuration/panel.html#"
                 />
                 <Option
                     opt={options.bar.workspaces.applicationIconOncePerWorkspace}
@@ -273,12 +274,6 @@ export const BarSettings = (): JSX.Element => {
                     opt={options.bar.workspaces.applicationIconEmptyWorkspace}
                     title="App Icon for empty workspace"
                     type="string"
-                />
-                <Option
-                    opt={options.bar.workspaces.workspaceIconMap}
-                    title="Workspace Icon & Color Mappings"
-                    subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"
-                    type="object"
                 />
                 <Option
                     opt={options.bar.workspaces.spacing}

@@ -58,6 +58,11 @@ export type BarLayouts = {
     [key: string]: BarLayout;
 };
 
+export type WorkspaceFormat = {
+    format: string;
+    overrides?: { [key: string]: string };
+}
+
 export type Unit = 'imperial' | 'metric';
 export type PowerOptions = 'sleep' | 'reboot' | 'logout' | 'shutdown';
 export type NotificationAnchor =

@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { forceUpdater, getWorkspacesToRender, initWorkspaceEvents, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
-import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
+import { ApplicationIcons } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
@@ -12,15 +12,14 @@ const {
     workspaces,
     monitorSpecific,
     workspaceMask,
+    customFormat,
     spacing,
     ignored,
     showAllActive,
     show_icons,
     show_numbered,
     numbered_active_indicator,
-    workspaceIconMap,
-    showWsIcons,
-    showApplicationIcons,
+    useCustomFormat,
     applicationIconOncePerWorkspace,
     applicationIconMap,
     applicationIconEmptyWorkspace,
@@ -46,9 +45,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(show_numbered),
             bind(numbered_active_indicator),
             bind(spacing),
-            bind(workspaceIconMap),
-            bind(showWsIcons),
-            bind(showApplicationIcons),
+            bind(useCustomFormat),
             bind(applicationIconOncePerWorkspace),
             bind(applicationIconMap),
             bind(applicationIconEmptyWorkspace),
@@ -76,9 +73,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             displayNumbered: boolean,
             numberedActiveIndicator: string,
             spacingValue: number,
-            workspaceIconMapping: WorkspaceIconMap,
-            displayWorkspaceIcons: boolean,
-            displayApplicationIcons: boolean,
+            useCustomFormat: boolean,
             appIconOncePerWorkspace: boolean,
             applicationIconMapping: ApplicationIcons,
             applicationIconEmptyWorkspace: string,
@@ -98,13 +93,14 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             );
 
             return workspacesToRender.map((wsId, index) => {
-                const appIcons = displayApplicationIcons
-                    ? getAppIcon(wsId, appIconOncePerWorkspace, {
-                          iconMap: applicationIconMapping,
-                          defaultIcon: applicationIconFallback,
-                          emptyIcon: applicationIconEmptyWorkspace,
-                      })
-                    : '';
+                const appIcons =
+                    useCustomFormat || customFormat.get()
+                        ? getAppIcon(wsId, appIconOncePerWorkspace, {
+                              iconMap: applicationIconMapping,
+                              defaultIcon: applicationIconFallback,
+                              emptyIcon: applicationIconEmptyWorkspace,
+                          })
+                        : '';
 
                 return (
                     <button
@@ -118,28 +114,28 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                         <label
                             valign={Gtk.Align.CENTER}
                             css={
-                                `margin: 0rem ${0.375 * spacingValue}rem;` +
-                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
+                                `margin: 0rem ${0.375 * spacingValue}rem;`// +
+                                // `${useCustomFormat && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
                             }
                             className={renderClassnames(
                                 displayIcons,
                                 displayNumbered,
+                                useCustomFormat,
                                 numberedActiveIndicator,
-                                displayWorkspaceIcons,
                                 smartHighlightEnabled,
                                 monitor,
                                 wsId,
                             )}
+                            useMarkup={true}
                             label={renderLabel(
                                 displayIcons,
                                 availableStatus,
                                 activeStatus,
                                 occupiedStatus,
-                                displayApplicationIcons,
+                                useCustomFormat,
                                 appIcons,
                                 workspaceMaskFlag,
-                                displayWorkspaceIcons,
-                                workspaceIconMapping,
+                                customFormat.get(),
                                 wsId,
                                 index,
                                 monitor,

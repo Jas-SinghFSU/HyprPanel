@@ -14,6 +14,7 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
+    WorkspaceFormat,
 } from './lib/types/options';
 import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/types/options';
 import { SystrayIconMap } from './lib/types/systray';
@@ -973,8 +974,7 @@ const options = mkOptions({
             showAllActive: opt(true),
             ignored: opt(''),
             show_numbered: opt(false),
-            showWsIcons: opt(false),
-            showApplicationIcons: opt(false),
+            useCustomFormat: opt(false),
             applicationIconOncePerWorkspace: opt(true),
             applicationIconMap: opt<ApplicationIcons>({}),
             applicationIconFallback: opt('󰣆'),
@@ -985,11 +985,13 @@ const options = mkOptions({
                 active: opt(''),
                 occupied: opt(''),
             },
-            workspaceIconMap: opt<WorkspaceIcons | WorkspaceIconsColored>({}),
             workspaces: opt(5),
             spacing: opt(1),
             monitorSpecific: opt(true),
             workspaceMask: opt(false),
+            customFormat: opt<WorkspaceFormat>({
+                format: '{workspace} {icons}',
+            }),
             reverse_scroll: opt(false),
             scroll_speed: opt(5),
         },
