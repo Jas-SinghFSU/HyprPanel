@@ -120,55 +120,42 @@ export const getAppIcon = (
     removeDuplicateIcons: boolean,
     { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
-    const clients = hyprlandService
+    const workspaceClients = hyprlandService
         .get_clients()
         .filter((client) => client?.workspace?.id === workspaceIndex)
         .map((client) => [client.class, client.title]);
 
-    if (!clients.length) {
+    if (!workspaceClients.length) {
         return emptyIcon;
     }
 
-    let icons = [];
-    for (const [clientClass, clientTitle] of clients) {
+    const findIconForClient = (clientClass: string, clientTitle: string): string | undefined => {
         const appIconMap = { ...defaultApplicationIconMap, ...userDefinedIconMap };
 
-        let totalIterations = 0;
-        for (const iter of iconMapIterators) {
-            while (true) {
-                totalIterations += 1;
-                const { value, done } = iter.next();
-
-                if (done) {
-                    break;
-                }
-
-                const [matcher, icon] = value;
-
-                let result = false;
-
-                if (matcher.startsWith('class:')) {
-                    const re = matcher.substring(6);
-                    result = new RegExp(re).test(clientClass);
-                } else if (matcher.startsWith('title:')) {
-                    const re = matcher.substring(6);
-                    result = new RegExp(re).test(clientTitle);
-                } else {
-                    result = new RegExp(matcher, 'i').test(clientClass);
-                }
-
-                if (result) {
-                    // console.log(`matcher: ${matcher}`);
-                    // console.log(`clientClass: ${clientClass}`);
-                    // console.log(`clientTitle: ${clientTitle}`);
-                    icons.push(icon);
-                }
+        const iconEntry = Object.entries(appIconMap).find(([matcher]) => {
+            if (matcher.startsWith('class:')) {
+                return new RegExp(matcher.substring(6)).test(clientClass);
             }
-        }
-        console.log(`totalIcons: ${Object.keys(defaultApplicationIconMap).length}`);
 
-        console.log(totalIterations);
-    }
+            if (matcher.startsWith('title:')) {
+                return new RegExp(matcher.substring(6)).test(clientTitle);
+            }
+
+            return new RegExp(matcher, 'i').test(clientClass);
+        });
+
+        return iconEntry?.[1];
+    };
+
+    let icons = workspaceClients.reduce((iconAccumulator, [clientClass, clientTitle]) => {
+        const icon = findIconForClient(clientClass, clientTitle);
+
+        if (icon) {
+            iconAccumulator.push(icon);
+        }
+
+        return iconAccumulator;
+    }, []);
 
     if (icons.length) {
         if (removeDuplicateIcons) {

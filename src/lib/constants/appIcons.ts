@@ -103,17 +103,35 @@ export const defaultWindowTitleMap = [
     ['dropbox', '󰇣', 'Dropbox'],
 ];
 
-export const defaultApplicationIcons = defaultWindowTitleMap.reduce(
-    function (map, obj) {
-        const key: string = obj[0];
-        if (!(key in map)) {
-            map[key] = obj[1];
+const overrides = {
+    kitty: '',
+};
+
+/**
+ * Generates a mapping of application names to their corresponding icons.
+ * Uses the defaultWindowTitleMap to create the base mapping and applies any overrides.
+ *
+ * @returns An object where keys are application names and values are icon names.
+ * If an application name exists in the overrides, that value is used instead of the default.
+ *
+ * @example
+ * // Given:
+ * defaultWindowTitleMap = [['kitty', '󰄛', 'Kitty Terminal'], ['firefox', '󰈹', 'Firefox']]
+ * overrides = { 'kitty': '' }
+ *
+ * // Returns:
+ * { 'kitty': '', 'firefox': '󰈹' }
+ */
+export const defaultApplicationIconMap = defaultWindowTitleMap.reduce(
+    (iconMapAccumulator: Record<string, string>, windowTitles) => {
+        const appName: string = windowTitles[0];
+        const appIcon: string = windowTitles[1];
+
+        if (!(appName in iconMapAccumulator)) {
+            iconMapAccumulator[appName] = appIcon;
         }
 
-        return map;
+        return iconMapAccumulator;
     },
-    // Overrides are defined here
-    {
-        kitty: '',
-    },
+    overrides,
 );

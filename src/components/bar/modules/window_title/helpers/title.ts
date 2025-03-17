@@ -4,9 +4,12 @@ import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { bind, Variable } from 'astal';
 
+const { title_map: userDefinedTitles } = options.bar.windowtitle;
+
 const hyprlandService = AstalHyprland.get_default();
-export const clientTitle = Variable('');
 let clientBinding: Variable<void> | undefined;
+
+export const clientTitle = Variable('');
 
 function trackClientUpdates(client: AstalHyprland.Client): void {
     clientBinding?.drop();
@@ -31,46 +34,25 @@ Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
  * This function searches for a matching window title in the predefined `windowTitleMap` based on the class of the provided window.
  * If a match is found, it returns an object containing the icon and label for the window. If no match is found, it returns a default icon and label.
  *
- * @param client The window object containing the class information.
+ * @param hyprlandClient The window object containing the class information.
  *
  * @returns An object containing the icon and label for the window.
  */
-export const getWindowMatch = (client: AstalHyprland.Client): Record<string, string> => {
-    const windowTitleIterators = [
-        options.bar.windowtitle.title_map.get()[Symbol.iterator](),
-        defaultWindowTitleMap[Symbol.iterator](),
-    ];
-
-    if (!client?.class) {
+export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<string, string> => {
+    if (!hyprlandClient?.class) {
         return {
             icon: '󰇄',
             label: 'Desktop',
         };
     }
 
-    for (const iter of windowTitleIterators) {
-        while (true) {
-            const { value, done } = iter.next();
+    const clientClass = hyprlandClient.class.toLowerCase();
+    const potentialWindowTitles = [...userDefinedTitles.get(), ...defaultWindowTitleMap];
+    const windowMatch = potentialWindowTitles.find((title) => RegExp(title[0]).test(clientClass));
 
-            if (done) {
-                break;
-            }
-
-            const [re, icon, label] = value;
-
-            if (RegExp(re).test(client?.class.toLowerCase())) {
-                return {
-                    icon: icon,
-                    label: label,
-                };
-            }
-        }
-    }
-
-    // Nothing found, return the default
     return {
-        icon: '󰣆',
-        label: `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`,
+        icon: windowMatch ? windowMatch[1] : '󰣆',
+        label: windowMatch ? windowMatch[2] : `${capitalizeFirstLetter(hyprlandClient.class ?? 'Unknown')}`,
     };
 };
 
