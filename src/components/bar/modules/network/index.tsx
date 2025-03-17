@@ -32,7 +32,6 @@ const Network = (): BarBoxChild => {
 
             bind(networkService, 'state'),
             bind(networkService, 'connectivity'),
-            // Conditionally bind to the WiFi enabled status if available
             ...(networkService.wifi ? [bind(networkService.wifi, 'enabled')] : []),
         ],
         (primaryNetwork, showLabel, trunc, tSize, showWifiInfo) => {
