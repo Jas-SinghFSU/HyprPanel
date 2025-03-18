@@ -144,7 +144,7 @@ export const getAppIcon = (
             return new RegExp(matcher, 'i').test(clientClass);
         });
 
-        return iconEntry?.[1];
+        return iconEntry?.[1] ?? defaultIcon;
     };
 
     let icons = workspaceClients.reduce((iconAccumulator, [clientClass, clientTitle]) => {
