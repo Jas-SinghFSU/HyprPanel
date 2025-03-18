@@ -1,11 +1,15 @@
 import options from 'src/options';
 import { capitalizeFirstLetter } from 'src/lib/utils';
+import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { bind, Variable } from 'astal';
 
+const { title_map: userDefinedTitles } = options.bar.windowtitle;
+
 const hyprlandService = AstalHyprland.get_default();
-export const clientTitle = Variable('');
 let clientBinding: Variable<void> | undefined;
+
+export const clientTitle = Variable('');
 
 function trackClientUpdates(client: AstalHyprland.Client): void {
     clientBinding?.drop();
@@ -30,141 +34,25 @@ Variable.derive([bind(hyprlandService, 'focusedClient')], (client) => {
  * This function searches for a matching window title in the predefined `windowTitleMap` based on the class of the provided window.
  * If a match is found, it returns an object containing the icon and label for the window. If no match is found, it returns a default icon and label.
  *
- * @param client The window object containing the class information.
+ * @param hyprlandClient The window object containing the class information.
  *
  * @returns An object containing the icon and label for the window.
  */
-export const getWindowMatch = (client: AstalHyprland.Client): Record<string, string> => {
-    const windowTitleMap = [
-        // user provided values
-        ...options.bar.windowtitle.title_map.get(),
-        // Original Entries
-        ['kitty', '󰄛', 'Kitty Terminal'],
-        ['firefox', '󰈹', 'Firefox'],
-        ['microsoft-edge', '󰇩', 'Edge'],
-        ['discord', '', 'Discord'],
-        ['vesktop', '', 'Vesktop'],
-        ['org.kde.dolphin', '', 'Dolphin'],
-        ['plex', '󰚺', 'Plex'],
-        ['steam', '', 'Steam'],
-        ['spotify', '󰓇', 'Spotify'],
-        ['ristretto', '󰋩', 'Ristretto'],
-        ['obsidian', '󱓧', 'Obsidian'],
-
-        // Browsers
-        ['google-chrome', '', 'Google Chrome'],
-        ['brave-browser', '󰖟', 'Brave Browser'],
-        ['chromium', '', 'Chromium'],
-        ['opera', '', 'Opera'],
-        ['vivaldi', '󰖟', 'Vivaldi'],
-        ['waterfox', '󰖟', 'Waterfox'],
-        ['thorium', '󰖟', 'Thorium'],
-        ['tor-browser', '', 'Tor Browser'],
-        ['floorp', '󰈹', 'Floorp'],
-        ['zen', '', 'Zen Browser'],
-
-        // Terminals
-        ['gnome-terminal', '', 'GNOME Terminal'],
-        ['konsole', '', 'Konsole'],
-        ['alacritty', '', 'Alacritty'],
-        ['wezterm', '', 'Wezterm'],
-        ['foot', '󰽒', 'Foot Terminal'],
-        ['tilix', '', 'Tilix'],
-        ['xterm', '', 'XTerm'],
-        ['urxvt', '', 'URxvt'],
-        ['com.mitchellh.ghostty', '󰊠', 'Ghostty'],
-        ['st', '', 'st Terminal'],
-
-        // Development Tools
-        ['code', '󰨞', 'Visual Studio Code'],
-        ['vscode', '󰨞', 'VS Code'],
-        ['sublime-text', '', 'Sublime Text'],
-        ['atom', '', 'Atom'],
-        ['android-studio', '󰀴', 'Android Studio'],
-        ['intellij-idea', '', 'IntelliJ IDEA'],
-        ['pycharm', '󱃖', 'PyCharm'],
-        ['webstorm', '󱃖', 'WebStorm'],
-        ['phpstorm', '󱃖', 'PhpStorm'],
-        ['eclipse', '', 'Eclipse'],
-        ['netbeans', '', 'NetBeans'],
-        ['docker', '', 'Docker'],
-        ['vim', '', 'Vim'],
-        ['neovim', '', 'Neovim'],
-        ['neovide', '', 'Neovide'],
-        ['emacs', '', 'Emacs'],
-
-        // Communication Tools
-        ['slack', '󰒱', 'Slack'],
-        ['telegram-desktop', '', 'Telegram'],
-        ['org.telegram.desktop', '', 'Telegram'],
-        ['whatsapp', '󰖣', 'WhatsApp'],
-        ['teams', '󰊻', 'Microsoft Teams'],
-        ['skype', '󰒯', 'Skype'],
-        ['thunderbird', '', 'Thunderbird'],
-
-        // File Managers
-        ['nautilus', '󰝰', 'Files (Nautilus)'],
-        ['thunar', '󰝰', 'Thunar'],
-        ['pcmanfm', '󰝰', 'PCManFM'],
-        ['nemo', '󰝰', 'Nemo'],
-        ['ranger', '󰝰', 'Ranger'],
-        ['doublecmd', '󰝰', 'Double Commander'],
-        ['krusader', '󰝰', 'Krusader'],
-
-        // Media Players
-        ['vlc', '󰕼', 'VLC Media Player'],
-        ['mpv', '', 'MPV'],
-        ['rhythmbox', '󰓃', 'Rhythmbox'],
-
-        // Graphics Tools
-        ['gimp', '', 'GIMP'],
-        ['inkscape', '', 'Inkscape'],
-        ['krita', '', 'Krita'],
-        ['blender', '󰂫', 'Blender'],
-
-        // Video Editing
-        ['kdenlive', '', 'Kdenlive'],
-
-        // Games and Gaming Platforms
-        ['lutris', '󰺵', 'Lutris'],
-        ['heroic', '󰺵', 'Heroic Games Launcher'],
-        ['minecraft', '󰍳', 'Minecraft'],
-        ['csgo', '󰺵', 'CS:GO'],
-        ['dota2', '󰺵', 'Dota 2'],
-
-        // Office and Productivity
-        ['evernote', '', 'Evernote'],
-        ['sioyek', '', 'Sioyek'],
-
-        // Cloud Services and Sync
-        ['dropbox', '󰇣', 'Dropbox'],
-
-        // Desktop
-        ['^$', '󰇄', 'Desktop'],
-
-        // Fallback icon
-        ['(.+)', '󰣆', `${capitalizeFirstLetter(client?.class ?? 'Unknown')}`],
-    ];
-
-    if (!client?.class) {
+export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<string, string> => {
+    if (!hyprlandClient?.class) {
         return {
             icon: '󰇄',
             label: 'Desktop',
         };
     }
 
-    const foundMatch = windowTitleMap.find((wt) => RegExp(wt[0]).test(client?.class.toLowerCase()));
-
-    if (!foundMatch || foundMatch.length !== 3) {
-        return {
-            icon: windowTitleMap[windowTitleMap.length - 1][1],
-            label: windowTitleMap[windowTitleMap.length - 1][2],
-        };
-    }
+    const clientClass = hyprlandClient.class.toLowerCase();
+    const potentialWindowTitles = [...userDefinedTitles.get(), ...defaultWindowTitleMap];
+    const windowMatch = potentialWindowTitles.find((title) => RegExp(title[0]).test(clientClass));
 
     return {
-        icon: foundMatch[1],
-        label: foundMatch[2],
+        icon: windowMatch ? windowMatch[1] : '󰣆',
+        label: windowMatch ? windowMatch[2] : `${capitalizeFirstLetter(hyprlandClient.class ?? 'Unknown')}`,
     };
 };
 

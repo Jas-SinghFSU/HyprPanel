@@ -17,12 +17,8 @@ const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(p
 cpuPoller.initialize('cpu');
 
 export const Cpu = (): BarBoxChild => {
-    const renderLabel = (cpuUsg: number, rnd: boolean): string => {
-        return rnd ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
-    };
-
-    const labelBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg, rnd) => {
-        return renderLabel(cpuUsg, rnd);
+    const labelBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg: number, round: boolean) => {
+        return round ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     });
 
     const cpuModule = Module({

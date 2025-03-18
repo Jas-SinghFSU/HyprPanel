@@ -31,7 +31,6 @@ export const BooleanInputter = <T extends string | number | boolean | object>({
 
 interface BooleanInputterProps<T> {
     opt: Opt<T>;
-    isUnsaved?: Variable<boolean>;
     disabledBinding?: Variable<boolean>;
     dependencies?: string[];
 }

@@ -441,6 +441,7 @@ in
       notifications.monitor = mkIntOption 0;
       notifications.position = mkStrOption "top right";
       notifications.showActionsOnHover = mkBoolOption false;
+      notifications.ignore = mkStrListOption [];
       notifications.timeout = mkIntOption 7000;
       scalingPriority = mkStrOption "gdk";
       tear = mkBoolOption false;
