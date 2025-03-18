@@ -55,7 +55,7 @@ async function extractMatugenizedVariables(matugenColors: MatugenColors): Promis
                 continue;
             }
 
-            const initialValue = opt.initial;
+            const initialValue = opt.value ?? opt.initial;
 
             if (!isHexColor(initialValue) && matugenColors !== undefined) {
                 result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${initialValue};`);
