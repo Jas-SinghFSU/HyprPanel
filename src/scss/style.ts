@@ -55,14 +55,14 @@ async function extractMatugenizedVariables(matugenColors: MatugenColors): Promis
                 continue;
             }
 
-            const initialValue = opt.value ?? opt.initial;
+            const value = opt.value;
 
-            if (!isHexColor(initialValue) && matugenColors !== undefined) {
-                result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${initialValue};`);
+            if (!isHexColor(value) && matugenColors !== undefined) {
+                result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${value};`);
                 continue;
             }
 
-            const matugenColor = getMatugenHex(initialValue as HexColor, matugenColors);
+            const matugenColor = getMatugenHex(value as HexColor, matugenColors);
 
             result.push(`$${name.replace('theme.', '').split('.').join('-')}: ${matugenColor};`);
         }
