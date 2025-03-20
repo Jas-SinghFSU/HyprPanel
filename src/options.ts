@@ -1226,7 +1226,7 @@ const options = mkOptions({
                 highCutoff: opt(10000),
                 noiseReduction: opt(0.77),
                 stereo: opt(false),
-                leftClick: opt('menu:mediamenu'),
+                leftClick: opt('menu:media'),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),
