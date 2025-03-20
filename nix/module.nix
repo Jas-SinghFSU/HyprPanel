@@ -638,7 +638,7 @@ in
   in mkIf cfg.enable {
 
     # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
-    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
+    nixpkgs.overlays = lib.mkIf cfg.overlay.enable [ self.overlay ];
 
     home.packages = [
       package
