@@ -35,14 +35,21 @@ export const Cava = (): BarBoxChild => {
     const settingsTracker = initSettingsTracker();
     const cavaService = AstalCava.get_default();
 
-    if (cavaService) labelBinding = Variable.derive(
-        [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
-        (values, spacing, blockCharacters) =>
-            values.map((v: number) => {
-                const index = Math.floor(v * blockCharacters.length);
-                return blockCharacters[Math.min(index, blockCharacters.length - 1)];
-            }).join(spacing),
-    );
+    if (cavaService) {
+        labelBinding = Variable.derive(
+            [bind(cavaService, 'values'), bind(spaceCharacter), bind(barCharacters)],
+            (values, spacing, blockCharacters) => {
+                const valueMap = values
+                    .map((v: number) => {
+                        const index = Math.floor(v * blockCharacters.length);
+                        return blockCharacters[Math.min(index, blockCharacters.length - 1)];
+                    })
+                    .join(spacing);
+
+                return valueMap;
+            },
+        );
+    }
 
     const mediaLabel = Variable.derive(
         [
