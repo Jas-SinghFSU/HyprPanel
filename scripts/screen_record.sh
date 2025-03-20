@@ -30,8 +30,8 @@ startRecording() {
         w=$(echo $monitor_info | jq -r '.width')
         h=$(echo $monitor_info | jq -r '.height')
         scale=$(echo $monitor_info | jq -r '.scale')
-        scaled_width=$(echo "${w} / ${scale}" | bc)
-        scaled_height=$(echo "${h} / ${scale}" | bc)
+        scaled_width=$(awk "BEGIN {print $w / $scale}")
+        scaled_height=$(awk "BEGIN {print $h / $scale}")
         x=$(echo $monitor_info | jq -r '.x')
         y=$(echo $monitor_info | jq -r '.y')
         wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${scaled_width}x${scaled_height}" --file "$outputPath" &

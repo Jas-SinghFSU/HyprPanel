@@ -5,7 +5,6 @@ import { Astal } from 'astal/gtk3';
 import { dropdownMenuList } from '../constants/options';
 
 export type MkOptionsResult = {
-    configFile: string;
     array: () => Opt[];
     reset: () => Promise<string>;
     handler: (deps: string[], callback: () => void) => void;

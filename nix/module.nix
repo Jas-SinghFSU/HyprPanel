@@ -441,6 +441,7 @@ in
       notifications.monitor = mkIntOption 0;
       notifications.position = mkStrOption "top right";
       notifications.showActionsOnHover = mkBoolOption false;
+      notifications.ignore = mkStrListOption [];
       notifications.timeout = mkIntOption 7000;
       scalingPriority = mkStrOption "gdk";
       tear = mkBoolOption false;
@@ -636,7 +637,7 @@ in
   in mkIf cfg.enable {
 
     # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
-    nixpkgs.overlays = lib.optionals cfg.overlay.enable [ self.overlay ];
+    nixpkgs.overlays = lib.mkIf cfg.overlay.enable [ self.overlay ];
 
     home.packages = [
       package
