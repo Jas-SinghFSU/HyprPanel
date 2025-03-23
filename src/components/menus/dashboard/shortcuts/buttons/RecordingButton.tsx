@@ -37,7 +37,6 @@ const MonitorListDropdown = (): JSX.Element => {
 
                     return (
                         <MenuItem
-                            key={monitor.name}
                             label={`Display ${monitor.name}`}
                             onButtonPressEvent={(_, event) => {
                                 if (event.get_button()[1] !== Gdk.BUTTON_PRIMARY) return;
