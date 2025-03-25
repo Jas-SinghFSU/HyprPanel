@@ -7,6 +7,27 @@ import options from 'src/options';
 const { left } = options.menus.dashboard.shortcuts;
 
 /**
+ * Retrieves the latest recording path from options.
+ *
+ * @returns The configured recording path.
+ */
+export const getRecordingPath = (): string => options.menus.dashboard.recording.path.get();
+
+/**
+ * Executes a shell command asynchronously with proper error handling.
+ *
+ * @param command The command to execute.
+ */
+export const executeCommand = async (command: string): Promise<void> => {
+    try {
+        await execAsync(`/bin/bash -c '${command}'`);
+    } catch (err) {
+        console.error('Command failed:', command);
+        console.error('Error:', err);
+    }
+};
+
+/**
  * Handles the recorder status based on the command output.
  *
  * This function checks if the command output indicates that recording is in progress.
@@ -16,10 +37,7 @@ const { left } = options.menus.dashboard.shortcuts;
  * @returns True if the command output is 'recording', false otherwise.
  */
 export const handleRecorder = (commandOutput: string): boolean => {
-    if (commandOutput === 'recording') {
-        return true;
-    }
-    return false;
+    return commandOutput === 'recording';
 };
 
 /**
@@ -35,9 +53,7 @@ export const handleClick = (action: string, tOut: number = 0): void => {
 
     timeout(tOut, () => {
         execAsync(`bash -c "${action}"`)
-            .then((res) => {
-                return res;
-            })
+            .then((res) => res)
             .catch((err) => console.error(err));
     });
 };
@@ -45,10 +61,7 @@ export const handleClick = (action: string, tOut: number = 0): void => {
 /**
  * Checks if a shortcut has a command.
  *
- * This function determines if the provided shortcut has a command defined.
- *
  * @param shortCut The shortcut to check.
- *
  * @returns True if the shortcut has a command, false otherwise.
  */
 export const hasCommand = (shortCut: ShortcutVariable): boolean => {
@@ -58,7 +71,7 @@ export const hasCommand = (shortCut: ShortcutVariable): boolean => {
 /**
  * A variable indicating whether the left card is hidden.
  *
- * This variable is set to true if none of the left shortcuts have commands defined.
+ * This is set to true if none of the left shortcuts have commands.
  */
 export const leftCardHidden = Variable(
     !(
@@ -82,7 +95,8 @@ export const isRecording = Variable(false);
 /**
  * A poller for checking the recording status.
  *
- * This poller periodically checks the recording status by executing a bash command and updates the `isRecording` variable.
+ * This poller periodically checks the recording status by executing a bash command
+ * and updates the `isRecording` variable accordingly.
  */
 export const recordingPoller = new BashPoller<boolean, []>(
     isRecording,

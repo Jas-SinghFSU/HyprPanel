@@ -1280,6 +1280,9 @@ const options = mkOptions({
                 interval: opt(2000),
                 enable_gpu: opt(false),
             },
+            recording: {
+                path: opt('$HOME/Videos/Screencasts'),
+            },
             controls: {
                 enabled: opt(true),
             },
