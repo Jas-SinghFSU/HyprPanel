@@ -394,7 +394,7 @@ in
       menus.dashboard.powermenu.reboot = mkStrOption "systemctl reboot";
       menus.dashboard.powermenu.shutdown = mkStrOption "systemctl poweroff";
       menus.dashboard.powermenu.sleep = mkStrOption "systemctl suspend";
-      menus.dashboard.recording.path = mkStrOption "$HOME/Videos/Screencasts"
+      menus.dashboard.recording.path = mkStrOption "$HOME/Videos/Screencasts";
       menus.dashboard.shortcuts.enabled = mkBoolOption true;
       menus.dashboard.shortcuts.left.shortcut1.command = mkStrOption "microsoft-edge-stable";
       menus.dashboard.shortcuts.left.shortcut1.icon = mkStrOption "󰇩";
