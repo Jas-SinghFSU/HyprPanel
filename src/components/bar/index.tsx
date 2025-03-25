@@ -79,6 +79,11 @@ export const Bar = (() => {
             return !isLayoutEmpty(foundLayout);
         });
 
+        const computeClassName = bind(layouts).as(() => {
+            const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.get());
+            return !isLayoutEmpty(foundLayout) ? `bar` : '';
+        });
+
         const computeAnchor = bind(location).as((loc) => {
             if (loc === 'bottom') {
                 return Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
@@ -132,7 +137,7 @@ export const Bar = (() => {
                 inhibit={bind(idleInhibit)}
                 name={`bar-${hyprlandMonitor}`}
                 namespace={`bar-${hyprlandMonitor}`}
-                className={'bar'}
+                className={computeClassName}
                 application={App}
                 monitor={monitor}
                 visible={computeVisibility}
