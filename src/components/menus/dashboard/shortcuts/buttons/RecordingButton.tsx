@@ -33,7 +33,7 @@ const MonitorListDropdown = (): JSX.Element => {
                             }}
                         />
                     );
-                })
+                }),
             )}
             <MenuItem
                 label="Region"
@@ -59,13 +59,13 @@ export const RecordingButton = (): JSX.Element => {
             vexpand
             onButtonPressEvent={(_, event) => {
                 const buttonClicked = event.get_button()[1];
-            
+
                 if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
                     return;
                 }
-            
+
                 const sanitizedPath = getRecordingPath().replace(/"/g, '\\"');
-            
+
                 if (isRecording.get() === true) {
                     App.get_window('dashboardmenu')?.set_visible(false);
                     const command = `${SRC_DIR}/scripts/screen_record.sh stop "${sanitizedPath}"`;
@@ -74,7 +74,7 @@ export const RecordingButton = (): JSX.Element => {
                     const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
                     monitorDropdownList.popup_at_pointer(event);
                 }
-            }}            
+            }}
         >
             <label className={'button-label txt-icon'} label={'󰑊'} />
         </button>
