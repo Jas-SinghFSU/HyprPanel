@@ -8,6 +8,8 @@ import { Astal } from 'astal/gtk3';
 
 const {
     updateCommand,
+    updateTooltipCommand,
+    extendedTooltip,
     label,
     padZero,
     autoHide,
@@ -21,6 +23,7 @@ const {
 } = options.bar.customModules.updates;
 
 const pendingUpdates: Variable<string> = Variable('0');
+const pendingUpdatesTooltip: Variable<string> = Variable('');
 const postInputUpdater = Variable(true);
 const isVis = Variable(!autoHide.get());
 
@@ -29,15 +32,31 @@ const processUpdateCount = (updateCount: string): string => {
     return `${updateCount.padStart(2, '0')}`;
 };
 
+const processUpdateTooltip = (updateTooltip: string, updateCount: Variable<string>): string => {
+    let defaultTooltip = updateCount.get() + " updates available";
+    if (!extendedTooltip.get()) return defaultTooltip;
+    return defaultTooltip + "\n\n" + updateTooltip;
+};
+
 const updatesPoller = new BashPoller<string, []>(
     pendingUpdates,
-    [bind(padZero), bind(postInputUpdater)],
+    [bind(padZero), bind(postInputUpdater), bind(updateCommand)],
     bind(pollingInterval),
     updateCommand.get(),
     processUpdateCount,
 );
 
+const tooltipPoller = new BashPoller<string, [Variable<string>]>(
+    pendingUpdatesTooltip,
+    [bind(extendedTooltip), bind(postInputUpdater), bind(updateTooltipCommand)],
+    bind(pollingInterval),
+    updateTooltipCommand.get(),
+    processUpdateTooltip,
+    pendingUpdates
+);
+
 updatesPoller.initialize('updates');
+tooltipPoller.initialize('updates');
 
 Variable.derive([bind(autoHide)], (autoHideModule) => {
     isVis.set(!autoHideModule || (autoHideModule && parseFloat(pendingUpdates.get()) > 0));
@@ -54,7 +73,7 @@ const updatesIcon = Variable.derive(
 export const Updates = (): BarBoxChild => {
     const updatesModule = Module({
         textIcon: updatesIcon(),
-        tooltipText: bind(pendingUpdates).as((v) => `${v} updates available`),
+        tooltipText: bind(pendingUpdatesTooltip),
         boxClass: 'updates',
         isVis: isVis,
         label: bind(pendingUpdates),
