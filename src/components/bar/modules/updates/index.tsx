@@ -33,9 +33,9 @@ const processUpdateCount = (updateCount: string): string => {
 };
 
 const processUpdateTooltip = (updateTooltip: string, updateCount: Variable<string>): string => {
-    let defaultTooltip = updateCount.get() + " updates available";
+    const defaultTooltip = updateCount.get() + ' updates available';
     if (!extendedTooltip.get()) return defaultTooltip;
-    return defaultTooltip + "\n\n" + updateTooltip;
+    return defaultTooltip + '\n\n' + updateTooltip;
 };
 
 const updatesPoller = new BashPoller<string, []>(
@@ -52,7 +52,7 @@ const tooltipPoller = new BashPoller<string, [Variable<string>]>(
     bind(pollingInterval),
     updateTooltipCommand.get(),
     processUpdateTooltip,
-    pendingUpdates
+    pendingUpdates,
 );
 
 updatesPoller.initialize('updates');
