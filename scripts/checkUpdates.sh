@@ -29,7 +29,7 @@ check_arch_updates() {
         command=" | head -n 50"
         official_updates=""
         aur_updates=""
-        sleep 1 # if you use the checkupdates command again too quickly, it will not return anything
+        wait_for_process_to_finish "checkupdates"
     else
         command="2>/dev/null | wc -l"
         official_updates=0
