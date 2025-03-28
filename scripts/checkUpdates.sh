@@ -11,6 +11,13 @@ has_param() {
     return 1
 }
 
+wait_for_process_to_finish() {
+    local process_name="$1"
+    while pgrep -a "$process_name" >/dev/null; do 
+        sleep 0.1
+    done
+}
+
 check_arch_updates() {
     if command -v paru &> /dev/null; then
         aur_helper="paru"
