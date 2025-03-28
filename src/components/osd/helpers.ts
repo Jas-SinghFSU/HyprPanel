@@ -4,6 +4,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import options from 'src/options';
 import Brightness from 'src/services/Brightness';
+import { GdkMonitorMapper } from '../bar/utils/GdkMonitorMapper';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
@@ -59,14 +60,20 @@ export const handleReveal = (self: Widget.Revealer): void => {
  * @returns A Variable<number> representing the monitor index for the OSD.
  */
 export const getOsdMonitor = (): Variable<number> => {
+    const gdkMonitorMapper = new GdkMonitorMapper();
+
     return Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (currentMonitor, defaultMonitor, followMonitor) => {
+            gdkMonitorMapper.reset();
+
             if (followMonitor === true) {
-                return currentMonitor.id;
+                const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(currentMonitor.id);
+                return gdkMonitor;
             }
 
-            return defaultMonitor;
+            const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(defaultMonitor);
+            return gdkMonitor;
         },
     );
 };
