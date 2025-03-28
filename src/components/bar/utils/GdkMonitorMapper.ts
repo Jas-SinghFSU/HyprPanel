@@ -131,11 +131,12 @@ export class GdkMonitorMapper {
             return getId(fallback);
         }
 
-        // As a last resort, iterate over candidate indices.
-        for (let i = 0; i < candidates.length; i++) {
-            if (!usedMonitors.has(i)) {
-                usedMonitors.add(i);
-                return i;
+        // As a last resort, iterate over candidates.
+        for (const candidate of candidates) {
+            const candidateId = getId(candidate);
+            if (!usedMonitors.has(candidateId)) {
+                usedMonitors.add(candidateId);
+                return candidateId;
             }
         }
 
