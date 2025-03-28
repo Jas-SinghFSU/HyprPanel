@@ -130,7 +130,7 @@ export const getAppIcon = (
     }
 
     const findIconForClient = (clientClass: string, clientTitle: string): string | undefined => {
-        const appIconMap = { ...defaultApplicationIconMap, ...userDefinedIconMap };
+        const appIconMap = { ...userDefinedIconMap, ...defaultApplicationIconMap };
 
         const iconEntry = Object.entries(appIconMap).find(([matcher]) => {
             if (matcher.startsWith('class:')) {
