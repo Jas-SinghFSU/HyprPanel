@@ -3,7 +3,7 @@ import { globalWeatherVar } from 'src/globals/weather';
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 
-const { unit } = options.menus.clock.weather;
+const { unit } = options.bar.customModules.weather;
 
 export const HourlyTemp = ({ hoursFromNow }: HourlyTempProps): JSX.Element => {
     const weatherBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], (weather, unitType) => {

@@ -3,7 +3,7 @@ import { globalWeatherVar } from 'src/globals/weather';
 import { getTemperature, getWeatherIcon } from 'src/globals/weather';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
-const { unit } = options.menus.clock.weather;
+const { unit } = options.bar.customModules.weather;
 
 const WeatherStatus = (): JSX.Element => {
     return (

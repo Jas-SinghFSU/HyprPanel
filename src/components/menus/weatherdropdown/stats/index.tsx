@@ -4,7 +4,7 @@ import { getRainChance } from 'src/globals/weather';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 
-const { unit } = options.menus.clock.weather;
+const { unit } = options.bar.customModules.weather;
 
 export const TodayStats = (): JSX.Element => {
     const temperatureBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], getTemperature);
