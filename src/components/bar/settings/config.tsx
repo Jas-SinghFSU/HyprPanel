@@ -299,6 +299,24 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Button Border"
                     type="boolean"
                 />
+                <Option
+                    opt={options.bar.customModules.weather.location}
+                    title="Location"
+                    subtitle="Zip Code, Postal Code, City, etc."
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.weather.key}
+                    title="Weather API Key"
+                    subtitle="API Key or path to JSON file containing 'weather_api_key'"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.weather.interval}
+                    title="Weather Fetching Interval (ms)"
+                    subtitle="May require AGS restart."
+                    type="number"
+                />
                 <Option opt={options.bar.customModules.weather.label} title="Show Label" type="boolean" />
                 <Option
                     opt={options.bar.customModules.weather.unit}

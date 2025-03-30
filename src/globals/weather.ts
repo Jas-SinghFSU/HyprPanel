@@ -7,7 +7,7 @@ import { AstalIO, bind, execAsync, interval, Variable } from 'astal';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 
-const { key, interval: weatherInterval, location } = options.menus.clock.weather;
+const { key, interval: weatherInterval, location } = options.bar.customModules.weather;
 
 export const globalWeatherVar = Variable<Weather>(DEFAULT_WEATHER);
 

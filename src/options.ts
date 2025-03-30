@@ -1172,7 +1172,10 @@ const options = mkOptions({
             weather: {
                 label: opt(true),
                 unit: opt<UnitType>('imperial'),
-                leftClick: opt(''),
+                interval: opt(60000),
+                location: opt('Los Angeles'),
+                key: opt<string>(''),
+                leftClick: opt('menu:weatherdropdown'),
                 rightClick: opt(''),
                 middleClick: opt(''),
                 scrollUp: opt(''),
@@ -1359,13 +1362,6 @@ const options = mkOptions({
             time: {
                 military: opt(false),
                 hideSeconds: opt(false),
-            },
-            weather: {
-                enabled: opt(true),
-                interval: opt(60000),
-                unit: opt<UnitType>('imperial'),
-                location: opt('Los Angeles'),
-                key: opt<string>(''),
             },
         },
     },
