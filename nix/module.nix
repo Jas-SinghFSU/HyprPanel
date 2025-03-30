@@ -327,6 +327,7 @@ in
       bar.notifications.scrollUp = mkStrOption "";
       bar.notifications.show_total = mkBoolOption false;
       bar.scrollSpeed = mkIntOption 5;
+      bar.systray.ignore = mkStrListOption [];
       bar.volume.label = mkBoolOption true;
       bar.volume.middleClick = mkStrOption "";
       bar.volume.rightClick = mkStrOption "";
