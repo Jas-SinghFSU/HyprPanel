@@ -1142,6 +1142,8 @@ const options = mkOptions({
             },
             updates: {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
+                updateTooltipCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch -tooltip`),
+                extendedTooltip: opt(false),
                 label: opt(true),
                 padZero: opt(true),
                 autoHide: opt(false),

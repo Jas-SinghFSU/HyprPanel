@@ -3,6 +3,7 @@ import { Variable } from 'types/variable';
 import { defaultColorMap } from './defaults/options';
 import { Astal } from 'astal/gtk3';
 import { dropdownMenuList } from '../constants/options';
+import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
 
 export type MkOptionsResult = {
     array: () => Opt[];
@@ -104,7 +105,7 @@ export interface RowProps<T> {
     subtitleLink?: string;
     dependencies?: string[];
     increment?: number;
-    fontStyle?: Opt<string>;
+    fontStyle?: Opt<FontStyle>;
     fontLabel?: Opt<string>;
 }
 

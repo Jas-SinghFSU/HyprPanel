@@ -68,19 +68,37 @@ startRecording() {
         w=$(echo "$monitor_info" | jq -r '.width')
         h=$(echo "$monitor_info" | jq -r '.height')
         scale=$(echo "$monitor_info" | jq -r '.scale')
-        scaled_width=$(awk "BEGIN { print $w / $scale }")
-        scaled_height=$(awk "BEGIN { print $h / $scale }")
         x=$(echo "$monitor_info" | jq -r '.x')
         y=$(echo "$monitor_info" | jq -r '.y')
 
-        wf-recorder $WF_RECORDER_OPTS --geometry "${x},${y} ${scaled_width}x${scaled_height}" --file "$outputPath" &
+        transform=$(echo "$monitor_info" | jq -r '.transform')
+        rotation_filter=""
+
+        if [ "$transform" -eq 1 ] || [ "$transform" -eq 3 ]; then
+            scaled_width=$(awk "BEGIN { print $h / $scale }")
+            scaled_height=$(awk "BEGIN { print $w / $scale }")
+        else
+            scaled_width=$(awk "BEGIN { print $w / $scale }")
+            scaled_height=$(awk "BEGIN { print $h / $scale }")
+        fi
+
+        case "$transform" in
+        1)
+            rotation_filter="-F transpose=1"
+            ;;
+        3)
+            rotation_filter="-F transpose=2"
+            ;;
+        esac
+
+        wf-recorder $WF_RECORDER_OPTS $rotation_filter --geometry "${x},${y} ${scaled_width}x${scaled_height}" --file "$outputPath" &
     elif [ "$target" == "region" ]; then
         wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" &
     fi
 
     disown "$(jobs -p | tail -n 1)"
     echo "Recording started. Saving to $outputPath"
-    echo "$outputPath" > /tmp/last_recording_path
+    echo "$outputPath" >/tmp/last_recording_path
 }
 
 # Function to stop screen recording
@@ -91,7 +109,7 @@ stopRecording() {
     fi
 
     pkill -SIGINT -f wf-recorder
-    sleep 1  # Allow wf-recorder time to terminate before proceeding
+    sleep 1 # Allow wf-recorder time to terminate before proceeding
 
     outputPath=$(cat /tmp/last_recording_path 2>/dev/null)
 
@@ -113,21 +131,21 @@ stopRecording() {
 
 # Handle script arguments
 case "$1" in
-    start)
-        startRecording "$@"
-        ;;
-    stop)
-        stopRecording
-        ;;
-    status)
-        if checkRecording; then
-            echo "recording"
-        else
-            echo "not recording"
-        fi
-        ;;
-    *)
-        echo "Usage: $0 {start [screen <monitor_name> | region] <output_directory> | stop | status}"
-        exit 1
-        ;;
+start)
+    startRecording "$@"
+    ;;
+stop)
+    stopRecording
+    ;;
+status)
+    if checkRecording; then
+        echo "recording"
+    else
+        echo "not recording"
+    fi
+    ;;
+*)
+    echo "Usage: $0 {start [screen <monitor_name> | region] <output_directory> | stop | status}"
+    exit 1
+    ;;
 esac
