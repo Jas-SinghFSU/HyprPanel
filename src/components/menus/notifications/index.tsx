@@ -22,7 +22,7 @@ export default (): JSX.Element => {
                 curPage.drop();
             }}
         >
-            <box className={'notification-menu-content'} css={'padding: 1px; margin: -1px;'} hexpand vexpand>
+            <box className={'notification-menu-content'} hexpand vexpand>
                 <box className={'notification-card-container menu'} hexpand vexpand vertical>
                     <Controls />
                     <NotificationsContainer curPage={curPage} />
