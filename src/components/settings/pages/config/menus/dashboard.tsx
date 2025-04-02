@@ -48,6 +48,9 @@ export const DashboardMenuSettings = (): JSX.Element => {
                 <Option opt={options.menus.dashboard.powermenu.logout} title="Logout Command" type="string" />
                 <Option opt={options.menus.dashboard.powermenu.sleep} title="Sleep Command" type="string" />
 
+                <Header title="Recording" />
+                <Option opt={options.menus.dashboard.recording.path} title="Recording Path" type="string" />
+
                 <Header title="Controls" />
                 <Option opt={options.menus.dashboard.controls.enabled} title="Enabled" type="boolean" />
 

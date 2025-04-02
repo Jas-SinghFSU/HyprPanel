@@ -1142,6 +1142,8 @@ const options = mkOptions({
             },
             updates: {
                 updateCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch`),
+                updateTooltipCommand: opt(`${SRC_DIR}/scripts/checkUpdates.sh -arch -tooltip`),
+                extendedTooltip: opt(false),
                 label: opt(true),
                 padZero: opt(true),
                 autoHide: opt(false),
@@ -1279,6 +1281,9 @@ const options = mkOptions({
                 enabled: opt(true),
                 interval: opt(2000),
                 enable_gpu: opt(false),
+            },
+            recording: {
+                path: opt('$HOME/Videos/Screencasts'),
             },
             controls: {
                 enabled: opt(true),

@@ -321,6 +321,7 @@ in
       bar.notifications.scrollUp = mkStrOption "";
       bar.notifications.show_total = mkBoolOption false;
       bar.scrollSpeed = mkIntOption 5;
+      bar.systray.ignore = mkStrListOption [];
       bar.volume.label = mkBoolOption true;
       bar.volume.middleClick = mkStrOption "";
       bar.volume.rightClick = mkStrOption "";
@@ -406,6 +407,7 @@ in
       menus.dashboard.powermenu.reboot = mkStrOption "systemctl reboot";
       menus.dashboard.powermenu.shutdown = mkStrOption "systemctl poweroff";
       menus.dashboard.powermenu.sleep = mkStrOption "systemctl suspend";
+      menus.dashboard.recording.path = mkStrOption "$HOME/Videos/Screencasts";
       menus.dashboard.shortcuts.enabled = mkBoolOption true;
       menus.dashboard.shortcuts.left.shortcut1.command = mkStrOption "microsoft-edge-stable";
       menus.dashboard.shortcuts.left.shortcut1.icon = mkStrOption "󰇩";
