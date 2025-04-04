@@ -94,7 +94,7 @@ in
     settings = {
       layout = mkOption {
         type = jsonFormat.type;
-        default = null;
+        default = { };
         example = ''
           {
             "bar.layouts" = {
@@ -359,15 +359,17 @@ in
       bar.workspaces.workspaces = mkIntOption 5;
       bar.workspaces.workspaceIconMap = mkOption {
         type = jsonFormat.type;
-        default = null;
+        default = { };
         example = ''
+        {
           "1": "<U+EEFE>",
           "2": "<U+F269>",
           "3": "<U+EAC4>",
           "4": "<U+EC1B>",
           "5": "<U+F02B4>",
           "6": "<U+F1FF> ",
-          "7": "<U+EB1C>"        
+          "7": "<U+EB1C>"
+        }
         '';
       };
       dummy = mkBoolOption true;
