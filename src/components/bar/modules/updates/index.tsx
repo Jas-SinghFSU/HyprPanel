@@ -34,7 +34,7 @@ const processUpdateCount = (updateCount: string): string => {
 
 const processUpdateTooltip = (updateTooltip: string, updateCount: Variable<string>): string => {
     const defaultTooltip = updateCount.get() + ' updates available';
-    if (!extendedTooltip.get()) return defaultTooltip;
+    if (!extendedTooltip.get() || !updateTooltip) return defaultTooltip;
     return defaultTooltip + '\n\n' + updateTooltip;
 };
 
