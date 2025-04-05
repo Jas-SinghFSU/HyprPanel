@@ -58,3 +58,69 @@
         0em
     );
 }
+
+.bar-button-label.worldclock {
+    color: if($bar-buttons-monochrome, $bar-buttons-text, $bar-buttons-modules-worldclock-text);
+    margin-left: $bar-buttons-modules-worldclock-spacing;
+}
+
+.bar-button-icon.worldclock {
+    font-size: 1.2em;
+    color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-modules-worldclock-icon);
+}
+
+.style2 {
+    .bar-button-icon.worldclock {
+        border-top-left-radius: $bar-buttons-radius;
+        border-bottom-left-radius: $bar-buttons-radius;
+        background: if(
+            $bar-buttons-monochrome,
+            $bar-buttons-icon_background,
+            $bar-buttons-modules-worldclock-icon_background
+        );
+        padding: $bar-buttons-padding_y 0em;
+        padding-left: $bar-buttons-padding_x;
+        padding-right: $bar-buttons-modules-worldclock-spacing;
+        border-top-left-radius: if(
+            $bar-buttons-modules-worldclock-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+            $bar-buttons-radius
+        );
+        border-bottom-left-radius: if(
+            $bar-buttons-modules-worldclock-enableBorder or $bar-buttons-enableBorders,
+            $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+            $bar-buttons-radius
+        );
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $bar-buttons-modules-worldclock-icon);
+    }
+
+    .bar-button-label.worldclock {
+        padding: $bar-buttons-padding_y 0em;
+        padding-right: $bar-buttons-padding_x;
+        padding-left: $bar-buttons-modules-worldclock-spacing;
+        margin-left: 0em;
+    }
+    &.no-label.worldclock-container {
+        .bar-button-icon.worldclock {
+            border-top-right-radius: if(
+                $bar-buttons-modules-worldclock-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+                $bar-buttons-radius
+            );
+            border-bottom-right-radius: if(
+                $bar-buttons-modules-worldclock-enableBorder or $bar-buttons-enableBorders,
+                $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
+                $bar-buttons-radius
+            );
+        }
+    }
+}
+
+.bar_item_box_visible.worldclock {
+    border: if(
+        $bar-buttons-modules-worldclock-enableBorder or $bar-buttons-enableBorders,
+        $bar-buttons-borderSize solid
+            if($bar-buttons-monochrome, $bar-buttons-borderColor, $bar-buttons-modules-worldclock-border),
+        0em
+    );
+}

@@ -25,6 +25,7 @@ import { Power } from '../../components/bar/modules/power/index';
 import { Hyprsunset } from '../../components/bar/modules/hyprsunset/index';
 import { Hypridle } from '../../components/bar/modules/hypridle/index';
 import { Cava } from '../../components/bar/modules/cava/index';
+import { WorldClock } from '../../components/bar/modules/worldclock/index';
 
 export {
     Menu,
@@ -54,4 +55,5 @@ export {
     Hyprsunset,
     Hypridle,
     Cava,
+    WorldClock,
 };

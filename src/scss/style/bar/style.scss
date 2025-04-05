@@ -503,3 +503,30 @@
     // custom font size
     1.2em //
 );
+
+/*
+ * #################################
+ * #      World Clock Styling      #
+ * #################################
+ */
+@include styleModule(
+    //
+    // class name
+    'worldclock',
+    // label color
+    $bar-buttons-modules-worldclock-text,
+    // icon color
+    $bar-buttons-modules-worldclock-icon,
+    // icon background if split style is used
+    $bar-buttons-modules-worldclock-icon_background,
+    // label background
+    $bar-buttons-modules-worldclock-background,
+    // inner spacing
+    $bar-buttons-modules-worldclock-spacing,
+    // if border enabled
+    $bar-buttons-modules-worldclock-enableBorder,
+    // border color
+    $bar-buttons-modules-worldclock-border,
+    // custom font size
+    1.2em //
+);

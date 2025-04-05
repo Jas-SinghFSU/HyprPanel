@@ -26,6 +26,7 @@ import {
     Hyprsunset,
     Hypridle,
     Cava,
+    WorldClock,
 } from './exports';
 
 import { WidgetContainer } from './shared/WidgetContainer';
@@ -67,6 +68,7 @@ const widget = {
     hyprsunset: (): JSX.Element => WidgetContainer(Hyprsunset()),
     hypridle: (): JSX.Element => WidgetContainer(Hypridle()),
     cava: (): JSX.Element => WidgetContainer(Cava()),
+    worldclock: (): JSX.Element => WidgetContainer(WorldClock()),
 };
 
 const gdkMonitorMapper = new GdkMonitorMapper();
