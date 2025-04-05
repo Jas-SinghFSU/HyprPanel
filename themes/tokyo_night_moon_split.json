@@ -389,5 +389,10 @@
   "theme.bar.buttons.modules.microphone.background": "#272a3d",
   "theme.bar.buttons.modules.microphone.text": "#c3e88d",
   "theme.bar.buttons.modules.microphone.icon": "#272a3d",
-  "theme.bar.buttons.modules.microphone.icon_background": "#c3e88d"
+  "theme.bar.buttons.modules.microphone.icon_background": "#c3e88d",
+  "theme.bar.buttons.modules.worldclock.text": "#fca7ea",
+  "theme.bar.buttons.modules.worldclock.background": "#272a3d",
+  "theme.bar.buttons.modules.worldclock.icon": "#272a3d",
+  "theme.bar.buttons.modules.worldclock.icon_background": "#fca7ea",
+  "theme.bar.buttons.modules.worldclock.border": "#fca7ea"
 }

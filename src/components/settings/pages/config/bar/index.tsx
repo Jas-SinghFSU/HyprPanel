@@ -313,7 +313,10 @@ export const BarSettings = (): JSX.Element => {
                 <Option
                     opt={options.bar.windowtitle.title_map}
                     title="Window Title Mappings"
-                    subtitle="Requires Custom Title.\nWiki: https://hyprpanel.com/configuration/panel.html#window-title-mappings"
+                    subtitle={
+                        'Requires Custom Title.\n' +
+                        'Wiki: https://hyprpanel.com/configuration/panel.html#window-title-mappings'
+                    }
                     type="object"
                     subtitleLink="https://hyprpanel.com/configuration/panel.html#window-title-mappings"
                 />
@@ -423,14 +426,17 @@ export const BarSettings = (): JSX.Element => {
                 <Option
                     opt={options.bar.systray.ignore}
                     title="Ignore List"
-                    subtitle="Apps to ignore\nWiki: https://hyprpanel.com/configuration/panel.html#system-tray"
+                    subtitle={'Apps to ignore\n' + 'Wiki: https://hyprpanel.com/configuration/panel.html#system-tray'}
                     subtitleLink="https://hyprpanel.com/configuration/panel.html#system-tray"
                     type="object"
                 />
                 <Option
                     opt={options.bar.systray.customIcons}
                     title="Custom Systray Icons"
-                    subtitle="Define custom icons for systray.\nWiki: https://hyprpanel.com/configuration/panel.html#custom-systray-icons"
+                    subtitle={
+                        'Define custom icons for systray.\n' +
+                        'Wiki: https://hyprpanel.com/configuration/panel.html#custom-systray-icons'
+                    }
                     subtitleLink="https://hyprpanel.com/configuration/panel.html#custom-systray-icons"
                     type="object"
                 />

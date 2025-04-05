@@ -1,120 +1,82 @@
-import { openMenu } from '../../utils/menu';
 import options from 'src/options';
 import { BarBoxChild } from 'src/lib/types/bar.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
+import { inputHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
-import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
 import { systemTime } from 'src/globals/time';
 import { GLib } from 'astal';
+import { Module } from '../../shared/Module';
 
-const { format, formatDiffDate, tz, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } =
-    options.bar.customModules.worldclock;
-const { style } = options.theme.bar.buttons;
+const {
+    format,
+    formatDiffDate,
+    divider,
+    tz,
+    icon,
+    showIcon,
+    leftClick,
+    rightClick,
+    middleClick,
+    scrollUp,
+    scrollDown,
+} = options.bar.customModules.worldclock;
 
-const time = Variable.derive(
-    [systemTime, format, formatDiffDate, tz],
-    (c, f, fdd, tzn) =>
-        tzn
-            .map((t) =>
-                c
-                    .to_timezone(GLib.TimeZone.new(t))
-                    .format(c.to_timezone(GLib.TimeZone.new(t)).get_day_of_year() == c.get_day_of_year() ? f : fdd),
-            )
-            .join(' | ') || '',
-);
-
-const WorldClock = (): BarBoxChild => {
-    const ClockTime = (): JSX.Element => <label className={'bar-button-label worldclock bar'} label={bind(time)} />;
-    const ClockIcon = (): JSX.Element => (
-        <label className={'bar-button-icon worldclock txt-icon bar'} label={bind(icon)} />
-    );
-
-    const componentClassName = Variable.derive(
-        [bind(style), bind(showIcon), bind(showTime)],
-        (btnStyle, shwIcn, shwLbl) => {
-            const styleMap = {
-                default: 'style1',
-                split: 'style2',
-                wave: 'style3',
-                wave2: 'style3',
-            };
-            return `worldclock-container ${styleMap[btnStyle]} ${!shwLbl ? 'no-label' : ''} ${!shwIcn ? 'no-icon' : ''}`;
-        },
-    );
-
-    const componentChildren = Variable.derive([bind(showIcon), bind(showTime)], (shIcn, shTm) => {
-        if (shIcn && !shTm) {
-            return <ClockIcon />;
-        } else if (shTm && !shIcn) {
-            return <ClockTime />;
+export const WorldClock = (): BarBoxChild => {
+    const iconBinding = Variable.derive([bind(icon), bind(showIcon)], (timeIcon, showTimeIcon) => {
+        if (!showTimeIcon) {
+            return '';
         }
-        return (
-            <box>
-                <ClockIcon />
-                <ClockTime />
-            </box>
-        );
+
+        return timeIcon;
     });
 
-    const component = (
-        <box
-            className={componentClassName()}
-            onDestroy={() => {
-                componentClassName.drop();
-                componentChildren.drop();
-            }}
-        >
-            {componentChildren()}
-        </box>
+    const timeBinding = Variable.derive(
+        [systemTime, format, formatDiffDate, tz, divider],
+        (localSystemTime, timeFormat, differentDayFormat, targetTimeZones, timeDivider) =>
+            targetTimeZones
+                .map((timeZoneId) => {
+                    const targetTimezone = GLib.TimeZone.new(timeZoneId);
+                    const timeInTargetZone = localSystemTime.to_timezone(targetTimezone);
+
+                    if (timeInTargetZone === null) {
+                        return 'Invalid TimeZone';
+                    }
+
+                    const isTargetZoneSameDay =
+                        timeInTargetZone.get_day_of_year() === localSystemTime.get_day_of_year();
+                    const formatForTimeZone = isTargetZoneSameDay ? timeFormat : differentDayFormat;
+
+                    return timeInTargetZone.format(formatForTimeZone);
+                })
+                .join(timeDivider),
     );
 
-    return {
-        component,
-        isVisible: true,
+    const microphoneModule = Module({
+        textIcon: iconBinding(),
+        label: timeBinding(),
         boxClass: 'worldclock',
         props: {
-            setup: (self: Astal.Button): void => {
-                let disconnectFunctions: (() => void)[] = [];
-
-                Variable.derive(
-                    [
-                        bind(rightClick),
-                        bind(middleClick),
-                        bind(scrollUp),
-                        bind(scrollDown),
-                        bind(options.bar.scrollSpeed),
-                    ],
-                    () => {
-                        disconnectFunctions.forEach((disconnect) => disconnect());
-                        disconnectFunctions = [];
-
-                        const throttledHandler = throttledScrollHandler(options.bar.scrollSpeed.get());
-
-                        disconnectFunctions.push(
-                            onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'calendarmenu');
-                            }),
-                        );
-
-                        disconnectFunctions.push(
-                            onSecondaryClick(self, (clicked, event) => {
-                                runAsyncCommand(rightClick.get(), { clicked, event });
-                            }),
-                        );
-
-                        disconnectFunctions.push(
-                            onMiddleClick(self, (clicked, event) => {
-                                runAsyncCommand(middleClick.get(), { clicked, event });
-                            }),
-                        );
-
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+            setup: (self: Astal.Button) => {
+                inputHandler(self, {
+                    onPrimaryClick: {
+                        cmd: leftClick,
                     },
-                );
+                    onSecondaryClick: {
+                        cmd: rightClick,
+                    },
+                    onMiddleClick: {
+                        cmd: middleClick,
+                    },
+                    onScrollUp: {
+                        cmd: scrollUp,
+                    },
+                    onScrollDown: {
+                        cmd: scrollDown,
+                    },
+                });
             },
         },
-    };
-};
+    });
 
-export { WorldClock };
+    return microphoneModule;
+};
