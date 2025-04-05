@@ -13,9 +13,13 @@ has_param() {
 
 wait_for_process_to_finish() {
     local process_name="$1"
-    while pgrep -a "$process_name" >/dev/null; do 
-        sleep 0.1
+    local pid
+
+    while pid=$(pgrep -x "$process_name"); do
+        wait "$pid" 2>/dev/null || true
     done
+
+    sleep 2
 }
 
 check_arch_updates() {
