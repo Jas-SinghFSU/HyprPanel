@@ -179,6 +179,7 @@ const collectBorderColors = (baseJSON) => {
 const determineBestMatchValue = (baseValue, valueToKeysMap, targetJSON, specialKeyMappings, currentKey, baseTheme) => {
     if (specialKeyMappings.hasOwnProperty(currentKey)) {
         const sourceKey = specialKeyMappings[currentKey];
+
         if (targetJSON.hasOwnProperty(sourceKey)) {
             console.log(formatMessage(COLORS.FG_CYAN, `🔍 Found source key '${sourceKey}' in target JSON.`));
             return targetJSON[sourceKey];
@@ -309,24 +310,24 @@ const processTheme = async (themePath, baseTheme, dryRun, specialKeyMappings = {
         }
     }
 
-    const extraKeys = findExtraKeys(baseTheme, themeJSON);
-
-    if (extraKeys.length === 0) {
-        console.log(formatMessage(COLORS.FG_GREEN, `✅ No extra keys to remove in '${path.basename(themePath)}'.`));
-    } else {
-        console.log(
-            formatMessage(
-                COLORS.FG_YELLOW,
-                `\n🗑️ Processing '${path.basename(themePath)}': Found ${extraKeys.length} extra key(s) to remove.`,
-            ),
-        );
-
-        for (const key of extraKeys) {
-            delete themeJSON[key];
-            console.log(formatMessage(COLORS.FG_RED, `➖ Removed key: "${key}"`));
-            hasChanges = true;
-        }
-    }
+    // const extraKeys = findExtraKeys(baseTheme, themeJSON);
+    //
+    // if (extraKeys.length === 0) {
+    //     console.log(formatMessage(COLORS.FG_GREEN, `✅ No extra keys to remove in '${path.basename(themePath)}'.`));
+    // } else {
+    //     console.log(
+    //         formatMessage(
+    //             COLORS.FG_YELLOW,
+    //             `\n🗑️ Processing '${path.basename(themePath)}': Found ${extraKeys.length} extra key(s) to remove.`,
+    //         ),
+    //     );
+    //
+    //     for (const key of extraKeys) {
+    //         delete themeJSON[key];
+    //         console.log(formatMessage(COLORS.FG_RED, `➖ Removed key: "${key}"`));
+    //         hasChanges = true;
+    //     }
+    // }
 
     if (hasChanges) {
         if (dryRun) {
@@ -402,11 +403,11 @@ const main = async () => {
     const themeFiles = (await fs.readdir(themesDir)).filter((file) => file.endsWith('.json'));
 
     const specialKeyMappings = {
-        'theme.bar.buttons.modules.cava.text': 'theme.bar.buttons.modules.submap.text',
-        'theme.bar.buttons.modules.cava.background': 'theme.bar.buttons.modules.submap.background',
-        'theme.bar.buttons.modules.cava.icon_background': 'theme.bar.buttons.modules.submap.icon_background',
-        'theme.bar.buttons.modules.cava.icon': 'theme.bar.buttons.modules.submap.icon',
-        'theme.bar.buttons.modules.cava.border': 'theme.bar.buttons.modules.submap.border',
+        'theme.bar.buttons.modules.worldclock.text': 'theme.bar.buttons.clock.text',
+        'theme.bar.buttons.modules.worldclock.background': 'theme.bar.buttons.clock.background',
+        'theme.bar.buttons.modules.worldclock.icon_background': 'theme.bar.buttons.clock.icon_background',
+        'theme.bar.buttons.modules.worldclock.icon': 'theme.bar.buttons.clock.icon',
+        'theme.bar.buttons.modules.worldclock.border': 'theme.bar.buttons.clock.border',
     };
 
     const queue = [...themeFiles].filter(

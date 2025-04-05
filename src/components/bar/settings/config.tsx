@@ -429,13 +429,15 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.worldclock.icon} title="Icon" type="string" />
                 <Option opt={options.bar.customModules.worldclock.showIcon} title="Show Icon" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.worldclock.spacing} title="Spacing" type="string" />
-                <Option opt={options.bar.customModules.worldclock.showTime} title="Show Time" type="boolean" />
                 <Option opt={options.bar.customModules.worldclock.format} title="Format" type="string" />
                 <Option
                     opt={options.bar.customModules.worldclock.formatDiffDate}
-                    title="Format (when date different from local date)"
+                    title="Cross-Day Time Format"
+                    subtitle="Format to use when the timezone is on a different calendar day than the local timezone."
                     type="string"
                 />
+                <Option opt={options.bar.customModules.worldclock.divider} title="Date Divider" type="string" />
+                <Option opt={options.bar.customModules.worldclock.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.worldclock.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.customModules.worldclock.middleClick} title="Middle Click" type="string" />
                 <Option opt={options.bar.customModules.worldclock.scrollUp} title="Scroll Up" type="string" />

@@ -366,5 +366,10 @@
   "theme.bar.buttons.modules.microphone.background": "#21252b",
   "theme.bar.buttons.modules.microphone.text": "#98c379",
   "theme.bar.buttons.modules.microphone.icon": "#98c379",
-  "theme.bar.buttons.modules.microphone.icon_background": "#21252b"
+  "theme.bar.buttons.modules.microphone.icon_background": "#21252b",
+  "theme.bar.buttons.modules.worldclock.text": "#98c379",
+  "theme.bar.buttons.modules.worldclock.background": "#21252b",
+  "theme.bar.buttons.modules.worldclock.icon_background": "#c678dd",
+  "theme.bar.buttons.modules.worldclock.icon": "#98c379",
+  "theme.bar.buttons.modules.worldclock.border": "#98c379"
 }
