@@ -23,9 +23,9 @@ export const Module = ({
     const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
         let iconWidget: JSX.Element | undefined;
 
-        if (icon !== undefined && !useTxtIcn) {
+        if (icon !== undefined && icon.get() != '' && !useTxtIcn) {
             iconWidget = <icon className={`txt-icon bar-button-icon module-icon ${boxClass}`} icon={icon} />;
-        } else if (textIcon !== undefined) {
+        } else if (textIcon !== undefined && textIcon.get() != '') {
             iconWidget = <label className={`txt-icon bar-button-icon module-icon ${boxClass}`} label={textIcon} />;
         }
 

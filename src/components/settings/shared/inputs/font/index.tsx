@@ -1,6 +1,6 @@
 import FontButton from 'src/components/shared/FontButton';
 import { Opt } from 'src/lib/option';
-import { styleToString } from './utils';
+import { FontStyle, styleToString } from './utils';
 
 export const FontInputter = <T extends string | number | boolean | object>({
     fontFamily,
@@ -38,6 +38,6 @@ export const FontInputter = <T extends string | number | boolean | object>({
 
 interface FontInputterProps<T> {
     fontFamily: Opt<T>;
-    fontStyle?: Opt<string>;
+    fontStyle?: Opt<FontStyle>;
     fontLabel?: Opt<string>;
 }

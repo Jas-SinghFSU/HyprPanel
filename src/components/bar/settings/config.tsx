@@ -238,6 +238,17 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="string"
                 />
                 <Option
+                    opt={options.bar.customModules.updates.updateTooltipCommand}
+                    title="Check Updates Tooltip Command"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.updates.extendedTooltip}
+                    title="Show Extended Tooltip"
+                    subtitle="Lists packages with updates. Arch only."
+                    type="boolean"
+                />
+                <Option
                     opt={options.bar.customModules.updates.icon.pending}
                     title="Updates Available Icon"
                     type="string"

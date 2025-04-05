@@ -36,9 +36,7 @@
         min-height: 0em;
         font-size: $font-size * $bar-menus-menu-notifications-scaling * 0.01;
         border: 0.15em solid $notification-border;
-        border-radius: 0em;
-        border-bottom-left-radius: $notification-border_radius;
-        border-top-left-radius: $notification-border_radius;
+        border-radius: $notification-border_radius;
         margin: 0em;
     }
 
@@ -208,6 +206,7 @@
 
 .notification-menu-pager {
     background: $bar-menus-menu-notifications-pager-background;
+    margin-bottom: 0.1em;
     border-radius: $bar-menus-border-radius;
     border-top-left-radius: 0em;
     border-top-right-radius: 0em;

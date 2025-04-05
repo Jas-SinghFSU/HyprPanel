@@ -1,5 +1,5 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { defaultApplicationIcons } from 'src/lib/constants/workspaces';
+import { defaultApplicationIconMap } from 'src/lib/constants/appIcons';
 import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
@@ -38,22 +38,23 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
  */
 const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
+    const defaultIcon = `${i}`;
 
     if (!iconEntry) {
-        return `${i}`;
+        return defaultIcon;
     }
-
-    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
 
     if (typeof iconEntry === 'string' && iconEntry !== '') {
         return iconEntry;
     }
 
+    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+
     if (hasIcon) {
         return iconEntry.icon;
     }
 
-    return `${i}`;
+    return defaultIcon;
 };
 
 /**
@@ -119,51 +120,48 @@ export const getAppIcon = (
     removeDuplicateIcons: boolean,
     { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
 ): string => {
-    const iconMap = { ...userDefinedIconMap, ...defaultApplicationIcons };
-
-    const clients = hyprlandService
+    const workspaceClients = hyprlandService
         .get_clients()
         .filter((client) => client?.workspace?.id === workspaceIndex)
         .map((client) => [client.class, client.title]);
 
-    if (!clients.length) {
+    if (!workspaceClients.length) {
         return emptyIcon;
     }
 
-    let icons = clients
-        .map(([clientClass, clientTitle]) => {
-            const maybeIcon = Object.entries(iconMap).find(([matcher]) => {
-                try {
-                    if (matcher.startsWith('class:')) {
-                        const re = matcher.substring(6);
-                        return new RegExp(re).test(clientClass);
-                    }
+    const findIconForClient = (clientClass: string, clientTitle: string): string | undefined => {
+        const appIconMap = { ...userDefinedIconMap, ...defaultApplicationIconMap };
 
-                    if (matcher.startsWith('title:')) {
-                        const re = matcher.substring(6);
-
-                        return new RegExp(re).test(clientTitle);
-                    }
-
-                    return new RegExp(matcher, 'i').test(clientClass);
-                } catch {
-                    return false;
-                }
-            });
-
-            if (!maybeIcon) {
-                return undefined;
+        const iconEntry = Object.entries(appIconMap).find(([matcher]) => {
+            if (matcher.startsWith('class:')) {
+                return new RegExp(matcher.substring(6)).test(clientClass);
             }
 
-            return maybeIcon.at(1);
-        })
-        .filter((x) => x);
+            if (matcher.startsWith('title:')) {
+                return new RegExp(matcher.substring(6)).test(clientTitle);
+            }
 
-    if (removeDuplicateIcons) {
-        icons = [...new Set(icons)];
-    }
+            return new RegExp(matcher, 'i').test(clientClass);
+        });
+
+        return iconEntry?.[1] ?? defaultIcon;
+    };
+
+    let icons = workspaceClients.reduce((iconAccumulator, [clientClass, clientTitle]) => {
+        const icon = findIconForClient(clientClass, clientTitle);
+
+        if (icon) {
+            iconAccumulator.push(icon);
+        }
+
+        return iconAccumulator;
+    }, []);
 
     if (icons.length) {
+        if (removeDuplicateIcons) {
+            icons = [...new Set(icons)];
+        }
+
         return icons.join(' ');
     }
 
