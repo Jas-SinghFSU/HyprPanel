@@ -1,0 +1,31 @@
+{
+    "calculator": {
+        "icon": "",
+        "label": "{}",
+        "tooltip": "This is a calculator",
+        "truncationSize": 15,
+
+        "execute": "/path/to/script.",
+        "executeOnAction": "/path/to/script.",
+        "interval": 5,
+
+        "hideOnEmpty": false,
+        "scrollThreshold": 1,
+
+        "actions": {
+            "onLeftClick": "",
+            "onRightClick": "",
+            "onMiddleClick": "",
+            "onScroppUp": "",
+            "onScrollDown": ""
+        },
+
+        "style": {
+            "iconColor": "",
+            "iconBackground": "",
+            "labelColor": "",
+            "labelBackground": "",
+            "buttonStyle": ""
+        }
+    }
+}

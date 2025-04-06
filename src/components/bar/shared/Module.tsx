@@ -21,15 +21,17 @@ export const Module = ({
     hook,
 }: BarModule): BarBoxChild => {
     const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
-        let iconWidget: JSX.Element | undefined;
+        const className = `txt-icon bar-button-icon module-icon ${boxClass}`;
 
-        if (icon !== undefined && icon.get() != '' && !useTxtIcn) {
-            iconWidget = <icon className={`txt-icon bar-button-icon module-icon ${boxClass}`} icon={icon} />;
-        } else if (textIcon !== undefined && textIcon.get() != '') {
-            iconWidget = <label className={`txt-icon bar-button-icon module-icon ${boxClass}`} label={textIcon} />;
+        const icn = typeof icon === 'string' ? icon : icon?.get();
+        if (!useTxtIcn && icn?.length) {
+            return <icon className={className} icon={icon} />;
         }
 
-        return iconWidget;
+        const textIcn = typeof textIcon === 'string' ? textIcon : textIcon?.get();
+        if (textIcn?.length) {
+            return <label className={className} label={textIcn} />;
+        }
     };
 
     const componentClass = Variable.derive(

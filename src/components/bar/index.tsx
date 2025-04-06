@@ -10,8 +10,6 @@ import {
     BatteryLabel,
     Clock,
     SysTray,
-
-    // Custom Modules
     Microphone,
     Ram,
     Cpu,
@@ -37,12 +35,13 @@ import Astal from 'gi://Astal?version=3.0';
 import { bind, Variable } from 'astal';
 import { getLayoutForMonitor, isLayoutEmpty } from './utils/monitors';
 import { GdkMonitorMapper } from './utils/GdkMonitorMapper';
+import { CustomModules } from './custom_modules/CustomModules';
 
 const { layouts } = options.bar;
 const { location } = options.theme.bar;
 const { location: borderLocation } = options.theme.bar.border;
 
-const widget = {
+let widgets: WidgetMap = {
     battery: (): JSX.Element => WidgetContainer(BatteryLabel()),
     dashboard: (): JSX.Element => WidgetContainer(Menu()),
     workspaces: (monitor: number): JSX.Element => WidgetContainer(Workspaces(monitor)),
@@ -73,7 +72,16 @@ const widget = {
 
 const gdkMonitorMapper = new GdkMonitorMapper();
 
-export const Bar = (monitor: number): JSX.Element => {
+export const Bar = async (monitor: number): Promise<JSX.Element> => {
+    try {
+        const customWidgets = await CustomModules.build();
+        widgets = {
+            ...widgets,
+            ...customWidgets,
+        };
+    } catch (error) {
+        console.log(error);
+    }
     const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor);
 
     const computeVisibility = bind(layouts).as(() => {
@@ -116,22 +124,22 @@ export const Bar = (monitor: number): JSX.Element => {
         const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
         return foundLayout.left
-            .filter((mod) => Object.keys(widget).includes(mod))
-            .map((w) => widget[w](hyprlandMonitor));
+            .filter((mod) => Object.keys(widgets).includes(mod))
+            .map((w) => widgets[w](hyprlandMonitor));
     });
     const middleBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
         const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
         return foundLayout.middle
-            .filter((mod) => Object.keys(widget).includes(mod))
-            .map((w) => widget[w](hyprlandMonitor));
+            .filter((mod) => Object.keys(widgets).includes(mod))
+            .map((w) => widgets[w](hyprlandMonitor));
     });
     const rightBinding = Variable.derive([bind(layouts)], (currentLayouts) => {
         const foundLayout = getLayoutForMonitor(hyprlandMonitor, currentLayouts);
 
         return foundLayout.right
-            .filter((mod) => Object.keys(widget).includes(mod))
-            .map((w) => widget[w](hyprlandMonitor));
+            .filter((mod) => Object.keys(widgets).includes(mod))
+            .map((w) => widgets[w](hyprlandMonitor));
     });
 
     return (
@@ -177,4 +185,8 @@ export const Bar = (monitor: number): JSX.Element => {
             </box>
         </window>
     );
+};
+
+export type WidgetMap = {
+    [K in string]: (monitor: number) => JSX.Element;
 };

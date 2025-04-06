@@ -30,7 +30,7 @@ export const BarGeneral = (): JSX.Element => {
                     title="Config"
                     subtitle="WARNING: Importing a configuration will replace your current configuration settings."
                     type="config_import"
-                    exportData={{ filePath: CONFIG, themeOnly: false }}
+                    exportData={{ filePath: CONFIG_FILE, themeOnly: false }}
                 />
                 <Option
                     opt={options.hyprpanel.restartAgs}

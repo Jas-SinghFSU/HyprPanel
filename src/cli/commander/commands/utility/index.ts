@@ -120,11 +120,11 @@ export const utilityCommands: Command[] = [
 
             try {
                 const oldFile = Gio.File.new_for_path(oldPath);
-                const newFile = Gio.File.new_for_path(CONFIG);
+                const newFile = Gio.File.new_for_path(CONFIG_FILE);
 
                 if (oldFile.query_exists(null)) {
                     oldFile.move(newFile, Gio.FileCopyFlags.OVERWRITE, null, null);
-                    return `Configuration file moved to ${CONFIG}`;
+                    return `Configuration file moved to ${CONFIG_FILE}`;
                 } else {
                     return `Old configuration file does not exist at ${oldPath}`;
                 }

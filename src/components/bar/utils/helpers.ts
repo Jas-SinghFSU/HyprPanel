@@ -123,7 +123,7 @@ export const inputHandler = (
     }: InputHandlerEvents,
     postInputUpdater?: Variable<boolean>,
 ): void => {
-    const sanitizeInput = (input?: Variable<string> | Variable<string>): string => {
+    const sanitizeInput = (input?: Variable<string>): string => {
         if (input === undefined) {
             return '';
         }

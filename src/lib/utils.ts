@@ -154,9 +154,10 @@ export async function sh(cmd: string | string[]): Promise<string> {
  *
  * @returns An array of JSX elements, one for each monitor.
  */
-export function forMonitors(widget: (monitor: number) => JSX.Element): JSX.Element[] {
+export async function forMonitors(widget: (monitor: number) => Promise<JSX.Element>): Promise<JSX.Element[]> {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
-    return range(n, 0).flatMap(widget);
+
+    return Promise.all(range(n, 0).map(widget));
 }
 
 /**

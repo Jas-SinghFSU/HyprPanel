@@ -22,7 +22,7 @@ export const MenuTheme = (): JSX.Element => {
                     title="Theme"
                     subtitle="WARNING: Importing a theme will replace your current theme color settings."
                     type="config_import"
-                    exportData={{ filePath: CONFIG, themeOnly: true }}
+                    exportData={{ filePath: CONFIG_FILE, themeOnly: true }}
                 />
                 <Option
                     opt={options.theme.bar.menus.monochrome}

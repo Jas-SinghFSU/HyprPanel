@@ -3,7 +3,8 @@ import { Gio } from 'astal/file';
 import { GLib } from 'astal/gobject';
 
 declare global {
-    const CONFIG: string;
+    const CONFIG_DIR: string;
+    const CONFIG_FILE: string;
     const TMP: string;
     const USER: string;
     const SRC_DIR: string;
@@ -31,12 +32,13 @@ export function ensureFile(path: string): void {
 const dataDir = typeof DATADIR !== 'undefined' ? DATADIR : SRC;
 
 Object.assign(globalThis, {
-    CONFIG: `${GLib.get_user_config_dir()}/hyprpanel/config.json`,
+    CONFIG_DIR: `${GLib.get_user_config_dir()}/hyprpanel`,
+    CONFIG_FILE: `${GLib.get_user_config_dir()}/hyprpanel/config.json`,
     TMP: `${GLib.get_tmp_dir()}/hyprpanel`,
     USER: GLib.get_user_name(),
     SRC_DIR: dataDir,
 });
 
 ensureDirectory(TMP);
-ensureFile(CONFIG);
+ensureFile(CONFIG_FILE);
 App.add_icons(`${SRC_DIR}/assets`);

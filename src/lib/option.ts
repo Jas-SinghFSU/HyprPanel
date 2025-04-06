@@ -100,7 +100,7 @@ export class Opt<T = unknown> extends Variable<T> {
         super.set(value);
 
         if (writeDisk) {
-            const raw = readFile(CONFIG);
+            const raw = readFile(CONFIG_FILE);
             let config: Record<string, unknown> = {};
             if (raw && raw.trim() !== '') {
                 try {
@@ -119,7 +119,7 @@ export class Opt<T = unknown> extends Variable<T> {
                 }
             }
             config[this._id] = value;
-            writeFile(CONFIG, JSON.stringify(config, null, 2));
+            writeFile(CONFIG_FILE, JSON.stringify(config, null, 2));
         }
     };
 
@@ -225,9 +225,9 @@ function getOptions(optionsObj: Record<string, unknown>, path = '', arr: Opt[] =
  * @returns The original object extended with additional methods for handling options.
  */
 export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult {
-    ensureDirectory(CONFIG.split('/').slice(0, -1).join('/'));
+    ensureDirectory(CONFIG_FILE.split('/').slice(0, -1).join('/'));
 
-    const rawConfig = readFile(CONFIG);
+    const rawConfig = readFile(CONFIG_FILE);
 
     let config: Record<string, unknown> = {};
     if (rawConfig && rawConfig.trim() !== '') {
@@ -254,7 +254,7 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
     // the config menu
     const debounceTimeMs = 200;
     let lastEventTime = Date.now();
-    monitorFile(CONFIG, () => {
+    monitorFile(CONFIG_FILE, () => {
         if (Date.now() - lastEventTime < debounceTimeMs) {
             return;
         }
@@ -262,7 +262,7 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
 
         let newConfig: Record<string, unknown> = {};
 
-        const rawConfig = readFile(CONFIG);
+        const rawConfig = readFile(CONFIG_FILE);
         if (rawConfig && rawConfig.trim() !== '') {
             try {
                 newConfig = JSON.parse(rawConfig) as Record<string, unknown>;
