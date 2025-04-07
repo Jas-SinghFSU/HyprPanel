@@ -30,7 +30,7 @@ export const Module = ({
 
         const textIcn = typeof textIcon === 'string' ? textIcon : textIcon?.get();
         if (textIcn?.length) {
-            return <label className={className} label={textIcn} />;
+            return <label className={className} label={textIcon} />;
         }
     };
 

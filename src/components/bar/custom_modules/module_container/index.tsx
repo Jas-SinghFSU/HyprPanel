@@ -5,10 +5,11 @@ import { Astal } from 'astal/gtk3';
 import { inputHandler } from '../../utils/helpers';
 import { bind, Variable } from 'astal';
 import { BashPoller } from 'src/lib/poller/BashPoller';
+import { getIcon } from './helpers/icon';
+import { getLabel } from './helpers/label';
 
 export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarModule): BarBoxChild => {
     const pollingInterval = Variable(moduleMetadata.interval ?? 0);
-    console.log(`Polling Interval: ${pollingInterval.get()}`);
     const commandOutput = Variable('');
 
     const commandPoller = new BashPoller<string, []>(
@@ -23,15 +24,13 @@ export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarMod
         commandPoller.initialize();
     }
 
-    Variable.derive([bind(commandOutput)], (cmdOutput) => {
-        console.log(`commandOutput: ${cmdOutput}`);
-    });
-
     const module = Module({
-        textIcon: moduleMetadata.icon,
-        tooltipText: moduleMetadata.tooltip,
+        textIcon: bind(commandOutput).as((cmdOutput) => getIcon(moduleName, cmdOutput, moduleMetadata)),
+        tooltipText: bind(commandOutput).as((cmdOutput) =>
+            getLabel(moduleName, cmdOutput, moduleMetadata.tooltip ?? ''),
+        ),
         boxClass: `user-module-${moduleName}`,
-        label: moduleMetadata.label,
+        label: bind(commandOutput).as((cmdOutput) => getLabel(moduleName, cmdOutput, moduleMetadata.label ?? '')),
         props: {
             setup: (self: Astal.Button) => {
                 inputHandler(self, {
@@ -54,6 +53,13 @@ export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarMod
             },
             onDestroy: () => {},
         },
+        isVis: bind(commandOutput).as((cmdOutput) => {
+            if (!moduleMetadata.hideOnEmpty) {
+                return true;
+            }
+
+            return cmdOutput.length === 0;
+        }),
     });
 
     return module;
