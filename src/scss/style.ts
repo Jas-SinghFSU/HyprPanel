@@ -91,6 +91,7 @@ export const resetCss = async (): Promise<void> => {
         const css = `${TMP}/main.css`;
         const scss = `${TMP}/entry.scss`;
         const localScss = `${SRC_DIR}/src/scss/main.scss`;
+        const moduleScss = `${CONFIG_DIR}/modules.scss`;
 
         const themeVariables = variables;
         const integratedVariables = themeVariables;
@@ -101,6 +102,9 @@ export const resetCss = async (): Promise<void> => {
 
         let mainScss = readFile(localScss);
         mainScss = `${imports}\n${mainScss}`;
+
+        const moduleScssFile = readFile(moduleScss);
+        mainScss = `${mainScss}\n${moduleScssFile}`;
 
         writeFile(scss, mainScss);
 

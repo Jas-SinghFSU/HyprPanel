@@ -19,7 +19,6 @@ export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarMod
         hideOnEmpty: moduleHideOnEmpty = false,
         scrollThreshold: moduleScrollThreshold = 4,
         actions: moduleActions = {},
-        style: moduleStyle = {},
     } = moduleMetadata;
 
     const pollingInterval: Variable<number> = Variable(moduleInterval);
@@ -32,7 +31,7 @@ export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarMod
     const module = Module({
         textIcon: bind(commandOutput).as((cmdOutput) => getIcon(moduleName, cmdOutput, moduleIcon)),
         tooltipText: bind(commandOutput).as((cmdOutput) => getLabel(moduleName, cmdOutput, moduleTooltip)),
-        boxClass: `user-module-${moduleName}`,
+        boxClass: `cmodule-${moduleName.replace(/custom\//, '')}`,
         label: bind(commandOutput).as((cmdOutput) => getLabel(moduleName, cmdOutput, moduleLabel)),
         truncationSize: bind(Variable(typeof moduleTruncation === 'number' ? moduleTruncation : -1)),
         props: {

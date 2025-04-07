@@ -6,6 +6,7 @@ import { Attribute, Child } from './widget';
 import { Widget } from 'astal/gtk3';
 import { Binding } from 'astal';
 import { Connectable } from 'astal/binding';
+import { CustomBarModuleStyle } from 'src/components/bar/custom_modules/types';
 
 export type BarBoxChild = {
     component: JSX.Element;

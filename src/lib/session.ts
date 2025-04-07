@@ -16,6 +16,20 @@ export function ensureDirectory(path: string): void {
     }
 }
 
+export function ensureJsonFile(path: string): void {
+    const file = Gio.File.new_for_path(path);
+    const parent = file.get_parent();
+
+    if (parent && !parent.query_exists(null)) {
+        parent.make_directory_with_parents(null);
+    }
+
+    if (!file.query_exists(null)) {
+        const stream = file.create(Gio.FileCreateFlags.NONE, null);
+        stream.write_all('{}', null);
+    }
+}
+
 export function ensureFile(path: string): void {
     const file = Gio.File.new_for_path(path);
     const parent = file.get_parent();
@@ -41,4 +55,6 @@ Object.assign(globalThis, {
 
 ensureDirectory(TMP);
 ensureFile(CONFIG_FILE);
+ensureJsonFile(`${CONFIG_DIR}/modules.json`);
+ensureFile(`${CONFIG_DIR}/modules.scss`);
 App.add_icons(`${SRC_DIR}/assets`);

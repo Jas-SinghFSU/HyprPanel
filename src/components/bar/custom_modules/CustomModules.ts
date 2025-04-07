@@ -13,6 +13,10 @@ export class CustomModules {
 
         try {
             Object.entries(customModuleMap).map(([moduleName, moduleMetadata]) => {
+                if (!moduleName.startsWith('custom/')) {
+                    return;
+                }
+
                 customModuleComponents[moduleName] = (): JSX.Element =>
                     WidgetContainer(ModuleContainer(moduleName, moduleMetadata));
             });

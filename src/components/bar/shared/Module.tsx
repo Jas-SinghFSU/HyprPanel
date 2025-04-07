@@ -60,7 +60,6 @@ export const Module = ({
             }
 
             if (showLabel) {
-                console.log(truncationSize?.get());
                 childrenArray.push(
                     <label
                         className={`bar-button-label module-label ${boxClass}`}

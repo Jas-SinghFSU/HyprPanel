@@ -1,10 +1,3 @@
-export type CustomBarModuleStyle = {
-    iconColor?: string;
-    iconBackground?: string;
-    labelColor?: string;
-    labelBackground?: string;
-    buttonStyle?: string;
-};
 export type CustomBarModuleActions = {
     onLeftClick?: string;
     onRightClick?: string;
@@ -23,6 +16,5 @@ export type CustomBarModule = {
     hideOnEmpty?: boolean;
     scrollThreshold?: number;
     actions?: CustomBarModuleActions;
-    style?: CustomBarModuleStyle;
 };
 export type CustomBarModuleIcon = string | string[] | Record<string, string>;
