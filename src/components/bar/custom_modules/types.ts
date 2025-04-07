@@ -13,7 +13,7 @@ export type CustomBarModuleActions = {
     onScrollDown?: string;
 };
 export type CustomBarModule = {
-    icon: string | string[] | Record<string, string>;
+    icon?: CustomBarModuleIcon;
     label?: string;
     tooltip?: string;
     truncationSize?: number;
@@ -25,3 +25,4 @@ export type CustomBarModule = {
     actions?: CustomBarModuleActions;
     style?: CustomBarModuleStyle;
 };
+export type CustomBarModuleIcon = string | string[] | Record<string, string>;

@@ -27,7 +27,7 @@ export class CustomModules {
     private static async _getCustomModules(): Promise<Record<string, CustomBarModule>> {
         try {
             const filesInConfigDir = await this._getFilesInConfigDir();
-            const modulesFile = filesInConfigDir.find((file) => file.match(/^modules(\.json|\.jsonc)?$/));
+            const modulesFile = filesInConfigDir.find((file) => file.match(/^modules(\.json)?$/));
             const pathToModulesFile = `${CONFIG_DIR}/${modulesFile}`;
 
             const customModulesFileContent = await readFileAsync(pathToModulesFile);

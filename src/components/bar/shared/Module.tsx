@@ -10,6 +10,7 @@ export const Module = ({
     textIcon,
     useTextIcon = bind(Variable(false)),
     label,
+    truncationSize = bind(Variable(-1)),
     tooltipText = '',
     boxClass,
     isVis,
@@ -59,9 +60,12 @@ export const Module = ({
             }
 
             if (showLabel) {
+                console.log(truncationSize?.get());
                 childrenArray.push(
                     <label
                         className={`bar-button-label module-label ${boxClass}`}
+                        truncate={truncationSize.as((truncSize) => truncSize > 0)}
+                        maxWidthChars={truncationSize.as((truncSize) => truncSize)}
                         label={label ?? ''}
                         setup={labelHook}
                     />,

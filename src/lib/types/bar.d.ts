@@ -26,7 +26,7 @@ export type BarModule = {
     textIcon?: string | Binding<string>;
     useTextIcon?: Binding<boolean>;
     label?: string | Binding<string>;
-    truncationSize?: string | Binding<string>;
+    truncationSize?: Binding<number>;
     labelHook?: LabelHook;
     boundLabel?: string;
     tooltipText?: string | Binding<string>;

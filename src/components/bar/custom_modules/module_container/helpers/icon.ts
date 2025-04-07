@@ -1,5 +1,5 @@
 import { isPrimitive } from 'src/lib/utils';
-import { CustomBarModule } from '../../types';
+import { CustomBarModuleIcon } from '../../types';
 import { parseCommandOutputJson } from './utils';
 
 const ERROR_ICON = '';
@@ -9,7 +9,7 @@ const ERROR_ICON = '';
  *
  * @param moduleName - The name of the module requesting the icon
  * @param commandOutput - The raw output string from the module's command execution
- * @param moduleMetadata - The module's configuration metadata containing icon settings
+ * @param moduleIcon - The module's configuration metadata containing icon settings
  * @returns The resolved icon string based on the configuration, or ERROR_ICON if resolution fails
  *
  * @example
@@ -22,18 +22,16 @@ const ERROR_ICON = '';
  * // Using an object mapping for specific states
  * getIcon('myModule', '{"alt": "success"}', { icon: { success: '✅', error: '❌' } })
  */
-export function getIcon(moduleName: string, commandOutput: string, moduleMetadata: CustomBarModule): string {
-    const iconConfig: IconConfig = moduleMetadata.icon ?? '';
-
-    if (Array.isArray(iconConfig)) {
-        return getIconFromArray(moduleName, commandOutput, iconConfig);
+export function getIcon(moduleName: string, commandOutput: string, moduleIcon: CustomBarModuleIcon): string {
+    if (Array.isArray(moduleIcon)) {
+        return getIconFromArray(moduleName, commandOutput, moduleIcon);
     }
 
-    if (typeof iconConfig === 'object') {
-        return getIconFromObject(moduleName, commandOutput, iconConfig);
+    if (typeof moduleIcon === 'object') {
+        return getIconFromObject(moduleName, commandOutput, moduleIcon);
     }
 
-    return iconConfig;
+    return moduleIcon;
 }
 
 /**
@@ -132,18 +130,3 @@ type CommandResults = {
     /** Percentage value for array-based icon configuration (0-100) */
     percentage?: number;
 };
-
-/**
- * Represents the possible icon configuration formats
- *
- * @example
- * // String format (static icon)
- * const iconConfig: IconConfig = '🚀';
- *
- * // Array format (percentage-based icons)
- * const iconConfig: IconConfig = ['😡', '😐', '😊'];
- *
- * // Object format (state-based icons)
- * const iconConfig: IconConfig = { success: '✅', error: '❌' };
- */
-type IconConfig = string | string[] | Record<string, unknown>;
