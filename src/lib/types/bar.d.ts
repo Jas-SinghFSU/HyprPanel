@@ -1,10 +1,12 @@
-import { Binding, Connectable } from 'types/service';
 import { Variable } from 'types/variable';
 import Box from 'types/widgets/box';
 import Button, { ButtonProps } from 'types/widgets/button';
 import Label from 'types/widgets/label';
 import { Attribute, Child } from './widget';
 import { Widget } from 'astal/gtk3';
+import { Binding } from 'astal';
+import { Connectable } from 'astal/binding';
+import { CustomBarModuleStyle } from 'src/components/bar/custom_modules/types';
 
 export type BarBoxChild = {
     component: JSX.Element;
@@ -25,6 +27,7 @@ export type BarModule = {
     textIcon?: string | Binding<string>;
     useTextIcon?: Binding<boolean>;
     label?: string | Binding<string>;
+    truncationSize?: Binding<number>;
     labelHook?: LabelHook;
     boundLabel?: string;
     tooltipText?: string | Binding<string>;

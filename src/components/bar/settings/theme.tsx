@@ -7,7 +7,7 @@ import { Gtk } from 'astal/gtk3';
 export const CustomModuleTheme = (): JSX.Element => {
     return (
         <scrollable
-            name={'Custom Modules'}
+            name={'Basic Modules'}
             className="menu-theme-page customModules paged-container"
             vscroll={Gtk.PolicyType.AUTOMATIC}
             hscroll={Gtk.PolicyType.AUTOMATIC}

@@ -53,12 +53,15 @@ App.start({
     requestHandler(request: string, res: (response: unknown) => void) {
         runCLI(request, res);
     },
-    main() {
+    async main() {
         initializeStartupScripts();
 
         Notifications();
         OSD();
-        forMonitors(Bar).forEach((bar: JSX.Element) => bar);
+
+        const barsForMonitors = await forMonitors(Bar);
+        barsForMonitors.forEach((bar: JSX.Element) => bar);
+
         SettingsDialog();
         initializeMenus();
 

@@ -10,6 +10,7 @@ export const Module = ({
     textIcon,
     useTextIcon = bind(Variable(false)),
     label,
+    truncationSize = bind(Variable(-1)),
     tooltipText = '',
     boxClass,
     isVis,
@@ -21,15 +22,17 @@ export const Module = ({
     hook,
 }: BarModule): BarBoxChild => {
     const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
-        let iconWidget: JSX.Element | undefined;
+        const className = `txt-icon bar-button-icon module-icon ${boxClass}`;
 
-        if (icon !== undefined && icon.get() != '' && !useTxtIcn) {
-            iconWidget = <icon className={`txt-icon bar-button-icon module-icon ${boxClass}`} icon={icon} />;
-        } else if (textIcon !== undefined && textIcon.get() != '') {
-            iconWidget = <label className={`txt-icon bar-button-icon module-icon ${boxClass}`} label={textIcon} />;
+        const icn = typeof icon === 'string' ? icon : icon?.get();
+        if (!useTxtIcn && icn?.length) {
+            return <icon className={className} icon={icon} />;
         }
 
-        return iconWidget;
+        const textIcn = typeof textIcon === 'string' ? textIcon : textIcon?.get();
+        if (textIcn?.length) {
+            return <label className={className} label={textIcon} />;
+        }
     };
 
     const componentClass = Variable.derive(
@@ -60,6 +63,8 @@ export const Module = ({
                 childrenArray.push(
                     <label
                         className={`bar-button-label module-label ${boxClass}`}
+                        truncate={truncationSize.as((truncSize) => truncSize > 0)}
+                        maxWidthChars={truncationSize.as((truncSize) => truncSize)}
                         label={label ?? ''}
                         setup={labelHook}
                     />,

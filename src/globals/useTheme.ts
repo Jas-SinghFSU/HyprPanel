@@ -14,7 +14,7 @@ globalThis.useTheme = (filePath: string): void => {
             return;
         }
 
-        const optionsConfigFile = Gio.File.new_for_path(CONFIG);
+        const optionsConfigFile = Gio.File.new_for_path(CONFIG_FILE);
 
         const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
 
@@ -27,7 +27,7 @@ globalThis.useTheme = (filePath: string): void => {
         const filteredConfig = filterConfigForThemeOnly(importedConfig);
         optionsConfig = { ...optionsConfig, ...filteredConfig };
 
-        saveConfigToFile(optionsConfig, CONFIG);
+        saveConfigToFile(optionsConfig, CONFIG_FILE);
         bash(restartCommand.get());
     } catch (error) {
         errorHandler(error);

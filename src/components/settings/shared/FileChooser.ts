@@ -272,7 +272,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 iconName: icons.ui.info,
             });
 
-            const optionsConfigFile = Gio.File.new_for_path(CONFIG);
+            const optionsConfigFile = Gio.File.new_for_path(CONFIG_FILE);
 
             const [optionsSuccess, optionsContent] = optionsConfigFile.load_contents(null);
 
@@ -289,7 +289,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 : filterConfigForNonTheme(importedConfig);
             optionsConfig = { ...optionsConfig, ...filteredConfig };
 
-            saveConfigToFile(optionsConfig, CONFIG);
+            saveConfigToFile(optionsConfig, CONFIG_FILE);
         }
         dialog.destroy();
         bash(restartCommand.get());

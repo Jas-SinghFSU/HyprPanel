@@ -32,22 +32,33 @@
     }
 }
 
+$style-module-defaults: (
+    'label-color': $bar-buttons-text,
+    'icon-color': $bar-buttons-icon,
+    'icon-background': $bar-buttons-icon_background,
+    'label-background': $bar-buttons-background,
+    'border-enabled': false,
+    'border-color': $text,
+    'icon-size': 1em,
+    'inner-spacing': 0.5em,
+);
+
 /*
  * #################################
  * #        Styling Function       #
  * #################################
  */
-@mixin styleModule(
-    $class,
-    $textColor,
-    $iconColor,
-    $iconBackground,
-    $labelBackground,
-    $spacing,
-    $borderEnabled,
-    $borderColor,
-    $fontSize: 1em
-) {
+@mixin styleModule($class, $config: ()) {
+    $config: map-merge($style-module-defaults, $config);
+    $text-color: map-get($config, 'text-color');
+    $icon-color: map-get($config, 'icon-color');
+    $icon-background: map-get($config, 'icon-background');
+    $label-background: map-get($config, 'label-background');
+    $spacing: map-get($config, 'inner-spacing');
+    $border-enabled: map-get($config, 'border-enabled');
+    $border-color: map-get($config, 'border-color');
+    $icon-size: map-get($config, 'icon-size');
+
     $bar-button-background-opacity-ratio: $bar-buttons-background_opacity * 0.01;
     $transparency-value: 1 - $bar-button-background-opacity-ratio;
 
@@ -56,12 +67,12 @@
     .bar_item_box_visible {
         &.#{$class} {
             background: transparentize(
-                if($bar-buttons-monochrome, $bar-buttons-background, $labelBackground),
+                if($bar-buttons-monochrome, $bar-buttons-background, $label-background),
                 $transparency-value
             );
             border: if(
-                $borderEnabled or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $borderColor),
+                $border-enabled or $bar-buttons-enableBorders,
+                $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $border-color),
                 0em
             );
 
@@ -76,35 +87,35 @@
     }
 
     .module-label.#{$class} {
-        color: if($bar-buttons-monochrome, $bar-buttons-text, $textColor);
+        color: if($bar-buttons-monochrome, $bar-buttons-text, $text-color);
         margin-left: $spacing;
         border-radius: $bar-buttons-radius;
     }
 
     .module-icon.#{$class} {
-        color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
-        font-size: if($fontSize, $fontSize, 1em);
+        color: if($bar-buttons-monochrome, $bar-buttons-icon, $icon-color);
+        font-size: if($icon-size, $icon-size, 1em);
     }
 
     .style2 {
         .module-icon.#{$class} {
-            background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $iconBackground);
+            background: if($bar-buttons-monochrome, $bar-buttons-icon_background, $icon-background);
             padding-right: $spacing;
-            color: if($bar-buttons-monochrome, $bar-buttons-icon, $iconColor);
+            color: if($bar-buttons-monochrome, $bar-buttons-icon, $icon-color);
             border-top-left-radius: if(
-                $borderEnabled or $bar-buttons-enableBorders,
+                $border-enabled or $bar-buttons-enableBorders,
                 $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
                 $bar-buttons-radius
             );
             border-bottom-left-radius: if(
-                $borderEnabled or $bar-buttons-enableBorders,
+                $border-enabled or $bar-buttons-enableBorders,
                 $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
                 $bar-buttons-radius
             );
         }
 
         .module-label.#{$class} {
-            background: transparentize($labelBackground, $transparency-value);
+            background: transparentize($label-background, $transparency-value);
             padding-left: $spacing * 1.5;
             margin-left: 0em;
             border-top-left-radius: 0em;
@@ -113,12 +124,12 @@
         &.no-label.#{$class} {
             .module-icon {
                 border-top-right-radius: if(
-                    $borderEnabled or $bar-buttons-enableBorders,
+                    $border-enabled or $bar-buttons-enableBorders,
                     $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
                     $bar-buttons-radius
                 );
                 border-bottom-right-radius: if(
-                    $borderEnabled or $bar-buttons-enableBorders,
+                    $border-enabled or $bar-buttons-enableBorders,
                     $bar-buttons-radius * $bar-buttons-innerRadiusMultiplier,
                     $bar-buttons-radius
                 );
@@ -133,25 +144,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'mic',
-    // label color
-    $bar-buttons-modules-microphone-text,
-    // icon color
-    $bar-buttons-modules-microphone-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-microphone-icon_background,
-    // label background
-    $bar-buttons-modules-microphone-background,
-    // inner spacing
-    $bar-buttons-modules-microphone-spacing,
-    //
-    // if border enabled
-    $bar-buttons-modules-microphone-enableBorder,
-    // border color
-    $bar-buttons-modules-microphone-border,
-    1.3em
+    (
+        'text-color': $bar-buttons-modules-microphone-text,
+        'icon-color': $bar-buttons-modules-microphone-icon,
+        'icon-background': $bar-buttons-modules-microphone-icon_background,
+        'label-background': $bar-buttons-modules-microphone-background,
+        'inner-spacing': $bar-buttons-modules-microphone-spacing,
+        'border-enabled': $bar-buttons-modules-microphone-enableBorder,
+        'border-color': $bar-buttons-modules-microphone-border,
+        'icon-size': 1.3em,
+    )
 );
 
 /*
@@ -160,24 +163,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'ram',
-    // label color
-    $bar-buttons-modules-ram-text,
-    // icon color
-    $bar-buttons-modules-ram-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-ram-icon_background,
-    // label background
-    $bar-buttons-modules-ram-background,
-    // inner spacing
-    $bar-buttons-modules-ram-spacing,
-    //
-    // if border enabled
-    $bar-buttons-modules-ram-enableBorder,
-    // border color
-    $bar-buttons-modules-ram-border
+    (
+        'text-color': $bar-buttons-modules-ram-text,
+        'icon-color': $bar-buttons-modules-ram-icon,
+        'icon-background': $bar-buttons-modules-ram-icon_background,
+        'label-background': $bar-buttons-modules-ram-background,
+        'inner-spacing': $bar-buttons-modules-ram-spacing,
+        'border-enabled': $bar-buttons-modules-ram-enableBorder,
+        'border-color': $bar-buttons-modules-ram-border,
+        'icon-size': 1em,
+    )
 );
 
 /*
@@ -186,25 +182,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'cpu',
-    // label color
-    $bar-buttons-modules-cpu-text,
-    // icon color
-    $bar-buttons-modules-cpu-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-cpu-icon_background,
-    // label background
-    $bar-buttons-modules-cpu-background,
-    // inner spacing
-    $bar-buttons-modules-cpu-spacing,
-    // if border enabled
-    $bar-buttons-modules-cpu-enableBorder,
-    // border color
-    $bar-buttons-modules-cpu-border,
-    // custom font size
-    1.05em //
+    (
+        'text-color': $bar-buttons-modules-cpu-text,
+        'icon-color': $bar-buttons-modules-cpu-icon,
+        'icon-background': $bar-buttons-modules-cpu-icon_background,
+        'label-background': $bar-buttons-modules-cpu-background,
+        'inner-spacing': $bar-buttons-modules-cpu-spacing,
+        'border-enabled': $bar-buttons-modules-cpu-enableBorder,
+        'border-color': $bar-buttons-modules-cpu-border,
+        'icon-size': 1.05em,
+    )
 );
 
 /*
@@ -213,25 +201,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'cpu-temp',
-    // label color
-    $bar-buttons-modules-cpuTemp-text,
-    // icon color
-    $bar-buttons-modules-cpuTemp-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-cpuTemp-icon_background,
-    // label background
-    $bar-buttons-modules-cpuTemp-background,
-    // inner spacing
-    $bar-buttons-modules-cpuTemp-spacing,
-    // if border enabled
-    $bar-buttons-modules-cpuTemp-enableBorder,
-    // border color
-    $bar-buttons-modules-cpuTemp-border,
-    // custom font size
-    1.05em //
+    (
+        'text-color': $bar-buttons-modules-cpuTemp-text,
+        'icon-color': $bar-buttons-modules-cpuTemp-icon,
+        'icon-background': $bar-buttons-modules-cpuTemp-icon_background,
+        'label-background': $bar-buttons-modules-cpuTemp-background,
+        'inner-spacing': $bar-buttons-modules-cpuTemp-spacing,
+        'border-enabled': $bar-buttons-modules-cpuTemp-enableBorder,
+        'border-color': $bar-buttons-modules-cpuTemp-border,
+        'icon-size': 1.05em,
+    )
 );
 
 /*
@@ -240,25 +220,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'storage',
-    // label color
-    $bar-buttons-modules-storage-text,
-    // icon color
-    $bar-buttons-modules-storage-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-storage-icon_background,
-    // label background
-    $bar-buttons-modules-storage-background,
-    // inner spacing
-    $bar-buttons-modules-storage-spacing,
-    // if border enabled
-    $bar-buttons-modules-storage-enableBorder,
-    // border color
-    $bar-buttons-modules-storage-border,
-    // custom font size
-    1.3em //
+    (
+        'text-color': $bar-buttons-modules-storage-text,
+        'icon-color': $bar-buttons-modules-storage-icon,
+        'icon-background': $bar-buttons-modules-storage-icon_background,
+        'label-background': $bar-buttons-modules-storage-background,
+        'inner-spacing': $bar-buttons-modules-storage-spacing,
+        'border-enabled': $bar-buttons-modules-storage-enableBorder,
+        'border-color': $bar-buttons-modules-storage-border,
+        'icon-size': 1.3em,
+    )
 );
 
 /*
@@ -267,25 +239,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'netstat',
-    // label color
-    $bar-buttons-modules-netstat-text,
-    // icon color
-    $bar-buttons-modules-netstat-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-netstat-icon_background,
-    // label background
-    $bar-buttons-modules-netstat-background,
-    // inner spacing
-    $bar-buttons-modules-netstat-spacing,
-    // if border enabled
-    $bar-buttons-modules-netstat-enableBorder,
-    // border color
-    $bar-buttons-modules-netstat-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-netstat-text,
+        'icon-color': $bar-buttons-modules-netstat-icon,
+        'icon-background': $bar-buttons-modules-netstat-icon_background,
+        'label-background': $bar-buttons-modules-netstat-background,
+        'inner-spacing': $bar-buttons-modules-netstat-spacing,
+        'border-enabled': $bar-buttons-modules-netstat-enableBorder,
+        'border-color': $bar-buttons-modules-netstat-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -294,25 +258,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'kblayout',
-    // label color
-    $bar-buttons-modules-kbLayout-text,
-    // icon color
-    $bar-buttons-modules-kbLayout-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-kbLayout-icon_background,
-    // label background
-    $bar-buttons-modules-kbLayout-background,
-    // inner spacing
-    $bar-buttons-modules-kbLayout-spacing,
-    // if border enabled
-    $bar-buttons-modules-kbLayout-enableBorder,
-    // border color
-    $bar-buttons-modules-kbLayout-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-kbLayout-text,
+        'icon-color': $bar-buttons-modules-kbLayout-icon,
+        'icon-background': $bar-buttons-modules-kbLayout-icon_background,
+        'label-background': $bar-buttons-modules-kbLayout-background,
+        'inner-spacing': $bar-buttons-modules-kbLayout-spacing,
+        'border-enabled': $bar-buttons-modules-kbLayout-enableBorder,
+        'border-color': $bar-buttons-modules-kbLayout-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -321,25 +277,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'updates',
-    // label color
-    $bar-buttons-modules-updates-text,
-    // icon color
-    $bar-buttons-modules-updates-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-updates-icon_background,
-    // label background
-    $bar-buttons-modules-updates-background,
-    // inner spacing
-    $bar-buttons-modules-updates-spacing,
-    // if border enabled
-    $bar-buttons-modules-updates-enableBorder,
-    // border color
-    $bar-buttons-modules-updates-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-updates-text,
+        'icon-color': $bar-buttons-modules-updates-icon,
+        'icon-background': $bar-buttons-modules-updates-icon_background,
+        'label-background': $bar-buttons-modules-updates-background,
+        'inner-spacing': $bar-buttons-modules-updates-spacing,
+        'border-enabled': $bar-buttons-modules-updates-enableBorder,
+        'border-color': $bar-buttons-modules-updates-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -348,25 +296,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'submap',
-    // label color
-    $bar-buttons-modules-submap-text,
-    // icon color
-    $bar-buttons-modules-submap-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-submap-icon_background,
-    // label background
-    $bar-buttons-modules-submap-background,
-    // inner spacing
-    $bar-buttons-modules-submap-spacing,
-    // if border enabled
-    $bar-buttons-modules-submap-enableBorder,
-    // border color
-    $bar-buttons-modules-submap-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-submap-text,
+        'icon-color': $bar-buttons-modules-submap-icon,
+        'icon-background': $bar-buttons-modules-submap-icon_background,
+        'label-background': $bar-buttons-modules-submap-background,
+        'inner-spacing': $bar-buttons-modules-submap-spacing,
+        'border-enabled': $bar-buttons-modules-submap-enableBorder,
+        'border-color': $bar-buttons-modules-submap-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -375,25 +315,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'weather-custom',
-    // label color
-    $bar-buttons-modules-weather-text,
-    // icon color
-    $bar-buttons-modules-weather-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-weather-icon_background,
-    // label background
-    $bar-buttons-modules-weather-background,
-    // inner spacing
-    $bar-buttons-modules-weather-spacing,
-    // if border enabled
-    $bar-buttons-modules-weather-enableBorder,
-    // border color
-    $bar-buttons-modules-weather-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-weather-text,
+        'icon-color': $bar-buttons-modules-weather-icon,
+        'icon-background': $bar-buttons-modules-weather-icon_background,
+        'label-background': $bar-buttons-modules-weather-background,
+        'inner-spacing': $bar-buttons-modules-weather-spacing,
+        'border-enabled': $bar-buttons-modules-weather-enableBorder,
+        'border-color': $bar-buttons-modules-weather-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -402,25 +334,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'powermodule',
-    // label color
-    $red,
-    // icon color
-    $bar-buttons-modules-power-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-power-icon_background,
-    // label background
-    $bar-buttons-modules-power-background,
-    // inner spacing
-    $bar-buttons-modules-power-spacing,
-    // if border enabled
-    $bar-buttons-modules-power-enableBorder,
-    // border color
-    $bar-buttons-modules-power-border,
-    // custom font size
-    1.3em //
+    (
+        'text-color': $red,
+        'icon-color': $bar-buttons-modules-power-icon,
+        'icon-background': $bar-buttons-modules-power-icon_background,
+        'label-background': $bar-buttons-modules-power-background,
+        'inner-spacing': $bar-buttons-modules-power-spacing,
+        'border-enabled': $bar-buttons-modules-power-enableBorder,
+        'border-color': $bar-buttons-modules-power-border,
+        'icon-size': 1.3em,
+    )
 );
 
 /*
@@ -429,25 +353,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'hyprsunset',
-    // label color
-    $bar-buttons-modules-hyprsunset-text,
-    // icon color
-    $bar-buttons-modules-hyprsunset-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-hyprsunset-icon_background,
-    // label background
-    $bar-buttons-modules-hyprsunset-background,
-    // inner spacing
-    $bar-buttons-modules-hyprsunset-spacing,
-    // if border enabled
-    $bar-buttons-modules-hyprsunset-enableBorder,
-    // border color
-    $bar-buttons-modules-hyprsunset-border,
-    // custom font size
-    1.3em //
+    (
+        'text-color': $bar-buttons-modules-hyprsunset-text,
+        'icon-color': $bar-buttons-modules-hyprsunset-icon,
+        'icon-background': $bar-buttons-modules-hyprsunset-icon_background,
+        'label-background': $bar-buttons-modules-hyprsunset-background,
+        'inner-spacing': $bar-buttons-modules-hyprsunset-spacing,
+        'border-enabled': $bar-buttons-modules-hyprsunset-enableBorder,
+        'border-color': $bar-buttons-modules-hyprsunset-border,
+        'icon-size': 1.3em,
+    )
 );
 
 /*
@@ -456,25 +372,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'hypridle',
-    // label color
-    $bar-buttons-modules-hypridle-text,
-    // icon color
-    $bar-buttons-modules-hypridle-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-hypridle-icon_background,
-    // label background
-    $bar-buttons-modules-hypridle-background,
-    // inner spacing
-    $bar-buttons-modules-hypridle-spacing,
-    // if border enabled
-    $bar-buttons-modules-hypridle-enableBorder,
-    // border color
-    $bar-buttons-modules-hypridle-border,
-    // custom font size
-    1.075em //
+    (
+        'text-color': $bar-buttons-modules-hypridle-text,
+        'icon-color': $bar-buttons-modules-hypridle-icon,
+        'icon-background': $bar-buttons-modules-hypridle-icon_background,
+        'label-background': $bar-buttons-modules-hypridle-background,
+        'inner-spacing': $bar-buttons-modules-hypridle-spacing,
+        'border-enabled': $bar-buttons-modules-hypridle-enableBorder,
+        'border-color': $bar-buttons-modules-hypridle-border,
+        'icon-size': 1.075em,
+    )
 );
 
 /*
@@ -483,25 +391,17 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'cava',
-    // label color
-    $bar-buttons-modules-cava-text,
-    // icon color
-    $bar-buttons-modules-cava-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-cava-icon_background,
-    // label background
-    $bar-buttons-modules-cava-background,
-    // inner spacing
-    $bar-buttons-modules-cava-spacing,
-    // if border enabled
-    $bar-buttons-modules-cava-enableBorder,
-    // border color
-    $bar-buttons-modules-cava-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-cava-text,
+        'icon-color': $bar-buttons-modules-cava-icon,
+        'icon-background': $bar-buttons-modules-cava-icon_background,
+        'label-background': $bar-buttons-modules-cava-background,
+        'inner-spacing': $bar-buttons-modules-cava-spacing,
+        'border-enabled': $bar-buttons-modules-cava-enableBorder,
+        'border-color': $bar-buttons-modules-cava-border,
+        'icon-size': 1.2em,
+    )
 );
 
 /*
@@ -510,23 +410,15 @@
  * #################################
  */
 @include styleModule(
-    //
-    // class name
     'worldclock',
-    // label color
-    $bar-buttons-modules-worldclock-text,
-    // icon color
-    $bar-buttons-modules-worldclock-icon,
-    // icon background if split style is used
-    $bar-buttons-modules-worldclock-icon_background,
-    // label background
-    $bar-buttons-modules-worldclock-background,
-    // inner spacing
-    $bar-buttons-modules-worldclock-spacing,
-    // if border enabled
-    $bar-buttons-modules-worldclock-enableBorder,
-    // border color
-    $bar-buttons-modules-worldclock-border,
-    // custom font size
-    1.2em //
+    (
+        'text-color': $bar-buttons-modules-worldclock-text,
+        'icon-color': $bar-buttons-modules-worldclock-icon,
+        'icon-background': $bar-buttons-modules-worldclock-icon_background,
+        'label-background': $bar-buttons-modules-worldclock-background,
+        'inner-spacing': $bar-buttons-modules-worldclock-spacing,
+        'border-enabled': $bar-buttons-modules-worldclock-enableBorder,
+        'border-color': $bar-buttons-modules-worldclock-border,
+        'icon-size': 1.2em,
+    )
 );

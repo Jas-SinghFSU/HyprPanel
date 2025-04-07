@@ -42,7 +42,7 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
     if (cmd.startsWith('menu:')) {
         const menuName = cmd.split(':')[1].trim().toLowerCase();
         openMenu(events.clicked, events.event, `${menuName}menu`);
-
+        handlePostInputUpdater(postInputUpdater);
         return;
     }
 
@@ -122,8 +122,9 @@ export const inputHandler = (
         onScrollDown: onScrollDownInput,
     }: InputHandlerEvents,
     postInputUpdater?: Variable<boolean>,
+    customScrollThreshold?: number,
 ): void => {
-    const sanitizeInput = (input?: Variable<string> | Variable<string>): string => {
+    const sanitizeInput = (input?: Variable<string>): string => {
         if (input === undefined) {
             return '';
         }
@@ -131,7 +132,7 @@ export const inputHandler = (
     };
 
     const updateHandlers = (): UpdateHandlers => {
-        const interval = scrollSpeed.get();
+        const interval = customScrollThreshold ?? scrollSpeed.get();
         const throttledHandler = throttledScrollHandler(interval);
 
         const disconnectPrimaryClick = onPrimaryClick(self, (clicked: GtkWidget, event: Gdk.Event) => {

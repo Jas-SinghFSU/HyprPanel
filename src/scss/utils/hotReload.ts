@@ -12,6 +12,7 @@ export const initializeHotReload = async (): Promise<void> => {
         `${SRC_DIR}/src/scss/style/settings`,
         `${SRC_DIR}/src/scss/style/colors.scss`,
         `${SRC_DIR}/src/scss/style/highlights.scss`,
+        `${CONFIG_DIR}/modules.scss`,
     ];
 
     monitorList.forEach((file) => monitorFile(file, resetCss));
