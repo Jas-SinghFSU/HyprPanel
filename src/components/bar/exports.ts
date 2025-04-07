@@ -10,7 +10,7 @@ import { BatteryLabel } from '../../components/bar/modules/battery/index';
 import { Clock } from '../../components/bar/modules/clock/index';
 import { SysTray } from '../../components/bar/modules/systray/index';
 
-// Custom Modules
+// Basic Modules
 import { Microphone } from '../../components/bar/modules/microphone/index';
 import { Ram } from '../../components/bar/modules/ram/index';
 import { Cpu } from '../../components/bar/modules/cpu/index';
@@ -40,7 +40,7 @@ export {
     Clock,
     SysTray,
 
-    // Custom Modules
+    // Basic Modules
     Microphone,
     Ram,
     Cpu,

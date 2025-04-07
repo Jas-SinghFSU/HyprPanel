@@ -16,7 +16,7 @@ export const themePages = [
     'System Tray',
     'Volume Menu',
     'Power Menu',
-    'Custom Modules',
+    'Basic Modules',
 ] as const;
 
 export const configPages = [
@@ -28,7 +28,7 @@ export const configPages = [
     'Volume',
     'Clock Menu',
     'Dashboard Menu',
-    'Custom Modules',
+    'Basic Modules',
     'Power Menu',
 ] as const;
 
