@@ -140,6 +140,11 @@ export const BarSettings = (): JSX.Element => {
                     type="number"
                 />
 
+                {/* Separator Section */}
+                <Header title="Separator" />
+                <Option opt={options.theme.bar.buttons.separator.margins} title="Margins" type="string" />
+                <Option opt={options.theme.bar.buttons.separator.width} title="Width" type="string" />
+
                 {/* Dashboard Section */}
                 <Header title="Dashboard" />
                 <Option opt={options.bar.launcher.icon} title="Dashboard Menu Icon" type="string" />
