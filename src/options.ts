@@ -309,6 +309,11 @@ const options = mkOptions({
                     total: opt(colors.lavender),
                     spacing: opt('0.5em'),
                 },
+                separator: {
+                    color: opt(colors.surface2),
+                    margins: opt('0.15em'),
+                    width: opt('0.1em'),
+                },
                 modules: {
                     microphone: {
                         enableBorder: opt(false),

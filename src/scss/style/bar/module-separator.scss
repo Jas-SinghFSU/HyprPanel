@@ -1,0 +1,6 @@
+.bar-module-separator {
+    background-color: $bar-buttons-separator-color;
+    opacity: $bar-buttons-opacity * 0.01;
+    margin: $bar-buttons-separator-margins;
+    min-width: $bar-buttons-separator-width;
+}

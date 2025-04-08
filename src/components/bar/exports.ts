@@ -27,6 +27,8 @@ import { Hypridle } from '../../components/bar/modules/hypridle/index';
 import { Cava } from '../../components/bar/modules/cava/index';
 import { WorldClock } from '../../components/bar/modules/worldclock/index';
 
+import { ModuleSeparator } from './modules/separator';
+
 export {
     Menu,
     Workspaces,
@@ -56,4 +58,5 @@ export {
     Hypridle,
     Cava,
     WorldClock,
+    ModuleSeparator,
 };
