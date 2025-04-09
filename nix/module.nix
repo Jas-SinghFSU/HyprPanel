@@ -1,12 +1,11 @@
-self:
-{
+self: {
   lib,
   pkgs,
   config,
   ...
-}:
-let
-  inherit (lib)
+}: let
+  inherit
+    (lib)
     types
     mkIf
     mkOption
@@ -15,12 +14,12 @@ let
 
   cfg = config.programs.hyprpanel;
 
-  jsonFormat = pkgs.formats.json { };
+  jsonFormat = pkgs.formats.json {};
 
   # No package option
   package =
-    if pkgs ? hyprpanel then
-      pkgs.hyprpanel
+    if pkgs ? hyprpanel
+    then pkgs.hyprpanel
     else
       abort ''
 
@@ -36,39 +35,32 @@ let
       '';
 
   # Shorthand lambda for self-documenting options under settings
-  mkStrOption =
-    default:
+  mkStrOption = default:
     mkOption {
       type = types.str;
       default = default;
     };
-  mkIntOption =
-    default:
+  mkIntOption = default:
     mkOption {
       type = types.int;
       default = default;
     };
-  mkBoolOption =
-    default:
+  mkBoolOption = default:
     mkOption {
       type = types.bool;
       default = default;
     };
-  mkStrListOption =
-    default:
+  mkStrListOption = default:
     mkOption {
       type = types.listOf types.str;
       default = default;
     };
-  mkFloatOption =
-    default:
+  mkFloatOption = default:
     mkOption {
       type = types.float;
       default = default;
     };
-
-in
-{
+in {
   options.programs.hyprpanel = {
     enable = mkEnableOption "HyprPanel";
     config.enable = mkBoolOption true; # Generate config
@@ -79,7 +71,7 @@ in
 
     override = mkOption {
       type = types.attrs;
-      default = { };
+      default = {};
       example = ''
         {
           theme.bar.menus.text = "#123ABC";
@@ -94,7 +86,7 @@ in
     settings = {
       layout = mkOption {
         type = jsonFormat.type;
-        default = { };
+        default = {};
         example = ''
           {
             "bar.layouts" = {
@@ -293,6 +285,7 @@ in
       bar.customModules.weather.unit = mkStrOption "imperial";
       bar.customModules.worldclock.format = mkStrOption "%I:%M:%S %p %Z";
       bar.customModules.worldclock.formatDiffDate = mkStrOption "%a %b %d  %I:%M:%S %p %Z";
+      bar.customModules.worldclock.divider = mkStrOption "  ";
       bar.customModules.worldclock.icon = mkStrOption "󱉊";
       bar.customModules.worldclock.middleClick = mkStrOption "";
       bar.customModules.worldclock.rightClick = mkStrOption "";
@@ -369,17 +362,17 @@ in
       bar.workspaces.workspaces = mkIntOption 5;
       bar.workspaces.workspaceIconMap = mkOption {
         type = jsonFormat.type;
-        default = { };
+        default = {};
         example = ''
-        {
-          "1": "<U+EEFE>",
-          "2": "<U+F269>",
-          "3": "<U+EAC4>",
-          "4": "<U+EC1B>",
-          "5": "<U+F02B4>",
-          "6": "<U+F1FF> ",
-          "7": "<U+EB1C>"
-        }
+          {
+            "1": "<U+EEFE>",
+            "2": "<U+F269>",
+            "3": "<U+EAC4>",
+            "4": "<U+EC1B>",
+            "5": "<U+F02B4>",
+            "6": "<U+F1FF> ",
+            "7": "<U+EB1C>"
+          }
         '';
       };
       dummy = mkBoolOption true;
@@ -468,7 +461,7 @@ in
       notifications.monitor = mkIntOption 0;
       notifications.position = mkStrOption "top right";
       notifications.showActionsOnHover = mkBoolOption false;
-      notifications.ignore = mkStrListOption [ ];
+      notifications.ignore = mkStrListOption [];
       notifications.timeout = mkIntOption 7000;
       scalingPriority = mkStrOption "gdk";
       tear = mkBoolOption false;
@@ -641,60 +634,56 @@ in
     };
   };
 
-  config =
-    let
+  config = let
+    theme =
+      if cfg.settings.theme.name != ""
+      then builtins.fromJSON (builtins.readFile ../themes/${cfg.settings.theme.name}.json)
+      else {};
 
-      theme =
-        if cfg.settings.theme.name != "" then
-          builtins.fromJSON (builtins.readFile ../themes/${cfg.settings.theme.name}.json)
-        else
-          { };
+    flatSet = lib.attrsets.recursiveUpdate cfg.settings theme;
 
-      flatSet = lib.attrsets.recursiveUpdate cfg.settings theme;
+    mergeSet = flatSet // cfg.override;
 
-      mergeSet = flatSet // cfg.override;
+    fullSet =
+      if cfg.settings.layout == null
+      then mergeSet
+      else mergeSet // cfg.settings.layout;
 
-      fullSet = if cfg.settings.layout == null then mergeSet else mergeSet // cfg.settings.layout;
+    finalConfig = builtins.toJSON fullSet;
 
-      finalConfig = builtins.toJSON fullSet;
-
-      hyprpanel-diff = pkgs.writeShellApplication {
-        runtimeInputs = [ pkgs.colordiff ];
-        name = "hyprpanel-diff";
-        text = ''
-          cd
-          echo '------------- HyprPanel -------------'
-          echo 'Please ignore the layout diff for now'
-          echo '-------------------------------------'
-          colordiff ${config.xdg.configFile.hyprpanel.target} \
-                    ${config.xdg.configFile.hyprpanel-swap.target}
-        '';
-      };
-
-    in
+    hyprpanel-diff = pkgs.writeShellApplication {
+      runtimeInputs = [pkgs.colordiff];
+      name = "hyprpanel-diff";
+      text = ''
+        cd
+        echo '------------- HyprPanel -------------'
+        echo 'Please ignore the layout diff for now'
+        echo '-------------------------------------'
+        colordiff ${config.xdg.configFile.hyprpanel.target} \
+                  ${config.xdg.configFile.hyprpanel-swap.target}
+      '';
+    };
+  in
     mkIf cfg.enable {
-
       # nixpkgs.overlays = if cfg.overlay.enable then [ self.overlay ] else null;
-      nixpkgs.overlays = lib.mkIf cfg.overlay.enable [ self.overlay ];
+      nixpkgs.overlays = lib.mkIf cfg.overlay.enable [self.overlay];
 
       home.packages = [
         package
         hyprpanel-diff
         (
-          if pkgs ? nerd-fonts.jetbrains-mono then
-            pkgs.nerd-fonts.jetbrains-mono
+          if pkgs ? nerd-fonts.jetbrains-mono
+          then pkgs.nerd-fonts.jetbrains-mono
           # NOTE:(benvonh) Remove after next release 25.05
-          else
-            pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }
+          else pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];}
         )
       ];
 
-      home.activation =
-        let
-          path = "${config.xdg.configFile.hyprpanel.target}";
-        in
+      home.activation = let
+        path = "${config.xdg.configFile.hyprpanel.target}";
+      in
         mkIf cfg.overwrite.enable {
-          hyprpanel = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+          hyprpanel = lib.hm.dag.entryBefore ["writeBoundary"] ''
             [[ -L "${path}" ]] || rm -f "${path}"
           '';
         };
@@ -729,11 +718,13 @@ in
       #     Install = { WantedBy = [ "graphical-session.target" ]; };
       #   };
       # };
-      warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [ ];
+      warnings =
+        if cfg.systemd.enable
+        then ["The `systemd.enable` option is now obsolete."]
+        else [];
 
       wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [
         "${package}/bin/hyprpanel"
       ];
     };
 }
-
