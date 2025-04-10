@@ -293,6 +293,7 @@ in
       bar.customModules.weather.unit = mkStrOption "imperial";
       bar.customModules.worldclock.format = mkStrOption "%I:%M:%S %p %Z";
       bar.customModules.worldclock.formatDiffDate = mkStrOption "%a %b %d  %I:%M:%S %p %Z";
+      bar.customModules.worldclock.divider = mkStrOption "  ";
       bar.customModules.worldclock.icon = mkStrOption "󱉊";
       bar.customModules.worldclock.middleClick = mkStrOption "";
       bar.customModules.worldclock.rightClick = mkStrOption "";
