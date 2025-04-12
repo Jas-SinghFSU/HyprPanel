@@ -24,6 +24,21 @@ const {
 export const cpuUsage = Variable(0);
 const cpuHistory = Variable<number[]>([]);
 
+const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
+
+const graphBinding = showGraph
+    ? Variable.derive([bind(cpuUsage), historyLengthBinding()], (cpuUsg: number, hstLength: number) => {
+          const history = cpuHistory.get();
+          history.push(cpuUsg);
+          if (history.length > hstLength) {
+              history.shift();
+          }
+          cpuHistory.set(history);
+
+          return history.map(getBarGraph).join('');
+      })
+    : Variable.derive([], () => '');
+
 const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(pollingInterval), computeCPU);
 
 cpuPoller.initialize('cpu');
@@ -41,21 +56,6 @@ export const Cpu = (): BarBoxChild => {
     const percentageBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg: number, round: boolean) => {
         return round ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     });
-    
-    const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
-
-    const graphBinding = showGraph
-        ? Variable.derive([bind(cpuUsage), historyLengthBinding()], (cpuUsg: number, hstLength: number) => {
-              const history = cpuHistory.get();
-              history.push(cpuUsg);
-              if (history.length > hstLength) {
-                  history.shift();
-              }
-              cpuHistory.set(history);
-
-              return history.map(getBarGraph).join('');
-          })
-        : Variable.derive([], () => '');
 
     const labelBinding = Variable.derive([percentageBinding(), graphBinding()], (percentage: string, graph: string) => {
         return showGraph ? `${percentage} ${graph}` : percentage;

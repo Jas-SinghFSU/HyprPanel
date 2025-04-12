@@ -16,6 +16,21 @@ const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, 
 const ramUsage = Variable<GenericResourceData>(defaultRamData);
 const ramHistory = Variable<number[]>([]);
 
+const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
+
+const graphBinding = showGraph
+    ? Variable.derive([bind(ramUsage), historyLengthBinding()], (rmUsg: GenericResourceData, hstLength: number) => {
+          const history = ramHistory.get();
+          history.push(rmUsg.percentage);
+          if (history.length > hstLength) {
+              history.shift();
+          }
+          ramHistory.set(history);
+
+          return history.map(getBarGraph).join('');
+      })
+    : Variable.derive([], () => '');
+
 const ramPoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
     ramUsage,
     [bind(round)],
@@ -43,19 +58,6 @@ export const Ram = (): BarBoxChild => {
             return returnValue;
         },
     );
-    
-    const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
-
-    const graphBinding = showGraph ? Variable.derive([bind(ramUsage), historyLengthBinding()], (rmUsg: GenericResourceData, hstLength: number) => {
-        const history = ramHistory.get();
-        history.push(rmUsg.percentage);
-        if (history.length > hstLength) {
-            history.shift();
-        }
-        ramHistory.set(history);
-
-        return history.map(getBarGraph).join('');
-    }) : Variable.derive([], () => '');
 
     const combinedLabelBinding = Variable.derive([labelBinding(), graphBinding()], (label: string, graph: string) => {
         return showGraph ? `${label} ${graph}` : label;
