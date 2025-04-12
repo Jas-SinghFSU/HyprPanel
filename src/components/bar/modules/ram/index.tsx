@@ -18,19 +18,6 @@ const ramHistory = Variable<number[]>([]);
 
 const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
 
-const graphBinding = showGraph
-    ? Variable.derive([bind(ramUsage), historyLengthBinding()], (rmUsg: GenericResourceData, hstLength: number) => {
-          const history = ramHistory.get();
-          history.push(rmUsg.percentage);
-          if (history.length > hstLength) {
-              history.shift();
-          }
-          ramHistory.set(history);
-
-          return history.map(getBarGraph).join('');
-      })
-    : Variable.derive([], () => '');
-
 const ramPoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
     ramUsage,
     [bind(round)],
@@ -49,6 +36,19 @@ const getBarGraph = (usage: number): string => {
     if (usage < 83.33) return '▇';
     return '█';
 };
+
+const graphBinding = showGraph
+    ? Variable.derive([bind(ramUsage), historyLengthBinding()], (rmUsg: GenericResourceData, hstLength: number) => {
+          const history = ramHistory.get();
+          history.push(rmUsg.percentage);
+          if (history.length > hstLength) {
+              history.shift();
+          }
+          ramHistory.set(history);
+
+          return history.map(getBarGraph).join('');
+      })
+    : Variable.derive([], () => '');
 
 export const Ram = (): BarBoxChild => {
     const labelBinding = Variable.derive(

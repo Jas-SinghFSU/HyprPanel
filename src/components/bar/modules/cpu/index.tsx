@@ -26,19 +26,6 @@ const cpuHistory = Variable<number[]>([]);
 
 const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
 
-const graphBinding = showGraph
-    ? Variable.derive([bind(cpuUsage), historyLengthBinding()], (cpuUsg: number, hstLength: number) => {
-          const history = cpuHistory.get();
-          history.push(cpuUsg);
-          if (history.length > hstLength) {
-              history.shift();
-          }
-          cpuHistory.set(history);
-
-          return history.map(getBarGraph).join('');
-      })
-    : Variable.derive([], () => '');
-
 const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(pollingInterval), computeCPU);
 
 cpuPoller.initialize('cpu');
@@ -51,6 +38,19 @@ const getBarGraph = (usage: number): string => {
     if (usage < 83.33) return '▇';
     return '█';
 };
+
+const graphBinding = showGraph
+    ? Variable.derive([bind(cpuUsage), historyLengthBinding()], (cpuUsg: number, hstLength: number) => {
+          const history = cpuHistory.get();
+          history.push(cpuUsg);
+          if (history.length > hstLength) {
+              history.shift();
+          }
+          cpuHistory.set(history);
+
+          return history.map(getBarGraph).join('');
+      })
+    : Variable.derive([], () => '');
 
 export const Cpu = (): BarBoxChild => {
     const percentageBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg: number, round: boolean) => {
