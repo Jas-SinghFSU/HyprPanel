@@ -14,6 +14,7 @@ import { SysTray } from '../../components/bar/modules/systray/index';
 import { Microphone } from '../../components/bar/modules/microphone/index';
 import { Ram } from '../../components/bar/modules/ram/index';
 import { Cpu } from '../../components/bar/modules/cpu/index';
+import { CpuGraph } from '../../components/bar/modules/cpugraph/index';
 import { CpuTemp } from '../../components/bar/modules/cputemp/index';
 import { Storage } from '../../components/bar/modules/storage/index';
 import { Netstat } from '../../components/bar/modules/netstat/index';
@@ -46,6 +47,7 @@ export {
     Microphone,
     Ram,
     Cpu,
+    CpuGraph,
     CpuTemp,
     Storage,
     Netstat,
