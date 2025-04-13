@@ -31,11 +31,13 @@ const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(p
 cpuPoller.initialize('cpu');
 
 const getBarGraph = (usage: number): string => {
-    if (usage < 16.67) return '▁';
-    if (usage < 33.33) return '▂';
+    if (usage < 12.5) return '▁';
+    if (usage < 25) return '▂';
+    if (usage < 37.5) return '▃';
     if (usage < 50) return '▄';
-    if (usage < 66.67) return '▆';
-    if (usage < 83.33) return '▇';
+    if (usage < 62.5) return '▅';
+    if (usage < 75) return '▆';
+    if (usage < 87.5) return '▇';
     return '█';
 };
 
