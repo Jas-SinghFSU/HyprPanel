@@ -418,6 +418,26 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cava.middleClick} title="Middle Click" type="string" />
                 <Option opt={options.bar.customModules.cava.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.cava.scrollDown} title="Scroll Down" type="string" />
+                <Option opt={options.bar.customModules.cava.show_tooltip} title="Toggle Media Tooltip" type="boolean" />
+                <Option
+                    opt={options.bar.customModules.cava.format}
+                    title="Tooltip Format"
+                    subtitle="Placeholders: {title}, {artists}, {artist}, {album}, {name}, {identity}"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.cava.truncation}
+                    title="Truncate Media Tooltip"
+                    subtitle="Requires Toggle Media Tooltip."
+                    type="boolean"
+                />
+                <Option
+                    opt={options.bar.customModules.cava.truncation_size}
+                    title="Truncation Size"
+                    subtitle="Requires Toggle Media Tooltip."
+                    type="number"
+                    min={10}
+                />
 
                 {/* World Clock Section */}
                 <Header title="World Clock" />
