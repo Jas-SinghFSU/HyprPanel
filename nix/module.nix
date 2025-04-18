@@ -387,6 +387,17 @@ in
         }
         '';
       };
+      bar.workspaces.applicationIconMap = mkOption {
+        type = jsonFormat.type;
+        default = { };
+        example = ''
+        {
+            "class:kitty$":"󰆍",
+            "title:Settings":"",
+            "vivaldi":""
+        }
+        '';
+      };
       dummy = mkBoolOption true;
       hyprpanel.restartAgs = mkBoolOption true;
       # hyprpanel.restartCommand = mkStrOption "${pkgs.procps}/bin/pkill -u $USER -USR1 hyprpanel; ${package}/bin/hyprpanel";
