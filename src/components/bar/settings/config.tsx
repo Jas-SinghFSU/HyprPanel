@@ -54,6 +54,15 @@ export const CustomModuleSettings = (): JSX.Element => {
                     max={60 * 24 * 1000}
                     increment={1000}
                 />
+                <Option
+                    opt={options.bar.customModules.ram.historyLength}
+                    title="History Length"
+                    type="number"
+                    min={1}
+                    max={30}
+                    increment={1}
+                />
+                <Option opt={options.bar.customModules.ram.showGraph} title="Show Graph" type="boolean" />
                 <Option opt={options.bar.customModules.ram.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.ram.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.customModules.ram.middleClick} title="Middle Click" type="string" />
@@ -73,6 +82,15 @@ export const CustomModuleSettings = (): JSX.Element => {
                     max={60 * 24 * 1000}
                     increment={1000}
                 />
+                <Option
+                    opt={options.bar.customModules.cpu.historyLength}
+                    title="History Length"
+                    type="number"
+                    min={1}
+                    max={30}
+                    increment={1}
+                />
+                <Option opt={options.bar.customModules.cpu.showGraph} title="Show Graph" type="boolean" />
                 <Option opt={options.bar.customModules.cpu.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.cpu.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.customModules.cpu.middleClick} title="Middle Click" type="string" />
