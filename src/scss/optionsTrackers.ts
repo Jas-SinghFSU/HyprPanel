@@ -37,7 +37,7 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
         }
         if (options.wallpaper.pywal.get() && dependencies('wal')) {
             const wallpaperPath = options.wallpaper.image.get();
-            bash(`wal -i ${wallpaperPath}`);
+            bash(`wal -i "${wallpaperPath}"`);
         }
     });
 };
