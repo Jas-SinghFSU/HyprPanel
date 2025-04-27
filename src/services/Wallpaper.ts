@@ -30,7 +30,7 @@ class Wallpaper extends GObject.Object {
                 '60',
                 '--transition-pos',
                 cursorPosition.replace(' ', ''),
-                `"${WP}"`
+                `"${WP}"`,
             ].join(' ');
 
             sh(transitionCmd)
