@@ -7,11 +7,11 @@ install_arch_updates() {
     sudo pacman -Syu
     echo "Updating AUR packages..."
     if command -v paru &> /dev/null; then
-    paru -Syu
+        paru -Syu
     elif command -v yay &> /dev/null; then
-    yay -Syu
+        yay -Syu
     else
-    echo "Missing AUR Helper. Try installing yay or paru"
+        echo "Missing AUR Helper. Try installing yay or paru"
     fi
     echo "Updating Flatpak packages..."
     flatpak update -y
