@@ -6,7 +6,13 @@ install_arch_updates() {
     echo "Updating Arch Linux system..."
     sudo pacman -Syu
     echo "Updating AUR packages..."
-    paru -Syu
+    if command -v paru &> /dev/null; then
+        paru -Syu
+    elif command -v yay &> /dev/null; then
+        yay -Syu
+    else
+        echo "Missing AUR Helper. Try installing yay or paru"
+    fi
     echo "Updating Flatpak packages..."
     flatpak update -y
     echo "Done with Arch & AUR updates."
@@ -32,6 +38,7 @@ install_flatpak_updates() {
     echo "Updating Flatpak packages..."
     flatpak update -y
     echo "Done with FlatPak updates."
+
 }
 
 case "$1" in

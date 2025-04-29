@@ -9,7 +9,7 @@ export const WallpaperInputter = <T extends string | number | boolean | object>(
         return (
             <FileChooserButton
                 onFileSet={(self) => {
-                    const newValue: string = self.get_uri()!.replace('file://', '');
+                    const newValue: string = decodeURIComponent(self.get_uri()!.replace('file://', ''));
                     opt.set(newValue as T);
                     if (options.wallpaper.enable.get()) {
                         Wallpaper.setWallpaper(newValue);

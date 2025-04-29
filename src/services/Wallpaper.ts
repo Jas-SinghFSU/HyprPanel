@@ -30,7 +30,7 @@ class Wallpaper extends GObject.Object {
                 '60',
                 '--transition-pos',
                 cursorPosition.replace(' ', ''),
-                WP,
+                `"${WP}"`,
             ].join(' ');
 
             sh(transitionCmd)
@@ -50,7 +50,7 @@ class Wallpaper extends GObject.Object {
         this.#blockMonitor = true;
 
         try {
-            await sh(`cp ${path} ${WP}`);
+            await sh(`cp "${path}" "${WP}"`);
             this.#wallpaper();
         } catch (error) {
             console.error('Error setting wallpaper:', error);
