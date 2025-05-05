@@ -1,0 +1,78 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "tsconfig.json",
+        "tsconfigRootDir": ".",
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
+    "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+    "root": true,
+    "env": {
+        "node": true,
+        "jest": true
+    },
+    "ignorePatterns": ["/*", "!/src"],
+    "rules": {
+        "@typescript-eslint/interface-name-prefix": "off",
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/strict-boolean-expressions": "error",
+        "@typescript-eslint/prefer-enum-initializers": "error",
+        "@typescript-eslint/no-mixed-enums": "error",
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+            "error",
+            {
+                "accessibility": "explicit",
+                "overrides": {
+                    "constructors": "no-public"
+                }
+            }
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "allowTemplateLiterals": false,
+                "avoidEscape": true
+            }
+        ],
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQuote": true,
+                "trailingComma": "all",
+                "printWidth": 110,
+                "tabWidth": 4
+            }
+        ],
+        "no-param-reassign": ["error", { "props": true }],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "typeLike",
+                "format": ["PascalCase"]
+            },
+            {
+                "selector": "enumMember",
+                "format": ["UPPER_CASE"]
+            },
+            {
+                "selector": "memberLike",
+                "modifiers": ["private"],
+                "format": null,
+                "leadingUnderscore": "require"
+            }
+        ]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.dto.ts"],
+            "rules": {
+                "@typescript-eslint/explicit-member-accessibility": "off"
+            }
+        }
+    ]
+}
