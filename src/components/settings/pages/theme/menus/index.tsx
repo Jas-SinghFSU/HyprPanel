@@ -45,7 +45,9 @@ export const MenuTheme = (): JSX.Element => {
                 <Option
                     opt={options.wallpaper.image}
                     title="Wallpaper"
-                    subtitle={bind(options.wallpaper.image).as((wallpaper) => wallpaper || 'No Wallpaper Selected')}
+                    subtitle={bind(options.wallpaper.image).as(
+                        (wallpaper) => wallpaper || 'No Wallpaper Selected',
+                    )}
                     type="wallpaper"
                 />
                 <Option opt={options.theme.bar.menus.background} title="Background Color" type="color" />
@@ -99,12 +101,20 @@ export const MenuTheme = (): JSX.Element => {
                 <Option opt={options.theme.bar.menus.switch.enabled} title="Enabled" type="color" />
                 <Option opt={options.theme.bar.menus.switch.disabled} title="Disabled" type="color" />
                 <Option opt={options.theme.bar.menus.switch.radius} title="Switch Radius" type="string" />
-                <Option opt={options.theme.bar.menus.switch.slider_radius} title="Switch Puck Radius" type="string" />
+                <Option
+                    opt={options.theme.bar.menus.switch.slider_radius}
+                    title="Switch Puck Radius"
+                    type="string"
+                />
                 <Option opt={options.theme.bar.menus.switch.puck} title="Puck" type="color" />
 
                 {/* Check/Radio Buttons Section */}
                 <Header title="Check/Radio Buttons" />
-                <Option opt={options.theme.bar.menus.check_radio_button.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.check_radio_button.background}
+                    title="Background"
+                    type="color"
+                />
                 <Option opt={options.theme.bar.menus.check_radio_button.active} title="Active" type="color" />
 
                 {/* Buttons Section */}
@@ -118,20 +128,40 @@ export const MenuTheme = (): JSX.Element => {
                 {/* Icon Buttons Section */}
                 <Header title="Icon Buttons" />
                 <Option opt={options.theme.bar.menus.iconbuttons.passive} title="Primary" type="color" />
-                <Option opt={options.theme.bar.menus.iconbuttons.active} title="Active/Hovered" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.iconbuttons.active}
+                    title="Active/Hovered"
+                    type="color"
+                />
 
                 {/* Progress Bar Section */}
                 <Header title="Progress Bar" />
-                <Option opt={options.theme.bar.menus.progressbar.radius} title="Progress Bar Radius" type="string" />
+                <Option
+                    opt={options.theme.bar.menus.progressbar.radius}
+                    title="Progress Bar Radius"
+                    type="string"
+                />
                 <Option opt={options.theme.bar.menus.progressbar.foreground} title="Primary" type="color" />
-                <Option opt={options.theme.bar.menus.progressbar.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.progressbar.background}
+                    title="Background"
+                    type="color"
+                />
 
                 {/* Slider Section */}
                 <Header title="Slider" />
                 <Option opt={options.theme.bar.menus.slider.primary} title="Primary" type="color" />
                 <Option opt={options.theme.bar.menus.slider.background} title="Background" type="color" />
-                <Option opt={options.theme.bar.menus.slider.backgroundhover} title="Background (Hover)" type="color" />
-                <Option opt={options.theme.bar.menus.slider.slider_radius} title="Slider Puck Radius" type="string" />
+                <Option
+                    opt={options.theme.bar.menus.slider.backgroundhover}
+                    title="Background (Hover)"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.slider.slider_radius}
+                    title="Slider Puck Radius"
+                    type="string"
+                />
                 <Option
                     opt={options.theme.bar.menus.slider.progress_radius}
                     title="Slider/Progress Bar Radius"
@@ -146,7 +176,11 @@ export const MenuTheme = (): JSX.Element => {
 
                 {/* Dropdown Menu Section */}
                 <Header title="Dropdown Menu" />
-                <Option opt={options.theme.bar.menus.dropdownmenu.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.dropdownmenu.background}
+                    title="Background"
+                    type="color"
+                />
                 <Option opt={options.theme.bar.menus.dropdownmenu.text} title="Text" type="color" />
                 <Option opt={options.theme.bar.menus.dropdownmenu.divider} title="Divider" type="color" />
 

@@ -43,7 +43,7 @@ export class Opt<T = unknown> extends Variable<T> {
      *
      * @returns {string}
      */
-    toJSON(): string {
+    public toJSON(): string {
         return `opt:${JSON.stringify(this.get())}`;
     }
 
@@ -148,33 +148,44 @@ export class Opt<T = unknown> extends Variable<T> {
     }
 }
 
+/**
+ * Recursively searches for a value in a nested object using a path array.
+ *
+ * @param obj - The object to search within
+ * @param path - Array of property names representing the path to the desired value
+ * @returns The value found at the specified path, or undefined if not found
+ *
+ * @example
+ * // Returns "baz"
+ * _findVal({ foo: { bar: "baz" } }, ["foo", "bar"]);
+ *
+ * @example
+ * // Also works with dot notation in object keys
+ * _findVal({ "foo.bar": "baz" }, ["foo", "bar"]);
+ *
+ * @private
+ */
 function _findVal(obj: Record<string, unknown>, path: string[]): unknown | undefined {
     const top = path.shift();
 
-    if (!top) {
-        // The path is empty, so this is our value.
+    if (top === undefined) {
         return obj;
     }
 
     if (typeof obj !== 'object') {
-        // Not an array, not an object, but we need to go deeper.
-        // This is invalid, so return.
         return undefined;
     }
 
     const mergedPath = [top, ...path].join('.');
 
     if (mergedPath in obj) {
-        // The key exists on this level with dot-notation, so we return that.
         return obj[mergedPath];
     }
 
     if (top in obj) {
-        // The value exists but we are not there yet, so we recurse.
         return _findVal(obj[top] as Record<string, unknown>, path);
     }
 
-    // Key does not exist :(
     return undefined;
 }
 
@@ -317,7 +328,7 @@ export function mkOptions<T extends object>(optionsObj: T): T & MkOptionsResult 
         for (let i = 0; i < opts.length; i++) {
             const id = opts[i].reset();
 
-            if (id) {
+            if (id !== undefined) {
                 results.push(id);
                 await sleep(50);
             }

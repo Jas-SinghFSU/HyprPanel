@@ -18,7 +18,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
                     return;
                 }
 
-                if (removingNotifications.get()) {
+                if (removingNotifications.get() === true) {
                     return;
                 }
 
@@ -27,7 +27,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
         >
             <label
                 className={bind(removingNotifications).as((removing) => {
-                    return removing
+                    return removing === true
                         ? 'clear-notifications-label txt-icon removing'
                         : 'clear-notifications-label txt-icon';
                 })}

@@ -13,7 +13,7 @@ export const PlaybackDevices = (): JSX.Element => {
         <box className={'menu-items-section playback'} vertical>
             <box className={'menu-container playback'} vertical>
                 {playbackDevices.as((devices) => {
-                    if (!devices || devices.length === 0) {
+                    if (devices === null || devices.length === 0) {
                         return <NotFoundButton type={'playback'} />;
                     }
 

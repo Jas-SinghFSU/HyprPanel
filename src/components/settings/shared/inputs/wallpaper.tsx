@@ -1,6 +1,7 @@
 import FileChooserButton from 'src/components/shared/FileChooserButton';
 import { Opt } from 'src/lib/option';
 import Wallpaper from 'src/services/Wallpaper';
+import options from 'src/options';
 
 export const WallpaperInputter = <T extends string | number | boolean | object>({
     opt,
@@ -9,10 +10,19 @@ export const WallpaperInputter = <T extends string | number | boolean | object>(
         return (
             <FileChooserButton
                 onFileSet={(self) => {
-                    const newValue: string = decodeURIComponent(self.get_uri()!.replace('file://', ''));
-                    opt.set(newValue as T);
+                    const fileUri = self.get_uri();
+
+                    if (fileUri === null) {
+                        console.warn('Failed to set wallpaper: File URI is null.');
+                        return;
+                    }
+
+                    const filePath: string = decodeURIComponent(fileUri.replace('file://', ''));
+
+                    opt.set(filePath as T);
+
                     if (options.wallpaper.enable.get()) {
-                        Wallpaper.setWallpaper(newValue);
+                        Wallpaper.setWallpaper(filePath);
                     }
                 }}
             />

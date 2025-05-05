@@ -16,9 +16,17 @@ export const NotificationsMenuTheme = (): JSX.Element => {
             <box vertical>
                 {/* Notifications Menu Theme Settings Section */}
                 <Header title="Notifications Menu Theme Settings" />
-                <Option opt={options.theme.bar.menus.menu.notifications.label} title="Menu Label" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.notifications.label}
+                    title="Menu Label"
+                    type="color"
+                />
                 <Option opt={options.theme.bar.menus.menu.notifications.card} title="Card" type="color" />
-                <Option opt={options.theme.bar.menus.menu.notifications.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.notifications.background}
+                    title="Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.notifications.no_notifications_label}
                     title="Empty Notifications Backdrop"
@@ -38,13 +46,21 @@ export const NotificationsMenuTheme = (): JSX.Element => {
 
                 {/* Switch Section */}
                 <Header title="Switch" />
-                <Option opt={options.theme.bar.menus.menu.notifications.switch.enabled} title="Enabled" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.notifications.switch.enabled}
+                    title="Enabled"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.notifications.switch.disabled}
                     title="Disabled"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.notifications.switch.puck} title="Puck" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.notifications.switch.puck}
+                    title="Puck"
+                    type="color"
+                />
 
                 {/* Scrollbar Section */}
                 <Header title="Scrollbar" />

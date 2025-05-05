@@ -10,16 +10,16 @@ class PowerMenu extends GObject.Object {
     #cmd = '';
 
     @property(String)
-    get title(): string {
+    public get title(): string {
         return this.#title;
     }
 
     @property(String)
-    get cmd(): string {
+    public get cmd(): string {
         return this.#cmd;
     }
 
-    action(action: Action): void {
+    public action(action: Action): void {
         [this.#cmd, this.#title] = {
             sleep: [sleep.get(), 'Sleep'],
             reboot: [reboot.get(), 'Reboot'],
@@ -34,7 +34,7 @@ class PowerMenu extends GObject.Object {
         App.get_window('verification')?.set_visible(true);
     }
 
-    customAction(action: Action, cmnd: string): void {
+    public customAction(action: Action, cmnd: string): void {
         [this.#cmd, this.#title] = [cmnd, action];
 
         this.notify('cmd');
@@ -44,11 +44,11 @@ class PowerMenu extends GObject.Object {
         App.get_window('verification')?.set_visible(true);
     }
 
-    shutdown = (): void => {
+    public shutdown = (): void => {
         this.action('shutdown');
     };
 
-    exec = (): void => {
+    public exec = (): void => {
         App.get_window('verification')?.set_visible(false);
         execAsync(this.#cmd);
     };

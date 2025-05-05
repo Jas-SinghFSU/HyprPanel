@@ -13,7 +13,11 @@ export const getNotificationIcon = (app_name: string, app_icon: string, app_entr
     let icon: string = icons.fallback.notification;
 
     if (lookUpIcon(app_name) || lookUpIcon(app_name.toLowerCase() || '')) {
-        icon = lookUpIcon(app_name) ? app_name : lookUpIcon(app_name.toLowerCase()) ? app_name.toLowerCase() : '';
+        icon = lookUpIcon(app_name)
+            ? app_name
+            : lookUpIcon(app_name.toLowerCase())
+              ? app_name.toLowerCase()
+              : '';
     }
 
     if (lookUpIcon(app_icon) && icon === '') {
@@ -27,7 +31,10 @@ export const getNotificationIcon = (app_name: string, app_icon: string, app_entr
     return icon;
 };
 
-export const clearNotifications = async (notifications: AstalNotifd.Notification[], delay: number): Promise<void> => {
+export const clearNotifications = async (
+    notifications: AstalNotifd.Notification[],
+    delay: number,
+): Promise<void> => {
     removingNotifications.set(true);
     for (const notification of notifications) {
         notification.dismiss();

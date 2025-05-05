@@ -145,7 +145,9 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 monitor,
                             )}
                             setup={(self) => {
-                                const currentWsClients = clients.filter((client) => client?.workspace?.id === wsId);
+                                const currentWsClients = clients.filter(
+                                    (client) => client?.workspace?.id === wsId,
+                                );
                                 self.toggleClassName('occupied', currentWsClients.length > 0);
                             }}
                         />

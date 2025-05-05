@@ -14,7 +14,7 @@ import { Command, ParsedCommand } from './types';
  * 5. Validates required arguments.
  */
 export class CommandParser {
-    private registry: CommandRegistry;
+    private _registry: CommandRegistry;
 
     /**
      * Constructs a CommandParser with the provided command registry.
@@ -22,7 +22,7 @@ export class CommandParser {
      * @param registry - The command registry containing available commands.
      */
     constructor(registry: CommandRegistry) {
-        this.registry = registry;
+        this._registry = registry;
     }
 
     /**
@@ -33,20 +33,22 @@ export class CommandParser {
      * @throws If no command token is found.
      * @throws If the command token is not registered.
      */
-    parse(input: string): ParsedCommand {
-        const tokens = this.tokenize(input);
+    public parse(input: string): ParsedCommand {
+        const tokens = this._tokenize(input);
 
         if (tokens.length === 0) {
             throw new Error('No command provided.');
         }
 
-        const commandName = tokens.shift()!;
-        const command = this.registry.get(commandName);
+        const commandName = tokens.shift() ?? 'non-existent-command';
+        const command = this._registry.get(commandName);
         if (!command) {
-            throw new Error(`Unknown command: "${commandName}". Use "hyprpanel explain" for available commands.`);
+            throw new Error(
+                `Unknown command: "${commandName}". Use "hyprpanel explain" for available commands.`,
+            );
         }
 
-        const args = this.parseArgs(command, tokens);
+        const args = this._parseArgs(command, tokens);
         return { command, args };
     }
 
@@ -56,10 +58,10 @@ export class CommandParser {
      * @param input - The raw input string to break into tokens.
      * @returns An array of tokens.
      */
-    private tokenize(input: string): string[] {
+    private _tokenize(input: string): string[] {
         const regex = /(?:[^\s"']+|"[^"]*"|'[^']*')+/g;
         const matches = input.match(regex);
-        return matches ? matches.map((token) => this.stripQuotes(token)) : [];
+        return matches ? matches.map((token) => this._stripQuotes(token)) : [];
     }
 
     /**
@@ -68,7 +70,7 @@ export class CommandParser {
      * @param str - The token from which to strip leading or trailing quotes.
      * @returns The token without its outer quotes.
      */
-    private stripQuotes(str: string): string {
+    private _stripQuotes(str: string): string {
         return str.replace(/^["'](.+(?=["']$))["']$/, '$1');
     }
 
@@ -81,13 +83,13 @@ export class CommandParser {
      * @throws If required arguments are missing.
      * @throws If there are too many tokens for the command definition.
      */
-    private parseArgs(command: Command, tokens: string[]): Record<string, unknown> {
+    private _parseArgs(command: Command, tokens: string[]): Record<string, unknown> {
         const args: Record<string, unknown> = {};
         let currentIndex = 0;
 
         for (const argDef of command.args) {
             if (currentIndex >= tokens.length) {
-                if (argDef.required) {
+                if (argDef.required === true) {
                     throw new Error(`Missing required argument: "${argDef.name}".`);
                 }
                 if (argDef.default !== undefined) {
@@ -97,13 +99,13 @@ export class CommandParser {
             }
 
             if (argDef.type === 'object') {
-                const { objectValue, nextIndex } = this.parseObjectTokens(tokens, currentIndex);
+                const { objectValue, nextIndex } = this._parseObjectTokens(tokens, currentIndex);
                 args[argDef.name] = objectValue;
                 currentIndex = nextIndex;
             } else {
                 const value = tokens[currentIndex];
                 currentIndex++;
-                args[argDef.name] = this.convertType(value, argDef.type);
+                args[argDef.name] = this._convertType(value, argDef.type);
             }
         }
 
@@ -125,7 +127,10 @@ export class CommandParser {
      * @returns An object containing the parsed JSON object and the next token index.
      * @throws If the reconstructed JSON is invalid.
      */
-    private parseObjectTokens(tokens: string[], startIndex: number): { objectValue: unknown; nextIndex: number } {
+    private _parseObjectTokens(
+        tokens: string[],
+        startIndex: number,
+    ): { objectValue: unknown; nextIndex: number } {
         let braceCount = 0;
         let started = false;
         const objectTokens: string[] = [];
@@ -166,7 +171,7 @@ export class CommandParser {
      * @returns The converted value.
      * @throws If the token cannot be converted to the expected type.
      */
-    private convertType(value: string, type: 'string' | 'number' | 'boolean' | 'object'): unknown {
+    private _convertType(value: string, type: 'string' | 'number' | 'boolean' | 'object'): unknown {
         switch (type) {
             case 'number': {
                 const num = Number(value);

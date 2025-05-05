@@ -17,7 +17,7 @@ export const Module = ({
     props = {},
     showLabelBinding = bind(Variable(true)),
     showIconBinding = bind(Variable(true)),
-    showLabel,
+    showLabel = true,
     labelHook,
     hook,
 }: BarModule): BarBoxChild => {
@@ -25,12 +25,12 @@ export const Module = ({
         const className = `txt-icon bar-button-icon module-icon ${boxClass}`;
 
         const icn = typeof icon === 'string' ? icon : icon?.get();
-        if (!useTxtIcn && icn?.length) {
+        if (!useTxtIcn && icn !== undefined && icn.length > 0) {
             return <icon className={className} icon={icon} />;
         }
 
         const textIcn = typeof textIcon === 'string' ? textIcon : textIcon?.get();
-        if (textIcn?.length) {
+        if (textIcn !== undefined && textIcn.length > 0) {
             return <label className={className} label={textIcon} />;
         }
     };

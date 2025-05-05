@@ -29,7 +29,9 @@ const InputField = <T extends string | number | boolean | object>({
 }: InputFieldProps<T>): JSX.Element => {
     switch (type) {
         case 'number':
-            return <NumberInputter opt={opt} min={min} max={max} increment={increment} isUnsaved={isUnsaved} />;
+            return (
+                <NumberInputter opt={opt} min={min} max={max} increment={increment} isUnsaved={isUnsaved} />
+            );
         case 'float':
         case 'object':
             return <ObjectInputter opt={opt} isUnsaved={isUnsaved} className={className} />;
@@ -38,7 +40,9 @@ const InputField = <T extends string | number | boolean | object>({
         case 'enum':
             return <EnumInputter opt={opt} values={enums} />;
         case 'boolean':
-            return <BooleanInputter opt={opt} disabledBinding={disabledBinding} dependencies={dependencies} />;
+            return (
+                <BooleanInputter opt={opt} disabledBinding={disabledBinding} dependencies={dependencies} />
+            );
         case 'img':
             return <ImageInputter opt={opt} />;
         case 'config_import':
@@ -71,7 +75,10 @@ export const Inputter = <T extends string | number | boolean | object>({
     isUnsaved,
 }: InputterProps<T>): JSX.Element => {
     return (
-        <box className={/export|import/.test(type || '') ? '' : 'inputter-container'} valign={Gtk.Align.CENTER}>
+        <box
+            className={/export|import/.test(type || '') ? '' : 'inputter-container'}
+            valign={Gtk.Align.CENTER}
+        >
             <InputField
                 type={type}
                 opt={opt}

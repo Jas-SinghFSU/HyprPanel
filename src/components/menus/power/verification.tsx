@@ -11,7 +11,9 @@ export default (): JSX.Element => (
                     <label className="title" label={bind(powermenu, 'title').as((t) => t.toUpperCase())} />
                     <label
                         className="desc"
-                        label={bind(powermenu, 'title').as((p) => `Are you sure you want to ${p.toLowerCase()}?`)}
+                        label={bind(powermenu, 'title').as(
+                            (p) => `Are you sure you want to ${p.toLowerCase()}?`,
+                        )}
                     />
                 </box>
                 <box className="buttons horizontal" vexpand valign={Gtk.Align.END} homogeneous>

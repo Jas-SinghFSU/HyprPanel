@@ -29,7 +29,8 @@ const Workspaces = (monitor = -1): BarBoxChild => {
                         self.disconnect(scrollHandlers);
                     }
 
-                    const { throttledScrollUp, throttledScrollDown } = initThrottledScrollHandlers(scroll_speed);
+                    const { throttledScrollUp, throttledScrollDown } =
+                        initThrottledScrollHandlers(scroll_speed);
 
                     scrollHandlers = self.connect('scroll-event', (_: GtkWidget, event: Gdk.Event) => {
                         if (isScrollUp(event)) {

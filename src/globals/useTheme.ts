@@ -1,7 +1,11 @@
 import options from '../options';
 import Gio from 'gi://Gio';
 import { bash, errorHandler } from '../lib/utils';
-import { filterConfigForThemeOnly, loadJsonFile, saveConfigToFile } from '../components/settings/shared/FileChooser';
+import {
+    filterConfigForThemeOnly,
+    loadJsonFile,
+    saveConfigToFile,
+} from '../components/settings/shared/FileChooser';
 
 const { restartCommand } = options.hyprpanel;
 export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;

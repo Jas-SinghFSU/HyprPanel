@@ -13,7 +13,12 @@ const { displayedTotal, ignore, showActionsOnHover } = options.notifications;
 export const NotificationsContainer = ({ curPage }: NotificationsContainerProps): JSX.Element => {
     return (
         <scrollable vscroll={Gtk.PolicyType.AUTOMATIC}>
-            <box className={'menu-content-container notifications'} halign={Gtk.Align.FILL} spacing={0} vexpand>
+            <box
+                className={'menu-content-container notifications'}
+                halign={Gtk.Align.FILL}
+                spacing={0}
+                vexpand
+            >
                 {Variable.derive(
                     [
                         bind(notifdService, 'notifications'),

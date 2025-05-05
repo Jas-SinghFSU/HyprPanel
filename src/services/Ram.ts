@@ -5,29 +5,29 @@ import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from 'src/lib/types/customModules/generic';
 
 class Ram {
-    private updateFrequency = Variable(2000);
-    private shouldRound = false;
-    private ramPoller: FunctionPoller<GenericResourceData, []>;
+    private _updateFrequency = Variable(2000);
+    private _shouldRound = false;
+    private _ramPoller: FunctionPoller<GenericResourceData, []>;
 
     public ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        this.ramPoller = new FunctionPoller<GenericResourceData, []>(
+        this._ramPoller = new FunctionPoller<GenericResourceData, []>(
             this.ram,
             [],
-            bind(this.updateFrequency),
+            bind(this._updateFrequency),
             this.calculateUsage,
         );
 
-        this.ramPoller.initialize('ram');
+        this._ramPoller.initialize('ram');
     }
 
     public calculateUsage(): GenericResourceData {
         try {
             const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
-            if (!success || !meminfoBytes) {
+            if (!success || meminfoBytes === undefined) {
                 throw new Error('Failed to read /proc/meminfo or file content is null.');
             }
 
@@ -47,7 +47,7 @@ class Ram {
             usedRam = isNaN(usedRam) || usedRam < 0 ? 0 : usedRam;
 
             return {
-                percentage: this.divide([totalRamInBytes, usedRam]),
+                percentage: this._divide([totalRamInBytes, usedRam]),
                 total: totalRamInBytes,
                 used: usedRam,
                 free: availableRamInBytes,
@@ -59,29 +59,29 @@ class Ram {
     }
 
     public setShouldRound(round: boolean): void {
-        this.shouldRound = round;
+        this._shouldRound = round;
     }
 
-    private divide([total, used]: number[]): number {
+    private _divide([total, used]: number[]): number {
         const percentageTotal = (used / total) * 100;
 
-        if (this.shouldRound) {
+        if (this._shouldRound) {
             return total > 0 ? Math.round(percentageTotal) : 0;
         }
 
         return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
     }
 
-    updateTimer(timerInMs: number): void {
-        this.updateFrequency.set(timerInMs);
+    public updateTimer(timerInMs: number): void {
+        this._updateFrequency.set(timerInMs);
     }
 
     public stopPoller(): void {
-        this.ramPoller.stop();
+        this._ramPoller.stop();
     }
 
     public startPoller(): void {
-        this.ramPoller.start();
+        this._ramPoller.start();
     }
 }
 

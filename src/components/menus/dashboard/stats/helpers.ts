@@ -47,7 +47,12 @@ const monitorInterval = (cpuService: Cpu, ramService: Ram, storageService: Stora
  * @param gpuService The GPU service instance.
  * @param storageService The storage service instance.
  */
-const monitorStatsEnabled = (cpuService: Cpu, ramService: Ram, gpuService: Gpu, storageService: Storage): void => {
+const monitorStatsEnabled = (
+    cpuService: Cpu,
+    ramService: Ram,
+    gpuService: Gpu,
+    storageService: Storage,
+): void => {
     enabled.subscribe(() => {
         if (!enabled.get()) {
             ramService.stopPoller();
@@ -95,7 +100,12 @@ const monitorGpuTrackingEnabled = (gpuService: Gpu): void => {
  * @param gpuService The GPU service instance.
  * @param storageService The storage service instance.
  */
-export const initializePollers = (cpuService: Cpu, ramService: Ram, gpuService: Gpu, storageService: Storage): void => {
+export const initializePollers = (
+    cpuService: Cpu,
+    ramService: Ram,
+    gpuService: Gpu,
+    storageService: Storage,
+): void => {
     ramService.setShouldRound(true);
     storageService.setShouldRound(true);
 

@@ -5,7 +5,10 @@ import { ThrottleFn } from '../types/utils';
 /**
  * Connects a primary click handler and returns a disconnect function.
  */
-export function onPrimaryClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
+export function onPrimaryClick(
+    widget: GtkWidget,
+    handler: (self: GtkWidget, event: Gdk.Event) => void,
+): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_PRIMARY) {
@@ -18,7 +21,10 @@ export function onPrimaryClick(widget: GtkWidget, handler: (self: GtkWidget, eve
 /**
  * Connects a secondary click handler and returns a disconnect function.
  */
-export function onSecondaryClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
+export function onSecondaryClick(
+    widget: GtkWidget,
+    handler: (self: GtkWidget, event: Gdk.Event) => void,
+): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_SECONDARY) {
@@ -31,7 +37,10 @@ export function onSecondaryClick(widget: GtkWidget, handler: (self: GtkWidget, e
 /**
  * Connects a middle click handler and returns a disconnect function.
  */
-export function onMiddleClick(widget: GtkWidget, handler: (self: GtkWidget, event: Gdk.Event) => void): () => void {
+export function onMiddleClick(
+    widget: GtkWidget,
+    handler: (self: GtkWidget, event: Gdk.Event) => void,
+): () => void {
     const id = widget.connect('button-press-event', (self: GtkWidget, event: Gdk.Event) => {
         const eventButton = event.get_button()[1];
         if (eventButton === Gdk.BUTTON_MIDDLE) {

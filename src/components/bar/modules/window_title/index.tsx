@@ -14,7 +14,12 @@ const ClientTitle = (): BarBoxChild => {
     const { custom_title, class_name, label, icon, truncation, truncation_size } = options.bar.windowtitle;
 
     const ClientIcon = ({ client }: ClientIconProps): JSX.Element => {
-        return <label className={'bar-button-icon windowtitle txt-icon bar'} label={getWindowMatch(client).icon} />;
+        return (
+            <label
+                className={'bar-button-icon windowtitle txt-icon bar'}
+                label={getWindowMatch(client).icon}
+            />
+        );
     };
 
     const ClientLabel = ({
@@ -28,7 +33,10 @@ const ClientTitle = (): BarBoxChild => {
         return (
             <label
                 className={`bar-button-label windowtitle ${showIcon ? '' : 'no-icon'}`}
-                label={truncateTitle(getTitle(client, useCustomTitle, useClassName), truncate ? truncationSize : -1)}
+                label={truncateTitle(
+                    getTitle(client, useCustomTitle, useClassName),
+                    truncate ? truncationSize : -1,
+                )}
             />
         );
     };
@@ -131,7 +139,9 @@ const ClientTitle = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

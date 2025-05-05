@@ -12,11 +12,11 @@ const NoStreams = (): JSX.Element => {
 
 export const ActivePlaybacks = (): JSX.Element => {
     return (
-        <box className={'menu-items-section selected'} name={ActiveDeviceMenu.Playbacks} vertical>
+        <box className={'menu-items-section selected'} name={ActiveDeviceMenu.PLAYBACKS} vertical>
             <scrollable className={'menu-scroller active-playbacks-scrollable'}>
                 <box vertical>
                     {bind(audioService, 'streams').as((streams) => {
-                        if (!streams || streams.length === 0) {
+                        if (streams === null || streams.length === 0) {
                             return <NoStreams />;
                         }
 

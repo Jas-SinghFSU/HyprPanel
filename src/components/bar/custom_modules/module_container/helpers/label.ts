@@ -29,7 +29,10 @@ export function getLabel(moduleName: string, commandOutput: string, labelConfig:
  * @param commandOutput - The processed command output (either a string or object)
  * @returns The extracted value as a string, or empty string if not found
  */
-function getValueForTemplateVariable(templatePath: string, commandOutput: string | Record<string, unknown>): string {
+function getValueForTemplateVariable(
+    templatePath: string,
+    commandOutput: string | Record<string, unknown>,
+): string {
     if (typeof commandOutput === 'string') {
         return getTemplateValueForStringOutput(templatePath, commandOutput);
     }
@@ -62,7 +65,10 @@ function getTemplateValueForStringOutput(templatePath: string, commandOutput: st
  * @param commandOutput - The object representing parsed command output
  * @returns The extracted value as a string, or empty string if path is invalid or value is not primitive
  */
-function getTemplateValueForObjectOutput(templatePath: string, commandOutput: Record<string, unknown>): string {
+function getTemplateValueForObjectOutput(
+    templatePath: string,
+    commandOutput: Record<string, unknown>,
+): string {
     const pathParts = templatePath.split('.');
 
     function isRecord(value: unknown): value is Record<string, unknown> {

@@ -31,7 +31,13 @@ export const PlayPause = (): JSX.Element => {
     };
 
     return (
-        <button className={className} halign={Gtk.Align.CENTER} hasTooltip tooltipText={tooltipText} onClick={onClick}>
+        <button
+            className={className}
+            halign={Gtk.Align.CENTER}
+            hasTooltip
+            tooltipText={tooltipText}
+            onClick={onClick}
+        >
             <icon icon={icon} />
         </button>
     );

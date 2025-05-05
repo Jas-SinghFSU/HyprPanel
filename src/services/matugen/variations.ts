@@ -5,7 +5,10 @@ import { MatugenColors, MatugenVariation, MatugenVariations } from 'src/lib/type
  * Each of the variations are carefully tested and curated to make sure that colors don't
  * have weird luminocity overlaps (light on light, dark on dark).
  */
-export const getMatugenVariations = (matugenColors: MatugenColors, variation: MatugenVariations): MatugenVariation => {
+export const getMatugenVariations = (
+    matugenColors: MatugenColors,
+    variation: MatugenVariations,
+): MatugenVariation => {
     const matVtns = {
         standard_1: {
             rosewater: matugenColors.secondary,

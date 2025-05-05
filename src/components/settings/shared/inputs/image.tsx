@@ -6,7 +6,8 @@ const handleFileSet =
     <T,>(opt: Opt<T>) =>
     (self: Gtk.FileChooserButton): void => {
         const uri = self.get_uri();
-        if (!uri) {
+
+        if (uri === null) {
             return;
         }
 

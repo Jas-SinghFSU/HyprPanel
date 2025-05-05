@@ -16,12 +16,14 @@ export const SliderIcon = ({ type, device }: SliderIconProps): JSX.Element => {
 
     return (
         <button
-            className={bind(device, 'mute').as((isMuted) => `menu-active-button ${type} ${isMuted ? 'muted' : ''}`)}
+            className={bind(device, 'mute').as(
+                (isMuted) => `menu-active-button ${type} ${isMuted ? 'muted' : ''}`,
+            )}
             vexpand={false}
             valign={Gtk.Align.END}
             onClick={(_, event) => {
                 if (isPrimaryClick(event)) {
-                    device.mute = !device.mute;
+                    device.set_mute(!device.mute);
                 }
             }}
             onDestroy={() => {

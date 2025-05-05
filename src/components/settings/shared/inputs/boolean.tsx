@@ -18,7 +18,11 @@ export const BooleanInputter = <T extends string | number | boolean | object>({
                     return;
                 }
 
-                if (self.active && dependencies !== undefined && !dependencies.every((dep) => checkDependencies(dep))) {
+                if (
+                    self.active &&
+                    dependencies !== undefined &&
+                    !dependencies.every((dep) => checkDependencies(dep))
+                ) {
                     self.active = false;
                     return;
                 }

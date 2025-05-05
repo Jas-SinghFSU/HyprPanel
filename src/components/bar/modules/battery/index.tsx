@@ -10,7 +10,14 @@ import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/l
 import { getBatteryIcon } from './helpers';
 
 const batteryService = AstalBattery.get_default();
-const { label: show_label, rightClick, middleClick, scrollUp, scrollDown, hideLabelWhenFull } = options.bar.battery;
+const {
+    label: show_label,
+    rightClick,
+    middleClick,
+    scrollUp,
+    scrollDown,
+    hideLabelWhenFull,
+} = options.bar.battery;
 
 const BatteryLabel = (): BarBoxChild => {
     const batIcon = Variable.derive(
@@ -55,10 +62,18 @@ const BatteryLabel = (): BarBoxChild => {
     );
 
     const componentTooltip = Variable.derive(
-        [bind(batteryService, 'charging'), bind(batteryService, 'timeToFull'), bind(batteryService, 'timeToEmpty')],
+        [
+            bind(batteryService, 'charging'),
+            bind(batteryService, 'timeToFull'),
+            bind(batteryService, 'timeToEmpty'),
+        ],
         (isCharging, timeToFull, timeToEmpty) => {
             const timeRemaining = isCharging ? timeToFull : timeToEmpty;
-            return generateTooltip(timeRemaining, isCharging, Math.floor(batteryService.percentage * 100) === 100);
+            return generateTooltip(
+                timeRemaining,
+                isCharging,
+                Math.floor(batteryService.percentage * 100) === 100,
+            );
         },
     );
 
@@ -68,7 +83,9 @@ const BatteryLabel = (): BarBoxChild => {
             const isCharged = Math.round(percentage) === 100;
 
             const icon = <label className={'bar-button-icon battery txt-icon'} label={batIcon()} />;
-            const label = <label className={'bar-button-label battery'} label={`${Math.floor(percentage * 100)}%`} />;
+            const label = (
+                <label className={'bar-button-label battery'} label={`${Math.floor(percentage * 100)}%`} />
+            );
 
             const children = [icon];
 
@@ -135,7 +152,9 @@ const BatteryLabel = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

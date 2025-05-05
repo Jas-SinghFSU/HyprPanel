@@ -19,7 +19,7 @@ const handleWiredIcon = (): void => {
     wiredIconBinding?.drop();
     wiredIconBinding = undefined;
 
-    if (!networkService.wired) {
+    if (networkService.wired === null) {
         return;
     }
 
@@ -38,7 +38,7 @@ const handleWirelessIcon = (): void => {
     wirelessIconBinding?.drop();
     wirelessIconBinding = undefined;
 
-    if (!networkService.wifi) {
+    if (networkService.wifi === null) {
         return;
     }
 

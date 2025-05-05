@@ -7,7 +7,13 @@ export const MediaContainer = ({ children }: MediaContainerProps): JSX.Element =
             <box className="menu-items-container media" halign={Gtk.Align.FILL} hexpand>
                 <box className={'menu-section-container'}>
                     <box className={'menu-items-section'} vertical={false}>
-                        <box className={'menu-content'} css={getBackground()} halign={Gtk.Align.FILL} hexpand vertical>
+                        <box
+                            className={'menu-content'}
+                            css={getBackground()}
+                            halign={Gtk.Align.FILL}
+                            hexpand
+                            vertical
+                        >
                             {children}
                         </box>
                     </box>

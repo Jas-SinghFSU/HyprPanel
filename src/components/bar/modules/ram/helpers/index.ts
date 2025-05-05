@@ -16,7 +16,7 @@ export const calculateRamUsage = (round: Variable<boolean>): GenericResourceData
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
-        if (!success || !meminfoBytes) {
+        if (!success || meminfoBytes === null) {
             throw new Error('Failed to read /proc/meminfo or file content is null.');
         }
 

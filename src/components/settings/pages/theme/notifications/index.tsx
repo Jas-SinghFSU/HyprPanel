@@ -16,7 +16,11 @@ export const NotificationsTheme = (): JSX.Element => {
             <box vertical>
                 {/* Notifications Theme Settings Section */}
                 <Header title="Notifications Theme Settings" />
-                <Option opt={options.theme.notification.background} title="Notification Background" type="color" />
+                <Option
+                    opt={options.theme.notification.background}
+                    title="Notification Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.notification.opacity}
                     title="Notification Opacity"
@@ -31,7 +35,11 @@ export const NotificationsTheme = (): JSX.Element => {
                     subtitle="Buttons that perform actions within a notification"
                     type="color"
                 />
-                <Option opt={options.theme.notification.actions.text} title="Action Button Text Color" type="color" />
+                <Option
+                    opt={options.theme.notification.actions.text}
+                    title="Action Button Text Color"
+                    type="color"
+                />
                 <Option opt={options.theme.notification.label} title="Label" type="color" />
                 <Option opt={options.theme.notification.border} title="Border" type="color" />
                 <Option opt={options.theme.notification.time} title="Time Stamp" type="color" />
@@ -42,8 +50,16 @@ export const NotificationsTheme = (): JSX.Element => {
                     subtitle="Icon that accompanies the label. Doesn't apply if icon is an app icon."
                     type="color"
                 />
-                <Option opt={options.theme.notification.close_button.background} title="Dismiss Button" type="color" />
-                <Option opt={options.theme.notification.close_button.label} title="Dismiss Button Text" type="color" />
+                <Option
+                    opt={options.theme.notification.close_button.background}
+                    title="Dismiss Button"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.notification.close_button.label}
+                    title="Dismiss Button Text"
+                    type="color"
+                />
             </box>
         </scrollable>
     );

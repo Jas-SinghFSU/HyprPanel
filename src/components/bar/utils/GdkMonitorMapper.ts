@@ -8,20 +8,20 @@ const hyprlandService = AstalHyprland.get_default();
  * It maintains internal state for monitors that have already been used so that duplicate assignments are avoided.
  */
 export class GdkMonitorMapper {
-    private usedGdkMonitors: Set<number>;
-    private usedHyprlandMonitors: Set<number>;
+    private _usedGdkMonitors: Set<number>;
+    private _usedHyprlandMonitors: Set<number>;
 
     constructor() {
-        this.usedGdkMonitors = new Set();
-        this.usedHyprlandMonitors = new Set();
+        this._usedGdkMonitors = new Set();
+        this._usedHyprlandMonitors = new Set();
     }
 
     /**
      * Resets the internal state for both GDK and Hyprland monitor mappings.
      */
     public reset(): void {
-        this.usedGdkMonitors.clear();
-        this.usedHyprlandMonitors.clear();
+        this._usedGdkMonitors.clear();
+        this._usedHyprlandMonitors.clear();
     }
 
     /**
@@ -44,7 +44,7 @@ export class GdkMonitorMapper {
             hyprlandMonitors,
             gdkMonitor,
             monitor,
-            this.usedHyprlandMonitors,
+            this._usedHyprlandMonitors,
             (mon) => mon.id,
             (mon, gdkMon) => this._matchMonitorKey(mon, gdkMon),
         );
@@ -68,13 +68,14 @@ export class GdkMonitorMapper {
         }
 
         const hyprlandMonitors = hyprlandService.get_monitors();
-        const foundHyprlandMonitor = hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
+        const foundHyprlandMonitor =
+            hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
 
         return this._matchMonitor(
             gdkCandidates,
             foundHyprlandMonitor,
             monitor,
-            this.usedGdkMonitors,
+            this._usedGdkMonitors,
             (candidate) => candidate.id,
             (candidate, hyprlandMonitor) => this._matchMonitorKey(hyprlandMonitor, candidate.monitor),
         );
@@ -105,7 +106,9 @@ export class GdkMonitorMapper {
         // Direct match: candidate matches the source and has the same id as the target.
         const directMatch = candidates.find(
             (candidate) =>
-                compare(candidate, source) && !usedMonitors.has(getId(candidate)) && getId(candidate) === target,
+                compare(candidate, source) &&
+                !usedMonitors.has(getId(candidate)) &&
+                getId(candidate) === target,
         );
 
         if (directMatch !== undefined) {
@@ -202,7 +205,7 @@ export class GdkMonitorMapper {
                 continue;
             }
 
-            const model = curMonitor.get_model() || '';
+            const model = curMonitor.get_model() ?? '';
             const geometry = curMonitor.get_geometry();
             const scaleFactor = curMonitor.get_scale_factor();
 

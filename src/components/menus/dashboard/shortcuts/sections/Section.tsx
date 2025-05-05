@@ -77,7 +77,9 @@ export const RightShortcuts = (): JSX.Element => {
         <box>
             {Variable.derive(rightBindings, () => {
                 return (
-                    <box className={`container utilities dashboard-card ${!leftCardHidden.get() ? 'paired' : ''}`}>
+                    <box
+                        className={`container utilities dashboard-card ${!leftCardHidden.get() ? 'paired' : ''}`}
+                    >
                         <LeftColumn isVisible={true}>
                             <RightShortcut1 />
                             <SettingsButton />

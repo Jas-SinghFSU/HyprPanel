@@ -66,7 +66,8 @@ export const Storage = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 LABEL_TYPES[
-                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
+                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) %
+                                        LABEL_TYPES.length
                                 ] as ResourceLabelType,
                             );
                         },

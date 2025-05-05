@@ -25,7 +25,7 @@ export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitT
         const [success, tempInfoBytes] = GLib.file_get_contents(sensor.get());
         const tempInfo = new TextDecoder('utf-8').decode(tempInfoBytes);
 
-        if (!success || !tempInfoBytes) {
+        if (!success || tempInfoBytes === null) {
             console.error(`Failed to read ${sensor.get()} or file content is null.`);
             return 0;
         }

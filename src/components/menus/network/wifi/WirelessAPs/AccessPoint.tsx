@@ -29,7 +29,11 @@ export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.
                     label={accessPoint.ssid ?? ''}
                 />
                 <revealer revealChild={isApActive(accessPoint) && isApEnabled(networkService.wifi?.state)}>
-                    <label className="connection-status dim" halign={Gtk.Align.START} label={getWifiStatus()} />
+                    <label
+                        className="connection-status dim"
+                        halign={Gtk.Align.START}
+                        label={getWifiStatus()}
+                    />
                 </revealer>
             </box>
         );

@@ -2,6 +2,7 @@ import { bind, Variable } from 'astal';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import LevelBar from 'src/components/shared/LevelBar';
 import Brightness from 'src/services/Brightness';
+import options from 'src/options';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;

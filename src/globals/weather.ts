@@ -100,12 +100,15 @@ const weatherIntervalFn = (weatherInterval: number, loc: string, weatherKey: str
     });
 };
 
-Variable.derive([bind(weatherApiKey), bind(weatherInterval), bind(location)], (weatherKey, weatherInterval, loc) => {
-    if (!weatherKey) {
-        return globalWeatherVar.set(DEFAULT_WEATHER);
-    }
-    weatherIntervalFn(weatherInterval, loc, weatherKey);
-})();
+Variable.derive(
+    [bind(weatherApiKey), bind(weatherInterval), bind(location)],
+    (weatherKey, weatherInterval, loc) => {
+        if (!weatherKey) {
+            return globalWeatherVar.set(DEFAULT_WEATHER);
+        }
+        weatherIntervalFn(weatherInterval, loc, weatherKey);
+    },
+)();
 
 /**
  * Gets the temperature from the weather data in the specified unit.
@@ -147,7 +150,9 @@ export const getWeatherIcon = (fahrenheit: number): Record<string, string> => {
     type IconKeys = keyof typeof icons;
 
     const threshold: IconKeys =
-        fahrenheit < 0 ? 0 : ([100, 75, 50, 25, 0] as IconKeys[]).find((threshold) => threshold <= fahrenheit) || 0;
+        fahrenheit < 0
+            ? 0
+            : (([100, 75, 50, 25, 0] as IconKeys[]).find((threshold) => threshold <= fahrenheit) ?? 0);
 
     const icon = icons[threshold || 50];
     const color = colors[threshold || 50];

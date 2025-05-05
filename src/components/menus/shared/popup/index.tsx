@@ -1,6 +1,12 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { WINDOW_LAYOUTS } from 'src/globals/window';
-import { LayoutFunction, Layouts, PaddingProps, PopupRevealerProps, PopupWindowProps } from 'src/lib/types/popupwindow';
+import {
+    LayoutFunction,
+    Layouts,
+    PaddingProps,
+    PopupRevealerProps,
+    PopupWindowProps,
+} from 'src/lib/types/popupwindow';
 import { Exclusivity, GtkWidget } from 'src/lib/types/widget';
 import { EventBox, Revealer } from 'astal/gtk3/widget';
 
@@ -147,7 +153,10 @@ export default ({
             application={App}
             layer={Astal.Layer.TOP}
             anchor={
-                Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.LEFT
+                Astal.WindowAnchor.TOP |
+                Astal.WindowAnchor.BOTTOM |
+                Astal.WindowAnchor.RIGHT |
+                Astal.WindowAnchor.LEFT
             }
             {...props}
         >

@@ -71,7 +71,9 @@ export const RamStat = (): JSX.Element => {
             icon={''}
             stat={'ram'}
             value={bind(ramService.ram).as((ramUsage) => ramUsage.percentage / 100)}
-            label={bind(ramService.ram).as((ramUsage) => `${renderResourceLabel('used/total', ramUsage, true)}`)}
+            label={bind(ramService.ram).as(
+                (ramUsage) => `${renderResourceLabel('used/total', ramUsage, true)}`,
+            )}
         />
     );
 };

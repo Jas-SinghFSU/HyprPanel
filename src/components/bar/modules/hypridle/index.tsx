@@ -10,24 +10,29 @@ const { label, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scro
     options.bar.customModules.hypridle;
 
 function toggleInhibit(): void {
-    idleInhibit.set(!idleInhibit.get());
+    idleInhibit.set(idleInhibit.get() === false);
 }
 
 export const Hypridle = (): BarBoxChild => {
-    const iconBinding = Variable.derive([bind(idleInhibit), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
-        return active ? onIcn : offIcn;
-    });
+    const iconBinding = Variable.derive(
+        [bind(idleInhibit), bind(onIcon), bind(offIcon)],
+        (active, onIcn, offIcn) => {
+            return active === true ? onIcn : offIcn;
+        },
+    );
 
     const labelBinding = Variable.derive(
         [bind(idleInhibit), bind(onLabel), bind(offLabel)],
         (active, onLbl, offLbl) => {
-            return active ? onLbl : offLbl;
+            return active === true ? onLbl : offLbl;
         },
     );
 
     const hypridleModule = Module({
         textIcon: iconBinding(),
-        tooltipText: bind(idleInhibit).as((active) => `Idle Inhibitor: ${active ? 'Enabled' : 'Disabled'}`),
+        tooltipText: bind(idleInhibit).as(
+            (active) => `Idle Inhibitor: ${active === true ? 'Enabled' : 'Disabled'}`,
+        ),
         boxClass: 'hypridle',
         label: labelBinding(),
         showLabelBinding: bind(label),

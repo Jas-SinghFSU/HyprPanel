@@ -25,24 +25,35 @@ const dummyVar = Variable(undefined);
 
 checkSunsetStatus();
 
-const sunsetPoller = new FunctionPoller<undefined, []>(dummyVar, [], bind(pollingInterval), checkSunsetStatus);
+const sunsetPoller = new FunctionPoller<undefined, []>(
+    dummyVar,
+    [],
+    bind(pollingInterval),
+    checkSunsetStatus,
+);
 
 sunsetPoller.initialize('hyprsunset');
 
 const throttledToggleSunset = throttleInput(() => toggleSunset(isActive), 1000);
 
 export const Hyprsunset = (): BarBoxChild => {
-    const iconBinding = Variable.derive([bind(isActive), bind(onIcon), bind(offIcon)], (active, onIcn, offIcn) => {
-        return active ? onIcn : offIcn;
-    });
+    const iconBinding = Variable.derive(
+        [bind(isActive), bind(onIcon), bind(offIcon)],
+        (active, onIcn, offIcn) => {
+            return active ? onIcn : offIcn;
+        },
+    );
 
     const tooltipBinding = Variable.derive([isActive, temperature], (active, temp) => {
         return `Hyprsunset ${active ? 'enabled' : 'disabled'}\nTemperature: ${temp}`;
     });
 
-    const labelBinding = Variable.derive([bind(isActive), bind(onLabel), bind(offLabel)], (active, onLbl, offLbl) => {
-        return active ? onLbl : offLbl;
-    });
+    const labelBinding = Variable.derive(
+        [bind(isActive), bind(onLabel), bind(offLabel)],
+        (active, onLbl, offLbl) => {
+            return active ? onLbl : offLbl;
+        },
+    );
 
     const hyprsunsetModule = Module({
         textIcon: iconBinding(),

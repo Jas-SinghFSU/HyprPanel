@@ -16,7 +16,7 @@ export const MilitaryTime = (): JSX.Element => {
                 <label
                     className={'clock-content-time'}
                     label={bind(systemTime).as((time) => {
-                        return time?.format(hideSeconds ? '%H:%M' : '%H:%M:%S') || '';
+                        return time?.format(hideSeconds ? '%H:%M' : '%H:%M:%S') ?? '';
                     })}
                 />
             </box>

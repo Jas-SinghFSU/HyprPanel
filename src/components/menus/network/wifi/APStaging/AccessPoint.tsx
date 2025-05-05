@@ -5,7 +5,9 @@ import Spinner from 'src/components/shared/Spinner';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 
 export const AccessPoint = ({ staging, connecting }: AccessPointProps): JSX.Element => {
-    const ConnectionIcon = (): JSX.Element => <icon className="network-icon wifi" icon={staging.get()?.iconName} />;
+    const ConnectionIcon = (): JSX.Element => (
+        <icon className="network-icon wifi" icon={staging.get()?.iconName} />
+    );
     const ConnectionSpinner = (): JSX.Element => (
         <revealer
             halign={Gtk.Align.END}

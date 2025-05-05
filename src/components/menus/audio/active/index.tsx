@@ -5,11 +5,11 @@ import { bind, Variable } from 'astal';
 import { isPrimaryClick } from 'src/lib/utils.js';
 
 export enum ActiveDeviceMenu {
-    Devices = 'devices',
-    Playbacks = 'playbacks',
+    DEVICES = 'devices',
+    PLAYBACKS = 'playbacks',
 }
 
-const activeMenu: Variable<ActiveDeviceMenu> = Variable(ActiveDeviceMenu.Devices);
+const activeMenu: Variable<ActiveDeviceMenu> = Variable(ActiveDeviceMenu.DEVICES);
 
 const Header = (): JSX.Element => (
     <box className={'menu-label-container volume selected'} halign={Gtk.Align.FILL}>
@@ -21,15 +21,15 @@ const Header = (): JSX.Element => (
                     return;
                 }
 
-                if (activeMenu.get() === ActiveDeviceMenu.Devices) {
-                    activeMenu.set(ActiveDeviceMenu.Playbacks);
+                if (activeMenu.get() === ActiveDeviceMenu.DEVICES) {
+                    activeMenu.set(ActiveDeviceMenu.PLAYBACKS);
                 } else {
-                    activeMenu.set(ActiveDeviceMenu.Devices);
+                    activeMenu.set(ActiveDeviceMenu.DEVICES);
                 }
             }}
             halign={Gtk.Align.END}
             hexpand
-            label={bind(activeMenu).as((menu) => (menu === ActiveDeviceMenu.Devices ? '' : '󰤽'))}
+            label={bind(activeMenu).as((menu) => (menu === ActiveDeviceMenu.DEVICES ? '' : '󰤽'))}
         />
     </box>
 );
@@ -40,13 +40,13 @@ export const VolumeSliders = (): JSX.Element => {
             <Header />
             <revealer
                 transitionType={Gtk.RevealerTransitionType.NONE}
-                revealChild={bind(activeMenu).as((curMenu) => curMenu === ActiveDeviceMenu.Devices)}
+                revealChild={bind(activeMenu).as((curMenu) => curMenu === ActiveDeviceMenu.DEVICES)}
             >
                 <ActiveDevices />
             </revealer>
             <revealer
                 transitionType={Gtk.RevealerTransitionType.NONE}
-                revealChild={bind(activeMenu).as((curMenu) => curMenu === ActiveDeviceMenu.Playbacks)}
+                revealChild={bind(activeMenu).as((curMenu) => curMenu === ActiveDeviceMenu.PLAYBACKS)}
             >
                 <ActivePlaybacks />
             </revealer>

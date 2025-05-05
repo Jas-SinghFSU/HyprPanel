@@ -118,7 +118,9 @@ const Volume = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

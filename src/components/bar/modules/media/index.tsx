@@ -49,15 +49,18 @@ const Media = (): BarBoxChild => {
         },
     );
 
-    const componentClassName = Variable.derive([options.theme.bar.buttons.style, show_label], (style: string) => {
-        const styleMap: Record<string, string> = {
-            default: 'style1',
-            split: 'style2',
-            wave: 'style3',
-            wave2: 'style3',
-        };
-        return `media-container ${styleMap[style]}`;
-    });
+    const componentClassName = Variable.derive(
+        [options.theme.bar.buttons.style, show_label],
+        (style: string) => {
+            const styleMap: Record<string, string> = {
+                default: 'style1',
+                split: 'style2',
+                wave: 'style3',
+                wave2: 'style3',
+            };
+            return `media-container ${styleMap[style]}`;
+        },
+    );
 
     const component = (
         <box
@@ -68,7 +71,10 @@ const Media = (): BarBoxChild => {
                 componentClassName.drop();
             }}
         >
-            <label className={'bar-button-icon media txt-icon bar'} label={bind(songIcon).as((icn) => icn || '󰝚')} />
+            <label
+                className={'bar-button-icon media txt-icon bar'}
+                label={bind(songIcon).as((icn) => icn || '󰝚')}
+            />
             <label className={'bar-button-label media'} label={mediaLabel()} />
         </box>
     );
@@ -113,7 +119,9 @@ const Media = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

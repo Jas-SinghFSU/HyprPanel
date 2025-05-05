@@ -15,12 +15,24 @@ export const Label = ({ title: name, subtitle: sub = '', subtitleLink = '' }: La
                 </button>
             );
         }
-        return <label className="options-sublabel" label={sub} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} />;
+        return (
+            <label
+                className="options-sublabel"
+                label={sub}
+                halign={Gtk.Align.START}
+                valign={Gtk.Align.CENTER}
+            />
+        );
     };
 
     return (
         <box halign={Gtk.Align.START} vertical>
-            <label className="options-label" label={name} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} />
+            <label
+                className="options-label"
+                label={name}
+                halign={Gtk.Align.START}
+                valign={Gtk.Align.CENTER}
+            />
             <Subtitle />
         </box>
     );

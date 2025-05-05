@@ -29,7 +29,7 @@ const getWiredState = (): void => {
     wiredStateBinding?.drop();
     wiredStateBinding = undefined;
 
-    if (!networkService.wired) {
+    if (networkService.wired === null) {
         wiredState.set(AstalNetwork.DeviceState.UNAVAILABLE);
         return;
     }
@@ -49,7 +49,7 @@ const getWiredInternet = (): void => {
     wiredInternetBinding?.drop();
     wiredInternetBinding = undefined;
 
-    if (!networkService.wired) {
+    if (networkService.wired === null) {
         return;
     }
 
@@ -68,7 +68,7 @@ const getWiredIcon = (): void => {
     wiredIconBinding?.drop();
     wiredIconBinding = undefined;
 
-    if (!networkService.wired) {
+    if (networkService.wired === null) {
         wiredIcon.set('network-wired-symbolic');
         return;
     }
@@ -88,7 +88,7 @@ const getWiredSpeed = (): void => {
     wiredSpeedBinding?.drop();
     wiredSpeedBinding = undefined;
 
-    if (!networkService.wired) {
+    if (networkService.wired === null) {
         return;
     }
 

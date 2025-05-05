@@ -21,7 +21,11 @@ export const SystrayMenuTheme = (): JSX.Element => {
                     title="Background"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.systray.dropdownmenu.text} title="Text" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.systray.dropdownmenu.text}
+                    title="Text"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.systray.dropdownmenu.divider}
                     title="Section Divider"

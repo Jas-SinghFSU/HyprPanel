@@ -9,7 +9,8 @@ import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 
 const notifdService = AstalNotifd.get_default();
-const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } = options.bar.notifications;
+const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } =
+    options.bar.notifications;
 const { ignore } = options.notifications;
 
 export const Notifications = (): BarBoxChild => {
@@ -122,7 +123,9 @@ export const Notifications = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

@@ -6,7 +6,8 @@ import { BarBoxChild } from 'src/lib/types/bar';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 
-const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.weather;
+const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
+    options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
     const iconBinding = Variable.derive([bind(globalWeatherVar)], (wthr) => {

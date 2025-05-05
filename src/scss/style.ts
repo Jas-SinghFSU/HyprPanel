@@ -8,9 +8,20 @@ import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
 
-const deps = ['font', 'theme', 'bar.flatButtons', 'bar.position', 'bar.battery.charging', 'bar.battery.blocks'];
+const deps = [
+    'font',
+    'theme',
+    'bar.flatButtons',
+    'bar.position',
+    'bar.battery.charging',
+    'bar.battery.blocks',
+];
 
-function extractVariables(theme: RecursiveOptionsObject, prefix = '', matugenColors?: MatugenColors): string[] {
+function extractVariables(
+    theme: RecursiveOptionsObject,
+    prefix = '',
+    matugenColors?: MatugenColors,
+): string[] {
     let result = [] as string[];
     for (const key in theme) {
         if (!theme.hasOwnProperty(key)) {

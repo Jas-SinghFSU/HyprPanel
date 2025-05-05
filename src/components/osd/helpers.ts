@@ -105,7 +105,10 @@ export const revealerSetup = (self: Widget.Revealer): void => {
         },
     );
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')], () => {
-        handleReveal(self);
-    });
+    Variable.derive(
+        [bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')],
+        () => {
+            handleReveal(self);
+        },
+    );
 };

@@ -3,6 +3,7 @@ import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
+import options from 'src/options';
 
 const audio = AstalWp.get_default();
 
@@ -15,7 +16,7 @@ export const utilityCommands: Command[] = [
         args: [],
         handler: (): string => {
             try {
-                return getSystrayItems();
+                return getSystrayItems() ?? 'No items found!';
             } catch (error) {
                 errorHandler(error);
             }
@@ -88,7 +89,8 @@ export const utilityCommands: Command[] = [
     {
         name: 'idleInhibit',
         aliases: ['idi'],
-        description: 'Enables/Disables the Idle Inhibitor. Toggles the Inhibitor if no parameter is provided.',
+        description:
+            'Enables/Disables the Idle Inhibitor. Toggles the Inhibitor if no parameter is provided.',
         category: 'Utility',
         args: [
             {
@@ -100,7 +102,7 @@ export const utilityCommands: Command[] = [
         ],
         handler: (args: Record<string, unknown>): boolean => {
             try {
-                const shouldInhibit = args['shouldInhibit'] ?? !idleInhibit.get();
+                const shouldInhibit = args['shouldInhibit'] ?? idleInhibit.get() === false;
                 idleInhibit.set(Boolean(shouldInhibit));
 
                 return idleInhibit.get();

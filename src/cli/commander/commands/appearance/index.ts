@@ -58,7 +58,8 @@ export const appearanceCommands: Command[] = [
         args: [
             {
                 name: 'layout',
-                description: 'Bar layout to apply. Wiki: https://hyprpanel.com/configuration/panel.html#layouts',
+                description:
+                    'Bar layout to apply. Wiki: https://hyprpanel.com/configuration/panel.html#layouts',
                 type: 'object',
                 required: true,
             },

@@ -69,7 +69,8 @@ export const Netstat = (): BarBoxChild => {
 
     const labelBinding = Variable.derive(
         [bind(networkUsage), bind(labelType)],
-        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, networkService),
+        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) =>
+            renderNetworkLabel(lblTyp, networkService),
     );
 
     const netstatModule = Module({
@@ -98,7 +99,8 @@ export const Netstat = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) %
+                                        NETWORK_LABEL_TYPES.length
                                 ] as NetstatLabelType,
                             );
                         },
@@ -107,7 +109,9 @@ export const Netstat = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) -
+                                        1 +
+                                        NETWORK_LABEL_TYPES.length) %
                                         NETWORK_LABEL_TYPES.length
                                 ] as NetstatLabelType,
                             );

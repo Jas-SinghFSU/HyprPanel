@@ -10,8 +10,9 @@ import { Astal } from 'astal/gtk3';
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
-    const iconBinding = Variable.derive([autoDetectIcon, icon], (autoDetect: boolean, iconValue: string): string =>
-        autoDetect ? getDistroIcon() : iconValue,
+    const iconBinding = Variable.derive(
+        [autoDetectIcon, icon],
+        (autoDetect: boolean, iconValue: string): string => (autoDetect ? getDistroIcon() : iconValue),
     );
 
     const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
@@ -75,7 +76,9 @@ const Menu = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

@@ -18,7 +18,8 @@ export const PowerProfiles = (): JSX.Element => {
                 return (
                     <button
                         className={bind(powerProfilesService, 'activeProfile').as(
-                            (active) => `power-profile-item ${active === powerProfile.profile ? 'active' : ''}`,
+                            (active) =>
+                                `power-profile-item ${active === powerProfile.profile ? 'active' : ''}`,
                         )}
                         onClick={(_, event) => {
                             if (isPrimaryClick(event)) {

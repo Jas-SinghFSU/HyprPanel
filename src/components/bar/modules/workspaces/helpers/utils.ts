@@ -40,7 +40,7 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
     const iconEntry = wsIconMap[i];
     const defaultIcon = `${i}`;
 
-    if (!iconEntry) {
+    if (iconEntry === undefined) {
         return defaultIcon;
     }
 
@@ -77,8 +77,10 @@ export const getWsColor = (
     monitor: number,
 ): string => {
     const iconEntry = wsIconMap[i];
-    const hasColor = typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
-    if (!iconEntry) {
+    const hasColor =
+        typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
+
+    if (iconEntry === undefined) {
         return '';
     }
 
@@ -150,7 +152,7 @@ export const getAppIcon = (
     let icons = workspaceClients.reduce((iconAccumulator, [clientClass, clientTitle]) => {
         const icon = findIconForClient(clientClass, clientTitle);
 
-        if (icon) {
+        if (icon !== undefined) {
             iconAccumulator.push(icon);
         }
 
@@ -193,7 +195,8 @@ export const renderClassnames = (
     monitor: number,
     i: number,
 ): string => {
-    const isWorkspaceActive = hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
+    const isWorkspaceActive =
+        hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
     const isActive = isWorkspaceActive ? 'active' : '';
 
     if (showIcons) {

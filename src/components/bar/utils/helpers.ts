@@ -1,6 +1,10 @@
 import { ResourceLabelType } from 'src/lib/types/bar';
 import { GenericResourceData, Postfix, UpdateHandlers } from 'src/lib/types/customModules/generic';
-import { InputHandlerEventArgs, InputHandlerEvents, RunAsyncCommand } from 'src/lib/types/customModules/utils';
+import {
+    InputHandlerEventArgs,
+    InputHandlerEvents,
+    RunAsyncCommand,
+} from 'src/lib/types/customModules/utils';
 import { ThrottleFn } from 'src/lib/types/utils';
 import { bind, Binding, execAsync, Variable } from 'astal';
 import { openMenu } from 'src/components/bar/utils/menu';
@@ -38,7 +42,12 @@ const handlePostInputUpdater = (postInputUpdater?: Variable<boolean>): void => {
  * @param fn An optional callback function to handle the command output.
  * @param postInputUpdater An optional Variable<boolean> that tracks the post input update state.
  */
-export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdater?: Variable<boolean>): void => {
+export const runAsyncCommand: RunAsyncCommand = (
+    cmd,
+    events,
+    fn,
+    postInputUpdater?: Variable<boolean>,
+): void => {
     if (cmd.startsWith('menu:')) {
         const menuName = cmd.split(':')[1].trim().toLowerCase();
         openMenu(events.clicked, events.event, `${menuName}menu`);
@@ -61,7 +70,8 @@ export const runAsyncCommand: RunAsyncCommand = (cmd, events, fn, postInputUpdat
  * which undo the toggle.
  */
 const throttledAsyncCommand = throttleInput(
-    (cmd, events, fn, postInputUpdater?: Variable<boolean>) => runAsyncCommand(cmd, events, fn, postInputUpdater),
+    (cmd, events, fn, postInputUpdater?: Variable<boolean>) =>
+        runAsyncCommand(cmd, events, fn, postInputUpdater),
     50,
 );
 
@@ -165,7 +175,12 @@ export const inputHandler = (
         const id = self.connect('scroll-event', (self: GtkWidget, event: Gdk.Event) => {
             const handleScroll = (input?: InputHandlerEventArgs): void => {
                 if (input) {
-                    throttledHandler(sanitizeInput(input.cmd), { clicked: self, event }, input.fn, postInputUpdater);
+                    throttledHandler(
+                        sanitizeInput(input.cmd),
+                        { clicked: self, event },
+                        input.fn,
+                        postInputUpdater,
+                    );
                 }
             };
 
@@ -344,7 +359,11 @@ export const getPostfix = (sizeInBytes: number): Postfix => {
  *
  * @returns The rendered resource label as a string.
  */
-export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericResourceData, round: boolean): string => {
+export const renderResourceLabel = (
+    lblType: ResourceLabelType,
+    rmUsg: GenericResourceData,
+    round: boolean,
+): string => {
     const { used, total, percentage, free } = rmUsg;
 
     const formatFunctions = {
@@ -361,7 +380,7 @@ export const renderResourceLabel = (lblType: ResourceLabelType, rmUsg: GenericRe
     const postfix = getPostfix(total);
 
     // Determine which format function to use
-    const formatUsed = formatFunctions[postfix] || formatFunctions['B'];
+    const formatUsed = formatFunctions[postfix] ?? formatFunctions['B'];
     const usedSizeFormatted = formatUsed(used, round);
 
     if (lblType === 'used/total') {

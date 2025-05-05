@@ -12,7 +12,11 @@ export const Controls = ({ connecting, accessPoint }: ControlsProps): JSX.Elemen
                     disconnectFromAP(accessPoint, event);
                 }}
             >
-                <label className="menu-icon-button disconnect-network txt-icon" tooltipText="Disconnect" label="󱘖" />
+                <label
+                    className="menu-icon-button disconnect-network txt-icon"
+                    tooltipText="Disconnect"
+                    label="󱘖"
+                />
             </button>
         );
     };

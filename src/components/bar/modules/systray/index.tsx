@@ -28,7 +28,13 @@ const MenuCustomIcon = ({ iconLabel, iconColor, item }: MenuCustomIconProps): JS
 };
 
 const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
-    return <icon className={'systray-icon'} gIcon={bind(item, 'gicon')} tooltipMarkup={bind(item, 'tooltipMarkup')} />;
+    return (
+        <icon
+            className={'systray-icon'}
+            gIcon={bind(item, 'gicon')}
+            tooltipMarkup={bind(item, 'tooltipMarkup')}
+        />
+    );
 };
 
 const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
@@ -37,10 +43,10 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
     const entryBinding = Variable.derive(
         [bind(item, 'menuModel'), bind(item, 'actionGroup')],
         (menuModel, actionGroup) => {
-            if (!menuModel) {
+            if (menuModel === null) {
                 return console.error(`Menu Model not found for ${item.id}`);
             }
-            if (!actionGroup) {
+            if (actionGroup === null) {
                 return console.error(`Action Group not found for ${item.id}`);
             }
 
@@ -85,7 +91,9 @@ const SysTray = (): BarBoxChild => {
             isVis.set(filteredTray.length > 0);
 
             return filteredTray.map((item) => {
-                const matchedCustomIcon = Object.keys(custIcons).find((iconRegex) => item.id.match(iconRegex));
+                const matchedCustomIcon = Object.keys(custIcons).find((iconRegex) =>
+                    item.id.match(iconRegex),
+                );
 
                 if (matchedCustomIcon !== undefined) {
                     const iconLabel = custIcons[matchedCustomIcon].icon || '󰠫';

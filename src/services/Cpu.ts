@@ -5,20 +5,25 @@ import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 
 class Cpu {
-    private updateFrequency = Variable(2000);
-    private previousCpuData = new GTop.glibtop_cpu();
-    private cpuPoller: FunctionPoller<number, []>;
+    private _updateFrequency = Variable(2000);
+    private _previousCpuData = new GTop.glibtop_cpu();
+    private _cpuPoller: FunctionPoller<number, []>;
 
     public cpu = Variable(0);
 
     constructor() {
-        GTop.glibtop_get_cpu(this.previousCpuData);
+        GTop.glibtop_get_cpu(this._previousCpuData);
 
         this.calculateUsage = this.calculateUsage.bind(this);
 
-        this.cpuPoller = new FunctionPoller<number, []>(this.cpu, [], bind(this.updateFrequency), this.calculateUsage);
+        this._cpuPoller = new FunctionPoller<number, []>(
+            this.cpu,
+            [],
+            bind(this._updateFrequency),
+            this.calculateUsage,
+        );
 
-        this.cpuPoller.initialize();
+        this._cpuPoller.initialize();
     }
 
     public calculateUsage(): number {
@@ -26,26 +31,26 @@ class Cpu {
         GTop.glibtop_get_cpu(currentCpuData);
 
         // Calculate the differences from the previous to current data
-        const totalDiff = currentCpuData.total - this.previousCpuData.total;
-        const idleDiff = currentCpuData.idle - this.previousCpuData.idle;
+        const totalDiff = currentCpuData.total - this._previousCpuData.total;
+        const idleDiff = currentCpuData.idle - this._previousCpuData.idle;
 
         const cpuUsagePercentage = totalDiff > 0 ? ((totalDiff - idleDiff) / totalDiff) * 100 : 0;
 
-        this.previousCpuData = currentCpuData;
+        this._previousCpuData = currentCpuData;
 
         return cpuUsagePercentage;
     }
 
     public updateTimer(timerInMs: number): void {
-        this.updateFrequency.set(timerInMs);
+        this._updateFrequency.set(timerInMs);
     }
 
     public stopPoller(): void {
-        this.cpuPoller.stop();
+        this._cpuPoller.stop();
     }
 
     public startPoller(): void {
-        this.cpuPoller.start();
+        this._cpuPoller.start();
     }
 }
 

@@ -10,11 +10,15 @@ import { systemTime } from 'src/globals/time';
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
-const time = Variable.derive([systemTime, format], (c, f) => c.format(f) || '');
+const time = Variable.derive([systemTime, format], (c, f) => c.format(f) ?? '');
 
 const Clock = (): BarBoxChild => {
-    const ClockTime = (): JSX.Element => <label className={'bar-button-label clock bar'} label={bind(time)} />;
-    const ClockIcon = (): JSX.Element => <label className={'bar-button-icon clock txt-icon bar'} label={bind(icon)} />;
+    const ClockTime = (): JSX.Element => (
+        <label className={'bar-button-label clock bar'} label={bind(time)} />
+    );
+    const ClockIcon = (): JSX.Element => (
+        <label className={'bar-button-icon clock txt-icon bar'} label={bind(icon)} />
+    );
 
     const componentClassName = Variable.derive(
         [bind(style), bind(showIcon), bind(showTime)],
@@ -95,7 +99,9 @@ const Clock = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

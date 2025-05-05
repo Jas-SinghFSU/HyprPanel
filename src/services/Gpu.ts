@@ -5,22 +5,22 @@ import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GPUStat } from 'src/lib/types/gpustat';
 
 class Gpu {
-    private updateFrequency = Variable(2000);
-    private gpuPoller: FunctionPoller<number, []>;
+    private _updateFrequency = Variable(2000);
+    private _gpuPoller: FunctionPoller<number, []>;
 
     public gpuUsage = Variable<number>(0);
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
 
-        this.gpuPoller = new FunctionPoller<number, []>(
+        this._gpuPoller = new FunctionPoller<number, []>(
             this.gpuUsage,
             [],
-            bind(this.updateFrequency),
+            bind(this._updateFrequency),
             this.calculateUsage,
         );
 
-        this.gpuPoller.initialize();
+        this._gpuPoller.initialize();
     }
 
     public calculateUsage(): number {
@@ -38,7 +38,7 @@ class Gpu {
                     return acc + gpu['utilization.gpu'];
                 }, 0) / data.gpus.length;
 
-            return this.divide([totalGpu, usedGpu]);
+            return this._divide([totalGpu, usedGpu]);
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error getting GPU stats:', error.message);
@@ -49,20 +49,20 @@ class Gpu {
         }
     }
 
-    private divide([total, free]: number[]): number {
+    private _divide([total, free]: number[]): number {
         return free / total;
     }
 
-    updateTimer(timerInMs: number): void {
-        this.updateFrequency.set(timerInMs);
+    public updateTimer(timerInMs: number): void {
+        this._updateFrequency.set(timerInMs);
     }
 
     public stopPoller(): void {
-        this.gpuPoller.stop();
+        this._gpuPoller.stop();
     }
 
     public startPoller(): void {
-        this.gpuPoller.start();
+        this._gpuPoller.start();
     }
 }
 

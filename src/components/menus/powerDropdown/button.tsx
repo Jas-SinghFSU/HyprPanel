@@ -35,7 +35,9 @@ export const PowerButton = (action: PowerOptions): JSX.Element => {
 
     return (
         <button
-            className={bind(showLabel).as((showLbl) => `power-menu-button ${action} ${!showLbl ? 'no-label' : ''}`)}
+            className={bind(showLabel).as(
+                (showLbl) => `power-menu-button ${action} ${!showLbl ? 'no-label' : ''}`,
+            )}
             onClicked={() => handleClick(action)}
         >
             <box vertical={false}>

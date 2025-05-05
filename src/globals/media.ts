@@ -11,12 +11,17 @@ export const activePlayer = Variable<AstalMpris.Player | undefined>(undefined);
 const forceUpdate = Variable(false);
 
 mprisService.connect('player-closed', (_, closedPlayer) => {
-    if (mprisService.get_players().length === 1 && closedPlayer.busName === mprisService.get_players()[0]?.busName) {
+    if (
+        mprisService.get_players().length === 1 &&
+        closedPlayer.busName === mprisService.get_players()[0]?.busName
+    ) {
         return activePlayer.set(undefined);
     }
 
     if (closedPlayer.busName === activePlayer.get()?.busName) {
-        const nextPlayer = mprisService.get_players().find((player) => player.busName !== closedPlayer.busName);
+        const nextPlayer = mprisService
+            .get_players()
+            .find((player) => player.busName !== closedPlayer.busName);
         activePlayer.set(nextPlayer);
     }
 });
@@ -200,9 +205,12 @@ const updateCanGoPrevious = (player: AstalMpris.Player | undefined): void => {
 
     const canGoPreviousBinding = bind(player, 'canGoPrevious');
 
-    canGoPreviousUnsub = Variable.derive([canGoPreviousBinding, bind(player, 'playbackStatus')], (canPrev) => {
-        canGoPrevious.set(canPrev ?? false);
-    });
+    canGoPreviousUnsub = Variable.derive(
+        [canGoPreviousBinding, bind(player, 'playbackStatus')],
+        (canPrev) => {
+            canGoPrevious.set(canPrev ?? false);
+        },
+    );
 
     const initialCanPrev = canGoPrevious.get();
     canGoPrevious.set(initialCanPrev);

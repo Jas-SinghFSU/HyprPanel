@@ -123,5 +123,7 @@ export const getPreviousPlayer = (): void => {
         return activePlayer.set(mprisService.get_players()[0]);
     }
 
-    return activePlayer.set(mprisService.get_players()[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers]);
+    return activePlayer.set(
+        mprisService.get_players()[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers],
+    );
 };

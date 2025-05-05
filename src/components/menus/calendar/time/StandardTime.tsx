@@ -5,7 +5,7 @@ import { systemTime } from 'src/globals/time';
 
 const { military, hideSeconds } = options.menus.clock.time;
 
-const period = Variable('').poll(1000, (): string => GLib.DateTime.new_now_local().format('%p') || '');
+const period = Variable('').poll(1000, (): string => GLib.DateTime.new_now_local().format('%p') ?? '');
 
 export const StandardTime = (): JSX.Element => {
     const CurrentTime = ({ hideSeconds }: CurrentTimeProps): JSX.Element => {
@@ -14,7 +14,7 @@ export const StandardTime = (): JSX.Element => {
                 <label
                     className={'clock-content-time'}
                     label={bind(systemTime).as((time) => {
-                        return time?.format(hideSeconds ? '%I:%M' : '%I:%M:%S') || '';
+                        return time?.format(hideSeconds ? '%I:%M' : '%I:%M:%S') ?? '';
                     })}
                 />
             </box>

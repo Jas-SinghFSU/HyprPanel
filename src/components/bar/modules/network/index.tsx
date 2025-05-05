@@ -20,7 +20,9 @@ const Network = (): BarBoxChild => {
         },
     );
 
-    const NetworkIcon = (): JSX.Element => <icon className={'bar-button-icon network-icon'} icon={iconBinding()} />;
+    const NetworkIcon = (): JSX.Element => (
+        <icon className={'bar-button-icon network-icon'} icon={iconBinding()} />
+    );
 
     const networkLabel = Variable.derive(
         [
@@ -32,14 +34,16 @@ const Network = (): BarBoxChild => {
 
             bind(networkService, 'state'),
             bind(networkService, 'connectivity'),
-            ...(networkService.wifi ? [bind(networkService.wifi, 'enabled')] : []),
+            ...(networkService.wifi !== null ? [bind(networkService.wifi, 'enabled')] : []),
         ],
         (primaryNetwork, showLabel, trunc, tSize, showWifiInfo) => {
             if (!showLabel) {
                 return <box />;
             }
             if (primaryNetwork === AstalNetwork.Primary.WIRED) {
-                return <label className={'bar-button-label network-label'} label={'Wired'.substring(0, tSize)} />;
+                return (
+                    <label className={'bar-button-label network-label'} label={'Wired'.substring(0, tSize)} />
+                );
             }
             const networkWifi = networkService.wifi;
             if (networkWifi != null) {
@@ -54,11 +58,15 @@ const Network = (): BarBoxChild => {
                     <label
                         className={'bar-button-label network-label'}
                         label={
-                            networkWifi.active_access_point
+                            networkWifi.active_access_point !== null
                                 ? `${trunc ? networkWifi.ssid.substring(0, tSize) : networkWifi.ssid}`
                                 : '--'
                         }
-                        tooltipText={showWifiInfo && networkWifi.active_access_point ? formatWifiInfo(networkWifi) : ''}
+                        tooltipText={
+                            showWifiInfo && networkWifi.active_access_point !== null
+                                ? formatWifiInfo(networkWifi)
+                                : ''
+                        }
                     />
                 );
             }
@@ -135,7 +143,9 @@ const Network = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

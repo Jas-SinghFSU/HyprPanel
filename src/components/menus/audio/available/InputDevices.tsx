@@ -13,7 +13,7 @@ export const InputDevices = (): JSX.Element => {
         <box className={'menu-items-section input'} vertical>
             <box className={'menu-container input'} vertical>
                 {inputDevices.as((devices) => {
-                    if (!devices || devices.length === 0) {
+                    if (devices === null || devices.length === 0) {
                         return <NotFoundButton type={'input'} />;
                     }
 

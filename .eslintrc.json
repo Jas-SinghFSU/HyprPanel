@@ -48,7 +48,10 @@
                 "tabWidth": 4
             }
         ],
-        "no-param-reassign": ["error", { "props": true }],
+        "no-param-reassign": [
+            "error",
+            { "props": true, "ignorePropertyModificationsFor": ["self", "ref", "el"] }
+        ],
         "@typescript-eslint/naming-convention": [
             "error",
             {

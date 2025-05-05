@@ -35,7 +35,9 @@ const Temperature = (): JSX.Element => {
                     (weather) =>
                         `calendar-menu-weather today temp label icon txt-icon ${getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
                 )}
-                label={bind(globalWeatherVar).as((weather) => getWeatherIcon(Math.ceil(weather.current.temp_f)).icon)}
+                label={bind(globalWeatherVar).as(
+                    (weather) => getWeatherIcon(Math.ceil(weather.current.temp_f)).icon,
+                )}
             />
         );
     };

@@ -35,5 +35,5 @@ export const getKeyboardLayout = (layoutData: string, format: KbLabelType): Layo
     const layout: LayoutKeys = mainKb['active_keymap'] as LayoutKeys;
     const foundLayout: LayoutValues = layoutMap[layout];
 
-    return format === 'code' ? foundLayout || layout : layout;
+    return format === 'code' ? (foundLayout ?? layout) : layout;
 };

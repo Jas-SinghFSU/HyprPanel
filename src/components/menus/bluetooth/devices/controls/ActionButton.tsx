@@ -1,7 +1,12 @@
 import { Binding } from 'astal';
 import { ButtonProps } from 'astal/gtk3/widget';
 
-export const ActionButton = ({ name = '', tooltipText = '', label = '', ...props }: ActionButtonProps): JSX.Element => {
+export const ActionButton = ({
+    name = '',
+    tooltipText = '',
+    label = '',
+    ...props
+}: ActionButtonProps): JSX.Element => {
     return (
         <button className={`menu-icon-button ${name} bluetooth`} {...props}>
             <label

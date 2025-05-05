@@ -46,7 +46,7 @@ function getFocusedHyprlandMonitor(): AstalHyprland.Monitor | undefined {
  * @returns An object containing `adjustedWidth` and `adjustedHeight` after scaling is applied.
  */
 function applyMonitorScaling(width: number, height: number, monitorScaling: number): MonitorScaling {
-    const gdkEnvScale = GLib.getenv('GDK_SCALE') || '1';
+    const gdkEnvScale = GLib.getenv('GDK_SCALE') ?? '1';
     const userScalingPriority = scalingPriority.get();
 
     let adjustedWidth = width;
@@ -101,7 +101,11 @@ function adjustForVerticalTransform(
  * @param anchorX - The X coordinate (in scaled pixels) around which the dropdown should be placed.
  * @returns An object containing `leftMargin` and `rightMargin`, ensuring they do not go below 0.
  */
-function calculateHorizontalMargins(monitorWidth: number, dropdownWidth: number, anchorX: number): HorizontalMargins {
+function calculateHorizontalMargins(
+    monitorWidth: number,
+    dropdownWidth: number,
+    anchorX: number,
+): HorizontalMargins {
     const minimumSpacing = 0;
 
     let rightMarginSpacing = monitorWidth - dropdownWidth / 2;
@@ -130,7 +134,11 @@ function calculateHorizontalMargins(monitorWidth: number, dropdownWidth: number,
  * @param monitorHeight - The scaled (and possibly swapped) monitor height.
  * @param dropdownHeight - The height of the dropdown widget.
  */
-function setVerticalPosition(dropdownEventBox: EventBox, monitorHeight: number, dropdownHeight: number): void {
+function setVerticalPosition(
+    dropdownEventBox: EventBox,
+    monitorHeight: number,
+    dropdownHeight: number,
+): void {
     if (location.get() === 'top') {
         dropdownEventBox.set_margin_top(0);
         dropdownEventBox.set_margin_bottom(monitorHeight);
@@ -151,7 +159,10 @@ function setVerticalPosition(dropdownEventBox: EventBox, monitorHeight: number, 
  *
  * @returns A Promise that resolves once the dropdown position is fully calculated and set.
  */
-export const calculateMenuPosition = async (positionCoordinates: number[], windowName: string): Promise<void> => {
+export const calculateMenuPosition = async (
+    positionCoordinates: number[],
+    windowName: string,
+): Promise<void> => {
     try {
         const dropdownEventBox = getDropdownEventBox(windowName);
 
@@ -182,7 +193,11 @@ export const calculateMenuPosition = async (positionCoordinates: number[], windo
         );
 
         const isVertical = transform !== undefined ? transform % 2 !== 0 : false;
-        const { finalWidth, finalHeight } = adjustForVerticalTransform(adjustedWidth, adjustedHeight, isVertical);
+        const { finalWidth, finalHeight } = adjustForVerticalTransform(
+            adjustedWidth,
+            adjustedHeight,
+            isVertical,
+        );
 
         const { leftMargin, rightMargin } = calculateHorizontalMargins(
             finalWidth,

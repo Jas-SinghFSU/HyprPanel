@@ -5,7 +5,11 @@ import { Gtk } from 'astal/gtk3';
 
 export const BarGeneral = (): JSX.Element => {
     return (
-        <scrollable name={'General'} className="bar-theme-page paged-container" vscroll={Gtk.PolicyType.AUTOMATIC}>
+        <scrollable
+            name={'General'}
+            className="bar-theme-page paged-container"
+            vscroll={Gtk.PolicyType.AUTOMATIC}
+        >
             <box vertical>
                 <Header title="General Settings" />
                 <Option
@@ -44,7 +48,12 @@ export const BarGeneral = (): JSX.Element => {
                     subtitle="Command executed when restarting. Use '-b busName' flag if needed."
                     type="string"
                 />
-                <Option opt={options.terminal} title="Terminal" subtitle="For tools like 'btop'" type="string" />
+                <Option
+                    opt={options.terminal}
+                    title="Terminal"
+                    subtitle="For tools like 'btop'"
+                    type="string"
+                />
                 <Option
                     opt={options.tear}
                     title="Tearing Compatible"
@@ -86,7 +95,14 @@ export const BarGeneral = (): JSX.Element => {
                     type="enum"
                     enums={['both', 'gdk', 'hyprland']}
                 />
-                <Option opt={options.theme.bar.scaling} title="Bar" type="number" min={1} max={100} increment={5} />
+                <Option
+                    opt={options.theme.bar.scaling}
+                    title="Bar"
+                    type="number"
+                    min={1}
+                    max={100}
+                    increment={5}
+                />
                 <Option
                     opt={options.theme.notification.scaling}
                     title="Notifications"
@@ -95,7 +111,14 @@ export const BarGeneral = (): JSX.Element => {
                     max={100}
                     increment={5}
                 />
-                <Option opt={options.theme.osd.scaling} title="OSD" type="number" min={1} max={100} increment={5} />
+                <Option
+                    opt={options.theme.osd.scaling}
+                    title="OSD"
+                    type="number"
+                    min={1}
+                    max={100}
+                    increment={5}
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.scaling}
                     title="Dashboard Menu"

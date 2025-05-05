@@ -82,8 +82,8 @@ export const generateMediaLabel = (
     const currentPlayer = activePlayer.get();
 
     if (!currentPlayer || !show_label.get()) {
-        songIcon.set(getIconForPlayer(activePlayer.get()?.identity || ''));
-        return `Media`;
+        songIcon.set(getIconForPlayer(activePlayer.get()?.identity ?? ''));
+        return 'Media';
     }
 
     const { title, identity, artist, album, busName } = currentPlayer;
@@ -107,7 +107,7 @@ export const generateMediaLabel = (
                 return '';
             }
             const value = p1 !== undefined ? mediaTags[p1] : '';
-            const suffix = p2?.length ? p2.slice(1) : '';
+            const suffix = p2 !== undefined && p2.length > 0 ? p2.slice(1) : '';
             return value ? value + suffix : '';
         },
     );

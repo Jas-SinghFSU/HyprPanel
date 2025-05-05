@@ -66,7 +66,10 @@ export default ({
                         onButtonPressEvent={(_, event) => {
                             const buttonClicked = event.get_button()[1];
 
-                            if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
+                            if (
+                                buttonClicked === Gdk.BUTTON_PRIMARY ||
+                                buttonClicked === Gdk.BUTTON_SECONDARY
+                            ) {
                                 return true;
                             }
                         }}

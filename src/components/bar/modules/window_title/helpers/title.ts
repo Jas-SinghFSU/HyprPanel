@@ -15,7 +15,7 @@ function trackClientUpdates(client: AstalHyprland.Client): void {
     clientBinding?.drop();
     clientBinding = undefined;
 
-    if (!client) {
+    if (client === null) {
         return;
     }
 
@@ -68,7 +68,11 @@ export const getWindowMatch = (hyprlandClient: AstalHyprland.Client): Record<str
  *
  * @returns The title of the window as a string.
  */
-export const getTitle = (client: AstalHyprland.Client, useCustomTitle: boolean, useClassName: boolean): string => {
+export const getTitle = (
+    client: AstalHyprland.Client,
+    useCustomTitle: boolean,
+    useClassName: boolean,
+): string => {
     if (client === null || useCustomTitle) return getWindowMatch(client).label;
 
     const title = client.title;

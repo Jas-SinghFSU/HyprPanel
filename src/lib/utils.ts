@@ -1,6 +1,6 @@
 import { BarModule, NotificationAnchor, PositionAnchor } from './types/options';
 import { OSDAnchor } from './types/options';
-import icons, { substitutes } from './icons/icons';
+import icons from './icons/icons';
 import GLib from 'gi://GLib?version=2.0';
 import GdkPixbuf from 'gi://GdkPixbuf';
 import { NotificationArgs } from './types/notification';
@@ -9,7 +9,6 @@ import { distroIcons } from './constants/distro';
 import { distro } from './variables';
 import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
-import AstalApps from 'gi://AstalApps?version=0.1';
 import { exec, execAsync } from 'astal/process';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Primitive } from './types/utils';
@@ -56,7 +55,7 @@ export function errorHandler(error: unknown): never {
  * @returns The Gtk.IconInfo object if the icon is found, or null if not found.
  */
 export function lookUpIcon(name?: string, size = 16): Gtk.IconInfo | null {
-    if (!name) return null;
+    if (name === undefined) return null;
 
     return Gtk.IconTheme.get_default().lookup_icon(name, size, Gtk.IconLookupFlags.USE_BUILTIN);
 }
@@ -88,37 +87,6 @@ export function getLayoutItems(): BarModule[] {
 }
 
 /**
- * Retrieves the appropriate icon based on the provided name and fallback.
- *
- * This function returns a substitute icon if available, the original name if it exists as a file, or a fallback icon.
- * It also logs a message if no substitute icon is found.
- *
- * @param name The name of the icon to look up.
- * @param fallback The fallback icon to use if the name is not found. Defaults to `icons.missing`.
- *
- * @returns The icon name or the fallback icon.
- */
-export function icon(name: string | null, fallback = icons.missing): string {
-    const validateSubstitute = (name: string): name is keyof typeof substitutes => name in substitutes;
-
-    if (!name) return fallback || '';
-
-    if (GLib.file_test(name, GLib.FileTest.EXISTS)) return name;
-
-    let icon: string = name;
-
-    if (validateSubstitute(name)) {
-        icon = substitutes[name];
-    }
-
-    if (lookUpIcon(icon)) return icon;
-
-    console.log(`No icon substitute "${icon}" for "${name}", fallback: "${fallback}"`);
-
-    return fallback;
-}
-
-/**
  * Executes a bash command asynchronously.
  *
  * This function runs a bash command using `execAsync` and returns the output as a string.
@@ -130,8 +98,8 @@ export function icon(name: string | null, fallback = icons.missing): string {
  * @returns A promise that resolves to the command output as a string.
  */
 export async function bash(strings: TemplateStringsArray | string, ...values: unknown[]): Promise<string> {
-    const cmd =
-        typeof strings === 'string' ? strings : strings.flatMap((str, i) => str + `${values[i] ?? ''}`).join('');
+    const stringsIsString = typeof strings === 'string';
+    const cmd = stringsIsString ? strings : strings.flatMap((str, i) => str + `${values[i] ?? ''}`).join('');
 
     return execAsync(['bash', '-c', cmd]).catch((err) => {
         console.error(cmd, err);
@@ -167,7 +135,7 @@ export async function sh(cmd: string | string[]): Promise<string> {
  * @returns An array of JSX elements, one for each monitor.
  */
 export async function forMonitors(widget: (monitor: number) => Promise<JSX.Element>): Promise<JSX.Element[]> {
-    const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
+    const n = Gdk.Display.get_default()?.get_n_monitors() ?? 1;
 
     return Promise.all(range(n, 0).map(widget));
 }
@@ -217,24 +185,6 @@ export function dependencies(...bins: string[]): boolean {
     }
 
     return missing.length === 0;
-}
-
-/**
- * Launches an application in a detached process.
- *
- * This function runs the specified application executable in the background using a bash command.
- * It also increments the application's frequency counter.
- *
- * @param app The application to launch.
- */
-export function launchApp(app: AstalApps.Application): void {
-    const exe = app.executable
-        .split(/\s+/)
-        .filter((str) => !str.startsWith('%') && !str.startsWith('@'))
-        .join(' ');
-
-    bash(`${exe} &`);
-    app.frequency += 1;
 }
 
 /**
@@ -294,13 +244,13 @@ export function Notify(notifPayload: NotificationArgs): void {
 
     let command = 'notify-send';
     command += ` "${notifPayload.summary} "`;
-    if (notifPayload.body) command += ` "${notifPayload.body}" `;
-    if (notifPayload.appName) command += ` -a "${notifPayload.appName}"`;
-    if (notifPayload.iconName) command += ` -i "${notifPayload.iconName}"`;
-    if (notifPayload.urgency) command += ` -u "${notifPayload.urgency}"`;
+    if (notifPayload.body !== undefined) command += ` "${notifPayload.body}" `;
+    if (notifPayload.appName !== undefined) command += ` -a "${notifPayload.appName}"`;
+    if (notifPayload.iconName !== undefined) command += ` -i "${notifPayload.iconName}"`;
+    if (notifPayload.urgency !== undefined) command += ` -u "${notifPayload.urgency}"`;
     if (notifPayload.timeout !== undefined) command += ` -t ${notifPayload.timeout}`;
-    if (notifPayload.category) command += ` -c "${notifPayload.category}"`;
-    if (notifPayload.transient) command += ` -e`;
+    if (notifPayload.category !== undefined) command += ` -c "${notifPayload.category}"`;
+    if (notifPayload.transient !== undefined) command += ' -e';
     if (notifPayload.id !== undefined) command += ` -r ${notifPayload.id}`;
 
     execAsync(command)
@@ -331,7 +281,7 @@ export function getPosition(pos: NotificationAnchor | OSDAnchor): Astal.WindowAn
         left: Astal.WindowAnchor.LEFT,
     };
 
-    return positionMap[pos] || Astal.WindowAnchor.TOP;
+    return positionMap[pos] ?? Astal.WindowAnchor.TOP;
 }
 
 /**

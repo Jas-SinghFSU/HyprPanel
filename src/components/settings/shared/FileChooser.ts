@@ -158,7 +158,9 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const jsonString = new TextDecoder('utf-8').decode(content);
         const jsonObject = JSON.parse(jsonString);
 
-        const filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
+        const filteredJsonObject = themeOnly
+            ? filterHexColorPairs(jsonObject)
+            : filterOutHexColorPairs(jsonObject);
         const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
         if (response === Gtk.ResponseType.ACCEPT) {
