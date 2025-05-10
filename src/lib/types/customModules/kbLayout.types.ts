@@ -1,5 +1,3 @@
-import { layoutMap } from 'src/components/bar/modules/kblayout/helpers/layouts';
-
 export type KbLabelType = 'layout' | 'code';
 
 export type HyprctlKeyboard = {
@@ -27,6 +25,3 @@ export type HyprctlDeviceLayout = {
     touch: unknown[];
     switches: unknown[];
 };
-
-export type LayoutKeys = keyof typeof layoutMap;
-export type LayoutValues = (typeof layoutMap)[LayoutKeys];

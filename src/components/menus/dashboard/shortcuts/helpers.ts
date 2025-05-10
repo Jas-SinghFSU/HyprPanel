@@ -1,7 +1,7 @@
 import { bind, execAsync, timeout, Variable } from 'astal';
 import { App } from 'astal/gtk3';
 import { BashPoller } from 'src/lib/poller/BashPoller';
-import { ShortcutVariable } from 'src/lib/types/dashboard';
+import { ShortcutVariable } from 'src/lib/types/dashboard.types';
 import options from 'src/options';
 
 const { left } = options.menus.dashboard.shortcuts;

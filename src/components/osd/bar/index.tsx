@@ -1,7 +1,7 @@
 import { Gtk } from 'astal/gtk3';
 import LevelBar from 'src/components/shared/LevelBar';
-import { OSDOrientation } from 'src/lib/types/options';
 import { setupOsdBar } from './helpers';
+import { OSDOrientation } from 'src/lib/types/options.types';
 
 export const OSDBar = ({ orientation }: OSDBarProps): JSX.Element => {
     const barOrientation = orientation === 'vertical' ? Gtk.Orientation.VERTICAL : Gtk.Orientation.HORIZONTAL;

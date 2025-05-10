@@ -147,7 +147,6 @@ export class CommandParser {
 
             objectTokens.push(token);
 
-            // Once we've started and braceCount returns to 0, we assume the object is complete
             if (started && braceCount === 0) break;
             if (token.includes('{')) started = true;
         }

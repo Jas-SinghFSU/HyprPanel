@@ -5,7 +5,7 @@ import { OSDIcon } from './icon/index';
 import { revealerSetup } from './helpers';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { OSDOrientation } from 'src/lib/types/options';
+import { OSDOrientation } from 'src/lib/types/options.types';
 
 const { orientation } = options.theme.osd;
 

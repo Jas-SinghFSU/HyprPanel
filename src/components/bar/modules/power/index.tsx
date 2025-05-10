@@ -11,7 +11,7 @@ export const Power = (): BarBoxChild => {
     const powerModule = Module({
         tooltipText: 'Power Menu',
         textIcon: bind(icon),
-        showLabelBinding: Variable(false),
+        showLabelBinding: bind(Variable(false)),
         boxClass: 'powermodule',
         props: {
             setup: (self: Astal.Button) => {

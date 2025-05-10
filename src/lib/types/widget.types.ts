@@ -18,13 +18,8 @@ export type Layouts =
 
 export type Attribute = unknown;
 export type Child = Gtk.Widget;
-export type BoxWidget = Box;
+export type BoxWidget = Gtk.Box;
 export type GdkEvent = Gdk.Event;
-
-export type GButton = Gtk.Button;
-export type GBox = Gtk.Box;
-export type GLabel = Gtk.Label;
-export type GCenterBox = Gtk.Box;
 
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;
 export type EventArgs = {

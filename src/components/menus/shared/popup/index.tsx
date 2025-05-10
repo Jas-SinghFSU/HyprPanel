@@ -1,14 +1,13 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { WINDOW_LAYOUTS } from 'src/shared/window';
+import { EventBox, Revealer } from 'astal/gtk3/widget';
 import {
-    LayoutFunction,
-    Layouts,
     PaddingProps,
     PopupRevealerProps,
+    LayoutFunction,
     PopupWindowProps,
-} from 'src/lib/types/popupwindow';
-import { Exclusivity, GtkWidget } from 'src/lib/types/widget';
-import { EventBox, Revealer } from 'astal/gtk3/widget';
+} from 'src/lib/types/popupwindow.types';
+import { Layouts, Exclusivity } from 'src/lib/types/widget.types';
 
 export const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox
@@ -38,7 +37,11 @@ const PopupRevealer = ({ name, child, transition }: PopupRevealerProps): JSX.Ele
     </box>
 );
 
-const Layout: LayoutFunction = (name: string, child: GtkWidget, transition: Gtk.RevealerTransitionType) => ({
+const Layout: LayoutFunction = (
+    name: string,
+    child: JSX.Element,
+    transition: Gtk.RevealerTransitionType,
+) => ({
     center: () => (
         <centerbox>
             <Padding name={name} />

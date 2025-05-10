@@ -1,4 +1,3 @@
-import { Action } from 'src/lib/types/power.js';
 import PopupWindow from '../shared/popup/index.js';
 import powermenu from './helpers/actions.js';
 import options from 'src/options.js';
@@ -7,6 +6,7 @@ import icons from 'src/lib/icons/icons.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { Action } from 'src/lib/types/power.types.js';
 
 const { transition } = options.menus;
 
