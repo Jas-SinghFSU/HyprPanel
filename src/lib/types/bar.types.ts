@@ -7,7 +7,7 @@ import { Label } from 'astal/gtk3/widget';
 export type BarBoxChild = {
     component: JSX.Element;
     isVisible?: boolean;
-    isVis?: Variable<boolean>;
+    isVis?: Binding<boolean>;
     isBox?: boolean;
     boxClass: string;
     tooltip_text?: string | Binding<string>;
@@ -26,7 +26,7 @@ export type BarModuleProps = {
     boundLabel?: string;
     tooltipText?: string | Binding<string>;
     boxClass: string;
-    isVis?: Variable<boolean>;
+    isVis?: Binding<boolean>;
     props?: Widget.ButtonProps;
     showLabel?: boolean;
     showLabelBinding?: Binding<boolean>;

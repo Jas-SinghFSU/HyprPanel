@@ -46,7 +46,7 @@ export const Cava = (): BarBoxChild => {
     }
 
     return Module({
-        isVis,
+        isVis: bind(isVis),
         label: labelBinding(),
         showIconBinding: bind(label),
         textIcon: bind(icon),

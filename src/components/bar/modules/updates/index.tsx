@@ -75,7 +75,7 @@ export const Updates = (): BarBoxChild => {
         textIcon: updatesIcon(),
         tooltipText: bind(pendingUpdatesTooltip),
         boxClass: 'updates',
-        isVis: isVis,
+        isVis: bind(isVis),
         label: bind(pendingUpdates),
         showLabelBinding: bind(label),
         props: {

@@ -81,7 +81,7 @@ const Media = (): BarBoxChild => {
 
     return {
         component,
-        isVis,
+        isVis: bind(isVis),
         boxClass: 'media',
         props: {
             setup: (self: Astal.Button): void => {

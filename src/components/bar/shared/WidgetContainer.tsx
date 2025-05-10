@@ -4,9 +4,10 @@ import { bind, Binding } from 'astal';
 
 const computeVisible = (child: BarBoxChild): Binding<boolean> | boolean => {
     if (child.isVis !== undefined) {
-        return bind(child.isVis);
+        return child.isVis;
     }
-    return child.isVisible ?? true;
+
+    return child.isVisible ?? false;
 };
 export const WidgetContainer = (child: BarBoxChild): JSX.Element => {
     const buttonClassName = bind(options.theme.bar.buttons.style).as((style) => {

@@ -130,7 +130,7 @@ const SysTray = (): BarBoxChild => {
         component,
         isVisible: true,
         boxClass: 'systray',
-        isVis,
+        isVis: bind(isVis),
         isBox: true,
         props: {},
     };
