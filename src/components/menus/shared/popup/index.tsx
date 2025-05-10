@@ -130,7 +130,7 @@ export default ({
     name,
     child,
     layout = 'center',
-    transition = 'none',
+    transition = Gtk.RevealerTransitionType.NONE,
     exclusivity = 'ignore' as Exclusivity,
     ...props
 }: PopupWindowProps): JSX.Element => {

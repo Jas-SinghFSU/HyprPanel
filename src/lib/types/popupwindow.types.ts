@@ -7,7 +7,7 @@ export type PopupWindowProps = {
     name: string;
     child?: JSX.Element | JSX.Element[];
     layout?: Layouts;
-    transition?: Transition | Binding<Transition>;
+    transition?: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>;
     exclusivity?: Exclusivity;
 } & WindowProps;
 

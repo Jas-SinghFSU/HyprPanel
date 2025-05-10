@@ -4,7 +4,7 @@ import { App, Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
 
 export default (): JSX.Element => (
-    <PopupWindow name="verification" transition="crossfade" layout={'center'}>
+    <PopupWindow name="verification" transition={Gtk.RevealerTransitionType.CROSSFADE} layout={'center'}>
         <box className="verification" expand={false}>
             <box className="verification-content" expand vertical>
                 <box className="text-box" vertical>
