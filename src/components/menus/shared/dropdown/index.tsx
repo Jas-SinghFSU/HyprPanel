@@ -1,11 +1,11 @@
 import options from 'src/options';
-import { DropdownMenuProps } from 'src/lib/types/dropdownmenu';
 import { BarEventMargins } from './eventBoxes/index';
-import { globalEventBoxes } from 'src/globals/dropdown';
+import { globalEventBoxes } from 'src/shared/dropdown';
 import { bind } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { Revealer } from 'astal/gtk3/widget';
-import { locationMap } from 'src/lib/types/defaults/bar';
+import { locationMap } from 'src/lib/types/defaults/bar.types';
+import { DropdownMenuProps } from 'src/lib/types/dropdownmenu.types';
 
 const { location } = options.theme.bar;
 

@@ -1,8 +1,6 @@
-import { GtkWidget, Transition } from './widget';
 import { Astal, Gtk } from 'astal/gtk3';
-import { WindowProps } from 'astal/gtk3/widget';
-import { Opt } from '../option';
 import { Binding } from 'astal';
+import { WindowProps } from 'astal/gtk3/widget';
 
 export interface DropdownMenuProps extends WindowProps {
     name: string;

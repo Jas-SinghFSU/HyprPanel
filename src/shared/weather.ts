@@ -1,9 +1,9 @@
 import options from 'src/options';
-import { UnitType, Weather, WeatherIconTitle, WeatherIcon } from 'src/lib/types/weather.js';
-import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.js';
 import GLib from 'gi://GLib?version=2.0';
 import { weatherIcons } from 'src/lib/icons/weather.js';
 import { AstalIO, bind, execAsync, interval, Variable } from 'astal';
+import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.types';
+import { Weather, UnitType, WeatherIconTitle, WeatherIcon } from 'src/lib/types/weather.types';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 
@@ -221,5 +221,3 @@ export const getWeatherStatusTextIcon = (weatherData: Weather): WeatherIcon => {
 export const convertCelsiusToFahrenheit = (celsiusValue: number): number => {
     return (celsiusValue * 9) / 5 + 32;
 };
-
-globalThis['globalWeatherVar'] = globalWeatherVar;

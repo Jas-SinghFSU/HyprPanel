@@ -1,11 +1,11 @@
 import options from 'src/options';
 import { initThrottledScrollHandlers } from './helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { WorkspaceModule } from './workspaces';
 import { bind, Variable } from 'astal';
-import { GtkWidget } from 'src/lib/types/widget';
 import { Astal, Gdk } from 'astal/gtk3';
 import { isScrollDown, isScrollUp } from 'src/lib/utils';
+import { BarBoxChild } from 'src/lib/types/bar.types';
+import { GtkWidget } from 'src/lib/types/widget.types';
 
 const { scroll_speed } = options.bar.workspaces;
 

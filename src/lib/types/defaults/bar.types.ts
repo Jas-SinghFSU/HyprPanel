@@ -1,6 +1,6 @@
 import { Astal } from 'astal/gtk3';
-import { NetstatLabelType, ResourceLabelType } from '../bar';
-import { BarLocation } from '../options';
+import { NetstatLabelType, ResourceLabelType } from '../bar.types';
+import { BarLocation } from '../options.types';
 
 export const LABEL_TYPES: ResourceLabelType[] = ['used/total', 'used', 'free', 'percentage'];
 

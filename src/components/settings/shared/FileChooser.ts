@@ -3,9 +3,9 @@ import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
 import { bash, Notify } from '../../../lib/utils';
 import icons from '../../../lib/icons/icons';
-import { Config } from '../../../lib/types/filechooser';
-import { hexColorPattern } from '../../../globals/useTheme';
-import { isHexColor } from '../../../globals/variables';
+import { Config } from '../../../lib/types/filechooser.types';
+import { hexColorPattern } from '../../../shared/useTheme';
+import { isHexColor } from '../../../shared/variables';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];

@@ -1,9 +1,9 @@
 import { App } from 'astal/gtk3';
 import options from '../options';
-import { BarLayouts } from 'src/lib/types/options';
 import { Variable } from 'astal';
+import { BarLayouts } from 'src/lib/types/options.types';
 
-globalThis.isWindowVisible = (windowName: string): boolean => {
+export function isWindowVisible(windowName: string): boolean {
     const appWindow = App.get_window(windowName);
 
     if (appWindow === undefined || appWindow === null) {
@@ -11,9 +11,9 @@ globalThis.isWindowVisible = (windowName: string): boolean => {
     }
 
     return appWindow.visible;
-};
+}
 
-globalThis.setLayout = (layout: BarLayouts): string => {
+export function setLayout(layout: BarLayouts): string {
     try {
         const { layouts } = options.bar;
 
@@ -22,6 +22,6 @@ globalThis.setLayout = (layout: BarLayouts): string => {
     } catch (error) {
         return `Failed to set layout: ${error}`;
     }
-};
+}
 
-globalThis.idleInhibit = Variable(false);
+export const idleInhibit = Variable(false);

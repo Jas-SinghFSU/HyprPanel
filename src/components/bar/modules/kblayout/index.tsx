@@ -2,11 +2,11 @@ import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getKeyboardLayout } from './helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { bind } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const hyprlandService = AstalHyprland.get_default();
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =

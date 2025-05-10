@@ -1,6 +1,6 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { defaultApplicationIconMap } from 'src/lib/constants/appIcons';
-import { AppIconOptions, WorkspaceIconMap } from 'src/lib/types/workspace';
+import { WorkspaceIconMap, AppIconOptions } from 'src/lib/types/workspace.types';
 import { isValidGjsColor } from 'src/lib/utils';
 import options from 'src/options';
 

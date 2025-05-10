@@ -1,8 +1,7 @@
-import { Bind } from 'src/lib/types/variable';
-import { GenericFunction } from 'src/lib/types/customModules/generic';
-import { BarModule } from 'src/lib/types/options';
+import { GenericFunction } from '../types/customModules/generic.types';
+import { BarModule } from '../types/options.types';
 import { Poller } from './Poller';
-import { execAsync, Variable } from 'astal';
+import { Binding, execAsync, Variable } from 'astal';
 
 /**
  * A class that manages polling of a variable by executing a bash command at specified intervals.
@@ -39,8 +38,8 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      */
     constructor(
         private _targetVariable: Variable<Value>,
-        private _trackers: Bind[],
-        private _pollingInterval: Bind,
+        private _trackers: Binding<unknown>[],
+        private _pollingInterval: Binding<number>,
         private _updateCommand: string,
         private _pollingFunction: GenericFunction<Value, [string, ...Parameters]>,
         ...params: Parameters

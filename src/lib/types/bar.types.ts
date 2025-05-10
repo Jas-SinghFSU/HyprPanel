@@ -1,12 +1,8 @@
-import { Variable } from 'types/variable';
-import Box from 'types/widgets/box';
-import Button, { ButtonProps } from 'types/widgets/button';
-import Label from 'types/widgets/label';
-import { Attribute, Child } from './widget';
 import { Widget } from 'astal/gtk3';
-import { Binding } from 'astal';
+import { Binding, Variable } from 'astal';
 import { Connectable } from 'astal/binding';
-import { CustomBarModuleStyle } from 'src/components/bar/custom_modules/types';
+import { BoxWidget } from './widget.types';
+import { Label } from 'astal/gtk3/widget';
 
 export type BarBoxChild = {
     component: JSX.Element;
@@ -17,12 +13,10 @@ export type BarBoxChild = {
     tooltip_text?: string | Binding<string>;
 } & ({ isBox: true; props: Widget.EventBoxProps } | { isBox?: false; props: Widget.ButtonProps });
 
-export type SelfButton = Button<Child, Attribute>;
+export type BoxHook = (self: BoxWidget) => void;
+export type LabelHook = (self: Label) => void;
 
-export type BoxHook = (self: Box<Gtk.Widget, Gtk.Widget>) => void;
-export type LabelHook = (self: Label<Gtk.Widget>) => void;
-
-export type BarModule = {
+export type BarModuleProps = {
     icon?: string | Binding<string>;
     textIcon?: string | Binding<string>;
     useTextIcon?: Binding<boolean>;
@@ -35,8 +29,8 @@ export type BarModule = {
     isVis?: Variable<boolean>;
     props?: Widget.ButtonProps;
     showLabel?: boolean;
-    showLabelBinding?: Binding;
-    showIconBinding?: Binding;
+    showLabelBinding?: Binding<boolean>;
+    showIconBinding?: Binding<boolean>;
     hook?: BoxHook;
     connection?: Binding<Connectable>;
 };

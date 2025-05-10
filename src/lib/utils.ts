@@ -1,9 +1,9 @@
-import { BarModule, NotificationAnchor, PositionAnchor } from './types/options';
-import { OSDAnchor } from './types/options';
+import { BarModule, NotificationAnchor, PositionAnchor } from './types/options.types';
+import { OSDAnchor } from './types/options.types';
 import icons from './icons/icons';
 import GLib from 'gi://GLib?version=2.0';
 import GdkPixbuf from 'gi://GdkPixbuf';
-import { NotificationArgs } from './types/notification';
+import { NotificationArgs } from './types/notification.types';
 import { namedColors } from './constants/colors';
 import { distroIcons } from './constants/distro';
 import { distro } from './variables';
@@ -11,7 +11,7 @@ import options from '../options';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 import { exec, execAsync } from 'astal/process';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { Primitive } from './types/utils';
+import { Primitive } from './types/utils.types';
 
 const notifdService = AstalNotifd.get_default();
 

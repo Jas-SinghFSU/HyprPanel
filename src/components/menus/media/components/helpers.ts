@@ -1,7 +1,7 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { mediaArtUrl } from 'src/globals/media';
+import { mediaArtUrl } from 'src/shared/media';
 import options from 'src/options';
 
 const mprisService = AstalMpris.get_default();

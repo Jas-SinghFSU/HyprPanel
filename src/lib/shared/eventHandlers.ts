@@ -1,6 +1,6 @@
-import { GtkWidget } from 'src/lib/types/widget.js';
 import { Gdk } from 'astal/gtk3';
-import { ThrottleFn } from '../types/utils';
+import { ThrottleFn } from '../types/utils.types';
+import { GtkWidget } from '../types/widget.types';
 
 /**
  * Connects a primary click handler and returns a disconnect function.

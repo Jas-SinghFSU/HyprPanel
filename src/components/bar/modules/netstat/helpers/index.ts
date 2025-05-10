@@ -1,8 +1,8 @@
 import GLib from 'gi://GLib';
 import { Variable } from 'astal';
-import { NetworkResourceData } from 'src/lib/types/customModules/network';
-import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
-import { RateUnit } from 'src/lib/types/bar';
+import { RateUnit } from 'src/lib/types/bar.types';
+import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
+import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
 
 let previousNetUsage = { rx: 0, tx: 0, time: 0 };
 
@@ -137,7 +137,7 @@ export const computeNetwork = (
     const rateUnit = dataType.get();
     const interfaceName = interfaceNameVar.get();
 
-    const DEFAULT_NETSTAT_DATA = GET_DEFAULT_NETSTAT_DATA(rateUnit);
+    const DEFAULT_NETSTAT_DATA = getDefaultNetstatData(rateUnit);
     try {
         const { rx, tx, name } = getNetworkUsage(interfaceName);
         const currentTime = Date.now();

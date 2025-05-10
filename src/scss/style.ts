@@ -1,9 +1,9 @@
 import options from '../options';
 import { bash, dependencies } from '../lib/utils';
-import { HexColor, MatugenColors, RecursiveOptionsObject } from '../lib/types/options';
+import { HexColor, MatugenColors, RecursiveOptionsObject } from '../lib/types/options.types';
 import { initializeTrackers } from './optionsTrackers';
 import { generateMatugenColors, getMatugenHex, replaceHexValues } from '../services/matugen/index';
-import { isHexColor } from '../globals/variables';
+import { isHexColor } from '../shared/variables';
 import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';

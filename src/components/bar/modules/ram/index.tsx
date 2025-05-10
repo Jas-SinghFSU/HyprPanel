@@ -2,12 +2,12 @@ import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { calculateRamUsage } from './helpers';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
-import { LABEL_TYPES } from 'src/lib/types/defaults/bar';
+import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
 import { bind, Variable } from 'astal';
-import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
     options.bar.customModules.ram;

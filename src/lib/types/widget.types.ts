@@ -1,5 +1,6 @@
-import { Gdk, Gtk } from 'astal/gtk3';
-import Box from 'types/widgets/box';
+import { Binding } from 'astal';
+import { Astal, Gdk, Gtk } from 'astal/gtk3';
+import { Box } from 'astal/gtk3/widget';
 
 export type Exclusivity = 'normal' | 'ignore' | 'exclusive';
 export type Anchor = 'left' | 'right' | 'top' | 'down';
@@ -17,8 +18,7 @@ export type Layouts =
 
 export type Attribute = unknown;
 export type Child = Gtk.Widget;
-export type GtkWidget = Gtk.Widget;
-export type BoxWidget = Box<GtkWidget, Child>;
+export type BoxWidget = Box;
 export type GdkEvent = Gdk.Event;
 
 export type GButton = Gtk.Button;
@@ -29,7 +29,7 @@ export type GCenterBox = Gtk.Box;
 export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;
 export type EventArgs = {
     clicked: GtkWidget;
-    event: Gdk.EventButton | Gdk.EventScroll;
+    event: Gdk.Event;
 };
 
 export interface WidgetProps {
@@ -48,7 +48,7 @@ export interface GtkWidgetExtended extends Gtk.Widget {
     isVisible?: boolean;
     boxClass?: string;
     isVis?: {
-        bind: (key: string) => Bind;
+        bind: (key: string) => Binding<boolean>;
     };
 }
 

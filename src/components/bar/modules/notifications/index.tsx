@@ -3,10 +3,10 @@ import { Astal, Gtk } from 'astal/gtk3';
 import { openMenu } from '../../utils/menu';
 import options from 'src/options';
 import { filterNotifications } from 'src/lib/shared/notifications.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const notifdService = AstalNotifd.get_default();
 const { show_total, rightClick, middleClick, scrollUp, scrollDown, hideCountWhenZero } =

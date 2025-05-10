@@ -1,5 +1,5 @@
-import { EventArgs } from './eventArgs';
-import { Variable } from 'types/variable';
+import { Variable } from 'astal';
+import { EventArgs } from './widget.types';
 
 export type ThrottleFn = (
     cmd: string,

@@ -1,6 +1,6 @@
 import { divide } from 'src/components/bar/utils/helpers';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
 import { GLib, Variable } from 'astal';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 /**
  * Calculates the RAM usage.

@@ -1,5 +1,5 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
-import { WINDOW_LAYOUTS } from 'src/globals/window';
+import { WINDOW_LAYOUTS } from 'src/shared/window';
 import {
     LayoutFunction,
     Layouts,

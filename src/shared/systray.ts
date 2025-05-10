@@ -2,7 +2,7 @@ import AstalTray from 'gi://AstalTray';
 import { errorHandler } from 'src/lib/utils';
 const systemtray = AstalTray.get_default();
 
-globalThis.getSystrayItems = (): string => {
+export function getSystrayItems(): string {
     try {
         const items = systemtray
             .get_items()
@@ -13,6 +13,4 @@ globalThis.getSystrayItems = (): string => {
     } catch (error) {
         errorHandler(error);
     }
-};
-
-export { getSystrayItems };
+}

@@ -1,5 +1,3 @@
-import { WIFI_STATUS_MAP } from 'src/globals/network';
-
 export type AccessPoint = {
     bssid: string | null;
     address: string | null;
@@ -10,7 +8,5 @@ export type AccessPoint = {
     frequency: number;
     iconName: string | undefined;
 };
-
-export type WifiStatus = keyof typeof WIFI_STATUS_MAP;
 
 export type WifiIcon = '󰤩' | '󰤨' | '󰤪' | '󰤨' | '󰤩' | '󰤮' | '󰤨' | '󰤥' | '󰤢' | '󰤟' | '󰤯';

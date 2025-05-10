@@ -5,8 +5,8 @@ import { bind, Variable } from 'astal';
 import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 import { Astal, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { formatWifiInfo, wiredIcon, wirelessIcon } from './helpers';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const networkService = AstalNetwork.get_default();
 const { label, truncation, truncation_size, rightClick, middleClick, scrollDown, scrollUp, showWifiInfo } =

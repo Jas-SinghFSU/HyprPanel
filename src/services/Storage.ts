@@ -4,7 +4,7 @@ import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 class Storage {
     private _updateFrequency = Variable(2000);

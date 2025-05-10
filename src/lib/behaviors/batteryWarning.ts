@@ -1,8 +1,15 @@
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import icons from '../icons/icons';
 import { Notify } from '../utils';
+import options from 'src/options';
 
 const batteryService = AstalBattery.get_default();
+const {
+    lowBatteryThreshold,
+    lowBatteryNotification,
+    lowBatteryNotificationText,
+    lowBatteryNotificationTitle,
+} = options.menus.power;
 
 export function warnOnLowBattery(): void {
     let sentLowNotification = false;
@@ -16,13 +23,6 @@ export function warnOnLowBattery(): void {
     });
 
     batteryService.connect('notify::percentage', () => {
-        const {
-            lowBatteryThreshold,
-            lowBatteryNotification,
-            lowBatteryNotificationText,
-            lowBatteryNotificationTitle,
-        } = options.menus.power;
-
         if (lowBatteryNotification.get() === undefined || batteryService.charging) {
             return;
         }

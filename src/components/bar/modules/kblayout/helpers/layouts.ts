@@ -1,4 +1,4 @@
-import { LayoutKeys, LayoutValues } from 'src/lib/types/customModules/kbLayout';
+import { LayoutKeys, LayoutValues } from 'src/lib/types/customModules/kbLayout.types';
 
 export const layoutMap: Record<LayoutKeys, LayoutValues> = {
     'Abkhazian (Russia)': 'RU (Ab)',

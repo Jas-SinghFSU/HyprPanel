@@ -1,11 +1,11 @@
 import options from 'src/options';
 import { forceUpdater, getWorkspacesToRender, initWorkspaceEvents, workspaceRules } from './helpers';
 import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers/utils';
-import { ApplicationIcons, WorkspaceIconMap } from 'src/lib/types/workspace';
 import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/utils';
+import { WorkspaceIconMap, ApplicationIcons } from 'src/lib/types/workspace.types';
 
 const hyprlandService = AstalHyprland.get_default();
 const {

@@ -1,3 +1,5 @@
+import { Variable } from 'astal';
+
 export type ShortcutFixed = {
     tooltip: string;
     command: string;
@@ -6,9 +8,9 @@ export type ShortcutFixed = {
 };
 
 export type ShortcutVariable = {
-    tooltip: VarType<string>;
-    command: VarType<string>;
-    icon: VarType<string>;
+    tooltip: Variable<string>;
+    command: Variable<string>;
+    icon: Variable<string>;
     configurable?: true;
 };
 

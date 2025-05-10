@@ -1,4 +1,4 @@
-import { layoutMap } from 'src/components/bar/modules/kblayout/layouts';
+import { layoutMap } from 'src/components/bar/modules/kblayout/helpers/layouts';
 
 export type KbLabelType = 'layout' | 'code';
 

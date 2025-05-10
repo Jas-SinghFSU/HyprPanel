@@ -1,7 +1,7 @@
-import { Bind } from 'src/lib/types/variable';
-import { BarModule } from 'src/lib/types/options';
 import { getLayoutItems } from 'src/lib/utils';
-import { AstalIO, interval, Variable } from 'astal';
+import { AstalIO, Binding, interval, Variable } from 'astal';
+import options from 'src/options';
+import { BarModule } from '../types/options.types';
 
 const { layouts } = options.bar;
 
@@ -20,8 +20,8 @@ export class Poller {
      * @param pollingFunction - The function to execute during each poll.
      */
     constructor(
-        private _pollingInterval: Bind,
-        private _trackers: Bind[],
+        private _pollingInterval: Binding<number>,
+        private _trackers: Binding<unknown>[],
         pollingFunction: () => Promise<void>,
     ) {
         this._pollingFunction = pollingFunction;

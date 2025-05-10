@@ -1,9 +1,8 @@
-import { BarBoxChild } from 'src/lib/types/bar';
-import { Bind } from '../../../lib/types/variable';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 import options from '../../../options';
-import { bind } from 'astal';
+import { bind, Binding } from 'astal';
 
-const computeVisible = (child: BarBoxChild): Bind | boolean => {
+const computeVisible = (child: BarBoxChild): Binding<boolean> | boolean => {
     if (child.isVis !== undefined) {
         return bind(child.isVis);
     }

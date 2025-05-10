@@ -2,10 +2,10 @@ import { Module } from '../../shared/Module';
 import options from 'src/options';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;

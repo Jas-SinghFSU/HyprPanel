@@ -1,18 +1,18 @@
-import { ResourceLabelType } from 'src/lib/types/bar';
-import { GenericResourceData, Postfix, UpdateHandlers } from 'src/lib/types/customModules/generic';
-import {
-    InputHandlerEventArgs,
-    InputHandlerEvents,
-    RunAsyncCommand,
-} from 'src/lib/types/customModules/utils';
-import { ThrottleFn } from 'src/lib/types/utils';
 import { bind, Binding, execAsync, Variable } from 'astal';
 import { openMenu } from 'src/components/bar/utils/menu';
 import options from 'src/options';
 import { Gdk } from 'astal/gtk3';
-import { GtkWidget } from 'src/lib/types/widget';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { isScrollDown, isScrollUp } from 'src/lib/utils';
+import { ResourceLabelType } from 'src/lib/types/bar.types';
+import { UpdateHandlers, Postfix, GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import {
+    RunAsyncCommand,
+    InputHandlerEvents,
+    InputHandlerEventArgs,
+} from 'src/lib/types/customModules/utils.types';
+import { ThrottleFn } from 'src/lib/types/utils.types';
+import { GtkWidget } from 'src/lib/types/widget.types';
 
 const { scrollSpeed } = options.bar.customModules;
 

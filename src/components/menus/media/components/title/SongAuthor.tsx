@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { mediaArtist } from 'src/globals/media';
+import { mediaArtist } from 'src/shared/media';
 
 const { hideAuthor } = options.menus.media;
 

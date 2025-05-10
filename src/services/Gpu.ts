@@ -2,7 +2,7 @@
 
 import { bind, exec, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GPUStat } from 'src/lib/types/gpustat';
+import { GPUStat } from 'src/lib/types/gpustat.types';
 
 class Gpu {
     private _updateFrequency = Variable(2000);

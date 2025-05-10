@@ -43,13 +43,10 @@ export const clearNotifications = async (
     removingNotifications.set(false);
 };
 
-const clearAllNotifications = async (): Promise<void> => {
+export async function clearAllNotifications(): Promise<void> {
     try {
         clearNotifications(notifdService.get_notifications(), clearDelay.get());
     } catch (error) {
         errorHandler(error);
     }
-};
-
-globalThis['removingNotifications'] = removingNotifications;
-globalThis['clearAllNotifications'] = clearAllNotifications;
+}

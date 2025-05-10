@@ -37,6 +37,7 @@ import { bind, Variable } from 'astal';
 import { getLayoutForMonitor, isLayoutEmpty } from './utils/monitors';
 import { GdkMonitorMapper } from './utils/GdkMonitorMapper';
 import { CustomModules } from './custom_modules/CustomModules';
+import { idleInhibit } from 'src/shared/utilities';
 
 const { layouts } = options.bar;
 const { location } = options.theme.bar;

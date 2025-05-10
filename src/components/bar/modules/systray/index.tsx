@@ -2,8 +2,8 @@ import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../.
 import options from '../../../../options';
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { Gdk, Gtk } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;

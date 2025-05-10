@@ -3,8 +3,9 @@ import { Module } from '../../shared/Module';
 import { inputHandler } from '../../utils/helpers';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { Astal } from 'astal/gtk3';
+import { idleInhibit } from 'src/shared/utilities';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const { label, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;

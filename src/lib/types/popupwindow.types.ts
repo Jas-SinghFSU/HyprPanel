@@ -1,7 +1,7 @@
-import { Widget } from 'types/widgets/widget';
-import { WindowProps } from 'types/widgets/window';
-import { Transition } from './widget';
 import { Gtk } from 'astal/gtk3';
+import { Exclusivity, GtkWidget, Transition } from './widget.types';
+import { Binding } from 'astal';
+import { WindowProps } from 'astal/gtk3/widget';
 
 export type PopupWindowProps = {
     name: string;
@@ -13,17 +13,17 @@ export type PopupWindowProps = {
 
 export type LayoutFunction = (
     name: string,
-    child: Widget,
+    child: Gtk.Widget,
     transition: Gtk.RevealerTransitionType,
 ) => {
-    center: () => Widget;
-    top: () => Widget;
-    'top-right': () => Widget;
-    'top-center': () => Widget;
-    'top-left': () => Widget;
-    'bottom-left': () => Widget;
-    'bottom-center': () => Widget;
-    'bottom-right': () => Widget;
+    center: () => Gtk.Widget;
+    top: () => Gtk.Widget;
+    'top-right': () => Gtk.Widget;
+    'top-center': () => Gtk.Widget;
+    'top-left': () => Gtk.Widget;
+    'bottom-left': () => Gtk.Widget;
+    'bottom-center': () => Gtk.Widget;
+    'bottom-right': () => Gtk.Widget;
 };
 export type Layouts =
     | 'center'

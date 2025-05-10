@@ -1,9 +1,9 @@
-import { defaultColorMap } from '../../lib/types/defaults/options';
-import { ColorMapKey, HexColor, MatugenColors } from '../../lib/types/options';
+import { ColorMapKey, HexColor, MatugenColors } from '../../lib/types/options.types';
 import { getMatugenVariations } from './variations';
 import { bash, dependencies, Notify, isAnImage } from '../../lib/utils';
 import options from '../../options';
 import icons from '../../lib/icons/icons';
+import { defaultColorMap } from 'src/lib/types/defaults/options.types';
 
 const MATUGEN_ENABLED = options.theme.matugen;
 const MATUGEN_SETTINGS = options.theme.matugen_settings;
@@ -102,7 +102,7 @@ export class MatugenService {
 
             const colorValue = defaultColorMap[colorKey];
             if (colorValue === incomingHex) {
-                return matugenVariation[colorKey] || incomingHex;
+                return matugenVariation[colorKey] ?? incomingHex;
             }
         }
 
@@ -117,14 +117,11 @@ export class MatugenService {
         const variation = MATUGEN_SETTINGS.variation.get();
         const matugenVariation = getMatugenVariations(matugenColors, variation);
 
-        // Update option color - separated for clarity
         this._updateOptionColor(matugenVariation.base);
 
-        // Reuse getMatugenHex to avoid code duplication
         return this.getMatugenHex(incomingHex, matugenColors);
     }
 
-    // Helper to update option color - follows Single Responsibility
     private _updateOptionColor(color: HexColor): void {
         const optionToUpdate = options.theme.bar.menus.menu.media.card.color;
         if (optionToUpdate !== undefined && color) {
@@ -133,10 +130,8 @@ export class MatugenService {
     }
 }
 
-// Create a singleton instance for easy use across the application
 const matugenService = new MatugenService();
 
-// Export functions with the same signatures for backward compatibility
 export async function generateMatugenColors(): Promise<MatugenColors | undefined> {
     return matugenService.generateMatugenColors();
 }

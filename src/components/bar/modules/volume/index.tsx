@@ -4,9 +4,9 @@ import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/util
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { getIcon } from './helpers/index.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
+import { BarBoxChild } from 'src/lib/types/bar.types.js';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber?.audio;

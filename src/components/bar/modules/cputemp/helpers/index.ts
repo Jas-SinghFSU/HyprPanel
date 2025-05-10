@@ -1,8 +1,8 @@
 import { Variable } from 'astal';
 import GLib from 'gi://GLib?version=2.0';
-import { convertCelsiusToFahrenheit } from 'src/globals/weather';
-import { UnitType } from 'src/lib/types/weather';
+import { convertCelsiusToFahrenheit } from 'src/shared/weather';
 import options from 'src/options';
+import { UnitType } from 'src/lib/types/weather.types';
 const { sensor } = options.bar.customModules.cpuTemp;
 
 /**

@@ -1,11 +1,11 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const {
     label,

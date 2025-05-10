@@ -1,4 +1,4 @@
-import { BarLayout, BarLayouts } from 'src/lib/types/options';
+import { BarLayout, BarLayouts } from 'src/lib/types/options.types';
 
 /**
  * Returns the bar layout configuration for a specific monitor

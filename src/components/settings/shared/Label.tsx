@@ -1,7 +1,11 @@
-import { execAsync } from 'astal';
+import { Binding, execAsync } from 'astal';
 import { Gtk } from 'astal/gtk3';
 
-export const Label = ({ title: name, subtitle: sub = '', subtitleLink = '' }: LabelProps): JSX.Element => {
+export const Label = ({
+    title: name,
+    subtitle: sub = '',
+    subtitleLink = '',
+}: LabelSettingProps): JSX.Element => {
     const Subtitle = (): JSX.Element => {
         if (subtitleLink.length) {
             return (
@@ -38,8 +42,8 @@ export const Label = ({ title: name, subtitle: sub = '', subtitleLink = '' }: La
     );
 };
 
-interface LabelProps {
+export interface LabelSettingProps {
     title: string;
-    subtitle?: string;
+    subtitle?: string | Binding<string>;
     subtitleLink?: string;
 }

@@ -2,11 +2,11 @@ import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getCPUTemperature } from './helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { UnitType } from 'src/lib/types/weather';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import { UnitType } from 'src/lib/types/weather.types';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const {
     label,

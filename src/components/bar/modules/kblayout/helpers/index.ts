@@ -4,7 +4,7 @@ import {
     KbLabelType,
     LayoutKeys,
     LayoutValues,
-} from 'src/lib/types/customModules/kbLayout';
+} from 'src/lib/types/customModules/kbLayout.types.js';
 import { layoutMap } from './layouts';
 
 /**

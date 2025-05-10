@@ -55,5 +55,4 @@ class PowerMenu extends GObject.Object {
 }
 
 const powermenu = new PowerMenu();
-Object.assign(globalThis, { powermenu });
 export default powermenu;

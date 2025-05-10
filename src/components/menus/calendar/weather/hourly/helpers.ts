@@ -1,4 +1,4 @@
-import { isValidWeatherIconTitle } from 'src/globals/weather';
+import { isValidWeatherIconTitle } from 'src/shared/weather';
 import { Weather, WeatherIconTitle } from 'src/lib/types/weather';
 
 /**

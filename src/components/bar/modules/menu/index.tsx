@@ -4,8 +4,8 @@ import { openMenu } from '../../utils/menu.js';
 import { getDistroIcon } from '../../../../lib/utils.js';
 import { Variable, bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types.js';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 

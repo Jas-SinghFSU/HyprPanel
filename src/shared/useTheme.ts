@@ -10,7 +10,7 @@ import {
 const { restartCommand } = options.hyprpanel;
 export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
 
-globalThis.useTheme = (filePath: string): void => {
+export function useTheme(filePath: string): void {
     try {
         const importedConfig = loadJsonFile(filePath);
 
@@ -36,4 +36,4 @@ globalThis.useTheme = (filePath: string): void => {
     } catch (error) {
         errorHandler(error);
     }
-};
+}

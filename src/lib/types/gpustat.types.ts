@@ -1,3 +1,5 @@
+import { Process } from 'astal';
+
 export type GPUStatProcess = {
     username: string;
     command: string;

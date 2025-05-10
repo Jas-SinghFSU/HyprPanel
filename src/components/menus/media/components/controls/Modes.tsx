@@ -4,7 +4,7 @@ import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
 import { isLoopActive, isShuffleActive, loopIconMap, loopTooltipMap } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer, loopStatus, shuffleStatus } from 'src/globals/media';
+import { activePlayer, loopStatus, shuffleStatus } from 'src/shared/media';
 
 export type LoopStatus = 'none' | 'track' | 'playlist';
 

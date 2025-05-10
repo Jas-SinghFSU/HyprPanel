@@ -1,6 +1,9 @@
 import { errorHandler } from 'src/lib/utils';
-import { BarLayouts } from 'src/lib/types/options';
 import { Command } from '../../types';
+import { setWallpaper } from 'src/shared/wallpaper';
+import { useTheme } from 'src/shared/useTheme';
+import { setLayout } from 'src/shared/utilities';
+import { BarLayouts } from 'src/lib/types/options.types';
 
 export const appearanceCommands: Command[] = [
     {

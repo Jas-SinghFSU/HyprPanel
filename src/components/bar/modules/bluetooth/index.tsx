@@ -1,11 +1,11 @@
 import options from 'src/options.js';
 import { openMenu } from '../../utils/menu.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { Variable, bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types.js';
 
 const bluetoothService = AstalBluetooth.get_default();
 

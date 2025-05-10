@@ -1,4 +1,4 @@
-import { MkOptionsResult } from './types/options';
+import { MkOptionsResult } from './types/options.types';
 import Variable from 'astal/variable';
 import { monitorFile, readFile, writeFile } from 'astal/file';
 import { errorHandler, Notify } from './utils';

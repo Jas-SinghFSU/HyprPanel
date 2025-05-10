@@ -1,9 +1,10 @@
 import { Opt } from 'src/lib/option';
-import { Variable } from 'types/variable';
-import { defaultColorMap } from './defaults/options';
 import { Astal } from 'astal/gtk3';
 import { dropdownMenuList } from '../constants/options';
 import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
+import { Variable } from 'astal';
+import { defaultColorMap } from './defaults/options.types';
+import { LabelSettingProps } from 'src/components/settings/shared/Label';
 
 export type MkOptionsResult = {
     array: () => Opt[];
@@ -70,7 +71,15 @@ export type NotificationAnchor =
     | 'bottom left'
     | 'left'
     | 'right';
-export type OSDAnchor = 'top left' | 'top' | 'top right' | 'right' | 'bottom right' | 'bottom' | 'bottom left' | 'left';
+export type OSDAnchor =
+    | 'top left'
+    | 'top'
+    | 'top right'
+    | 'right'
+    | 'bottom right'
+    | 'bottom'
+    | 'bottom left'
+    | 'left';
 export type BarButtonStyles = 'default' | 'split' | 'wave' | 'wave2';
 
 export type ThemeExportData = {
@@ -101,7 +110,7 @@ export interface RowProps<T> {
     min?: number;
     disabledBinding?: Variable<boolean>;
     exportData?: ThemeExportData;
-    subtitle?: string | VarType<string> | Opt;
+    subtitle?: LabelSettingProps['subtitle'];
     subtitleLink?: string;
     dependencies?: string[];
     increment?: number;
@@ -196,9 +205,9 @@ export type MatugenVariation = {
     base: HexColor;
     mantle: HexColor;
     crust: HexColor;
-    notifications_closer: HexColor;
-    notifications_background: HexColor;
-    dashboard_btn_text: HexColor;
+    notifications_closer?: HexColor;
+    notifications_background?: HexColor;
+    dashboard_btn_text?: HexColor;
     red2: HexColor;
     peach2: HexColor;
     pink2: HexColor;
@@ -230,9 +239,6 @@ export type MatugenVariation = {
     yellow3: HexColor;
     maroon3: HexColor;
     crust3: HexColor;
-    notifications_closer?: HexColor;
-    notifications_background?: HexColor;
-    dashboard_btn_text?: HexColor;
 };
 export type MatugenScheme =
     | 'content'
@@ -243,6 +249,8 @@ export type MatugenScheme =
     | 'neutral'
     | 'rainbow'
     | 'tonal-spot';
+
+export type MatugenTheme = 'light' | 'dark';
 
 export type MatugenVariations =
     | 'standard_1'
@@ -255,8 +263,6 @@ export type MatugenVariations =
     | 'vivid_2'
     | 'vivid_3';
 
-type MatugenTheme = 'light' | 'dark';
-
 export type ColorMapKey = keyof typeof defaultColorMap;
 export type ColorMapValue = (typeof defaultColorMap)[ColorMapKey];
 
@@ -264,7 +270,15 @@ export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
 
 export type BluetoothBatteryState = 'paired' | 'connected' | 'always';
 
-export type BorderLocation = 'none' | 'top' | 'right' | 'bottom' | 'left' | 'horizontal' | 'vertical' | 'full';
+export type BorderLocation =
+    | 'none'
+    | 'top'
+    | 'right'
+    | 'bottom'
+    | 'left'
+    | 'horizontal'
+    | 'vertical'
+    | 'full';
 
 export type PositionAnchor = { [key: string]: Astal.WindowAnchor };
 

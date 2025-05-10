@@ -1,10 +1,10 @@
 import './src/lib/session';
 import './src/scss/style';
-import './src/globals/useTheme';
-import './src/globals/wallpaper';
-import './src/globals/systray';
-import './src/globals/dropdown';
-import './src/globals/utilities';
+import './src/shared/useTheme';
+import './src/shared/wallpaper';
+import './src/shared/systray';
+import './src/shared/dropdown';
+import './src/shared/utilities';
 import './src/components/bar/utils/sideEffects';
 
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';

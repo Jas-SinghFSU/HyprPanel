@@ -2,7 +2,7 @@
 
 import { bind, GLib, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 class Ram {
     private _updateFrequency = Variable(2000);

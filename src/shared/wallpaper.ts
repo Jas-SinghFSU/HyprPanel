@@ -5,7 +5,7 @@ import Wallpaper from 'src/services/Wallpaper';
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 const { enable: enableWallpaper, image } = options.wallpaper;
 
-globalThis.setWallpaper = (filePath: string): void => {
+export function setWallpaper(filePath: string): void {
     if (!(GLib.file_test(filePath, EXISTS) && GLib.file_test(filePath, IS_REGULAR))) {
         throw new Error('The input file is not a valid wallpaper.');
     }
@@ -24,4 +24,4 @@ globalThis.setWallpaper = (filePath: string): void => {
             throw new Error(`An error occurred while setting the wallpaper: ${error}`);
         }
     }
-};
+}

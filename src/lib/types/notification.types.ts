@@ -6,7 +6,7 @@ export interface NotificationArgs {
     iconName?: string;
     id?: number;
     summary?: string;
-    urgency?: Urgency;
+    urgency?: string;
     category?: string;
     timeout?: number;
     transient?: boolean;
