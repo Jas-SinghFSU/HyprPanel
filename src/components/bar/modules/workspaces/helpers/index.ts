@@ -338,6 +338,8 @@ export function getWorkspacesToRender(
         ) {
             return workspaceMonitorRules[currentMonitorInstance.name].includes(workspaceId);
         }
+
+        return false;
     });
 
     if (isMonitorSpecific) {

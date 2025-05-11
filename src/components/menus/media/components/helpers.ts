@@ -56,7 +56,9 @@ export const initializeActivePlayerHook = (): void => {
             .get_players()
             .find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
 
-        const playerStillExists = mprisService.get_players().some((player) => curPlayer.set(player.busName));
+        const playerStillExists = mprisService
+            .get_players()
+            .some((player) => curPlayer.get() === player.busName);
 
         const nextPlayerUp = mprisService
             .get_players()

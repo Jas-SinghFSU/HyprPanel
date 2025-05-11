@@ -68,10 +68,10 @@ class Wallpaper extends GObject.Object {
     }
 
     @property(String)
-    public declare wallpaper: string;
+    declare public wallpaper: string;
 
     @signal(Boolean)
-    public declare changed: (event: boolean) => void;
+    declare public changed: (event: boolean) => void;
 
     constructor() {
         super();
