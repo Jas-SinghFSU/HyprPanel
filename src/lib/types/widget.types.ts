@@ -1,8 +1,6 @@
 import { Binding } from 'astal';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
-import { Box } from 'astal/gtk3/widget';
 
-export type Exclusivity = 'normal' | 'ignore' | 'exclusive';
 export type Anchor = 'left' | 'right' | 'top' | 'down';
 export type Transition = 'none' | 'crossfade' | 'slide_right' | 'slide_left' | 'slide_up' | 'slide_down';
 

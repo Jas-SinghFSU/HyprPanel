@@ -1,5 +1,5 @@
-import { Gtk } from 'astal/gtk3';
-import { Exclusivity, GtkWidget, Transition } from './widget.types';
+import { Astal, Gtk } from 'astal/gtk3';
+import { GtkWidget } from './widget.types';
 import { Binding } from 'astal';
 import { WindowProps } from 'astal/gtk3/widget';
 
@@ -8,12 +8,12 @@ export type PopupWindowProps = {
     child?: JSX.Element | JSX.Element[];
     layout?: Layouts;
     transition?: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>;
-    exclusivity?: Exclusivity;
+    exclusivity?: Astal.Exclusivity;
 } & WindowProps;
 
 export type LayoutFunction = (
     name: string,
-    child: Gtk.Widget,
+    child: JSX.Element,
     transition: Gtk.RevealerTransitionType,
 ) => {
     center: () => Gtk.Widget;
@@ -47,6 +47,6 @@ export type PaddingProps = {
 
 export type PopupRevealerProps = {
     name: string;
-    child: GtkWidget;
+    child: JSX.Element;
     transition: Gtk.RevealerTransitionType;
 };

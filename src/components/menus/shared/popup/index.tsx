@@ -7,7 +7,7 @@ import {
     LayoutFunction,
     PopupWindowProps,
 } from 'src/lib/types/popupwindow.types';
-import { Layouts, Exclusivity } from 'src/lib/types/widget.types';
+import { Layouts } from 'src/lib/types/widget.types';
 
 export const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox
@@ -131,7 +131,7 @@ export default ({
     child,
     layout = 'center',
     transition = Gtk.RevealerTransitionType.NONE,
-    exclusivity = 'ignore' as Exclusivity,
+    exclusivity = Astal.Exclusivity.IGNORE,
     ...props
 }: PopupWindowProps): JSX.Element => {
     const layoutFn = isValidLayout(layout) ? layout : 'center';
