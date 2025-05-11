@@ -1,4 +1,4 @@
-import { ColorMapKey, HexColor, MatugenColors } from '../../lib/types/options.types';
+import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/options.types';
 import { getMatugenVariations } from './variations';
 import { bash, dependencies, Notify, isAnImage } from '../../lib/utils';
 import options from '../../options';
@@ -33,7 +33,7 @@ class DefaultSystemDependencies implements SystemDependencies {
     }
 }
 
-export class MatugenService {
+class MatugenService {
     private _deps: SystemDependencies;
 
     constructor(deps: SystemDependencies = new DefaultSystemDependencies()) {
@@ -46,7 +46,7 @@ export class MatugenService {
 
     public async generateMatugenColors(): Promise<MatugenColors | undefined> {
         if (!MATUGEN_ENABLED.get() || !this._deps.checkDependencies('matugen')) {
-            return undefined;
+            return;
         }
 
         const wallpaperPath = options.wallpaper.image.get();
@@ -57,7 +57,8 @@ export class MatugenService {
                 body: "Please select a wallpaper in 'Theming > General' first.",
                 iconName: icons.ui.warning,
             });
-            return undefined;
+
+            return;
         }
 
         try {
@@ -79,7 +80,7 @@ export class MatugenService {
                 iconName: icons.ui.info,
             });
             console.error(`An error occurred while generating matugen colors: ${error}`);
-            return undefined;
+            return;
         }
     }
 
@@ -108,38 +109,7 @@ export class MatugenService {
 
         return incomingHex;
     }
-
-    public replaceHexValues(incomingHex: HexColor, matugenColors?: MatugenColors): HexColor {
-        if (!MATUGEN_ENABLED.get() || !matugenColors) {
-            return incomingHex;
-        }
-
-        const variation = MATUGEN_SETTINGS.variation.get();
-        const matugenVariation = getMatugenVariations(matugenColors, variation);
-
-        this._updateOptionColor(matugenVariation.base);
-
-        return this.getMatugenHex(incomingHex, matugenColors);
-    }
-
-    private _updateOptionColor(color: HexColor): void {
-        const optionToUpdate = options.theme.bar.menus.menu.media.card.color;
-        if (optionToUpdate !== undefined && color) {
-            optionToUpdate.set(color);
-        }
-    }
 }
 
 const matugenService = new MatugenService();
-
-export async function generateMatugenColors(): Promise<MatugenColors | undefined> {
-    return matugenService.generateMatugenColors();
-}
-
-export const getMatugenHex = (incomingHex: HexColor, matugenColors: MatugenColors): HexColor => {
-    return matugenService.getMatugenHex(incomingHex, matugenColors);
-};
-
-export const replaceHexValues = (incomingHex: HexColor, matugenColors: MatugenColors): HexColor => {
-    return matugenService.replaceHexValues(incomingHex, matugenColors);
-};
+export { matugenService };

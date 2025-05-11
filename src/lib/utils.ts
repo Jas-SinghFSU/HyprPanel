@@ -1,5 +1,5 @@
-import { BarModule, NotificationAnchor, PositionAnchor } from './types/options.types';
-import { OSDAnchor } from './types/options.types';
+import { BarModule, NotificationAnchor, PositionAnchor } from './options/options.types';
+import { OSDAnchor } from './options/options.types';
 import icons from './icons/icons';
 import GLib from 'gi://GLib?version=2.0';
 import GdkPixbuf from 'gi://GdkPixbuf';

@@ -1,5 +1,5 @@
 import { GenericFunction } from '../types/customModules/generic.types';
-import { BarModule } from '../types/options.types';
+import { BarModule } from '../options/options.types';
 import { Poller } from './Poller';
 import { Binding, Variable } from 'astal';
 

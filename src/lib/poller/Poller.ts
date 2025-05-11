@@ -1,7 +1,7 @@
 import { getLayoutItems } from 'src/lib/utils';
 import { AstalIO, Binding, interval, Variable } from 'astal';
 import options from 'src/options';
-import { BarModule } from '../types/options.types';
+import { BarModule } from '../options/options.types';
 
 const { layouts } = options.bar;
 

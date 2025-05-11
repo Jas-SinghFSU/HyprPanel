@@ -1,6 +1,6 @@
 import { bind, Variable } from 'astal';
 import { BarBoxChild, BarModuleProps } from 'src/lib/types/bar.types';
-import { BarButtonStyles } from 'src/lib/types/options.types';
+import { BarButtonStyles } from 'src/lib/options/options.types';
 import options from 'src/options';
 
 const { style } = options.theme.bar.buttons;

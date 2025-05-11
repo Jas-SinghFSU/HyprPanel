@@ -37,11 +37,7 @@ const PopupRevealer = ({ name, child, transition }: PopupRevealerProps): JSX.Ele
     </box>
 );
 
-const Layout: LayoutFunction = (
-    name: string,
-    child: JSX.Element,
-    transition: Gtk.RevealerTransitionType,
-) => ({
+const Layout: LayoutFunction = (name, child, transition) => ({
     center: () => (
         <centerbox>
             <Padding name={name} />
@@ -128,7 +124,7 @@ const isValidLayout = (layout: string): layout is Layouts => {
 
 export default ({
     name,
-    child,
+    child = <box />,
     layout = 'center',
     transition = Gtk.RevealerTransitionType.NONE,
     exclusivity = Astal.Exclusivity.IGNORE,

@@ -1,5 +1,5 @@
-import { RecursiveOptionsObject, HexColor, MatugenTheme } from 'src/lib/types/options.types';
-import { Opt } from '../lib/option';
+import { Opt } from 'src/lib/options';
+import { RecursiveOptionsObject, HexColor, MatugenTheme } from 'src/lib/options/options.types';
 
 export const isOpt = <T>(value: unknown): value is Opt<T> =>
     typeof value === 'object' && value !== null && 'value' in value && value instanceof Opt;

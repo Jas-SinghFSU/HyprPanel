@@ -1,5 +1,4 @@
 import { FontStyle } from './components/settings/shared/inputs/font/utils';
-import { opt, mkOptions } from './lib/option';
 import { NetstatLabelType, RateUnit, ResourceLabelType } from './lib/types/bar.types';
 import { KbLabelType } from './lib/types/customModules/kbLayout.types';
 import {
@@ -14,12 +13,13 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
-} from './lib/types/options.types';
-import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/types/options.types';
+} from './lib/options/options.types';
+import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/options/options.types';
 import { SystrayIconMap } from './lib/types/systray.types';
 import { UnitType } from './lib/types/weather.types';
 import { Transition } from './lib/types/widget.types';
 import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from './lib/types/workspace.types';
+import { mkOptions, opt } from './lib/options';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
 export const colors = {

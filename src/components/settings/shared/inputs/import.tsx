@@ -1,4 +1,4 @@
-import { ThemeExportData } from 'src/lib/types/options.types';
+import { ThemeExportData } from 'src/lib/options/options.types';
 import { importFiles, saveFileDialog } from '../FileChooser';
 import { isPrimaryClick } from 'src/lib/utils';
 

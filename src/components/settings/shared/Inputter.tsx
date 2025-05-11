@@ -10,7 +10,7 @@ import { EnumInputter } from './inputs/enum';
 import { FontInputter } from './inputs/font';
 import { Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { RowProps } from 'src/lib/types/options.types';
+import { RowProps } from 'src/lib/options/options.types';
 
 const InputField = <T extends string | number | boolean | object>({
     opt,

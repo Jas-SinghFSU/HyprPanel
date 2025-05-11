@@ -48,7 +48,7 @@
      */
     async function readJson(filePath: string): Promise<Record<string, unknown>> {
         const raw = await fs.promises.readFile(path.resolve(filePath), 'utf8');
-        return JSON.parse(raw) as Record<string, unknown>;
+        return JSON.parse(raw);
     }
 
     /**

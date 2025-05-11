@@ -1,29 +1,28 @@
 import { Astal, Gtk } from 'astal/gtk3';
-import { GtkWidget } from './widget.types';
 import { Binding } from 'astal';
 import { WindowProps } from 'astal/gtk3/widget';
 
-export type PopupWindowProps = {
+export interface PopupWindowProps extends WindowProps {
     name: string;
-    child?: JSX.Element | JSX.Element[];
+    child?: JSX.Element;
     layout?: Layouts;
     transition?: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>;
     exclusivity?: Astal.Exclusivity;
-} & WindowProps;
+}
 
 export type LayoutFunction = (
     name: string,
     child: JSX.Element,
-    transition: Gtk.RevealerTransitionType,
+    transition: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>,
 ) => {
-    center: () => Gtk.Widget;
-    top: () => Gtk.Widget;
-    'top-right': () => Gtk.Widget;
-    'top-center': () => Gtk.Widget;
-    'top-left': () => Gtk.Widget;
-    'bottom-left': () => Gtk.Widget;
-    'bottom-center': () => Gtk.Widget;
-    'bottom-right': () => Gtk.Widget;
+    center: () => JSX.Element;
+    top: () => JSX.Element;
+    'top-right': () => JSX.Element;
+    'top-center': () => JSX.Element;
+    'top-left': () => JSX.Element;
+    'bottom-left': () => JSX.Element;
+    'bottom-center': () => JSX.Element;
+    'bottom-right': () => JSX.Element;
 };
 export type Layouts =
     | 'center'
@@ -48,5 +47,5 @@ export type PaddingProps = {
 export type PopupRevealerProps = {
     name: string;
     child: JSX.Element;
-    transition: Gtk.RevealerTransitionType;
+    transition: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>;
 };

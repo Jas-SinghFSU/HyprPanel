@@ -1,16 +1,16 @@
-import { Opt } from 'src/lib/option';
 import { Astal } from 'astal/gtk3';
 import { dropdownMenuList } from '../constants/options';
 import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
 import { Variable } from 'astal';
-import { defaultColorMap } from './defaults/options.types';
+import { defaultColorMap } from '../types/defaults/options.types';
 import { LabelSettingProps } from 'src/components/settings/shared/Label';
+import { Opt } from './Opt';
 
-export type MkOptionsResult = {
-    array: () => Opt[];
+export interface MkOptionsResult {
+    toArray: () => Opt[];
     reset: () => Promise<string>;
-    handler: (deps: string[], callback: () => void) => void;
-};
+    handler: (optionsToWatch: string[], callback: () => void) => void;
+}
 
 export type RecursiveOptionsObject = {
     [key: string]:
@@ -22,6 +22,8 @@ export type RecursiveOptionsObject = {
         | Variable<number>
         | Variable<boolean>;
 };
+
+export type OptionsObject = Record<string, unknown>;
 
 export type BarLocation = 'top' | 'bottom';
 export type AutoHide = 'never' | 'fullscreen' | 'single-window';

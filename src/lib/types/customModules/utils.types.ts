@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
-import { Opt } from 'src/lib/option';
 import { EventArgs } from '../widget.types';
+import { Opt } from 'src/lib/options';
 
 export type InputHandlerEventArgs = {
     cmd?: Opt<string> | Variable<string>;

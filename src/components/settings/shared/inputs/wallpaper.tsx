@@ -1,7 +1,7 @@
 import FileChooserButton from 'src/components/shared/FileChooserButton';
-import { Opt } from 'src/lib/option';
 import Wallpaper from 'src/services/Wallpaper';
 import options from 'src/options';
+import { Opt } from 'src/lib/options';
 
 export const WallpaperInputter = <T extends string | number | boolean | object>({
     opt,

@@ -1,4 +1,4 @@
-import { BarLocation } from 'src/lib/types/options.types';
+import { BarLocation } from 'src/lib/options/options.types';
 
 export type EventBoxPaddingProps = {
     className: string;

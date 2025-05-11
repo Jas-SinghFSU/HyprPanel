@@ -3,7 +3,7 @@ import { Command } from '../../types';
 import { setWallpaper } from 'src/shared/wallpaper';
 import { useTheme } from 'src/shared/useTheme';
 import { setLayout } from 'src/shared/utilities';
-import { BarLayouts } from 'src/lib/types/options.types';
+import { BarLayouts } from 'src/lib/options/options.types';
 
 export const appearanceCommands: Command[] = [
     {

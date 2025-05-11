@@ -2,7 +2,7 @@ import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import SpinButton from 'src/components/shared/SpinButton';
 import icons from 'src/lib/icons/icons';
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 import { useHook } from 'src/lib/shared/hookHandler';
 
 export const NumberInputter = <T extends string | number | boolean | object>({

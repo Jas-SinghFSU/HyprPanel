@@ -3,7 +3,7 @@ import options from 'src/options';
 import powermenu from '../power/helpers/actions';
 import { App, Gtk } from 'astal/gtk3';
 import { bind, execAsync } from 'astal';
-import { PowerOptions } from 'src/lib/types/options.types';
+import { PowerOptions } from 'src/lib/options/options.types';
 
 const { confirmation, shutdown, logout, sleep, reboot, showLabel } = options.menus.power;
 

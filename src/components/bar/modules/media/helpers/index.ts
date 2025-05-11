@@ -1,7 +1,7 @@
-import { Opt } from 'src/lib/option';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { Variable } from 'astal';
 import { MediaTags } from 'src/lib/types/audio.types';
+import { Opt } from 'src/lib/options';
 
 /**
  * Retrieves the icon for a given media player.

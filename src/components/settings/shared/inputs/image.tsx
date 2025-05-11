@@ -1,6 +1,6 @@
 import { Gtk } from 'astal/gtk3';
 import FileChooserButton from 'src/components/shared/FileChooserButton';
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 
 const handleFileSet =
     <T,>(opt: Opt<T>) =>

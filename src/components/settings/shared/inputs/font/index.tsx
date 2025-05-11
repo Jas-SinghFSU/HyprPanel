@@ -1,6 +1,6 @@
 import FontButton from 'src/components/shared/FontButton';
-import { Opt } from 'src/lib/option';
 import { FontStyle, styleToString } from './utils';
+import { Opt } from 'src/lib/options';
 
 export const FontInputter = <T extends string | number | boolean | object>({
     fontFamily,
