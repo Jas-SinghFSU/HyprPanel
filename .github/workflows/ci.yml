@@ -35,6 +35,9 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
+            - name: Check TypeScript Version
+              run: npx tsc --version
+
             - name: ESLint
               run: npm run lint
 
