@@ -9,11 +9,14 @@ import { Astal } from 'astal/gtk3';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
-const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
+const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, showGraph, historyLength, icon } =
     options.bar.customModules.ram;
 
 const defaultRamData: GenericResourceData = { total: 0, used: 0, percentage: 0, free: 0 };
 const ramUsage = Variable<GenericResourceData>(defaultRamData);
+const ramHistory = Variable<number[]>([]);
+
+const historyLengthBinding = Variable.derive([bind(historyLength)], (length: number) => length);
 
 const ramPoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
     ramUsage,
@@ -25,19 +28,46 @@ const ramPoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
 
 ramPoller.initialize('ram');
 
+const getBarGraph = (usage: number): string => {
+    if (usage < 12.5) return '▁';
+    if (usage < 25) return '▂';
+    if (usage < 37.5) return '▃';
+    if (usage < 50) return '▄';
+    if (usage < 62.5) return '▅';
+    if (usage < 75) return '▆';
+    if (usage < 87.5) return '▇';
+    return '█';
+};
+
+const graphBinding = showGraph
+    ? Variable.derive([bind(ramUsage), historyLengthBinding()], (rmUsg: GenericResourceData, hstLength: number) => {
+          const history = ramHistory.get();
+          history.push(rmUsg.percentage);
+          if (history.length > hstLength) {
+              history.shift();
+          }
+          ramHistory.set(history);
+
+          return history.map(getBarGraph).join('');
+      })
+    : Variable.derive([], () => '');
+
 export const Ram = (): BarBoxChild => {
     const labelBinding = Variable.derive(
         [bind(ramUsage), bind(labelType), bind(round)],
         (rmUsg: GenericResourceData, lblTyp: ResourceLabelType, round: boolean) => {
             const returnValue = renderResourceLabel(lblTyp, rmUsg, round);
-
             return returnValue;
         },
     );
 
+    const combinedLabelBinding = Variable.derive([labelBinding(), graphBinding()], (label: string, graph: string) => {
+        return showGraph ? `${label} ${graph}` : label;
+    });
+
     const ramModule = Module({
         textIcon: bind(icon),
-        label: labelBinding(),
+        label: combinedLabelBinding(),
         tooltipText: bind(labelType).as((lblTyp) => {
             return formatTooltip('RAM', lblTyp);
         }),
@@ -78,6 +108,8 @@ export const Ram = (): BarBoxChild => {
             },
             onDestroy: () => {
                 labelBinding.drop();
+                graphBinding.drop();
+                combinedLabelBinding.drop();
             },
         },
     });
