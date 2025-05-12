@@ -4,128 +4,39 @@ on:
     pull_request:
         branches:
             - master
-    push:
-        branches:
-            - matugen
 
 jobs:
     code_quality:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout main repository
+            - name: Checkout main repository with submodules
               uses: actions/checkout@v3
+            #   with:
+            #       submodules: true
+            #
+            # - name: Clone astal repository to /usr/share/astal/gjs
+            #   run: |
+            #       sudo mkdir -p /usr/share/astal/
+            #       sudo git clone https://github.com/Jas-SinghFSU/astalgjs.git /usr/share/astal
+            #
+            # - name: Copy types to @girs/
+            #   run: |
+            #       rm -rf @girs
+            #       mkdir -p @girs
+            #       cp -R external/ags-types/@girs/* @girs/
+            #       rm -rf external/ags-types
 
             - name: Node Setup
               uses: actions/setup-node@v3
               with:
                   node-version: '21'
 
-            - name: Create mock dependencies for ESLint
-              run: |
-                # Create mock astal
-                sudo mkdir -p /usr/share/astal/gjs
-                echo '{
-                  "name": "astal",
-                  "version": "0.0.0",
-                  "main": "index.js"
-                }' > /usr/share/astal/gjs/package.json
-                
-                echo 'module.exports = {
-                  bind: () => ({}),
-                  Variable: class Variable {
-                    constructor(value) { this.value = value; }
-                    get() { return this.value; }
-                    set(val) { this.value = val; return true; }
-                    static derive() { return () => ({}); }
-                  },
-                  Binding: class Binding {}
-                };' > /usr/share/astal/gjs/index.js
-                
-                # Create gi directory for GObject imports
-                mkdir -p gi-modules
-                
-                # Mock AstalMpris
-                echo 'module.exports = {
-                  get_default: () => ({
-                    connect: () => {},
-                    get_players: () => [],
-                    focusedMonitor: { id: 0 },
-                    focusedWorkspace: { id: 0 }
-                  }),
-                  PlaybackStatus: {
-                    PLAYING: "playing",
-                    PAUSED: "paused",
-                    STOPPED: "stopped"
-                  },
-                  Loop: {
-                    NONE: "none",
-                    UNSUPPORTED: "unsupported",
-                    TRACK: "track",
-                    PLAYLIST: "playlist"
-                  },
-                  Shuffle: {
-                    ON: "on",
-                    OFF: "off"
-                  }
-                };' > gi-modules/AstalMpris.js
-                
-                # Mock AstalHyprland
-                echo 'module.exports = {
-                  get_default: () => ({
-                    connect: () => {},
-                    get_monitors: () => [],
-                    get_workspaces: () => [],
-                    dispatch: () => {},
-                    message: () => "[]",
-                    focusedMonitor: { id: 0 },
-                    focusedWorkspace: { id: 0 }
-                  })
-                };' > gi-modules/AstalHyprland.js
-                
-                # Create a mock .babelrc to resolve gi:// imports
-                echo '{
-                  "plugins": [
-                    ["module-resolver", {
-                      "alias": {
-                        "gi://AstalMpris?version=0.1": "./gi-modules/AstalMpris.js",
-                        "gi://AstalHyprland?version=0.1": "./gi-modules/AstalHyprland.js"
-                      }
-                    }]
-                  ]
-                }' > .babelrc
-
             - name: Install Dependencies
-              run: |
-                npm install
-                npm install --save-dev babel-plugin-module-resolver
+              run: npm install
 
-            - name: Environment Information
-              run: |
-                echo "Node version: $(node -v)"
-                echo "NPM version: $(npm -v)"
-                echo "ESLint version: $(npx eslint --version)"
-                echo "TypeScript version: $(npx tsc --version)"
-                echo "@typescript-eslint/eslint-plugin version: $(npm list @typescript-eslint/eslint-plugin)"
-
-            - name: Create CI-specific ESLint config
-              run: |
-                echo '{
-                  "extends": "./.eslintrc.json",
-                  "settings": {
-                    "import/resolver": {
-                      "node": {
-                        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-                      }
-                    }
-                  },
-                  "rules": {
-                    "@typescript-eslint/no-var-requires": "off"
-                  }
-                }' > .eslintrc.ci.json
-                
             - name: ESLint
-              run: npx eslint --config .eslintrc.ci.json .
+              run: npm run lint
 
             # - name: Type Check
             #   run: npx tsc --noEmit --pretty --extendedDiagnostics
