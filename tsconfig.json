@@ -6,7 +6,7 @@
         "module": "ES2022",
         "lib": ["ES2022", "DOM"],
         "moduleResolution": "Bundler",
-        "allowJs": true,
+        "allowJs": false,
         "checkJs": false,
         "strict": true,
         "noImplicitAny": true,
