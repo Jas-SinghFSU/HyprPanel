@@ -201,7 +201,7 @@ export function dependencies(...bins: string[]): boolean {
  */
 export function isAnImage(imgFilePath: string): boolean {
     try {
-        GdkPixbuf.Pixbuf.new_from_file(normalizePath(imgFilePath));
+        GdkPixbuf.Pixbuf.new_from_file(normalizeToAbsolutePath(imgFilePath));
         return true;
     } catch (error) {
         console.info(error);
@@ -218,8 +218,8 @@ export function isAnImage(imgFilePath: string): boolean {
  *
  * @returns The normalized path.
  */
-export function normalizePath(path: string): string {
-    if (path.charAt(0) == '~') {
+export function normalizeToAbsolutePath(path: string): string {
+    if (path.charAt(0) === '~') {
         // Replace will only replace the first match, in this case, the first character
         return path.replace('~', GLib.get_home_dir());
     }
@@ -340,7 +340,7 @@ export function capitalizeFirstLetter(str: string): string {
  */
 export function getDistroIcon(): string {
     const icon = distroIcons.find(([id]) => id === distro.id);
-    return icon ? icon[1] : ''; // default icon if not found
+    return icon ? icon[1] : '';
 }
 
 /**

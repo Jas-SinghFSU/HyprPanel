@@ -23,7 +23,7 @@ const {
     icon,
 } = options.bar.customModules.cpuTemp;
 
-export const cpuTemp = Variable(0);
+const cpuTemp = Variable(0);
 
 const cpuTempPoller = new FunctionPoller<number, [Variable<boolean>, Variable<UnitType>]>(
     cpuTemp,

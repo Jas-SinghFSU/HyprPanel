@@ -5,7 +5,7 @@ import { range } from 'src/lib/utils';
 import options from 'src/options';
 
 const hyprlandService = AstalHyprland.get_default();
-const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
+const { reverse_scroll, ignored } = options.bar.workspaces;
 
 /**
  * A Variable that holds the current map of monitors to the workspace numbers assigned to them.
@@ -16,36 +16,6 @@ export const workspaceRules = Variable(getWorkspaceMonitorMap());
  * A Variable used to force UI or other updates when relevant workspace events occur.
  */
 export const forceUpdater = Variable(true);
-
-/**
- * Retrieves the workspace numbers associated with a specific monitor.
- *
- * If only one monitor exists, this will simply return a list of all possible workspaces.
- * Otherwise, it will consult the workspace rules to determine which workspace numbers
- * belong to the specified monitor.
- *
- * @param monitorId - The numeric identifier of the monitor.
- *
- * @returns An array of workspace numbers belonging to the specified monitor.
- */
-export function getWorkspacesForMonitor(monitorId: number): number[] {
-    const allMonitors = hyprlandService.get_monitors();
-
-    if (allMonitors.length === 1) {
-        return Array.from({ length: workspaces.get() }, (_, index) => index + 1);
-    }
-
-    const workspaceMonitorRules = getWorkspaceMonitorMap();
-
-    const monitorNameMap: MonitorMap = {};
-    allMonitors.forEach((monitorInstance) => {
-        monitorNameMap[monitorInstance.id] = monitorInstance.name;
-    });
-
-    const currentMonitorName = monitorNameMap[monitorId];
-
-    return workspaceMonitorRules[currentMonitorName];
-}
 
 /**
  * Checks whether a given workspace is valid (assigned) for the specified monitor.
@@ -210,7 +180,7 @@ function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable
  * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
     navigateWorkspace('next', ignoredWorkspacesVariable);
 }
 
@@ -221,7 +191,7 @@ export function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): 
  * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
-export function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
+function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
     navigateWorkspace('prev', ignoredWorkspacesVariable);
 }
 
@@ -233,7 +203,7 @@ export function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string
  *
  * @returns The throttled version of the input function.
  */
-export function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
+function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
     let isThrottleActive: boolean;
 
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {

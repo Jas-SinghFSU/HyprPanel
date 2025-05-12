@@ -69,28 +69,6 @@ export const filterConfigForThemeOnly = (config: Config): Config => {
 };
 
 /**
- * Filters the given configuration object to exclude theme-related properties.
- * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
- *
- * @param config - The configuration object to be filtered.
- * @returns A new configuration object excluding theme-related properties.
- */
-export const filterConfigForNonTheme = (config: Config): Config => {
-    const filteredConfig: Config = {};
-    for (const key in config) {
-        if (whiteListedThemeProp.includes(key)) {
-            continue;
-        }
-
-        const value = config[key];
-        if (!(typeof value === 'string' && hexColorPattern.test(value))) {
-            filteredConfig[key] = config[key];
-        }
-    }
-    return filteredConfig;
-};
-
-/**
  * Opens a file save dialog to save the current configuration to a specified file path.
  * The configuration can be filtered to include only theme-related properties if the themeOnly flag is set.
  * If the file already exists, it increments the file name to avoid overwriting.
@@ -306,3 +284,25 @@ export const importFiles = (themeOnly: boolean = false): void => {
         });
     }
 };
+
+/**
+ * Filters the given configuration object to exclude theme-related properties.
+ * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
+ *
+ * @param config - The configuration object to be filtered.
+ * @returns A new configuration object excluding theme-related properties.
+ */
+function filterConfigForNonTheme(config: Config): Config {
+    const filteredConfig: Config = {};
+    for (const key in config) {
+        if (whiteListedThemeProp.includes(key)) {
+            continue;
+        }
+
+        const value = config[key];
+        if (!(typeof value === 'string' && hexColorPattern.test(value))) {
+            filteredConfig[key] = config[key];
+        }
+    }
+    return filteredConfig;
+}

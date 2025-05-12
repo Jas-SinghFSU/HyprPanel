@@ -24,7 +24,6 @@ export type AppIconOptions = {
     defaultIcon: string;
     emptyIcon: string;
 };
-export type ClientAttributes = [className: string, title: string];
 
 export type WorkspaceIconsColored = {
     [key: string]: {

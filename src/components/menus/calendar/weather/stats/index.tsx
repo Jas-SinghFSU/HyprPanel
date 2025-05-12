@@ -1,4 +1,4 @@
-import { getTemperature, globalWeatherVar } from 'src/shared/weather';
+import { getWindConditions, globalWeatherVar } from 'src/shared/weather';
 import options from 'src/options';
 import { getRainChance } from 'src/shared/weather';
 import { Gtk } from 'astal/gtk3';
@@ -7,7 +7,7 @@ import { bind, Variable } from 'astal';
 const { unit } = options.menus.clock.weather;
 
 export const TodayStats = (): JSX.Element => {
-    const temperatureBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], getTemperature);
+    const windBindings = Variable.derive([bind(globalWeatherVar), bind(unit)], getWindConditions);
 
     return (
         <box
@@ -16,12 +16,12 @@ export const TodayStats = (): JSX.Element => {
             valign={Gtk.Align.CENTER}
             vertical
             onDestroy={() => {
-                temperatureBinding.drop();
+                windBindings.drop();
             }}
         >
             <box className={'weather wind'}>
                 <label className={'weather wind icon txt-icon'} label={''} />
-                <label className={'weather wind label'} label={temperatureBinding()} />
+                <label className={'weather wind label'} label={windBindings()} />
             </box>
             <box className={'weather precip'}>
                 <label className={'weather precip icon txt-icon'} label={''} />

@@ -6,8 +6,6 @@ import { isLoopActive, isShuffleActive, loopIconMap, loopTooltipMap } from './he
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { activePlayer, loopStatus, shuffleStatus } from 'src/shared/media';
 
-export type LoopStatus = 'none' | 'track' | 'playlist';
-
 export const Loop = (): JSX.Element => {
     const className = bind(loopStatus).as((status) => {
         const isActive = isLoopActive(status);

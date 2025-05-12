@@ -1,13 +1,23 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
-import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { mediaArtUrl } from 'src/shared/media';
 import options from 'src/options';
 
-const mprisService = AstalMpris.get_default();
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 
-const curPlayer = Variable('');
+/**
+ * Retrieves the background binding for the media card.
+ *
+ * This function sets up a derived variable that updates the background CSS for the media card
+ * based on the current theme settings for color, tint, and media art URL.
+ *
+ * @returns A Binding<string> representing the background CSS for the media card.
+ */
+export const getBackground = (): Binding<string> => {
+    return Variable.derive([bind(color), bind(tint), bind(mediaArtUrl)], (_, __, artUrl) => {
+        return generateAlbumArt(artUrl);
+    })();
+};
 
 /**
  * Generates CSS for album art with a tinted background.
@@ -19,7 +29,7 @@ const curPlayer = Variable('');
  *
  * @returns A CSS string for the album art background.
  */
-export const generateAlbumArt = (imageUrl: string): string => {
+function generateAlbumArt(imageUrl: string): string {
     const userTint = tint.get();
     const userHexColor = color.get();
 
@@ -36,50 +46,4 @@ export const generateAlbumArt = (imageUrl: string): string => {
             ), url("${imageUrl}");`;
 
     return css;
-};
-
-/**
- * Initializes the active player hook.
- *
- * This function sets up a listener for changes in the MPRIS service.
- * It updates the current player based on the playback status and the order of players.
- */
-export const initializeActivePlayerHook = (): void => {
-    mprisService.connect('changed', () => {
-        const statusOrder = {
-            [AstalMpris.PlaybackStatus.PLAYING]: 1,
-            [AstalMpris.PlaybackStatus.PAUSED]: 2,
-            [AstalMpris.PlaybackStatus.STOPPED]: 3,
-        };
-
-        const isPlaying = mprisService
-            .get_players()
-            .find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
-
-        const playerStillExists = mprisService
-            .get_players()
-            .some((player) => curPlayer.get() === player.busName);
-
-        const nextPlayerUp = mprisService
-            .get_players()
-            .sort((a, b) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus])[0].bus_name;
-
-        if (isPlaying || !playerStillExists) {
-            curPlayer.set(nextPlayerUp);
-        }
-    });
-};
-
-/**
- * Retrieves the background binding for the media card.
- *
- * This function sets up a derived variable that updates the background CSS for the media card
- * based on the current theme settings for color, tint, and media art URL.
- *
- * @returns A Binding<string> representing the background CSS for the media card.
- */
-export const getBackground = (): Binding<string> => {
-    return Variable.derive([bind(color), bind(tint), bind(mediaArtUrl)], (_, __, artUrl) => {
-        return generateAlbumArt(artUrl);
-    })();
-};
+}

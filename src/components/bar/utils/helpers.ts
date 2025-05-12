@@ -259,7 +259,7 @@ export const divide = ([total, used]: number[], round: boolean): number => {
  *
  * @returns The size in KiB as a number.
  */
-export const formatSizeInKiB = (sizeInBytes: number, round: boolean): number => {
+const formatSizeInKiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 1;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
@@ -274,7 +274,7 @@ export const formatSizeInKiB = (sizeInBytes: number, round: boolean): number => 
  *
  * @returns The size in MiB as a number.
  */
-export const formatSizeInMiB = (sizeInBytes: number, round: boolean): number => {
+const formatSizeInMiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 2;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
@@ -289,7 +289,7 @@ export const formatSizeInMiB = (sizeInBytes: number, round: boolean): number => 
  *
  * @returns The size in GiB as a number.
  */
-export const formatSizeInGiB = (sizeInBytes: number, round: boolean): number => {
+const formatSizeInGiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 3;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
@@ -304,7 +304,7 @@ export const formatSizeInGiB = (sizeInBytes: number, round: boolean): number => 
  *
  * @returns The size in TiB as a number.
  */
-export const formatSizeInTiB = (sizeInBytes: number, round: boolean): number => {
+const formatSizeInTiB = (sizeInBytes: number, round: boolean): number => {
     const sizeInGiB = sizeInBytes / 1024 ** 4;
     return round ? Math.round(sizeInGiB) : parseFloat(sizeInGiB.toFixed(2));
 };
@@ -319,8 +319,7 @@ export const formatSizeInTiB = (sizeInBytes: number, round: boolean): number => 
  *
  * @returns The formatted size as a number.
  */
-export const autoFormatSize = (sizeInBytes: number, round: boolean): number => {
-    // auto convert to GiB, MiB, KiB, TiB, or bytes
+const autoFormatSize = (sizeInBytes: number, round: boolean): number => {
     if (sizeInBytes >= 1024 ** 4) return formatSizeInTiB(sizeInBytes, round);
     if (sizeInBytes >= 1024 ** 3) return formatSizeInGiB(sizeInBytes, round);
     if (sizeInBytes >= 1024 ** 2) return formatSizeInMiB(sizeInBytes, round);
@@ -338,7 +337,7 @@ export const autoFormatSize = (sizeInBytes: number, round: boolean): number => {
  *
  * @returns The postfix as a string.
  */
-export const getPostfix = (sizeInBytes: number): Postfix => {
+const getPostfix = (sizeInBytes: number): Postfix => {
     if (sizeInBytes >= 1024 ** 4) return 'TiB';
     if (sizeInBytes >= 1024 ** 3) return 'GiB';
     if (sizeInBytes >= 1024 ** 2) return 'MiB';
@@ -374,12 +373,9 @@ export const renderResourceLabel = (
         B: (size: number): number => size,
     };
 
-    // Get the data in proper GiB, MiB, KiB, TiB, or bytes
     const totalSizeFormatted = autoFormatSize(total, round);
-    // get the postfix: one of [TiB, GiB, MiB, KiB, B]
     const postfix = getPostfix(total);
 
-    // Determine which format function to use
     const formatUsed = formatFunctions[postfix] ?? formatFunctions['B'];
     const usedSizeFormatted = formatUsed(used, round);
 

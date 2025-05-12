@@ -6,7 +6,7 @@ export interface PositionalArg {
     default?: string | number | boolean | Record<string, unknown>;
 }
 
-export type HandlerReturn = unknown | Promise<unknown>;
+type HandlerReturn = unknown | Promise<unknown>;
 
 export interface Command {
     name: string;

@@ -8,6 +8,4 @@ export type ThrottleFn = (
     postInputUpdated?: Variable<boolean>,
 ) => void;
 
-export type ThrottleFnCallback = ((output: string) => void) | undefined;
-
 export type Primitive = string | number | boolean | symbol | null | undefined | bigint;

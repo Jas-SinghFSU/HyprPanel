@@ -22,4 +22,4 @@ export function mkOptions<T extends OptionsObject>(optionsObj: T): T & MkOptions
     return registry.createEnhancedOptions();
 }
 
-export { Opt, OptProps, ConfigManager, OptionRegistry };
+export { Opt };

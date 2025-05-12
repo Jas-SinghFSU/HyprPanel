@@ -13,8 +13,8 @@ export type BarBoxChild = {
     tooltip_text?: string | Binding<string>;
 } & ({ isBox: true; props: Widget.EventBoxProps } | { isBox?: false; props: Widget.ButtonProps });
 
-export type BoxHook = (self: BoxWidget) => void;
-export type LabelHook = (self: Label) => void;
+type BoxHook = (self: BoxWidget) => void;
+type LabelHook = (self: Label) => void;
 
 export type BarModuleProps = {
     icon?: string | Binding<string>;

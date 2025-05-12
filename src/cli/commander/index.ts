@@ -31,5 +31,3 @@ export function runCLI(input: string, response: ResponseCallback): void {
         response({ error: err instanceof Error ? err.message : String(err) });
     });
 }
-
-export { registry };

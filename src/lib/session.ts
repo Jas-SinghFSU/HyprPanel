@@ -16,7 +16,7 @@ export function ensureDirectory(path: string): void {
     }
 }
 
-export function ensureJsonFile(path: string): void {
+function ensureJsonFile(path: string): void {
     const file = Gio.File.new_for_path(path);
     const parent = file.get_parent();
 
@@ -30,7 +30,7 @@ export function ensureJsonFile(path: string): void {
     }
 }
 
-export function ensureFile(path: string): void {
+function ensureFile(path: string): void {
     const file = Gio.File.new_for_path(path);
     const parent = file.get_parent();
 

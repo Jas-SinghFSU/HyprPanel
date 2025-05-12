@@ -12,7 +12,7 @@ export type HyprctlKeyboard = {
     main: boolean;
 };
 
-export type HyprctlMouse = {
+type HyprctlMouse = {
     address: string;
     name: string;
     defaultSpeed: number;

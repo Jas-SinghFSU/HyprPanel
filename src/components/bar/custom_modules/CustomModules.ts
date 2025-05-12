@@ -1,8 +1,7 @@
 import { Gio, readFileAsync } from 'astal';
-import { CustomBarModule } from './types';
+import { CustomBarModule, WidgetMap } from './types';
 import { ModuleContainer } from './module_container';
 import { WidgetContainer } from '../shared/WidgetContainer';
-import { WidgetMap } from '..';
 
 export class CustomModules {
     constructor() {}

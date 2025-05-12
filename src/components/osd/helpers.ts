@@ -31,7 +31,7 @@ timeout(3000, () => {
  * @param self The Widget.Revealer or Widget.Window instance.
  * @param property The property to check, either 'revealChild' or 'visible'.
  */
-export const handleReveal = (self: Widget.Revealer): void => {
+const handleReveal = (self: Widget.Revealer): void => {
     if (isStartingUp) {
         return;
     }

@@ -12,17 +12,6 @@ export interface MkOptionsResult {
     handler: (optionsToWatch: string[], callback: () => void) => void;
 }
 
-export type RecursiveOptionsObject = {
-    [key: string]:
-        | RecursiveOptionsObject
-        | Opt<string>
-        | Opt<number>
-        | Opt<boolean>
-        | Variable<string>
-        | Variable<number>
-        | Variable<boolean>;
-};
-
 export type OptionsObject = Record<string, unknown>;
 
 export type BarLocation = 'top' | 'bottom';
@@ -62,7 +51,6 @@ export type BarLayouts = {
     [key: string]: BarLayout;
 };
 
-export type Unit = 'imperial' | 'metric';
 export type PowerOptions = 'sleep' | 'reboot' | 'logout' | 'shutdown';
 export type NotificationAnchor =
     | 'top'
@@ -88,7 +76,7 @@ export type ThemeExportData = {
     filePath: string;
     themeOnly: boolean;
 };
-export type InputType =
+type InputType =
     | 'number'
     | 'color'
     | 'float'
@@ -266,11 +254,8 @@ export type MatugenVariations =
     | 'vivid_3';
 
 export type ColorMapKey = keyof typeof defaultColorMap;
-export type ColorMapValue = (typeof defaultColorMap)[ColorMapKey];
 
 export type ScalingPriority = 'gdk' | 'hyprland' | 'both';
-
-export type BluetoothBatteryState = 'paired' | 'connected' | 'always';
 
 export type BorderLocation =
     | 'none'

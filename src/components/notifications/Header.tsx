@@ -7,7 +7,17 @@ import { notifHasImg } from './helpers';
 
 const { military } = options.menus.clock.time;
 
-export const NotificationIcon = ({ notification }: HeaderProps): JSX.Element => {
+export const Header = ({ notification }: HeaderProps): JSX.Element => {
+    return (
+        <box vertical={false} hexpand>
+            <NotificationIcon notification={notification} />
+            <SummaryLabel notification={notification} />
+            <TimeLabel notification={notification} />
+        </box>
+    );
+};
+
+const NotificationIcon = ({ notification }: HeaderProps): JSX.Element => {
     const { appName, appIcon, desktopEntry } = notification;
 
     return (
@@ -22,7 +32,7 @@ export const NotificationIcon = ({ notification }: HeaderProps): JSX.Element => 
     );
 };
 
-export const SummaryLabel = ({ notification }: HeaderProps): JSX.Element => {
+const SummaryLabel = ({ notification }: HeaderProps): JSX.Element => {
     return (
         <box className={'notification-card-header'} halign={Gtk.Align.START} valign={Gtk.Align.START} hexpand>
             <label
@@ -40,7 +50,7 @@ export const SummaryLabel = ({ notification }: HeaderProps): JSX.Element => {
     );
 };
 
-export const TimeLabel = ({ notification }: HeaderProps): JSX.Element => {
+const TimeLabel = ({ notification }: HeaderProps): JSX.Element => {
     const time = (time: number, format = '%I:%M %p'): string => {
         return GLib.DateTime.new_from_unix_local(time).format(military.get() ? '%H:%M' : format) ?? '--';
     };
@@ -53,16 +63,6 @@ export const TimeLabel = ({ notification }: HeaderProps): JSX.Element => {
             hexpand
         >
             <label className={'notification-time'} label={time(notification.time)} vexpand />
-        </box>
-    );
-};
-
-export const Header = ({ notification }: HeaderProps): JSX.Element => {
-    return (
-        <box vertical={false} hexpand>
-            <NotificationIcon notification={notification} />
-            <SummaryLabel notification={notification} />
-            <TimeLabel notification={notification} />
         </box>
     );
 };

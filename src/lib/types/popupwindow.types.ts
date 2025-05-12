@@ -2,6 +2,16 @@ import { Astal, Gtk } from 'astal/gtk3';
 import { Binding } from 'astal';
 import { WindowProps } from 'astal/gtk3/widget';
 
+type Layouts =
+    | 'center'
+    | 'top'
+    | 'top-right'
+    | 'top-center'
+    | 'top-left'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right';
+
 export interface PopupWindowProps extends WindowProps {
     name: string;
     child?: JSX.Element;
@@ -24,17 +34,8 @@ export type LayoutFunction = (
     'bottom-center': () => JSX.Element;
     'bottom-right': () => JSX.Element;
 };
-export type Layouts =
-    | 'center'
-    | 'top'
-    | 'top-right'
-    | 'top-center'
-    | 'top-left'
-    | 'bottom-left'
-    | 'bottom-center'
-    | 'bottom-right';
 
-export type Opts = {
+type Opts = {
     className: string;
     vexpand: boolean;
 };

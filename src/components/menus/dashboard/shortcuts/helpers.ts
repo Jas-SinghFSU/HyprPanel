@@ -7,6 +7,11 @@ import options from 'src/options';
 const { left } = options.menus.dashboard.shortcuts;
 
 /**
+ * A variable representing the polling interval in milliseconds.
+ */
+const pollingInterval = Variable(1000);
+
+/**
  * Retrieves the latest recording path from options.
  *
  * @returns The configured recording path.
@@ -25,19 +30,6 @@ export const executeCommand = async (command: string): Promise<void> => {
         console.error('Command failed:', command);
         console.error('Error:', err);
     }
-};
-
-/**
- * Handles the recorder status based on the command output.
- *
- * This function checks if the command output indicates that recording is in progress.
- *
- * @param commandOutput The output of the command to check.
- *
- * @returns True if the command output is 'recording', false otherwise.
- */
-export const handleRecorder = (commandOutput: string): boolean => {
-    return commandOutput === 'recording';
 };
 
 /**
@@ -83,11 +75,6 @@ export const leftCardHidden = Variable(
 );
 
 /**
- * A variable representing the polling interval in milliseconds.
- */
-export const pollingInterval = Variable(1000);
-
-/**
  * A variable indicating whether recording is in progress.
  */
 export const isRecording = Variable(false);
@@ -105,3 +92,16 @@ export const recordingPoller = new BashPoller<boolean, []>(
     `${SRC_DIR}/scripts/screen_record.sh status`,
     handleRecorder,
 );
+
+/**
+ * Handles the recorder status based on the command output.
+ *
+ * This function checks if the command output indicates that recording is in progress.
+ *
+ * @param commandOutput The output of the command to check.
+ *
+ * @returns True if the command output is 'recording', false otherwise.
+ */
+function handleRecorder(commandOutput: string): boolean {
+    return commandOutput === 'recording';
+}

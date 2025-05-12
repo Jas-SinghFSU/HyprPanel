@@ -136,7 +136,7 @@ export const getFilteredWirelessAPs = (): AstalNetwork.AccessPoint[] => {
  * @returns True if the device is in an active state; otherwise, false.
  */
 export const isApEnabled = (state: AstalNetwork.DeviceState | undefined): boolean => {
-    if (state == null) {
+    if (state === null) {
         return false;
     }
 
@@ -174,26 +174,6 @@ export const isDisconnecting = (accessPoint: AstalNetwork.AccessPoint): boolean 
         return networkService.wifi?.state === AstalNetwork.DeviceState.DEACTIVATING;
     }
     return false;
-};
-
-/**
- * Extracts the connection ID associated with a given SSID from the `nmcli` command output.
- *
- * This function parses the output of the `nmcli` command to find the connection ID associated with the provided SSID.
- *
- * @param ssid The SSID of the network.
- * @param nmcliOutput The output string from the `nmcli` command.
- *
- * @returns The connection ID if found; otherwise, undefined.
- */
-export const getIdFromSsid = (ssid: string, nmcliOutput: string): string | undefined => {
-    const lines = nmcliOutput.trim().split('\n');
-    for (const line of lines) {
-        const columns = line.trim().split(/\s{2,}/);
-        if (columns[0].includes(ssid)) {
-            return columns[1];
-        }
-    }
 };
 
 /**
@@ -311,6 +291,26 @@ export const forgetAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.Cli
             });
     });
 };
+
+/**
+ * Extracts the connection ID associated with a given SSID from the `nmcli` command output.
+ *
+ * This function parses the output of the `nmcli` command to find the connection ID associated with the provided SSID.
+ *
+ * @param ssid The SSID of the network.
+ * @param nmcliOutput The output string from the `nmcli` command.
+ *
+ * @returns The connection ID if found; otherwise, undefined.
+ */
+function getIdFromSsid(ssid: string, nmcliOutput: string): string | undefined {
+    const lines = nmcliOutput.trim().split('\n');
+    for (const line of lines) {
+        const columns = line.trim().split(/\s{2,}/);
+        if (columns[0].includes(ssid)) {
+            return columns[1];
+        }
+    }
+}
 
 Variable.derive([bind(networkService, 'wifi')], () => {
     wifiEnabled();

@@ -1,7 +1,6 @@
 import { Binding } from 'astal';
 import { Astal, Gdk, Gtk } from 'astal/gtk3';
 
-export type Anchor = 'left' | 'right' | 'top' | 'down';
 export type Transition = 'none' | 'crossfade' | 'slide_right' | 'slide_left' | 'slide_up' | 'slide_down';
 
 export type Layouts =
@@ -14,18 +13,14 @@ export type Layouts =
     | 'bottom-center'
     | 'bottom-right';
 
-export type Attribute = unknown;
-export type Child = Gtk.Widget;
 export type BoxWidget = Gtk.Box;
-export type GdkEvent = Gdk.Event;
 
-export type EventHandler<Self> = (self: Self, event: Gdk.Event) => boolean | unknown;
 export type EventArgs = {
     clicked: GtkWidget;
     event: Gdk.Event;
 };
 
-export interface WidgetProps {
+interface WidgetProps {
     onPrimaryClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
     onSecondaryClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
     onMiddleClick?: (clicked: GtkWidget, event: Gdk.EventButton) => void;
@@ -34,7 +29,7 @@ export interface WidgetProps {
     setup?: (self: GtkWidget) => void;
 }
 
-export interface GtkWidgetExtended extends Gtk.Widget {
+interface GtkWidgetExtended extends Gtk.Widget {
     props?: WidgetProps;
     component?: JSX.Element;
     primaryClick?: (clicked: GtkWidget, event: Astal.ClickEvent) => void;
