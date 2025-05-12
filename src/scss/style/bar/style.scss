@@ -72,7 +72,8 @@ $style-module-defaults: (
             );
             border: if(
                 $border-enabled or $bar-buttons-enableBorders,
-                $bar-buttons-borderSize solid if($bar-buttons-monochrome, $bar-buttons-borderColor, $border-color),
+                $bar-buttons-borderSize solid
+                    if($bar-buttons-monochrome, $bar-buttons-borderColor, $border-color),
                 0em
             );
 
@@ -336,7 +337,7 @@ $style-module-defaults: (
 @include styleModule(
     'powermodule',
     (
-        'text-color': $red,
+        'text-color': $bar-buttons-modules-power-icon,
         'icon-color': $bar-buttons-modules-power-icon,
         'icon-background': $bar-buttons-modules-power-icon_background,
         'label-background': $bar-buttons-modules-power-background,

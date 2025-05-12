@@ -18,7 +18,7 @@ class ThemeStyleManager {
      * Orchestrates the full theme regeneration process
      * Falls back to standard theme if Matugen is unavailable
      */
-    public async resetCss(): Promise<void> {
+    public async applyCss(): Promise<void> {
         if (!dependencies('sass')) return;
 
         try {
@@ -106,7 +106,13 @@ class ThemeStyleManager {
                     continue;
                 }
 
-                const matugenColor = matugenService.getMatugenHex(optionValue, matugenColors);
+                const defaultThemeValue = opt.initial;
+
+                if (!isHexColor(defaultThemeValue)) {
+                    continue;
+                }
+
+                const matugenColor = matugenService.getMatugenHex(defaultThemeValue, matugenColors);
                 result.push(`$${variableName}: ${matugenColor};`);
             }
 
@@ -200,11 +206,11 @@ const optionsToWatch = [
     'bar.battery.blocks',
 ];
 
-initializeTrackers(themeManager.resetCss.bind(themeManager));
+initializeTrackers(themeManager.applyCss.bind(themeManager));
 initializeHotReload();
 
-options.handler(optionsToWatch, themeManager.resetCss.bind(themeManager));
+options.handler(optionsToWatch, themeManager.applyCss.bind(themeManager));
 
-await themeManager.resetCss();
+await themeManager.applyCss();
 
 export { themeManager };

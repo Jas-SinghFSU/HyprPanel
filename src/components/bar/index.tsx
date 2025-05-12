@@ -83,7 +83,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
             ...customWidgets,
         };
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
     const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor);
 

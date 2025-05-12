@@ -112,4 +112,5 @@ class MatugenService {
 }
 
 const matugenService = new MatugenService();
+
 export { matugenService };

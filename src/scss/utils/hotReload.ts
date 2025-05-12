@@ -15,5 +15,5 @@ export const initializeHotReload = async (): Promise<void> => {
         `${CONFIG_DIR}/modules.scss`,
     ];
 
-    monitorList.forEach((file) => monitorFile(file, themeManager.resetCss));
+    monitorList.forEach((file) => monitorFile(file, themeManager.applyCss.bind(themeManager)));
 };
