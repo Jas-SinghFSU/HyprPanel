@@ -1,6 +1,6 @@
 import { bind } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { clearNotifications } from 'src/globals/notification';
+import { clearNotifications, removingNotifications } from 'src/shared/notification';
 import { isPrimaryClick } from 'src/lib/utils';
 import options from 'src/options';
 
@@ -18,7 +18,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
                     return;
                 }
 
-                if (removingNotifications.get()) {
+                if (removingNotifications.get() === true) {
                     return;
                 }
 
@@ -27,7 +27,7 @@ export const ClearNotificationsButton = (): JSX.Element => {
         >
             <label
                 className={bind(removingNotifications).as((removing) => {
-                    return removing
+                    return removing === true
                         ? 'clear-notifications-label txt-icon removing'
                         : 'clear-notifications-label txt-icon';
                 })}

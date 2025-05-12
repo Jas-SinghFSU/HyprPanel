@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { globalWeatherVar } from 'src/globals/weather';
+import { globalWeatherVar } from 'src/shared/weather';
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 

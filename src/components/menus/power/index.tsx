@@ -1,4 +1,3 @@
-import { Action } from 'src/lib/types/power.js';
 import PopupWindow from '../shared/popup/index.js';
 import powermenu from './helpers/actions.js';
 import options from 'src/options.js';
@@ -7,6 +6,7 @@ import icons from 'src/lib/icons/icons.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { Action } from 'src/lib/types/power.types.js';
 
 const { transition } = options.menus;
 
@@ -21,7 +21,11 @@ const SysButton = ({ action, label }: SysButtonProps): JSX.Element => {
             }}
         >
             <box className={'system-button widget-box'} vertical vexpand valign={Gtk.Align.FILL}>
-                <icon className={`system-button_icon txt-icon ${action}`} icon={icons.powermenu[action]} vexpand />
+                <icon
+                    className={`system-button_icon txt-icon ${action}`}
+                    icon={icons.powermenu[action]}
+                    vexpand
+                />
                 <label className={`system-button_label ${action}`} label={label} vexpand />
             </box>
         </button>
@@ -29,7 +33,10 @@ const SysButton = ({ action, label }: SysButtonProps): JSX.Element => {
 };
 
 export default (): JSX.Element => (
-    <PopupWindow name={'powermenu'} transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}>
+    <PopupWindow
+        name={'powermenu'}
+        transition={bind(transition).as((transition) => RevealerTransitionMap[transition])}
+    >
         <box className={'powermenu horizontal'}>
             <SysButton action={'shutdown'} label={'SHUTDOWN'} />
             <SysButton action={'logout'} label={'LOG OUT'} />

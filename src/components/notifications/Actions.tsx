@@ -14,7 +14,9 @@ const ActionButton = ({ notification, action }: ActionButtonProps): JSX.Element 
                 }
 
                 if (action.id.includes('scriptAction:-')) {
-                    execAsync(`${action.id.replace('scriptAction:-', '')}`).catch((err) => console.error(err));
+                    execAsync(`${action.id.replace('scriptAction:-', '')}`).catch((err) =>
+                        console.error(err),
+                    );
                     notification.dismiss();
                 } else {
                     notification.invoke(action.id);
@@ -38,7 +40,10 @@ const ActionButton = ({ notification, action }: ActionButtonProps): JSX.Element 
 
 export const Actions = ({ notification, showActions }: ActionProps): JSX.Element => {
     return (
-        <revealer transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN} revealChild={showActions ? false : true}>
+        <revealer
+            transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
+            revealChild={showActions ? false : true}
+        >
             <eventbox>
                 <box className={'notification-card-actions'} hexpand valign={Gtk.Align.END}>
                     {notification.get_actions().map((action) => {

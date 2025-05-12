@@ -6,7 +6,12 @@ const notifdService = AstalNotifd.get_default();
 
 export const Placeholder = (): JSX.Element => {
     return (
-        <box className={'notification-label-container'} halign={Gtk.Align.CENTER} valign={Gtk.Align.FILL} expand>
+        <box
+            className={'notification-label-container'}
+            halign={Gtk.Align.CENTER}
+            valign={Gtk.Align.FILL}
+            expand
+        >
             <box valign={Gtk.Align.CENTER} vertical expand>
                 <label
                     className={'placeholder-label dim bell txt-icon'}

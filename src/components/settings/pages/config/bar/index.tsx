@@ -23,7 +23,12 @@ export const BarSettings = (): JSX.Element => {
                     className="bar-layout-input"
                 />
                 <Option opt={options.theme.bar.floating} title="Floating Bar" type="boolean" />
-                <Option opt={options.theme.bar.location} title="Location" type="enum" enums={['top', 'bottom']} />
+                <Option
+                    opt={options.theme.bar.location}
+                    title="Location"
+                    type="enum"
+                    enums={['top', 'bottom']}
+                />
 
                 <Option
                     opt={options.bar.autoHide}
@@ -90,8 +95,16 @@ export const BarSettings = (): JSX.Element => {
                     subtitle="Spacing between the buttons in the bar."
                     type="string"
                 />
-                <Option opt={options.theme.bar.buttons.padding_x} title="Button Horizontal Padding" type="string" />
-                <Option opt={options.theme.bar.buttons.padding_y} title="Button Vertical Padding" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.padding_x}
+                    title="Button Horizontal Padding"
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.padding_y}
+                    title="Button Vertical Padding"
+                    type="string"
+                />
                 <Option opt={options.theme.bar.buttons.radius} title="Button Radius" type="string" />
                 <Option
                     opt={options.theme.bar.buttons.innerRadiusMultiplier}
@@ -149,7 +162,11 @@ export const BarSettings = (): JSX.Element => {
                 <Header title="Dashboard" />
                 <Option opt={options.bar.launcher.icon} title="Dashboard Menu Icon" type="string" />
                 <Option opt={options.bar.launcher.autoDetectIcon} title="Auto Detect Icon" type="boolean" />
-                <Option opt={options.theme.bar.buttons.dashboard.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.dashboard.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.launcher.rightClick} title="Right Click" type="string" />
                 <Option opt={options.bar.launcher.middleClick} title="Middle Click" type="string" />
                 <Option opt={options.bar.launcher.scrollUp} title="Scroll Up" type="string" />
@@ -157,7 +174,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Workspaces Section */}
                 <Header title="Workspaces" />
-                <Option opt={options.theme.bar.buttons.workspaces.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.workspaces.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option
                     opt={options.bar.workspaces.monitorSpecific}
                     title="Monitor Specific"
@@ -165,7 +186,11 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.workspaces.show_icons} title="Show Workspace Icons" type="boolean" />
-                <Option opt={options.bar.workspaces.show_numbered} title="Show Workspace Numbers" type="boolean" />
+                <Option
+                    opt={options.bar.workspaces.show_numbered}
+                    title="Show Workspace Numbers"
+                    type="boolean"
+                />
                 <Option
                     opt={options.bar.workspaces.workspaceMask}
                     title="Zero-Based Workspace Numbers"
@@ -259,9 +284,17 @@ export const BarSettings = (): JSX.Element => {
                     subtitle="Only applicable to numbered workspaces and mapped icons. Adjust carefully."
                     type="string"
                 />
-                <Option opt={options.bar.workspaces.icons.available} title="Workspace Available" type="string" />
+                <Option
+                    opt={options.bar.workspaces.icons.available}
+                    title="Workspace Available"
+                    type="string"
+                />
                 <Option opt={options.bar.workspaces.icons.active} title="Workspace Active" type="string" />
-                <Option opt={options.bar.workspaces.icons.occupied} title="Workspace Occupied" type="string" />
+                <Option
+                    opt={options.bar.workspaces.icons.occupied}
+                    title="Workspace Occupied"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.workspaces.applicationIconMap}
                     title="App Icon Mappings"
@@ -313,7 +346,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Window Titles Section */}
                 <Header title="Window Titles" />
-                <Option opt={options.theme.bar.buttons.windowtitle.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.windowtitle.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.windowtitle.custom_title} title="Use Custom Title" type="boolean" />
                 <Option
                     opt={options.bar.windowtitle.title_map}
@@ -339,7 +376,12 @@ export const BarSettings = (): JSX.Element => {
                     subtitle="Truncates the window title to a specified size."
                     type="boolean"
                 />
-                <Option opt={options.bar.windowtitle.truncation_size} title="Truncation Size" type="number" min={10} />
+                <Option
+                    opt={options.bar.windowtitle.truncation_size}
+                    title="Truncation Size"
+                    type="number"
+                    min={10}
+                />
                 <Option
                     opt={options.theme.bar.buttons.windowtitle.spacing}
                     title="Inner Spacing"
@@ -354,7 +396,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Volume Section */}
                 <Header title="Volume" />
-                <Option opt={options.theme.bar.buttons.volume.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.volume.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.volume.label} title="Show Volume Percentage" type="boolean" />
                 <Option
                     opt={options.theme.bar.buttons.volume.spacing}
@@ -369,9 +415,17 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Network Section */}
                 <Header title="Network" />
-                <Option opt={options.theme.bar.buttons.network.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.network.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.network.label} title="Show Network Name" type="boolean" />
-                <Option opt={options.bar.network.showWifiInfo} title="Show Wifi Info On Hover" type="boolean" />
+                <Option
+                    opt={options.bar.network.showWifiInfo}
+                    title="Show Wifi Info On Hover"
+                    type="boolean"
+                />
                 <Option
                     opt={options.bar.network.truncation}
                     title="Truncate Network Name"
@@ -392,7 +446,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Bluetooth Section */}
                 <Header title="Bluetooth" />
-                <Option opt={options.theme.bar.buttons.bluetooth.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.bluetooth.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.bluetooth.label} title="Show Bluetooth Label" type="boolean" />
                 <Option
                     opt={options.theme.bar.buttons.bluetooth.spacing}
@@ -407,7 +465,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Battery Section */}
                 <Header title="Battery" />
-                <Option opt={options.theme.bar.buttons.battery.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.battery.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.battery.label} title="Show Battery Percentage" type="boolean" />
                 <Option
                     opt={options.bar.battery.hideLabelWhenFull}
@@ -427,11 +489,18 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* System Tray Section */}
                 <Header title="System Tray" />
-                <Option opt={options.theme.bar.buttons.systray.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.systray.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option
                     opt={options.bar.systray.ignore}
                     title="Ignore List"
-                    subtitle={'Apps to ignore\n' + 'Wiki: https://hyprpanel.com/configuration/panel.html#system-tray'}
+                    subtitle={
+                        'Apps to ignore\n' +
+                        'Wiki: https://hyprpanel.com/configuration/panel.html#system-tray'
+                    }
                     subtitleLink="https://hyprpanel.com/configuration/panel.html#system-tray"
                     type="object"
                 />
@@ -448,7 +517,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Clock Section */}
                 <Header title="Clock" />
-                <Option opt={options.theme.bar.buttons.clock.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.clock.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.clock.format} title="Clock Format" type="string" />
                 <Option opt={options.bar.clock.icon} title="Icon" type="string" />
                 <Option opt={options.bar.clock.showIcon} title="Show Icon" type="boolean" />
@@ -466,7 +539,11 @@ export const BarSettings = (): JSX.Element => {
 
                 {/* Media Section */}
                 <Header title="Media" />
-                <Option opt={options.theme.bar.buttons.media.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.media.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option
                     opt={options.theme.bar.buttons.media.spacing}
                     title="Inner Spacing"

@@ -1,7 +1,11 @@
-import { execAsync } from 'astal';
+import { Binding, execAsync } from 'astal';
 import { Gtk } from 'astal/gtk3';
 
-export const Label = ({ title: name, subtitle: sub = '', subtitleLink = '' }: LabelProps): JSX.Element => {
+export const Label = ({
+    title: name,
+    subtitle: sub = '',
+    subtitleLink = '',
+}: LabelSettingProps): JSX.Element => {
     const Subtitle = (): JSX.Element => {
         if (subtitleLink.length) {
             return (
@@ -15,19 +19,31 @@ export const Label = ({ title: name, subtitle: sub = '', subtitleLink = '' }: La
                 </button>
             );
         }
-        return <label className="options-sublabel" label={sub} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} />;
+        return (
+            <label
+                className="options-sublabel"
+                label={sub}
+                halign={Gtk.Align.START}
+                valign={Gtk.Align.CENTER}
+            />
+        );
     };
 
     return (
         <box halign={Gtk.Align.START} vertical>
-            <label className="options-label" label={name} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} />
+            <label
+                className="options-label"
+                label={name}
+                halign={Gtk.Align.START}
+                valign={Gtk.Align.CENTER}
+            />
             <Subtitle />
         </box>
     );
 };
 
-interface LabelProps {
+export interface LabelSettingProps {
     title: string;
-    subtitle?: string;
+    subtitle?: string | Binding<string>;
     subtitleLink?: string;
 }

@@ -10,7 +10,7 @@ Variable.derive([bind(networkService, 'wifi')], () => {
     wifiEnabledBinding?.drop();
     wifiEnabledBinding = undefined;
 
-    if (!networkService.wifi) {
+    if (networkService.wifi === null) {
         return;
     }
 

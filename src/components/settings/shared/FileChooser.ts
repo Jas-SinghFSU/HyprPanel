@@ -3,9 +3,9 @@ import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
 import { bash, Notify } from '../../../lib/utils';
 import icons from '../../../lib/icons/icons';
-import { Config } from '../../../lib/types/filechooser';
-import { hexColorPattern } from '../../../globals/useTheme';
-import { isHexColor } from '../../../globals/variables';
+import { Config } from '../../../lib/types/filechooser.types';
+import { hexColorPattern } from '../../../shared/useTheme';
+import { isHexColor } from '../../../shared/variables';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
@@ -158,7 +158,9 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const jsonString = new TextDecoder('utf-8').decode(content);
         const jsonObject = JSON.parse(jsonString);
 
-        const filteredJsonObject = themeOnly ? filterHexColorPairs(jsonObject) : filterOutHexColorPairs(jsonObject);
+        const filteredJsonObject = themeOnly
+            ? filterHexColorPairs(jsonObject)
+            : filterOutHexColorPairs(jsonObject);
         const filteredContent = JSON.stringify(filteredJsonObject, null, 2);
 
         if (response === Gtk.ResponseType.ACCEPT) {

@@ -6,7 +6,7 @@ import { Command } from './types';
  * and retrieval of all commands for listing and help functionalities.
  */
 export class CommandRegistry {
-    private commands: Map<string, Command> = new Map();
+    private _commands: Map<string, Command> = new Map();
 
     /**
      * Registers a command. If a command with the same name or alias already exists,
@@ -15,18 +15,18 @@ export class CommandRegistry {
      * @param command - The command to register.
      * @throws If a command with the same name or alias already exists.
      */
-    register(command: Command): void {
-        if (this.commands.has(command.name)) {
+    public register(command: Command): void {
+        if (this._commands.has(command.name)) {
             throw new Error(`Command "${command.name}" is already registered.`);
         }
-        this.commands.set(command.name, command);
+        this._commands.set(command.name, command);
 
         if (command.aliases) {
             for (const alias of command.aliases) {
-                if (this.commands.has(alias)) {
+                if (this._commands.has(alias)) {
                     throw new Error(`Alias "${alias}" is already in use.`);
                 }
-                this.commands.set(alias, command);
+                this._commands.set(alias, command);
             }
         }
     }
@@ -37,8 +37,8 @@ export class CommandRegistry {
      * @param commandName - The name or alias of the command to retrieve.
      * @returns The command if found, otherwise undefined.
      */
-    get(commandName: string): Command | undefined {
-        return this.commands.get(commandName);
+    public get(commandName: string): Command | undefined {
+        return this._commands.get(commandName);
     }
 
     /**
@@ -46,8 +46,8 @@ export class CommandRegistry {
      *
      * @returns An array of all registered commands.
      */
-    getAll(): Command[] {
-        const unique = new Set<Command>(this.commands.values());
+    public getAll(): Command[] {
+        const unique = new Set<Command>(this._commands.values());
         return Array.from(unique);
     }
 }

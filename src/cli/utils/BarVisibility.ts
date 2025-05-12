@@ -1,4 +1,4 @@
-import { BarToggleStates } from 'src/lib/types/cli';
+import { BarToggleStates } from 'src/lib/types/cli.types';
 
 export class BarVisibility {
     private static _toggleStates: BarToggleStates = {};

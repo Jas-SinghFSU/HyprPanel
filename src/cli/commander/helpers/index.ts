@@ -58,7 +58,7 @@ export function createExplainCommand(registry: CommandRegistry): Command {
         handler: (args: Record<string, unknown>): string => {
             const commandName = args['commandName'] as string | undefined;
 
-            if (commandName) {
+            if (commandName !== undefined) {
                 return formatCommandExplain(registry, commandName);
             }
 
@@ -134,7 +134,7 @@ function organizeCommandsByCategory(commands: Command[]): CategoryMap {
     const categoryMap: CategoryMap = {};
 
     commands.forEach((cmd) => {
-        if (!categoryMap[cmd.category]) {
+        if (categoryMap[cmd.category] === undefined) {
             categoryMap[cmd.category] = [];
         }
         categoryMap[cmd.category].push(cmd);
@@ -183,7 +183,8 @@ function formatArguments(args: PositionalArg[]): string {
     return (
         args
             .map((arg) => {
-                const requirement = arg.required ? `${ANSI_FG_RED}(required)` : `${ANSI_FG_CYAN}(optional)`;
+                const requirement =
+                    arg.required === true ? `${ANSI_FG_RED}(required)` : `${ANSI_FG_CYAN}(optional)`;
                 const defaultValue =
                     arg.default !== undefined
                         ? ` ${ANSI_FG_MAGENTA}[default: ${JSON.stringify(arg.default)}]${ANSI_RESET}`

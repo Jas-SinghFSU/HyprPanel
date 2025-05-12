@@ -10,7 +10,7 @@ Variable.derive([bind(bluetoothService, 'adapter')], () => {
     discoveringBinding?.drop();
     discoveringBinding = undefined;
 
-    if (!bluetoothService.adapter) {
+    if (bluetoothService.adapter === null) {
         return;
     }
 

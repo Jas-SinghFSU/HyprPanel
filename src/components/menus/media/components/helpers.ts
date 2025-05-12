@@ -1,7 +1,7 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { mediaArtUrl } from 'src/globals/media';
+import { mediaArtUrl } from 'src/shared/media';
 import options from 'src/options';
 
 const mprisService = AstalMpris.get_default();
@@ -56,7 +56,9 @@ export const initializeActivePlayerHook = (): void => {
             .get_players()
             .find((p) => p['playbackStatus'] === AstalMpris.PlaybackStatus.PLAYING);
 
-        const playerStillExists = mprisService.get_players().some((player) => curPlayer.set(player.busName));
+        const playerStillExists = mprisService
+            .get_players()
+            .some((player) => curPlayer.get() === player.busName);
 
         const nextPlayerUp = mprisService
             .get_players()

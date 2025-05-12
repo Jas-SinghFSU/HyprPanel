@@ -1,7 +1,7 @@
 export const LeftColumn = ({ isVisible, children }: LeftColumnProps): JSX.Element => {
     return (
-        <box className={`card-button-section-container ${isVisible ? 'visible' : ''}`}>
-            {isVisible ? (
+        <box className={`card-button-section-container ${isVisible === true ? 'visible' : ''}`}>
+            {isVisible === true ? (
                 <box vertical hexpand vexpand>
                     {children}
                 </box>
@@ -14,7 +14,7 @@ export const LeftColumn = ({ isVisible, children }: LeftColumnProps): JSX.Elemen
 
 export const RightColumn = ({ children }: RightColumnProps): JSX.Element => {
     return (
-        <box className={`card-button-section-container`}>
+        <box className={'card-button-section-container'}>
             <box vertical hexpand vexpand>
                 {children}
             </box>

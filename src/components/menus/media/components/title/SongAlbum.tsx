@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { mediaAlbum } from 'src/globals/media';
+import { mediaAlbum } from 'src/shared/media';
 
 const { hideAlbum } = options.menus.media;
 

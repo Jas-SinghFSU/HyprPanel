@@ -59,19 +59,19 @@ class Wallpaper extends GObject.Object {
         }
     }
 
-    setWallpaper(path: string): void {
+    public setWallpaper(path: string): void {
         this.#setWallpaper(path);
     }
 
-    isRunning(): boolean {
+    public isRunning(): boolean {
         return this.#isRunning;
     }
 
     @property(String)
-    declare wallpaper: string;
+    declare public wallpaper: string;
 
     @signal(Boolean)
-    declare changed: (event: boolean) => void;
+    declare public changed: (event: boolean) => void;
 
     constructor() {
         super();

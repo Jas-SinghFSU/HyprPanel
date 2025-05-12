@@ -1,6 +1,4 @@
-import { VolumeIcons } from 'src/lib/types/volume';
-
-const icons: VolumeIcons = {
+const icons: Record<number, string> = {
     101: '󰕾',
     66: '󰕾',
     34: '󰖀',

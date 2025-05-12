@@ -1,4 +1,4 @@
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 import options from 'src/options';
 
 const { show_numbered, show_icons, showWsIcons, showApplicationIcons } = options.bar.workspaces;

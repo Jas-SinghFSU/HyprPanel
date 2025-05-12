@@ -29,7 +29,7 @@ type IconVolumes = keyof typeof speakerIcons;
  */
 const getIcon = (audioVol: number, isMuted: boolean): Record<string, string> => {
     const thresholds: IconVolumes[] = [101, 66, 34, 1, 0];
-    const icon = isMuted ? 0 : thresholds.find((threshold) => threshold <= audioVol * 100) || 0;
+    const icon = isMuted ? 0 : (thresholds.find((threshold) => threshold <= audioVol * 100) ?? 0);
 
     return {
         spkr: speakerIcons[icon],

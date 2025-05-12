@@ -1,7 +1,7 @@
-import { Opt } from 'src/lib/option';
 import icons from 'src/lib/icons/icons';
 import { bind } from 'astal';
 import { isPrimaryClick } from 'src/lib/utils';
+import { Opt } from 'src/lib/options';
 
 export const EnumInputter = <T extends string | number | boolean | object>({
     opt,

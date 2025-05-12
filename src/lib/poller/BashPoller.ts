@@ -1,25 +1,24 @@
-import { Bind } from 'src/lib/types/variable';
-import { GenericFunction } from 'src/lib/types/customModules/generic';
-import { BarModule } from 'src/lib/types/options';
+import { GenericFunction } from '../types/customModules/generic.types';
+import { BarModule } from '../options/options.types';
 import { Poller } from './Poller';
-import { execAsync, Variable } from 'astal';
+import { Binding, execAsync, Variable } from 'astal';
 
 /**
  * A class that manages polling of a variable by executing a bash command at specified intervals.
  */
 export class BashPoller<Value, Parameters extends unknown[]> {
-    private poller: Poller;
+    private _poller: Poller;
 
-    private params: Parameters;
+    private _params: Parameters;
 
     /**
      * Creates an instance of BashPoller.
      *
-     * @param targetVariable - The target variable to poll.
-     * @param trackers - An array of trackers to monitor.
-     * @param pollingInterval - The interval at which polling occurs.
-     * @param updateCommand - The command to update the target variable.
-     * @param pollingFunction - The function to execute during each poll.
+     * @param _targetVariable - The target variable to poll.
+     * @param _trackers - An array of trackers to monitor.
+     * @param _pollingInterval - The interval at which polling occurs.
+     * @param _updateCommand - The command to update the target variable.
+     * @param _pollingFunction - The function to execute during each poll.
      * @param params - Additional parameters for the polling function.
      *
      * @example
@@ -38,16 +37,16 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      * ```
      */
     constructor(
-        private targetVariable: Variable<Value>,
-        private trackers: Bind[],
-        private pollingInterval: Bind,
-        private updateCommand: string,
-        private pollingFunction: GenericFunction<Value, [string, ...Parameters]>,
+        private _targetVariable: Variable<Value>,
+        private _trackers: Binding<unknown>[],
+        private _pollingInterval: Binding<number>,
+        private _updateCommand: string,
+        private _pollingFunction: GenericFunction<Value, [string, ...Parameters]>,
         ...params: Parameters
     ) {
-        this.params = params;
+        this._params = params;
 
-        this.poller = new Poller(this.pollingInterval, this.trackers, this.execute);
+        this._poller = new Poller(this._pollingInterval, this._trackers, this.execute);
     }
 
     /**
@@ -58,10 +57,10 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      */
     public execute = async (): Promise<void> => {
         try {
-            const res = await execAsync(`bash -c "${this.updateCommand}"`);
-            this.targetVariable.set(await this.pollingFunction(res, ...this.params));
+            const res = await execAsync(`bash -c "${this._updateCommand}"`);
+            this._targetVariable.set(await this._pollingFunction(res, ...this._params));
         } catch (error) {
-            console.error(`Error executing bash command "${this.updateCommand}":`, error);
+            console.error(`Error executing bash command "${this._updateCommand}":`, error);
         }
     };
 
@@ -69,14 +68,14 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      * Starts the polling process.
      */
     public start(): void {
-        this.poller.start();
+        this._poller.start();
     }
 
     /**
      * Stops the polling process.
      */
     public stop(): void {
-        this.poller.stop();
+        this._poller.stop();
     }
 
     /**
@@ -85,6 +84,6 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      * @param moduleName - The name of the module to initialize.
      */
     public initialize(moduleName?: BarModule): void {
-        this.poller.initialize(moduleName);
+        this._poller.initialize(moduleName);
     }
 }

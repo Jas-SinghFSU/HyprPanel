@@ -1,11 +1,11 @@
 import { Variable, bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { Module } from '../../shared/Module';
 import { inputHandler } from '../../utils/helpers';
 import options from 'src/options';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';
 import AstalCava from 'gi://AstalCava?version=0.1';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const {
     icon,
@@ -46,7 +46,7 @@ export const Cava = (): BarBoxChild => {
     }
 
     return Module({
-        isVis,
+        isVis: bind(isVis),
         label: labelBinding(),
         showIconBinding: bind(label),
         textIcon: bind(icon),

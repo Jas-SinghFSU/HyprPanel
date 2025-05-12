@@ -1,5 +1,5 @@
 import { App, Gdk } from 'astal/gtk3';
-import { GtkWidget } from 'src/lib/types/widget';
+import { GtkWidget } from 'src/lib/types/widget.types';
 import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/locationHandler';
 
 export const closeAllMenus = (): void => {

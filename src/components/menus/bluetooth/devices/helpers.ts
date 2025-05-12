@@ -41,7 +41,9 @@ export const getAvailableBluetoothDevices = (): AstalBluetooth.Device[] => {
  */
 export const getConnectedBluetoothDevices = (): string[] => {
     const availableDevices = getAvailableBluetoothDevices();
-    const connectedDeviceNames = availableDevices.filter((d) => d.connected || d.paired).map((d) => d.address);
+    const connectedDeviceNames = availableDevices
+        .filter((d) => d.connected || d.paired)
+        .map((d) => d.address);
 
     return connectedDeviceNames;
 };

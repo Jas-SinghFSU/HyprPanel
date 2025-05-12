@@ -1,8 +1,8 @@
 import GLib from 'gi://GLib';
 import { Variable } from 'astal';
-import { NetworkResourceData } from 'src/lib/types/customModules/network';
-import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
-import { RateUnit } from 'src/lib/types/bar';
+import { RateUnit } from 'src/lib/types/bar.types';
+import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
+import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
 
 let previousNetUsage = { rx: 0, tx: 0, time: 0 };
 
@@ -97,16 +97,20 @@ const isValidInterface = (iface: NetworkUsage | null, interfaceName: string): bo
  */
 const getNetworkUsage = (interfaceName: string = ''): NetworkUsage => {
     const [success, data] = GLib.file_get_contents('/proc/net/dev');
+    const defaultStats = { name: '', rx: 0, tx: 0 };
+
     if (!success) {
         console.error('Failed to read /proc/net/dev');
-        return { name: '', rx: 0, tx: 0 };
+        return defaultStats;
     }
 
     const lines = new TextDecoder('utf-8').decode(data).split('\n');
+
     for (const line of lines) {
         const iface = parseInterfaceData(line);
+
         if (isValidInterface(iface, interfaceName)) {
-            return iface!;
+            return iface ?? defaultStats;
         }
     }
 
@@ -131,9 +135,9 @@ export const computeNetwork = (
     dataType: Variable<RateUnit>,
 ): NetworkResourceData => {
     const rateUnit = dataType.get();
-    const interfaceName = interfaceNameVar ? interfaceNameVar.get() : '';
+    const interfaceName = interfaceNameVar.get();
 
-    const DEFAULT_NETSTAT_DATA = GET_DEFAULT_NETSTAT_DATA(rateUnit);
+    const DEFAULT_NETSTAT_DATA = getDefaultNetstatData(rateUnit);
     try {
         const { rx, tx, name } = getNetworkUsage(interfaceName);
         const currentTime = Date.now();

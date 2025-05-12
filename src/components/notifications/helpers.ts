@@ -84,7 +84,9 @@ const dropNotificationPopup = (
     popupNotifications: Variable<AstalNotifd.Notification[]>,
 ): void => {
     const currentPopups = popupNotifications.get();
-    const undismissedNotifications = currentPopups.filter((popupNotif) => popupNotif.id !== notificationToDismiss.id);
+    const undismissedNotifications = currentPopups.filter(
+        (popupNotif) => popupNotif.id !== notificationToDismiss.id,
+    );
 
     popupNotifications.set(undismissedNotifications);
 };

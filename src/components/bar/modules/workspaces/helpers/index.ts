@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace';
+import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace.types';
 import { range } from 'src/lib/utils';
 import options from 'src/options';
 
@@ -172,7 +172,7 @@ function isWorkspaceIgnored(ignoredWorkspacesVariable: Variable<string>, workspa
  * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
  */
 function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable: Variable<string>): void {
-    const allHyprlandWorkspaces = hyprlandService.get_workspaces() || [];
+    const allHyprlandWorkspaces = hyprlandService.get_workspaces() ?? [];
 
     const activeWorkspaceIds = allHyprlandWorkspaces
         .filter((workspaceInstance) => hyprlandService.focusedMonitor.id === workspaceInstance.monitor?.id)
@@ -187,7 +187,8 @@ function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable
     const workspaceIndex = assignedOrOccupiedWorkspaces.indexOf(hyprlandService.focusedWorkspace?.id);
     const step = direction === 'next' ? 1 : -1;
 
-    let newIndex = (workspaceIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
+    let newIndex =
+        (workspaceIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
     let attempts = 0;
 
     while (attempts < assignedOrOccupiedWorkspaces.length) {
@@ -196,7 +197,8 @@ function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable
             hyprlandService.dispatch('workspace', targetWorkspaceNumber.toString());
             return;
         }
-        newIndex = (newIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
+        newIndex =
+            (newIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
         attempts++;
     }
 }
@@ -321,7 +323,9 @@ export function getWorkspacesToRender(
     );
 
     const activeWorkspacesForCurrentMonitor = activeWorkspaceIds.filter((workspaceId) => {
-        const metadataForWorkspace = allWorkspaceInstances.find((workspaceObj) => workspaceObj.id === workspaceId);
+        const metadataForWorkspace = allWorkspaceInstances.find(
+            (workspaceObj) => workspaceObj.id === workspaceId,
+        );
 
         if (metadataForWorkspace) {
             return metadataForWorkspace?.monitor?.id === monitorId;
@@ -334,6 +338,8 @@ export function getWorkspacesToRender(
         ) {
             return workspaceMonitorRules[currentMonitorInstance.name].includes(workspaceId);
         }
+
+        return false;
     });
 
     if (isMonitorSpecific) {
@@ -347,12 +353,16 @@ export function getWorkspacesToRender(
             );
         });
 
-        allPotentialWorkspaces = [...new Set([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers])];
+        allPotentialWorkspaces = [
+            ...new Set([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers]),
+        ];
     } else {
         allPotentialWorkspaces = [...new Set([...allPotentialWorkspaces, ...activeWorkspaceIds])];
     }
 
-    return allPotentialWorkspaces.filter((workspace) => !isWorkspaceIgnored(ignored, workspace)).sort((a, b) => a - b);
+    return allPotentialWorkspaces
+        .filter((workspace) => !isWorkspaceIgnored(ignored, workspace))
+        .sort((a, b) => a - b);
 }
 
 /**

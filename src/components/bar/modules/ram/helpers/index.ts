@@ -1,6 +1,6 @@
 import { divide } from 'src/components/bar/utils/helpers';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
 import { GLib, Variable } from 'astal';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 /**
  * Calculates the RAM usage.
@@ -16,7 +16,7 @@ export const calculateRamUsage = (round: Variable<boolean>): GenericResourceData
     try {
         const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
-        if (!success || !meminfoBytes) {
+        if (!success || meminfoBytes === null) {
             throw new Error('Failed to read /proc/meminfo or file content is null.');
         }
 

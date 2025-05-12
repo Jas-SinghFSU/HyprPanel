@@ -15,7 +15,6 @@ export const computeCPU = (): number => {
     const currentCpuData = new GTop.glibtop_cpu();
     GTop.glibtop_get_cpu(currentCpuData);
 
-    // Calculate the differences from the previous to current data
     const totalDiff = currentCpuData.total - previousCpuData.total;
     const idleDiff = currentCpuData.idle - previousCpuData.idle;
 

@@ -1,6 +1,6 @@
 import { bind, Variable } from 'astal';
 import icons from 'src/lib/icons/icons';
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 
 export const ObjectInputter = <T extends string | number | boolean | object>({
     opt,

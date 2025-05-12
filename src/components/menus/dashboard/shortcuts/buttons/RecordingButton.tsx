@@ -15,7 +15,12 @@ const MonitorListDropdown = (): JSX.Element => {
     });
 
     return (
-        <Menu className={'dropdown recording'} halign={Gtk.Align.FILL} onDestroy={() => monitorBinding.drop()} hexpand>
+        <Menu
+            className={'dropdown recording'}
+            halign={Gtk.Align.FILL}
+            onDestroy={() => monitorBinding.drop()}
+            hexpand
+        >
             {bind(monitorList).as((monitors) =>
                 monitors.map((monitor) => {
                     const sanitizedPath = getRecordingPath().replace(/"/g, '\\"');

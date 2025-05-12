@@ -1,8 +1,8 @@
 import { Variable } from 'astal';
 import GLib from 'gi://GLib?version=2.0';
-import { convertCelsiusToFahrenheit } from 'src/globals/weather';
-import { UnitType } from 'src/lib/types/weather';
+import { convertCelsiusToFahrenheit } from 'src/shared/weather';
 import options from 'src/options';
+import { UnitType } from 'src/lib/types/weather.types';
 const { sensor } = options.bar.customModules.cpuTemp;
 
 /**
@@ -25,7 +25,7 @@ export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitT
         const [success, tempInfoBytes] = GLib.file_get_contents(sensor.get());
         const tempInfo = new TextDecoder('utf-8').decode(tempInfoBytes);
 
-        if (!success || !tempInfoBytes) {
+        if (!success || tempInfoBytes === null) {
             console.error(`Failed to read ${sensor.get()} or file content is null.`);
             return 0;
         }
