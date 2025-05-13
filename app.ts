@@ -19,7 +19,7 @@ import options from 'src/options';
 import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
 import { execAsync } from 'astal';
-import { handleRealization } from 'src/components/menus/shared/dropdown/helpers';
+import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers';
 import { isDropdownMenu } from 'src/lib/constants/options.js';
 import { initializeSystemBehaviors } from 'src/lib/behaviors';
 import { runCLI } from 'src/cli/commander';

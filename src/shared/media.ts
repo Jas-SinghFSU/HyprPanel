@@ -232,11 +232,11 @@ const updateTitle = (player: AstalMpris.Player | undefined): void => {
             return mediaTitle.set(noMediaText.get() ?? '-----');
         }
 
-        mediaTitle.set(newTitle.length > 0 ? newTitle : '-----');
+        mediaTitle.set(newTitle.length > 0 ? normalizeLabel(newTitle) : '-----');
     });
 
     const initialTitle = mediaTitle.get();
-    mediaTitle.set(initialTitle.length > 0 ? initialTitle : '-----');
+    mediaTitle.set(initialTitle.length > 0 ? normalizeLabel(initialTitle) : '-----');
 };
 
 const updateAlbum = (player: AstalMpris.Player | undefined): void => {
@@ -249,11 +249,11 @@ const updateAlbum = (player: AstalMpris.Player | undefined): void => {
     }
 
     albumUnsub = Variable.derive([bind(player, 'album'), bind(player, 'playbackStatus')], (newAlbum) => {
-        mediaAlbum.set(newAlbum?.length > 0 ? newAlbum : '-----');
+        mediaAlbum.set(newAlbum?.length > 0 ? normalizeLabel(initialAlbum) : '-----');
     });
 
     const initialAlbum = mediaAlbum.get();
-    mediaAlbum.set(initialAlbum.length > 0 ? initialAlbum : '-----');
+    mediaAlbum.set(initialAlbum.length > 0 ? normalizeLabel(initialAlbum) : '-----');
 };
 
 const updateArtist = (player: AstalMpris.Player | undefined): void => {
@@ -268,11 +268,11 @@ const updateArtist = (player: AstalMpris.Player | undefined): void => {
     const artistBinding = bind(player, 'artist');
 
     artistUnsub = Variable.derive([artistBinding, bind(player, 'playbackStatus')], (newArtist) => {
-        mediaArtist.set(newArtist?.length > 0 ? newArtist : '-----');
+        mediaArtist.set(newArtist?.length > 0 ? normalizeLabel(newArtist) : '-----');
     });
 
     const initialArtist = mediaArtist.get();
-    mediaArtist.set(initialArtist?.length > 0 ? initialArtist : '-----');
+    mediaArtist.set(initialArtist?.length > 0 ? normalizeLabel(initialArtist) : '-----');
 };
 
 const updateArtUrl = (player: AstalMpris.Player | undefined): void => {
@@ -293,6 +293,10 @@ const updateArtUrl = (player: AstalMpris.Player | undefined): void => {
     const initialArtUrl = mediaArtUrl.get();
     mediaArtUrl.set(initialArtUrl);
 };
+
+function normalizeLabel(label: string): string {
+    return label.replace(/\r?\n/g, ' ');
+}
 
 Variable.derive([bind(activePlayer), bind(forceUpdate)], (player) => {
     updatePosition(player);

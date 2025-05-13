@@ -1,6 +1,6 @@
 import { App, Gdk } from 'astal/gtk3';
+import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/helpers/locationHandler';
 import { GtkWidget } from 'src/lib/types/widget.types';
-import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/locationHandler';
 
 const closeAllMenus = (): void => {
     const menuWindows = App.get_windows()

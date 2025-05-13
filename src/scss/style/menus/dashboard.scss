@@ -52,7 +52,11 @@
             }
 
             label {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-buttons-text,
+                    $bar-menus-menu-dashboard-shortcuts-text
+                );
                 font-size: 1.7em;
             }
 
@@ -181,7 +185,11 @@
                     $bar-menus-buttons-default,
                     $bar-menus-menu-dashboard-shortcuts-background
                 );
-                color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-shortcuts-text);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-buttons-text,
+                    $bar-menus-menu-dashboard-shortcuts-text
+                );
                 min-height: 3em;
 
                 label {
@@ -221,7 +229,11 @@
             min-width: 3.8em;
 
             label {
-                color: if($bar-menus-monochrome, $bar-menus-buttons-text, $bar-menus-menu-dashboard-controls-wifi-text);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-buttons-text,
+                    $bar-menus-menu-dashboard-controls-wifi-text
+                );
                 font-size: 1.6em;
             }
 
@@ -473,19 +485,35 @@
             }
 
             &.cpu label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-cpu-icon);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-icons-active,
+                    $bar-menus-menu-dashboard-monitors-cpu-icon
+                );
             }
 
             &.ram label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-ram-icon);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-icons-active,
+                    $bar-menus-menu-dashboard-monitors-ram-icon
+                );
             }
 
             &.gpu label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-gpu-icon);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-icons-active,
+                    $bar-menus-menu-dashboard-monitors-gpu-icon
+                );
             }
 
             &.storage label {
-                color: if($bar-menus-monochrome, $bar-menus-icons-active, $bar-menus-menu-dashboard-monitors-disk-icon);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-icons-active,
+                    $bar-menus-menu-dashboard-monitors-disk-icon
+                );
             }
 
             .stats-bar {
@@ -552,19 +580,35 @@
             font-size: 0.9em;
 
             &.cpu {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-cpu-label);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-label,
+                    $bar-menus-menu-dashboard-monitors-cpu-label
+                );
             }
 
             &.ram {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-ram-label);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-label,
+                    $bar-menus-menu-dashboard-monitors-ram-label
+                );
             }
 
             &.gpu {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-gpu-label);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-label,
+                    $bar-menus-menu-dashboard-monitors-gpu-label
+                );
             }
 
             &.storage {
-                color: if($bar-menus-monochrome, $bar-menus-label, $bar-menus-menu-dashboard-monitors-disk-label);
+                color: if(
+                    $bar-menus-monochrome,
+                    $bar-menus-label,
+                    $bar-menus-menu-dashboard-monitors-disk-label
+                );
             }
         }
     }

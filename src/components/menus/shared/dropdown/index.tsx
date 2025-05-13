@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { BarEventMargins } from './eventBoxes/index';
+import { BarEventMargins } from './helpers/eventBoxes';
 import { globalEventBoxes } from 'src/shared/dropdown';
 import { bind } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
