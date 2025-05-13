@@ -1,6 +1,6 @@
-import { getWindConditions, globalWeatherVar } from 'src/shared/weather';
+import { getWindConditions, globalWeatherVar } from 'src/shared/weather/weather';
 import options from 'src/options';
-import { getRainChance } from 'src/shared/weather';
+import { getRainChance } from 'src/shared/weather/weather';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 

@@ -1,6 +1,6 @@
 import options from 'src/options';
-import { globalWeatherVar } from 'src/shared/weather';
-import { getTemperature, getWeatherIcon } from 'src/shared/weather';
+import { globalWeatherVar } from 'src/shared/weather/weather';
+import { getTemperature, getWeatherIcon } from 'src/shared/weather/weather';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 const { unit } = options.menus.clock.weather;
