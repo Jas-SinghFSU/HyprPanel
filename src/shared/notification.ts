@@ -10,22 +10,20 @@ const { clearDelay } = options.notifications;
 export const removingNotifications = Variable<boolean>(false);
 
 export const getNotificationIcon = (app_name: string, app_icon: string, app_entry: string): string => {
-    let icon: string = icons.fallback.notification;
+    const icon = icons.fallback.notification;
 
-    if (lookUpIcon(app_name) || lookUpIcon(app_name.toLowerCase() || '')) {
-        icon = lookUpIcon(app_name)
-            ? app_name
-            : lookUpIcon(app_name.toLowerCase())
-              ? app_name.toLowerCase()
-              : '';
+    if (lookUpIcon(app_name)) {
+        return app_name;
+    } else if (app_name && lookUpIcon(app_name.toLowerCase())) {
+        return app_name.toLowerCase();
     }
 
-    if (lookUpIcon(app_icon) && icon === '') {
-        icon = app_icon;
+    if (app_icon && lookUpIcon(app_icon)) {
+        return app_icon;
     }
 
-    if (lookUpIcon(app_entry || '') && icon === '') {
-        icon = app_entry || '';
+    if (app_entry && lookUpIcon(app_entry)) {
+        return app_entry;
     }
 
     return icon;

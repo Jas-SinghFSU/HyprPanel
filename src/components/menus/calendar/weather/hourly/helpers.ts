@@ -1,5 +1,5 @@
 import { Weather, WeatherIconTitle } from 'src/lib/types/weather.types';
-import { isValidWeatherIconTitle } from 'src/shared/weather';
+import { isValidWeatherIconTitle } from 'src/shared/weather/weather';
 
 /**
  * Retrieves the next epoch time for weather data.

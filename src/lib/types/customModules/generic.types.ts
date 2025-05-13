@@ -1,6 +1,8 @@
-export type GenericFunction<Value, Parameters extends unknown[]> = (...args: Parameters) => Promise<Value> | Value;
+export type GenericFunction<Value, Parameters extends unknown[]> = (
+    ...args: Parameters
+) => Promise<Value> | Value;
 
-export type GenericResourceMetrics = {
+type GenericResourceMetrics = {
     total: number;
     used: number;
     percentage: number;

@@ -11,7 +11,7 @@ export interface OptProps {
 /**
  * Options for set operations
  */
-export interface WriteOptions {
+interface WriteOptions {
     writeDisk?: boolean;
 }
 

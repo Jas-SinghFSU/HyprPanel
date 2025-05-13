@@ -30,7 +30,6 @@ class Cpu {
         const currentCpuData = new GTop.glibtop_cpu();
         GTop.glibtop_get_cpu(currentCpuData);
 
-        // Calculate the differences from the previous to current data
         const totalDiff = currentCpuData.total - this._previousCpuData.total;
         const idleDiff = currentCpuData.idle - this._previousCpuData.idle;
 

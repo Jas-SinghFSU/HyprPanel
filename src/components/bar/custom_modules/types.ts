@@ -1,4 +1,4 @@
-export type CustomBarModuleActions = {
+type CustomBarModuleActions = {
     onLeftClick?: string;
     onRightClick?: string;
     onMiddleClick?: string;
@@ -18,3 +18,7 @@ export type CustomBarModule = {
     actions?: CustomBarModuleActions;
 };
 export type CustomBarModuleIcon = string | string[] | Record<string, string>;
+
+export type WidgetMap = {
+    [key in string]: (monitor: number) => JSX.Element;
+};

@@ -1,5 +1,5 @@
 import { bind } from 'astal';
-import { globalWeatherVar } from 'src/shared/weather';
+import { globalWeatherVar } from 'src/shared/weather/weather';
 import { Gtk } from 'astal/gtk3';
 import { weatherIcons } from 'src/lib/icons/weather.js';
 import { getIconQuery } from '../helpers';

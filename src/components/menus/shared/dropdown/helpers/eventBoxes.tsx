@@ -1,5 +1,5 @@
 import { App } from 'astal/gtk3';
-import { BarEventMarginsProps, EventBoxPaddingProps } from '../types';
+import { BarEventMarginsProps, EventBoxPaddingProps } from './types';
 
 const EventBoxPadding = ({ className, windowName }: EventBoxPaddingProps): JSX.Element => {
     return (

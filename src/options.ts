@@ -22,7 +22,7 @@ import { ApplicationIcons, WorkspaceIcons, WorkspaceIconsColored } from './lib/t
 import { mkOptions, opt } from './lib/options';
 
 // WARN: CHANGING THESE VALUES WILL PREVENT MATUGEN COLOR GENERATION FOR THE CHANGED VALUE
-export const colors = {
+const colors = {
     rosewater: '#f5e0dc',
     flamingo: '#f2cdcd',
     pink: '#f5c2e7',

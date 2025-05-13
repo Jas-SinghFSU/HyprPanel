@@ -10,7 +10,7 @@ import { BarBoxChild } from 'src/lib/types/bar.types';
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;
 
-export const cpuUsage = Variable(0);
+const cpuUsage = Variable(0);
 
 const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(pollingInterval), computeCPU);
 

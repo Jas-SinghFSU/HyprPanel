@@ -46,10 +46,7 @@ const Network = (): BarBoxChild => {
                 );
             }
             const networkWifi = networkService.wifi;
-            if (networkWifi != null) {
-                // Astal doesn't reset the wifi attributes on disconnect, only on a valid connection
-                // so we need to check if both the WiFi is enabled and if there is an active access
-                // point
+            if (networkWifi !== null) {
                 if (!networkWifi.enabled) {
                     return <label className={'bar-button-label network-label'} label="Off" />;
                 }

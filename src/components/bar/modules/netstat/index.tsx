@@ -28,7 +28,7 @@ const {
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const networkUsage = Variable<NetworkResourceData>(getDefaultNetstatData(rateUnit.get()));
+const networkUsage = Variable<NetworkResourceData>(getDefaultNetstatData(rateUnit.get()));
 
 const netstatPoller = new FunctionPoller<
     NetworkResourceData,

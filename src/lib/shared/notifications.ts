@@ -2,7 +2,14 @@ import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 
 const normalizeName = (name: string): string => name.toLowerCase().replace(/\s+/g, '_');
 
-export const isNotificationIgnored = (notification: AstalNotifd.Notification, filter: string[]): boolean => {
+export const isNotificationIgnored = (
+    notification: AstalNotifd.Notification | null,
+    filter: string[],
+): boolean => {
+    if (!notification) {
+        return false;
+    }
+
     const notificationFilters = new Set(filter.map(normalizeName));
     const normalizedAppName = normalizeName(notification.app_name);
 

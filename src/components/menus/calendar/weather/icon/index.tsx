@@ -1,6 +1,6 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather';
+import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather/weather';
 
 export const TodayIcon = (): JSX.Element => {
     return (

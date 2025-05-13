@@ -9,7 +9,7 @@ import {
 } from 'src/lib/types/popupwindow.types';
 import { Layouts } from 'src/lib/types/widget.types';
 
-export const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
+const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox
         className={opts?.className ?? ''}
         hexpand

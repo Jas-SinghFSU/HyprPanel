@@ -1,4 +1,4 @@
-import { globalWeatherVar } from 'src/shared/weather';
+import { globalWeatherVar } from 'src/shared/weather/weather';
 import { getNextEpoch } from '../helpers';
 import { bind } from 'astal';
 

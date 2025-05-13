@@ -8,7 +8,7 @@ export type Weather = {
     forecast: Forecast;
 };
 
-export type Current = {
+type Current = {
     last_updated_epoch?: number;
     last_updated?: string;
     temp_c: number;
@@ -47,17 +47,17 @@ export type Current = {
     chance_of_snow?: number;
 };
 
-export type Condition = {
+type Condition = {
     text: string;
     icon: string;
     code: number;
 };
 
-export type Forecast = {
+type Forecast = {
     forecastday: Forecastday[];
 };
 
-export type Forecastday = {
+type Forecastday = {
     date: string;
     date_epoch: number;
     day: Day;
@@ -65,7 +65,7 @@ export type Forecastday = {
     hour: Current[];
 };
 
-export type Astro = {
+type Astro = {
     sunrise: string;
     sunset: string;
     moonrise: string;
@@ -76,7 +76,7 @@ export type Astro = {
     is_sun_up: number;
 };
 
-export type Day = {
+type Day = {
     maxtemp_c: number;
     maxtemp_f: number;
     mintemp_c: number;
@@ -99,7 +99,7 @@ export type Day = {
     uv: number;
 };
 
-export type Location = {
+type Location = {
     name: string;
     region: string;
     country: string;
@@ -108,10 +108,6 @@ export type Location = {
     tz_id: string;
     localtime_epoch: number;
     localtime: string;
-};
-
-export type TemperatureIconColorMap = {
-    [key: number]: string;
 };
 
 export type WeatherIconTitle = keyof typeof weatherIcons;

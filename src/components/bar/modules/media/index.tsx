@@ -5,7 +5,7 @@ import { generateMediaLabel } from './helpers/index.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/shared/media.js';
+import { activePlayer, mediaAlbum, mediaArtist, mediaTitle } from 'src/shared/media/index.js';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.types.js';
 

@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather';
+import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather/weather';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';

@@ -1,6 +1,6 @@
 import { DropdownMenuList } from 'src/lib/options/options.types';
-import { calculateMenuPosition } from './locationHandler';
 import { App, Gtk } from 'astal/gtk3';
+import { calculateMenuPosition } from './locationHandler';
 
 /**
  * Handles the realization of a dropdown menu.

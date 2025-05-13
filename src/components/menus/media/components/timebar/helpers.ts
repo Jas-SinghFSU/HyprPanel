@@ -27,7 +27,7 @@ export const getTimeStamp = (position: number, totalLength: number): string => {
  *
  * @returns A formatted time string in the format "HH:MM:SS" or "MM:SS".
  */
-export const getFormattedTime = (time: number): string => {
+function getFormattedTime(time: number): string {
     const curHour = Math.floor(time / 3600);
     const curMin = Math.floor((time % 3600) / 60);
     const curSec = Math.floor(time % 60);
@@ -41,4 +41,4 @@ export const getFormattedTime = (time: number): string => {
     };
 
     return `${formatHour(curHour)}${formatTime(curMin)}:${formatTime(curSec)}`;
-};
+}
