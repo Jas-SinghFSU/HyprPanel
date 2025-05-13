@@ -24,30 +24,32 @@ export class WeatherApiKeyManager {
     private _getWeatherKey(apiKey: string): string {
         const weatherKey = apiKey;
 
-        if (GLib.file_test(weatherKey, EXISTS) && GLib.file_test(weatherKey, IS_REGULAR)) {
-            try {
-                const fileContentArray = GLib.file_get_contents(weatherKey)[1];
-                const fileContent = new TextDecoder().decode(fileContentArray);
+        const keyIsAFilePath = GLib.file_test(weatherKey, EXISTS) && GLib.file_test(weatherKey, IS_REGULAR);
 
-                if (!fileContent) {
-                    console.error('weather_api_key file is empty');
-                    return '';
-                }
-
-                const parsedContent = JSON.parse(fileContent);
-
-                if (parsedContent.weather_api_key !== undefined) {
-                    return parsedContent.weather_api_key;
-                } else {
-                    console.error('weather_api_key is missing in the JSON content');
-                    return '';
-                }
-            } catch (error) {
-                console.error(`Failed to read or parse weather key file: ${error}`);
-                return '';
-            }
+        if (!keyIsAFilePath) {
+            return apiKey;
         }
 
-        return apiKey;
+        try {
+            const fileContentArray = GLib.file_get_contents(weatherKey)[1];
+            const fileContent = new TextDecoder().decode(fileContentArray);
+
+            if (!fileContent) {
+                console.error('weather_api_key file is empty');
+                return '';
+            }
+
+            const parsedContent = JSON.parse(fileContent);
+
+            if (parsedContent.weather_api_key !== undefined) {
+                return parsedContent.weather_api_key;
+            }
+
+            console.error('weather_api_key is missing in the JSON content');
+            return '';
+        } catch (error) {
+            console.error(`Failed to read or parse weather key file: ${error}`);
+            return '';
+        }
     }
 }
