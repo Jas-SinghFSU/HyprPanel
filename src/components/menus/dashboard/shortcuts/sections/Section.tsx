@@ -7,11 +7,11 @@ import {
     LeftShortcut3,
     LeftShortcut4,
     RightShortcut1,
+    RightShortcut2,
     RightShortcut3,
+    RightShortcut4
 } from '../buttons/ShortcutButtons';
 import { LeftColumn, RightColumn } from './Column';
-import { SettingsButton } from '../buttons/SettingsButton';
-import { RecordingButton } from '../buttons/RecordingButton';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 
@@ -34,9 +34,15 @@ const rightBindings = [
     bind(right.shortcut1.command),
     bind(right.shortcut1.tooltip),
     bind(right.shortcut1.icon),
+    bind(right.shortcut2.command),
+    bind(right.shortcut2.tooltip),
+    bind(right.shortcut2.icon),
     bind(right.shortcut3.command),
     bind(right.shortcut3.tooltip),
     bind(right.shortcut3.icon),
+    bind(right.shortcut4.command),
+    bind(right.shortcut4.tooltip),
+    bind(right.shortcut4.icon),
     bind(leftCardHidden),
     bind(isRecording),
 ];
@@ -82,11 +88,11 @@ export const RightShortcuts = (): JSX.Element => {
                     >
                         <LeftColumn isVisible={true}>
                             <RightShortcut1 />
-                            <SettingsButton />
+                            <RightShortcut2 />
                         </LeftColumn>
                         <RightColumn>
                             <RightShortcut3 />
-                            <RecordingButton />
+                            <RightShortcut4/>
                         </RightColumn>
                     </box>
                 );
