@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
-import { activePlayer, currentPosition, timeStamp } from 'src/shared/media';
+import { activePlayer, currentPosition, timeStamp } from 'src/services/media';
 
 const { displayTimeTooltip } = options.menus.media;
 

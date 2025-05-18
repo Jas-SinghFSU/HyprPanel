@@ -1,7 +1,7 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer } from 'src/shared/media';
 import icons2 from 'src/lib/icons/icons2';
 import { PlaybackIconMap } from 'src/lib/types/mpris.types';
+import { activePlayer } from 'src/services/media';
 
 const mprisService = AstalMpris.get_default();
 

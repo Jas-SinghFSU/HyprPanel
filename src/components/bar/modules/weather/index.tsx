@@ -4,7 +4,7 @@ import { inputHandler } from 'src/components/bar/utils/helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
-import WeatherManager from 'src/shared/weather';
+import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();
 

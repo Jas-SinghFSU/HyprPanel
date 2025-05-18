@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
-import WeatherManager from 'src/shared/weather';
+import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();
 const { military } = options.menus.clock.time;

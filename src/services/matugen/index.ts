@@ -33,11 +33,21 @@ class DefaultSystemDependencies implements SystemDependencies {
     }
 }
 
-class MatugenService {
+export class MatugenService {
+    private static _instance: MatugenService;
+
     private _deps: SystemDependencies;
 
     constructor(deps: SystemDependencies = new DefaultSystemDependencies()) {
         this._deps = deps;
+    }
+
+    public static getDefault(): MatugenService {
+        if (this._instance === undefined) {
+            this._instance = new MatugenService();
+        }
+
+        return this._instance;
     }
 
     private _normalizeContrast(contrast: number): number {
@@ -110,7 +120,3 @@ class MatugenService {
         return incomingHex;
     }
 }
-
-const matugenService = new MatugenService();
-
-export { matugenService };

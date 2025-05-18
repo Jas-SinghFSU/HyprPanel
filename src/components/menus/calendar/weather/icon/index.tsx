@@ -1,6 +1,6 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import WeatherManager from 'src/shared/weather';
+import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();
 

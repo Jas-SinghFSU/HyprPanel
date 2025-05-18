@@ -2,7 +2,7 @@ import icons from 'src/lib/icons/icons';
 import { Astal, Gtk, Widget } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
-import { activePlayer, canGoNext, canGoPrevious } from 'src/shared/media';
+import { canGoNext, activePlayer, canGoPrevious } from 'src/services/media';
 
 export const NextTrack = (): JSX.Element => {
     const className = bind(canGoNext).as((skippable) => {

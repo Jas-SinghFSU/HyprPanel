@@ -2,7 +2,7 @@ import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { weatherIcons } from 'src/lib/icons/weather.js';
 import { getIconQuery } from '../helpers';
-import WeatherManager from 'src/shared/weather';
+import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();
 

@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { initThrottledScrollHandlers } from './helpers';
+import { initThrottledScrollHandlers } from './helpers/utils';
 import { WorkspaceModule } from './workspaces';
 import { bind, Variable } from 'astal';
 import { Astal, Gdk } from 'astal/gtk3';

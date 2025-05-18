@@ -1,7 +1,7 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
-import { mediaArtUrl } from 'src/shared/media';
 import options from 'src/options';
+import { mediaArtUrl } from 'src/services/media';
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;
 

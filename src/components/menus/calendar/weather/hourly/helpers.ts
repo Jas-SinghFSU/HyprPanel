@@ -1,5 +1,5 @@
 import { Weather, WeatherIconTitle } from 'src/lib/types/weather.types';
-import WeatherManager from 'src/shared/weather';
+import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();
 
