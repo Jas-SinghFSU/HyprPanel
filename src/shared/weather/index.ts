@@ -40,11 +40,8 @@ export default class WeatherManager {
             [bind(weatherKeyManager.weatherApiKey), bind(this._intervalFrequency), bind(this._location)],
             (weatherKey, weatherInterval, loc) => {
                 if (!weatherKey) {
-                    console.log('no weather key');
                     return this.weatherData.set(DEFAULT_WEATHER);
                 }
-
-                console.log('_initializeWeatherPolling');
 
                 this._initializeWeatherPolling(weatherInterval, loc, weatherKey);
             },
@@ -69,7 +66,6 @@ export default class WeatherManager {
         this._interval = interval(weatherInterval, async () => {
             try {
                 const response = await httpClient.get(url);
-                console.log(JSON.stringify(response, null, 2));
 
                 if (response.data) {
                     this.weatherData.set(response.data as Weather);
