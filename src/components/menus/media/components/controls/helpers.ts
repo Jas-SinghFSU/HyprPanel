@@ -1,7 +1,7 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer } from 'src/globals/media';
+import { activePlayer } from 'src/shared/media';
 import icons2 from 'src/lib/icons/icons2';
-import { PlaybackIconMap } from 'src/lib/types/mpris';
+import { PlaybackIconMap } from 'src/lib/types/mpris.types';
 
 const mprisService = AstalMpris.get_default();
 
@@ -123,5 +123,7 @@ export const getPreviousPlayer = (): void => {
         return activePlayer.set(mprisService.get_players()[0]);
     }
 
-    return activePlayer.set(mprisService.get_players()[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers]);
+    return activePlayer.set(
+        mprisService.get_players()[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers],
+    );
 };

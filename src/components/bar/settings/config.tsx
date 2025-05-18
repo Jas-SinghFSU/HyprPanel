@@ -24,18 +24,50 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.customModules.microphone.label} title="Show Label" type="boolean" />
-                <Option opt={options.bar.customModules.microphone.mutedIcon} title="Muted Icon" type="string" />
-                <Option opt={options.bar.customModules.microphone.unmutedIcon} title="Unmuted Icon" type="string" />
-                <Option opt={options.theme.bar.buttons.modules.microphone.spacing} title="Spacing" type="string" />
-                <Option opt={options.bar.customModules.microphone.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.microphone.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.microphone.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.microphone.mutedIcon}
+                    title="Muted Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.microphone.unmutedIcon}
+                    title="Unmuted Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.modules.microphone.spacing}
+                    title="Spacing"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.microphone.leftClick}
+                    title="Left Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.microphone.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.microphone.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.microphone.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.microphone.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.microphone.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* RAM Section */}
                 <Header title="RAM" />
-                <Option opt={options.theme.bar.buttons.modules.ram.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.ram.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.customModules.ram.icon} title="Ram Icon" type="string" />
                 <Option opt={options.bar.customModules.ram.label} title="Show Label" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.ram.spacing} title="Spacing" type="string" />
@@ -69,7 +101,11 @@ export const CustomModuleSettings = (): JSX.Element => {
 
                 {/* CPU Section */}
                 <Header title="CPU" />
-                <Option opt={options.theme.bar.buttons.modules.cpu.enableBorder} title="Button Border" type="boolean" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cpu.enableBorder}
+                    title="Button Border"
+                    type="boolean"
+                />
                 <Option opt={options.bar.customModules.cpu.icon} title="Cpu Icon" type="string" />
                 <Option opt={options.bar.customModules.cpu.label} title="Show Label" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.cpu.spacing} title="Spacing" type="string" />
@@ -118,9 +154,17 @@ export const CustomModuleSettings = (): JSX.Element => {
                     enums={['imperial', 'metric']}
                 />
                 <Option opt={options.bar.customModules.cpuTemp.showUnit} title="Show Unit" type="boolean" />
-                <Option opt={options.bar.customModules.cpuTemp.icon} title="Cpu Temperature Icon" type="string" />
+                <Option
+                    opt={options.bar.customModules.cpuTemp.icon}
+                    title="Cpu Temperature Icon"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.cpuTemp.label} title="Show Label" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.cpuTemp.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cpuTemp.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.cpuTemp.round} title="Round" type="boolean" />
                 <Option
                     opt={options.bar.customModules.cpuTemp.pollingInterval}
@@ -131,10 +175,22 @@ export const CustomModuleSettings = (): JSX.Element => {
                     increment={1000}
                 />
                 <Option opt={options.bar.customModules.cpuTemp.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.cpuTemp.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.cpuTemp.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.cpuTemp.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.cpuTemp.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.cpuTemp.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.cpuTemp.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.cpuTemp.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Storage Section */}
                 <Header title="Storage" />
@@ -145,7 +201,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.customModules.storage.icon} title="Storage Icon" type="string" />
                 <Option opt={options.bar.customModules.storage.label} title="Show Label" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.storage.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.storage.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.storage.labelType}
                     title="Label Type"
@@ -162,8 +222,16 @@ export const CustomModuleSettings = (): JSX.Element => {
                     increment={1000}
                 />
                 <Option opt={options.bar.customModules.storage.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.storage.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.storage.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.storage.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.storage.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
 
                 {/* Netstat Section */}
                 <Header title="Netstat" />
@@ -189,7 +257,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.customModules.netstat.icon} title="Netstat Icon" type="string" />
                 <Option opt={options.bar.customModules.netstat.label} title="Show Label" type="boolean" />
-                <Option opt={options.bar.customModules.netstat.networkInLabel} title="Network In Label" type="string" />
+                <Option
+                    opt={options.bar.customModules.netstat.networkInLabel}
+                    title="Network In Label"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.netstat.networkOutLabel}
                     title="Network Out Label"
@@ -201,7 +273,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="enum"
                     enums={['GiB', 'MiB', 'KiB', 'auto']}
                 />
-                <Option opt={options.theme.bar.buttons.modules.netstat.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.netstat.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.netstat.labelType}
                     title="Label Type"
@@ -218,8 +294,16 @@ export const CustomModuleSettings = (): JSX.Element => {
                     increment={1000}
                 />
                 <Option opt={options.bar.customModules.netstat.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.netstat.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.netstat.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.netstat.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.netstat.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
 
                 {/* Keyboard Layout Section */}
                 <Header title="Keyboard Layout" />
@@ -228,7 +312,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Button Border"
                     type="boolean"
                 />
-                <Option opt={options.bar.customModules.kbLayout.icon} title="Keyboard Layout Icon" type="string" />
+                <Option
+                    opt={options.bar.customModules.kbLayout.icon}
+                    title="Keyboard Layout Icon"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.kbLayout.label} title="Show Label" type="boolean" />
                 <Option
                     opt={options.bar.customModules.kbLayout.labelType}
@@ -236,12 +324,28 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="enum"
                     enums={['layout', 'code']}
                 />
-                <Option opt={options.theme.bar.buttons.modules.kbLayout.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.kbLayout.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.kbLayout.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.kbLayout.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.kbLayout.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.kbLayout.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.kbLayout.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.kbLayout.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.kbLayout.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.kbLayout.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Updates Section */}
                 <Header title="Updates" />
@@ -271,7 +375,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Updates Available Icon"
                     type="string"
                 />
-                <Option opt={options.bar.customModules.updates.icon.updated} title="No Updates Icon" type="string" />
+                <Option
+                    opt={options.bar.customModules.updates.icon.updated}
+                    title="No Updates Icon"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.updates.label} title="Show Label" type="boolean" />
                 <Option
                     opt={options.bar.customModules.updates.autoHide}
@@ -280,7 +388,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.customModules.updates.padZero} title="Pad with 0" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.updates.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.updates.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.updates.pollingInterval}
                     title="Polling Interval"
@@ -291,10 +403,22 @@ export const CustomModuleSettings = (): JSX.Element => {
                     increment={1000}
                 />
                 <Option opt={options.bar.customModules.updates.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.updates.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.updates.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.updates.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.updates.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.updates.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.updates.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.updates.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Submap Section */}
                 <Header title="Submap" />
@@ -309,15 +433,39 @@ export const CustomModuleSettings = (): JSX.Element => {
                     subtitle="Displays current submap name instead of Enabled/Disabled text."
                     type="boolean"
                 />
-                <Option opt={options.bar.customModules.submap.enabledIcon} title="Enabled Icon" type="string" />
-                <Option opt={options.bar.customModules.submap.disabledIcon} title="Disabled Icon" type="string" />
-                <Option opt={options.bar.customModules.submap.enabledText} title="Enabled Text" type="string" />
-                <Option opt={options.bar.customModules.submap.disabledText} title="Disabled Text" type="string" />
+                <Option
+                    opt={options.bar.customModules.submap.enabledIcon}
+                    title="Enabled Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.submap.disabledIcon}
+                    title="Disabled Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.submap.enabledText}
+                    title="Enabled Text"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.submap.disabledText}
+                    title="Disabled Text"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.submap.label} title="Show Label" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.submap.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.submap.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.submap.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.submap.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.submap.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.submap.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.submap.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.submap.scrollDown} title="Scroll Down" type="string" />
 
@@ -335,12 +483,28 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="enum"
                     enums={['imperial', 'metric']}
                 />
-                <Option opt={options.theme.bar.buttons.modules.weather.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.weather.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.weather.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.weather.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.weather.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.weather.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.weather.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.weather.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.weather.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.weather.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Hyprsunset Section */}
                 <Header title="Hyprsunset" />
@@ -355,12 +519,32 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Button Border"
                     type="boolean"
                 />
-                <Option opt={options.bar.customModules.hyprsunset.onIcon} title="Enabled Icon" type="string" />
-                <Option opt={options.bar.customModules.hyprsunset.offIcon} title="Disabled Icon" type="string" />
-                <Option opt={options.bar.customModules.hyprsunset.onLabel} title="Enabled Label" type="string" />
-                <Option opt={options.bar.customModules.hyprsunset.offLabel} title="Disabled Label" type="string" />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.onIcon}
+                    title="Enabled Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.offIcon}
+                    title="Disabled Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.onLabel}
+                    title="Enabled Label"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.offLabel}
+                    title="Disabled Label"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.hyprsunset.label} title="Show Label" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.hyprsunset.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.hyprsunset.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.hyprsunset.pollingInterval}
                     title="Polling Interval"
@@ -369,10 +553,22 @@ export const CustomModuleSettings = (): JSX.Element => {
                     max={60 * 24 * 1000}
                     increment={1000}
                 />
-                <Option opt={options.bar.customModules.hyprsunset.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.hyprsunset.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.hyprsunset.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.hyprsunset.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.hyprsunset.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Hypridle Section */}
                 <Header title="Hypridle" />
@@ -382,11 +578,27 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.customModules.hypridle.onIcon} title="Enabled Icon" type="string" />
-                <Option opt={options.bar.customModules.hypridle.offIcon} title="Disabled Icon" type="string" />
-                <Option opt={options.bar.customModules.hypridle.onLabel} title="Enabled Label" type="string" />
-                <Option opt={options.bar.customModules.hypridle.offLabel} title="Disabled Label" type="string" />
+                <Option
+                    opt={options.bar.customModules.hypridle.offIcon}
+                    title="Disabled Icon"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hypridle.onLabel}
+                    title="Enabled Label"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hypridle.offLabel}
+                    title="Disabled Label"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.hypridle.label} title="Show Label" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.hypridle.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.hypridle.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.hypridle.pollingInterval}
                     title="Polling Interval"
@@ -395,10 +607,22 @@ export const CustomModuleSettings = (): JSX.Element => {
                     max={60 * 24 * 1000}
                     increment={1000}
                 />
-                <Option opt={options.bar.customModules.hypridle.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.hypridle.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.hypridle.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.hypridle.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.hypridle.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.hypridle.scrollDown} title="Scroll Down" type="string" />
+                <Option
+                    opt={options.bar.customModules.hypridle.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
 
                 {/* Cava Section */}
                 <Header title="Cava" />
@@ -410,8 +634,16 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cava.icon} title="Icon" type="string" />
                 <Option opt={options.bar.customModules.cava.showIcon} title="Show Icon" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.cava.spacing} title="Spacing" type="string" />
-                <Option opt={options.bar.customModules.cava.barCharacters} title="Bar Characters" type="object" />
-                <Option opt={options.bar.customModules.cava.spaceCharacter} title="Bar Separator" type="string" />
+                <Option
+                    opt={options.bar.customModules.cava.barCharacters}
+                    title="Bar Characters"
+                    type="object"
+                />
+                <Option
+                    opt={options.bar.customModules.cava.spaceCharacter}
+                    title="Bar Separator"
+                    type="string"
+                />
                 <Option
                     opt={options.bar.customModules.cava.showActiveOnly}
                     title="Auto Hide"
@@ -429,7 +661,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                 />
                 <Option opt={options.bar.customModules.cava.lowCutoff} title="Low Cutoff" type="number" />
                 <Option opt={options.bar.customModules.cava.highCutoff} title="High Cutoff" type="number" />
-                <Option opt={options.bar.customModules.cava.noiseReduction} title="Noise Reduction" type="float" />
+                <Option
+                    opt={options.bar.customModules.cava.noiseReduction}
+                    title="Noise Reduction"
+                    type="float"
+                />
                 <Option opt={options.bar.customModules.cava.stereo} title="Stereo" type="boolean" />
                 <Option opt={options.bar.customModules.cava.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.cava.rightClick} title="Right Click" type="string" />
@@ -445,8 +681,16 @@ export const CustomModuleSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option opt={options.bar.customModules.worldclock.icon} title="Icon" type="string" />
-                <Option opt={options.bar.customModules.worldclock.showIcon} title="Show Icon" type="boolean" />
-                <Option opt={options.theme.bar.buttons.modules.worldclock.spacing} title="Spacing" type="string" />
+                <Option
+                    opt={options.bar.customModules.worldclock.showIcon}
+                    title="Show Icon"
+                    type="boolean"
+                />
+                <Option
+                    opt={options.theme.bar.buttons.modules.worldclock.spacing}
+                    title="Spacing"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.worldclock.format} title="Format" type="string" />
                 <Option
                     opt={options.bar.customModules.worldclock.formatDiffDate}
@@ -454,13 +698,37 @@ export const CustomModuleSettings = (): JSX.Element => {
                     subtitle="Format to use when the timezone is on a different calendar day than the local timezone."
                     type="string"
                 />
-                <Option opt={options.bar.customModules.worldclock.divider} title="Date Divider" type="string" />
-                <Option opt={options.bar.customModules.worldclock.leftClick} title="Left Click" type="string" />
-                <Option opt={options.bar.customModules.worldclock.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.worldclock.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.worldclock.divider}
+                    title="Date Divider"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.worldclock.leftClick}
+                    title="Left Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.worldclock.rightClick}
+                    title="Right Click"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.worldclock.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.worldclock.scrollUp} title="Scroll Up" type="string" />
-                <Option opt={options.bar.customModules.worldclock.scrollDown} title="Scroll Down" type="string" />
-                <Option opt={options.bar.customModules.worldclock.tz} title="Timezones Displayed" type="object" />
+                <Option
+                    opt={options.bar.customModules.worldclock.scrollDown}
+                    title="Scroll Down"
+                    type="string"
+                />
+                <Option
+                    opt={options.bar.customModules.worldclock.tz}
+                    title="Timezones Displayed"
+                    type="object"
+                />
 
                 {/* Power Section */}
                 <Header title="Power" />
@@ -473,7 +741,11 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.power.icon} title="Power Button Icon" type="string" />
                 <Option opt={options.bar.customModules.power.leftClick} title="Left Click" type="string" />
                 <Option opt={options.bar.customModules.power.rightClick} title="Right Click" type="string" />
-                <Option opt={options.bar.customModules.power.middleClick} title="Middle Click" type="string" />
+                <Option
+                    opt={options.bar.customModules.power.middleClick}
+                    title="Middle Click"
+                    type="string"
+                />
                 <Option opt={options.bar.customModules.power.scrollUp} title="Scroll Up" type="string" />
                 <Option opt={options.bar.customModules.power.scrollDown} title="Scroll Down" type="string" />
             </box>

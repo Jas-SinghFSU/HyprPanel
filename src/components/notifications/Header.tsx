@@ -2,7 +2,7 @@ import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import options from 'src/options.js';
 import { GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { getNotificationIcon } from 'src/globals/notification.js';
+import { getNotificationIcon } from 'src/shared/notification.js';
 import { notifHasImg } from './helpers';
 
 const { military } = options.menus.clock.time;
@@ -13,7 +13,10 @@ export const NotificationIcon = ({ notification }: HeaderProps): JSX.Element => 
     return (
         <box className={'notification-card-header'} halign={Gtk.Align.START}>
             <box css={'min-width: 2rem; min-height: 2rem; '}>
-                <icon className={'notification-icon'} icon={getNotificationIcon(appName, appIcon, desktopEntry)} />
+                <icon
+                    className={'notification-icon'}
+                    icon={getNotificationIcon(appName, appIcon, desktopEntry)}
+                />
             </box>
         </box>
     );
@@ -39,11 +42,16 @@ export const SummaryLabel = ({ notification }: HeaderProps): JSX.Element => {
 
 export const TimeLabel = ({ notification }: HeaderProps): JSX.Element => {
     const time = (time: number, format = '%I:%M %p'): string => {
-        return GLib.DateTime.new_from_unix_local(time).format(military.get() ? '%H:%M' : format) || '--';
+        return GLib.DateTime.new_from_unix_local(time).format(military.get() ? '%H:%M' : format) ?? '--';
     };
 
     return (
-        <box className={'notification-card-header menu'} halign={Gtk.Align.END} valign={Gtk.Align.START} hexpand>
+        <box
+            className={'notification-card-header menu'}
+            halign={Gtk.Align.END}
+            valign={Gtk.Align.START}
+            hexpand
+        >
             <label className={'notification-time'} label={time(notification.time)} vexpand />
         </box>
     );

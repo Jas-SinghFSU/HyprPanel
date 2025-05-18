@@ -24,7 +24,11 @@ export const ClockMenuTheme = (): JSX.Element => {
 
                 {/* Background Section */}
                 <Header title="Background" />
-                <Option opt={options.theme.bar.menus.menu.clock.background.color} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.background.color}
+                    title="Background"
+                    type="color"
+                />
 
                 {/* Border Section */}
                 <Header title="Border" />
@@ -42,14 +46,26 @@ export const ClockMenuTheme = (): JSX.Element => {
 
                 {/* Calendar Section */}
                 <Header title="Calendar" />
-                <Option opt={options.theme.bar.menus.menu.clock.calendar.yearmonth} title="Year/Month" type="color" />
-                <Option opt={options.theme.bar.menus.menu.clock.calendar.weekdays} title="Weekdays" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.calendar.yearmonth}
+                    title="Year/Month"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.calendar.weekdays}
+                    title="Weekdays"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.clock.calendar.paginator}
                     title="Navigation Arrows (Hover)"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.clock.calendar.currentday} title="Current Day" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.calendar.currentday}
+                    title="Current Day"
+                    type="color"
+                />
                 <Option opt={options.theme.bar.menus.menu.clock.calendar.days} title="Days" type="color" />
                 <Option
                     opt={options.theme.bar.menus.menu.clock.calendar.contextdays}
@@ -69,8 +85,16 @@ export const ClockMenuTheme = (): JSX.Element => {
                     title="Current Temperature"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.clock.weather.status} title="Current Status" type="color" />
-                <Option opt={options.theme.bar.menus.menu.clock.weather.stats} title="Current Stats" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.weather.status}
+                    title="Current Status"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.clock.weather.stats}
+                    title="Current Stats"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.clock.weather.thermometer.extremelyhot}
                     title="Thermometer - Extremely Hot"

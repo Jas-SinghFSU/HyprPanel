@@ -13,7 +13,7 @@ export const getTimeStamp = (position: number, totalLength: number): string => {
     if (typeof position === 'number' && position >= 0) {
         return `${getFormattedTime(position)} / ${getFormattedTime(totalLength)}`;
     } else {
-        return `00:00`;
+        return '00:00';
     }
 };
 

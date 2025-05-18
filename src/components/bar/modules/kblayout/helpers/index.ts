@@ -2,10 +2,8 @@ import {
     HyprctlDeviceLayout,
     HyprctlKeyboard,
     KbLabelType,
-    LayoutKeys,
-    LayoutValues,
-} from 'src/lib/types/customModules/kbLayout';
-import { layoutMap } from './layouts';
+} from 'src/lib/types/customModules/kbLayout.types.js';
+import { LayoutKeys, layoutMap, LayoutValues } from './layouts';
 
 /**
  * Retrieves the keyboard layout from a given JSON string and format.
@@ -32,8 +30,21 @@ export const getKeyboardLayout = (layoutData: string, format: KbLabelType): Layo
         mainKb = keyboards[keyboards.length - 1];
     }
 
-    const layout: LayoutKeys = mainKb['active_keymap'] as LayoutKeys;
+    if (!isValidLayout(mainKb.active_keymap)) {
+        return layoutMap['Unknown Layout'];
+    }
+
+    const layout: LayoutKeys = mainKb.active_keymap;
+
     const foundLayout: LayoutValues = layoutMap[layout];
 
-    return format === 'code' ? foundLayout || layout : layout;
+    return format === 'code' ? (foundLayout ?? layout) : layout;
 };
+
+function isValidLayout(kbLayout: string): kbLayout is LayoutKeys {
+    if (!Object.keys(layoutMap).includes(kbLayout)) {
+        return false;
+    }
+
+    return true;
+}

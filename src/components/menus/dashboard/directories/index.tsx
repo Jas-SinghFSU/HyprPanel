@@ -8,7 +8,12 @@ export const Directories = ({ isEnabled }: DirectoriesProps): JSX.Element => {
     }
 
     return (
-        <box className={'dashboard-card directories-container'} valign={Gtk.Align.FILL} halign={Gtk.Align.FILL} expand>
+        <box
+            className={'dashboard-card directories-container'}
+            valign={Gtk.Align.FILL}
+            halign={Gtk.Align.FILL}
+            expand
+        >
             <LeftSection>
                 <LeftLink1 />
                 <LeftLink2 />

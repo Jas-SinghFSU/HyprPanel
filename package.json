@@ -4,8 +4,8 @@
     "description": "A customizable panel built for Hyprland.",
     "main": "app.ts",
     "scripts": {
-        "lint": "eslint --config .eslintrc.js .",
-        "lint:fix": "eslint --config .eslintrc.js . --fix",
+        "lint": "eslint --config .eslintrc.json .",
+        "lint:fix": "eslint --config .eslintrc.json . --fix",
         "format": "prettier --write 'modules/**/*.ts'"
     },
     "keywords": [],
@@ -24,6 +24,6 @@
         "eslint-plugin-prettier": "^5.2.1",
         "prettier": "^3.3.3",
         "tsconfig-paths": "^4.2.0",
-        "typescript": "^5.6.2"
+        "typescript": "5.7.3"
     }
 }

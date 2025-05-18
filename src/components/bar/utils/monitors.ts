@@ -1,4 +1,4 @@
-import { BarLayout, BarLayouts } from 'src/lib/types/options';
+import { BarLayout, BarLayouts } from 'src/lib/options/options.types';
 
 /**
  * Returns the bar layout configuration for a specific monitor
@@ -11,7 +11,7 @@ export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLa
     const matchingKey = Object.keys(layouts).find((key) => key === monitor.toString());
     const wildcard = Object.keys(layouts).find((key) => key === '*');
 
-    if (matchingKey) {
+    if (matchingKey !== undefined) {
         return layouts[matchingKey];
     }
 

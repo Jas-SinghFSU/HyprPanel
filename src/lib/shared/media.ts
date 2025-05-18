@@ -23,7 +23,8 @@ export const getCurrentPlayer = (
     const playerStillExists = mprisPlayers.some((p) => activePlayer.bus_name === p.bus_name);
 
     const nextPlayerUp = mprisPlayers.sort(
-        (a: AstalMpris.Player, b: AstalMpris.Player) => statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus],
+        (a: AstalMpris.Player, b: AstalMpris.Player) =>
+            statusOrder[a.playbackStatus] - statusOrder[b.playbackStatus],
     )[0];
 
     if (isPlaying || !playerStillExists) {

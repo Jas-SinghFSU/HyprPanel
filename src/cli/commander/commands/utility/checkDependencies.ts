@@ -110,9 +110,9 @@ function checkServiceStatus(services: string[]): ServiceStatus {
             const enabledResult = runCommand(`systemctl is-enabled ${svc}`);
             const enabledStatus = enabledResult.stdout;
 
-            if (enabledResult && (enabledStatus === 'enabled' || enabledStatus === 'static')) {
+            if (enabledResult !== undefined && (enabledStatus === 'enabled' || enabledStatus === 'static')) {
                 return 'INSTALLED';
-            } else if (enabledResult && enabledStatus === 'disabled') {
+            } else if (enabledResult !== undefined && enabledStatus === 'disabled') {
                 return 'DISABLED';
             } else {
                 return 'MISSING';
@@ -174,7 +174,7 @@ function getDependencyStatus(dep: Dependency): string {
             break;
     }
 
-    if (!dep.description) {
+    if (dep.description === undefined) {
         return `  ${colorText(textStatus, color)} ${dep.package}`;
     }
 

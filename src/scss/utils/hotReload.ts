@@ -1,5 +1,5 @@
 import { monitorFile } from 'astal';
-import { resetCss } from '../style';
+import { themeManager } from '../style';
 
 export const initializeHotReload = async (): Promise<void> => {
     const monitorList = [
@@ -15,5 +15,5 @@ export const initializeHotReload = async (): Promise<void> => {
         `${CONFIG_DIR}/modules.scss`,
     ];
 
-    monitorList.forEach((file) => monitorFile(file, resetCss));
+    monitorList.forEach((file) => monitorFile(file, themeManager.applyCss.bind(themeManager)));
 };

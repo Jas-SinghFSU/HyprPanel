@@ -1,8 +1,8 @@
 import { Widget } from 'astal/gtk3';
-import { ShortcutVariable } from 'src/lib/types/dashboard';
 import { isPrimaryClick } from 'src/lib/utils';
 import { handleClick, hasCommand } from '../helpers';
 import options from 'src/options';
+import { ShortcutVariable } from 'src/lib/types/dashboard.types';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 
@@ -41,7 +41,7 @@ export const LeftShortcut2 = (): JSX.Element => {
         return <box />;
     }
 
-    return <ShortcutButton shortcut={left.shortcut2} className={`dashboard-button`} />;
+    return <ShortcutButton shortcut={left.shortcut2} className={'dashboard-button'} />;
 };
 
 export const LeftShortcut3 = (): JSX.Element => {
@@ -62,7 +62,7 @@ export const LeftShortcut4 = (): JSX.Element => {
         return <box />;
     }
 
-    return <ShortcutButton shortcut={left.shortcut4} className={`dashboard-button `} />;
+    return <ShortcutButton shortcut={left.shortcut4} className={'dashboard-button '} />;
 };
 
 export const RightShortcut1 = (): JSX.Element => {
@@ -70,7 +70,7 @@ export const RightShortcut1 = (): JSX.Element => {
         return <box />;
     }
 
-    return <ShortcutButton shortcut={right.shortcut1} className={`dashboard-button top-button paired`} />;
+    return <ShortcutButton shortcut={right.shortcut1} className={'dashboard-button top-button paired'} />;
 };
 
 export const RightShortcut3 = (): JSX.Element => {
@@ -78,7 +78,7 @@ export const RightShortcut3 = (): JSX.Element => {
         return <box />;
     }
 
-    return <ShortcutButton shortcut={right.shortcut3} className={`dashboard-button top-button paired`} />;
+    return <ShortcutButton shortcut={right.shortcut3} className={'dashboard-button top-button paired'} />;
 };
 
 interface ShortcutButtonProps extends Widget.ButtonProps {

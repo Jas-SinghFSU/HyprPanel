@@ -1,8 +1,13 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
-import { WINDOW_LAYOUTS } from 'src/globals/window';
-import { LayoutFunction, Layouts, PaddingProps, PopupRevealerProps, PopupWindowProps } from 'src/lib/types/popupwindow';
-import { Exclusivity, GtkWidget } from 'src/lib/types/widget';
+import { WINDOW_LAYOUTS } from 'src/shared/window';
 import { EventBox, Revealer } from 'astal/gtk3/widget';
+import {
+    PaddingProps,
+    PopupRevealerProps,
+    LayoutFunction,
+    PopupWindowProps,
+} from 'src/lib/types/popupwindow.types';
+import { Layouts } from 'src/lib/types/widget.types';
 
 export const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox
@@ -32,7 +37,7 @@ const PopupRevealer = ({ name, child, transition }: PopupRevealerProps): JSX.Ele
     </box>
 );
 
-const Layout: LayoutFunction = (name: string, child: GtkWidget, transition: Gtk.RevealerTransitionType) => ({
+const Layout: LayoutFunction = (name, child, transition) => ({
     center: () => (
         <centerbox>
             <Padding name={name} />
@@ -119,10 +124,10 @@ const isValidLayout = (layout: string): layout is Layouts => {
 
 export default ({
     name,
-    child,
+    child = <box />,
     layout = 'center',
-    transition = 'none',
-    exclusivity = 'ignore' as Exclusivity,
+    transition = Gtk.RevealerTransitionType.NONE,
+    exclusivity = Astal.Exclusivity.IGNORE,
     ...props
 }: PopupWindowProps): JSX.Element => {
     const layoutFn = isValidLayout(layout) ? layout : 'center';
@@ -147,7 +152,10 @@ export default ({
             application={App}
             layer={Astal.Layer.TOP}
             anchor={
-                Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.LEFT
+                Astal.WindowAnchor.TOP |
+                Astal.WindowAnchor.BOTTOM |
+                Astal.WindowAnchor.RIGHT |
+                Astal.WindowAnchor.LEFT
             }
             {...props}
         >

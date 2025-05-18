@@ -1,4 +1,3 @@
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { CustomBarModule } from '../types';
 import { Module } from '../../shared/Module';
 import { Astal } from 'astal/gtk3';
@@ -6,6 +5,7 @@ import { bind, Variable } from 'astal';
 import { getIcon } from './helpers/icon';
 import { getLabel } from './helpers/label';
 import { initActionListener, initCommandPoller, setupModuleInteractions } from './setup';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarModule): BarBoxChild => {
     const {

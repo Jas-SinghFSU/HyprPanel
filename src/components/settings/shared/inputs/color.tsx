@@ -1,6 +1,6 @@
 import { Gdk } from 'astal/gtk3';
 import ColorButton from 'src/components/shared/ColorButton';
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 import { useHook } from 'src/lib/shared/hookHandler';
 
 export const ColorInputter = <T extends string | number | boolean | object>({

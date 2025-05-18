@@ -3,7 +3,7 @@ import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
 import { getPlaybackIcon } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer, canPlay, playbackStatus } from 'src/globals/media';
+import { activePlayer, canPlay, playbackStatus } from 'src/shared/media';
 
 export const PlayPause = (): JSX.Element => {
     const className = bind(canPlay).as((canPlay) => {
@@ -31,7 +31,13 @@ export const PlayPause = (): JSX.Element => {
     };
 
     return (
-        <button className={className} halign={Gtk.Align.CENTER} hasTooltip tooltipText={tooltipText} onClick={onClick}>
+        <button
+            className={className}
+            halign={Gtk.Align.CENTER}
+            hasTooltip
+            tooltipText={tooltipText}
+            onClick={onClick}
+        >
             <icon icon={icon} />
         </button>
     );

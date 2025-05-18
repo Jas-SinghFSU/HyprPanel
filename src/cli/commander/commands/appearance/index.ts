@@ -1,6 +1,9 @@
 import { errorHandler } from 'src/lib/utils';
-import { BarLayouts } from 'src/lib/types/options';
 import { Command } from '../../types';
+import { setWallpaper } from 'src/shared/wallpaper';
+import { useTheme } from 'src/shared/useTheme';
+import { setLayout } from 'src/shared/utilities';
+import { BarLayouts } from 'src/lib/options/options.types';
 
 export const appearanceCommands: Command[] = [
     {
@@ -58,7 +61,8 @@ export const appearanceCommands: Command[] = [
         args: [
             {
                 name: 'layout',
-                description: 'Bar layout to apply. Wiki: https://hyprpanel.com/configuration/panel.html#layouts',
+                description:
+                    'Bar layout to apply. Wiki: https://hyprpanel.com/configuration/panel.html#layouts',
                 type: 'object',
                 required: true,
             },

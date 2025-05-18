@@ -124,14 +124,16 @@ const overrides = {
  */
 export const defaultApplicationIconMap = defaultWindowTitleMap.reduce(
     (iconMapAccumulator: Record<string, string>, windowTitles) => {
+        const currentIconMap = iconMapAccumulator;
+
         const appName: string = windowTitles[0];
         const appIcon: string = windowTitles[1];
 
-        if (!(appName in iconMapAccumulator)) {
-            iconMapAccumulator[appName] = appIcon;
+        if (!(appName in currentIconMap)) {
+            currentIconMap[appName] = appIcon;
         }
 
-        return iconMapAccumulator;
+        return currentIconMap;
     },
     overrides,
 );

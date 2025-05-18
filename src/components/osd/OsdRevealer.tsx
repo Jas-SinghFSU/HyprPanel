@@ -5,7 +5,7 @@ import { OSDIcon } from './icon/index';
 import { revealerSetup } from './helpers';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { OSDOrientation } from 'src/lib/types/options';
+import { OSDOrientation } from 'src/lib/options/options.types';
 
 const { orientation } = options.theme.osd;
 
@@ -29,7 +29,11 @@ export const OsdRevealer = (): JSX.Element => {
     const osdOrientation = bind(orientation).as((currentOrientation) => currentOrientation === 'vertical');
 
     return (
-        <revealer transitionType={Gtk.RevealerTransitionType.CROSSFADE} revealChild={false} setup={revealerSetup}>
+        <revealer
+            transitionType={Gtk.RevealerTransitionType.CROSSFADE}
+            revealChild={false}
+            setup={revealerSetup}
+        >
             <box className={'osd-container'} vertical={osdOrientation}>
                 {bind(orientation).as((currentOrientation) => {
                     if (currentOrientation === 'vertical') {

@@ -18,7 +18,9 @@ const notifdService = AstalNotifd.get_default();
 export const WifiButton = (): JSX.Element => {
     return (
         <button
-            className={bind(isWifiEnabled).as((isEnabled) => `dashboard-button wifi ${!isEnabled ? 'disabled' : ''}`)}
+            className={bind(isWifiEnabled).as(
+                (isEnabled) => `dashboard-button wifi ${!isEnabled ? 'disabled' : ''}`,
+            )}
             onClick={(_, event) => {
                 if (isPrimaryClick(event)) {
                     networkService.wifi?.set_enabled(!networkService.wifi.enabled);
@@ -27,7 +29,10 @@ export const WifiButton = (): JSX.Element => {
             tooltipText={'Toggle Wifi'}
             expand
         >
-            <label className={'txt-icon'} label={bind(isWifiEnabled).as((isEnabled) => (isEnabled ? '󰤨' : '󰤭'))} />
+            <label
+                className={'txt-icon'}
+                label={bind(isWifiEnabled).as((isEnabled) => (isEnabled ? '󰤨' : '󰤭'))}
+            />
         </button>
     );
 };
@@ -68,7 +73,10 @@ export const NotificationsButton = (): JSX.Element => {
             tooltipText={'Toggle Notifications'}
             expand
         >
-            <label className={'txt-icon'} label={bind(notifdService, 'dontDisturb').as((dnd) => (dnd ? '󰂛' : '󰂚'))} />
+            <label
+                className={'txt-icon'}
+                label={bind(notifdService, 'dontDisturb').as((dnd) => (dnd ? '󰂛' : '󰂚'))}
+            />
         </button>
     );
 };

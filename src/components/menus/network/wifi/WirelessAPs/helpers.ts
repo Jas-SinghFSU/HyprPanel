@@ -25,7 +25,7 @@ const wifiEnabled = (): void => {
     wifiEnabledBinding?.drop();
     wifiEnabledBinding = undefined;
 
-    if (!networkService.wifi) {
+    if (networkService.wifi === null) {
         return;
     }
 
@@ -44,7 +44,7 @@ const accessPoints = (): void => {
     accessPointBinding?.drop();
     accessPointBinding = undefined;
 
-    if (!networkService.wifi) {
+    if (networkService.wifi === null) {
         return;
     }
 
@@ -62,7 +62,7 @@ const accessPoints = (): void => {
  * @returns An array of deduplicated access points.
  */
 const dedupeWAPs = (): AstalNetwork.AccessPoint[] => {
-    if (!networkService.wifi) {
+    if (networkService.wifi === null) {
         return [];
     }
 
@@ -136,7 +136,7 @@ export const getFilteredWirelessAPs = (): AstalNetwork.AccessPoint[] => {
  * @returns True if the device is in an active state; otherwise, false.
  */
 export const isApEnabled = (state: AstalNetwork.DeviceState | undefined): boolean => {
-    if (!state) {
+    if (state == null) {
         return false;
     }
 
@@ -206,7 +206,7 @@ export const getIdFromSsid = (ssid: string, nmcliOutput: string): string | undef
 export const getWifiStatus = (): string => {
     const wifiState = networkService.wifi?.state;
 
-    if (wifiState) {
+    if (wifiState !== null) {
         return DEVICE_STATES[wifiState];
     }
     return DEVICE_STATES[AstalNetwork.DeviceState.UNKNOWN];
@@ -232,9 +232,9 @@ export const connectToAP = (accessPoint: AstalNetwork.AccessPoint, event: Astal.
             connecting.set('');
             staging.set({} as AstalNetwork.AccessPoint);
         })
-        .catch((err) => {
+        .catch((err: Error) => {
             connecting.set('');
-            if (err.message?.toLowerCase().includes('secrets were required, but not provided')) {
+            if (err.message.toLowerCase().includes('secrets were required, but not provided')) {
                 staging.set(accessPoint);
             } else {
                 Notify({

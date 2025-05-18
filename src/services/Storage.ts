@@ -4,25 +4,25 @@ import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 class Storage {
-    private updateFrequency = Variable(2000);
-    private shouldRound = false;
-    private storagePoller: FunctionPoller<GenericResourceData, []>;
+    private _updateFrequency = Variable(2000);
+    private _shouldRound = false;
+    private _storagePoller: FunctionPoller<GenericResourceData, []>;
 
     public storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
     constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
-        this.storagePoller = new FunctionPoller<GenericResourceData, []>(
+        this._storagePoller = new FunctionPoller<GenericResourceData, []>(
             this.storage,
             [],
-            bind(this.updateFrequency),
+            bind(this._updateFrequency),
             this.calculateUsage,
         );
 
-        this.storagePoller.initialize();
+        this._storagePoller.initialize();
     }
 
     public calculateUsage(): GenericResourceData {
@@ -39,7 +39,7 @@ class Storage {
                 total,
                 used,
                 free: available,
-                percentage: this.divide([total, used]),
+                percentage: this._divide([total, used]),
             };
         } catch (error) {
             console.error('Error calculating Storage usage:', error);
@@ -48,13 +48,13 @@ class Storage {
     }
 
     public setShouldRound(round: boolean): void {
-        this.shouldRound = round;
+        this._shouldRound = round;
     }
 
-    private divide([total, used]: number[]): number {
+    private _divide([total, used]: number[]): number {
         const percentageTotal = (used / total) * 100;
 
-        if (this.shouldRound) {
+        if (this._shouldRound) {
             return total > 0 ? Math.round(percentageTotal) : 0;
         }
 
@@ -62,15 +62,15 @@ class Storage {
     }
 
     public updateTimer(timerInMs: number): void {
-        this.updateFrequency.set(timerInMs);
+        this._updateFrequency.set(timerInMs);
     }
 
     public stopPoller(): void {
-        this.storagePoller.stop();
+        this._storagePoller.stop();
     }
 
     public startPoller(): void {
-        this.storagePoller.start();
+        this._storagePoller.start();
     }
 }
 

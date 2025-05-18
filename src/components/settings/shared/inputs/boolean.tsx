@@ -1,6 +1,6 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
-import { Opt } from 'src/lib/option';
+import { Opt } from 'src/lib/options';
 
 import { dependencies as checkDependencies } from 'src/lib/utils';
 
@@ -18,7 +18,11 @@ export const BooleanInputter = <T extends string | number | boolean | object>({
                     return;
                 }
 
-                if (self.active && dependencies !== undefined && !dependencies.every((dep) => checkDependencies(dep))) {
+                if (
+                    self.active &&
+                    dependencies !== undefined &&
+                    !dependencies.every((dep) => checkDependencies(dep))
+                ) {
                     self.active = false;
                     return;
                 }

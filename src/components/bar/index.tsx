@@ -37,6 +37,7 @@ import { bind, Variable } from 'astal';
 import { getLayoutForMonitor, isLayoutEmpty } from './utils/monitors';
 import { GdkMonitorMapper } from './utils/GdkMonitorMapper';
 import { CustomModules } from './custom_modules/CustomModules';
+import { idleInhibit } from 'src/shared/utilities';
 
 const { layouts } = options.bar;
 const { location } = options.theme.bar;
@@ -82,7 +83,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
             ...customWidgets,
         };
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
     const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor);
 
@@ -93,7 +94,7 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
 
     const computeClassName = bind(layouts).as(() => {
         const foundLayout = getLayoutForMonitor(hyprlandMonitor, layouts.get());
-        return !isLayoutEmpty(foundLayout) ? `bar` : '';
+        return !isLayoutEmpty(foundLayout) ? 'bar' : '';
     });
 
     const computeAnchor = bind(location).as((loc) => {
@@ -104,19 +105,22 @@ export const Bar = async (monitor: number): Promise<JSX.Element> => {
         return Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
     });
 
-    const computeLayer = Variable.derive([bind(options.theme.bar.layer), bind(options.tear)], (barLayer, tear) => {
-        if (tear && barLayer === 'overlay') {
-            return Astal.Layer.TOP;
-        }
-        const layerMap = {
-            overlay: Astal.Layer.OVERLAY,
-            top: Astal.Layer.TOP,
-            bottom: Astal.Layer.BOTTOM,
-            background: Astal.Layer.BACKGROUND,
-        };
+    const computeLayer = Variable.derive(
+        [bind(options.theme.bar.layer), bind(options.tear)],
+        (barLayer, tear) => {
+            if (tear && barLayer === 'overlay') {
+                return Astal.Layer.TOP;
+            }
+            const layerMap = {
+                overlay: Astal.Layer.OVERLAY,
+                top: Astal.Layer.TOP,
+                bottom: Astal.Layer.BOTTOM,
+                background: Astal.Layer.BACKGROUND,
+            };
 
-        return layerMap[barLayer];
-    });
+            return layerMap[barLayer];
+        },
+    );
 
     const computeBorderLocation = bind(borderLocation).as((brdrLcn) =>
         brdrLcn !== 'none' ? 'bar-panel withBorder' : 'bar-panel',

@@ -24,7 +24,11 @@ export const VolumeMenuTheme = (): JSX.Element => {
 
                 {/* Background Section */}
                 <Header title="Background" />
-                <Option opt={options.theme.bar.menus.menu.volume.background.color} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.background.color}
+                    title="Background"
+                    type="color"
+                />
 
                 {/* Border Section */}
                 <Header title="Border" />
@@ -36,17 +40,37 @@ export const VolumeMenuTheme = (): JSX.Element => {
 
                 {/* List Items Section */}
                 <Header title="List Items" />
-                <Option opt={options.theme.bar.menus.menu.volume.listitems.active} title="Active/Hover" type="color" />
-                <Option opt={options.theme.bar.menus.menu.volume.listitems.passive} title="Passive" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.listitems.active}
+                    title="Active/Hover"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.listitems.passive}
+                    title="Passive"
+                    type="color"
+                />
 
                 {/* Icon Button Section */}
                 <Header title="Icon Button" />
-                <Option opt={options.theme.bar.menus.menu.volume.iconbutton.active} title="Active/Hover" type="color" />
-                <Option opt={options.theme.bar.menus.menu.volume.iconbutton.passive} title="Passive" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.iconbutton.active}
+                    title="Active/Hover"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.iconbutton.passive}
+                    title="Passive"
+                    type="color"
+                />
 
                 {/* Audio Slider Section */}
                 <Header title="Audio Slider" />
-                <Option opt={options.theme.bar.menus.menu.volume.audio_slider.primary} title="Primary" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.audio_slider.primary}
+                    title="Primary"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.volume.audio_slider.background}
                     title="Background"
@@ -57,11 +81,19 @@ export const VolumeMenuTheme = (): JSX.Element => {
                     title="Background (Hover)"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.volume.audio_slider.puck} title="Puck" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.audio_slider.puck}
+                    title="Puck"
+                    type="color"
+                />
 
                 {/* Input Slider Section */}
                 <Header title="Input Slider" />
-                <Option opt={options.theme.bar.menus.menu.volume.input_slider.primary} title="Primary" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.input_slider.primary}
+                    title="Primary"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.volume.input_slider.background}
                     title="Background"
@@ -72,7 +104,11 @@ export const VolumeMenuTheme = (): JSX.Element => {
                     title="Background (Hover)"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.volume.input_slider.puck} title="Puck" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.volume.input_slider.puck}
+                    title="Puck"
+                    type="color"
+                />
             </box>
         </scrollable>
     );

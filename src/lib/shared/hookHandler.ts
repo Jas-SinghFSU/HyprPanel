@@ -35,7 +35,7 @@ export function useHook(
     };
 
     const hookIntoTarget = (): void => {
-        if (signal && isConnectable(hookTarget)) {
+        if (signal !== undefined && isConnectable(hookTarget)) {
             passedWidget.hook(hookTarget, signal, executeSetup);
         } else if (isSubscribable(hookTarget)) {
             passedWidget.hook(hookTarget, executeSetup);

@@ -1,12 +1,12 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { capitalizeFirstLetter } from 'src/lib/utils';
 import { getInitialSubmap, isSubmapEnabled } from './helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const hyprlandService = AstalHyprland.get_default();
 const {

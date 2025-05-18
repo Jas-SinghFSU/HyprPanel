@@ -19,7 +19,16 @@ export const NotificationSettings = (): JSX.Element => {
                     opt={options.notifications.position}
                     title="Notification Location"
                     type="enum"
-                    enums={['top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left']}
+                    enums={[
+                        'top left',
+                        'top',
+                        'top right',
+                        'right',
+                        'bottom right',
+                        'bottom',
+                        'bottom left',
+                        'left',
+                    ]}
                 />
                 <Option opt={options.theme.notification.border_radius} title="Border Radius" type="string" />
                 <Option opt={options.theme.notification.enableShadow} title="Enable Shadow" type="boolean" />

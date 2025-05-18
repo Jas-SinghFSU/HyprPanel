@@ -1,10 +1,10 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { bind, Variable } from 'astal';
-import { BarBoxChild } from 'src/lib/types/bar';
 import { Astal } from 'astal/gtk3';
 import { inputHandler } from '../../utils/helpers';
 import AstalWp from 'gi://AstalWp?version=0.1';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;

@@ -32,7 +32,11 @@ export const NotificationPager = ({ curPage }: NotificationPagerProps): JSX.Elem
                 <box>
                     <FirstPageButton curPage={curPage} currentPage={currentPage} />
                     <PreviousPageButton curPage={curPage} currentPage={currentPage} />
-                    <PageDisplay notifications={notifications} currentPage={currentPage} dispTotal={dispTotal} />
+                    <PageDisplay
+                        notifications={notifications}
+                        currentPage={currentPage}
+                        dispTotal={dispTotal}
+                    />
                     <NextPageButton
                         curPage={curPage}
                         currentPage={currentPage}

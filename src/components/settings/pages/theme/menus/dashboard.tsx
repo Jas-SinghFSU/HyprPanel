@@ -20,22 +20,50 @@ export const DashboardMenuTheme = (): JSX.Element => {
 
                 {/* Background Section */}
                 <Header title="Background" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.background.color} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.background.color}
+                    title="Background"
+                    type="color"
+                />
 
                 {/* Border Section */}
                 <Header title="Border" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.border.color} title="Border" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.border.color}
+                    title="Border"
+                    type="color"
+                />
 
                 {/* Profile Section */}
                 <Header title="Profile" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.profile.name} title="Profile Name" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.profile.name}
+                    title="Profile Name"
+                    type="color"
+                />
 
                 {/* Power Menu Section */}
                 <Header title="Power Menu" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.powermenu.shutdown} title="Shutdown" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.powermenu.restart} title="Restart" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.powermenu.logout} title="Log Out" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.powermenu.sleep} title="Sleep" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.powermenu.shutdown}
+                    title="Shutdown"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.powermenu.restart}
+                    title="Restart"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.powermenu.logout}
+                    title="Log Out"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.powermenu.sleep}
+                    title="Sleep"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.powermenu.confirmation.card}
                     title="Confirmation Dialog Card"
@@ -84,7 +112,11 @@ export const DashboardMenuTheme = (): JSX.Element => {
                     title="Primary"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.dashboard.shortcuts.text} title="Text" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.shortcuts.text}
+                    title="Text"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.shortcuts.recording}
                     title="Recording"
@@ -191,22 +223,46 @@ export const DashboardMenuTheme = (): JSX.Element => {
                     title="Bar Background"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.cpu.icon} title="CPU Icon" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.cpu.bar} title="CPU Bar" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.cpu.icon}
+                    title="CPU Icon"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.cpu.bar}
+                    title="CPU Bar"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.monitors.cpu.label}
                     title="CPU Label"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.ram.icon} title="RAM Icon" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.ram.bar} title="RAM Bar" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.ram.icon}
+                    title="RAM Icon"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.ram.bar}
+                    title="RAM Bar"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.monitors.ram.label}
                     title="RAM Label"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.gpu.icon} title="GPU Icon" type="color" />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.gpu.bar} title="GPU Bar" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.gpu.icon}
+                    title="GPU Icon"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.gpu.bar}
+                    title="GPU Bar"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.monitors.gpu.label}
                     title="GPU Label"
@@ -217,7 +273,11 @@ export const DashboardMenuTheme = (): JSX.Element => {
                     title="Disk Icon"
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.dashboard.monitors.disk.bar} title="Disk Bar" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.monitors.disk.bar}
+                    title="Disk Bar"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.dashboard.monitors.disk.label}
                     title="Disk Label"

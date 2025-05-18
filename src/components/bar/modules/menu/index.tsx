@@ -4,14 +4,15 @@ import { openMenu } from '../../utils/menu.js';
 import { getDistroIcon } from '../../../../lib/utils.js';
 import { Variable, bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
-import { BarBoxChild } from 'src/lib/types/bar.js';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild } from 'src/lib/types/bar.types.js';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
-    const iconBinding = Variable.derive([autoDetectIcon, icon], (autoDetect: boolean, iconValue: string): string =>
-        autoDetect ? getDistroIcon() : iconValue,
+    const iconBinding = Variable.derive(
+        [autoDetectIcon, icon],
+        (autoDetect: boolean, iconValue: string): string => (autoDetect ? getDistroIcon() : iconValue),
     );
 
     const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
@@ -75,7 +76,9 @@ const Menu = (): BarBoxChild => {
                             }),
                         );
 
-                        disconnectFunctions.push(onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()));
+                        disconnectFunctions.push(
+                            onScroll(self, throttledHandler, scrollUp.get(), scrollDown.get()),
+                        );
                     },
                 );
             },

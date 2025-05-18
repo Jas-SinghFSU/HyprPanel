@@ -48,7 +48,11 @@ export function getIcon(moduleName: string, commandOutput: string, moduleIcon: C
  * - No matching icon is found for the alt text
  * - Corresponding icon value is not a string
  */
-function getIconFromObject(moduleName: string, commandOutput: string, iconObject: Record<string, unknown>): string {
+function getIconFromObject(
+    moduleName: string,
+    commandOutput: string,
+    iconObject: Record<string, unknown>,
+): string {
     try {
         const commandResults: CommandResults = parseCommandOutputJson(moduleName, commandOutput);
 
@@ -115,7 +119,7 @@ function getIconFromArray(moduleName: string, commandOutput: string, iconArray: 
 
         const iconForStep = iconArray.find((_, index) => resultsPercentage <= step * (index + 1));
 
-        return iconForStep || ERROR_ICON;
+        return iconForStep ?? ERROR_ICON;
     } catch {
         return ERROR_ICON;
     }

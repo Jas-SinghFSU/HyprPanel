@@ -23,7 +23,7 @@ export class CustomModules {
 
             return customModuleComponents;
         } catch (error) {
-            console.log(`Failed to build custom modules in ${CONFIG_DIR}: ${error}`);
+            console.error(`Failed to build custom modules in ${CONFIG_DIR}: ${error}`);
             throw new Error(`Failed to build custom modules in ${CONFIG_DIR}: ${error}`);
         }
     }

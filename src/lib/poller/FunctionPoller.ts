@@ -1,24 +1,23 @@
-import { Bind } from 'src/lib/types/variable';
-import { GenericFunction } from 'src/lib/types/customModules/generic';
-import { BarModule } from 'src/lib/types/options';
+import { GenericFunction } from '../types/customModules/generic.types';
+import { BarModule } from '../options/options.types';
 import { Poller } from './Poller';
-import { Variable } from 'astal';
+import { Binding, Variable } from 'astal';
 
 /**
  * A class that manages polling of a variable by executing a generic function at specified intervals.
  */
 export class FunctionPoller<Value, Parameters extends unknown[] = []> {
-    private poller: Poller;
+    private _poller: Poller;
 
-    private params: Parameters;
+    private _params: Parameters;
 
     /**
      * Creates an instance of FunctionPoller.
      *
-     * @param targetVariable - The target variable to poll.
-     * @param trackers - An array of trackers to monitor.
-     * @param pollingInterval - The interval at which polling occurs.
-     * @param pollingFunction - The function to execute during each poll.
+     * @param _targetVariable - The target variable to poll.
+     * @param _trackers - An array of trackers to monitor.
+     * @param _pollingInterval - The interval at which polling occurs.
+     * @param _pollingFunction - The function to execute during each poll.
      * @param params - Additional parameters for the polling function.
      *
      * @example
@@ -36,15 +35,15 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      * ```
      */
     constructor(
-        private targetVariable: Variable<Value>,
-        private trackers: Bind[],
-        private pollingInterval: Bind,
-        private pollingFunction: GenericFunction<Value, Parameters>,
+        private _targetVariable: Variable<Value>,
+        private _trackers: Binding<unknown>[],
+        private _pollingInterval: Binding<number>,
+        private _pollingFunction: GenericFunction<Value, Parameters>,
         ...params: Parameters
     ) {
-        this.params = params;
+        this._params = params;
 
-        this.poller = new Poller(this.pollingInterval, this.trackers, this.execute);
+        this._poller = new Poller(this._pollingInterval, this._trackers, this._execute);
     }
 
     /**
@@ -52,10 +51,10 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      *
      * The result of the function is assigned to the target variable.
      */
-    private execute = async (): Promise<void> => {
+    private _execute = async (): Promise<void> => {
         try {
-            const result = await this.pollingFunction(...this.params);
-            this.targetVariable.set(result);
+            const result = await this._pollingFunction(...this._params);
+            this._targetVariable.set(result);
         } catch (error) {
             console.error('Error executing polling function:', error);
         }
@@ -65,14 +64,14 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      * Starts the polling process.
      */
     public start(): void {
-        this.poller.start();
+        this._poller.start();
     }
 
     /**
      * Stops the polling process.
      */
     public stop(): void {
-        this.poller.stop();
+        this._poller.stop();
     }
 
     /**
@@ -81,6 +80,6 @@ export class FunctionPoller<Value, Parameters extends unknown[] = []> {
      * @param moduleName - The name of the module to initialize.
      */
     public initialize(moduleName?: BarModule): void {
-        this.poller.initialize(moduleName);
+        this._poller.initialize(moduleName);
     }
 }

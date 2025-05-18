@@ -1,6 +1,6 @@
 import options from 'src/options';
-import { globalWeatherVar } from 'src/globals/weather';
-import { getTemperature, getWeatherIcon } from 'src/globals/weather';
+import { globalWeatherVar } from 'src/shared/weather';
+import { getTemperature, getWeatherIcon } from 'src/shared/weather';
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 const { unit } = options.menus.clock.weather;
@@ -35,7 +35,9 @@ const Temperature = (): JSX.Element => {
                     (weather) =>
                         `calendar-menu-weather today temp label icon txt-icon ${getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
                 )}
-                label={bind(globalWeatherVar).as((weather) => getWeatherIcon(Math.ceil(weather.current.temp_f)).icon)}
+                label={bind(globalWeatherVar).as(
+                    (weather) => getWeatherIcon(Math.ceil(weather.current.temp_f)).icon,
+                )}
             />
         );
     };

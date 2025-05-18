@@ -10,7 +10,11 @@ import { notifHasImg } from './helpers';
 
 const NotificationContent = ({ actionBox, notification }: NotificationContentProps): JSX.Element => {
     return (
-        <box className={`notification-card-content ${!notifHasImg(notification) ? 'noimg' : ''}`} hexpand vertical>
+        <box
+            className={`notification-card-content ${!notifHasImg(notification) ? 'noimg' : ''}`}
+            hexpand
+            vertical
+        >
             <Header notification={notification} />
             <Body notification={notification} />
             {actionBox}
@@ -18,7 +22,11 @@ const NotificationContent = ({ actionBox, notification }: NotificationContentPro
     );
 };
 
-export const NotificationCard = ({ notification, showActions, ...props }: NotificationCardProps): JSX.Element => {
+export const NotificationCard = ({
+    notification,
+    showActions,
+    ...props
+}: NotificationCardProps): JSX.Element => {
     const actionBox: IActionBox | null = notification.get_actions().length ? (
         <Actions notification={notification} showActions={showActions} />
     ) : null;

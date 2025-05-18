@@ -7,7 +7,7 @@ const audioService = wireplumber.audio;
 
 const ActiveDeviceContainer = ({ children }: ActiveDeviceContainerProps): JSX.Element => {
     return (
-        <box className={'menu-items-section selected'} name={ActiveDeviceMenu.Devices} vertical>
+        <box className={'menu-items-section selected'} name={ActiveDeviceMenu.DEVICES} vertical>
             {children}
         </box>
     );

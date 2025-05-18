@@ -2,14 +2,14 @@ import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './helpers';
-import { BarBoxChild, NetstatLabelType, RateUnit } from 'src/lib/types/bar';
-import { NetworkResourceData } from 'src/lib/types/customModules/network';
-import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar';
-import { GET_DEFAULT_NETSTAT_DATA } from 'src/lib/types/defaults/netstat';
+import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
+import { RateUnit, BarBoxChild, NetstatLabelType } from 'src/lib/types/bar.types';
+import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
+import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
 
 const networkService = AstalNetwork.get_default();
 const {
@@ -28,7 +28,7 @@ const {
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const networkUsage = Variable<NetworkResourceData>(GET_DEFAULT_NETSTAT_DATA(rateUnit.get()));
+export const networkUsage = Variable<NetworkResourceData>(getDefaultNetstatData(rateUnit.get()));
 
 const netstatPoller = new FunctionPoller<
     NetworkResourceData,
@@ -69,7 +69,8 @@ export const Netstat = (): BarBoxChild => {
 
     const labelBinding = Variable.derive(
         [bind(networkUsage), bind(labelType)],
-        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) => renderNetworkLabel(lblTyp, networkService),
+        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) =>
+            renderNetworkLabel(lblTyp, networkService),
     );
 
     const netstatModule = Module({
@@ -98,7 +99,8 @@ export const Netstat = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) % NETWORK_LABEL_TYPES.length
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) %
+                                        NETWORK_LABEL_TYPES.length
                                 ] as NetstatLabelType,
                             );
                         },
@@ -107,7 +109,9 @@ export const Netstat = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) - 1 + NETWORK_LABEL_TYPES.length) %
+                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) -
+                                        1 +
+                                        NETWORK_LABEL_TYPES.length) %
                                         NETWORK_LABEL_TYPES.length
                                 ] as NetstatLabelType,
                             );

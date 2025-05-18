@@ -20,7 +20,9 @@ const DeviceName = ({ device, type }: Omit<AudioDeviceProps, 'icon'>): JSX.Eleme
             truncate
             wrap
             className={bind(device, 'description').as((currentDesc) =>
-                device.description === currentDesc ? `menu-button-name active ${type}` : `menu-button-name ${type}`,
+                device.description === currentDesc
+                    ? `menu-button-name active ${type}`
+                    : `menu-button-name ${type}`,
             )}
             label={device.description}
         />

@@ -23,7 +23,11 @@ export const MediaMenuTheme = (): JSX.Element => {
 
                 {/* Background Section */}
                 <Header title="Background" />
-                <Option opt={options.theme.bar.menus.menu.media.background.color} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.media.background.color}
+                    title="Background"
+                    type="color"
+                />
 
                 {/* Border Section */}
                 <Header title="Border" />
@@ -55,13 +59,25 @@ export const MediaMenuTheme = (): JSX.Element => {
                     subtitle="Ex: Button color when shuffle/loop is enabled."
                     type="color"
                 />
-                <Option opt={options.theme.bar.menus.menu.media.buttons.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.media.buttons.background}
+                    title="Background"
+                    type="color"
+                />
                 <Option opt={options.theme.bar.menus.menu.media.buttons.text} title="Text" type="color" />
 
                 {/* Slider Section */}
                 <Header title="Slider" />
-                <Option opt={options.theme.bar.menus.menu.media.slider.primary} title="Primary Color" type="color" />
-                <Option opt={options.theme.bar.menus.menu.media.slider.background} title="Background" type="color" />
+                <Option
+                    opt={options.theme.bar.menus.menu.media.slider.primary}
+                    title="Primary Color"
+                    type="color"
+                />
+                <Option
+                    opt={options.theme.bar.menus.menu.media.slider.background}
+                    title="Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.menus.menu.media.slider.backgroundhover}
                     title="Background (Hover)"

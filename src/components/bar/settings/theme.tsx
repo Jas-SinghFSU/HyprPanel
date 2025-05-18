@@ -32,13 +32,21 @@ export const CustomModuleTheme = (): JSX.Element => {
                     }
                     type="color"
                 />
-                <Option opt={options.theme.bar.buttons.modules.microphone.border} title="Border" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.microphone.border}
+                    title="Border"
+                    type="color"
+                />
 
                 {/* RAM Module Section */}
                 <Header title="RAM" />
                 <Option opt={options.theme.bar.buttons.modules.ram.text} title="Text" type="color" />
                 <Option opt={options.theme.bar.buttons.modules.ram.icon} title="Icon" type="color" />
-                <Option opt={options.theme.bar.buttons.modules.ram.background} title="Label Background" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.ram.background}
+                    title="Label Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.buttons.modules.ram.icon_background}
                     title="Icon Background"
@@ -54,7 +62,11 @@ export const CustomModuleTheme = (): JSX.Element => {
                 <Header title="CPU" />
                 <Option opt={options.theme.bar.buttons.modules.cpu.text} title="Text" type="color" />
                 <Option opt={options.theme.bar.buttons.modules.cpu.icon} title="Icon" type="color" />
-                <Option opt={options.theme.bar.buttons.modules.cpu.background} title="Label Background" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cpu.background}
+                    title="Label Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.buttons.modules.cpu.icon_background}
                     title="Icon Background"
@@ -224,7 +236,11 @@ export const CustomModuleTheme = (): JSX.Element => {
                     }
                     type="color"
                 />
-                <Option opt={options.theme.bar.buttons.modules.hyprsunset.border} title="Border" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.hyprsunset.border}
+                    title="Border"
+                    type="color"
+                />
 
                 {/* Hypridle Module Section */}
                 <Header title="Hypridle" />
@@ -250,7 +266,11 @@ export const CustomModuleTheme = (): JSX.Element => {
                 <Header title="Cava" />
                 <Option opt={options.theme.bar.buttons.modules.cava.text} title="Bars" type="color" />
                 <Option opt={options.theme.bar.buttons.modules.cava.icon} title="Icon" type="color" />
-                <Option opt={options.theme.bar.buttons.modules.cava.background} title="Label Background" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.cava.background}
+                    title="Label Background"
+                    type="color"
+                />
                 <Option
                     opt={options.theme.bar.buttons.modules.cava.icon_background}
                     title="Icon Background"
@@ -280,7 +300,11 @@ export const CustomModuleTheme = (): JSX.Element => {
                     }
                     type="color"
                 />
-                <Option opt={options.theme.bar.buttons.modules.worldclock.border} title="Border" type="color" />
+                <Option
+                    opt={options.theme.bar.buttons.modules.worldclock.border}
+                    title="Border"
+                    type="color"
+                />
 
                 {/* Power Module Section */}
                 <Header title="Power" />

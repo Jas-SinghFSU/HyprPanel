@@ -1,15 +1,14 @@
-import { BarBoxChild } from 'src/lib/types/bar';
-import { Bind } from '../../../lib/types/variable';
+import { BarBoxChild } from 'src/lib/types/bar.types';
 import options from '../../../options';
-import { bind } from 'astal';
+import { bind, Binding } from 'astal';
 
-const computeVisible = (child: BarBoxChild): Bind | boolean => {
+const computeVisible = (child: BarBoxChild): Binding<boolean> | boolean => {
     if (child.isVis !== undefined) {
-        return bind(child.isVis);
+        return child.isVis;
     }
-    return child.isVisible;
-};
 
+    return child.isVisible ?? true;
+};
 export const WidgetContainer = (child: BarBoxChild): JSX.Element => {
     const buttonClassName = bind(options.theme.bar.buttons.style).as((style) => {
         const styleMap = {
@@ -24,7 +23,7 @@ export const WidgetContainer = (child: BarBoxChild): JSX.Element => {
         return `bar_item_box_visible ${styleMap[style]} ${boxClassName}`;
     });
 
-    if (child.isBox) {
+    if (child.isBox === true) {
         return (
             <eventbox visible={computeVisible(child)} {...child.props}>
                 <box className={buttonClassName}>{child.component}</box>

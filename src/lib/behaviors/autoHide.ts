@@ -28,7 +28,7 @@ function setBarVisibility(monitorId: number, isVisible: boolean): void {
  * @param client - The Hyprland client that gained focus
  */
 function handleFullscreenClientVisibility(client: AstalHyprland.Client): void {
-    if (!client) {
+    if (client === null) {
         return;
     }
 
@@ -36,7 +36,7 @@ function handleFullscreenClientVisibility(client: AstalHyprland.Client): void {
 
     Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
         if (autoHide.get() === 'fullscreen') {
-            setBarVisibility(client.monitor.id, !isFullScreen);
+            setBarVisibility(client.monitor.id, !Boolean(isFullScreen));
         }
     });
 }

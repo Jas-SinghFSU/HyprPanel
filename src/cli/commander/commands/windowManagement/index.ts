@@ -2,6 +2,7 @@ import { errorHandler } from 'src/lib/utils';
 import { Command } from '../../types';
 import { App } from 'astal/gtk3';
 import { BarVisibility } from 'src/cli/utils/BarVisibility';
+import { isWindowVisible } from 'src/shared/utilities';
 
 export const windowManagementCommands: Command[] = [
     {

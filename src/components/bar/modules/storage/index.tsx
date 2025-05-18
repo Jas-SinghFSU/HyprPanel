@@ -2,12 +2,12 @@ import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './helpers';
-import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar';
-import { GenericResourceData } from 'src/lib/types/customModules/generic';
-import { LABEL_TYPES } from 'src/lib/types/defaults/bar';
+import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
+import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
+import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
@@ -66,7 +66,8 @@ export const Storage = (): BarBoxChild => {
                         fn: () => {
                             labelType.set(
                                 LABEL_TYPES[
-                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) % LABEL_TYPES.length
+                                    (LABEL_TYPES.indexOf(labelType.get()) - 1 + LABEL_TYPES.length) %
+                                        LABEL_TYPES.length
                                 ] as ResourceLabelType,
                             );
                         },
