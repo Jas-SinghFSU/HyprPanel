@@ -16,7 +16,7 @@ export const ClockMenuSettings = (): JSX.Element => {
                 <Option
                     opt={options.menus.clock.weather.location}
                     title="Location"
-                    subtitle="Zip Code, Postal Code, City, etc."
+                    subtitle="<Zip Code>, <Postal Code>, <City>, <lat, long>, etc."
                     type="string"
                 />
                 <Option

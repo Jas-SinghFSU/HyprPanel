@@ -1,10 +1,11 @@
-import { AstalIO, bind, execAsync, interval, Variable } from 'astal';
+import { AstalIO, bind, interval, Variable } from 'astal';
 import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.types';
 import { UnitType, Weather, WeatherIcon, WeatherIconTitle } from 'src/lib/types/weather.types';
 import { WeatherApiKeyManager } from './KeyManager';
 import options from 'src/options';
 import { Opt } from 'src/lib/options';
 import { weatherIcons } from 'src/lib/icons/weather';
+import { httpClient } from 'src/lib/httpClient';
 
 export default class WeatherManager {
     public static instance: WeatherManager;
@@ -39,8 +40,11 @@ export default class WeatherManager {
             [bind(weatherKeyManager.weatherApiKey), bind(this._intervalFrequency), bind(this._location)],
             (weatherKey, weatherInterval, loc) => {
                 if (!weatherKey) {
+                    console.log('no weather key');
                     return this.weatherData.set(DEFAULT_WEATHER);
                 }
+
+                console.log('_initializeWeatherPolling');
 
                 this._initializeWeatherPolling(weatherInterval, loc, weatherKey);
             },
@@ -60,33 +64,22 @@ export default class WeatherManager {
         }
 
         const formattedLocation = loc.replaceAll(' ', '%20');
+        const url = `https://api.weatherapi.com/v1/forecast.json?key=${weatherKey}&q=${formattedLocation}&days=1&aqi=no&alerts=no`;
 
         this._interval = interval(weatherInterval, async () => {
-            execAsync(
-                `curl "https://api.weatherapi.com/v1/forecast.json?key=${weatherKey}&q=${formattedLocation}&days=1&aqi=no&alerts=no"`,
-            )
-                .then((weatherResponse) => {
-                    try {
-                        if (typeof weatherResponse !== 'string') {
-                            return this.weatherData.set(DEFAULT_WEATHER);
-                        }
+            try {
+                const response = await httpClient.get(url);
+                console.log(JSON.stringify(response, null, 2));
 
-                        const parsedWeather = JSON.parse(weatherResponse);
-
-                        if (Object.keys(parsedWeather).includes('error')) {
-                            return this.weatherData.set(DEFAULT_WEATHER);
-                        }
-
-                        return this.weatherData.set(parsedWeather);
-                    } catch (error) {
-                        this.weatherData.set(DEFAULT_WEATHER);
-                        console.warn(`Failed to parse weather data: ${error}`);
-                    }
-                })
-                .catch((err) => {
-                    console.error(`Failed to fetch weather: ${err}`);
+                if (response.data) {
+                    this.weatherData.set(response.data as Weather);
+                } else {
                     this.weatherData.set(DEFAULT_WEATHER);
-                });
+                }
+            } catch (error) {
+                console.error(`Failed to fetch weather: ${error}`);
+                this.weatherData.set(DEFAULT_WEATHER);
+            }
         });
     }
 

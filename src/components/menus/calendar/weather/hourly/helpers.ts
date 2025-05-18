@@ -1,5 +1,7 @@
 import { Weather, WeatherIconTitle } from 'src/lib/types/weather.types';
-import { isValidWeatherIconTitle } from 'src/shared/weather/weather';
+import WeatherManager from 'src/shared/weather';
+
+const weatherManager = WeatherManager.get_default();
 
 /**
  * Retrieves the next epoch time for weather data.
@@ -56,7 +58,7 @@ export const getIconQuery = (weather: Weather, hoursFromNow: number): WeatherIco
         iconQuery = 'partly_cloudy_night';
     }
 
-    if (isValidWeatherIconTitle(iconQuery)) {
+    if (weatherManager.isValidWeatherIconTitle(iconQuery)) {
         return iconQuery;
     } else {
         return 'warning';

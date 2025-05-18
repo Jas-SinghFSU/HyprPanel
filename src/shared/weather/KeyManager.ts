@@ -1,18 +1,33 @@
 import { GLib, Variable } from 'astal';
-const { EXISTS, IS_REGULAR } = GLib.FileTest;
 import options from 'src/options';
 
+const { EXISTS, IS_REGULAR } = GLib.FileTest;
+
+/**
+ * Manages weather API key retrieval and validation
+ * Supports loading keys from files or direct input
+ */
 export class WeatherApiKeyManager {
     public weatherApiKey: Variable<string> = Variable('');
 
     private readonly _apiKeyUserInput = options.menus.clock.weather.key;
 
     constructor() {
-        this._apiKeyUserInput.subscribe((key) => {
-            const fetchedKey = this._getWeatherKey(key);
+        this._mountWeatherKey(this._apiKeyUserInput.get());
 
-            this.weatherApiKey.set(fetchedKey);
+        this._apiKeyUserInput.subscribe((key) => {
+            this._mountWeatherKey(key);
         });
+    }
+
+    /**
+     * Updates the weather API key variable with the processed key value
+     * @param key - The API key input which could be a direct key or file path
+     */
+    private _mountWeatherKey(key: string): void {
+        const fetchedKey = this._getWeatherKey(key);
+
+        this.weatherApiKey.set(fetchedKey);
     }
 
     /**

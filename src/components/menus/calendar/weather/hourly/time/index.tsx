@@ -1,12 +1,14 @@
-import { globalWeatherVar } from 'src/shared/weather/weather';
 import { getNextEpoch } from '../helpers';
 import { bind } from 'astal';
+import WeatherManager from 'src/shared/weather';
+
+const weatherManager = WeatherManager.get_default();
 
 export const HourlyTime = ({ hoursFromNow }: HourlyTimeProps): JSX.Element => {
     return (
         <label
             className={'hourly-weather-time'}
-            label={bind(globalWeatherVar).as((weather) => {
+            label={bind(weatherManager.weatherData).as((weather) => {
                 if (!Object.keys(weather).length) {
                     return '-';
                 }

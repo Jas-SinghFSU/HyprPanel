@@ -1,21 +1,23 @@
 import options from 'src/options';
 import { Module } from '../../shared/Module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
-import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather/weather';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import WeatherManager from 'src/shared/weather';
+
+const weatherManager = WeatherManager.get_default();
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
-    const iconBinding = Variable.derive([bind(globalWeatherVar)], (wthr) => {
-        const weatherStatusIcon = getWeatherStatusTextIcon(wthr);
+    const iconBinding = Variable.derive([bind(weatherManager.weatherData)], (wthr) => {
+        const weatherStatusIcon = weatherManager.getWeatherStatusTextIcon(wthr);
         return weatherStatusIcon;
     });
 
-    const labelBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], (wthr, unt) => {
+    const labelBinding = Variable.derive([bind(weatherManager.weatherData), bind(unit)], (wthr, unt) => {
         if (unt === 'imperial') {
             return `${Math.ceil(wthr.current.temp_f)}° F`;
         } else {
@@ -25,7 +27,9 @@ export const Weather = (): BarBoxChild => {
 
     const weatherModule = Module({
         textIcon: iconBinding(),
-        tooltipText: bind(globalWeatherVar).as((v) => `Weather Status: ${v.current.condition.text}`),
+        tooltipText: bind(weatherManager.weatherData).as(
+            (v) => `Weather Status: ${v.current.condition.text}`,
+        ),
         boxClass: 'weather-custom',
         label: labelBinding(),
         showLabelBinding: bind(label),
