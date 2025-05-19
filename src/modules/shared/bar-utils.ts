@@ -1,9 +1,5 @@
+import { options } from 'src/configuration';
 import { BarModule, BarLayouts } from 'src/lib/options/types';
-import options from '../../options';
-
-/**
- * Bar module utilities
- */
 
 /**
  * Retrieves all unique layout items from the bar options

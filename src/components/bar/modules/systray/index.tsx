@@ -1,5 +1,5 @@
 import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
-import options from '../../../../options';
+import options from '../../../../configuration';
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';

@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib?version=2.0';
-import options from '../options';
+import options from '../configuration';
 import Wallpaper from 'src/services/Wallpaper';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;

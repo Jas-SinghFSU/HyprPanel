@@ -1,6 +1,6 @@
 import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/types';
 import { getMatugenVariations } from './variations';
-import options from '../../options';
+import options from '../../configuration';
 import icons from '../../lib/icons/icons';
 import { defaultColorMap } from 'src/lib/types/defaults/options.types';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';

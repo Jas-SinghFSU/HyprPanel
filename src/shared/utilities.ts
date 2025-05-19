@@ -1,5 +1,5 @@
 import { App } from 'astal/gtk3';
-import options from '../options';
+import options from '../configuration';
 import { Variable } from 'astal';
 import { BarLayouts } from 'src/lib/options/types';
 

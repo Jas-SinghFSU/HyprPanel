@@ -2,10 +2,6 @@ import GdkPixbuf from 'gi://GdkPixbuf';
 import { normalizeToAbsolutePath } from '../path/helpers';
 
 /**
- * Image validation utilities
- */
-
-/**
  * Checks if the provided filepath is a valid image
  * Note: Unlike GdkPixbuf, this function will normalize the given path
  * @param imgFilePath - The path to the image file

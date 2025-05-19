@@ -1,4 +1,4 @@
-import { isPrimitive } from 'src/lib/utils';
+import { isPrimitive } from 'src/lib';
 
 /**
  * Generates a label based on module command output and a template configuration.

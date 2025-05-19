@@ -1,6 +1,6 @@
 import icons from '../lib/icons/icons';
 import { bash, dependencies, Notify, isAnImage, normalizeToAbsolutePath } from '../lib/utils';
-import options from '../options';
+import options from '../configuration';
 import Wallpaper from 'src/services/Wallpaper';
 
 const { matugen } = options.theme;

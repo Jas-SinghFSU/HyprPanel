@@ -1,4 +1,4 @@
-import options from '../options';
+import options from '../configuration';
 import Gio from 'gi://Gio';
 import { bash, errorHandler } from '../lib/utils';
 import {

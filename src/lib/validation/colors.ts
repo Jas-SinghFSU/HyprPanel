@@ -1,10 +1,6 @@
 import { namedColors } from '../constants/colors';
 
 /**
- * Color validation utilities
- */
-
-/**
  * Validates if a string is a valid GJS color
  * Supports named colors, hex colors, RGB, and RGBA formats
  * @param color - The color string to validate

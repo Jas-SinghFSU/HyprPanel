@@ -1,4 +1,4 @@
-import options from '../options';
+import options from '../configuration';
 import { bash, dependencies } from '../lib/utils';
 import { MatugenColors } from '../lib/options/types';
 import { initializeTrackers } from './optionsTrackers';

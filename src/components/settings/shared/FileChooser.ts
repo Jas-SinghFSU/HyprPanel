@@ -1,11 +1,11 @@
-import options from '../../../options';
 import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
-import { bash, Notify } from '../../../lib/utils';
 import icons from '../../../lib/icons/icons';
 import { Config } from '../../../lib/types/filechooser.types';
 import { hexColorPattern } from '../../../shared/useTheme';
 import { isHexColor } from '../../../shared/variables';
+import Notify from 'gi://Notify?version=0.7';
+import { options } from 'src/configuration';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];

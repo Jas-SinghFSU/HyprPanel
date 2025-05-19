@@ -1,5 +1,5 @@
 import { runAsyncCommand, throttledScrollHandler } from '../../utils/helpers.js';
-import options from '../../../../options.js';
+import options from '../../../../configuration/index.js';
 import { openMenu } from '../../utils/menu.js';
 import { getDistroIcon } from '../../../../lib/utils.js';
 import { Variable, bind } from 'astal';

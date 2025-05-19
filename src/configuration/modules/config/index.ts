@@ -1,5 +1,8 @@
 import { opt } from 'src/lib/options';
 import { ScalingPriority } from 'src/lib/options/types';
+import bar from './bar';
+import menus from './menus';
+import notifications from './notifications';
 
 export default {
     scalingPriority: opt<ScalingPriority>('gdk'),
@@ -15,7 +18,7 @@ export default {
         restartCommand: opt('hyprpanel -q; hyprpanel'),
     },
     dummy: opt(true),
-    bar: undefined,
-    menus: undefined,
-    notifications: undefined,
+    bar,
+    menus,
+    notifications,
 };
