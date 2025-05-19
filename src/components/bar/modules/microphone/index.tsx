@@ -1,10 +1,12 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { inputHandler } from '../../utils/helpers';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
@@ -51,7 +53,7 @@ export const Microphone = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

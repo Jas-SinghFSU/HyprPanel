@@ -1,8 +1,9 @@
 import { bind, execAsync, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+import { SystemUtilities } from 'src/core';
 import { DEVICE_STATES } from 'src/lib/constants/network';
-import { isPrimaryClick, Notify } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 /**
  * WifiManager handles all WiFi-related functionality for staging and connecting to
@@ -203,7 +204,7 @@ export class WifiManager {
                 if (err.message.toLowerCase().includes('secrets were required, but not provided')) {
                     this.staging.set(accessPoint);
                 } else {
-                    Notify({
+                    SystemUtilities.notify({
                         summary: 'Network',
                         body: err.message,
                     });

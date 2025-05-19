@@ -2,7 +2,9 @@ import { Variable, bind, execAsync } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import { CustomBarModule } from '../types';
-import { inputHandler } from '../../utils/helpers';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getDefault();
 
 export function initCommandPoller(
     commandOutput: Variable<string>,
@@ -51,7 +53,7 @@ export function setupModuleInteractions(
     moduleScrollThreshold: number,
 ): void {
     const scrollThreshold = moduleScrollThreshold >= 0 ? moduleScrollThreshold : 1;
-    inputHandler(
+    inputHandler.attachHandlers(
         element,
         {
             onPrimaryClick: {

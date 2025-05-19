@@ -1,4 +1,4 @@
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { getOsdMonitor } from './helpers';

@@ -1,8 +1,8 @@
 import { bind } from 'astal';
 import { Astal, Gtk, Widget } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { getNextPlayer, getPreviousPlayer } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const mprisService = AstalMpris.get_default();
 

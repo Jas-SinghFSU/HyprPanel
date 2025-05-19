@@ -1,9 +1,9 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import AstalPowerProfiles from 'gi://AstalPowerProfiles?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 import icons from 'src/lib/icons/icons';
 import { ProfileType } from 'src/lib/types/powerprofiles.types';
-import { isPrimaryClick } from 'src/lib/utils';
 
 const powerProfilesService = AstalPowerProfiles.get_default();
 

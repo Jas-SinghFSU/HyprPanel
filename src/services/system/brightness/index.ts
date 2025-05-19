@@ -1,19 +1,19 @@
 import { exec, GObject, monitorFile, property, readFileAsync, register } from 'astal';
-import { sh } from 'src/lib/utils';
+import { SystemUtilities } from 'src/core';
 
 const get = (args: string): number => Number(exec(`brightnessctl ${args}`));
 const screen = exec('bash -c "ls -w1 /sys/class/backlight | head -1"');
 const kbd = exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"');
 
 @register({ GTypeName: 'Brightness' })
-export default class Brightness extends GObject.Object {
-    public static instance: Brightness;
+export default class BrightnessService extends GObject.Object {
+    public static instance: BrightnessService;
 
-    public static get_default(): Brightness {
-        if (Brightness.instance === undefined) {
-            Brightness.instance = new Brightness();
+    public static get_default(): BrightnessService {
+        if (BrightnessService.instance === undefined) {
+            BrightnessService.instance = new BrightnessService();
         }
-        return Brightness.instance;
+        return BrightnessService.instance;
     }
 
     #kbdMax = kbd?.length ? get(`--device ${kbd} max`) : 0;
@@ -34,7 +34,7 @@ export default class Brightness extends GObject.Object {
     public set kbd(value: number) {
         if (value < 0 || value > this.#kbdMax || !kbd?.length) return;
 
-        sh(`brightnessctl -d ${kbd} s ${value} -q`).then(() => {
+        SystemUtilities.sh(`brightnessctl -d ${kbd} s ${value} -q`).then(() => {
             this.#kbd = value;
             this.notify('kbd');
         });
@@ -49,10 +49,12 @@ export default class Brightness extends GObject.Object {
 
         if (percent > 1) brightnessPct = 1;
 
-        sh(`brightnessctl set ${Math.round(brightnessPct * 100)}% -d ${screen} -q`).then(() => {
-            this.#screen = brightnessPct;
-            this.notify('screen');
-        });
+        SystemUtilities.sh(`brightnessctl set ${Math.round(brightnessPct * 100)}% -d ${screen} -q`).then(
+            () => {
+                this.#screen = brightnessPct;
+                this.notify('screen');
+            },
+        );
     }
 
     constructor() {

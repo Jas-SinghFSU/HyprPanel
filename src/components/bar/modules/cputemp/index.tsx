@@ -1,12 +1,14 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { getCPUTemperature } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { UnitType } from 'src/lib/types/weather.types';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const {
     label,
@@ -53,7 +55,7 @@ export const CpuTemp = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

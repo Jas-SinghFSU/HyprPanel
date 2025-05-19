@@ -1,7 +1,7 @@
 import { bind, Variable } from 'astal';
 import AstalCava from 'gi://AstalCava?version=0.1';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import options from 'src/options';
+import { options } from 'src/configuration';
 
 const mprisService = AstalMpris.get_default();
 const {

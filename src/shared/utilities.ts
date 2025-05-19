@@ -1,7 +1,7 @@
 import { App } from 'astal/gtk3';
-import options from '../configuration';
 import { Variable } from 'astal';
 import { BarLayouts } from 'src/lib/options/types';
+import { options } from 'src/configuration';
 
 export function isWindowVisible(windowName: string): boolean {
     const appWindow = App.get_window(windowName);

@@ -1,5 +1,5 @@
 import { execAsync, Variable } from 'astal';
-import options from 'src/options';
+import { options } from 'src/configuration';
 
 const { temperature } = options.bar.customModules.hyprsunset;
 

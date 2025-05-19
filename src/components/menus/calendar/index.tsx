@@ -2,9 +2,9 @@ import DropdownMenu from '../shared/dropdown/index.js';
 import { TimeWidget } from './time/index';
 import { CalendarWidget } from './CalendarWidget.js';
 import { WeatherWidget } from './weather/index';
-import options from 'src/options';
 import { bind } from 'astal';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { options } from 'src/configuration';
 
 const { transition } = options.menus;
 const { enabled: weatherEnabled } = options.menus.clock.weather;

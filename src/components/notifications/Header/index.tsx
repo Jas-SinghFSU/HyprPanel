@@ -1,5 +1,5 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import options from 'src/options.js';
+import { options } from 'src/configuration';
 import { GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { getNotificationIcon } from 'src/shared/notification.js';

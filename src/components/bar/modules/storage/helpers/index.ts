@@ -1,8 +1,8 @@
 import GTop from 'gi://GTop';
 
-import { divide } from 'src/components/bar/utils/helpers';
 import { Variable } from 'astal';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import { divide } from 'src/components/bar/utils/systemResource';
 
 /**
  * Computes the storage usage for the root filesystem.

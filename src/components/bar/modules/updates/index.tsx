@@ -1,10 +1,12 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { options } from 'src/configuration';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const {
     updateCommand,
@@ -80,7 +82,7 @@ export const Updates = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(
+                inputHandler.attachHandlers(
                     self,
                     {
                         onPrimaryClick: {

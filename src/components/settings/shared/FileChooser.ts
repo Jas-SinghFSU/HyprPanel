@@ -4,8 +4,8 @@ import icons from '../../../lib/icons/icons';
 import { Config } from '../../../lib/types/filechooser.types';
 import { hexColorPattern } from '../../../shared/useTheme';
 import { isHexColor } from '../../../shared/variables';
-import Notify from 'gi://Notify?version=0.7';
 import { options } from 'src/configuration';
+import { SystemUtilities } from 'src/core';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
@@ -177,7 +177,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
 
                 dataOutputStream.close(null);
 
-                Notify({
+                SystemUtilities.notify({
                     summary: 'File Saved Successfully',
                     body: `At ${finalFilePath}.`,
                     iconName: icons.ui.info,
@@ -194,7 +194,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
-        Notify({
+        SystemUtilities.notify({
             summary: `${themeOnly ? 'Theme' : 'Config'} Export Failed`,
             body: errorMessage ?? 'An unknown error occurred.',
             iconName: icons.ui.warning,
@@ -231,7 +231,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
             const filePath: string | null = dialog.get_filename();
 
             if (filePath === null) {
-                Notify({
+                SystemUtilities.notify({
                     summary: 'Failed to import',
                     body: 'No file selected.',
                     iconName: icons.ui.warning,
@@ -246,7 +246,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 return;
             }
 
-            Notify({
+            SystemUtilities.notify({
                 summary: `Importing ${themeOnly ? 'Theme' : 'Config'}`,
                 body: `Importing: ${filePath}`,
                 iconName: icons.ui.info,
@@ -272,12 +272,12 @@ export const importFiles = (themeOnly: boolean = false): void => {
             saveConfigToFile(optionsConfig, CONFIG_FILE);
         }
         dialog.destroy();
-        bash(restartCommand.get());
+        SystemUtilities.bash(restartCommand.get());
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
-        Notify({
+        SystemUtilities.notify({
             summary: `${themeOnly ? 'Theme' : 'Config'} Import Failed`,
             body: errorMessage ?? 'An unknown error occurred.',
             iconName: icons.ui.warning,

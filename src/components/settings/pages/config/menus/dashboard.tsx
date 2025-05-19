@@ -1,6 +1,6 @@
 import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { Gtk } from 'astal/gtk3';
 
 export const DashboardMenuSettings = (): JSX.Element => {

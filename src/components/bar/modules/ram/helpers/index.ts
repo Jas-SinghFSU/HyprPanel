@@ -1,5 +1,5 @@
-import { divide } from 'src/components/bar/utils/helpers';
 import { GLib, Variable } from 'astal';
+import { divide } from 'src/components/bar/utils/systemResource';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
 /**

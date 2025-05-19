@@ -2,14 +2,15 @@ import { bind, GLib, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
-class Ram {
+class RamService {
+    private static _instance: RamService;
     private _updateFrequency = Variable(2000);
     private _shouldRound = false;
     private _ramPoller: FunctionPoller<GenericResourceData, []>;
 
     public ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
-    constructor() {
+    private constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
         this._ramPoller = new FunctionPoller<GenericResourceData, []>(
             this.ram,
@@ -18,7 +19,15 @@ class Ram {
             this.calculateUsage,
         );
 
-        this._ramPoller.initialize('ram');
+        this._ramPoller.initialize();
+    }
+
+    public static getDefault(): RamService {
+        if (this._instance === undefined) {
+            this._instance = new RamService();
+        }
+
+        return this._instance;
     }
 
     public calculateUsage(): GenericResourceData {
@@ -83,4 +92,4 @@ class Ram {
     }
 }
 
-export default Ram;
+export default RamService;

@@ -2,14 +2,15 @@ import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 
-class Cpu {
+class CpuService {
+    private static _instance: CpuService;
     private _updateFrequency = Variable(2000);
     private _previousCpuData = new GTop.glibtop_cpu();
     private _cpuPoller: FunctionPoller<number, []>;
 
     public cpu = Variable(0);
 
-    constructor() {
+    private constructor() {
         GTop.glibtop_get_cpu(this._previousCpuData);
 
         this.calculateUsage = this.calculateUsage.bind(this);
@@ -22,6 +23,14 @@ class Cpu {
         );
 
         this._cpuPoller.initialize();
+    }
+
+    public static getDefault(): CpuService {
+        if (this._instance === undefined) {
+            this._instance = new CpuService();
+        }
+
+        return this._instance;
     }
 
     public calculateUsage(): number {
@@ -51,4 +60,4 @@ class Cpu {
     }
 }
 
-export default Cpu;
+export default CpuService;

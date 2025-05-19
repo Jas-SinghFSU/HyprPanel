@@ -1,9 +1,11 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const { icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.power;
 
@@ -15,7 +17,7 @@ export const Power = (): BarBoxChild => {
         boxClass: 'powermodule',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

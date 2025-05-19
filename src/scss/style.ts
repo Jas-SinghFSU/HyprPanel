@@ -1,13 +1,15 @@
-import options from '../configuration';
-import { bash, dependencies } from '../lib/utils';
 import { MatugenColors } from '../lib/options/types';
 import { initializeTrackers } from './optionsTrackers';
 import { isHexColor } from '../shared/variables';
 import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
-import { matugenService } from 'src/services/matugen';
 import { Opt } from 'src/lib/options';
+import { SystemUtilities } from 'src/core';
+import { options } from 'src/configuration';
+import { MatugenService } from 'src/services';
+
+const matugenService = MatugenService.getDefault();
 
 /**
  * Central manager for theme styling throughout the application
@@ -19,7 +21,7 @@ class ThemeStyleManager {
      * Falls back to standard theme if Matugen is unavailable
      */
     public async applyCss(): Promise<void> {
-        if (!dependencies('sass')) return;
+        if (!SystemUtilities.checkDependencies('sass')) return;
 
         try {
             const variables = await this._generateThemeVariables();
@@ -180,7 +182,9 @@ class ThemeStyleManager {
 
         writeFile(entryScssPath, combinedScss);
 
-        await bash(`sass --load-path=${SRC_DIR}/src/scss ${entryScssPath} ${compiledCssPath}`);
+        await SystemUtilities.bash(
+            `sass --load-path=${SRC_DIR}/src/scss ${entryScssPath} ${compiledCssPath}`,
+        );
     }
 
     /**

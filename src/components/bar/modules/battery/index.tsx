@@ -1,13 +1,14 @@
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import { Astal } from 'astal/gtk3';
 import { openMenu } from '../../utils/menu';
-import options from 'src/options';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { getBatteryIcon } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { options } from 'src/configuration';
+import { throttledScrollHandler } from '../../utils/input/throttle';
+import { runAsyncCommand } from '../../utils/input/commandExecutor';
 
 const batteryService = AstalBattery.get_default();
 const {

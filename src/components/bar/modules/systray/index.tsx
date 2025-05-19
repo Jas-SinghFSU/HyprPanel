@@ -1,9 +1,10 @@
-import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
-import options from '../../../../configuration';
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { options } from 'src/configuration';
+import { isPrimaryClick, isSecondaryClick, isMiddleClick } from 'src/lib/events/mouse';
+import { SystemUtilities } from 'src/core';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
@@ -67,7 +68,7 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
                 }
 
                 if (isMiddleClick(event)) {
-                    Notify({ summary: 'App Name', body: item.id });
+                    SystemUtilities.notify({ summary: 'App Name', body: item.id });
                 }
             }}
             onDestroy={() => {

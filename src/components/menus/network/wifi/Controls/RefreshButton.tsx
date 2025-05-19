@@ -1,8 +1,8 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { isPrimaryClick } from 'src/lib/utils';
 import { isScanning } from './helpers';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const networkService = AstalNetwork.get_default();
 

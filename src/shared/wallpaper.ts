@@ -1,7 +1,8 @@
 import GLib from 'gi://GLib?version=2.0';
-import options from '../configuration';
-import Wallpaper from 'src/services/Wallpaper';
+import { options } from 'src/configuration';
+import { WallpaperService } from 'src/services';
 
+const wallpaperService = WallpaperService.getDefault();
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 const { enable: enableWallpaper, image } = options.wallpaper;
 
@@ -16,7 +17,7 @@ export function setWallpaper(filePath: string): void {
         return;
     }
     try {
-        Wallpaper.setWallpaper(filePath);
+        wallpaperService.setWallpaper(filePath);
     } catch (error) {
         if (error instanceof Error) {
             throw new Error(error.message);

@@ -1,6 +1,4 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './helpers';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
@@ -8,6 +6,11 @@ import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
@@ -43,7 +46,7 @@ export const Storage = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

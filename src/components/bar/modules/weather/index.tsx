@@ -1,10 +1,12 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import WeatherManager from 'src/services/weather';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const weatherManager = WeatherManager.get_default();
 
@@ -35,7 +37,7 @@ export const Weather = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

@@ -1,4 +1,4 @@
-import { errorHandler } from 'src/lib/utils';
+import { errorHandler } from 'src/core';
 import { Command } from '../../types';
 import { App } from 'astal/gtk3';
 import { isWindowVisible } from 'src/shared/utilities';

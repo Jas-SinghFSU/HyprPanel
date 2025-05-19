@@ -1,11 +1,14 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+import { throttleInput } from '../../utils/input/throttle';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const {
     label,
@@ -63,7 +66,7 @@ export const Hyprsunset = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             throttledToggleSunset();

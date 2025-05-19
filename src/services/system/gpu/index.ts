@@ -2,13 +2,14 @@ import { bind, exec, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GPUStat } from 'src/lib/types/gpustat.types';
 
-class Gpu {
+class GpuService {
+    private static _instance: GpuService;
     private _updateFrequency = Variable(2000);
     private _gpuPoller: FunctionPoller<number, []>;
 
     public gpuUsage = Variable<number>(0);
 
-    constructor() {
+    private constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
 
         this._gpuPoller = new FunctionPoller<number, []>(
@@ -19,6 +20,14 @@ class Gpu {
         );
 
         this._gpuPoller.initialize();
+    }
+
+    public static getDefault(): GpuService {
+        if (this._instance === undefined) {
+            this._instance = new GpuService();
+        }
+
+        return this._instance;
     }
 
     public calculateUsage(): number {
@@ -64,4 +73,4 @@ class Gpu {
     }
 }
 
-export default Gpu;
+export default GpuService;

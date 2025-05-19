@@ -1,9 +1,9 @@
-import { capitalizeFirstLetter } from 'src/lib/utils';
-import options from 'src/options';
+import { options } from 'src/configuration';
 import powermenu from '../power/helpers/actions';
 import { App, Gtk } from 'astal/gtk3';
 import { bind, execAsync } from 'astal';
 import { PowerOptions } from 'src/lib/options/types';
+import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 
 const { confirmation, shutdown, logout, sleep, reboot, showLabel } = options.menus.power;
 

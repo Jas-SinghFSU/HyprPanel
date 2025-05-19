@@ -2,10 +2,10 @@ import DropdownMenu from '../shared/dropdown/index.js';
 import { Controls } from './controls/index.js';
 import { NotificationsContainer } from './notification/index.js';
 import { NotificationPager } from './pager/index.js';
-import options from 'src/options.js';
 import { handlePageBoundaries } from './helpers.js';
 import { bind, Variable } from 'astal';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { options } from 'src/configuration';
 
 const { transition } = options.menus;
 

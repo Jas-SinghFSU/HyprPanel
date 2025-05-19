@@ -2,9 +2,9 @@ import { bind, timeout, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { GdkMonitorService } from 'src/services/display/monitor';
-import { BrightnessService } from 'src/services';
+import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;

@@ -3,7 +3,7 @@ import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.types';
 import { UnitType, Weather, WeatherIcon, WeatherIconTitle } from 'src/lib/types/weather.types';
 import { getWeatherProvider } from 'src/lib/types/weather/providers/registry';
 import { WeatherApiKeyManager } from './keyManager';
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { Opt } from 'src/lib/options';
 import { weatherIcons } from 'src/lib/constants/weather';
 import { httpClient } from 'src/lib/httpClient';

@@ -1,12 +1,12 @@
-import options from 'src/options.js';
-import { getPosition } from 'src/lib/utils.js';
+import { options } from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { trackActiveMonitor, trackAutoTimeout, trackPopupNotifications } from './helpers.js';
 import { Astal } from 'astal/gtk3';
-import { NotificationCard } from './Notification.js';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { GdkMonitorService } from 'src/services/display/monitor/index.js';
+import { getPosition } from 'src/lib/positioning/helpers';
+import { NotificationCard } from './Notification';
 
 const hyprlandService = AstalHyprland.get_default();
 const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;

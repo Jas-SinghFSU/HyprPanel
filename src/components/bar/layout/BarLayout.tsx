@@ -1,10 +1,10 @@
 import { App, Gtk } from 'astal/gtk3';
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Binding, Variable } from 'astal';
-import options from 'src/options';
 import { idleInhibit } from 'src/shared/utilities';
 import { WidgetRegistry } from './WidgetRegistry';
 import { getLayoutForMonitor, isLayoutEmpty } from '../utils/monitors';
+import { options } from 'src/configuration';
 
 /**
  * Responsible for the bar UI layout and positioning

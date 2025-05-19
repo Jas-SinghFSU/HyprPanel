@@ -1,6 +1,3 @@
-import { openMenu } from '../../utils/menu.js';
-import options from 'src/options.js';
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers.js';
 import { generateMediaLabel } from './helpers/index.js';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
 import { bind, Variable } from 'astal';
@@ -8,6 +5,10 @@ import { Astal } from 'astal/gtk3';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.types.js';
 import { activePlayer, mediaTitle, mediaAlbum, mediaArtist } from 'src/services/media';
+import { options } from 'src/configuration';
+import { runAsyncCommand } from '../../utils/input/commandExecutor';
+import { throttledScrollHandler } from '../../utils/input/throttle';
+import { openMenu } from '../../utils/menu';
 
 const mprisService = AstalMpris.get_default();
 const {

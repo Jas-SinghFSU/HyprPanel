@@ -1,7 +1,11 @@
+import { options } from 'src/configuration';
+import { isAnImage } from 'src/lib';
+import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
 import icons from '../lib/icons/icons';
-import { bash, dependencies, Notify, isAnImage, normalizeToAbsolutePath } from '../lib/utils';
-import options from '../configuration';
-import Wallpaper from 'src/services/Wallpaper';
+import { SystemUtilities } from 'src/core';
+import { WallpaperService } from 'src/services';
+
+const wallpaperService = WallpaperService.getDefault();
 
 const { matugen } = options.theme;
 
@@ -9,7 +13,7 @@ const ensureMatugenWallpaper = (): void => {
     const wallpaperPath = options.wallpaper.image.get();
 
     if (matugen.get() && (!wallpaperPath.length || !isAnImage(normalizeToAbsolutePath(wallpaperPath)))) {
-        Notify({
+        SystemUtilities.notify({
             summary: 'Matugen Failed',
             body: "Please select a wallpaper in 'Theming > General' first.",
             iconName: icons.ui.warning,
@@ -23,7 +27,7 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
         ensureMatugenWallpaper();
     });
 
-    Wallpaper.connect('changed', () => {
+    wallpaperService.connect('changed', () => {
         console.info('Wallpaper changed, regenerating Matugen colors...');
         if (options.theme.matugen.get()) {
             resetCssFunc();
@@ -31,13 +35,16 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
     });
 
     options.wallpaper.image.subscribe(() => {
-        if ((!Wallpaper.isRunning() && options.theme.matugen.get()) || !options.wallpaper.enable.get()) {
+        if (
+            (!wallpaperService.isRunning() && options.theme.matugen.get()) ||
+            !options.wallpaper.enable.get()
+        ) {
             console.info('Wallpaper path changed, regenerating Matugen colors...');
             resetCssFunc();
         }
-        if (options.wallpaper.pywal.get() && dependencies('wal')) {
+        if (options.wallpaper.pywal.get() && SystemUtilities.checkDependencies('wal')) {
             const wallpaperPath = options.wallpaper.image.get();
-            bash(`wal -i "${wallpaperPath}"`);
+            SystemUtilities.bash(`wal -i "${wallpaperPath}"`);
         }
     });
 };

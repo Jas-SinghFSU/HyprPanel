@@ -1,6 +1,4 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './helpers';
 import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
@@ -10,6 +8,10 @@ import { Astal } from 'astal/gtk3';
 import { RateUnit, BarBoxChild, NetstatLabelType } from 'src/lib/types/bar.types';
 import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
 import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const networkService = AstalNetwork.get_default();
 const {
@@ -85,7 +87,7 @@ export const Netstat = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

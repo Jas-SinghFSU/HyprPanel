@@ -1,4 +1,4 @@
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { BarModule } from '../options/types';
 
 /**

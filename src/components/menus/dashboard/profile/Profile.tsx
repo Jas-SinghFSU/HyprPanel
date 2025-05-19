@@ -1,7 +1,8 @@
 import { bind, GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import options from 'src/options.js';
-import { normalizeToAbsolutePath, isAnImage } from 'src/lib/utils.js';
+import { options } from 'src/configuration';
+import { isAnImage } from 'src/lib';
+import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
 
 const { image, name } = options.menus.dashboard.powermenu.avatar;
 

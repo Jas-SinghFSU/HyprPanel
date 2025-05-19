@@ -1,9 +1,9 @@
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { errorHandler } from 'src/lib/utils';
+import { errorHandler } from 'src/core';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { clearAllNotifications } from 'src/shared/notification';
 import { getSystrayItems } from 'src/shared/systray';
 import { idleInhibit } from 'src/shared/utilities';

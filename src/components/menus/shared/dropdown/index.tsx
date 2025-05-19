@@ -1,4 +1,4 @@
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { BarEventMargins } from './helpers/eventBoxes';
 import { globalEventBoxes } from 'src/shared/dropdown';
 import { bind } from 'astal';

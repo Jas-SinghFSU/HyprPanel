@@ -1,7 +1,7 @@
-import options from 'src/options';
+import { options } from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 import { StackTransitionMap } from 'src/lib/constants/options';
 import { ConfigPage, configPages } from '../../helpers';
 import { BarGeneral } from './general';

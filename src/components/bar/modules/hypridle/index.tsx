@@ -1,11 +1,13 @@
-import options from 'src/options';
 import { Module } from '../../shared/module';
-import { inputHandler } from '../../utils/helpers';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { idleInhibit } from 'src/shared/utilities';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import { options } from 'src/configuration';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const { label, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;
@@ -39,7 +41,7 @@ export const Hypridle = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             toggleInhibit();

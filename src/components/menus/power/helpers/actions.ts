@@ -1,6 +1,6 @@
-import options from 'src/options';
 import { execAsync, GObject, property, register } from 'astal';
 import { App } from 'astal/gtk3';
+import { options } from 'src/configuration';
 import { Action } from 'src/lib/types/power.types';
 const { sleep, reboot, logout, shutdown } = options.menus.dashboard.powermenu;
 

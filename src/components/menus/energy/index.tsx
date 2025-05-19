@@ -1,10 +1,10 @@
 import DropdownMenu from '../shared/dropdown/index.js';
 import { EnergyProfiles } from './profiles/index.js';
 import { Brightness } from './brightness/index.js';
-import options from 'src/options.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { options } from 'src/configuration';
 
 const { transition } = options.menus;
 

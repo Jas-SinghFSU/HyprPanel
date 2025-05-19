@@ -4,14 +4,15 @@ import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 
-class Storage {
+class StorageService {
+    private static _instance: StorageService;
     private _updateFrequency = Variable(2000);
     private _shouldRound = false;
     private _storagePoller: FunctionPoller<GenericResourceData, []>;
 
     public storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
-    constructor() {
+    private constructor() {
         this.calculateUsage = this.calculateUsage.bind(this);
         this._storagePoller = new FunctionPoller<GenericResourceData, []>(
             this.storage,
@@ -21,6 +22,14 @@ class Storage {
         );
 
         this._storagePoller.initialize();
+    }
+
+    public static getDefault(): StorageService {
+        if (this._instance === undefined) {
+            this._instance = new StorageService();
+        }
+
+        return this._instance;
     }
 
     public calculateUsage(): GenericResourceData {
@@ -72,4 +81,4 @@ class Storage {
     }
 }
 
-export default Storage;
+export default StorageService;

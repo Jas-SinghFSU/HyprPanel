@@ -1,10 +1,10 @@
 import { execAsync } from 'astal';
 import { App } from 'astal/gtk3';
-import options from 'src/options';
-import Cpu from 'src/services/Cpu';
-import Gpu from 'src/services/Gpu';
-import Ram from 'src/services/Ram';
-import Storage from 'src/services/Storage';
+import GpuService from 'src/services/system/gpu';
+import CpuService from 'src/services/system/cpu';
+import RamService from 'src/services/system/ram';
+import StorageService from 'src/services/system/storage';
+import { options } from 'src/configuration';
 
 const { terminal } = options;
 const { interval, enabled, enable_gpu } = options.menus.dashboard.stats;
@@ -29,7 +29,11 @@ export const handleClick = (): void => {
  * @param ramService The RAM service instance.
  * @param storageService The storage service instance.
  */
-const monitorInterval = (cpuService: Cpu, ramService: Ram, storageService: Storage): void => {
+const monitorInterval = (
+    cpuService: CpuService,
+    ramService: RamService,
+    storageService: StorageService,
+): void => {
     interval.subscribe(() => {
         ramService.updateTimer(interval.get());
         cpuService.updateTimer(interval.get());
@@ -48,10 +52,10 @@ const monitorInterval = (cpuService: Cpu, ramService: Ram, storageService: Stora
  * @param storageService The storage service instance.
  */
 const monitorStatsEnabled = (
-    cpuService: Cpu,
-    ramService: Ram,
-    gpuService: Gpu,
-    storageService: Storage,
+    cpuService: CpuService,
+    ramService: RamService,
+    gpuService: GpuService,
+    storageService: StorageService,
 ): void => {
     enabled.subscribe(() => {
         if (!enabled.get()) {
@@ -79,7 +83,7 @@ const monitorStatsEnabled = (
  *
  * @param gpuService The GPU service instance.
  */
-const monitorGpuTrackingEnabled = (gpuService: Gpu): void => {
+const monitorGpuTrackingEnabled = (gpuService: GpuService): void => {
     enable_gpu.subscribe((gpuEnabled) => {
         if (gpuEnabled) {
             return gpuService.startPoller();
@@ -101,10 +105,10 @@ const monitorGpuTrackingEnabled = (gpuService: Gpu): void => {
  * @param storageService The storage service instance.
  */
 export const initializePollers = (
-    cpuService: Cpu,
-    ramService: Ram,
-    gpuService: Gpu,
-    storageService: Storage,
+    cpuService: CpuService,
+    ramService: RamService,
+    gpuService: GpuService,
+    storageService: StorageService,
 ): void => {
     ramService.setShouldRound(true);
     storageService.setShouldRound(true);

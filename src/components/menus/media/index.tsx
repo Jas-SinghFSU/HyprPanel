@@ -1,6 +1,6 @@
 import { bind } from 'astal';
 import DropdownMenu from '../shared/dropdown/index.js';
-import options from 'src/options.js';
+import { options } from 'src/configuration';
 import { MediaContainer } from './components/MediaContainer.js';
 import { MediaInfo } from './components/title/index.js';
 import { MediaControls } from './components/controls/index.js';

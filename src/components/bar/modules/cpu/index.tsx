@@ -1,11 +1,13 @@
 import { Module } from '../../shared/module';
-import options from 'src/options';
-import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
+import { options } from 'src/configuration';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getDefault();
 
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;
@@ -29,7 +31,7 @@ export const Cpu = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },

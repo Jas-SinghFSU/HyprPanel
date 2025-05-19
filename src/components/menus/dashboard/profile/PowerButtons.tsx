@@ -1,4 +1,4 @@
-import { isPrimaryClick } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 import { handleClick } from './helpers';
 import { PowerOptions } from 'src/lib/options/types';
 

@@ -1,8 +1,7 @@
 import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
-
-import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
+import { options } from 'src/configuration';
 
 export const CustomModuleTheme = (): JSX.Element => {
     return (

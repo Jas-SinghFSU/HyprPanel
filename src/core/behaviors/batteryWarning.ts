@@ -1,7 +1,7 @@
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import icons from 'src/lib/icons/icons';
-import { Notify } from 'src/lib/utils';
-import options from 'src/options';
+import { options } from 'src/configuration';
+import { SystemUtilities } from '../system/SystemUtilities';
 
 const batteryService = AstalBattery.get_default();
 const {
@@ -44,7 +44,7 @@ export function warnOnLowBattery(): void {
         }
 
         if (sendNotification) {
-            Notify({
+            SystemUtilities.notify({
                 summary: lowBatteryNotificationTitle
                     .get()
                     .replaceAll('$POWER_LEVEL', batteryPercentage.toString()),

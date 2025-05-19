@@ -1,7 +1,8 @@
 import { Gdk, Gtk } from 'astal/gtk3';
-import { isPrimaryClick, Notify } from 'src/lib/utils';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { execAsync, Variable } from 'astal';
+import { SystemUtilities } from 'src/core';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.Element => {
     const shouldMaskPassword = true;
@@ -26,7 +27,7 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                             .catch((err) => {
                                 connecting.set('');
 
-                                Notify({
+                                SystemUtilities.notify({
                                     summary: 'Network',
                                     body: err.message,
                                 });

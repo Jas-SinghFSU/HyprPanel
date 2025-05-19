@@ -1,11 +1,19 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
-import options from 'src/options';
 import { handleClick } from './helpers';
 import { Binding } from 'astal';
-import { cpuService, gpuService, ramService, storageService } from '.';
-import { renderResourceLabel } from 'src/components/bar/utils/helpers';
+import { renderResourceLabel } from 'src/components/bar/utils/systemResource';
+import { options } from 'src/configuration';
+import { isPrimaryClick } from 'src/lib/events/mouse';
+import GpuService from 'src/services/system/gpu';
+import CpuService from 'src/services/system/cpu';
+import RamService from 'src/services/system/ram';
+import StorageService from 'src/services/system/storage';
+
+const gpuService = GpuService.getDefault();
+const cpuService = CpuService.getDefault();
+const ramService = RamService.getDefault();
+const storageService = StorageService.getDefault();
 
 const { enable_gpu } = options.menus.dashboard.stats;
 

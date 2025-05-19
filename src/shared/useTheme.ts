@@ -1,11 +1,11 @@
-import options from '../configuration';
 import Gio from 'gi://Gio';
-import { bash, errorHandler } from '../lib/utils';
 import {
     filterConfigForThemeOnly,
     loadJsonFile,
     saveConfigToFile,
 } from '../components/settings/shared/FileChooser';
+import { options } from 'src/configuration';
+import { errorHandler, SystemUtilities } from 'src/core';
 
 const { restartCommand } = options.hyprpanel;
 export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
@@ -32,7 +32,7 @@ export function useTheme(filePath: string): void {
         optionsConfig = { ...optionsConfig, ...filteredConfig };
 
         saveConfigToFile(optionsConfig, CONFIG_FILE);
-        bash(restartCommand.get());
+        SystemUtilities.bash(restartCommand.get());
     } catch (error) {
         errorHandler(error);
     }

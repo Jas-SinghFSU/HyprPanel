@@ -1,4 +1,4 @@
-import options from '../../../configuration';
+import { options } from 'src/configuration';
 
 const { showIcon, showTime } = options.bar.clock;
 
