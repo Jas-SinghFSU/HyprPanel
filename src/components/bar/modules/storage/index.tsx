@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
 import { computeStorage } from './helpers';
 import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';

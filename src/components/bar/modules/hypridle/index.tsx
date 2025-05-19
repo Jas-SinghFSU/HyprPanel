@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { inputHandler } from '../../utils/helpers';
 import Variable from 'astal/variable';
 import { bind } from 'astal';

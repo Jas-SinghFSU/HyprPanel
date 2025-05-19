@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeNetwork } from './helpers';
 import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar.types';

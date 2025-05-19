@@ -1,6 +1,6 @@
 import { Variable, bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { inputHandler } from '../../utils/helpers';
 import options from 'src/options';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';

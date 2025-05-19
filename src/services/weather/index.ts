@@ -2,10 +2,10 @@ import { AstalIO, bind, interval, Variable } from 'astal';
 import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.types';
 import { UnitType, Weather, WeatherIcon, WeatherIconTitle } from 'src/lib/types/weather.types';
 import { getWeatherProvider } from 'src/lib/types/weather/providers/registry';
-import { WeatherApiKeyManager } from './KeyManager';
+import { WeatherApiKeyManager } from './keyManager';
 import options from 'src/options';
 import { Opt } from 'src/lib/options';
-import { weatherIcons } from 'src/lib/icons/weather';
+import { weatherIcons } from 'src/lib/constants/weather';
 import { httpClient } from 'src/lib/httpClient';
 
 export default class WeatherManager {

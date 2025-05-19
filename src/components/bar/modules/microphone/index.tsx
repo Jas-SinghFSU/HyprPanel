@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { inputHandler } from '../../utils/helpers';

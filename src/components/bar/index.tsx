@@ -1,9 +1,7 @@
-import { GdkMonitorMapper } from './utils/GdkMonitorMapper';
-import { BarLayout } from './BarLayout';
-import { WidgetRegistry } from './WidgetRegistry';
-import { getCoreWidgets } from './CoreWidgets';
+import { GdkMonitorService } from 'src/services';
+import { BarLayout, getCoreWidgets, WidgetRegistry } from './layout';
 
-const gdkMonitorMapper = new GdkMonitorMapper();
+const gdkMonitorService = new GdkMonitorService();
 const widgetRegistry = new WidgetRegistry(getCoreWidgets());
 
 /**
@@ -12,7 +10,7 @@ const widgetRegistry = new WidgetRegistry(getCoreWidgets());
 export const Bar = async (monitor: number): Promise<JSX.Element> => {
     await widgetRegistry.initialize();
 
-    const hyprlandMonitor = gdkMonitorMapper.mapGdkToHyprland(monitor);
+    const hyprlandMonitor = gdkMonitorService.mapGdkToHyprland(monitor);
     const barLayout = new BarLayout(monitor, hyprlandMonitor, widgetRegistry);
 
     return barLayout.render();

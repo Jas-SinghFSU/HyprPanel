@@ -4,7 +4,7 @@ import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { systemTime } from 'src/shared/time';
 import { GLib } from 'astal';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 
 const {

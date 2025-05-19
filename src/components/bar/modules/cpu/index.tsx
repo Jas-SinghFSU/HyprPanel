@@ -1,4 +1,4 @@
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import options from 'src/options';
 import { inputHandler } from 'src/components/bar/utils/helpers';
 import { computeCPU } from './helpers';

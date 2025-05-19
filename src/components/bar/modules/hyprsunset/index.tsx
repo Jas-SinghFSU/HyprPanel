@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { Module } from '../../shared/Module';
+import { Module } from '../../shared/module';
 import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';

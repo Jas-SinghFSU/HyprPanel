@@ -1,5 +1,5 @@
 import GdkPixbuf from 'gi://GdkPixbuf';
-import { normalizeToAbsolutePath } from '../../utils/path/helpers';
+import { normalizeToAbsolutePath } from '../path/helpers';
 
 /**
  * Image validation utilities

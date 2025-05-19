@@ -5,7 +5,7 @@ import './src/shared/wallpaper';
 import './src/shared/systray';
 import './src/shared/dropdown';
 import './src/shared/utilities';
-import './src/components/bar/sideEffects';
+import './src/lib/options/sideEffects/bar';
 
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 const hyprland = AstalHyprland.get_default();
@@ -22,7 +22,7 @@ import { execAsync } from 'astal';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers';
 import { isDropdownMenu } from 'src/lib/constants/options.js';
 import { initializeSystemBehaviors } from 'src/core/behaviors';
-import { runCLI } from 'src/cli/commander';
+import { runCLI } from 'src/services/cli/commander';
 
 const initializeStartupScripts = (): void => {
     execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => console.error(err));

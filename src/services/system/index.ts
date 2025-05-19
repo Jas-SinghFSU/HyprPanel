@@ -1,7 +1,8 @@
-export { default as CpuService } from './CpuService';
-export { default as GpuService } from './GpuService';
-export { default as RamService } from './RamService';
-export { default as StorageService } from './StorageService';
-export { default as BrightnessService } from './BrightnessService';
+export * from './brightness';
+export * from './cpu';
+export * from './gpu';
+export * from './ram';
+export * from './storage';
+export * from './uptime';
 
 export * from './types';

@@ -13,10 +13,3 @@ export type InputHandlerEvents = {
     onScrollUp?: InputHandlerEventArgs;
     onScrollDown?: InputHandlerEventArgs;
 };
-
-export type RunAsyncCommand = (
-    cmd: string,
-    args: EventArgs,
-    fn?: (output: string) => void,
-    postInputUpdater?: Variable<boolean>,
-) => void;

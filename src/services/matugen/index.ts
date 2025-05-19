@@ -1,46 +1,16 @@
 import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/options.types';
 import { getMatugenVariations } from './variations';
-import { bash, dependencies, Notify, isAnImage } from '../../lib/utils';
 import options from '../../options';
 import icons from '../../lib/icons/icons';
 import { defaultColorMap } from 'src/lib/types/defaults/options.types';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { isAnImage } from 'src/lib';
 
 const MATUGEN_ENABLED = options.theme.matugen;
 const MATUGEN_SETTINGS = options.theme.matugen_settings;
 
-interface SystemDependencies {
-    checkDependencies(dep: string): boolean;
-    executeCommand(cmd: string): Promise<string>;
-    notify(notification: { summary: string; body: string; iconName: string }): void;
-    isValidImage(path: string): boolean;
-}
-
-class DefaultSystemDependencies implements SystemDependencies {
-    public checkDependencies(dep: string): boolean {
-        return dependencies(dep);
-    }
-
-    public async executeCommand(cmd: string): Promise<string> {
-        return bash(cmd);
-    }
-
-    public notify(notification: { summary: string; body: string; iconName: string }): void {
-        Notify(notification);
-    }
-
-    public isValidImage(path: string): boolean {
-        return isAnImage(path);
-    }
-}
-
 export class MatugenService {
     private static _instance: MatugenService;
-
-    private _deps: SystemDependencies;
-
-    constructor(deps: SystemDependencies = new DefaultSystemDependencies()) {
-        this._deps = deps;
-    }
 
     public static getDefault(): MatugenService {
         if (this._instance === undefined) {
@@ -55,14 +25,14 @@ export class MatugenService {
     }
 
     public async generateMatugenColors(): Promise<MatugenColors | undefined> {
-        if (!MATUGEN_ENABLED.get() || !this._deps.checkDependencies('matugen')) {
+        if (!MATUGEN_ENABLED.get() || !SystemUtilities.checkDependencies('matugen')) {
             return;
         }
 
         const wallpaperPath = options.wallpaper.image.get();
 
-        if (!wallpaperPath || !this._deps.isValidImage(wallpaperPath)) {
-            this._deps.notify({
+        if (!wallpaperPath || !isAnImage(wallpaperPath)) {
+            SystemUtilities.notify({
                 summary: 'Matugen Failed',
                 body: "Please select a wallpaper in 'Theming > General' first.",
                 iconName: icons.ui.warning,
@@ -78,13 +48,13 @@ export class MatugenService {
 
             const baseCommand = `matugen image -q "${wallpaperPath}" -t scheme-${schemeType} --contrast ${normalizedContrast}`;
 
-            const jsonResult = await this._deps.executeCommand(`${baseCommand} --dry-run --json hex`);
-            await this._deps.executeCommand(baseCommand);
+            const jsonResult = await SystemUtilities.bash(`${baseCommand} --dry-run --json hex`);
+            await SystemUtilities.bash(baseCommand);
 
             const parsedResult = JSON.parse(jsonResult);
             return parsedResult?.colors?.[mode];
         } catch (error) {
-            this._deps.notify({
+            SystemUtilities.notify({
                 summary: 'Matugen Error',
                 body: `An error occurred: ${error}`,
                 iconName: icons.ui.info,

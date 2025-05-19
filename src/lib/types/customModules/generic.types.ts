@@ -12,7 +12,13 @@ export type GenericResourceData = GenericResourceMetrics & {
     free: number;
 };
 
-export type Postfix = 'TiB' | 'GiB' | 'MiB' | 'KiB' | 'B';
+export enum Postfix {
+    Tebibyte = 'TiB',
+    Gibibyte = 'GiB',
+    Mebibyte = 'MiB',
+    Kibibyte = 'KiB',
+    Byte = 'B',
+}
 
 export type UpdateHandlers = {
     disconnectPrimary: () => void;

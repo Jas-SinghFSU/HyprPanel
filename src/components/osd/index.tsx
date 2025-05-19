@@ -1,9 +1,9 @@
 import options from 'src/options';
-import { getPosition } from 'src/lib/utils';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { getOsdMonitor } from './helpers';
-import { OsdRevealer } from './OsdRevealer';
+import { getPosition } from 'src/lib/positioning/helpers';
+import { OsdRevealer } from './revealer';
 
 const { location } = options.theme.osd;
 

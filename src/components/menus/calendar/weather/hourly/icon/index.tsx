@@ -1,6 +1,6 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { weatherIcons } from 'src/lib/icons/weather.js';
+import { weatherIcons } from 'src/lib/constants/weather.js';
 import { getIconQuery } from '../helpers';
 import WeatherManager from 'src/services/weather';
 
