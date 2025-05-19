@@ -13,8 +13,8 @@ import {
     OSDOrientation,
     ScalingPriority,
     WindowLayer,
-} from './lib/options/options.types';
-import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/options/options.types';
+} from './lib/options/types';
+import { MatugenScheme, MatugenTheme, MatugenVariations } from './lib/options/types';
 import { SystrayIconMap } from './lib/types/systray.types';
 import { UnitType } from './lib/types/weather.types';
 import { Transition } from './lib/types/widget.types';

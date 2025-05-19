@@ -1,19 +1,5 @@
 import Variable from 'astal/variable';
-import { ConfigManager } from './ConfigManager';
-
-/**
- * Properties that can be passed when creating an option
- */
-export interface OptProps {
-    persistent?: boolean;
-}
-
-/**
- * Options for set operations
- */
-interface WriteOptions {
-    writeDisk?: boolean;
-}
+import { ConfigManager } from '../configManager';
 
 /**
  * A managed application option with persistence capabilities
@@ -95,4 +81,18 @@ export class Opt<T = unknown> extends Variable<T> {
 
         return currentValue !== initialValue;
     }
+}
+
+/**
+ * Properties that can be passed when creating an option
+ */
+export interface OptProps {
+    persistent?: boolean;
+}
+
+/**
+ * Options for set operations
+ */
+interface WriteOptions {
+    writeDisk?: boolean;
 }

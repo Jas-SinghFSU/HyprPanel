@@ -1,5 +1,5 @@
 import { Astal } from 'astal/gtk3';
-import { NotificationAnchor, OSDAnchor, PositionAnchor } from 'src/lib/options/options.types';
+import { NotificationAnchor, OSDAnchor, PositionAnchor } from 'src/lib/options/types';
 
 /**
  * Maps a notification or OSD anchor position to an Astal window anchor

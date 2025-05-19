@@ -1,7 +1,7 @@
 import { readFile, writeFile, monitorFile } from 'astal/file';
-import { errorHandler, Notify } from '../utils';
-import { ensureDirectory } from '../session';
-import icons from '../icons/icons';
+import { ensureDirectory } from '../../session';
+import icons from '../../icons/icons';
+import { errorHandler, SystemUtilities } from 'src/core';
 
 /**
  * Manages configuration file operations including reading, writing, and change monitoring
@@ -149,11 +149,12 @@ export class ConfigManager {
      */
     private _handleConfigError(error: unknown): void {
         console.error(`Failed to load config file: ${error}`);
-        Notify({
+        SystemUtilities.notify({
             summary: 'Failed to load config file',
             body: `${error}`,
             iconName: icons.ui.warning,
         });
+
         errorHandler(error);
     }
 

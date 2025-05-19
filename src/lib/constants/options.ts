@@ -1,5 +1,5 @@
 import { Gtk } from 'astal/gtk3';
-import { DropdownMenuList } from '../options/options.types';
+import { DropdownMenuList } from '../options/types';
 
 export const StackTransitionMap = {
     none: Gtk.StackTransitionType.NONE,

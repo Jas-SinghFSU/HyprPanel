@@ -1,4 +1,4 @@
-import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/options.types';
+import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/types';
 import { getMatugenVariations } from './variations';
 import options from '../../options';
 import icons from '../../lib/icons/icons';

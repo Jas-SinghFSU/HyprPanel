@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
 import { Inputter } from '../Inputter';
-import { RowProps } from 'src/lib/options/options.types';
+import { RowProps } from 'src/lib/options/types';
 
 export const SettingInput = <T extends string | number | boolean | object>({
     className,

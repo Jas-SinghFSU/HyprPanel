@@ -1,6 +1,6 @@
 import { Gdk } from 'astal/gtk3';
 import { range } from 'src/lib/array/helpers';
-import { BarLayout, BarLayouts } from 'src/lib/options/options.types';
+import { BarLayout, BarLayouts } from 'src/lib/options/types';
 
 /**
  * Returns the bar layout configuration for a specific monitor

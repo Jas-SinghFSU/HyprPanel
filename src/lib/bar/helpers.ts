@@ -1,5 +1,5 @@
 import options from 'src/options';
-import { BarModule } from '../options/options.types';
+import { BarModule } from '../options/types';
 
 /**
  * Retrieves all unique layout items from the bar options.

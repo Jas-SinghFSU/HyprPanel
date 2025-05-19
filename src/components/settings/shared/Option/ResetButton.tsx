@@ -1,7 +1,7 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import icons from 'src/lib/icons/icons';
-import { RowProps } from 'src/lib/options/options.types';
+import { RowProps } from 'src/lib/options/types';
 import { isPrimaryClick } from 'src/lib/utils';
 
 export const ResetButton = <T extends string | number | boolean | object>({

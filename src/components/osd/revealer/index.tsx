@@ -1,7 +1,7 @@
 import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { OSDOrientation } from 'src/lib/options/options.types';
+import { OSDOrientation } from 'src/lib/options/types';
 import { OSDBar } from '../bar';
 import { revealerSetup } from '../helpers';
 import { OSDIcon } from '../icon';

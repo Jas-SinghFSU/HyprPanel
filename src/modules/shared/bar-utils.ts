@@ -1,4 +1,4 @@
-import { BarModule, BarLayouts } from 'src/lib/options/options.types';
+import { BarModule, BarLayouts } from 'src/lib/options/types';
 import options from '../../options';
 
 /**

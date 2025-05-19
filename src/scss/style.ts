@@ -1,6 +1,6 @@
 import options from '../options';
 import { bash, dependencies } from '../lib/utils';
-import { MatugenColors } from '../lib/options/options.types';
+import { MatugenColors } from '../lib/options/types';
 import { initializeTrackers } from './optionsTrackers';
 import { isHexColor } from '../shared/variables';
 import { readFile, writeFile } from 'astal/file';
