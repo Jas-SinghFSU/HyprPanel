@@ -1,7 +1,7 @@
 import { Gdk, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { execAsync, Variable } from 'astal';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.Element => {

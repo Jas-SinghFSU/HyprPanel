@@ -1,7 +1,8 @@
 import { readFile, writeFile, monitorFile } from 'astal/file';
 import { ensureDirectory } from '../../session';
 import icons from '../../icons/icons';
-import { errorHandler, SystemUtilities } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 /**
  * Manages configuration file operations including reading, writing, and change monitoring

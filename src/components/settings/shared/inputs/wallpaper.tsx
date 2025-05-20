@@ -1,7 +1,7 @@
 import FileChooserButton from 'src/components/shared/FileChooserButton';
 import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
-import { WallpaperService } from 'src/services';
+import { WallpaperService } from 'src/services/wallpaper';
 
 const wallpaperService = WallpaperService.getDefault();
 

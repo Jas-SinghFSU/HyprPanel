@@ -1,4 +1,4 @@
-import { isPrimitive } from 'src/lib';
+import { isPrimitive } from 'src/lib/validation/types';
 import { CustomBarModuleIcon } from '../../types';
 import { parseCommandOutputJson } from './utils';
 

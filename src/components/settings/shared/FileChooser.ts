@@ -5,7 +5,7 @@ import { Config } from '../../../lib/types/filechooser.types';
 import { hexColorPattern } from '../../../shared/useTheme';
 import { isHexColor } from '../../../shared/variables';
 import options from 'src/configuration';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];

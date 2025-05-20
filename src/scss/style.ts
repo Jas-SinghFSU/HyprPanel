@@ -5,9 +5,9 @@ import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
 import { Opt } from 'src/lib/options';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import options from 'src/configuration';
-import { MatugenService } from 'src/services';
+import { MatugenService } from 'src/services/matugen';
 
 const matugenService = MatugenService.getDefault();
 

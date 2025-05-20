@@ -1,7 +1,7 @@
 import { Opt } from '../opt';
 import { ConfigManager } from '../configManager';
 import { MkOptionsResult, OptionsObject } from '../types';
-import { errorHandler } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
 
 /**
  * Creates and manages a registry of application options

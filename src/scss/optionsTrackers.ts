@@ -1,9 +1,9 @@
 import options from 'src/configuration';
-import { isAnImage } from 'src/lib';
 import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
 import icons from '../lib/icons/icons';
-import { SystemUtilities } from 'src/core';
-import { WallpaperService } from 'src/services';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { WallpaperService } from 'src/services/wallpaper';
+import { isAnImage } from 'src/lib/validation/images';
 
 const wallpaperService = WallpaperService.getDefault();
 

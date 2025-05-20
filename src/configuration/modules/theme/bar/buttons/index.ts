@@ -1,6 +1,6 @@
 import { opt } from 'src/lib/options';
 import { BarButtonStyles } from 'src/lib/options/types';
-import { primaryColors } from '../../colors';
+import { primaryColors } from '../../colors/primary';
 import dashboard from './dashboard';
 import workspaces from './workspaces';
 import windowtitle from './windowtitle';

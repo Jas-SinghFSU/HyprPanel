@@ -3,7 +3,7 @@ import { execAsync } from 'astal/process';
 import { monitorFile } from 'astal/file';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/configuration';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const hyprlandService = AstalHyprland.get_default();
 const WP = `${GLib.get_home_dir()}/.config/background`;

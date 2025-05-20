@@ -5,7 +5,8 @@ import {
     saveConfigToFile,
 } from '../components/settings/shared/FileChooser';
 import options from 'src/configuration';
-import { errorHandler, SystemUtilities } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const { restartCommand } = options.hyprpanel;
 export const hexColorPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;

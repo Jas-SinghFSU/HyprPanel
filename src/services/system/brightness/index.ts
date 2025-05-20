@@ -1,5 +1,5 @@
 import { exec, GObject, monitorFile, property, readFileAsync, register } from 'astal';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const get = (args: string): number => Number(exec(`brightnessctl ${args}`));
 const screen = exec('bash -c "ls -w1 /sys/class/backlight | head -1"');

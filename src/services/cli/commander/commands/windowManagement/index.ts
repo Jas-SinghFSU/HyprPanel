@@ -1,8 +1,8 @@
-import { errorHandler } from 'src/core';
 import { Command } from '../../types';
 import { App } from 'astal/gtk3';
 import { isWindowVisible } from 'src/shared/utilities';
 import { BarVisibility } from 'src/services/display/bar';
+import { errorHandler } from 'src/core/errors/handler';
 
 export const windowManagementCommands: Command[] = [
     {

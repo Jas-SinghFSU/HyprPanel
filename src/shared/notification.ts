@@ -3,7 +3,7 @@ import { Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import options from 'src/configuration';
 import { lookUpIcon } from 'src/lib/icons/helpers';
-import { errorHandler } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
 
 const notifdService = AstalNotifd.get_default();
 const { clearDelay } = options.notifications;

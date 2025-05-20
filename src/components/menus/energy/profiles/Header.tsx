@@ -1,7 +1,7 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { renderUptime } from './helpers';
-import { uptime } from 'src/services';
+import { uptime } from 'src/services/system/uptime';
 
 export const PowerProfileHeader = (): JSX.Element => {
     return (

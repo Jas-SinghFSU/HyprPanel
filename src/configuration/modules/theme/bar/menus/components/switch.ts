@@ -1,5 +1,7 @@
 import { opt } from 'src/lib/options';
-import { primaryColors, tertiaryColors, secondaryColors } from '../../../colors';
+import { primaryColors } from '../../../colors/primary';
+import { secondaryColors } from '../../../colors/secondary';
+import { tertiaryColors } from '../../../colors/tertiary';
 
 export default {
     enabled: opt(primaryColors.lavender),

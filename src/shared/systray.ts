@@ -1,5 +1,5 @@
 import AstalTray from 'gi://AstalTray';
-import { errorHandler } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
 const systemtray = AstalTray.get_default();
 
 export function getSystrayItems(): string {

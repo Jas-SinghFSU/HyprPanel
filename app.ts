@@ -23,7 +23,7 @@ import { runCLI } from 'src/services/cli/commander';
 import { DropdownMenus, StandardWindows } from 'src/components/menus';
 import { forMonitors } from 'src/components/bar/utils/monitors';
 import options from 'src/configuration';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const initializeStartupScripts = (): void => {
     execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => console.error(err));

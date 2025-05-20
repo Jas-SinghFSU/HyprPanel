@@ -1,5 +1,7 @@
-import { GdkMonitorService } from 'src/services';
-import { BarLayout, getCoreWidgets, WidgetRegistry } from './layout';
+import { GdkMonitorService } from 'src/services/display/monitor';
+import { BarLayout } from './layout/BarLayout';
+import { getCoreWidgets } from './layout/coreWidgets';
+import { WidgetRegistry } from './layout/WidgetRegistry';
 
 const gdkMonitorService = new GdkMonitorService();
 const widgetRegistry = new WidgetRegistry(getCoreWidgets());

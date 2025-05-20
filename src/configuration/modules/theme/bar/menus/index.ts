@@ -1,5 +1,5 @@
 import { opt } from 'src/lib/options';
-import { primaryColors } from '../../colors';
+import { primaryColors } from '../../colors/primary';
 import components from './components';
 import media from './modules/media';
 import volume from './modules/volume';

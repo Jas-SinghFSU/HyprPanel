@@ -1,8 +1,8 @@
 import { opt } from 'src/lib/options';
 import { BarLocation, WindowLayer, BorderLocation } from 'src/lib/options/types';
-import { primaryColors } from '../colors';
 import buttons from './buttons';
 import menus from './menus';
+import { primaryColors } from '../colors/primary';
 
 export default {
     scaling: opt(100),

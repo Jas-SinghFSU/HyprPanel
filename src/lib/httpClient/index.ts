@@ -2,7 +2,7 @@ import { GLib } from 'astal';
 import Soup from 'gi://Soup?version=3.0';
 import { HttpError } from './HttpError';
 import { RequestOptions, RestResponse } from './types';
-import { errorHandler } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
 
 /**
  * HTTP client wrapper for Soup.Session providing a Promise-based API

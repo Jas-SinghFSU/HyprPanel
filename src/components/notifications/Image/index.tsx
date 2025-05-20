@@ -1,6 +1,6 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Gtk } from 'astal/gtk3';
-import { isAnImage } from 'src/lib';
+import { isAnImage } from 'src/lib/validation/images';
 import { notifHasImg } from '../helpers';
 
 const ImageItem = ({ notification }: ImageProps): JSX.Element => {

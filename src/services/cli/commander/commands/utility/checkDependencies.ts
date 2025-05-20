@@ -1,5 +1,5 @@
 import { GLib } from 'astal';
-import { errorHandler } from 'src/core';
+import { errorHandler } from 'src/core/errors/handler';
 
 const RED = '\x1b[31m';
 const GREEN = '\x1b[32m';

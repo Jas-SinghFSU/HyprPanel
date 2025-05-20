@@ -4,7 +4,7 @@ import { Gdk, Gtk } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import options from 'src/configuration';
 import { isPrimaryClick, isSecondaryClick, isMiddleClick } from 'src/lib/events/mouse';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;

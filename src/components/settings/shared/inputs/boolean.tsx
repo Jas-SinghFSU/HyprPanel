@@ -1,6 +1,6 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
-import { SystemUtilities } from 'src/core';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { Opt } from 'src/lib/options';
 
 export const BooleanInputter = <T extends string | number | boolean | object>({

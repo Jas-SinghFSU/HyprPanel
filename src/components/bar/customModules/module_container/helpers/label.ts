@@ -1,4 +1,4 @@
-import { isPrimitive } from 'src/lib';
+import { isPrimitive } from 'src/lib/validation/types';
 
 /**
  * Generates a label based on module command output and a template configuration.
