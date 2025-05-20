@@ -4,7 +4,7 @@ import { CalendarWidget } from './CalendarWidget.js';
 import { WeatherWidget } from './weather/index';
 import { bind } from 'astal';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { transition } = options.menus;
 const { enabled: weatherEnabled } = options.menus.clock.weather;

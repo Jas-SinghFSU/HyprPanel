@@ -3,7 +3,7 @@ import { Gtk } from 'astal/gtk3';
 import { handleClick } from './helpers';
 import { Binding } from 'astal';
 import { renderResourceLabel } from 'src/components/bar/utils/systemResource';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import GpuService from 'src/services/system/gpu';
 import CpuService from 'src/services/system/cpu';

@@ -1,7 +1,7 @@
 import icons from 'src/lib/icons/icons2';
 import { Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { lookUpIcon } from 'src/lib/icons/helpers';
 import { errorHandler } from 'src/core';
 

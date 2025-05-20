@@ -1,5 +1,5 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { WorkspaceService } from 'src/services/workspace';
 
 const workspaceService = WorkspaceService.getDefault();

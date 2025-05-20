@@ -1,7 +1,7 @@
 import { bind, Variable } from 'astal';
 import { App } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { BarVisibility } from '.';
 import { WorkspaceService } from 'src/services/workspace';
 

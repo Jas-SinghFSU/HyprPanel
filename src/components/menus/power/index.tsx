@@ -5,7 +5,7 @@ import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 import { Action } from 'src/lib/types/power.types.js';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const { transition } = options.menus;

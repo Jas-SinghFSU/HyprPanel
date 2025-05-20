@@ -1,5 +1,5 @@
 import FileChooserButton from 'src/components/shared/FileChooserButton';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
 import { WallpaperService } from 'src/services';
 

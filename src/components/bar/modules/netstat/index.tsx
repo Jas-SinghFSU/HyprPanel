@@ -9,7 +9,7 @@ import { RateUnit, BarBoxChild, NetstatLabelType } from 'src/lib/types/bar.types
 import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
 import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const inputHandler = InputHandlerService.getDefault();
 

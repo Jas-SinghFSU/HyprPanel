@@ -1,7 +1,7 @@
 import { bind } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isScrollUp, isScrollDown } from 'src/lib/events/mouse';
 import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 

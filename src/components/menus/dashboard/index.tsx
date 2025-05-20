@@ -6,7 +6,7 @@ import { Stats } from './stats/index.js';
 import { Directories } from './directories/index.js';
 import { bind, Variable } from 'astal';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { controls, shortcuts, stats, directories } = options.menus.dashboard;
 const { transition } = options.menus;

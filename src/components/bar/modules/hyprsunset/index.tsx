@@ -5,7 +5,7 @@ import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { throttleInput } from '../../utils/input/throttle';
 
 const inputHandler = InputHandlerService.getDefault();

@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { globalEventBoxes } from 'src/shared/dropdown';
 import { GLib } from 'astal';
 import { EventBox } from 'astal/gtk3/widget';

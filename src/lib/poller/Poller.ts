@@ -1,5 +1,5 @@
 import { AstalIO, Binding, interval, Variable } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { BarModule } from '../options/types';
 import { getLayoutItems } from '../bar/helpers';
 

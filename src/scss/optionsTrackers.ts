@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isAnImage } from 'src/lib';
 import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
 import icons from '../lib/icons/icons';

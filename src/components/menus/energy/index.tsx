@@ -4,7 +4,7 @@ import { Brightness } from './brightness/index.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { transition } = options.menus;
 

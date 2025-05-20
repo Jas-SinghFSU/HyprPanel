@@ -1,6 +1,6 @@
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import WeatherManager from 'src/services/weather';
 
 const weatherManager = WeatherManager.get_default();

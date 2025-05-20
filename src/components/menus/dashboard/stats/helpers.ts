@@ -4,7 +4,7 @@ import GpuService from 'src/services/system/gpu';
 import CpuService from 'src/services/system/cpu';
 import RamService from 'src/services/system/ram';
 import StorageService from 'src/services/system/storage';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { terminal } = options;
 const { interval, enabled, enable_gpu } = options.menus.dashboard.stats;

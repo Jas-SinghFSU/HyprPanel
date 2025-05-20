@@ -1431,4 +1431,4 @@ const options = mkOptions({
     dummy: opt(true),
 });
 
-export default options;
+console.log(options);

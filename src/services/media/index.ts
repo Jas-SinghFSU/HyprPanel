@@ -2,7 +2,7 @@ import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { bind, Variable } from 'astal';
 import { getTimeStamp } from 'src/components/menus/media/components/timebar/helpers';
 import { CurrentPlayer, MediaSubscriptionNames, MediaSubscriptions } from './types';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 /**
  * MediaManager handles media player state management across the application

@@ -7,7 +7,7 @@ import { Astal } from 'astal/gtk3';
 import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
 import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
 
 const inputHandler = InputHandlerService.getDefault();

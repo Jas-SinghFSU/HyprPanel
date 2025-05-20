@@ -1,6 +1,6 @@
 import { Binding } from 'astal';
 import { bind, Variable } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { mediaArtUrl } from 'src/services/media';
 
 const { tint, color } = options.theme.bar.menus.menu.media.card;

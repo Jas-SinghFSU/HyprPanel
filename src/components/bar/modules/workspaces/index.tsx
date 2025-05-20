@@ -2,7 +2,7 @@ import { initThrottledScrollHandlers } from './helpers/utils';
 import { WorkspaceModule } from './workspaces';
 import { bind, Variable } from 'astal';
 import { Astal, Gdk } from 'astal/gtk3';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isScrollUp, isScrollDown } from 'src/lib/events/mouse';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import { GtkWidget } from 'src/lib/types/widget.types';

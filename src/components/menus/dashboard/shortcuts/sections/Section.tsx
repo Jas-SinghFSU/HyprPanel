@@ -11,7 +11,7 @@ import {
 import { LeftColumn, RightColumn } from './Column';
 import { SettingsButton } from '../buttons/SettingsButton';
 import { RecordingButton } from '../buttons/RecordingButton';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 

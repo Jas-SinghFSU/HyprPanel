@@ -5,7 +5,7 @@ import { Astal } from 'astal/gtk3';
 import { idleInhibit } from 'src/shared/utilities';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const inputHandler = InputHandlerService.getDefault();
 

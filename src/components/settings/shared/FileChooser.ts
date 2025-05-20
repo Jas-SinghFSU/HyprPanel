@@ -4,7 +4,7 @@ import icons from '../../../lib/icons/icons';
 import { Config } from '../../../lib/types/filechooser.types';
 import { hexColorPattern } from '../../../shared/useTheme';
 import { isHexColor } from '../../../shared/variables';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { SystemUtilities } from 'src/core';
 
 const { restartCommand } = options.hyprpanel;

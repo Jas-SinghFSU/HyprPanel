@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/events/mouse';

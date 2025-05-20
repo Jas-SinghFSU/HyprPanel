@@ -5,7 +5,7 @@ import { Astal } from 'astal/gtk3';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.types.js';
 import { activePlayer, mediaTitle, mediaAlbum, mediaArtist } from 'src/services/media';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { openMenu } from '../../utils/menu';

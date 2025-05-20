@@ -4,7 +4,7 @@ import { systemTime } from 'src/shared/time';
 import { GLib } from 'astal';
 import { Module } from '../../shared/module';
 import { BarBoxChild } from 'src/lib/types/bar.types';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
 const inputHandler = InputHandlerService.getDefault();

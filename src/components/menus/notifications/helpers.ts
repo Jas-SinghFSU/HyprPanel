@@ -1,6 +1,6 @@
 import { bind, Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { displayedTotal } = options.notifications;
 const notifdService = AstalNotifd.get_default();

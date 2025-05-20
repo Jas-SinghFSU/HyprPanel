@@ -6,7 +6,7 @@ import { bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { getBatteryIcon } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar.types';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 

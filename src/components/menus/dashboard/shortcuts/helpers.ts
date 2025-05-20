@@ -1,6 +1,6 @@
 import { bind, execAsync, timeout, Variable } from 'astal';
 import { App } from 'astal/gtk3';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { BashPoller } from 'src/lib/poller/BashPoller';
 import { ShortcutVariable } from 'src/lib/types/dashboard.types';
 

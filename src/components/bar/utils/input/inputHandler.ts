@@ -6,7 +6,7 @@ import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/
 import { Gdk } from 'astal/gtk3';
 import { isScrollDown, isScrollUp } from 'src/lib/events/mouse';
 import { throttledAsyncCommand, throttledScrollHandler } from './throttle';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 type EventType = 'primary' | 'secondary' | 'middle';
 type ClickHandler = typeof onPrimaryClick | typeof onSecondaryClick | typeof onMiddleClick;

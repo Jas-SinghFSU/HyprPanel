@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import powermenu from '../power/helpers/actions';
 import { App, Gtk } from 'astal/gtk3';
 import { bind, execAsync } from 'astal';

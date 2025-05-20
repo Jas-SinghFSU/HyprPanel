@@ -1,6 +1,6 @@
 import { App, Gtk } from 'astal/gtk3';
 import icons from 'src/lib/icons/icons';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const Header = (): JSX.Element => {

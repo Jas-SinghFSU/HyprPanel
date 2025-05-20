@@ -1,7 +1,7 @@
 import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;

@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
 import { OSDOrientation } from 'src/lib/options/types';

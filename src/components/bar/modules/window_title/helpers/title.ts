@@ -1,7 +1,7 @@
 import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { bind, Variable } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 
 const { title_map: userDefinedTitles } = options.bar.windowtitle;

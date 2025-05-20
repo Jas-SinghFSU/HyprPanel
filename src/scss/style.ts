@@ -6,7 +6,7 @@ import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
 import { Opt } from 'src/lib/options';
 import { SystemUtilities } from 'src/core';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { MatugenService } from 'src/services';
 
 const matugenService = MatugenService.getDefault();

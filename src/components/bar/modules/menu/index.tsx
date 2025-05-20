@@ -3,7 +3,7 @@ import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/l
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/lib/types/bar.types.js';
 import { SystemUtilities } from 'src/core';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { openMenu } from '../../utils/menu';

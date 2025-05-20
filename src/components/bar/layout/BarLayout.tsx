@@ -4,7 +4,7 @@ import { bind, Binding, Variable } from 'astal';
 import { idleInhibit } from 'src/shared/utilities';
 import { WidgetRegistry } from './WidgetRegistry';
 import { getLayoutForMonitor, isLayoutEmpty } from '../utils/monitors';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 /**
  * Responsible for the bar UI layout and positioning

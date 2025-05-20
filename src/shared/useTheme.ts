@@ -4,7 +4,7 @@ import {
     loadJsonFile,
     saveConfigToFile,
 } from '../components/settings/shared/FileChooser';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { errorHandler, SystemUtilities } from 'src/core';
 
 const { restartCommand } = options.hyprpanel;

@@ -1,7 +1,7 @@
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 import WeatherManager from 'src/services/weather';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const weatherManager = WeatherManager.get_default();
 const { unit } = options.menus.clock.weather;

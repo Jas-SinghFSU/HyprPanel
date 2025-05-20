@@ -4,7 +4,7 @@ import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
 import { Placeholder } from './Placeholder';
 import { NotificationCard } from 'src/components/notifications/Notification';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const notifdService = AstalNotifd.get_default();
 

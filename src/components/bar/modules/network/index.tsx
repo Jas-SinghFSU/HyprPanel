@@ -5,7 +5,7 @@ import { Astal, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { formatWifiInfo, wiredIcon, wirelessIcon } from './helpers';
 import { BarBoxChild } from 'src/lib/types/bar.types';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 

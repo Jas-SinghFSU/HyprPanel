@@ -5,7 +5,7 @@ import { bind } from 'astal';
 import { NoWifi } from './wifi/WirelessAPs/NoWifi.js';
 import { RevealerTransitionMap } from 'src/lib/constants/options.js';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const networkService = AstalNetwork.get_default();
 

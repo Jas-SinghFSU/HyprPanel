@@ -5,7 +5,7 @@ import { filterNotifications } from 'src/lib/shared/notifications.js';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { BarBoxChild } from 'src/lib/types/bar.types';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 

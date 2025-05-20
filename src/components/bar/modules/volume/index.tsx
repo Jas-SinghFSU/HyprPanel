@@ -4,7 +4,7 @@ import { getIcon } from './helpers/index.js';
 import { Astal } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import { BarBoxChild } from 'src/lib/types/bar.types.js';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { openMenu } from '../../utils/menu';

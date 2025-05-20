@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib?version=2.0';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { WallpaperService } from 'src/services';
 
 const wallpaperService = WallpaperService.getDefault();

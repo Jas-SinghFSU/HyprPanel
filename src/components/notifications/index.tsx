@@ -1,4 +1,4 @@
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { trackActiveMonitor, trackAutoTimeout, trackPopupNotifications } from './helpers.js';
 import { Astal } from 'astal/gtk3';

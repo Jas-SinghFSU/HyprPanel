@@ -1,6 +1,6 @@
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import { bind, Binding } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const computeVisible = (child: BarBoxChild): Binding<boolean> | boolean => {
     if (child.isVis !== undefined) {

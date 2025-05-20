@@ -2,7 +2,7 @@ import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { FirstPageButton, LastPageButton, NextPageButton, PreviousPageButton } from './Buttons';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const notifdService = AstalNotifd.get_default();
 

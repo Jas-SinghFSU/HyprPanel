@@ -2,7 +2,7 @@ import GObject, { GLib, property, register, signal } from 'astal/gobject';
 import { execAsync } from 'astal/process';
 import { monitorFile } from 'astal/file';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { SystemUtilities } from 'src/core';
 
 const hyprlandService = AstalHyprland.get_default();

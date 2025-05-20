@@ -1,6 +1,6 @@
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import icons from 'src/lib/icons/icons';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { SystemUtilities } from '../system/SystemUtilities';
 
 const batteryService = AstalBattery.get_default();

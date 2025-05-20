@@ -1,5 +1,5 @@
 import { GLib, Variable } from 'astal';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 
