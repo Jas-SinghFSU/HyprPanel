@@ -10,11 +10,6 @@ import CpuService from 'src/services/system/cpu';
 import RamService from 'src/services/system/ram';
 import StorageService from 'src/services/system/storage';
 
-const gpuService = GpuService.getDefault();
-const cpuService = CpuService.getDefault();
-const ramService = RamService.getDefault();
-const storageService = StorageService.getDefault();
-
 const { enable_gpu } = options.menus.dashboard.stats;
 
 const StatBar = ({ icon, value, label, stat }: StatBarProps): JSX.Element => {
@@ -49,6 +44,8 @@ export const GpuStat = (): JSX.Element => {
                     return <box />;
                 }
 
+                const gpuService = GpuService.getDefault();
+
                 return (
                     <StatBar
                         icon={'󰢮'}
@@ -63,6 +60,8 @@ export const GpuStat = (): JSX.Element => {
 };
 
 export const CpuStat = (): JSX.Element => {
+    const cpuService = CpuService.getDefault();
+
     return (
         <StatBar
             icon={''}
@@ -74,6 +73,8 @@ export const CpuStat = (): JSX.Element => {
 };
 
 export const RamStat = (): JSX.Element => {
+    const ramService = RamService.getDefault();
+
     return (
         <StatBar
             icon={''}
@@ -87,6 +88,8 @@ export const RamStat = (): JSX.Element => {
 };
 
 export const StorageStat = (): JSX.Element => {
+    const storageService = StorageService.getDefault();
+
     return (
         <StatBar
             icon={'󰋊'}

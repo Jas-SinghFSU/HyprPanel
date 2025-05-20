@@ -11,6 +11,7 @@ import { throttledScrollHandler } from '../../utils/input/throttle';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 
 const batteryService = AstalBattery.get_default();
+
 const {
     label: show_label,
     rightClick,

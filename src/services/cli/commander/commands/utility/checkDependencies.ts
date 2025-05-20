@@ -1,5 +1,6 @@
-import { GLib } from 'astal';
 import { errorHandler } from 'src/core/errors/handler';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { ServiceStatus } from 'src/core/system/types';
 
 const RED = '\x1b[31m';
 const GREEN = '\x1b[32m';
@@ -11,36 +12,6 @@ const STATUS_INSTALLED = '(INSTALLED)';
 const STATUS_ACTIVE = '(ACTIVE)';
 const STATUS_DISABLED = '(DISABLED)';
 const STATUS_MISSING = '(MISSING)';
-
-/**
- * Decodes a Uint8Array output into a trimmed UTF-8 string.
- *
- * @description Converts a Uint8Array output from a command execution into a human-readable string.
- *
- * @param output - The Uint8Array output to decode.
- */
-function decodeOutput(output: Uint8Array): string {
-    const decoder = new TextDecoder();
-    return decoder.decode(output).trim();
-}
-
-/**
- * Spawns a command line synchronously and returns the exit code and output.
- *
- * @description Executes a shell command using GLib.spawn_command_line_sync and extracts the exit code, stdout, and stderr.
- *
- * @param command - The command to execute.
- */
-function runCommand(command: string): CommandResult {
-    const [, out, err, exitCode] = GLib.spawn_command_line_sync(command);
-    const stdout = out ? decodeOutput(out) : '';
-    const stderr = err ? decodeOutput(err) : '';
-    return {
-        exitCode,
-        stdout,
-        stderr,
-    };
-}
 
 /**
  * Colors a given text using ANSI color codes.
@@ -55,79 +26,6 @@ function colorText(text: string, color: string): string {
 }
 
 /**
- * Checks if any of the given executables is installed by using `which`.
- *
- * @description Iterates through a list of executables and returns true if any are found.
- *
- * @param executables - The list of executables to check.
- */
-function checkExecutable(executables: string[]): boolean {
-    for (const exe of executables) {
-        const { exitCode } = runCommand(`which ${exe}`);
-
-        if (exitCode === 0) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Checks if any of the given libraries is installed using `pkg-config`.
- *
- * @description Uses `pkg-config --exists <lib>` to determine if a library is installed.
- *
- * @param libraries - The list of libraries to check.
- */
-function checkLibrary(libraries: string[]): boolean {
-    for (const lib of libraries) {
-        const { exitCode, stdout } = runCommand(`sh -c "ldconfig -p | grep ${lib}"`);
-
-        if (exitCode === 0 && stdout.length > 0) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Checks the status of a service.
- *
- * @description Determines if a service is ACTIVE, INSTALLED (but not running), DISABLED, or MISSING.
- *
- * @param services - The list of services to check.
- */
-function checkServiceStatus(services: string[]): ServiceStatus {
-    for (const svc of services) {
-        const activeResult = runCommand(`systemctl is-active ${svc}`);
-        const activeStatus = activeResult.stdout;
-
-        if (activeStatus === 'active') {
-            return 'ACTIVE';
-        }
-
-        if (activeStatus === 'inactive' || activeStatus === 'failed') {
-            const enabledResult = runCommand(`systemctl is-enabled ${svc}`);
-            const enabledStatus = enabledResult.stdout;
-
-            if (enabledResult !== undefined && (enabledStatus === 'enabled' || enabledStatus === 'static')) {
-                return 'INSTALLED';
-            } else if (enabledResult !== undefined && enabledStatus === 'disabled') {
-                return 'DISABLED';
-            } else {
-                return 'MISSING';
-            }
-        }
-
-        if (activeStatus === 'unknown' || activeResult.exitCode !== 0) {
-            continue;
-        }
-    }
-
-    return 'MISSING';
-}
-
-/**
  * Determines the status string and color for a dependency based on its type and checks.
  *
  * @description Returns the formatted line indicating the status of the given dependency.
@@ -139,13 +37,13 @@ function getDependencyStatus(dep: Dependency): string {
 
     switch (dep.type) {
         case 'executable':
-            status = checkExecutable(dep.check) ? 'INSTALLED' : 'MISSING';
+            status = SystemUtilities.checkExecutable(dep.check) ? 'INSTALLED' : 'MISSING';
             break;
         case 'library':
-            status = checkLibrary(dep.check) ? 'INSTALLED' : 'MISSING';
+            status = SystemUtilities.checkLibrary(dep.check) ? 'INSTALLED' : 'MISSING';
             break;
         case 'service':
-            status = checkServiceStatus(dep.check);
+            status = SystemUtilities.checkServiceStatus(dep.check);
             break;
         default:
             status = 'MISSING';
@@ -348,15 +246,7 @@ export function checkDependencies(): string {
     }
 }
 
-type CommandResult = {
-    exitCode: number;
-    stdout: string;
-    stderr: string;
-};
-
 type DependencyType = 'executable' | 'library' | 'service';
-
-type ServiceStatus = 'ACTIVE' | 'INSTALLED' | 'DISABLED' | 'MISSING';
 
 type Dependency = {
     package: string;
