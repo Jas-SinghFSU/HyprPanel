@@ -39,11 +39,16 @@ const initializeMenus = (): void => {
     });
 
     DropdownMenus.forEach((window) => {
-        const windowName = window.name.replace('_default', '').concat('menu').toLowerCase();
+        const windowName = window.name
+            .replace(/_default.*/, '')
+            .concat('menu')
+            .toLowerCase();
 
         if (!isDropdownMenu(windowName)) {
             return;
         }
+
+        console.log(windowName);
 
         handleRealization(windowName);
     });

@@ -1,15 +1,15 @@
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';
-import WeatherManager from 'src/services/weather';
+import WeatherService from 'src/services/weather';
 
-const weatherManager = WeatherManager.get_default();
+const weatherService = WeatherService.get_default();
 
 const { unit } = options.menus.clock.weather;
 
 export const HourlyTemp = ({ hoursFromNow }: HourlyTempProps): JSX.Element => {
     const weatherBinding = Variable.derive(
-        [bind(weatherManager.weatherData), bind(unit)],
+        [bind(weatherService.weatherData), bind(unit)],
         (weather, unitType) => {
             if (!Object.keys(weather).length) {
                 return '-';

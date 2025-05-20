@@ -1,16 +1,16 @@
 import { Gtk } from 'astal/gtk3';
 import { bind, Variable } from 'astal';
-import WeatherManager from 'src/services/weather';
+import WeatherService from 'src/services/weather';
 import options from 'src/configuration';
 
-const weatherManager = WeatherManager.get_default();
+const weatherService = WeatherService.get_default();
 
 const { unit } = options.menus.clock.weather;
 
 export const TodayStats = (): JSX.Element => {
     const windBindings = Variable.derive(
-        [bind(weatherManager.weatherData), bind(unit)],
-        weatherManager.getWindConditions,
+        [bind(weatherService.weatherData), bind(unit)],
+        weatherService.getWindConditions,
     );
 
     return (
@@ -31,7 +31,7 @@ export const TodayStats = (): JSX.Element => {
                 <label className={'weather precip icon txt-icon'} label={''} />
                 <label
                     className={'weather precip label'}
-                    label={bind(weatherManager.weatherData).as(weatherManager.getRainChance)}
+                    label={bind(weatherService.weatherData).as(weatherService.getRainChance)}
                 />
             </box>
         </box>

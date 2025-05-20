@@ -8,8 +8,8 @@ import { Opt } from 'src/lib/options';
 import { weatherIcons } from 'src/lib/constants/weather';
 import { httpClient } from 'src/lib/httpClient';
 
-export default class WeatherManager {
-    public static instance: WeatherManager;
+export default class WeatherService {
+    public static instance: WeatherService;
 
     public weatherData: Variable<Weather> = Variable(DEFAULT_WEATHER);
     private _currentProvider = 'weatherapi';
@@ -28,11 +28,11 @@ export default class WeatherManager {
         this._initializeConfigTracker();
     }
 
-    public static get_default(): WeatherManager {
-        if (WeatherManager.instance === undefined) {
-            WeatherManager.instance = new WeatherManager();
+    public static get_default(): WeatherService {
+        if (WeatherService.instance === undefined) {
+            WeatherService.instance = new WeatherService();
         }
-        return WeatherManager.instance;
+        return WeatherService.instance;
     }
 
     private _initializeConfigTracker(): void {

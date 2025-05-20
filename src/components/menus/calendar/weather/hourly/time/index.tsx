@@ -1,14 +1,14 @@
 import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';
-import WeatherManager from 'src/services/weather';
+import WeatherService from 'src/services/weather';
 
-const weatherManager = WeatherManager.get_default();
+const weatherService = WeatherService.get_default();
 const { military } = options.menus.clock.time;
 
 export const HourlyTime = ({ hoursFromNow }: HourlyTimeProps): JSX.Element => {
     const weatherBinding = Variable.derive(
-        [bind(weatherManager.weatherData), bind(military)],
+        [bind(weatherService.weatherData), bind(military)],
         (weather, military) => {
             if (!Object.keys(weather).length) {
                 return '-';
