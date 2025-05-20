@@ -22,7 +22,7 @@ import { initializeSystemBehaviors } from 'src/core/behaviors';
 import { runCLI } from 'src/services/cli/commander';
 import { DropdownMenus, StandardWindows } from 'src/components/menus';
 import { forMonitors } from 'src/components/bar/utils/monitors';
-import { options } from 'src/configuration';
+import options from 'src/configuration';
 import { SystemUtilities } from 'src/core';
 
 const initializeStartupScripts = (): void => {
