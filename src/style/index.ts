@@ -165,7 +165,7 @@ class ThemeStyleManager {
      */
     private async _compileSass(themeVariables: string[]): Promise<void> {
         const themeVariablesPath = `${TMP}/variables.scss`;
-        const appScssPath = `${SRC_DIR}/src/scss/main.scss`;
+        const appScssPath = `${SRC_DIR}/src/style/main.scss`;
         const entryScssPath = `${TMP}/entry.scss`;
         const modulesScssPath = `${CONFIG_DIR}/modules.scss`;
         const compiledCssPath = `${TMP}/main.css`;
@@ -183,7 +183,7 @@ class ThemeStyleManager {
         writeFile(entryScssPath, combinedScss);
 
         await SystemUtilities.bash(
-            `sass --load-path=${SRC_DIR}/src/scss ${entryScssPath} ${compiledCssPath}`,
+            `sass --load-path=${SRC_DIR}/src/style ${entryScssPath} ${compiledCssPath}`,
         );
     }
 

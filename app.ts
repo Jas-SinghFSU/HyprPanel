@@ -1,5 +1,5 @@
 import './src/lib/session';
-import './src/scss/style';
+import './src/style';
 import './src/shared/useTheme';
 import './src/shared/wallpaper';
 import './src/shared/systray';
@@ -47,8 +47,6 @@ const initializeMenus = (): void => {
         if (!isDropdownMenu(windowName)) {
             return;
         }
-
-        console.log(windowName);
 
         handleRealization(windowName);
     });

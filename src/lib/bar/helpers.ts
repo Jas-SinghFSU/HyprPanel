@@ -1,5 +1,5 @@
 import options from 'src/configuration';
-import { BarModule } from '../options/types';
+import { BarLayouts, BarModule } from '../options/types';
 
 /**
  * Retrieves all unique layout items from the bar options.
@@ -25,4 +25,15 @@ export function getLayoutItems(): BarModule[] {
     });
 
     return [...new Set(itemsInLayout)];
+}
+
+export function setLayout(layout: BarLayouts): string {
+    try {
+        const { layouts } = options.bar;
+
+        layouts.set(layout);
+        return 'Successfully updated layout.';
+    } catch (error) {
+        return `Failed to set layout: ${error}`;
+    }
 }
