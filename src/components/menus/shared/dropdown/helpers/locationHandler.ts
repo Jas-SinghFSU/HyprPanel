@@ -1,5 +1,5 @@
 import options from 'src/configuration';
-import { globalEventBoxes } from 'src/shared/dropdown';
+import { globalEventBoxes } from 'src/lib/events/dropdown';
 import { GLib } from 'astal';
 import { EventBox } from 'astal/gtk3/widget';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';

@@ -2,8 +2,8 @@ import AstalNotifd from 'gi://AstalNotifd';
 import { NotificationArgs } from 'src/lib/types/notification.types';
 import { exec, execAsync, GLib } from 'astal';
 import icons from 'src/lib/icons/icons';
-import { distroIcons } from 'src/lib/constants/distro';
-import { distro } from 'src/lib/constants/system';
+import { distroIcons } from 'src/core/system/distroIcons';
+import { distro } from 'src/core/system/osInfo';
 import { CommandResult, ServiceStatus } from './types';
 
 AstalNotifd.get_default();

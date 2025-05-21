@@ -3,7 +3,7 @@ import {
     filterConfigForThemeOnly,
     loadJsonFile,
     saveConfigToFile,
-} from '../components/settings/shared/FileChooser';
+} from '../../components/settings/shared/FileChooser';
 import options from 'src/configuration';
 import { errorHandler } from 'src/core/errors/handler';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';

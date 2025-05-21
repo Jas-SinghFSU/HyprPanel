@@ -2,7 +2,7 @@ import { Module } from '../../shared/module';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { idleInhibit } from 'src/shared/utilities';
+import { idleInhibit } from 'src/lib/window/visibility';
 import { BarBoxChild } from 'src/lib/types/bar.types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';

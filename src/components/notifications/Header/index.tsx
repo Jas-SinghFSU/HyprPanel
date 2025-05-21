@@ -2,8 +2,8 @@ import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import options from 'src/configuration';
 import { GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { getNotificationIcon } from 'src/shared/notification.js';
 import { notifHasImg } from '../helpers';
+import { getNotificationIcon } from 'src/lib/shared/notifications';
 
 const { military } = options.menus.clock.time;
 

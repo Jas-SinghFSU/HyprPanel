@@ -5,7 +5,7 @@ import { Astal } from 'astal/gtk3';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { GdkMonitorService } from 'src/services/display/monitor/index.js';
-import { getPosition } from 'src/lib/positioning/helpers';
+import { getPosition } from 'src/lib/window/positioning.js';
 import { NotificationCard } from './Notification';
 
 const hyprlandService = AstalHyprland.get_default();

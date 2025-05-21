@@ -1,7 +1,7 @@
 import { App, Gtk } from 'astal/gtk3';
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Binding, Variable } from 'astal';
-import { idleInhibit } from 'src/shared/utilities';
+import { idleInhibit } from 'src/lib/window/visibility';
 import { WidgetRegistry } from './WidgetRegistry';
 import { getLayoutForMonitor, isLayoutEmpty } from '../utils/monitors';
 import options from 'src/configuration';

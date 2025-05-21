@@ -1,6 +1,5 @@
 import { MatugenColors } from '../lib/options/types';
 import { initializeTrackers } from './optionsTrackers';
-import { isHexColor } from '../shared/variables';
 import { readFile, writeFile } from 'astal/file';
 import { App } from 'astal/gtk3';
 import { initializeHotReload } from './utils/hotReload';
@@ -8,6 +7,7 @@ import { Opt } from 'src/lib/options';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import options from 'src/configuration';
 import { MatugenService } from 'src/services/matugen';
+import { isHexColor } from 'src/lib/validation/colors';
 
 const matugenService = MatugenService.getDefault();
 

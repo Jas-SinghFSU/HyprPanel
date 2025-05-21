@@ -1,4 +1,5 @@
-import { namedColors } from '../constants/colors';
+import { namedColors } from './colorNames';
+import { HexColor } from '../options/types';
 
 /**
  * Validates if a string is a valid GJS color
@@ -27,3 +28,7 @@ export function isValidGjsColor(color: string): boolean {
 
     return false;
 }
+
+export const isHexColor = (val: unknown): val is HexColor => {
+    return typeof val === 'string' && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(val);
+};

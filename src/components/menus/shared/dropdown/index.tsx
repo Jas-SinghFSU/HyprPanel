@@ -1,6 +1,6 @@
 import options from 'src/configuration';
 import { BarEventMargins } from './helpers/eventBoxes';
-import { globalEventBoxes } from 'src/shared/dropdown';
+import { globalEventBoxes } from 'src/lib/events/dropdown';
 import { bind } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { Revealer } from 'astal/gtk3/widget';

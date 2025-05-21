@@ -3,7 +3,7 @@
  * New code should use the modular types in weather/
  */
 
-import { weatherIcons } from 'src/lib/constants/weather';
+import { weatherIcons } from 'src/services/weather/icons';
 
 export { UnitType, Weather as GenericWeather } from './weather/core.types';
 

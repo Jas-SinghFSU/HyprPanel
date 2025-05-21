@@ -1,6 +1,6 @@
 import { Command } from '../../types';
 import { App } from 'astal/gtk3';
-import { isWindowVisible } from 'src/shared/utilities';
+import { isWindowVisible } from 'src/lib/window/visibility';
 import { BarVisibility } from 'src/services/display/bar';
 import { errorHandler } from 'src/core/errors/handler';
 

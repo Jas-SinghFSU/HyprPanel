@@ -2,7 +2,7 @@ import options from 'src/configuration';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { getOsdMonitor } from './helpers';
-import { getPosition } from 'src/lib/positioning/helpers';
+import { getPosition } from 'src/lib/window/positioning';
 import { OsdRevealer } from './revealer';
 
 const { location } = options.theme.osd;

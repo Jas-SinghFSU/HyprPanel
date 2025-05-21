@@ -5,7 +5,7 @@ import { getWeatherProvider } from 'src/lib/types/weather/providers/registry';
 import { WeatherApiKeyManager } from './keyManager';
 import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
-import { weatherIcons } from 'src/lib/constants/weather';
+import { weatherIcons } from 'src/services/weather/icons';
 import { httpClient } from 'src/lib/httpClient';
 
 export default class WeatherService {

@@ -1,13 +1,16 @@
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import { Command } from '../../types';
 import { execAsync, Gio, GLib } from 'astal';
 import { checkDependencies } from './checkDependencies';
-import options from 'src/configuration';
-import { clearAllNotifications } from 'src/shared/notification';
-import { getSystrayItems } from 'src/shared/systray';
-import { idleInhibit } from 'src/shared/utilities';
+import { getSystrayItems } from 'src/services/cli/helpers/systray';
+import { idleInhibit } from 'src/lib/window/visibility';
 import { errorHandler } from 'src/core/errors/handler';
+import { clearNotifications } from 'src/lib/shared/notifications';
+import options from 'src/configuration';
 
+const { clearDelay } = options.notifications;
+const notifdService = AstalNotifd.get_default();
 const audio = AstalWp.get_default();
 
 export const utilityCommands: Command[] = [
@@ -33,7 +36,9 @@ export const utilityCommands: Command[] = [
         args: [],
         handler: (): string => {
             try {
-                clearAllNotifications();
+                const allNotifications = notifdService.get_notifications();
+                clearNotifications(allNotifications, clearDelay.get());
+
                 return 'Notifications cleared successfully.';
             } catch (error) {
                 errorHandler(error);

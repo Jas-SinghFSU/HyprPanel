@@ -1,4 +1,4 @@
-export const WINDOW_LAYOUTS: string[] = [
+export const POPUP_LAYOUTS: string[] = [
     'center',
     'top',
     'top-right',

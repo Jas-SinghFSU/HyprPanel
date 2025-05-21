@@ -1,11 +1,6 @@
 import './src/lib/session';
 import './src/style';
-import './src/shared/useTheme';
-import './src/shared/wallpaper';
-import './src/shared/systray';
-import './src/shared/dropdown';
-import './src/shared/utilities';
-import './src/lib/options/sideEffects/bar';
+import 'src/core/behaviors/bar';
 
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 const hyprland = AstalHyprland.get_default();

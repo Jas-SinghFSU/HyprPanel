@@ -1,5 +1,5 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
-import { WINDOW_LAYOUTS } from 'src/shared/window';
+import { POPUP_LAYOUTS } from 'src/components/menus/shared/popup/layouts';
 import { EventBox, Revealer } from 'astal/gtk3/widget';
 import {
     PaddingProps,
@@ -119,7 +119,7 @@ const Layout: LayoutFunction = (name, child, transition) => ({
 });
 
 const isValidLayout = (layout: string): layout is Layouts => {
-    return WINDOW_LAYOUTS.includes(layout);
+    return POPUP_LAYOUTS.includes(layout);
 };
 
 export default ({

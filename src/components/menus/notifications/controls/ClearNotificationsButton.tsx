@@ -2,7 +2,7 @@ import { bind } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import { clearNotifications, removingNotifications } from 'src/shared/notification';
+import { clearNotifications, removingNotifications } from 'src/lib/shared/notifications';
 
 const notifdService = AstalNotifd.get_default();
 
