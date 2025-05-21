@@ -15,7 +15,7 @@ initializePollers(cpuService, ramService, gpuService, storageService);
 
 export const Stats = ({ isEnabled }: StatsProps): JSX.Element => {
     if (!isEnabled) {
-        return <box />;
+        return null;
     }
 
     return (

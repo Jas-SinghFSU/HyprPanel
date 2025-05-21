@@ -4,7 +4,7 @@ import { LeftLink1, LeftLink2, LeftLink3, RightLink1, RightLink2, RightLink3 } f
 
 export const Directories = ({ isEnabled }: DirectoriesProps): JSX.Element => {
     if (!isEnabled) {
-        return <box />;
+        return null;
     }
 
     return (
