@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
-import { ThrottleFn } from 'src/lib/types/utils.types';
 import { runAsyncCommand } from './commandExecutor';
+import { ThrottleFn } from 'src/lib/shared/eventHandlers/types';
 
 /**
  * Generic throttle function to limit the rate at which a function can be called.

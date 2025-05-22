@@ -11,19 +11,19 @@ export const HourlyTemp = ({ hoursFromNow }: HourlyTempProps): JSX.Element => {
     const weatherBinding = Variable.derive(
         [bind(weatherService.weatherData), bind(unit)],
         (weather, unitType) => {
-            if (!Object.keys(weather).length) {
+            if (!Object.keys(weather).length || !weather?.forecast?.[0]?.hourly) {
                 return '-';
             }
 
             const nextEpoch = getNextEpoch(weather, hoursFromNow);
-            const weatherAtEpoch = weather.forecast.forecastday[0].hour.find(
-                (h) => h.time_epoch === nextEpoch,
+            const weatherAtEpoch = weather.forecast[0].hourly.find(
+                (h) => h.time === nextEpoch,
             );
 
             if (unitType === 'imperial') {
-                return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temp_f) : '-'}° F`;
+                return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temperature.fahrenheit) : '-'}° F`;
             }
-            return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temp_c) : '-'}° C`;
+            return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temperature.celsius) : '-'}° C`;
         },
     );
 

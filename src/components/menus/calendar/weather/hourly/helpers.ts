@@ -1,5 +1,6 @@
-import { Weather, WeatherIconTitle } from 'src/lib/types/weather.types';
 import WeatherService from 'src/services/weather';
+import { Weather } from 'src/services/weather/providers/core.types';
+import { WeatherIconTitle } from 'src/services/weather/types';
 
 const weatherService = WeatherService.get_default();
 
@@ -15,7 +16,7 @@ const weatherService = WeatherService.get_default();
  * @returns The next epoch time as a number.
  */
 export const getNextEpoch = (wthr: Weather, hoursFromNow: number): number => {
-    const currentEpoch = wthr.location.localtime_epoch;
+    const currentEpoch = wthr.location.localTimeEpoch;
     const epochAtHourStart = currentEpoch - (currentEpoch % 3600);
     let nextEpoch = 3600 * hoursFromNow + epochAtHourStart;
 
@@ -45,8 +46,12 @@ export const getNextEpoch = (wthr: Weather, hoursFromNow: number): number => {
  * @returns The weather icon query as a string.
  */
 export const getIconQuery = (weather: Weather, hoursFromNow: number): WeatherIconTitle => {
+    if (!weather?.forecast?.[0]?.hourly) {
+        return 'warning';
+    }
+    
     const nextEpoch = getNextEpoch(weather, hoursFromNow);
-    const weatherAtEpoch = weather.forecast.forecastday[0].hour.find((h) => h.time_epoch === nextEpoch);
+    const weatherAtEpoch = weather.forecast[0].hourly.find((h) => h.time === nextEpoch);
 
     if (weatherAtEpoch === undefined) {
         return 'warning';
@@ -54,7 +59,7 @@ export const getIconQuery = (weather: Weather, hoursFromNow: number): WeatherIco
 
     let iconQuery = weatherAtEpoch.condition.text.trim().toLowerCase().replaceAll(' ', '_');
 
-    if (!weatherAtEpoch?.is_day && iconQuery === 'partly_cloudy') {
+    if (!weatherAtEpoch?.condition.isDay && iconQuery === 'partly_cloudy') {
         iconQuery = 'partly_cloudy_night';
     }
 

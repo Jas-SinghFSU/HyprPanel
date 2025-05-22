@@ -5,7 +5,7 @@ import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/configuration';
 import { capitalizeFirstLetter } from 'src/lib/string/formatters';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
 const inputHandler = InputHandlerService.getDefault();

@@ -3,10 +3,10 @@ import { getAppIcon, getWsColor, renderClassnames, renderLabel } from './helpers
 import { bind, Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Gtk } from 'astal/gtk3';
-import { WorkspaceIconMap, ApplicationIcons } from 'src/lib/types/workspace.types';
 import { WorkspaceService } from 'src/services/workspace';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
+import { WorkspaceIconMap, ApplicationIcons } from './types';
 
 const workspaceService = WorkspaceService.getDefault();
 

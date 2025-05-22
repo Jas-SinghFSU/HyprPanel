@@ -1,13 +1,7 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { POPUP_LAYOUTS } from 'src/components/menus/shared/popup/layouts';
 import { EventBox, Revealer } from 'astal/gtk3/widget';
-import {
-    PaddingProps,
-    PopupRevealerProps,
-    LayoutFunction,
-    PopupWindowProps,
-} from 'src/lib/types/popupwindow.types';
-import { Layouts } from 'src/lib/types/widget.types';
+import { LayoutFunction, Layouts, PaddingProps, PopupRevealerProps, PopupWindowProps } from './types';
 
 const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox

@@ -1,5 +1,5 @@
 import { bind, Variable } from 'astal';
-import { BarBoxChild, BarModuleProps } from 'src/lib/types/bar.types';
+import { BarBoxChild, BarModuleProps } from 'src/components/bar/types';
 import { BarButtonStyles } from 'src/lib/options/types';
 import options from 'src/configuration';
 

@@ -4,7 +4,7 @@ import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/l
 import { Astal, Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { formatWifiInfo, wiredIcon, wirelessIcon } from './helpers';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';

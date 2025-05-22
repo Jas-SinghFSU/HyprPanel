@@ -1,7 +1,7 @@
 import { Variable, bind } from 'astal';
-import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
+import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types.js';
+import { BarBoxChild } from 'src/components/bar/types.js';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';

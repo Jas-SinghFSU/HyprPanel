@@ -1,4 +1,4 @@
-import { WifiIcon } from 'src/lib/types/network.types';
+import { WifiIcon } from './types';
 
 /**
  * Retrieves the appropriate WiFi icon based on the provided icon name.

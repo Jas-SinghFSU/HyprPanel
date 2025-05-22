@@ -1,14 +1,16 @@
 import AstalNotifd from 'gi://AstalNotifd';
-import { NotificationArgs } from 'src/lib/types/notification.types';
 import { exec, execAsync, GLib } from 'astal';
 import icons from 'src/lib/icons/icons';
 import { distroIcons } from 'src/core/system/distroIcons';
 import { distro } from 'src/core/system/osInfo';
-import { CommandResult, ServiceStatus } from './types';
+import { CommandResult, NotificationArgs, ServiceStatus } from './types';
 
 AstalNotifd.get_default();
 
 export class SystemUtilities {
+    /*******************************************
+     *                 Notify                  *
+     *******************************************/
     /**
      * Sends a notification using the `notify-send` command.
      *
@@ -20,6 +22,10 @@ export class SystemUtilities {
     public static notify(notifPayload: NotificationArgs): void {
         SystemUtilities._notify(notifPayload);
     }
+
+    /*******************************************
+     *           Depndency Checking            *
+     *******************************************/
 
     /**
      * Checks if all specified dependencies are available
@@ -125,6 +131,10 @@ export class SystemUtilities {
         return 'MISSING';
     }
 
+    /*******************************************
+     *            Command Execution            *
+     *******************************************/
+
     /**
      * Executes a bash command asynchronously
      * @param strings - The command to execute as a template string or a regular string
@@ -155,6 +165,10 @@ export class SystemUtilities {
             return '';
         });
     }
+
+    /*******************************************
+     *               System Info               *
+     *******************************************/
 
     /**
      * Retrieves the icon for the current distribution
@@ -204,10 +218,8 @@ export class SystemUtilities {
         if (notifPayload.transient !== undefined) command += ' -e';
         if (notifPayload.id !== undefined) command += ` -r ${notifPayload.id}`;
 
-        execAsync(command)
-            .then()
-            .catch((err) => {
-                console.error(`Failed to send notification: ${err.message}`);
-            });
+        execAsync(command).catch((err) => {
+            console.error(`Failed to send notification: ${err.message}`);
+        });
     }
 }

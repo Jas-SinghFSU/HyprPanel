@@ -12,7 +12,7 @@ const WeatherStatus = (): JSX.Element => {
             <label
                 className={bind(weatherService.weatherData).as(
                     (weather) =>
-                        `calendar-menu-weather today condition label ${weatherService.getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
+                        `calendar-menu-weather today condition label ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).color}`,
                 )}
                 label={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
                 truncate
@@ -37,10 +37,10 @@ const Temperature = (): JSX.Element => {
             <label
                 className={bind(weatherService.weatherData).as(
                     (weather) =>
-                        `calendar-menu-weather today temp label icon txt-icon ${weatherService.getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
+                        `calendar-menu-weather today temp label icon txt-icon ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).color}`,
                 )}
                 label={bind(weatherService.weatherData).as(
-                    (weather) => weatherService.getWeatherIcon(Math.ceil(weather.current.temp_f)).icon,
+                    (weather) => weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).icon,
                 )}
             />
         );

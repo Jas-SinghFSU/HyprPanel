@@ -1,8 +1,4 @@
-import { Primitive } from '../types/utils.types';
-
-/**
- * Type validation utilities
- */
+export type Primitive = string | number | boolean | symbol | null | undefined | bigint;
 
 /**
  * Checks if a value is a primitive type

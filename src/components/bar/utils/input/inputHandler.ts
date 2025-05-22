@@ -1,12 +1,11 @@
 import { bind, Binding, Variable } from 'astal';
-import { UpdateHandlers } from 'src/lib/types/customModules/generic.types';
-import { InputHandlerEventArgs, InputHandlerEvents } from 'src/lib/types/customModules/utils.types';
-import { GtkWidget } from 'src/lib/types/widget.types';
 import { onMiddleClick, onPrimaryClick, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Gdk } from 'astal/gtk3';
 import { isScrollDown, isScrollUp } from 'src/lib/events/mouse';
 import { throttledAsyncCommand, throttledScrollHandler } from './throttle';
 import options from 'src/configuration';
+import { InputHandlerEventArgs, InputHandlerEvents, UpdateHandlers } from './types';
+import { GtkWidget } from '../../types';
 
 type EventType = 'primary' | 'secondary' | 'middle';
 type ClickHandler = typeof onPrimaryClick | typeof onSecondaryClick | typeof onMiddleClick;

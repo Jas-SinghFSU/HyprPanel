@@ -1,6 +1,6 @@
 import { bind, GLib, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import { GenericResourceData } from '../types';
 
 class RamService {
     private static _instance: RamService;

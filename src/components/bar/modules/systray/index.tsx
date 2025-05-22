@@ -1,7 +1,7 @@
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { isPrimaryClick, isSecondaryClick, isMiddleClick } from 'src/lib/events/mouse';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';

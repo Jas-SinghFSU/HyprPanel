@@ -1,6 +1,6 @@
 import { execAsync, Variable } from 'astal';
 import { openMenu } from '../menu';
-import { EventArgs } from 'src/lib/types/widget.types';
+import { EventArgs } from './types';
 
 /**
  * Executes an asynchronous command and handles the result.

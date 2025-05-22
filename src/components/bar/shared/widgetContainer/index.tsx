@@ -1,4 +1,4 @@
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import { bind, Binding } from 'astal';
 import options from 'src/configuration';
 

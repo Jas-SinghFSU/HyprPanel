@@ -2,9 +2,9 @@ import { Astal } from 'astal/gtk3';
 import { dropdownMenuList } from '../constants/options';
 import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
 import { Variable } from 'astal';
-import { defaultColorMap } from '../types/defaults/options.types';
 import { LabelSettingProps } from 'src/components/settings/shared/Label';
 import { Opt } from './opt';
+import { defaultColorMap } from 'src/services/matugen/defaults';
 
 export interface MkOptionsResult {
     toArray: () => Opt[];

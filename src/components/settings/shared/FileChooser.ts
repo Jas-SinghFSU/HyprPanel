@@ -1,11 +1,11 @@
 import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
 import icons from '../../../lib/icons/icons';
-import { Config } from '../../../lib/types/filechooser.types';
 import { hexColorPattern } from '../../../lib/theme/useTheme';
 import options from 'src/configuration';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { isHexColor } from 'src/lib/validation/colors';
+import { Config } from './types';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];

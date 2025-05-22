@@ -2,7 +2,7 @@ import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 

@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
 import { systemTime } from 'src/lib/formatters/time';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';

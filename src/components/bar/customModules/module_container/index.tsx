@@ -5,7 +5,7 @@ import { bind, Variable } from 'astal';
 import { getIcon } from './helpers/icon';
 import { getLabel } from './helpers/label';
 import { initActionListener, initCommandPoller, setupModuleInteractions } from './setup';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 
 export const ModuleContainer = (moduleName: string, moduleMetadata: CustomBarModule): BarBoxChild => {
     const {

@@ -6,8 +6,7 @@ import {
     autoFormatSize,
     getPostfix,
 } from 'src/lib/formatters/size';
-import { ResourceLabelType } from 'src/lib/types/bar.types';
-import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import { ResourceLabelType, GenericResourceData } from 'src/services/system/types';
 
 /**
  * Calculates the percentage of used resources.

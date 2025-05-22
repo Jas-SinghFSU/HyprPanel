@@ -21,7 +21,7 @@ const wifiIconMap = new Map<string, WifiIcon>([
  */
 export const getWifiIcon = (iconName?: string): WifiIcon => {
     if (iconName === undefined) {
-        return '󰤫' as WifiIcon;
+        return '󰤫';
     }
 
     const wifiIcon = wifiIconMap.get(iconName.toLowerCase());

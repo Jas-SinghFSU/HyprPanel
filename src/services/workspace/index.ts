@@ -1,8 +1,8 @@
 import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { range } from 'src/lib/array/helpers';
-import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace.types';
 import options from 'src/configuration';
+import { WorkspaceMonitorMap, MonitorMap, WorkspaceRule } from './types';
 
 const hyprlandService = AstalHyprland.get_default();
 

@@ -4,8 +4,7 @@ import { bind, Variable } from 'astal';
 import { Astal, Gdk } from 'astal/gtk3';
 import options from 'src/configuration';
 import { isScrollUp, isScrollDown } from 'src/lib/events/mouse';
-import { BarBoxChild } from 'src/lib/types/bar.types';
-import { GtkWidget } from 'src/lib/types/widget.types';
+import { BarBoxChild, GtkWidget } from 'src/components/bar/types';
 
 const { scroll_speed } = options.bar.workspaces;
 

@@ -1,7 +1,7 @@
 import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import WeatherService from 'src/services/weather';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
@@ -21,9 +21,9 @@ export const Weather = (): BarBoxChild => {
 
     const labelBinding = Variable.derive([bind(weatherService.weatherData), bind(unit)], (wthr, unt) => {
         if (unt === 'imperial') {
-            return `${Math.ceil(wthr.current.temp_f)}° F`;
+            return `${Math.ceil(wthr.current.temperature.fahrenheit)}° F`;
         } else {
-            return `${Math.ceil(wthr.current.temp_c)}° C`;
+            return `${Math.ceil(wthr.current.temperature.celsius)}° C`;
         }
     });
 

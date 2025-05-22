@@ -1,7 +1,7 @@
-import { GenericFunction } from '../types/customModules/generic.types';
 import { BarModule } from '../options/types';
 import { Poller } from './Poller';
 import { Binding, execAsync, Variable } from 'astal';
+import { GenericFunction } from './types';
 
 /**
  * A class that manages polling of a variable by executing a bash command at specified intervals.

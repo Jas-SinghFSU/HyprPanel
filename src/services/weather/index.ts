@@ -1,12 +1,14 @@
 import { AstalIO, bind, interval, Variable } from 'astal';
-import { DEFAULT_WEATHER } from 'src/lib/types/defaults/weather.types';
-import { UnitType, Weather, WeatherIcon, WeatherIconTitle } from 'src/lib/types/weather.types';
-import { getWeatherProvider } from 'src/lib/types/weather/providers/registry';
+import { getWeatherProvider } from 'src/services/weather/providers/registry';
 import { WeatherApiKeyManager } from './keyManager';
 import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
 import { weatherIcons } from 'src/services/weather/icons';
 import { httpClient } from 'src/lib/httpClient';
+import { Weather } from './providers/core.types';
+import { WeatherIconTitle, WeatherIcon } from './types';
+import { DEFAULT_WEATHER } from 'src/services/weather/default';
+import { UnitType } from 'src/lib/types/shared/unit.types';
 
 export default class WeatherService {
     public static instance: WeatherService;
@@ -69,14 +71,15 @@ export default class WeatherService {
         }
 
         const formattedLocation = loc.replaceAll(' ', '%20');
-        const url = provider.formatUrl(formattedLocation, weatherKey);
+        const url = provider.formatUrl?.(formattedLocation, weatherKey) || `${provider.baseUrl}?location=${formattedLocation}&key=${weatherKey}`;
 
         this._interval = interval(weatherInterval, async () => {
             try {
                 const response = await httpClient.get(url);
 
-                if (response.data) {
-                    this.weatherData.set(response.data as Weather);
+                if (response.data && provider.adapter) {
+                    const transformedData = provider.adapter.toGenericFormat(response.data);
+                    this.weatherData.set(transformedData);
                 } else {
                     this.weatherData.set(DEFAULT_WEATHER);
                 }
@@ -95,10 +98,14 @@ export default class WeatherService {
      * @returns - The temperature formatted as a string with the appropriate unit.
      */
     public getTemperature(weatherData: Weather, unitType: UnitType): string {
+        if (!weatherData?.current?.temperature) {
+            return '--° --';
+        }
+        
         if (unitType === 'imperial') {
-            return `${Math.ceil(weatherData.current.temp_f)}° F`;
+            return `${Math.ceil(weatherData.current.temperature.fahrenheit)}° F`;
         } else {
-            return `${Math.ceil(weatherData.current.temp_c)}° C`;
+            return `${Math.ceil(weatherData.current.temperature.celsius)}° C`;
         }
     }
 
@@ -148,10 +155,14 @@ export default class WeatherService {
      * @returns - The wind conditions formatted as a string with the appropriate unit.
      */
     public getWindConditions(weatherData: Weather, unitType: UnitType): string {
-        if (unitType === 'imperial') {
-            return `${Math.floor(weatherData.current.wind_mph)} mph`;
+        if (!weatherData?.current?.wind) {
+            return '-- mph';
         }
-        return `${Math.floor(weatherData.current.wind_kph)} kph`;
+        
+        if (unitType === 'imperial') {
+            return `${Math.floor(weatherData.current.wind.speedMph)} mph`;
+        }
+        return `${Math.floor(weatherData.current.wind.speedKph)} kph`;
     }
 
     /**
@@ -161,7 +172,10 @@ export default class WeatherService {
      * @returns - The chance of rain formatted as a percentage string.
      */
     public getRainChance(weatherData: Weather): string {
-        return `${weatherData.forecast.forecastday[0].day.daily_chance_of_rain}%`;
+        if (!weatherData?.forecast?.[0]?.chanceOfRain) {
+            return '--%';
+        }
+        return `${weatherData.forecast[0].chanceOfRain}%`;
     }
 
     /**
@@ -182,9 +196,13 @@ export default class WeatherService {
      * @returns - The weather icon corresponding to the weather status text.
      */
     public getWeatherStatusTextIcon(weatherData: Weather): WeatherIcon {
+        if (!weatherData?.current?.condition?.text) {
+            return weatherIcons.warning;
+        }
+        
         let iconQuery = weatherData.current.condition.text.trim().toLowerCase().replaceAll(' ', '_');
 
-        if (!weatherData.current.is_day && iconQuery === 'partly_cloudy') {
+        if (!weatherData.current.condition.isDay && iconQuery === 'partly_cloudy') {
             iconQuery = 'partly_cloudy_night';
         }
 
@@ -213,9 +231,9 @@ export default class WeatherService {
         this._currentProvider = providerId;
 
         const weatherKeyManager = new WeatherApiKeyManager();
-        const weatherKey = weatherKeyManager.weatherApiKey.value;
-        if (weatherKey && this._location.value) {
-            this._initializeWeatherPolling(this._intervalFrequency.value, this._location.value, weatherKey);
+        const weatherKey = weatherKeyManager.weatherApiKey.get();
+        if (weatherKey && this._location.get()) {
+            this._initializeWeatherPolling(this._intervalFrequency.get(), this._location.get(), weatherKey);
         }
     }
 }

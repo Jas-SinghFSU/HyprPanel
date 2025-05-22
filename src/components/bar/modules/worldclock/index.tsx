@@ -3,7 +3,7 @@ import { Astal } from 'astal/gtk3';
 import { systemTime } from 'src/lib/formatters/time';
 import { GLib } from 'astal';
 import { Module } from '../../shared/module';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 

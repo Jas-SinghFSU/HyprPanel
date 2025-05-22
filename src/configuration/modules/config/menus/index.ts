@@ -1,10 +1,10 @@
 import { opt } from 'src/lib/options';
-import { Transition } from 'src/lib/types/widget.types';
 import clock from './clock';
 import dashboard from './dashboard';
 import media from './media';
 import power from './power';
 import volume from './volume';
+import { Transition } from './types';
 
 export default {
     transition: opt<Transition>('crossfade'),

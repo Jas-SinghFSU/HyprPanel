@@ -1,10 +1,10 @@
 import { ColorMapKey, HexColor, MatugenColors } from '../../lib/options/types';
 import { getMatugenVariations } from './variations';
 import icons from '../../lib/icons/icons';
-import { defaultColorMap } from 'src/lib/types/defaults/options.types';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import options from 'src/configuration';
 import { isAnImage } from 'src/lib/validation/images';
+import { defaultColorMap } from './defaults';
 
 const MATUGEN_ENABLED = options.theme.matugen;
 const MATUGEN_SETTINGS = options.theme.matugen_settings;

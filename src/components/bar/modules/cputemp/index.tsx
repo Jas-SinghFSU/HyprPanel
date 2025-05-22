@@ -3,10 +3,10 @@ import { getCPUTemperature } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { UnitType } from 'src/lib/types/weather.types';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
+import { UnitType } from 'src/lib/types/shared/unit.types';
 
 const inputHandler = InputHandlerService.getDefault();
 

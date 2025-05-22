@@ -1,8 +1,9 @@
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/configuration';
 import { defaultApplicationIconMap } from 'src/lib/constants/appIcons';
-import { WorkspaceIconMap, AppIconOptions } from 'src/lib/types/workspace.types';
 import { isValidGjsColor } from 'src/lib/validation/colors';
+import { AppIconOptions } from './types';
+import { WorkspaceIconMap } from '../types';
 
 const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;

@@ -1,14 +1,13 @@
 import { Module } from '../../shared/module';
 import { computeStorage } from './helpers';
-import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
-import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
-import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
+import { GenericResourceData, LABEL_TYPES, ResourceLabelType } from 'src/services/system/types';
+import { BarBoxChild } from '../../types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
 
 const inputHandler = InputHandlerService.getDefault();
 

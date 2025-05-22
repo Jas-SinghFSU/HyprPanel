@@ -1,6 +1,6 @@
 import { bind, exec, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GPUStat } from 'src/lib/types/gpustat.types';
+import { GPUStat } from './types';
 
 class GpuService {
     private static _instance: GpuService;

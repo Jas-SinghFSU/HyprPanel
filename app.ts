@@ -1,10 +1,7 @@
 import './src/lib/session';
 import './src/style';
 import 'src/core/behaviors/bar';
-
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-const hyprland = AstalHyprland.get_default();
-
 import { Bar } from './src/components/bar';
 import Notifications from './src/components/notifications';
 import SettingsDialog from './src/components/settings/index';
@@ -20,8 +17,11 @@ import { forMonitors } from 'src/components/bar/utils/monitors';
 import options from 'src/configuration';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
+const hyprland = AstalHyprland.get_default();
 const initializeStartupScripts = (): void => {
-    execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => console.error(err));
+    execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => 
+        console.error('Failed to initialize bluetooth script:', err)
+    );
 };
 
 const initializeMenus = (): void => {
@@ -53,18 +53,22 @@ App.start({
         runCLI(request, res);
     },
     async main() {
-        initializeStartupScripts();
+        try {
+            initializeStartupScripts();
 
-        Notifications();
-        OSD();
+            Notifications();
+            OSD();
 
-        const barsForMonitors = await forMonitors(Bar);
-        barsForMonitors.forEach((bar: JSX.Element) => bar);
+            const barsForMonitors = await forMonitors(Bar);
+            barsForMonitors.forEach((bar: JSX.Element) => bar);
 
-        SettingsDialog();
-        initializeMenus();
+            SettingsDialog();
+            initializeMenus();
 
-        initializeSystemBehaviors();
+            initializeSystemBehaviors();
+        } catch (error) {
+            console.error('Error during application initialization:', error);
+        }
     },
 });
 

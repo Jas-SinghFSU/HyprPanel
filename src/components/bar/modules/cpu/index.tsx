@@ -3,7 +3,7 @@ import { computeCPU } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 

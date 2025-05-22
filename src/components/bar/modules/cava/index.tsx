@@ -3,7 +3,7 @@ import { Astal } from 'astal/gtk3';
 import { Module } from '../../shared/module';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';
 import AstalCava from 'gi://AstalCava?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
