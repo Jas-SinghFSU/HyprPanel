@@ -30,15 +30,15 @@ import { WorldClock } from '../../components/bar/modules/worldclock/index';
 import { ModuleSeparator } from './modules/separator';
 
 export {
-    Menu,
+    Menu as Dashboard,
     Workspaces,
-    ClientTitle,
+    ClientTitle as WindowTitle,
     Media,
     Notifications,
     Volume,
     Network,
     Bluetooth,
-    BatteryLabel,
+    BatteryLabel as Battery,
     Clock,
     SysTray,
 
@@ -58,5 +58,5 @@ export {
     Hypridle,
     Cava,
     WorldClock,
-    ModuleSeparator,
+    ModuleSeparator as Separator,
 };

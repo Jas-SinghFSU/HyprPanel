@@ -1,32 +1,4 @@
-import {
-    Menu,
-    Workspaces,
-    ClientTitle,
-    Media,
-    Notifications,
-    Volume,
-    Network,
-    Bluetooth,
-    BatteryLabel,
-    Clock,
-    SysTray,
-    Microphone,
-    Ram,
-    Cpu,
-    CpuTemp,
-    Storage,
-    Netstat,
-    KbInput,
-    Updates,
-    Submap,
-    Weather,
-    Power,
-    Hyprsunset,
-    Hypridle,
-    Cava,
-    WorldClock,
-    ModuleSeparator,
-} from './exports';
+import * as components from './exports';
 
 import { WidgetContainer } from './shared/WidgetContainer';
 import options from 'src/options';
@@ -43,35 +15,20 @@ const { layouts } = options.bar;
 const { location } = options.theme.bar;
 const { location: borderLocation } = options.theme.bar.border;
 
-let widgets: WidgetMap = {
-    battery: () => WidgetContainer(BatteryLabel()),
-    dashboard: () => WidgetContainer(Menu()),
-    workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
-    windowtitle: () => WidgetContainer(ClientTitle()),
-    media: () => WidgetContainer(Media()),
-    notifications: () => WidgetContainer(Notifications()),
-    volume: () => WidgetContainer(Volume()),
-    network: () => WidgetContainer(Network()),
-    bluetooth: () => WidgetContainer(Bluetooth()),
-    clock: () => WidgetContainer(Clock()),
-    systray: () => WidgetContainer(SysTray()),
-    microphone: () => WidgetContainer(Microphone()),
-    ram: () => WidgetContainer(Ram()),
-    cpu: () => WidgetContainer(Cpu()),
-    cputemp: () => WidgetContainer(CpuTemp()),
-    storage: () => WidgetContainer(Storage()),
-    netstat: () => WidgetContainer(Netstat()),
-    kbinput: () => WidgetContainer(KbInput()),
-    updates: () => WidgetContainer(Updates()),
-    submap: () => WidgetContainer(Submap()),
-    weather: () => WidgetContainer(Weather()),
-    power: () => WidgetContainer(Power()),
-    hyprsunset: () => WidgetContainer(Hyprsunset()),
-    hypridle: () => WidgetContainer(Hypridle()),
-    cava: () => WidgetContainer(Cava()),
-    worldclock: () => WidgetContainer(WorldClock()),
-    separator: () => ModuleSeparator(),
-};
+let widgets: WidgetMap = {};
+
+Object.entries(components).forEach(([name, Component]) => {
+    switch (name) {
+        case 'Workspaces':
+            widgets['workspaces'] = (monitor: number): void => WidgetContainer(Component(monitor));
+            break;
+        case 'ModuleSeparator':
+            widgets['separator'] = (): void => Component();
+            break;
+        default:
+            widgets[name.toLowerCase()] = (): void => WidgetContainer(Component());
+    }
+});
 
 const gdkMonitorMapper = new GdkMonitorMapper();
 
