@@ -9,7 +9,7 @@ import OSD from 'src/components/osd/index';
 import { App } from 'astal/gtk3';
 import { execAsync } from 'astal';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers';
-import { isDropdownMenu } from 'src/lib/constants/options.js';
+import { isDropdownMenu } from 'src/components/settings/constants.js';
 import { initializeSystemBehaviors } from 'src/core/behaviors';
 import { runCLI } from 'src/services/cli/commander';
 import { DropdownMenus, StandardWindows } from 'src/components/menus';
@@ -19,8 +19,8 @@ import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const hyprland = AstalHyprland.get_default();
 const initializeStartupScripts = (): void => {
-    execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) => 
-        console.error('Failed to initialize bluetooth script:', err)
+    execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) =>
+        console.error('Failed to initialize bluetooth script:', err),
     );
 };
 

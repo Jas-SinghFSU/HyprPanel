@@ -3,7 +3,7 @@ import { VolumeSliders } from './active/index.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { AvailableDevices } from './available/index.js';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 import options from 'src/configuration';
 
 export default (): JSX.Element => {

@@ -1,5 +1,5 @@
 import { Gtk } from 'astal/gtk3';
-import { DropdownMenuList } from '../options/types';
+import { DropdownMenuList } from '../../lib/options/types';
 
 export const StackTransitionMap = {
     none: Gtk.StackTransitionType.NONE,
@@ -8,7 +8,7 @@ export const StackTransitionMap = {
     slide_left: Gtk.StackTransitionType.SLIDE_LEFT,
     slide_up: Gtk.StackTransitionType.SLIDE_UP,
     slide_down: Gtk.StackTransitionType.SLIDE_DOWN,
-};
+} as const;
 
 export const RevealerTransitionMap = {
     none: Gtk.RevealerTransitionType.NONE,
@@ -17,7 +17,7 @@ export const RevealerTransitionMap = {
     slide_left: Gtk.RevealerTransitionType.SLIDE_LEFT,
     slide_up: Gtk.RevealerTransitionType.SLIDE_UP,
     slide_down: Gtk.RevealerTransitionType.SLIDE_DOWN,
-};
+} as const;
 
 export const dropdownMenuList = [
     'dashboardmenu',

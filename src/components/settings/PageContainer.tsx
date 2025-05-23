@@ -1,6 +1,6 @@
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { StackTransitionMap } from 'src/lib/constants/options';
+import { StackTransitionMap } from 'src/components/settings/constants';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import { ThemesMenu } from './pages/theme';

@@ -6,7 +6,7 @@ import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
-import { UnitType } from 'src/lib/types/shared/unit.types';
+import { UnitType } from 'src/lib/formatters/temperature/types';
 
 const inputHandler = InputHandlerService.getDefault();
 

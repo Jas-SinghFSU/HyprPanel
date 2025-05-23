@@ -2,8 +2,8 @@ import { bind, execAsync, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
-import { DEVICE_STATES } from 'src/lib/constants/network';
 import { isPrimaryClick } from 'src/lib/events/mouse';
+import { DEVICE_STATES } from 'src/services/network/types';
 
 const networkService = AstalNetwork.get_default();
 

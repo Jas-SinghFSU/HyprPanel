@@ -2,7 +2,7 @@ import { bind } from 'astal';
 import DropdownMenu from '../shared/dropdown/index.js';
 import { PowerButton } from './button.js';
 import options from 'src/configuration';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 
 export default (): JSX.Element => {
     return (

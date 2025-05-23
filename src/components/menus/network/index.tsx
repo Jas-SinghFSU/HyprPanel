@@ -3,7 +3,7 @@ import { Ethernet } from './ethernet/index.js';
 import { Wifi } from './wifi/index.js';
 import { bind } from 'astal';
 import { NoWifi } from './wifi/WirelessAPs/NoWifi.js';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import options from 'src/configuration';
 

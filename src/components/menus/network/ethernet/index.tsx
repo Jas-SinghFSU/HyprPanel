@@ -1,8 +1,8 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal/binding';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { DEVICE_STATES } from 'src/lib/constants/network';
 import { wiredIcon, wiredInternet, wiredSpeed, wiredState } from './helpers';
+import { DEVICE_STATES } from 'src/services/network/types';
 
 export const Ethernet = (): JSX.Element => {
     return (

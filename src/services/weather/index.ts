@@ -8,7 +8,7 @@ import { httpClient } from 'src/lib/httpClient';
 import { Weather } from './providers/core.types';
 import { WeatherIconTitle, WeatherIcon } from './types';
 import { DEFAULT_WEATHER } from 'src/services/weather/default';
-import { UnitType } from 'src/lib/types/shared/unit.types';
+import { UnitType } from 'src/lib/formatters/temperature/types';
 
 export default class WeatherService {
     public static instance: WeatherService;
@@ -71,7 +71,9 @@ export default class WeatherService {
         }
 
         const formattedLocation = loc.replaceAll(' ', '%20');
-        const url = provider.formatUrl?.(formattedLocation, weatherKey) || `${provider.baseUrl}?location=${formattedLocation}&key=${weatherKey}`;
+        const url =
+            provider.formatUrl?.(formattedLocation, weatherKey) ||
+            `${provider.baseUrl}?location=${formattedLocation}&key=${weatherKey}`;
 
         this._interval = interval(weatherInterval, async () => {
             try {
@@ -101,7 +103,7 @@ export default class WeatherService {
         if (!weatherData?.current?.temperature) {
             return '--° --';
         }
-        
+
         if (unitType === 'imperial') {
             return `${Math.ceil(weatherData.current.temperature.fahrenheit)}° F`;
         } else {
@@ -158,7 +160,7 @@ export default class WeatherService {
         if (!weatherData?.current?.wind) {
             return '-- mph';
         }
-        
+
         if (unitType === 'imperial') {
             return `${Math.floor(weatherData.current.wind.speedMph)} mph`;
         }
@@ -199,7 +201,7 @@ export default class WeatherService {
         if (!weatherData?.current?.condition?.text) {
             return weatherIcons.warning;
         }
-        
+
         let iconQuery = weatherData.current.condition.text.trim().toLowerCase().replaceAll(' ', '_');
 
         if (!weatherData.current.condition.isDay && iconQuery === 'partly_cloudy') {

@@ -6,7 +6,7 @@ import { MediaInfo } from './components/title/index.js';
 import { MediaControls } from './components/controls/index.js';
 import { MediaSlider } from './components/timebar/index.js';
 import { MediaTimeStamp } from './components/timelabel/index.js';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 
 const { transition } = options.menus;
 

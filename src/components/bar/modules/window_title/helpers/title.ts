@@ -1,4 +1,4 @@
-import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
+import { defaultWindowTitleMap } from 'src/components/bar/modules/window_title/helpers/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';

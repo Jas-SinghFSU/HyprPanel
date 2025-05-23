@@ -2,7 +2,7 @@ import options from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import { StackTransitionMap } from 'src/lib/constants/options';
+import { StackTransitionMap } from 'src/components/settings/constants';
 import { ConfigPage, configPages } from '../../helpers';
 import { BarGeneral } from './general';
 import { BarSettings } from './bar';
@@ -19,6 +19,7 @@ const { transition, transitionTime } = options.menus;
 
 const CurrentPage = Variable<ConfigPage>('General');
 
+// TODO: Rework the settings menu, it's shit
 export const SettingsMenu = (): JSX.Element => {
     return (
         <box name={'Configuration'} halign={Gtk.Align.FILL} hexpand vertical>

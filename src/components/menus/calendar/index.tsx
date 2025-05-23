@@ -3,7 +3,7 @@ import { TimeWidget } from './time/index';
 import { CalendarWidget } from './CalendarWidget.js';
 import { WeatherWidget } from './weather/index';
 import { bind } from 'astal';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 import options from 'src/configuration';
 
 const { transition } = options.menus;

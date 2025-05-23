@@ -4,7 +4,7 @@ import { NotificationsContainer } from './notification/index.js';
 import { NotificationPager } from './pager/index.js';
 import { handlePageBoundaries } from './helpers.js';
 import { bind, Variable } from 'astal';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 import options from 'src/configuration';
 
 const { transition } = options.menus;

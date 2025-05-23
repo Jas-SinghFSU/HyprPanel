@@ -1,5 +1,5 @@
 import { Astal } from 'astal/gtk3';
-import { dropdownMenuList } from '../constants/options';
+import { dropdownMenuList } from '../../components/settings/constants';
 import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
 import { Variable } from 'astal';
 import { LabelSettingProps } from 'src/components/settings/shared/Label';

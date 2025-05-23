@@ -1,5 +1,5 @@
 import { opt } from 'src/lib/options';
-import { UnitType } from 'src/lib/types/shared/unit.types';
+import { UnitType } from 'src/lib/formatters/temperature/types';
 
 export default {
     icon: opt(''),

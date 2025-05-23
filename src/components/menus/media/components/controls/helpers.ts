@@ -1,5 +1,5 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import icons2 from 'src/lib/icons/icons2';
+import icons2 from 'src/lib/icons/icons';
 import { activePlayer } from 'src/services/media';
 import { PlaybackIconMap } from './types';
 

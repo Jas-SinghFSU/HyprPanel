@@ -3,7 +3,7 @@ import powermenu from './helpers/actions.js';
 import icons from 'src/lib/icons/icons.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import { Action } from './types';

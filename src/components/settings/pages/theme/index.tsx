@@ -2,7 +2,7 @@ import options from 'src/configuration';
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import { StackTransitionMap } from 'src/lib/constants/options';
+import { StackTransitionMap } from 'src/components/settings/constants';
 import { MenuTheme } from './menus';
 import { Matugen } from './menus/matugen';
 import { BarTheme } from './bar';
