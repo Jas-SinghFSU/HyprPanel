@@ -3,11 +3,11 @@ import { LeftShortcuts, RightShortcuts } from './sections/Section';
 import { recordingPoller } from './helpers';
 
 export const Shortcuts = ({ isEnabled }: ShortcutsProps): JSX.Element => {
-    recordingPoller.initialize();
-
     if (!isEnabled) {
+        recordingPoller.stop();
         return <box />;
     }
+    recordingPoller.initialize();
 
     return (
         <box className={'shortcuts-container'} halign={Gtk.Align.FILL} hexpand>
