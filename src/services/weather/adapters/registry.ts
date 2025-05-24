@@ -1,15 +1,11 @@
-/**
- * Registry of weather providers and their configurations
- */
-
-import { WeatherProvider } from './core.types';
-import { WeatherApiAdapter } from './weatherApi/weather-api.adapter';
+import { WeatherProvider } from './types';
+import { WeatherApiAdapter } from './weatherApi/adapter';
 
 export const weatherProviders: Record<string, WeatherProvider> = {
     weatherapi: {
         name: 'WeatherAPI.com',
         baseUrl: 'https://api.weatherapi.com/v1',
-        adapter: WeatherApiAdapter,
+        adapter: new WeatherApiAdapter(),
         formatUrl: (location: string, apiKey: string) =>
             `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=1&aqi=no&alerts=no`,
     },

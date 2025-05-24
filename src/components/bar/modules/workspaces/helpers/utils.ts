@@ -2,7 +2,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/configuration';
 import { WorkspaceService } from 'src/services/workspace';
 
-const workspaceService = WorkspaceService.getDefault();
+const workspaceService = WorkspaceService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const { reverse_scroll } = options.bar.workspaces;

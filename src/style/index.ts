@@ -9,7 +9,7 @@ import options from 'src/configuration';
 import { MatugenService } from 'src/services/matugen';
 import { isHexColor } from 'src/lib/validation/colors';
 
-const matugenService = MatugenService.getDefault();
+const matugenService = MatugenService.getInstance();
 
 /**
  * Central manager for theme styling throughout the application

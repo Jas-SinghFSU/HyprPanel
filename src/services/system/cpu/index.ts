@@ -25,7 +25,7 @@ class CpuService {
         this._cpuPoller.initialize();
     }
 
-    public static getDefault(): CpuService {
+    public static getInstance(): CpuService {
         if (this._instance === undefined) {
             this._instance = new CpuService();
         }

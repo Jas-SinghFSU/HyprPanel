@@ -9,7 +9,7 @@ import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import { GenericResourceData, ResourceLabelType, LABEL_TYPES } from 'src/services/system/types';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const { label, labelType, round, leftClick, rightClick, middleClick, pollingInterval, icon } =
     options.bar.customModules.ram;

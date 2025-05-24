@@ -59,7 +59,7 @@ export class WallpaperService extends GObject.Object {
         }
     }
 
-    public static getDefault(): WallpaperService {
+    public static getInstance(): WallpaperService {
         if (this._instance === undefined) {
             this._instance = new WallpaperService();
         }

@@ -7,7 +7,7 @@ import BrightnessService from 'src/services/system/brightness';
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
 
-const brightnessService = BrightnessService.get_default();
+const brightnessService = BrightnessService.getInstance();
 
 /**
  * Sets up the OSD bar for a LevelBar instance.

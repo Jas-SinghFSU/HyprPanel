@@ -9,7 +9,26 @@ const kbd = exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | 
 export default class BrightnessService extends GObject.Object {
     public static instance: BrightnessService;
 
-    public static get_default(): BrightnessService {
+    constructor() {
+        super();
+
+        const screenPath = `/sys/class/backlight/${screen}/brightness`;
+        const kbdPath = `/sys/class/leds/${kbd}/brightness`;
+
+        monitorFile(screenPath, async (f) => {
+            const v = await readFileAsync(f);
+            this.#screen = Number(v) / this.#screenMax;
+            this.notify('screen');
+        });
+
+        monitorFile(kbdPath, async (f) => {
+            const v = await readFileAsync(f);
+            this.#kbd = Number(v) / this.#kbdMax;
+            this.notify('kbd');
+        });
+    }
+
+    public static getInstance(): BrightnessService {
         if (BrightnessService.instance === undefined) {
             BrightnessService.instance = new BrightnessService();
         }
@@ -55,24 +74,5 @@ export default class BrightnessService extends GObject.Object {
                 this.notify('screen');
             },
         );
-    }
-
-    constructor() {
-        super();
-
-        const screenPath = `/sys/class/backlight/${screen}/brightness`;
-        const kbdPath = `/sys/class/leds/${kbd}/brightness`;
-
-        monitorFile(screenPath, async (f) => {
-            const v = await readFileAsync(f);
-            this.#screen = Number(v) / this.#screenMax;
-            this.notify('screen');
-        });
-
-        monitorFile(kbdPath, async (f) => {
-            const v = await readFileAsync(f);
-            this.#kbd = Number(v) / this.#kbdMax;
-            this.notify('kbd');
-        });
     }
 }

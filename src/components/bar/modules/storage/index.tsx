@@ -9,7 +9,7 @@ import { GenericResourceData, LABEL_TYPES, ResourceLabelType } from 'src/service
 import { BarBoxChild } from '../../types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;

@@ -9,8 +9,8 @@ import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 import { cycleArray, setupNetworkServiceBindings } from './helpers';
 
-const inputHandler = InputHandlerService.getDefault();
-const networkService = NetworkService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
+const networkService = NetworkService.getInstance();
 const astalNetworkService = AstalNetwork.get_default();
 
 const NETWORK_LABEL_TYPES: NetstatLabelType[] = ['full', 'in', 'out'];

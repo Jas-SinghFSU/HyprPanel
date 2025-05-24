@@ -17,7 +17,9 @@ export class WorkspaceService {
     public workspaceRules = Variable(this._getWorkspaceMonitorMap());
     public forceUpdater = Variable(true);
 
-    public static getDefault(): WorkspaceService {
+    private constructor() {}
+
+    public static getInstance(): WorkspaceService {
         if (WorkspaceService.instance === undefined) {
             WorkspaceService.instance = new WorkspaceService();
         }

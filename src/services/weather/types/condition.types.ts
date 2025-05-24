@@ -1,0 +1,17 @@
+export enum WeatherIcon {
+    WARNING = '󰼯',
+    SUNNY = '󰖙',
+    CLEAR = '󰖔',
+    PARTLY_CLOUDY = '󰖕',
+    PARTLY_CLOUDY_NIGHT = '󰼱',
+    CLOUDY = '󰖐',
+    FOG = '󰖑',
+    LIGHT_RAIN = '󰼳',
+    RAIN = '󰖗',
+    HEAVY_RAIN = '󰖖',
+    SNOW = '󰼴',
+    HEAVY_SNOW = '󰼶',
+    SLEET = '󰙿',
+    HAIL = '󰖒',
+    THUNDERSTORM = '󰙾',
+}

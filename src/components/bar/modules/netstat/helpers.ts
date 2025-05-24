@@ -2,7 +2,7 @@ import NetworkService from 'src/services/system/network';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';
 
-const networkService = NetworkService.getDefault();
+const networkService = NetworkService.getInstance();
 
 const { networkInterface, rateUnit, round, pollingInterval } = options.bar.customModules.netstat;
 

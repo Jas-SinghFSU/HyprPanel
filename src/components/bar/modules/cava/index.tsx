@@ -7,7 +7,7 @@ import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     icon,

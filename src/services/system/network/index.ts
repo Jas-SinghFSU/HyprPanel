@@ -31,7 +31,7 @@ class NetworkService {
         this._networkPoller.initialize();
     }
 
-    public static getDefault(): NetworkService {
+    public static getInstance(): NetworkService {
         if (this._instance === undefined) {
             this._instance = new NetworkService();
         }

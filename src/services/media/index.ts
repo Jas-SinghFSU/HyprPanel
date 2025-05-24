@@ -16,6 +16,7 @@ import options from 'src/configuration';
  * of useful bindings to display the media info of the current media player.
  */
 export class MediaPlayerService {
+    private static _instance: MediaPlayerService;
     public activePlayer: Variable<CurrentPlayer> = Variable(undefined);
 
     public timeStamp: Variable<string> = Variable('00:00');
@@ -50,13 +51,7 @@ export class MediaPlayerService {
         artUrl: undefined,
     };
 
-    /**
-     * Creates a new MediaManager and initializes event listeners
-     *
-     * Sets up tracking of media players and binds to the MPRIS service
-     * to receive updates about media playback across the system.
-     */
-    constructor() {
+    private constructor() {
         this._mprisService = AstalMpris.get_default();
         const { noMediaText } = options.menus.media;
 
@@ -71,6 +66,14 @@ export class MediaPlayerService {
         Variable.derive([bind(this.activePlayer)], (player) => {
             this._updateAllMediaProperties(player);
         });
+    }
+
+    public static getInstance(): MediaPlayerService {
+        if (this._instance === undefined) {
+            this._instance = new MediaPlayerService();
+        }
+
+        return this._instance;
     }
 
     /**
@@ -504,7 +507,7 @@ export class MediaPlayerService {
     }
 }
 
-const mediaPlayerManager = new MediaPlayerService();
+const mediaPlayerManager = MediaPlayerService.getInstance();
 
 export const {
     activePlayer,

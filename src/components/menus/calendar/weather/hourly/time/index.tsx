@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import options from 'src/configuration';
 import WeatherService from 'src/services/weather';
 
-const weatherService = WeatherService.get_default();
+const weatherService = WeatherService.getInstance();
 const { military } = options.menus.clock.time;
 
 export const HourlyTime = ({ hoursFromNow }: HourlyTimeProps): JSX.Element => {

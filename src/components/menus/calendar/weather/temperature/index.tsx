@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import WeatherService from 'src/services/weather';
 import options from 'src/configuration';
 
-const weatherService = WeatherService.get_default();
+const weatherService = WeatherService.getInstance();
 const { unit } = options.menus.clock.weather;
 
 const WeatherStatus = (): JSX.Element => {
@@ -12,7 +12,7 @@ const WeatherStatus = (): JSX.Element => {
             <label
                 className={bind(weatherService.weatherData).as(
                     (weather) =>
-                        `calendar-menu-weather today condition label ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).color}`,
+                        `calendar-menu-weather today condition label ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).color}`,
                 )}
                 label={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
                 truncate
@@ -37,10 +37,10 @@ const Temperature = (): JSX.Element => {
             <label
                 className={bind(weatherService.weatherData).as(
                     (weather) =>
-                        `calendar-menu-weather today temp label icon txt-icon ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).color}`,
+                        `calendar-menu-weather today temp label icon txt-icon ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).color}`,
                 )}
                 label={bind(weatherService.weatherData).as(
-                    (weather) => weatherService.getWeatherIcon(Math.ceil(weather.current.temperature.fahrenheit)).icon,
+                    (weather) => weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).icon,
                 )}
             />
         );

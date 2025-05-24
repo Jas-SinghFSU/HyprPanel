@@ -11,7 +11,7 @@ import { WorkspaceService } from 'src/services/workspace';
 export class BarAutoHideService {
     private static _instance: BarAutoHideService;
 
-    private _workspaceService = WorkspaceService.getDefault();
+    private _workspaceService = WorkspaceService.getInstance();
     private _hyprlandService = AstalHyprland.get_default();
     private _autoHide = options.bar.autoHide;
 
@@ -25,10 +25,12 @@ export class BarAutoHideService {
         autoHide: undefined,
     };
 
+    private constructor() {}
+
     /**
      * Gets the singleton instance of the BarAutoHideService
      */
-    public static getDefault(): BarAutoHideService {
+    public static getInstance(): BarAutoHideService {
         if (!this._instance) {
             this._instance = new BarAutoHideService();
         }

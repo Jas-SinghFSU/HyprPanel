@@ -22,7 +22,7 @@ class GpuService {
         this._gpuPoller.initialize();
     }
 
-    public static getDefault(): GpuService {
+    public static getInstance(): GpuService {
         if (this._instance === undefined) {
             this._instance = new GpuService();
         }

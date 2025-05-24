@@ -4,7 +4,7 @@ import { BashPoller } from 'src/lib/poller/BashPoller';
 import { CustomBarModule } from '../types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 export function initCommandPoller(
     commandOutput: Variable<string>,

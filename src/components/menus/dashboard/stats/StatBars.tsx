@@ -44,7 +44,7 @@ export const GpuStat = (): JSX.Element => {
                     return <box />;
                 }
 
-                const gpuService = GpuService.getDefault();
+                const gpuService = GpuService.getInstance();
 
                 return (
                     <StatBar
@@ -60,7 +60,7 @@ export const GpuStat = (): JSX.Element => {
 };
 
 export const CpuStat = (): JSX.Element => {
-    const cpuService = CpuService.getDefault();
+    const cpuService = CpuService.getInstance();
 
     return (
         <StatBar
@@ -73,7 +73,7 @@ export const CpuStat = (): JSX.Element => {
 };
 
 export const RamStat = (): JSX.Element => {
-    const ramService = RamService.getDefault();
+    const ramService = RamService.getInstance();
 
     return (
         <StatBar
@@ -88,7 +88,7 @@ export const RamStat = (): JSX.Element => {
 };
 
 export const StorageStat = (): JSX.Element => {
-    const storageService = StorageService.getDefault();
+    const storageService = StorageService.getInstance();
 
     return (
         <StatBar

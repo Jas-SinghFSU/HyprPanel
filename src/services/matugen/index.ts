@@ -12,7 +12,9 @@ const MATUGEN_SETTINGS = options.theme.matugen_settings;
 export class MatugenService {
     private static _instance: MatugenService;
 
-    public static getDefault(): MatugenService {
+    private constructor() {}
+
+    public static getInstance(): MatugenService {
         if (this._instance === undefined) {
             this._instance = new MatugenService();
         }

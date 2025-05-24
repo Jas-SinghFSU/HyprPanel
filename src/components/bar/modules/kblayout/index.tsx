@@ -8,7 +8,7 @@ import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =

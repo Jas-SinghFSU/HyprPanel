@@ -1,83 +1,38 @@
-import { Weather } from './providers/core.types';
+import { Weather } from './types';
 
 export const DEFAULT_WEATHER: Weather = {
     location: {
-        name: 'Tahiti',
-        region: 'Somewhere',
-        country: 'United States of America',
-        coordinates: {
-            lat: 0,
-            lon: 0,
-        },
-        timezone: 'Tahiti',
-        localTimeEpoch: 1721981457,
+        name: 'Unknown',
+        region: '',
+        country: '',
     },
     current: {
-        temperature: {
-            celsius: 0,
-            fahrenheit: 0,
-        },
+        temperature: 0,
+        feelsLike: 0,
         condition: {
-            text: 'Clear',
-            code: 1000,
-            isDay: false,
+            text: 'WARNING',
+            isDay: true,
         },
         wind: {
-            speedKph: 0,
-            speedMph: 0,
+            speed: 0,
+            direction: 'N',
+            degree: 0,
         },
         humidity: 0,
-        feelsLike: {
-            celsius: 0,
-            fahrenheit: 0,
-        },
     },
     forecast: [
         {
-            date: '2024-07-26',
-            dateEpoch: 1721952000,
-            tempMin: {
-                celsius: 0,
-                fahrenheit: 0,
-            },
-            tempMax: {
-                celsius: 0,
-                fahrenheit: 0,
-            },
+            date: new Date(),
+            tempMin: 0,
+            tempMax: 0,
             condition: {
-                text: 'Sunny',
-                code: 1000,
+                text: 'WARNING',
                 isDay: true,
             },
             chanceOfRain: 0,
-            hourly: [
-                {
-                    time: 1721977200,
-                    temperature: {
-                        celsius: 0,
-                        fahrenheit: 0,
-                    },
-                    condition: {
-                        text: 'Clear',
-                        code: 1000,
-                        isDay: false,
-                    },
-                    chanceOfRain: 0,
-                },
-                {
-                    time: 1721980800,
-                    temperature: {
-                        celsius: 0,
-                        fahrenheit: 0,
-                    },
-                    condition: {
-                        text: 'Clear',
-                        code: 1000,
-                        isDay: false,
-                    },
-                    chanceOfRain: 0,
-                },
-            ],
+            hourly: [],
         },
     ],
+    lastUpdated: new Date(),
+    provider: 'none',
 };

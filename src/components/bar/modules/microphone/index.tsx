@@ -6,7 +6,7 @@ import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;

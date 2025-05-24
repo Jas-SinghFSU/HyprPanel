@@ -8,7 +8,7 @@ import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
-const brightnessService = BrightnessService.get_default();
+const brightnessService = BrightnessService.getInstance();
 const hyprlandService = AstalHyprland.get_default();
 
 const { enable, duration, active_monitor, monitor } = options.theme.osd;

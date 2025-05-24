@@ -22,7 +22,7 @@ class RamService {
         this._ramPoller.initialize();
     }
 
-    public static getDefault(): RamService {
+    public static getInstance(): RamService {
         if (this._instance === undefined) {
             this._instance = new RamService();
         }

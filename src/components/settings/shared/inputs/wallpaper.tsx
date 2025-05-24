@@ -3,7 +3,7 @@ import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
 import { WallpaperService } from 'src/services/wallpaper';
 
-const wallpaperService = WallpaperService.getDefault();
+const wallpaperService = WallpaperService.getInstance();
 
 export const WallpaperInputter = <T extends string | number | boolean | object>({
     opt,

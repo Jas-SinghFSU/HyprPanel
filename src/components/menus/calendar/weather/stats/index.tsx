@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import WeatherService from 'src/services/weather';
 import options from 'src/configuration';
 
-const weatherService = WeatherService.get_default();
+const weatherService = WeatherService.getInstance();
 
 const { unit } = options.menus.clock.weather;
 

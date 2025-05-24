@@ -24,6 +24,17 @@ export class NetworkService {
     }
 
     /**
+     * Gets the singleton instance of NetworkService
+     * @returns The NetworkService instance
+     */
+    public static getInstance(): NetworkService {
+        if (!this._instance) {
+            this._instance = new NetworkService();
+        }
+        return this._instance;
+    }
+
+    /**
      * Sets up bindings to monitor network service changes
      */
     private _setupBindings(): void {
@@ -50,17 +61,4 @@ export class NetworkService {
     public get rawService(): AstalNetwork.Network {
         return this._astalNetwork;
     }
-
-    /**
-     * Gets the singleton instance of NetworkService
-     * @returns The NetworkService instance
-     */
-    public static get_default(): NetworkService {
-        if (!this._instance) {
-            this._instance = new NetworkService();
-        }
-        return this._instance;
-    }
 }
-
-export const networkService = NetworkService.get_default();

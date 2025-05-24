@@ -1,14 +1,12 @@
 import { AstalIO, bind, interval, Variable } from 'astal';
-import { getWeatherProvider } from 'src/services/weather/providers/registry';
+import { getWeatherProvider } from 'src/services/weather/adapters/registry';
 import { WeatherApiKeyManager } from './keyManager';
 import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
-import { weatherIcons } from 'src/services/weather/icons';
 import { httpClient } from 'src/lib/httpClient';
-import { Weather } from './providers/core.types';
-import { WeatherIconTitle, WeatherIcon } from './types';
-import { DEFAULT_WEATHER } from 'src/services/weather/default';
 import { UnitType } from 'src/lib/formatters/temperature/types';
+import { Weather } from './types';
+import { DEFAULT_WEATHER } from './default';
 
 export default class WeatherService {
     public static instance: WeatherService;
@@ -21,7 +19,7 @@ export default class WeatherService {
     private readonly _intervalFrequency: Opt<number>;
     private _interval: null | AstalIO.Time = null;
 
-    constructor() {
+    private constructor() {
         const { interval, location } = options.menus.clock.weather;
 
         this._intervalFrequency = interval;
@@ -30,7 +28,7 @@ export default class WeatherService {
         this._initializeConfigTracker();
     }
 
-    public static get_default(): WeatherService {
+    public static getInstance(): WeatherService {
         if (WeatherService.instance === undefined) {
             WeatherService.instance = new WeatherService();
         }
@@ -80,7 +78,7 @@ export default class WeatherService {
                 const response = await httpClient.get(url);
 
                 if (response.data && provider.adapter) {
-                    const transformedData = provider.adapter.toGenericFormat(response.data);
+                    const transformedData = provider.adapter.toStandardFormat(response.data);
                     this.weatherData.set(transformedData);
                 } else {
                     this.weatherData.set(DEFAULT_WEATHER);
@@ -105,43 +103,44 @@ export default class WeatherService {
         }
 
         if (unitType === 'imperial') {
-            return `${Math.ceil(weatherData.current.temperature.fahrenheit)}° F`;
+            // FIX: Add conversion
+            return `${Math.ceil(weatherData.current.temperature)}° F`;
         } else {
-            return `${Math.ceil(weatherData.current.temperature.celsius)}° C`;
+            return `${Math.ceil(weatherData.current.temperature)}° C`;
         }
     }
 
     /**
-     * Returns the appropriate weather icon and color class based on the temperature in Fahrenheit.
+     * Returns the appropriate weather icon and color class based on the temperature in Celsius.
      *
-     * @param fahrenheit - The temperature in Fahrenheit.
+     * @param celsius - The temperature in Celsius.
      * @returns - An object containing the weather icon and color class.
      */
-    public getWeatherIcon(fahrenheit: number): Record<string, string> {
+    public getWeatherIcon(celsius: number): Record<string, string> {
         const icons = {
-            100: '',
-            75: '',
-            50: '',
-            25: '',
-            0: '',
+            38: '',
+            24: '',
+            10: '',
+            [-4]: '',
+            [-18]: '',
         } as const;
+
         const colors = {
-            100: 'weather-color red',
-            75: 'weather-color orange',
-            50: 'weather-color lavender',
-            25: 'weather-color blue',
-            0: 'weather-color sky',
+            38: 'weather-color red',
+            24: 'weather-color orange',
+            10: 'weather-color lavender',
+            [-4]: 'weather-color blue',
+            [-18]: 'weather-color sky',
         } as const;
 
         type IconKeys = keyof typeof icons;
 
         const threshold: IconKeys =
-            fahrenheit < 0
-                ? 0
-                : (([100, 75, 50, 25, 0] as IconKeys[]).find((threshold) => threshold <= fahrenheit) ?? 0);
-
-        const icon = icons[threshold || 50];
-        const color = colors[threshold || 50];
+            celsius < -18
+                ? -18
+                : (([38, 24, 10, -4, -18] as IconKeys[]).find((threshold) => threshold <= celsius) ?? 10);
+        const icon = icons[threshold || 10];
+        const color = colors[threshold || 10];
 
         return {
             icon,
@@ -162,9 +161,10 @@ export default class WeatherService {
         }
 
         if (unitType === 'imperial') {
-            return `${Math.floor(weatherData.current.wind.speedMph)} mph`;
+            // FIX: Add conversion
+            return `${Math.floor(weatherData.current.wind.speed)} mph`;
         }
-        return `${Math.floor(weatherData.current.wind.speedKph)} kph`;
+        return `${Math.floor(weatherData.current.wind.speed)} kph`;
     }
 
     /**
@@ -180,41 +180,41 @@ export default class WeatherService {
         return `${weatherData.forecast[0].chanceOfRain}%`;
     }
 
-    /**
-     * Type Guard
-     * Checks if the given title is a valid weather icon title.
-     *
-     * @param title - The weather icon title to check.
-     * @returns - True if the title is a valid weather icon title, false otherwise.
-     */
-    public isValidWeatherIconTitle(title: string): title is WeatherIconTitle {
-        return title in weatherIcons;
-    }
-
-    /**
-     * Gets the appropriate weather icon based on the weather status text.
-     *
-     * @param weatherData - The weather data object.
-     * @returns - The weather icon corresponding to the weather status text.
-     */
-    public getWeatherStatusTextIcon(weatherData: Weather): WeatherIcon {
-        if (!weatherData?.current?.condition?.text) {
-            return weatherIcons.warning;
-        }
-
-        let iconQuery = weatherData.current.condition.text.trim().toLowerCase().replaceAll(' ', '_');
-
-        if (!weatherData.current.condition.isDay && iconQuery === 'partly_cloudy') {
-            iconQuery = 'partly_cloudy_night';
-        }
-
-        if (this.isValidWeatherIconTitle(iconQuery)) {
-            return weatherIcons[iconQuery];
-        } else {
-            console.warn(`Unknown weather icon title: ${iconQuery}`);
-            return weatherIcons['warning'];
-        }
-    }
+    // /**
+    //  * Type Guard
+    //  * Checks if the given title is a valid weather icon title.
+    //  *
+    //  * @param title - The weather icon title to check.
+    //  * @returns - True if the title is a valid weather icon title, false otherwise.
+    //  */
+    // public isValidWeatherIconTitle(title: string): title is WeatherIconTitle {
+    //     return title in weatherIcons;
+    // }
+    //
+    // /**
+    //  * Gets the appropriate weather icon based on the weather status text.
+    //  *
+    //  * @param weatherData - The weather data object.
+    //  * @returns - The weather icon corresponding to the weather status text.
+    //  */
+    // public getWeatherStatusTextIcon(weatherData: Weather): WeatherIcon {
+    //     if (!weatherData?.current?.condition?.text) {
+    //         return weatherIcons.warning;
+    //     }
+    //
+    //     let iconQuery = weatherData.current.condition.text.trim().toLowerCase().replaceAll(' ', '_');
+    //
+    //     if (!weatherData.current.condition.isDay && iconQuery === 'partly_cloudy') {
+    //         iconQuery = 'partly_cloudy_night';
+    //     }
+    //
+    //     if (this.isValidWeatherIconTitle(iconQuery)) {
+    //         return weatherIcons[iconQuery];
+    //     } else {
+    //         console.warn(`Unknown weather icon title: ${iconQuery}`);
+    //         return weatherIcons['warning'];
+    //     }
+    // }
 
     public convertCelsiusToFahrenheit(celsiusValue: number): number {
         return (celsiusValue * 9) / 5 + 32;

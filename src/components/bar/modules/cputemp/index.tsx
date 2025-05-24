@@ -8,7 +8,7 @@ import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 import { UnitType } from 'src/lib/formatters/temperature/types';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     label,

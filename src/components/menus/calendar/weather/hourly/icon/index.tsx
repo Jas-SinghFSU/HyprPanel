@@ -1,10 +1,9 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { weatherIcons } from 'src/services/weather/icons.js';
-import { getIconQuery } from '../helpers';
 import WeatherService from 'src/services/weather';
+import { getHourlyWeatherIcon } from '../helpers';
 
-const weatherService = WeatherService.get_default();
+const weatherService = WeatherService.getInstance();
 
 export const HourlyIcon = ({ hoursFromNow }: HourlyIconProps): JSX.Element => {
     return (
@@ -12,9 +11,8 @@ export const HourlyIcon = ({ hoursFromNow }: HourlyIconProps): JSX.Element => {
             <label
                 className={'hourly-weather-icon txt-icon'}
                 label={bind(weatherService.weatherData).as((weather) => {
-                    const iconQuery = getIconQuery(weather, hoursFromNow);
-                    const weatherIcn = weatherIcons[iconQuery] || weatherIcons['warning'];
-                    return weatherIcn;
+                    const weatherIcon = getHourlyWeatherIcon(weather, hoursFromNow);
+                    return weatherIcon;
                 })}
                 halign={Gtk.Align.CENTER}
             />

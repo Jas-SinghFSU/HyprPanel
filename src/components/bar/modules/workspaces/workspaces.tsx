@@ -8,7 +8,7 @@ import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import { WorkspaceIconMap, ApplicationIcons } from './types';
 
-const workspaceService = WorkspaceService.getDefault();
+const workspaceService = WorkspaceService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const {

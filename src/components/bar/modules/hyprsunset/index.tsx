@@ -8,7 +8,7 @@ import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 import { throttleInput } from '../../utils/input/throttle';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     label,

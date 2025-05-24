@@ -8,7 +8,7 @@ import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const {

@@ -6,31 +6,32 @@ import WeatherService from 'src/services/weather';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
-const weatherService = WeatherService.get_default();
+const weatherService = WeatherService.getInstance();
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
     const iconBinding = Variable.derive([bind(weatherService.weatherData)], (wthr) => {
-        const weatherStatusIcon = weatherService.getWeatherStatusTextIcon(wthr);
+        const weatherStatusIcon = wthr.current.condition.text;
         return weatherStatusIcon;
     });
 
     const labelBinding = Variable.derive([bind(weatherService.weatherData), bind(unit)], (wthr, unt) => {
         if (unt === 'imperial') {
-            return `${Math.ceil(wthr.current.temperature.fahrenheit)}° F`;
+            // FIX: Convert to F
+            return `${Math.ceil(wthr.current.temperature)}° F`;
         } else {
-            return `${Math.ceil(wthr.current.temperature.celsius)}° C`;
+            return `${Math.ceil(wthr.current.temperature)}° C`;
         }
     });
 
     const weatherModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(weatherService.weatherData).as(
-            (v) => `Weather Status: ${v.current.condition.text}`,
+            (wthr) => `Weather Status: ${wthr.current.condition.text}`,
         ),
         boxClass: 'weather-custom',
         label: labelBinding(),

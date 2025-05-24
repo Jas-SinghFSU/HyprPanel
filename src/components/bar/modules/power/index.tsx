@@ -5,7 +5,7 @@ import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
 
-const inputHandler = InputHandlerService.getDefault();
+const inputHandler = InputHandlerService.getInstance();
 
 const { icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.power;
 

@@ -20,12 +20,12 @@ interface EventConfig {
  */
 export class InputHandlerService {
     private static _instance: InputHandlerService;
-
     private readonly _EMPTY_CMD = Variable('');
-
     private readonly _scrollSpeed = options.bar.customModules.scrollSpeed;
 
-    public static getDefault(): InputHandlerService {
+    private constructor() {}
+
+    public static getInstance(): InputHandlerService {
         if (this._instance === undefined) {
             this._instance = new InputHandlerService();
         }

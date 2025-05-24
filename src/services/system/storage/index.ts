@@ -24,7 +24,7 @@ class StorageService {
         this._storagePoller.initialize();
     }
 
-    public static getDefault(): StorageService {
+    public static getInstance(): StorageService {
         if (this._instance === undefined) {
             this._instance = new StorageService();
         }

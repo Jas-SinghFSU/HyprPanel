@@ -5,7 +5,7 @@ import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { WallpaperService } from 'src/services/wallpaper';
 import { isAnImage } from 'src/lib/validation/images';
 
-const wallpaperService = WallpaperService.getDefault();
+const wallpaperService = WallpaperService.getInstance();
 
 const { matugen } = options.theme;
 

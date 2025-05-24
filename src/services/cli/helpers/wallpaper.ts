@@ -2,7 +2,7 @@ import GLib from 'gi://GLib?version=2.0';
 import options from 'src/configuration';
 import { WallpaperService } from 'src/services/wallpaper';
 
-const wallpaperService = WallpaperService.getDefault();
+const wallpaperService = WallpaperService.getInstance();
 const { EXISTS, IS_REGULAR } = GLib.FileTest;
 const { enable: enableWallpaper, image } = options.wallpaper;
 

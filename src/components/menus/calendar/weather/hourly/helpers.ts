@@ -1,8 +1,6 @@
-import WeatherService from 'src/services/weather';
-import { Weather } from 'src/services/weather/providers/core.types';
-import { WeatherIconTitle } from 'src/services/weather/types';
-
-const weatherService = WeatherService.get_default();
+import { toEpochTime } from 'src/lib/formatters/time';
+import { Weather, WeatherStatus } from 'src/services/weather/types';
+import { WeatherIcon } from 'src/services/weather/types/condition.types';
 
 /**
  * Retrieves the next epoch time for weather data.
@@ -16,11 +14,11 @@ const weatherService = WeatherService.get_default();
  * @returns The next epoch time as a number.
  */
 export const getNextEpoch = (wthr: Weather, hoursFromNow: number): number => {
-    const currentEpoch = wthr.location.localTimeEpoch;
-    const epochAtHourStart = currentEpoch - (currentEpoch % 3600);
-    let nextEpoch = 3600 * hoursFromNow + epochAtHourStart;
+    const currentEpochTime = toEpochTime(wthr.lastUpdated);
+    const epochAtHourStart = currentEpochTime - (currentEpochTime % 3600);
+    const curHour = new Date(currentEpochTime * 1000).getHours();
 
-    const curHour = new Date(currentEpoch * 1000).getHours();
+    let nextEpoch = 3600 * hoursFromNow + epochAtHourStart;
 
     /*
      * NOTE: Since the API is only capable of showing the current day; if
@@ -45,27 +43,22 @@ export const getNextEpoch = (wthr: Weather, hoursFromNow: number): number => {
  *
  * @returns The weather icon query as a string.
  */
-export const getIconQuery = (weather: Weather, hoursFromNow: number): WeatherIconTitle => {
+export const getHourlyWeatherIcon = (weather: Weather, hoursFromNow: number): WeatherIcon => {
     if (!weather?.forecast?.[0]?.hourly) {
-        return 'warning';
+        return WeatherIcon.WARNING;
     }
-    
+
     const nextEpoch = getNextEpoch(weather, hoursFromNow);
-    const weatherAtEpoch = weather.forecast[0].hourly.find((h) => h.time === nextEpoch);
+    const weatherAtEpoch = weather.forecast[0].hourly.find((hour) => toEpochTime(hour.time) === nextEpoch);
 
     if (weatherAtEpoch === undefined) {
-        return 'warning';
+        return WeatherIcon.WARNING;
     }
 
-    let iconQuery = weatherAtEpoch.condition.text.trim().toLowerCase().replaceAll(' ', '_');
+    let iconQuery: WeatherStatus = weatherAtEpoch.condition?.text ?? 'WARNING';
 
-    if (!weatherAtEpoch?.condition.isDay && iconQuery === 'partly_cloudy') {
-        iconQuery = 'partly_cloudy_night';
+    if (!weatherAtEpoch?.condition?.isDay && iconQuery === 'PARTLY_CLOUDY') {
+        iconQuery = 'PARTLY_CLOUDY';
     }
-
-    if (weatherService.isValidWeatherIconTitle(iconQuery)) {
-        return iconQuery;
-    } else {
-        return 'warning';
-    }
+    return WeatherIcon[iconQuery];
 };
