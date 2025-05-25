@@ -5,7 +5,7 @@ import { recordingPoller } from './helpers';
 export const Shortcuts = ({ isEnabled }: ShortcutsProps): JSX.Element => {
     if (!isEnabled) {
         recordingPoller.stop();
-        return <box />;
+        return null;
     }
     recordingPoller.initialize();
 
