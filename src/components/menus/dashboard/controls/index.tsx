@@ -9,7 +9,7 @@ import {
 
 export const Controls = ({ isEnabled }: ControlsProps): JSX.Element => {
     if (!isEnabled) {
-        return <box />;
+        return null;
     }
 
     return (

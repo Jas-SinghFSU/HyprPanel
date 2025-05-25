@@ -723,25 +723,23 @@ in
         text = finalConfig;
       };
 
-      # NOTE: Deprecated
-      # systemd.user.services = mkIf cfg.systemd.enable {
-      #   hyprpanel = {
-      #     Unit = {
-      #       Description = "A Bar/Panel for Hyprland with extensive customizability.";
-      #       Documentation = "https://hyprpanel.com";
-      #       PartOf = [ "graphical-session.target" ];
-      #       After = [ "graphical-session-pre.target" ];
-      #     };
-      #     Service = {
-      #       ExecStart = "${package}/bin/hyprpanel";
-      #       ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
-      #       Restart = "on-failure";
-      #       KillMode = "mixed";
-      #     };
-      #     Install = { WantedBy = [ "graphical-session.target" ]; };
-      #   };
-      # };
-      warnings = if cfg.systemd.enable then [ "The `systemd.enable` option is now obsolete." ] else [ ];
+      systemd.user.services = mkIf cfg.systemd.enable {
+        hyprpanel = {
+          Unit = {
+            Description = "A Bar/Panel for Hyprland with extensive customizability.";
+            Documentation = "https://hyprpanel.com";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session-pre.target" ];
+          };
+          Service = {
+            ExecStart = "${package}/bin/hyprpanel";
+            ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR1 $MAINPID";
+            Restart = "on-failure";
+            KillMode = "mixed";
+          };
+          Install = { WantedBy = [ "graphical-session.target" ]; };
+        };
+      };
 
       wayland.windowManager.hyprland.settings.exec-once = mkIf cfg.hyprland.enable [
         "${package}/bin/hyprpanel"
