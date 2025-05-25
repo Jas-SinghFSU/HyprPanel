@@ -5,8 +5,8 @@ import { RamServiceCtor } from './types';
 
 class RamUsageService {
     private _updateFrequency: Variable<number>;
-    private _shouldRound = false;
     private _ramPoller: FunctionPoller<GenericResourceData, []>;
+    private _isInitialized = false;
 
     private _ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
@@ -20,8 +20,6 @@ class RamUsageService {
             bind(this._updateFrequency),
             this._calculateUsage,
         );
-
-        this._ramPoller.initialize();
     }
 
     public refresh(): void {
@@ -67,22 +65,21 @@ class RamUsageService {
         }
     }
 
-    public setShouldRound(round: boolean): void {
-        this._shouldRound = round;
-    }
-
     private _divide([total, used]: number[]): number {
         const percentageTotal = (used / total) * 100;
-
-        if (this._shouldRound) {
-            return total > 0 ? Math.round(percentageTotal) : 0;
-        }
 
         return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
     }
 
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
+    }
+
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._ramPoller.initialize();
+            this._isInitialized = true;
+        }
     }
 
     public stopPoller(): void {

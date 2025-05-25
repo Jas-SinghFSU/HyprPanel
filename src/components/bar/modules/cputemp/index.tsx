@@ -24,8 +24,10 @@ const {
     icon,
 } = options.bar.customModules.cpuTemp;
 
+const cpuTempService = new CpuTempService({ frequency: pollingInterval, sensor });
+
 export const CpuTemp = (): BarBoxChild => {
-    const cpuTempService = new CpuTempService({ frequency: pollingInterval, sensor });
+    cpuTempService.initialize();
 
     const bindings = Variable.derive([bind(sensor), bind(round), bind(unit)], (sensorName) => {
         cpuTempService.refresh();

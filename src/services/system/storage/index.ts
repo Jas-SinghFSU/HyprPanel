@@ -9,6 +9,7 @@ class StorageService {
     private _updateFrequency: Variable<number>;
     private _shouldRound = false;
     private _storagePoller: FunctionPoller<GenericResourceData, []>;
+    private _isInitialized = false;
 
     private _storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
@@ -21,8 +22,6 @@ class StorageService {
             bind(this._updateFrequency),
             this._calculateUsage,
         );
-
-        this._storagePoller.initialize();
     }
 
     public refresh(): void {
@@ -71,6 +70,13 @@ class StorageService {
 
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
+    }
+
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._storagePoller.initialize();
+            this._isInitialized = true;
+        }
     }
 
     public stopPoller(): void {

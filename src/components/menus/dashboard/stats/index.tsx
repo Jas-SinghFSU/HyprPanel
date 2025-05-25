@@ -1,10 +1,13 @@
 import { Gtk } from 'astal/gtk3';
 import { CpuStat, GpuStat, RamStat, StorageStat } from './StatBars';
+import { setupDashboardMonitoring } from './helpers';
 
 export const Stats = ({ isEnabled }: StatsProps): JSX.Element => {
     if (!isEnabled) {
         return <box />;
     }
+
+    setupDashboardMonitoring();
 
     return (
         <box

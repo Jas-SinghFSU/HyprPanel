@@ -1,36 +1,26 @@
 import { Module } from '../../shared/module';
-import { computeStorage } from './helpers';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import options from 'src/configuration';
 import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
-import { GenericResourceData, LABEL_TYPES, ResourceLabelType } from 'src/services/system/types';
+import { LABEL_TYPES, ResourceLabelType } from 'src/services/system/types';
 import { BarBoxChild } from '../../types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
+import StorageService from 'src/services/system/storage';
 
 const inputHandler = InputHandlerService.getInstance();
 
 const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
     options.bar.customModules.storage;
 
-const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
-
-const storageUsage = Variable<GenericResourceData>(defaultStorageData);
-
-const storagePoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
-    storageUsage,
-    [bind(round)],
-    bind(pollingInterval),
-    computeStorage,
-    round,
-);
-
-storagePoller.initialize('storage');
+const storageService = new StorageService({ frequency: pollingInterval });
 
 export const Storage = (): BarBoxChild => {
+    console.log('re-rendering');
+    storageService.initialize();
+
     const labelBinding = Variable.derive(
-        [bind(storageUsage), bind(labelType), bind(round)],
+        [bind(storageService.storage), bind(labelType), bind(round)],
         (storage, lblTyp, round) => {
             return renderResourceLabel(lblTyp, storage, round);
         },

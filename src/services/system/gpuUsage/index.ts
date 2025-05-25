@@ -5,6 +5,7 @@ import { GpuServiceCtor, GPUStat } from './types';
 class GpuUsageService {
     private _updateFrequency: Variable<number>;
     private _gpuPoller: FunctionPoller<number, []>;
+    private _isInitialized = false;
 
     public _gpu = Variable<number>(0);
 
@@ -18,8 +19,6 @@ class GpuUsageService {
             bind(this._updateFrequency),
             this._calculateUsage,
         );
-
-        this._gpuPoller.initialize();
     }
 
     public refresh(): void {
@@ -64,7 +63,18 @@ class GpuUsageService {
         this._updateFrequency.set(timerInMs);
     }
 
+    /**
+     * Initializes the GPU usage monitoring poller
+     */
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._gpuPoller.initialize();
+            this._isInitialized = true;
+        }
+    }
+
     public stopPoller(): void {
+        console.log('stopping GPU');
         this._gpuPoller.stop();
     }
 

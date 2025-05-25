@@ -12,6 +12,7 @@ class NetworkUsageService {
 
     private _previousNetUsage = { rx: 0, tx: 0, time: 0 };
     private _networkPoller: FunctionPoller<NetworkResourceData, []>;
+    private _isInitialized = false;
 
     public _network: Variable<NetworkResourceData>;
 
@@ -28,8 +29,6 @@ class NetworkUsageService {
             bind(this._updateFrequency),
             this._calculateUsage,
         );
-
-        this._networkPoller.initialize();
     }
 
     public refresh(): void {
@@ -105,6 +104,16 @@ class NetworkUsageService {
      */
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
+    }
+
+    /**
+     * Initializes the network usage monitoring poller
+     */
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._networkPoller.initialize();
+            this._isInitialized = true;
+        }
     }
 
     /**

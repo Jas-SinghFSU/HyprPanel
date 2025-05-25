@@ -1,27 +1,27 @@
 import { Module } from '../../shared/module';
-import { computeCPU } from './helpers';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { InputHandlerService } from '../../utils/input/inputHandler';
+import CpuUsageService from 'src/services/system/cpuUsage';
 
 const inputHandler = InputHandlerService.getInstance();
 
 const { label, round, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
     options.bar.customModules.cpu;
 
-const cpuUsage = Variable(0);
-
-const cpuPoller = new FunctionPoller<number, []>(cpuUsage, [bind(round)], bind(pollingInterval), computeCPU);
-
-cpuPoller.initialize('cpu');
+const cpuService = new CpuUsageService({ frequency: pollingInterval });
 
 export const Cpu = (): BarBoxChild => {
-    const labelBinding = Variable.derive([bind(cpuUsage), bind(round)], (cpuUsg: number, round: boolean) => {
-        return round ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
-    });
+    cpuService.initialize();
+
+    const labelBinding = Variable.derive(
+        [bind(cpuService.cpu), bind(round)],
+        (cpuUsg: number, round: boolean) => {
+            return round ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
+        },
+    );
 
     let inputHandlerBindings: Variable<void>;
 
@@ -54,6 +54,7 @@ export const Cpu = (): BarBoxChild => {
             onDestroy: () => {
                 inputHandlerBindings.drop();
                 labelBinding.drop();
+                cpuService.destroy();
             },
         },
     });

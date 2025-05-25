@@ -1,11 +1,4 @@
-import {
-    formatSizeInTiB,
-    formatSizeInGiB,
-    formatSizeInMiB,
-    formatSizeInKiB,
-    autoFormatSize,
-    getPostfix,
-} from 'src/lib/units/size';
+import { SizeConverter } from 'src/lib/units/size';
 import { ResourceLabelType, GenericResourceData } from 'src/services/system/types';
 
 /**
@@ -47,29 +40,46 @@ export const renderResourceLabel = (
     round: boolean,
 ): string => {
     const { used, total, percentage, free } = rmUsg;
-
-    const formatFunctions = {
-        TiB: formatSizeInTiB,
-        GiB: formatSizeInGiB,
-        MiB: formatSizeInMiB,
-        KiB: formatSizeInKiB,
-        B: (size: number): number => size,
-    };
-
-    const totalSizeFormatted = autoFormatSize(total, round);
-    const postfix = getPostfix(total);
-
-    const formatUsed = formatFunctions[postfix] ?? formatFunctions['B'];
-    const usedSizeFormatted = formatUsed(used, round);
+    const precision = round ? 0 : 2;
 
     if (lblType === 'used/total') {
-        return `${usedSizeFormatted}/${totalSizeFormatted} ${postfix}`;
+        const totalConverter = SizeConverter.fromBytes(total);
+        const usedConverter = SizeConverter.fromBytes(used);
+        const { unit } = totalConverter.toAuto();
+
+        let usedValue: number;
+        let totalValue: string;
+
+        switch (unit) {
+            case 'tebibytes':
+                usedValue = usedConverter.toTiB(precision);
+                totalValue = totalConverter.formatTiB(precision);
+                return `${usedValue}/${totalValue}`;
+            case 'gibibytes':
+                usedValue = usedConverter.toGiB(precision);
+                totalValue = totalConverter.formatGiB(precision);
+                return `${usedValue}/${totalValue}`;
+            case 'mebibytes':
+                usedValue = usedConverter.toMiB(precision);
+                totalValue = totalConverter.formatMiB(precision);
+                return `${usedValue}/${totalValue}`;
+            case 'kibibytes':
+                usedValue = usedConverter.toKiB(precision);
+                totalValue = totalConverter.formatKiB(precision);
+                return `${usedValue}/${totalValue}`;
+            default:
+                usedValue = usedConverter.toBytes(precision);
+                totalValue = totalConverter.formatBytes(precision);
+                return `${usedValue}/${totalValue}`;
+        }
     }
+
     if (lblType === 'used') {
-        return `${autoFormatSize(used, round)} ${getPostfix(used)}`;
+        return SizeConverter.fromBytes(used).formatAuto(precision);
     }
+
     if (lblType === 'free') {
-        return `${autoFormatSize(free, round)} ${getPostfix(free)}`;
+        return SizeConverter.fromBytes(free).formatAuto(precision);
     }
 
     return `${percentage}%`;

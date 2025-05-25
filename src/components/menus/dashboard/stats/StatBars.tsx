@@ -1,14 +1,10 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { handleClick } from './helpers';
+import { cpuService, gpuService, handleClick, ramService, storageService } from './helpers';
 import { Binding } from 'astal';
 import { renderResourceLabel } from 'src/components/bar/utils/systemResource';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import GpuUsageService from 'src/services/system/gpuUsage';
-import CpuUsageService from 'src/services/system/cpuUsage';
-import RamUsageService from 'src/services/system/ramUsage';
-import StorageService from 'src/services/system/storage';
 
 const { enable_gpu } = options.menus.dashboard.stats;
 
@@ -44,7 +40,7 @@ export const GpuStat = (): JSX.Element => {
                     return <box />;
                 }
 
-                const gpuService = new GpuUsageService();
+                gpuService.initialize();
 
                 return (
                     <StatBar
@@ -60,7 +56,7 @@ export const GpuStat = (): JSX.Element => {
 };
 
 export const CpuStat = (): JSX.Element => {
-    const cpuService = new CpuUsageService();
+    cpuService.initialize();
 
     return (
         <StatBar
@@ -73,7 +69,7 @@ export const CpuStat = (): JSX.Element => {
 };
 
 export const RamStat = (): JSX.Element => {
-    const ramService = new RamUsageService();
+    ramService.initialize();
 
     return (
         <StatBar
@@ -88,7 +84,7 @@ export const RamStat = (): JSX.Element => {
 };
 
 export const StorageStat = (): JSX.Element => {
-    const storageService = new StorageService();
+    storageService.initialize();
 
     return (
         <StatBar

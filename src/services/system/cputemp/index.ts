@@ -7,6 +7,7 @@ class CpuTempService {
     private _sensor: Variable<string>;
     private _updateFrequency: Variable<number>;
     private _tempPoller: FunctionPoller<number, []>;
+    private _isInitialized = false;
     private _temperature = Variable(0);
 
     constructor({ sensor, frequency }: CpuTempServiceCtor = {}) {
@@ -21,8 +22,6 @@ class CpuTempService {
             bind(this._updateFrequency),
             this._readTemperature,
         );
-
-        this._tempPoller.initialize();
     }
 
     /**
@@ -71,6 +70,16 @@ class CpuTempService {
 
     public updateFrequency(frequency: number): void {
         this._updateFrequency.set(frequency);
+    }
+
+    /**
+     * Initializes the CPU temperature monitoring poller
+     */
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._tempPoller.initialize();
+            this._isInitialized = true;
+        }
     }
 
     public stopPoller(): void {

@@ -7,6 +7,7 @@ class CpuUsageService {
     private _updateFrequency: Variable<number>;
     private _previousCpuData = new GTop.glibtop_cpu();
     private _cpuPoller: FunctionPoller<number, []>;
+    private _isInitialized = false;
 
     private _cpu = Variable(0);
 
@@ -22,8 +23,6 @@ class CpuUsageService {
             bind(this._updateFrequency),
             this._calculateUsage,
         );
-
-        this._cpuPoller.initialize();
     }
 
     public refresh(): void {
@@ -50,6 +49,13 @@ class CpuUsageService {
 
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
+    }
+
+    public initialize(): void {
+        if (!this._isInitialized) {
+            this._cpuPoller.initialize();
+            this._isInitialized = true;
+        }
     }
 
     public stopPoller(): void {

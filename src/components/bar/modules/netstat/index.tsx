@@ -29,8 +29,10 @@ const {
 
 setupNetworkServiceBindings();
 
+const networkService = new NetworkUsageService({ frequency: pollingInterval });
+
 export const Netstat = (): BarBoxChild => {
-    const networkService = new NetworkUsageService({ frequency: pollingInterval });
+    networkService.initialize();
 
     const renderNetworkLabel = (
         lblType: NetstatLabelType,
@@ -107,7 +109,7 @@ export const Netstat = (): BarBoxChild => {
                 inputHandlerBindings.drop();
                 labelBinding.drop();
                 iconBinding.drop();
-                networkService.stopPoller();
+                networkService.destroy();
             },
         },
     });
