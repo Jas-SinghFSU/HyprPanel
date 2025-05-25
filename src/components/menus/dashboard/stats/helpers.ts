@@ -32,7 +32,6 @@ export const handleClick = (): void => {
  */
 const monitorInterval = (): void => {
     interval.subscribe(() => {
-        console.log('changed');
         ramService.updateTimer(interval.get());
         cpuService.updateTimer(interval.get());
         storageService.updateTimer(interval.get());

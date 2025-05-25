@@ -74,7 +74,6 @@ class GpuUsageService {
     }
 
     public stopPoller(): void {
-        console.log('stopping GPU');
         this._gpuPoller.stop();
     }
 

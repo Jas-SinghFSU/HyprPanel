@@ -2,6 +2,7 @@ import { bind, Variable } from 'astal';
 import options from 'src/configuration';
 import WeatherService from 'src/services/weather';
 import { getTargetHour } from '../helpers';
+import { TemperatureConverter } from 'src/lib/units/temperature';
 
 const weatherService = WeatherService.getInstance();
 
@@ -19,12 +20,12 @@ export const HourlyTemp = ({ hoursFromNow }: HourlyTempProps): JSX.Element => {
             const weatherAtTargetHour = weather.forecast[0].hourly.find(
                 (h) => h.time.getTime() === targetHour.getTime(),
             );
+            const temperatureAtTargetHour = weatherAtTargetHour?.temperature ?? 0;
 
-            if (unitType === 'imperial') {
-                // FIX: Convert to F
-                return `${weatherAtTargetHour ? Math.ceil(weatherAtTargetHour.temperature) : '-'}° F`;
-            }
-            return `${weatherAtTargetHour ? Math.ceil(weatherAtTargetHour.temperature) : '-'}° C`;
+            const tempConverter = TemperatureConverter.fromCelsius(temperatureAtTargetHour);
+            const isImperial = unitType === 'imperial';
+
+            return isImperial ? tempConverter.formatFahrenheit() : tempConverter.formatCelsius();
         },
     );
 

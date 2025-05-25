@@ -88,15 +88,15 @@ export class TemperatureConverter {
         switch (unit) {
             case 'celsius':
                 value = this.toCelsius();
-                symbol = '°C';
+                symbol = '° C';
                 break;
             case 'fahrenheit':
                 value = this.toFahrenheit();
-                symbol = '°F';
+                symbol = '° F';
                 break;
             case 'kelvin':
                 value = this.toKelvin();
-                symbol = 'K';
+                symbol = ' K';
                 break;
         }
 

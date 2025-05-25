@@ -7,6 +7,8 @@ import { httpClient } from 'src/lib/httpClient';
 import { GaugeIcon, Percentage, Weather, WeatherIcon } from './types';
 import { DEFAULT_WEATHER } from './default';
 import { WeatherProvider } from './adapters/types';
+import { TemperatureConverter } from 'src/lib/units/temperature';
+import { SpeedConverter } from 'src/lib/units/speed';
 
 const { unit: unitType } = options.menus.clock.weather;
 
@@ -100,14 +102,10 @@ export default class WeatherService {
     private _getTemperature(): string {
         const { temperature } = this.weatherData.get().current;
 
-        const units = unitType.get() === 'imperial' ? 'F' : 'C';
+        const tempConverter = TemperatureConverter.fromCelsius(temperature);
+        const isImperial = unitType.get() === 'imperial';
 
-        if (!temperature) {
-            return `--° ${units}`;
-        }
-
-        // FIX: Add conversion
-        return `${Math.ceil(temperature)}° ${units}`;
+        return isImperial ? tempConverter.formatFahrenheit() : tempConverter.formatCelsius();
     }
 
     /**
@@ -171,14 +169,11 @@ export default class WeatherService {
     private _getWindConditions(): string {
         const windConditions = this.weatherData.get().current.wind;
 
-        const units = unitType.get() === 'imperial' ? 'mph' : 'kph';
+        const isImperial = unitType.get() === 'imperial';
+        const windSpeed = windConditions?.speed ?? 0;
+        const speedConverter = SpeedConverter.fromKph(windSpeed);
 
-        if (!windConditions) {
-            return `-- ${units}`;
-        }
-
-        // FIX: Add conversion
-        return `${Math.floor(windConditions.speed)} ${units}`;
+        return isImperial ? speedConverter.formatMph() : speedConverter.formatKph();
     }
 
     /**

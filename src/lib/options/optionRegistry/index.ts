@@ -74,7 +74,11 @@ export class OptionRegistry<T extends OptionsObject> {
             }
 
             const oldVal = opt.get();
-            if (newVal !== oldVal) {
+
+            const newValueStringified = JSON.stringify(newVal, null, 2);
+            const oldValueStringified = JSON.stringify(oldVal, null, 2);
+
+            if (newValueStringified !== oldValueStringified) {
                 opt.set(newVal, { writeDisk: false });
             }
         }

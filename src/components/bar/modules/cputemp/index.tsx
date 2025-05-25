@@ -40,18 +40,19 @@ export const CpuTemp = (): BarBoxChild => {
     const labelBinding = Variable.derive(
         [bind(cpuTempService.temperature), bind(unit), bind(showUnit), bind(round)],
         (cpuTemp, tempUnit, showUnit, roundValue) => {
-            const converter = TemperatureConverter.fromCelsius(cpuTemp);
+            const tempConverter = TemperatureConverter.fromCelsius(cpuTemp);
             const isImperial = tempUnit === 'imperial';
+            const precision = roundValue ? 0 : 2;
 
             if (showUnit) {
                 return isImperial
-                    ? converter.formatFahrenheit(roundValue ? 0 : 2)
-                    : converter.formatCelsius(roundValue ? 0 : 2);
+                    ? tempConverter.formatFahrenheit(precision)
+                    : tempConverter.formatCelsius(precision);
             }
 
             const temp = isImperial
-                ? converter.toFahrenheit(roundValue ? 0 : 2)
-                : converter.toCelsius(roundValue ? 0 : 2);
+                ? tempConverter.toFahrenheit(precision)
+                : tempConverter.toCelsius(precision);
 
             return temp.toString();
         },

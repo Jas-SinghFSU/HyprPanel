@@ -14,18 +14,12 @@ const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } 
     options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
-    const iconBinding = Variable.derive([bind(weatherService.weatherData)], (wthr) => {
-        const weatherStatusIcon = wthr.current.condition.text;
-        return weatherStatusIcon;
+    const iconBinding = Variable.derive([bind(weatherService.statusIcon)], (icon) => {
+        return icon;
     });
 
-    const labelBinding = Variable.derive([bind(weatherService.weatherData), bind(unit)], (wthr, unt) => {
-        if (unt === 'imperial') {
-            // FIX: Convert to F
-            return `${Math.ceil(wthr.current.temperature)}° F`;
-        } else {
-            return `${Math.ceil(wthr.current.temperature)}° C`;
-        }
+    const labelBinding = Variable.derive([bind(weatherService.temperature), bind(unit)], (temp) => {
+        return temp;
     });
 
     let inputHandlerBindings: Variable<void>;
