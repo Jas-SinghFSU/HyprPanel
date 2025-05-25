@@ -5,9 +5,9 @@ import { Binding } from 'astal';
 import { renderResourceLabel } from 'src/components/bar/utils/systemResource';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import GpuService from 'src/services/system/gpu';
-import CpuService from 'src/services/system/cpu';
-import RamService from 'src/services/system/ram';
+import GpuUsageService from 'src/services/system/gpuUsage';
+import CpuUsageService from 'src/services/system/cpuUsage';
+import RamUsageService from 'src/services/system/ramUsage';
 import StorageService from 'src/services/system/storage';
 
 const { enable_gpu } = options.menus.dashboard.stats;
@@ -44,14 +44,14 @@ export const GpuStat = (): JSX.Element => {
                     return <box />;
                 }
 
-                const gpuService = GpuService.getInstance();
+                const gpuService = new GpuUsageService();
 
                 return (
                     <StatBar
                         icon={'󰢮'}
                         stat={'gpu'}
-                        value={bind(gpuService.gpuUsage)}
-                        label={bind(gpuService.gpuUsage).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
+                        value={bind(gpuService.gpu)}
+                        label={bind(gpuService.gpu).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
                     />
                 );
             })}
@@ -60,7 +60,7 @@ export const GpuStat = (): JSX.Element => {
 };
 
 export const CpuStat = (): JSX.Element => {
-    const cpuService = CpuService.getInstance();
+    const cpuService = new CpuUsageService();
 
     return (
         <StatBar
@@ -73,7 +73,7 @@ export const CpuStat = (): JSX.Element => {
 };
 
 export const RamStat = (): JSX.Element => {
-    const ramService = RamService.getInstance();
+    const ramService = new RamUsageService();
 
     return (
         <StatBar
@@ -88,7 +88,7 @@ export const RamStat = (): JSX.Element => {
 };
 
 export const StorageStat = (): JSX.Element => {
-    const storageService = StorageService.getInstance();
+    const storageService = new StorageService();
 
     return (
         <StatBar

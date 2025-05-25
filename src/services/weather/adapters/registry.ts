@@ -1,5 +1,5 @@
 import { WeatherProvider } from './types';
-import { WeatherApiAdapter } from './weatherApi/adapter';
+import { WeatherApiAdapter } from './weatherApi';
 
 export const weatherProviders: Record<string, WeatherProvider> = {
     weatherapi: {

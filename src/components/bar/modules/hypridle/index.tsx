@@ -31,6 +31,8 @@ export const Hypridle = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const hypridleModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(idleInhibit).as(
@@ -41,7 +43,7 @@ export const Hypridle = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             toggleInhibit();
@@ -62,6 +64,7 @@ export const Hypridle = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 labelBinding.drop();
             },

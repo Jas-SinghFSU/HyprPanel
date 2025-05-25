@@ -37,6 +37,8 @@ export const Ram = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const ramModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
@@ -47,7 +49,7 @@ export const Ram = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -79,6 +81,7 @@ export const Ram = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
             },
         },

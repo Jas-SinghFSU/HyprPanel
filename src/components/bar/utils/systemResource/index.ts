@@ -5,7 +5,7 @@ import {
     formatSizeInKiB,
     autoFormatSize,
     getPostfix,
-} from 'src/lib/formatters/size';
+} from 'src/lib/units/size';
 import { ResourceLabelType, GenericResourceData } from 'src/services/system/types';
 
 /**

@@ -47,6 +47,8 @@ export const Cava = (): BarBoxChild => {
         );
     }
 
+    let inputHandlerBindings: Variable<void>;
+
     return Module({
         isVis: bind(isVis),
         label: labelBinding(),
@@ -55,7 +57,7 @@ export const Cava = (): BarBoxChild => {
         boxClass: 'cava',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -74,9 +76,10 @@ export const Cava = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
+                settingsTracker?.drop();
                 labelBinding.drop();
                 visTracker.drop();
-                settingsTracker?.drop();
             },
         },
     });

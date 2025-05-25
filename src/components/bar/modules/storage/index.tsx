@@ -35,6 +35,8 @@ export const Storage = (): BarBoxChild => {
             return renderResourceLabel(lblTyp, storage, round);
         },
     );
+    let inputHandlerBindings: Variable<void>;
+
     const storageModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
@@ -45,7 +47,7 @@ export const Storage = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -77,6 +79,7 @@ export const Storage = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
             },
         },

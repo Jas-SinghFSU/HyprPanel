@@ -1,36 +1,38 @@
 import { bind, GLib, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from '../types';
+import { RamServiceCtor } from './types';
 
-class RamService {
-    private static _instance: RamService;
-    private _updateFrequency = Variable(2000);
+class RamUsageService {
+    private _updateFrequency: Variable<number>;
     private _shouldRound = false;
     private _ramPoller: FunctionPoller<GenericResourceData, []>;
 
-    public ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
+    private _ram = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
-    private constructor() {
-        this.calculateUsage = this.calculateUsage.bind(this);
+    constructor({ frequency }: RamServiceCtor = {}) {
+        this._updateFrequency = frequency ?? Variable(2000);
+        this._calculateUsage = this._calculateUsage.bind(this);
+
         this._ramPoller = new FunctionPoller<GenericResourceData, []>(
-            this.ram,
-            [],
+            this._ram,
+            [bind(this._updateFrequency)],
             bind(this._updateFrequency),
-            this.calculateUsage,
+            this._calculateUsage,
         );
 
         this._ramPoller.initialize();
     }
 
-    public static getInstance(): RamService {
-        if (this._instance === undefined) {
-            this._instance = new RamService();
-        }
-
-        return this._instance;
+    public refresh(): void {
+        this._ram.set(this._calculateUsage());
     }
 
-    public calculateUsage(): GenericResourceData {
+    public get ram(): Variable<GenericResourceData> {
+        return this._ram;
+    }
+
+    private _calculateUsage(): GenericResourceData {
         try {
             const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
 
@@ -90,6 +92,12 @@ class RamService {
     public startPoller(): void {
         this._ramPoller.start();
     }
+
+    public destroy(): void {
+        this._ramPoller.stop();
+        this._ram.drop();
+        this._updateFrequency.drop();
+    }
 }
 
-export default RamService;
+export default RamUsageService;

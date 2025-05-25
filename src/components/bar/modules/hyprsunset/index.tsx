@@ -58,6 +58,8 @@ export const Hyprsunset = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const hyprsunsetModule = Module({
         textIcon: iconBinding(),
         tooltipText: tooltipBinding(),
@@ -66,7 +68,7 @@ export const Hyprsunset = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             throttledToggleSunset();
@@ -87,6 +89,7 @@ export const Hyprsunset = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 tooltipBinding.drop();
                 labelBinding.drop();

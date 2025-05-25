@@ -1,36 +1,36 @@
 import { bind, exec, Variable } from 'astal';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
-import { GPUStat } from './types';
+import { GpuServiceCtor, GPUStat } from './types';
 
-class GpuService {
-    private static _instance: GpuService;
-    private _updateFrequency = Variable(2000);
+class GpuUsageService {
+    private _updateFrequency: Variable<number>;
     private _gpuPoller: FunctionPoller<number, []>;
 
-    public gpuUsage = Variable<number>(0);
+    public _gpu = Variable<number>(0);
 
-    private constructor() {
-        this.calculateUsage = this.calculateUsage.bind(this);
+    constructor({ frequency }: GpuServiceCtor = {}) {
+        this._updateFrequency = frequency ?? Variable(2000);
+        this._calculateUsage = this._calculateUsage.bind(this);
 
         this._gpuPoller = new FunctionPoller<number, []>(
-            this.gpuUsage,
+            this._gpu,
             [],
             bind(this._updateFrequency),
-            this.calculateUsage,
+            this._calculateUsage,
         );
 
         this._gpuPoller.initialize();
     }
 
-    public static getInstance(): GpuService {
-        if (this._instance === undefined) {
-            this._instance = new GpuService();
-        }
-
-        return this._instance;
+    public refresh(): void {
+        this._gpu.set(this._calculateUsage());
     }
 
-    public calculateUsage(): number {
+    public get gpu(): Variable<number> {
+        return this._gpu;
+    }
+
+    private _calculateUsage(): number {
         try {
             const gpuStats = exec('gpustat --json');
             if (typeof gpuStats !== 'string') {
@@ -71,6 +71,12 @@ class GpuService {
     public startPoller(): void {
         this._gpuPoller.start();
     }
+
+    public destroy(): void {
+        this._gpuPoller.stop();
+        this._gpu.drop();
+        this._updateFrequency.drop();
+    }
 }
 
-export default GpuService;
+export default GpuUsageService;

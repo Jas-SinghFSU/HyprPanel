@@ -23,6 +23,8 @@ export const Cpu = (): BarBoxChild => {
         return round ? `${Math.round(cpuUsg)}%` : `${cpuUsg.toFixed(2)}%`;
     });
 
+    let inputHandlerBindings: Variable<void>;
+
     const cpuModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
@@ -31,7 +33,7 @@ export const Cpu = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -50,6 +52,7 @@ export const Cpu = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
             },
         },

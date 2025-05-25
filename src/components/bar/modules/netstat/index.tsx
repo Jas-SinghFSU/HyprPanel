@@ -1,5 +1,5 @@
 import { Module } from '../../shared/module';
-import NetworkService from 'src/services/system/network';
+import NetworkUsageService from 'src/services/system/networkUsage';
 import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
@@ -10,7 +10,6 @@ import options from 'src/configuration';
 import { cycleArray, setupNetworkServiceBindings } from './helpers';
 
 const inputHandler = InputHandlerService.getInstance();
-const networkService = NetworkService.getInstance();
 const astalNetworkService = AstalNetwork.get_default();
 
 const NETWORK_LABEL_TYPES: NetstatLabelType[] = ['full', 'in', 'out'];
@@ -25,11 +24,14 @@ const {
     leftClick,
     rightClick,
     middleClick,
+    pollingInterval,
 } = options.bar.customModules.netstat;
 
 setupNetworkServiceBindings();
 
 export const Netstat = (): BarBoxChild => {
+    const networkService = new NetworkUsageService({ frequency: pollingInterval });
+
     const renderNetworkLabel = (
         lblType: NetstatLabelType,
         networkData: { in: string; out: string },
@@ -63,6 +65,8 @@ export const Netstat = (): BarBoxChild => {
         (networkData, lblType: NetstatLabelType) => renderNetworkLabel(lblType, networkData),
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const netstatModule = Module({
         useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
         icon: iconBinding(),
@@ -75,7 +79,7 @@ export const Netstat = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -100,6 +104,7 @@ export const Netstat = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
                 iconBinding.drop();
                 networkService.stopPoller();

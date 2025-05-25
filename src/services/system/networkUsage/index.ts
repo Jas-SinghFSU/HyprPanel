@@ -2,12 +2,10 @@ import { bind, Variable } from 'astal';
 import GLib from 'gi://GLib';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { ByteMultiplier, NetworkResourceData, RateUnit } from '../types';
-import { NetworkUsage } from './types';
+import { NetworkServiceCtor, NetworkUsage } from './types';
 
-class NetworkService {
-    private static _instance: NetworkService;
-
-    private _updateFrequency = Variable(2000);
+class NetworkUsageService {
+    private _updateFrequency: Variable<number>;
     private _shouldRound = false;
     private _interfaceName = Variable('');
     private _rateUnit = Variable<RateUnit>('auto');
@@ -15,34 +13,37 @@ class NetworkService {
     private _previousNetUsage = { rx: 0, tx: 0, time: 0 };
     private _networkPoller: FunctionPoller<NetworkResourceData, []>;
 
-    public network: Variable<NetworkResourceData>;
+    public _network: Variable<NetworkResourceData>;
 
-    private constructor() {
+    constructor({ frequency }: NetworkServiceCtor = {}) {
+        this._updateFrequency = frequency ?? Variable(2000);
         const defaultNetstatData = this._getDefaultNetstatData(this._rateUnit.get());
-        this.network = Variable<NetworkResourceData>(defaultNetstatData);
-        this.calculateUsage = this.calculateUsage.bind(this);
+        this._network = Variable<NetworkResourceData>(defaultNetstatData);
+
+        this._calculateUsage = this._calculateUsage.bind(this);
+
         this._networkPoller = new FunctionPoller<NetworkResourceData, []>(
-            this.network,
+            this._network,
             [],
             bind(this._updateFrequency),
-            this.calculateUsage,
+            this._calculateUsage,
         );
 
         this._networkPoller.initialize();
     }
 
-    public static getInstance(): NetworkService {
-        if (this._instance === undefined) {
-            this._instance = new NetworkService();
-        }
+    public refresh(): void {
+        this._network.set(this._calculateUsage());
+    }
 
-        return this._instance;
+    public get network(): Variable<NetworkResourceData> {
+        return this._network;
     }
 
     /**
      * Calculates network usage rates for the configured interface
      */
-    public calculateUsage(): NetworkResourceData {
+    private _calculateUsage(): NetworkResourceData {
         const rateUnit = this._rateUnit.get();
         const interfaceName = this._interfaceName.get();
 
@@ -211,6 +212,14 @@ class NetworkService {
 
         return { in: `0 ${dataType}/s`, out: `0 ${dataType}/s` };
     };
+
+    public destroy(): void {
+        this._networkPoller.stop();
+        this._network.drop();
+        this._interfaceName.drop();
+        this._rateUnit.drop();
+        this._updateFrequency.drop();
+    }
 }
 
-export default NetworkService;
+export default NetworkUsageService;

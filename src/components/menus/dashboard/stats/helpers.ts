@@ -1,8 +1,8 @@
 import { execAsync } from 'astal';
 import { App } from 'astal/gtk3';
-import GpuService from 'src/services/system/gpu';
-import CpuService from 'src/services/system/cpu';
-import RamService from 'src/services/system/ram';
+import GpuUsageService from 'src/services/system/gpuUsage';
+import CpuUsageService from 'src/services/system/cpuUsage';
+import RamUsageService from 'src/services/system/ramUsage';
 import StorageService from 'src/services/system/storage';
 import options from 'src/configuration';
 
@@ -30,8 +30,8 @@ export const handleClick = (): void => {
  * @param storageService The storage service instance.
  */
 const monitorInterval = (
-    cpuService: CpuService,
-    ramService: RamService,
+    cpuService: CpuUsageService,
+    ramService: RamUsageService,
     storageService: StorageService,
 ): void => {
     interval.subscribe(() => {
@@ -52,9 +52,9 @@ const monitorInterval = (
  * @param storageService The storage service instance.
  */
 const monitorStatsEnabled = (
-    cpuService: CpuService,
-    ramService: RamService,
-    gpuService: GpuService,
+    cpuService: CpuUsageService,
+    ramService: RamUsageService,
+    gpuService: GpuUsageService,
     storageService: StorageService,
 ): void => {
     enabled.subscribe(() => {
@@ -83,7 +83,7 @@ const monitorStatsEnabled = (
  *
  * @param gpuService The GPU service instance.
  */
-const monitorGpuTrackingEnabled = (gpuService: GpuService): void => {
+const monitorGpuTrackingEnabled = (gpuService: GpuUsageService): void => {
     enable_gpu.subscribe((gpuEnabled) => {
         if (gpuEnabled) {
             return gpuService.startPoller();
@@ -105,9 +105,9 @@ const monitorGpuTrackingEnabled = (gpuService: GpuService): void => {
  * @param storageService The storage service instance.
  */
 export const initializePollers = (
-    cpuService: CpuService,
-    ramService: RamService,
-    gpuService: GpuService,
+    cpuService: CpuUsageService,
+    ramService: RamUsageService,
+    gpuService: GpuUsageService,
     storageService: StorageService,
 ): void => {
     ramService.setShouldRound(true);

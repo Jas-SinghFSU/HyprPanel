@@ -1,6 +1,6 @@
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { systemTime } from 'src/lib/formatters/time';
+import { systemTime } from 'src/lib/units/time';
 import { GLib } from 'astal';
 import { Module } from '../../shared/module';
 import { BarBoxChild } from 'src/components/bar/types';
@@ -53,13 +53,15 @@ export const WorldClock = (): BarBoxChild => {
                 .join(timeDivider),
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const microphoneModule = Module({
         textIcon: iconBinding(),
         label: timeBinding(),
         boxClass: 'worldclock',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -76,6 +78,11 @@ export const WorldClock = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
+                timeBinding.drop();
+                iconBinding.drop();
             },
         },
     });

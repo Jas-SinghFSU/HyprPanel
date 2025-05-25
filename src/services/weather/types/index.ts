@@ -1,5 +1,3 @@
-import { WeatherIcon } from './condition.types';
-
 export type WindDirection =
     | 'N'
     | 'NNE'
@@ -46,6 +44,8 @@ export interface CurrentWeather {
     condition: WeatherCondition;
     /** Wind information */
     wind?: Wind;
+    /** Chance of rain */
+    chanceOfRain?: Percentage;
     /** Relative humidity (0-100) */
     humidity?: Percentage;
 }
@@ -96,4 +96,32 @@ export interface Weather {
     lastUpdated: Date;
     /** Provider name for debugging */
     provider?: string;
+}
+
+export enum WeatherIcon {
+    WARNING = '󰼯',
+    SUNNY = '󰖙',
+    CLEAR = '󰖔',
+    'PARTLY CLOUDY' = '󰖕',
+    'PARTLY CLOUDY NIGHT' = '󰼱',
+    CLOUDY = '󰖐',
+    FOG = '󰖑',
+    'LIGHT RAIN' = '󰼳',
+    RAIN = '󰖗',
+    'HEAVY RAIN' = '󰖖',
+    SNOW = '󰼴',
+    'HEAVY SNOW' = '󰼶',
+    SLEET = '󰙿',
+    HAIL = '󰖒',
+    THUNDERSTORM = '󰙾',
+}
+
+export interface GaugeIcon {
+    icon: '' | '' | '' | '' | '';
+    color:
+        | 'weather-color red'
+        | 'weather-color orange'
+        | 'weather-color lavender'
+        | 'weather-color blue'
+        | 'weather-color sky';
 }

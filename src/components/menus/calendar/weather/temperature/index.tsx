@@ -1,18 +1,15 @@
 import { Gtk } from 'astal/gtk3';
-import { bind, Variable } from 'astal';
+import { bind } from 'astal';
 import WeatherService from 'src/services/weather';
-import options from 'src/configuration';
 
 const weatherService = WeatherService.getInstance();
-const { unit } = options.menus.clock.weather;
 
 const WeatherStatus = (): JSX.Element => {
     return (
         <box halign={Gtk.Align.CENTER}>
             <label
-                className={bind(weatherService.weatherData).as(
-                    (weather) =>
-                        `calendar-menu-weather today condition label ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).color}`,
+                className={bind(weatherService.gaugeIcon).as(
+                    (gauge) => `calendar-menu-weather today condition label ${gauge.color}`,
                 )}
                 label={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
                 truncate
@@ -23,25 +20,22 @@ const WeatherStatus = (): JSX.Element => {
 };
 
 const Temperature = (): JSX.Element => {
-    const labelBinding = Variable.derive(
-        [bind(weatherService.weatherData), bind(unit)],
-        weatherService.getTemperature,
-    );
-
     const TemperatureLabel = (): JSX.Element => {
-        return <label className={'calendar-menu-weather today temp label'} label={labelBinding()} />;
+        return (
+            <label
+                className={'calendar-menu-weather today temp label'}
+                label={bind(weatherService.temperature)}
+            />
+        );
     };
 
     const ThermometerIcon = (): JSX.Element => {
         return (
             <label
-                className={bind(weatherService.weatherData).as(
-                    (weather) =>
-                        `calendar-menu-weather today temp label icon txt-icon ${weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).color}`,
+                className={bind(weatherService.gaugeIcon).as(
+                    (gauge) => `calendar-menu-weather today temp label icon txt-icon ${gauge.color}`,
                 )}
-                label={bind(weatherService.weatherData).as(
-                    (weather) => weatherService.getWeatherIcon(Math.ceil(weather.current.temperature)).icon,
-                )}
+                label={bind(weatherService.gaugeIcon).as((gauge) => gauge.icon)}
             />
         );
     };
@@ -51,9 +45,6 @@ const Temperature = (): JSX.Element => {
             className={'calendar-menu-weather today temp container'}
             valign={Gtk.Align.CENTER}
             vertical={false}
-            onDestroy={() => {
-                labelBinding.drop();
-            }}
             hexpand
         >
             <box halign={Gtk.Align.CENTER} hexpand>

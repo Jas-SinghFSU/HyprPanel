@@ -1,6 +1,6 @@
 import { Module } from '../../shared/module';
 import { getKeyboardLayout } from './helpers';
-import { bind } from 'astal';
+import { bind, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
@@ -24,6 +24,8 @@ function setLabel(self: Astal.Label): void {
 }
 
 export const KbInput = (): BarBoxChild => {
+    let inputHandlerBindings: Variable<void>;
+
     const keyboardModule = Module({
         textIcon: bind(icon),
         tooltipText: '',
@@ -45,7 +47,7 @@ export const KbInput = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -62,6 +64,9 @@ export const KbInput = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });

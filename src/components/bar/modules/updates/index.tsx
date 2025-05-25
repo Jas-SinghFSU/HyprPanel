@@ -73,6 +73,8 @@ const updatesIcon = Variable.derive(
 );
 
 export const Updates = (): BarBoxChild => {
+    let inputHandlerBindings: Variable<void>;
+
     const updatesModule = Module({
         textIcon: updatesIcon(),
         tooltipText: bind(pendingUpdatesTooltip),
@@ -82,7 +84,7 @@ export const Updates = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(
+                inputHandlerBindings = inputHandler.attachHandlers(
                     self,
                     {
                         onPrimaryClick: {
@@ -103,6 +105,9 @@ export const Updates = (): BarBoxChild => {
                     },
                     postInputUpdater,
                 );
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });

@@ -8,13 +8,7 @@ import type {
 } from '../../types';
 import { WeatherAdapter } from '../types';
 import { WeatherApiStatusMapper } from './mapper';
-import type {
-    WeatherApiCurrent,
-    WeatherApiForecastDay,
-    WeatherApiHour,
-    WeatherApiLocation,
-    WeatherApiResponse,
-} from './types';
+import type { WeatherApiForecastDay, WeatherApiHour, WeatherApiResponse } from './types';
 
 export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
     private readonly _statusMapper: WeatherApiStatusMapper;
@@ -31,21 +25,25 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
      */
     public toStandardFormat(data: WeatherApiResponse): Weather {
         return {
-            location: this._mapLocation(data.location),
-            current: this._mapCurrentWeather(data.current),
+            location: this._mapLocation(data),
+            current: this._mapCurrentWeather(data),
             forecast: data.forecast.forecastday.map(this._mapDailyForecast.bind(this)),
             lastUpdated: new Date(),
         };
     }
 
-    private _mapLocation(location: WeatherApiLocation): WeatherLocation {
+    private _mapLocation(data: WeatherApiResponse): WeatherLocation {
+        const location = data.location;
         return {
             name: location.name,
             region: location.region,
         };
     }
 
-    private _mapCurrentWeather(currentWeather: WeatherApiCurrent): CurrentWeather {
+    private _mapCurrentWeather(data: WeatherApiResponse): CurrentWeather {
+        const currentWeather = data.current;
+        const currentRainChance = data.forecast.forecastday[0].hour[0].chance_of_rain;
+
         return {
             temperature: currentWeather.temp_c,
             condition: {
@@ -56,6 +54,7 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
                 speed: currentWeather.wind_kph,
                 direction: currentWeather.wind_dir as Wind['direction'],
             },
+            chanceOfRain: currentRainChance,
             humidity: currentWeather.humidity,
             feelsLike: currentWeather.feelslike_c,
         };
@@ -76,8 +75,12 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
 
     private _mapHourlyForecast(hourlyForecast: WeatherApiHour): HourlyForecast {
         return {
-            time: new Date(hourlyForecast.time_epoch),
+            time: new Date(hourlyForecast.time),
             temperature: hourlyForecast.temp_c,
+            condition: {
+                text: this._statusMapper.toStatus(hourlyForecast.condition.text.trim()),
+                isDay: hourlyForecast.is_day === 1,
+            },
             chanceOfRain: hourlyForecast.chance_of_rain,
         };
     }

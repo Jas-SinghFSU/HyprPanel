@@ -45,6 +45,9 @@ export const Microphone = (): BarBoxChild => {
             return `${icon} ${description}`;
         },
     );
+
+    let inputHandlerBindings: Variable<void>;
+
     const microphoneModule = Module({
         textIcon: iconBinding(),
         label: bind(audioService.defaultMicrophone, 'volume').as((vol) => `${Math.round(vol * 100)}%`),
@@ -53,7 +56,7 @@ export const Microphone = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -70,6 +73,9 @@ export const Microphone = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });

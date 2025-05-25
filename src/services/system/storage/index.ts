@@ -3,36 +3,37 @@ import GTop from 'gi://GTop';
 
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from '../types';
+import { StorageServiceCtor } from './types';
 
 class StorageService {
-    private static _instance: StorageService;
-    private _updateFrequency = Variable(2000);
+    private _updateFrequency: Variable<number>;
     private _shouldRound = false;
     private _storagePoller: FunctionPoller<GenericResourceData, []>;
 
-    public storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
+    private _storage = Variable<GenericResourceData>({ total: 0, used: 0, percentage: 0, free: 0 });
 
-    private constructor() {
-        this.calculateUsage = this.calculateUsage.bind(this);
+    constructor({ frequency }: StorageServiceCtor = {}) {
+        this._updateFrequency = frequency ?? Variable(2000);
+        this._calculateUsage = this._calculateUsage.bind(this);
         this._storagePoller = new FunctionPoller<GenericResourceData, []>(
-            this.storage,
+            this._storage,
             [],
             bind(this._updateFrequency),
-            this.calculateUsage,
+            this._calculateUsage,
         );
 
         this._storagePoller.initialize();
     }
 
-    public static getInstance(): StorageService {
-        if (this._instance === undefined) {
-            this._instance = new StorageService();
-        }
-
-        return this._instance;
+    public refresh(): void {
+        this._storage.set(this._calculateUsage());
     }
 
-    public calculateUsage(): GenericResourceData {
+    public get storage(): Variable<GenericResourceData> {
+        return this._storage;
+    }
+
+    private _calculateUsage(): GenericResourceData {
         try {
             const currentFsUsage = new GTop.glibtop_fsusage();
 
@@ -78,6 +79,12 @@ class StorageService {
 
     public startPoller(): void {
         this._storagePoller.start();
+    }
+
+    public destroy(): void {
+        this._storagePoller.stop();
+        this._storage.drop();
+        this._updateFrequency.drop();
     }
 }
 

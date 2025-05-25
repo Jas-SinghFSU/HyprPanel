@@ -1,8 +1,7 @@
-import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';
-import { toEpochTime } from 'src/lib/formatters/time';
 import WeatherService from 'src/services/weather';
+import { getTargetHour } from '../helpers';
 
 const weatherService = WeatherService.getInstance();
 
@@ -16,14 +15,16 @@ export const HourlyTemp = ({ hoursFromNow }: HourlyTempProps): JSX.Element => {
                 return '-';
             }
 
-            const nextEpoch = getNextEpoch(weather, hoursFromNow);
-            const weatherAtEpoch = weather.forecast[0].hourly.find((h) => toEpochTime(h.time) === nextEpoch);
+            const targetHour = getTargetHour(new Date(), hoursFromNow);
+            const weatherAtTargetHour = weather.forecast[0].hourly.find(
+                (h) => h.time.getTime() === targetHour.getTime(),
+            );
 
             if (unitType === 'imperial') {
                 // FIX: Convert to F
-                return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temperature) : '-'}° F`;
+                return `${weatherAtTargetHour ? Math.ceil(weatherAtTargetHour.temperature) : '-'}° F`;
             }
-            return `${weatherAtEpoch ? Math.ceil(weatherAtEpoch.temperature) : '-'}° C`;
+            return `${weatherAtTargetHour ? Math.ceil(weatherAtTargetHour.temperature) : '-'}° C`;
         },
     );
 

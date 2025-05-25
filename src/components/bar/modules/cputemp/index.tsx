@@ -1,12 +1,11 @@
 import { Module } from '../../shared/module';
-import { getCPUTemperature } from './helpers';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/components/bar/types';
 import { InputHandlerService } from '../../utils/input/inputHandler';
+import CpuTempService from 'src/services/system/cputemp';
 import options from 'src/configuration';
-import { UnitType } from 'src/lib/formatters/temperature/types';
+import { TemperatureConverter } from 'src/lib/units/temperature';
 
 const inputHandler = InputHandlerService.getInstance();
 
@@ -25,28 +24,39 @@ const {
     icon,
 } = options.bar.customModules.cpuTemp;
 
-const cpuTemp = Variable(0);
-
-const cpuTempPoller = new FunctionPoller<number, [Variable<boolean>, Variable<UnitType>]>(
-    cpuTemp,
-    [bind(sensor), bind(round), bind(unit)],
-    bind(pollingInterval),
-    getCPUTemperature,
-    round,
-    unit,
-);
-
-cpuTempPoller.initialize('cputemp');
-
 export const CpuTemp = (): BarBoxChild => {
+    const cpuTempService = new CpuTempService({ frequency: pollingInterval, sensor });
+
+    const bindings = Variable.derive([bind(sensor), bind(round), bind(unit)], (sensorName) => {
+        cpuTempService.refresh();
+
+        if (cpuTempService.sensor.get() !== sensorName) {
+            cpuTempService.updateSensor(sensorName);
+        }
+    });
+
     const labelBinding = Variable.derive(
-        [bind(cpuTemp), bind(unit), bind(showUnit), bind(round)],
-        (cpuTmp, tempUnit, shwUnit) => {
-            const unitLabel = tempUnit === 'imperial' ? 'F' : 'C';
-            const unit = shwUnit ? ` ${unitLabel}` : '';
-            return `${cpuTmp.toString()}°${unit}`;
+        [bind(cpuTempService.temperature), bind(unit), bind(showUnit), bind(round)],
+        (cpuTemp, tempUnit, showUnit, roundValue) => {
+            const converter = TemperatureConverter.fromCelsius(cpuTemp);
+            const isImperial = tempUnit === 'imperial';
+
+            if (showUnit) {
+                return isImperial
+                    ? converter.formatFahrenheit(roundValue ? 0 : 2)
+                    : converter.formatCelsius(roundValue ? 0 : 2);
+            }
+
+            const temp = isImperial
+                ? converter.toFahrenheit(roundValue ? 0 : 2)
+                : converter.toCelsius(roundValue ? 0 : 2);
+
+            return temp.toString();
         },
     );
+
+    let inputHandlerBindings: Variable<void>;
+
     const cpuTempModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
@@ -55,7 +65,7 @@ export const CpuTemp = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -74,7 +84,10 @@ export const CpuTemp = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
+                cpuTempService.destroy();
                 labelBinding.drop();
+                bindings.drop();
             },
         },
     });

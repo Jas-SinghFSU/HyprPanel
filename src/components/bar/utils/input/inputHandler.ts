@@ -41,7 +41,7 @@ export class InputHandlerService {
         userDefinedActions: InputHandlerEvents,
         postInputUpdater?: Variable<boolean>,
         customScrollThreshold?: number,
-    ): void {
+    ): Variable<void> {
         const eventHandlers = this._createEventHandlers(
             widget,
             userDefinedActions,
@@ -49,7 +49,7 @@ export class InputHandlerService {
             customScrollThreshold,
         );
 
-        this._setupBindings(
+        return this._setupBindings(
             widget,
             userDefinedActions,
             eventHandlers,
@@ -175,7 +175,7 @@ export class InputHandlerService {
         handlers: UpdateHandlers,
         postInputUpdater?: Variable<boolean>,
         customScrollThreshold?: number,
-    ): void {
+    ): Variable<void> {
         const eventCommands = [
             userDefinedActions.onPrimaryClick?.cmd,
             userDefinedActions.onSecondaryClick?.cmd,
@@ -186,7 +186,7 @@ export class InputHandlerService {
 
         const eventCommandBindings = eventCommands.map((cmd) => this._sanitizeVariable(cmd));
 
-        Variable.derive([bind(this._scrollSpeed), ...eventCommandBindings], () => {
+        return Variable.derive([bind(this._scrollSpeed), ...eventCommandBindings], () => {
             this._disconnectHandlers(handlers);
 
             const newHandlers = this._createEventHandlers(
@@ -197,7 +197,7 @@ export class InputHandlerService {
             );
 
             Object.assign(handlers, newHandlers);
-        })();
+        });
     }
 
     /**

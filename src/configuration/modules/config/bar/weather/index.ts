@@ -1,5 +1,5 @@
 import { opt } from 'src/lib/options';
-import { UnitType } from 'src/lib/formatters/temperature/types';
+import { UnitType } from 'src/lib/units/temperature/types';
 
 export default {
     label: opt(true),

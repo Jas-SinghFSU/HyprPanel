@@ -1,4 +1,8 @@
-import { Process } from 'astal';
+import { Process, Variable } from 'astal';
+
+export interface GpuServiceCtor {
+    frequency?: Variable<number>;
+}
 
 export type GPUStat = {
     index: number;

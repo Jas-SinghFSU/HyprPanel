@@ -1,39 +1,40 @@
 import { bind, Variable } from 'astal';
 import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
+import { CpuServiceCtor } from './types';
 
-class CpuService {
-    private static _instance: CpuService;
-    private _updateFrequency = Variable(2000);
+class CpuUsageService {
+    private _updateFrequency: Variable<number>;
     private _previousCpuData = new GTop.glibtop_cpu();
     private _cpuPoller: FunctionPoller<number, []>;
 
-    public cpu = Variable(0);
+    private _cpu = Variable(0);
 
-    private constructor() {
+    constructor({ frequency }: CpuServiceCtor = {}) {
+        this._updateFrequency = frequency ?? Variable(2000);
         GTop.glibtop_get_cpu(this._previousCpuData);
 
-        this.calculateUsage = this.calculateUsage.bind(this);
+        this._calculateUsage = this._calculateUsage.bind(this);
 
         this._cpuPoller = new FunctionPoller<number, []>(
             this.cpu,
-            [],
+            [bind(this._updateFrequency)],
             bind(this._updateFrequency),
-            this.calculateUsage,
+            this._calculateUsage,
         );
 
         this._cpuPoller.initialize();
     }
 
-    public static getInstance(): CpuService {
-        if (this._instance === undefined) {
-            this._instance = new CpuService();
-        }
-
-        return this._instance;
+    public refresh(): void {
+        this._cpu.set(this._calculateUsage());
     }
 
-    public calculateUsage(): number {
+    public get cpu(): Variable<number> {
+        return this._cpu;
+    }
+
+    private _calculateUsage(): number {
         const currentCpuData = new GTop.glibtop_cpu();
         GTop.glibtop_get_cpu(currentCpuData);
 
@@ -58,6 +59,12 @@ class CpuService {
     public startPoller(): void {
         this._cpuPoller.start();
     }
+
+    public destroy(): void {
+        this._cpuPoller.stop();
+        this._cpu.drop();
+        this._updateFrequency.drop();
+    }
 }
 
-export default CpuService;
+export default CpuUsageService;

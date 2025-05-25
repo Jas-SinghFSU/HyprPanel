@@ -54,6 +54,8 @@ export const Submap = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const submapModule = Module({
         textIcon: submapIcon(),
         tooltipText: submapLabel(),
@@ -62,7 +64,7 @@ export const Submap = (): BarBoxChild => {
         boxClass: 'submap',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -81,6 +83,7 @@ export const Submap = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 submapLabel.drop();
                 submapIcon.drop();
             },

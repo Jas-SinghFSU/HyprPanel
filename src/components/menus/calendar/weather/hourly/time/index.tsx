@@ -1,7 +1,7 @@
-import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
 import options from 'src/configuration';
 import WeatherService from 'src/services/weather';
+import { getTargetHour } from '../helpers';
 
 const weatherService = WeatherService.getInstance();
 const { military } = options.menus.clock.time;
@@ -14,10 +14,9 @@ export const HourlyTime = ({ hoursFromNow }: HourlyTimeProps): JSX.Element => {
                 return '-';
             }
 
-            const nextEpoch = getNextEpoch(weather, hoursFromNow);
-            const dateAtEpoch = new Date(nextEpoch * 1000);
+            const targetHour = getTargetHour(new Date(), hoursFromNow);
 
-            let hours = dateAtEpoch.getHours();
+            let hours = targetHour.getHours();
 
             if (military) {
                 return `${hours}:00`;

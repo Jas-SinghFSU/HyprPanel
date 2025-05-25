@@ -10,6 +10,8 @@ const inputHandler = InputHandlerService.getInstance();
 const { icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.power;
 
 export const Power = (): BarBoxChild => {
+    let inputHandlerBindings: Variable<void>;
+
     const powerModule = Module({
         tooltipText: 'Power Menu',
         textIcon: bind(icon),
@@ -17,7 +19,7 @@ export const Power = (): BarBoxChild => {
         boxClass: 'powermodule',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -34,6 +36,9 @@ export const Power = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });

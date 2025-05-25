@@ -28,6 +28,8 @@ export const Weather = (): BarBoxChild => {
         }
     });
 
+    let inputHandlerBindings: Variable<void>;
+
     const weatherModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(weatherService.weatherData).as(
@@ -38,7 +40,7 @@ export const Weather = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler.attachHandlers(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -57,6 +59,7 @@ export const Weather = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 labelBinding.drop();
             },

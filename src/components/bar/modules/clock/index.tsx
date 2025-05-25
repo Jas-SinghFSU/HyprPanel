@@ -2,7 +2,7 @@ import { openMenu } from '../../utils/menu';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
-import { systemTime } from 'src/lib/formatters/time';
+import { systemTime } from 'src/lib/units/time';
 import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
