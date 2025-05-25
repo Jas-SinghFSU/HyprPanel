@@ -6,7 +6,7 @@ export const Shortcuts = ({ isEnabled }: ShortcutsProps): JSX.Element => {
     recordingPoller.initialize();
 
     if (!isEnabled) {
-        return <box />;
+        return null;
     }
 
     return (
