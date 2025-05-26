@@ -13,7 +13,7 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                 className="network-password-input"
                 hexpand
                 halign={Gtk.Align.START}
-                visibility={shouldMaskPassword}
+                visibility={!shouldMaskPassword}
                 placeholderText="Enter Password"
                 onKeyPressEvent={(self, event) => {
                     const keyPressed = event.get_keyval()[1];

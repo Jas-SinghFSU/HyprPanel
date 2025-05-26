@@ -4,6 +4,7 @@ import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import { DEVICE_STATES } from './types';
+import NM from 'gi://NM';
 
 /**
  * WifiManager handles all WiFi-related functionality for staging and connecting to
@@ -220,23 +221,25 @@ export class WifiManager {
             return;
         }
 
-        this.connecting.set(accessPoint.bssid || '');
-        execAsync(`nmcli device wifi connect ${accessPoint.bssid}`)
-            .then(() => {
-                this.connecting.set('');
-                this.staging.set({} as AstalNetwork.AccessPoint);
-            })
-            .catch((err: Error) => {
-                this.connecting.set('');
-                if (err.message.toLowerCase().includes('secrets were required, but not provided')) {
-                    this.staging.set(accessPoint);
-                } else {
+        this.connecting.set(accessPoint.bssid ?? '');
+
+        if (!accessPoint.flags || accessPoint.flags === NM.__80211ApFlags.NONE) {
+            execAsync(`nmcli device wifi connect ${accessPoint.bssid}`)
+                .then(() => {
+                    this.connecting.set('');
+                    this.staging.set({} as AstalNetwork.AccessPoint);
+                })
+                .catch((err: Error) => {
+                    this.connecting.set('');
                     SystemUtilities.notify({
                         summary: 'Network',
                         body: err.message,
                     });
-                }
-            });
+                });
+        } else {
+            this.connecting.set('');
+            this.staging.set(accessPoint);
+        }
     }
 
     /**
