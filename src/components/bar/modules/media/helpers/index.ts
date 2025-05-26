@@ -108,7 +108,7 @@ export const generateMediaLabel = (
             }
             let value = p1 !== undefined ? mediaTags[p1] : '';
 
-            value = value.replace(/\r?\n/g, ' ');
+            value = value?.replace(/\r?\n/g, ' ') ?? '';
 
             const suffix = p2 !== undefined && p2.length > 0 ? p2.slice(1) : '';
             return value ? value + suffix : '';

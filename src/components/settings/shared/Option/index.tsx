@@ -11,7 +11,7 @@ export const Option = <T extends string | number | boolean | object>({
     const isUnsaved = Variable(false);
     return (
         <box
-            className={'option-item'}
+            className="option-item"
             hexpand
             onDestroy={() => {
                 isUnsaved.drop();

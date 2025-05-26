@@ -16,7 +16,7 @@ export const ResetButton = <T extends string | number | boolean | object>({
                 }
             }}
             sensitive={bind(props.opt).as((v) => v !== props.opt.initial)}
-            valign={Gtk.Align.CENTER}
+            valign={Gtk.Align.START}
         >
             <icon icon={icons.ui.refresh} />
         </button>
