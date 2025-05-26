@@ -67,7 +67,7 @@
     }
 
     .json-preview {
-        padding: 0.5em 0.75em;
+        padding: 0.25em 0.75em;
         background-color: transparentize($bar-menus-background, 0.3);
         border-radius: $bar-menus-border-radius * 0.4;
         transition: all 200ms ease;
@@ -79,6 +79,7 @@
 
         .preview-icon {
             margin-left: 0.5em;
+            font-size: 1em;
             color: $bar-menus-text;
         }
     }
