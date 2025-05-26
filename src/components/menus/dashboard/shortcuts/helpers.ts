@@ -25,7 +25,7 @@ export const getRecordingPath = (): string => options.menus.dashboard.recording.
  */
 export const executeCommand = async (command: string): Promise<void> => {
     try {
-        await execAsync(`/bin/bash -c '${command}'`);
+        await execAsync(`bash -c '${command}'`);
     } catch (err) {
         console.error('Command failed:', command);
         console.error('Error:', err);
