@@ -22,3 +22,17 @@ export const DEVICE_STATES: DevceStates = {
     [AstalNetwork.DeviceState.DEACTIVATING]: 'Deactivating',
     [AstalNetwork.DeviceState.FAILED]: 'Failed',
 } as const;
+
+export const wifiIconMap = new Map<string, WifiIcon>([
+    ['network-wireless-acquiring', '󰤩'],
+    ['network-wireless-connected', '󰤨'],
+    ['network-wireless-encrypted', '󰤪'],
+    ['network-wireless-hotspot', '󰤨'],
+    ['network-wireless-no-route', '󰤩'],
+    ['network-wireless-offline', '󰤮'],
+    ['network-wireless-signal-excellent', '󰤨'],
+    ['network-wireless-signal-good', '󰤥'],
+    ['network-wireless-signal-ok', '󰤢'],
+    ['network-wireless-signal-weak', '󰤟'],
+    ['network-wireless-signal-none', '󰤯'],
+]);

@@ -2,7 +2,7 @@ import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { WifiManager } from './wifi';
 import { EthernetManager } from './ethernet';
-import { getWifiIcon } from './utils';
+import { WifiIcon, wifiIconMap } from './types';
 
 /**
  * NetworkService consolidates all network-related functionality from various components
@@ -49,19 +49,22 @@ export class NetworkService {
     }
 
     /**
-     * Utility method to get WiFi icon
+     * Retrieves the appropriate WiFi icon based on the provided icon name.
      *
-     * @param iconName - The icon name from the network service
-     * @returns The corresponding WiFi icon
+     * @param iconName - The name of the icon to look up. If not provided, a default icon is returned.
+     * @returns The corresponding WiFi icon as a string.
      */
-    public getWifiIcon = getWifiIcon;
+    public getWifiIcon(iconName?: string): WifiIcon {
+        if (iconName === undefined) {
+            return '󰤫';
+        }
 
-    /**
-     * Gets the raw AstalNetwork service (for components that need direct access)
-     *
-     * @returns The underlying AstalNetwork service
-     */
-    public get rawService(): AstalNetwork.Network {
-        return this._astalNetwork;
+        const wifiIcon = wifiIconMap.get(iconName.toLowerCase());
+
+        if (wifiIcon) {
+            return wifiIcon;
+        }
+
+        return '󰤨';
     }
 }

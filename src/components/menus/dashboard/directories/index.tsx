@@ -1,8 +1,9 @@
 import { Gtk } from 'astal/gtk3';
 import { LeftSection, RightSection } from './Sections';
 import { LeftLink1, LeftLink2, LeftLink3, RightLink1, RightLink2, RightLink3 } from './DirectoryLinks';
+import { JSXElement } from 'src/core/types';
 
-export const Directories = ({ isEnabled }: DirectoriesProps): JSX.Element => {
+export const Directories = ({ isEnabled }: DirectoriesProps): JSXElement => {
     if (!isEnabled) {
         return null;
     }

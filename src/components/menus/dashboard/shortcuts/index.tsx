@@ -1,8 +1,9 @@
 import { Gtk } from 'astal/gtk3';
 import { LeftShortcuts, RightShortcuts } from './sections/Section';
 import { recordingPoller } from './helpers';
+import { JSXElement } from 'src/core/types';
 
-export const Shortcuts = ({ isEnabled }: ShortcutsProps): JSX.Element => {
+export const Shortcuts = ({ isEnabled }: ShortcutsProps): JSXElement => {
     recordingPoller.initialize();
 
     if (!isEnabled) {

@@ -1,8 +1,9 @@
 import { Gtk } from 'astal/gtk3';
 import { CpuStat, GpuStat, RamStat, StorageStat } from './StatBars';
 import { setupDashboardMonitoring } from './helpers';
+import { JSXElement } from 'src/core/types';
 
-export const Stats = ({ isEnabled }: StatsProps): JSX.Element => {
+export const Stats = ({ isEnabled }: StatsProps): JSXElement => {
     if (!isEnabled) {
         return null;
     }

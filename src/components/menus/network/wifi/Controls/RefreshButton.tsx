@@ -1,10 +1,11 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { isScanning } from './helpers';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { isPrimaryClick } from 'src/lib/events/mouse';
+import { NetworkService } from 'src/services/network';
 
-const networkService = AstalNetwork.get_default();
+const networkService = NetworkService.getInstance();
+const astalNetwork = AstalNetwork.get_default();
 
 export const RefreshButton = (): JSX.Element => {
     return (
@@ -14,12 +15,14 @@ export const RefreshButton = (): JSX.Element => {
             halign={Gtk.Align.END}
             onClick={(_, event) => {
                 if (isPrimaryClick(event)) {
-                    networkService.wifi?.scan();
+                    astalNetwork.wifi?.scan();
                 }
             }}
         >
             <icon
-                className={bind(isScanning).as((scanning) => (scanning ? 'spinning-icon' : ''))}
+                className={bind(networkService.wifi.isScanning).as((scanning) =>
+                    scanning ? 'spinning-icon' : '',
+                )}
                 icon="view-refresh-symbolic"
             />
         </button>

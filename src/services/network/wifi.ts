@@ -13,11 +13,13 @@ export class WifiManager {
     private _astalNetwork: AstalNetwork.Network;
 
     public isWifiEnabled: Variable<boolean> = Variable(false);
+    public isScanning: Variable<boolean> = Variable(false);
     public wifiAccessPoints: Variable<AstalNetwork.AccessPoint[]> = Variable([]);
     public staging = Variable<AstalNetwork.AccessPoint | undefined>(undefined);
     public connecting = Variable<string>('');
 
     private _wifiEnabledBinding: Variable<void> | undefined;
+    private _scanningBinding: Variable<void> | undefined;
     private _accessPointBinding: Variable<void> | undefined;
 
     constructor(networkService: AstalNetwork.Network) {
@@ -29,6 +31,7 @@ export class WifiManager {
      */
     public onWifiServiceChanged(): void {
         this._wifiEnabled();
+        this._scanningStatus();
         this._accessPoints();
     }
 
@@ -49,6 +52,22 @@ export class WifiManager {
                 this.isWifiEnabled.set(isEnabled);
             },
         );
+    }
+
+    /**
+     * Updates the WiFi scanning status.
+     */
+    private _scanningStatus(): void {
+        this._scanningBinding?.drop();
+        this._scanningBinding = undefined;
+
+        if (this._astalNetwork.wifi === null) {
+            return;
+        }
+
+        this._scanningBinding = Variable.derive([bind(this._astalNetwork.wifi, 'scanning')], (scanning) => {
+            this.isScanning.set(scanning);
+        });
     }
 
     /**
