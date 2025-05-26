@@ -3,27 +3,6 @@ import { SizeUnit } from 'src/lib/units/size/types';
 import { ResourceLabelType, GenericResourceData } from 'src/services/system/types';
 
 /**
- * Calculates the percentage of used resources.
- *
- * This function calculates the percentage of used resources based on the total and used values.
- * It can optionally round the result to the nearest integer.
- *
- * @param totalUsed An array containing the total and used values.
- * @param round A boolean indicating whether to round the result.
- *
- * @returns The percentage of used resources as a number.
- */
-export const divide = ([total, used]: number[], round: boolean): number => {
-    const percentageTotal = (used / total) * 100;
-
-    if (round) {
-        return total > 0 ? Math.round(percentageTotal) : 0;
-    }
-
-    return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
-};
-
-/**
  * Renders a resource label based on the label type and resource data.
  *
  * This function generates a resource label string based on the provided label type, resource data, and rounding option.

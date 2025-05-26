@@ -8,7 +8,7 @@ import { errorHandler } from 'src/core/errors/handler';
  * HTTP client wrapper for Soup.Session providing a Promise-based API
  * Handles authentication, timeouts, and JSON parsing automatically
  */
-export class HttpClient {
+class HttpClient {
     private _session: Soup.Session;
     constructor(defaultTimeout = 30) {
         this._session = new Soup.Session();

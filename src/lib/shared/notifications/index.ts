@@ -1,6 +1,6 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Variable } from 'astal';
-import { lookUpIcon } from 'src/lib/icons/helpers';
+import { iconExists } from 'src/lib/icons/helpers';
 import icons from 'src/lib/icons/icons';
 
 const normalizeName = (name: string): string => name.toLowerCase().replace(/\s+/g, '_');
@@ -35,17 +35,17 @@ export const filterNotifications = (
 export const getNotificationIcon = (app_name: string, app_icon: string, app_entry: string): string => {
     const icon = icons.fallback.notification;
 
-    if (lookUpIcon(app_name)) {
+    if (iconExists(app_name)) {
         return app_name;
-    } else if (app_name && lookUpIcon(app_name.toLowerCase())) {
+    } else if (app_name && iconExists(app_name.toLowerCase())) {
         return app_name.toLowerCase();
     }
 
-    if (app_icon && lookUpIcon(app_icon)) {
+    if (app_icon && iconExists(app_icon)) {
         return app_icon;
     }
 
-    if (app_entry && lookUpIcon(app_entry)) {
+    if (app_entry && iconExists(app_entry)) {
         return app_entry;
     }
 

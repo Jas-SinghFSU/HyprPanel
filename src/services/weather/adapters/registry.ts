@@ -1,7 +1,7 @@
 import { WeatherProvider } from './types';
 import { WeatherApiAdapter } from './weatherApi';
 
-export const weatherProviders: Record<string, WeatherProvider> = {
+const weatherProviders: Record<string, WeatherProvider> = {
     weatherapi: {
         name: 'WeatherAPI.com',
         baseUrl: 'https://api.weatherapi.com/v1',

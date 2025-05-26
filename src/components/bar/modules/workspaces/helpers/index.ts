@@ -4,6 +4,7 @@ import { defaultApplicationIconMap } from 'src/components/bar/modules/window_tit
 import { isValidGjsColor } from 'src/lib/validation/colors';
 import { AppIconOptions } from './types';
 import { WorkspaceIconMap } from '../types';
+import { unique } from 'src/lib/array/helpers';
 
 const hyprlandService = AstalHyprland.get_default();
 const { monochrome, background } = options.theme.bar.buttons;
@@ -162,7 +163,7 @@ export const getAppIcon = (
 
     if (icons.length) {
         if (removeDuplicateIcons) {
-            icons = [...new Set(icons)];
+            icons = unique(icons);
         }
 
         return icons.join(' ');

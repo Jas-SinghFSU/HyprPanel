@@ -4,6 +4,7 @@ import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from '../types';
 import { StorageServiceCtor, MultiDriveStorageData, DriveStorageData } from './types';
+import { unique } from 'src/lib/array/helpers';
 
 /**
  * Monitors storage usage across multiple drives and provides real-time updates
@@ -34,7 +35,9 @@ class StorageService {
     constructor({ frequency, round, pathsToMonitor }: StorageServiceCtor) {
         this._updateFrequency = frequency ?? Variable(2000);
         this._shouldRound = round ?? Variable(false);
+
         this._pathsToMonitor = pathsToMonitor ?? Variable(['/']);
+        this._pathsToMonitor.set(unique(this._pathsToMonitor.get()));
 
         this._storagePoller = new FunctionPoller<MultiDriveStorageData, []>(
             this._statBreakdown,
@@ -122,7 +125,7 @@ class StorageService {
      * @param paths - Array of mount paths to monitor
      */
     public set pathsToMonitor(paths: string[]) {
-        this._pathsToMonitor.set(paths);
+        this._pathsToMonitor.set(unique(paths));
     }
 
     /**

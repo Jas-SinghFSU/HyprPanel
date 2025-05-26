@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { range } from 'src/lib/array/helpers';
+import { range, unique } from 'src/lib/array/helpers';
 import options from 'src/configuration';
 import { WorkspaceMonitorMap, MonitorMap, WorkspaceRule } from './types';
 
@@ -108,11 +108,9 @@ export class WorkspaceService {
                 );
             });
 
-            allPotentialWorkspaces = [
-                ...new Set([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers]),
-            ];
+            allPotentialWorkspaces = unique([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers]);
         } else {
-            allPotentialWorkspaces = [...new Set([...allPotentialWorkspaces, ...activeWorkspaceIds])];
+            allPotentialWorkspaces = unique([...allPotentialWorkspaces, ...activeWorkspaceIds]);
         }
 
         return allPotentialWorkspaces

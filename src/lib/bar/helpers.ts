@@ -1,5 +1,6 @@
 import options from 'src/configuration';
 import { BarLayouts, BarModule } from '../options/types';
+import { unique } from '../array/helpers';
 
 /**
  * Retrieves all unique layout items from the bar options.
@@ -24,7 +25,7 @@ export function getLayoutItems(): BarModule[] {
         itemsInLayout.push(...rightItems);
     });
 
-    return [...new Set(itemsInLayout)];
+    return unique(itemsInLayout);
 }
 
 export function setLayout(layout: BarLayouts): string {

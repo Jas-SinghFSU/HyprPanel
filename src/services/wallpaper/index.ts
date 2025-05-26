@@ -153,5 +153,3 @@ export class WallpaperService extends GObject.Object {
     @signal(Boolean)
     declare public changed: (event: boolean) => void;
 }
-
-export default new WallpaperService();
