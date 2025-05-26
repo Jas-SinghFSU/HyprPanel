@@ -728,8 +728,8 @@ in
           Unit = {
             Description = "A Bar/Panel for Hyprland with extensive customizability.";
             Documentation = "https://hyprpanel.com";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session-pre.target" ];
+            PartOf = [ config.wayland.systemd.target ];
+            After = [ config.wayland.systemd.target ];
           };
           Service = {
             ExecStart = "${package}/bin/hyprpanel";
@@ -737,7 +737,7 @@ in
             Restart = "on-failure";
             KillMode = "mixed";
           };
-          Install = { WantedBy = [ "graphical-session.target" ]; };
+          Install = { WantedBy = [ config.wayland.systemd.target ]; };
         };
       };
 
