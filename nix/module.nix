@@ -160,6 +160,8 @@ in
       bar.customModules.cpu.leftClick = mkStrOption "";
       bar.customModules.cpu.middleClick = mkStrOption "";
       bar.customModules.cpu.pollingInterval = mkIntOption 2000;
+      bar.customModules.cpu.historyLength = mkIntOption 10;
+      bar.customModules.cpu.showGraph = mkBoolOption false;
       bar.customModules.cpu.rightClick = mkStrOption "";
       bar.customModules.cpu.round = mkBoolOption true;
       bar.customModules.cpu.scrollDown = mkStrOption "";
@@ -236,6 +238,8 @@ in
       bar.customModules.ram.icon = mkStrOption "";
       bar.customModules.ram.label = mkBoolOption true;
       bar.customModules.ram.labelType = mkStrOption "percentage";
+      bar.customModules.ram.historyLength = mkIntOption 10;
+      bar.customModules.ram.showGraph = mkBoolOption false;
       bar.customModules.ram.leftClick = mkStrOption "";
       bar.customModules.ram.middleClick = mkStrOption "";
       bar.customModules.ram.pollingInterval = mkIntOption 2000;
