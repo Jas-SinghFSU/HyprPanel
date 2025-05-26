@@ -22,18 +22,7 @@ let
     if pkgs ? hyprpanel then
       pkgs.hyprpanel
     else
-      abort ''
-
-        ********************************************************************************
-        *                                  HyprPanel                                   *
-        *------------------------------------------------------------------------------*
-        *                         You didn't add the overlay!                          *
-        *                                                                              *
-        * Either set 'overlay.enable = true' or manually add it to 'nixpkgs.overlays'. *
-        * If you use the 'nixosModule' for Home Manager and have 'useGlobalPkgs' set,  *
-        *                  you will need to add the overlay yourself.                  *
-        ********************************************************************************
-      '';
+      self.packages.${pkgs.stdenv.system}.wrapper;
 
   # Shorthand lambda for self-documenting options under settings
   mkStrOption =
