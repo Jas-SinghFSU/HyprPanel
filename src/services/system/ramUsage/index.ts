@@ -3,6 +3,9 @@ import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { GenericResourceData } from '../types';
 import { RamServiceCtor } from './types';
 
+/**
+ * Service for monitoring system RAM usage and statistics
+ */
 class RamUsageService {
     private _updateFrequency: Variable<number>;
     private _ramPoller: FunctionPoller<GenericResourceData, []>;
@@ -22,14 +25,27 @@ class RamUsageService {
         );
     }
 
+    /**
+     * Manually refreshes the RAM usage statistics
+     */
     public refresh(): void {
         this._ram.set(this._calculateUsage());
     }
 
+    /**
+     * Gets the RAM usage data variable
+     *
+     * @returns Variable containing RAM statistics (total, used, free, percentage)
+     */
     public get ram(): Variable<GenericResourceData> {
         return this._ram;
     }
 
+    /**
+     * Calculates current RAM usage by parsing /proc/meminfo
+     *
+     * @returns RAM usage statistics including total, used, free, and percentage
+     */
     private _calculateUsage(): GenericResourceData {
         try {
             const [success, meminfoBytes] = GLib.file_get_contents('/proc/meminfo');
@@ -65,16 +81,30 @@ class RamUsageService {
         }
     }
 
+    /**
+     * Calculates percentage of RAM used
+     *
+     * @param values - Tuple of [total, used] RAM values
+     * @returns RAM usage percentage with 2 decimal places
+     */
     private _divide([total, used]: number[]): number {
         const percentageTotal = (used / total) * 100;
 
         return total > 0 ? parseFloat(percentageTotal.toFixed(2)) : 0;
     }
 
+    /**
+     * Updates the polling frequency
+     *
+     * @param timerInMs - New polling interval in milliseconds
+     */
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
     }
 
+    /**
+     * Initializes the RAM usage monitoring
+     */
     public initialize(): void {
         if (!this._isInitialized) {
             this._ramPoller.initialize();
@@ -82,14 +112,23 @@ class RamUsageService {
         }
     }
 
+    /**
+     * Stops the RAM usage polling
+     */
     public stopPoller(): void {
         this._ramPoller.stop();
     }
 
+    /**
+     * Starts the RAM usage polling
+     */
     public startPoller(): void {
         this._ramPoller.start();
     }
 
+    /**
+     * Cleans up resources and stops monitoring
+     */
     public destroy(): void {
         this._ramPoller.stop();
         this._ram.drop();

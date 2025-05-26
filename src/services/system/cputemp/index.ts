@@ -4,6 +4,9 @@ import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { CpuTempServiceCtor } from './types';
 import { CpuTempSensorDiscovery } from './sensorDiscovery';
 
+/**
+ * Service for monitoring CPU temperature from system sensors
+ */
 class CpuTempService {
     private _sensor: Variable<string>;
     private _updateFrequency: Variable<number>;
@@ -68,27 +71,55 @@ class CpuTempService {
         }
     }
 
+    /**
+     * Gets the CPU temperature variable
+     *
+     * @returns Variable containing temperature in Celsius
+     */
     public get temperature(): Variable<number> {
         return this._temperature;
     }
 
+    /**
+     * Gets the sensor configuration variable
+     *
+     * @returns Variable containing sensor path or 'auto'
+     */
     public get sensor(): Variable<string> {
         return this._sensor;
     }
 
+    /**
+     * Gets the currently resolved sensor file path
+     *
+     * @returns The actual sensor path being used
+     */
     public get currentSensorPath(): string | undefined {
         return this._resolvedSensorPath;
     }
 
+    /**
+     * Manually refreshes the temperature reading
+     */
     public refresh(): void {
         this._temperature.set(this._readTemperature());
     }
 
+    /**
+     * Updates the sensor path and refreshes the temperature
+     *
+     * @param sensor - New sensor path or 'auto' for auto-discovery
+     */
     public updateSensor(sensor: string): void {
         this._sensor.set(sensor);
         this.refresh();
     }
 
+    /**
+     * Updates the polling frequency
+     *
+     * @param frequency - New polling interval in milliseconds
+     */
     public updateFrequency(frequency: number): void {
         this._updateFrequency.set(frequency);
     }
@@ -104,14 +135,23 @@ class CpuTempService {
         this._isInitialized = true;
     }
 
+    /**
+     * Stops the temperature polling
+     */
     public stopPoller(): void {
         this._tempPoller.stop();
     }
 
+    /**
+     * Starts the temperature polling
+     */
     public startPoller(): void {
         this._tempPoller.start();
     }
 
+    /**
+     * Cleans up resources and stops monitoring
+     */
     public destroy(): void {
         this._tempPoller.stop();
         this._temperature.drop();

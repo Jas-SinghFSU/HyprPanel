@@ -84,6 +84,9 @@ export class BarAutoHideService {
 
     /**
      * Sets bar visibility for a specific monitor
+     *
+     * @param monitorId - The ID of the monitor whose bar visibility to set
+     * @param isVisible - Whether the bar should be visible
      */
     private _setBarVisibility(monitorId: number, isVisible: boolean): void {
         const barName = `bar-${monitorId}`;
@@ -95,6 +98,8 @@ export class BarAutoHideService {
 
     /**
      * Handles bar visibility when a client's fullscreen state changes
+     *
+     * @param client - The Hyprland client whose fullscreen state to monitor
      */
     private _handleFullscreenClientVisibility(client: AstalHyprland.Client): void {
         if (client === null) {

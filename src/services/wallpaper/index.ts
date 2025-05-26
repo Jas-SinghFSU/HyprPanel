@@ -8,6 +8,9 @@ import { SystemUtilities } from 'src/core/system/SystemUtilities';
 const hyprlandService = AstalHyprland.get_default();
 const WP = `${GLib.get_home_dir()}/.config/background`;
 
+/**
+ * Service for managing desktop wallpaper using swww daemon
+ */
 @register({ GTypeName: 'Wallpaper' })
 export class WallpaperService extends GObject.Object {
     private static _instance: WallpaperService;
@@ -59,6 +62,11 @@ export class WallpaperService extends GObject.Object {
         }
     }
 
+    /**
+     * Gets the singleton instance of WallpaperService
+     *
+     * @returns The WallpaperService instance
+     */
     public static getInstance(): WallpaperService {
         if (this._instance === undefined) {
             this._instance = new WallpaperService();
@@ -67,6 +75,9 @@ export class WallpaperService extends GObject.Object {
         return this._instance;
     }
 
+    /**
+     * Applies the wallpaper using swww with a transition effect from cursor position
+     */
     private _wallpaper(): void {
         if (!SystemUtilities.checkDependencies('swww')) return;
 
@@ -100,6 +111,11 @@ export class WallpaperService extends GObject.Object {
         }
     }
 
+    /**
+     * Copies wallpaper to config location and applies it
+     *
+     * @param path - Path to the wallpaper image file
+     */
     private async _setWallpaper(path: string): Promise<void> {
         this._blockMonitor = true;
 
@@ -113,10 +129,20 @@ export class WallpaperService extends GObject.Object {
         }
     }
 
+    /**
+     * Sets a new wallpaper from the specified file path
+     *
+     * @param path - Path to the wallpaper image file
+     */
     public setWallpaper(path: string): void {
         this._setWallpaper(path);
     }
 
+    /**
+     * Checks if the wallpaper service is currently running
+     *
+     * @returns Whether swww daemon is active
+     */
     public isRunning(): boolean {
         return this._isRunning;
     }

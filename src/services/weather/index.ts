@@ -11,6 +11,9 @@ import { TemperatureConverter } from 'src/lib/units/temperature';
 import { SpeedConverter } from 'src/lib/units/speed';
 import { UnitType } from 'src/lib/units/temperature/types';
 
+/**
+ * Service for fetching and managing weather data from various providers
+ */
 export default class WeatherService {
     public static instance: WeatherService;
 
@@ -39,6 +42,11 @@ export default class WeatherService {
         this._initializeWeatherTracker();
     }
 
+    /**
+     * Gets the singleton instance of WeatherService
+     *
+     * @returns The WeatherService instance
+     */
     public static getInstance(): WeatherService {
         if (WeatherService.instance === undefined) {
             WeatherService.instance = new WeatherService();
@@ -49,7 +57,7 @@ export default class WeatherService {
     /**
      * Changes the active weather provider
      *
-     * @param providerId Provider identifier (e.g., 'weatherapi', 'openweathermap')
+     * @param providerId - Provider identifier (e.g., 'weatherapi', 'openweathermap')
      */
     public setProvider(providerId: string): void {
         const provider = getWeatherProvider(providerId);
@@ -66,34 +74,74 @@ export default class WeatherService {
         }
     }
 
+    /**
+     * Gets the complete weather data variable
+     *
+     * @returns Variable containing all weather information
+     */
     public get weatherData(): Variable<Weather> {
         return this._weatherData;
     }
 
+    /**
+     * Gets the formatted temperature string variable
+     *
+     * @returns Variable containing temperature with unit
+     */
     public get temperature(): Variable<string> {
         return this._temperature;
     }
 
+    /**
+     * Gets the rain probability percentage variable
+     *
+     * @returns Variable containing rain chance percentage
+     */
     public get rainChance(): Variable<Percentage> {
         return this._rainChance;
     }
 
+    /**
+     * Gets the formatted wind conditions variable
+     *
+     * @returns Variable containing wind speed with unit
+     */
     public get windCondition(): Variable<string> {
         return this._windCondition;
     }
 
+    /**
+     * Gets the weather condition icon variable
+     *
+     * @returns Variable containing weather icon enum value
+     */
     public get statusIcon(): Variable<WeatherIcon> {
         return this._statusIcon;
     }
 
+    /**
+     * Gets the temperature gauge icon and color variable
+     *
+     * @returns Variable containing gauge icon and color class
+     */
     public get gaugeIcon(): Variable<GaugeIcon> {
         return this._gaugeIcon;
     }
 
+    /**
+     * Gets the current temperature unit type
+     *
+     * @returns Current unit type ('imperial' or 'metric')
+     */
     public get unit(): UnitType {
         return this._unitType.get();
     }
 
+    /**
+     * Sets the temperature unit type
+     *
+     * @param unitType - New unit type ('imperial' or 'metric')
+     */
     public set unit(unitType: UnitType) {
         this._unitType.set(unitType);
     }
@@ -195,6 +243,9 @@ export default class WeatherService {
         return chanceOfRain;
     }
 
+    /**
+     * Sets up configuration tracking for dynamic weather updates
+     */
     private _initializeConfigTracker(): void {
         const weatherKeyManager = new WeatherApiKeyManager();
 
@@ -210,6 +261,9 @@ export default class WeatherService {
         )();
     }
 
+    /**
+     * Sets up weather data tracking to update derived values
+     */
     private _initializeWeatherTracker(): void {
         Variable.derive([bind(this._weatherData), bind(this._unitType)], () => {
             this._statusIcon.set(this._getWeatherStatusIcon());
@@ -224,9 +278,9 @@ export default class WeatherService {
     /**
      * Sets up a weather update interval function.
      *
-     * @param weatherInterval The interval in milliseconds at which to fetch weather updates
-     * @param loc The location for which to fetch weather data
-     * @param weatherKey The API key for accessing the weather service
+     * @param weatherInterval - The interval in milliseconds at which to fetch weather updates
+     * @param loc - The location for which to fetch weather data
+     * @param weatherKey - The API key for accessing the weather service
      */
     private _initializeWeatherPolling(weatherInterval: number, loc: string, weatherKey: string): void {
         if (this._interval !== null) {
@@ -244,6 +298,13 @@ export default class WeatherService {
         });
     }
 
+    /**
+     * Fetches weather data from the specified provider
+     *
+     * @param provider - The weather provider to use
+     * @param loc - The location to fetch weather for
+     * @param weatherKey - The API key for authentication
+     */
     private async _fetchWeatherData(
         provider: WeatherProvider,
         loc: string,

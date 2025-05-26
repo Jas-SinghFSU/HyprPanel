@@ -25,6 +25,7 @@ export class NetworkService {
 
     /**
      * Gets the singleton instance of NetworkService
+     *
      * @returns The NetworkService instance
      */
     public static getInstance(): NetworkService {
@@ -49,13 +50,15 @@ export class NetworkService {
 
     /**
      * Utility method to get WiFi icon
-     * @param iconName The icon name from the network service
+     *
+     * @param iconName - The icon name from the network service
      * @returns The corresponding WiFi icon
      */
     public getWifiIcon = getWifiIcon;
 
     /**
      * Gets the raw AstalNetwork service (for components that need direct access)
+     *
      * @returns The underlying AstalNetwork service
      */
     public get rawService(): AstalNetwork.Network {

@@ -27,7 +27,7 @@ export class GdkMonitorService {
     /**
      * Converts a GDK monitor id to the corresponding Hyprland monitor id.
      *
-     * @param monitor The GDK monitor id.
+     * @param monitor - The GDK monitor id.
      * @returns The corresponding Hyprland monitor id.
      */
     public mapGdkToHyprland(monitor: number): number {
@@ -53,7 +53,7 @@ export class GdkMonitorService {
     /**
      * Converts a Hyprland monitor id to the corresponding GDK monitor id.
      *
-     * @param monitor The Hyprland monitor id.
+     * @param monitor - The Hyprland monitor id.
      * @returns The corresponding GDK monitor id.
      */
     public mapHyprlandToGdk(monitor: number): number {
@@ -87,12 +87,12 @@ export class GdkMonitorService {
      *  2. A relaxed match (candidate matches the source, regardless of id).
      *  3. A fallback match (first candidate that hasn’t been used).
      *
-     * @param candidates Array of candidate monitors.
-     * @param source The source monitor object to match against.
-     * @param target The desired monitor id.
-     * @param usedMonitors A Set of already used candidate ids.
-     * @param getId Function to extract the id from a candidate.
-     * @param compare Function that determines if a candidate matches the source.
+     * @param candidates - Array of candidate monitors.
+     * @param source - The source monitor object to match against.
+     * @param target - The desired monitor id.
+     * @param usedMonitors - A Set of already used candidate ids.
+     * @param getId - Function to extract the id from a candidate.
+     * @param compare - Function that determines if a candidate matches the source.
      * @returns The chosen monitor id.
      */
     private _matchMonitor<T, U>(

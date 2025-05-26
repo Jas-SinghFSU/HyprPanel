@@ -16,7 +16,8 @@ const wifiIconMap = new Map<string, WifiIcon>([
 
 /**
  * Retrieves the appropriate WiFi icon based on the provided icon name.
- * @param iconName The name of the icon to look up. If not provided, a default icon is returned.
+ *
+ * @param iconName - The name of the icon to look up. If not provided, a default icon is returned.
  * @returns The corresponding WiFi icon as a string.
  */
 export const getWifiIcon = (iconName?: string): WifiIcon => {

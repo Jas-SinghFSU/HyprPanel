@@ -3,6 +3,9 @@ import GTop from 'gi://GTop';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { CpuServiceCtor } from './types';
 
+/**
+ * Service for monitoring CPU usage percentage
+ */
 class CpuUsageService {
     private _updateFrequency: Variable<number>;
     private _previousCpuData = new GTop.glibtop_cpu();
@@ -25,14 +28,27 @@ class CpuUsageService {
         );
     }
 
+    /**
+     * Manually refreshes the CPU usage reading
+     */
     public refresh(): void {
         this._cpu.set(this._calculateUsage());
     }
 
+    /**
+     * Gets the CPU usage percentage variable
+     *
+     * @returns Variable containing CPU usage percentage (0-100)
+     */
     public get cpu(): Variable<number> {
         return this._cpu;
     }
 
+    /**
+     * Calculates the current CPU usage percentage based on CPU time deltas
+     *
+     * @returns Current CPU usage percentage
+     */
     private _calculateUsage(): number {
         const currentCpuData = new GTop.glibtop_cpu();
         GTop.glibtop_get_cpu(currentCpuData);
@@ -47,10 +63,18 @@ class CpuUsageService {
         return cpuUsagePercentage;
     }
 
+    /**
+     * Updates the polling frequency for CPU usage monitoring
+     *
+     * @param timerInMs - New polling interval in milliseconds
+     */
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
     }
 
+    /**
+     * Initializes the CPU usage monitoring service
+     */
     public initialize(): void {
         if (!this._isInitialized) {
             this._cpuPoller.initialize();
@@ -58,14 +82,23 @@ class CpuUsageService {
         }
     }
 
+    /**
+     * Stops the CPU usage polling
+     */
     public stopPoller(): void {
         this._cpuPoller.stop();
     }
 
+    /**
+     * Starts the CPU usage polling
+     */
     public startPoller(): void {
         this._cpuPoller.start();
     }
 
+    /**
+     * Cleans up resources and stops monitoring
+     */
     public destroy(): void {
         this._cpuPoller.stop();
         this._cpu.drop();

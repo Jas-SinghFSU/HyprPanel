@@ -22,6 +22,7 @@ export class WeatherApiKeyManager {
 
     /**
      * Updates the weather API key variable with the processed key value
+     *
      * @param key - The API key input which could be a direct key or file path
      */
     private _mountWeatherKey(key: string): void {
@@ -34,7 +35,7 @@ export class WeatherApiKeyManager {
      * Retrieves the weather API key from a file if it exists and is valid.
      *
      * @param apiKey - The path to the file containing the weather API key.
-     * @returns - The weather API key if found, otherwise the original apiKey.
+     * @returns The weather API key if found, otherwise the original apiKey.
      */
     private _getWeatherKey(apiKey: string): string {
         const weatherKey = apiKey;

@@ -5,6 +5,9 @@ const get = (args: string): number => Number(exec(`brightnessctl ${args}`));
 const screen = exec('bash -c "ls -w1 /sys/class/backlight | head -1"');
 const kbd = exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"');
 
+/**
+ * Service for managing screen and keyboard backlight brightness
+ */
 @register({ GTypeName: 'Brightness' })
 export default class BrightnessService extends GObject.Object {
     public static instance: BrightnessService;
@@ -28,6 +31,11 @@ export default class BrightnessService extends GObject.Object {
         });
     }
 
+    /**
+     * Gets the singleton instance of BrightnessService
+     *
+     * @returns The BrightnessService instance
+     */
     public static getInstance(): BrightnessService {
         if (BrightnessService.instance === undefined) {
             BrightnessService.instance = new BrightnessService();
@@ -40,16 +48,31 @@ export default class BrightnessService extends GObject.Object {
     #screenMax = screen?.length ? get(`--device ${screen} max`) : 0;
     #screen = screen?.length ? get(`--device ${screen} get`) / (get(`--device ${screen} max`) || 1) : 0;
 
+    /**
+     * Gets the keyboard backlight brightness level
+     *
+     * @returns The keyboard brightness as a number between 0 and the maximum value
+     */
     @property(Number)
     public get kbd(): number {
         return this.#kbd;
     }
 
+    /**
+     * Gets the screen brightness level
+     *
+     * @returns The screen brightness as a percentage (0-1)
+     */
     @property(Number)
     public get screen(): number {
         return this.#screen;
     }
 
+    /**
+     * Sets the keyboard backlight brightness level
+     *
+     * @param value - The brightness value to set (0 to maximum)
+     */
     public set kbd(value: number) {
         if (value < 0 || value > this.#kbdMax || !kbd?.length) return;
 
@@ -59,6 +82,11 @@ export default class BrightnessService extends GObject.Object {
         });
     }
 
+    /**
+     * Sets the screen brightness level
+     *
+     * @param percent - The brightness percentage to set (0-1)
+     */
     public set screen(percent: number) {
         if (!screen?.length) return;
 

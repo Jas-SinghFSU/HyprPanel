@@ -20,7 +20,7 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
     /**
      * Transforms WeatherAPI.com's response structure to the standard format
      *
-     * @param data Raw response from WeatherAPI.com
+     * @param data - Raw response from WeatherAPI.com
      * @returns Normalized weather data
      */
     public toStandardFormat(data: WeatherApiResponse): Weather {
@@ -32,6 +32,12 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
         };
     }
 
+    /**
+     * Maps WeatherAPI location data to standard format
+     *
+     * @param data - WeatherAPI response data
+     * @returns Standardized location information
+     */
     private _mapLocation(data: WeatherApiResponse): WeatherLocation {
         const location = data.location;
         return {
@@ -40,6 +46,12 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
         };
     }
 
+    /**
+     * Maps current weather conditions to standard format
+     *
+     * @param data - WeatherAPI response data
+     * @returns Standardized current weather data
+     */
     private _mapCurrentWeather(data: WeatherApiResponse): CurrentWeather {
         const currentWeather = data.current;
         const currentRainChance = data.forecast.forecastday[0].hour[0].chance_of_rain;
@@ -60,6 +72,12 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
         };
     }
 
+    /**
+     * Maps daily forecast data to standard format
+     *
+     * @param forecastDay - WeatherAPI forecast day data
+     * @returns Standardized daily forecast
+     */
     private _mapDailyForecast(forecastDay: WeatherApiForecastDay): DailyForecast {
         return {
             date: new Date(forecastDay.date),
@@ -73,6 +91,12 @@ export class WeatherApiAdapter implements WeatherAdapter<WeatherApiResponse> {
         };
     }
 
+    /**
+     * Maps hourly forecast data to standard format
+     *
+     * @param hourlyForecast - WeatherAPI hourly forecast data
+     * @returns Standardized hourly forecast
+     */
     private _mapHourlyForecast(hourlyForecast: WeatherApiHour): HourlyForecast {
         return {
             time: new Date(hourlyForecast.time),

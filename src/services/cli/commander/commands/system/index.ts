@@ -19,7 +19,7 @@ export const utilityCommands: Command[] = [
         name: 'systrayItems',
         aliases: ['sti'],
         description: 'Gets a list of IDs for the current applications in the system tray.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {
@@ -33,7 +33,7 @@ export const utilityCommands: Command[] = [
         name: 'clearNotifications',
         aliases: ['cno'],
         description: 'Clears all of the notifications that currently exist.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {
@@ -47,10 +47,26 @@ export const utilityCommands: Command[] = [
         },
     },
     {
+        name: 'toggleDnd',
+        aliases: ['dnd'],
+        description: 'Toggled the Do Not Disturb mode for notifications.',
+        category: 'System',
+        args: [],
+        handler: (): string => {
+            try {
+                notifdService.set_dont_disturb(!notifdService.dontDisturb);
+
+                return notifdService.dontDisturb ? 'Enabled' : 'Disabled';
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
         name: 'adjustVolume',
         aliases: ['vol'],
         description: 'Adjusts the volume of the default audio output device.',
-        category: 'Utility',
+        category: 'System',
         args: [
             {
                 name: 'volume',
@@ -85,7 +101,7 @@ export const utilityCommands: Command[] = [
         name: 'isInhibiting',
         aliases: ['isi'],
         description: 'Returns the status of the Idle Inhibitor.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): boolean => {
             try {
@@ -100,7 +116,7 @@ export const utilityCommands: Command[] = [
         aliases: ['idi'],
         description:
             'Enables/Disables the Idle Inhibitor. Toggles the Inhibitor if no parameter is provided.',
-        category: 'Utility',
+        category: 'System',
         args: [
             {
                 name: 'shouldInhibit',
@@ -124,7 +140,7 @@ export const utilityCommands: Command[] = [
         name: 'migrateConfig',
         aliases: ['mcfg'],
         description: 'Migrates the configuration file from the old location to the new one.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             const oldPath = `${GLib.get_user_cache_dir()}/ags/hyprpanel/options.json`;
@@ -148,7 +164,7 @@ export const utilityCommands: Command[] = [
         name: 'checkDependencies',
         aliases: ['chd'],
         description: 'Checks the status of required and optional dependencies.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {
@@ -162,7 +178,7 @@ export const utilityCommands: Command[] = [
         name: 'listCpuSensors',
         aliases: ['lcs'],
         description: 'Lists all available CPU temperature sensors and shows the current one.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {
@@ -176,7 +192,7 @@ export const utilityCommands: Command[] = [
         name: 'restart',
         aliases: ['r'],
         description: 'Restarts HyprPanel.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {
@@ -191,7 +207,7 @@ export const utilityCommands: Command[] = [
         name: 'quit',
         aliases: ['q'],
         description: 'Quits HyprPanel.',
-        category: 'Utility',
+        category: 'System',
         args: [],
         handler: (): string => {
             try {

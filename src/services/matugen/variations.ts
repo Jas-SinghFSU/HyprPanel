@@ -5,6 +5,13 @@ import { MatugenColors, MatugenVariations, MatugenVariation } from 'src/lib/opti
  * Each of the variations are carefully tested and curated to make sure that colors don't
  * have weird luminocity overlaps (light on light, dark on dark).
  */
+/**
+ * Maps Matugen color palette to predefined color variations for theme consistency
+ *
+ * @param matugenColors - The Matugen-generated color palette
+ * @param variation - The specific variation style to apply
+ * @returns Mapped color variation object
+ */
 export const getMatugenVariations = (
     matugenColors: MatugenColors,
     variation: MatugenVariations,

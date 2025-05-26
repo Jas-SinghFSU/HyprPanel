@@ -14,7 +14,7 @@ export const weatherProviders: Record<string, WeatherProvider> = {
 /**
  * Retrieves a weather provider configuration by its identifier
  *
- * @param providerId Provider identifier (e.g., 'weatherapi', 'openweathermap')
+ * @param providerId - Provider identifier (e.g., 'weatherapi', 'openweathermap')
  * @returns Provider configuration or undefined if not found
  */
 export function getWeatherProvider(providerId: string): WeatherProvider | undefined {

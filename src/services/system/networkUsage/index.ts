@@ -4,6 +4,9 @@ import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { ByteMultiplier, NetworkResourceData, RateUnit } from '../types';
 import { NetworkServiceCtor, NetworkUsage } from './types';
 
+/**
+ * Service for monitoring network interface traffic and bandwidth usage
+ */
 class NetworkUsageService {
     private _updateFrequency: Variable<number>;
     private _shouldRound = false;
@@ -31,10 +34,18 @@ class NetworkUsageService {
         );
     }
 
+    /**
+     * Manually refreshes the network usage statistics
+     */
     public refresh(): void {
         this._network.set(this._calculateUsage());
     }
 
+    /**
+     * Gets the network usage data variable
+     *
+     * @returns Variable containing incoming and outgoing network rates
+     */
     public get network(): Variable<NetworkResourceData> {
         return this._network;
     }
@@ -79,6 +90,8 @@ class NetworkUsageService {
 
     /**
      * Sets the network interface to monitor
+     *
+     * @param interfaceName - Name of the network interface (e.g., 'eth0', 'wlan0')
      */
     public setInterface(interfaceName: string): void {
         this._interfaceName.set(interfaceName);
@@ -87,6 +100,8 @@ class NetworkUsageService {
 
     /**
      * Sets the rate unit for formatting network speeds
+     *
+     * @param unit - Unit to display rates in ('auto', 'KiB', 'MiB', 'GiB')
      */
     public setRateUnit(unit: RateUnit): void {
         this._rateUnit.set(unit);
@@ -94,6 +109,8 @@ class NetworkUsageService {
 
     /**
      * Sets whether to round the rates to whole numbers
+     *
+     * @param round - Whether to round rates to integers
      */
     public setShouldRound(round: boolean): void {
         this._shouldRound = round;
@@ -101,6 +118,8 @@ class NetworkUsageService {
 
     /**
      * Updates the polling frequency
+     *
+     * @param timerInMs - New polling interval in milliseconds
      */
     public updateTimer(timerInMs: number): void {
         this._updateFrequency.set(timerInMs);
@@ -139,6 +158,11 @@ class NetworkUsageService {
 
     /**
      * Formats the network rate based on the provided rate, type, and rounding option
+     *
+     * @param rate - Raw rate in bytes per second
+     * @param type - Unit type to format to
+     * @param round - Whether to round to whole numbers
+     * @returns Formatted rate string with unit suffix
      */
     private _formatRate(rate: number, type: RateUnit, round: boolean): string {
         const fixed = round ? 0 : 2;
@@ -164,6 +188,9 @@ class NetworkUsageService {
 
     /**
      * Parses a line of network interface data from /proc/net/dev
+     *
+     * @param line - Raw line from /proc/net/dev
+     * @returns Parsed network usage data or null if invalid
      */
     private _parseInterfaceData(line: string): NetworkUsage | null {
         const trimmedLine = line.trim();
@@ -181,6 +208,10 @@ class NetworkUsageService {
 
     /**
      * Validates a network interface for monitoring
+     *
+     * @param iface - Interface data to validate
+     * @param interfaceName - Specific interface name to match (empty for auto)
+     * @returns Whether the interface is valid for monitoring
      */
     private _isValidInterface(iface: NetworkUsage | null, interfaceName: string): boolean {
         if (!iface) return false;
@@ -191,6 +222,9 @@ class NetworkUsageService {
 
     /**
      * Retrieves network usage for the specified interface from /proc/net/dev
+     *
+     * @param interfaceName - Name of interface to monitor (empty for auto-detect)
+     * @returns Network usage statistics
      */
     private _getNetworkUsage(interfaceName: string = ''): NetworkUsage {
         const [success, data] = GLib.file_get_contents('/proc/net/dev');
@@ -214,6 +248,12 @@ class NetworkUsageService {
         return { name: '', rx: 0, tx: 0 };
     }
 
+    /**
+     * Gets default network statistics data for initialization
+     *
+     * @param dataType - Rate unit type
+     * @returns Default network resource data
+     */
     private _getDefaultNetstatData = (dataType: RateUnit): NetworkResourceData => {
         if (dataType === 'auto') {
             return { in: '0 Kib/s', out: '0 Kib/s' };
@@ -222,6 +262,9 @@ class NetworkUsageService {
         return { in: `0 ${dataType}/s`, out: `0 ${dataType}/s` };
     };
 
+    /**
+     * Cleans up resources and stops monitoring
+     */
     public destroy(): void {
         this._networkPoller.stop();
         this._network.drop();

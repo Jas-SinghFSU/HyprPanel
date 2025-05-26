@@ -69,6 +69,7 @@ export class WifiManager {
 
     /**
      * Removes duplicate access points based on their SSID.
+     *
      * @returns An array of deduplicated access points.
      */
     private _dedupeWAPs(): AstalNetwork.AccessPoint[] {
@@ -90,7 +91,8 @@ export class WifiManager {
 
     /**
      * Determines if a given access point is currently in the staging area.
-     * @param wap The access point to check.
+     *
+     * @param wap - The access point to check.
      * @returns True if the access point is in staging; otherwise, false.
      */
     private _isInStaging(wap: AstalNetwork.AccessPoint): boolean {
@@ -104,6 +106,7 @@ export class WifiManager {
 
     /**
      * Retrieves a list of filtered wireless access points by removing duplicates and excluding specific entries.
+     *
      * @returns A filtered array of wireless access points.
      */
     public getFilteredWirelessAPs(): AstalNetwork.AccessPoint[] {
@@ -130,7 +133,8 @@ export class WifiManager {
 
     /**
      * Determines whether the device is in an active state.
-     * @param state The current state of the device.
+     *
+     * @param state - The current state of the device.
      * @returns True if the device is in an active state; otherwise, false.
      */
     public isApEnabled(state: AstalNetwork.DeviceState | undefined): boolean {
@@ -147,7 +151,8 @@ export class WifiManager {
 
     /**
      * Checks if the given access point is the currently active one.
-     * @param accessPoint The access point to check.
+     *
+     * @param accessPoint - The access point to check.
      * @returns True if the access point is active; otherwise, false.
      */
     public isApActive(accessPoint: AstalNetwork.AccessPoint): boolean {
@@ -156,7 +161,8 @@ export class WifiManager {
 
     /**
      * Checks if the specified access point is in the process of disconnecting.
-     * @param accessPoint The access point to check.
+     *
+     * @param accessPoint - The access point to check.
      * @returns True if the access point is disconnecting; otherwise, false.
      */
     public isDisconnecting(accessPoint: AstalNetwork.AccessPoint): boolean {
@@ -168,6 +174,7 @@ export class WifiManager {
 
     /**
      * Retrieves the current Wi-Fi status based on the network service state.
+     *
      * @returns A string representing the current Wi-Fi status.
      */
     public getWifiStatus(): string {
@@ -181,8 +188,9 @@ export class WifiManager {
 
     /**
      * Initiates a connection to the specified access point.
-     * @param accessPoint The access point to connect to.
-     * @param event The click event triggering the connection.
+     *
+     * @param accessPoint - The access point to connect to.
+     * @param event - The click event triggering the connection.
      */
     public connectToAP(accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void {
         if (
@@ -214,8 +222,9 @@ export class WifiManager {
 
     /**
      * Disconnects from the specified access point.
-     * @param accessPoint The access point to disconnect from.
-     * @param event The click event triggering the disconnection.
+     *
+     * @param accessPoint - The access point to disconnect from.
+     * @param event - The click event triggering the disconnection.
      */
     public disconnectFromAP(accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void {
         if (!isPrimaryClick(event)) {
@@ -244,8 +253,9 @@ export class WifiManager {
 
     /**
      * Forgets the specified access point by deleting its connection.
-     * @param accessPoint The access point to forget.
-     * @param event The click event triggering the forget action.
+     *
+     * @param accessPoint - The access point to forget.
+     * @param event - The click event triggering the forget action.
      */
     public forgetAP(accessPoint: AstalNetwork.AccessPoint, event: Astal.ClickEvent): void {
         if (!isPrimaryClick(event)) {
@@ -273,8 +283,9 @@ export class WifiManager {
 
     /**
      * Extracts the connection ID associated with a given SSID from the `nmcli` command output.
-     * @param ssid The SSID of the network.
-     * @param nmcliOutput The output string from the `nmcli` command.
+     *
+     * @param ssid - The SSID of the network.
+     * @param nmcliOutput - The output string from the `nmcli` command.
      * @returns The connection ID if found; otherwise, undefined.
      */
     private _getIdFromSsid(ssid: string, nmcliOutput: string): string | undefined {

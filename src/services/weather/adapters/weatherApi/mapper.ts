@@ -60,6 +60,7 @@ export class WeatherApiStatusMapper {
 
     /**
      * Maps weather API status strings to standardized WeatherStatus
+     *
      * @param status - The weather status string from the API
      * @returns The mapped WeatherStatus
      */

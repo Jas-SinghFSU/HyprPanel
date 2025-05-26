@@ -19,6 +19,11 @@ export class WorkspaceService {
 
     private constructor() {}
 
+    /**
+     * Gets the singleton instance of WorkspaceService
+     *
+     * @returns The WorkspaceService instance
+     */
     public static getInstance(): WorkspaceService {
         if (WorkspaceService.instance === undefined) {
             WorkspaceService.instance = new WorkspaceService();
@@ -136,6 +141,9 @@ export class WorkspaceService {
         this.workspaceRules.set(this._getWorkspaceMonitorMap());
     }
 
+    /**
+     * Forces a UI update by toggling the forceUpdater variable
+     */
     public forceAnUpdate(): void {
         this.forceUpdater.set(!this.forceUpdater.get());
     }
@@ -289,9 +297,7 @@ export class WorkspaceService {
     /**
      * Checks if a workspace number should be ignored based on a regular expression.
      *
-     * @param ignoredWorkspacesVariable - A Variable object containing a string pattern of ignored workspaces.
      * @param workspaceNumber - The numeric representation of the workspace to check.
-     *
      * @returns `true` if the workspace should be ignored, otherwise `false`.
      */
     private _isWorkspaceIgnored(workspaceNumber: number): boolean {
