@@ -1,5 +1,5 @@
 import { execAsync, Variable } from 'astal';
-import { openMenu } from '../menu';
+import { openDropdownMenu } from '../menu';
 import { EventArgs } from './types';
 
 /**
@@ -21,14 +21,17 @@ export function runAsyncCommand(
 ): void {
     if (cmd.startsWith('menu:')) {
         const menuName = cmd.split(':')[1].trim().toLowerCase();
-        openMenu(events.clicked, events.event, `${menuName}menu`);
+
+        openDropdownMenu(events.clicked, events.event, `${menuName}menu`);
         handlePostInputUpdater(postInputUpdater);
+
         return;
     }
 
     execAsync(['bash', '-c', cmd])
         .then((output) => {
             handlePostInputUpdater(postInputUpdater);
+
             if (fn !== undefined) {
                 fn(output);
             }

@@ -5,7 +5,7 @@ import { BarBoxChild } from 'src/components/bar/types.js';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 
 const bluetoothService = AstalBluetooth.get_default();
@@ -91,7 +91,7 @@ const Bluetooth = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'bluetoothmenu');
+                                openDropdownMenu(clicked, event, 'bluetoothmenu');
                             }),
                         );
 

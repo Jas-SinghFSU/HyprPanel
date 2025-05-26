@@ -1,6 +1,6 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Astal, Gtk } from 'astal/gtk3';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { BarBoxChild } from 'src/components/bar/types';
@@ -108,7 +108,7 @@ export const Notifications = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'notificationsmenu');
+                                openDropdownMenu(clicked, event, 'notificationsmenu');
                             }),
                         );
 

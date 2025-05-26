@@ -1,4 +1,4 @@
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 import { bind, Variable } from 'astal';
 import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 import { Astal, Gtk } from 'astal/gtk3';
@@ -125,7 +125,7 @@ const Network = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'networkmenu');
+                                openDropdownMenu(clicked, event, 'networkmenu');
                             }),
                         );
 

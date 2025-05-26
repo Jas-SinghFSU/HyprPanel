@@ -8,7 +8,7 @@ import { activePlayer, mediaTitle, mediaAlbum, mediaArtist } from 'src/services/
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 
 const mprisService = AstalMpris.get_default();
 const {
@@ -104,7 +104,7 @@ const Media = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'mediamenu');
+                                openDropdownMenu(clicked, event, 'mediamenu');
                             }),
                         );
 

@@ -6,7 +6,7 @@ import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
@@ -62,7 +62,7 @@ const Menu = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'dashboardmenu');
+                                openDropdownMenu(clicked, event, 'dashboardmenu');
                             }),
                         );
 

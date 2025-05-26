@@ -2,40 +2,23 @@ import { App, Gdk } from 'astal/gtk3';
 import { calculateMenuPosition } from 'src/components/menus/shared/dropdown/helpers/locationHandler';
 import { GtkWidget } from '../../types';
 
-const closeAllMenus = (): void => {
-    const menuWindows = App.get_windows()
-        .filter((w) => {
-            if (w.name) {
-                return /.*menu/.test(w.name);
-            }
-
-            return false;
-        })
-        .map((window) => window.name);
-
-    menuWindows.forEach((window) => {
-        if (window) {
-            App.get_window(window)?.set_visible(false);
-        }
-    });
-};
-
-export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: string): Promise<void> => {
-    /*
-     * NOTE: We have to make some adjustments so the menu pops up relatively
-     * to the center of the button clicked. We don't want the menu to spawn
-     * offcenter depending on which edge of the button you click on.
-     * -------------
-     * To fix this, we take the x coordinate of the click within the button's bounds.
-     * If you click the left edge of a 100 width button, then the x axis will be 0
-     * and if you click the right edge then the x axis will be 100.
-     * -------------
-     * Then we divide the width of the button by 2 to get the center of the button and then get
-     * the offset by subtracting the clicked x coordinate. Then we can apply that offset
-     * to the x coordinate of the click relative to the screen to get the center of the
-     * icon click.
-     */
-
+/**
+ * Opens a dropdown menu centered relative to the clicked button
+ *
+ * This function handles the positioning logic to ensure menus appear centered
+ * relative to the button that was clicked, regardless of where on the button
+ * the click occurred. It calculates the offset needed to center the menu
+ * based on the click position within the button's bounds.
+ *
+ * @param clicked - The widget that was clicked to trigger the menu
+ * @param event - The click event containing position information
+ * @param window - The name of the menu window to open
+ */
+export const openDropdownMenu = async (
+    clicked: GtkWidget,
+    event: Gdk.Event,
+    window: string,
+): Promise<void> => {
     try {
         const middleOfButton = Math.floor(clicked.get_allocated_width() / 2);
         const xAxisOfButtonClick = clicked.get_pointer()[0];
@@ -57,3 +40,28 @@ export const openMenu = async (clicked: GtkWidget, event: Gdk.Event, window: str
         }
     }
 };
+
+/**
+ * Closes all currently open menu windows
+ *
+ * This function finds all windows whose names contain "menu" and
+ * hides them. It's used to ensure only one menu is open at a time
+ * when opening a new dropdown menu.
+ */
+function closeAllMenus(): void {
+    const menuWindows = App.get_windows()
+        .filter((w) => {
+            if (w.name) {
+                return /.*menu/.test(w.name);
+            }
+
+            return false;
+        })
+        .map((window) => window.name);
+
+    menuWindows.forEach((window) => {
+        if (window) {
+            App.get_window(window)?.set_visible(false);
+        }
+    });
+}

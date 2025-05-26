@@ -1,6 +1,6 @@
 import AstalBattery from 'gi://AstalBattery?version=0.1';
 import { Astal } from 'astal/gtk3';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
@@ -138,7 +138,7 @@ const BatteryLabel = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'energymenu');
+                                openDropdownMenu(clicked, event, 'energymenu');
                             }),
                         );
 

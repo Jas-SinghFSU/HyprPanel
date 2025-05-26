@@ -7,7 +7,7 @@ import { BarBoxChild } from 'src/components/bar/types.js';
 import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber?.audio;
@@ -103,7 +103,7 @@ const Volume = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'audiomenu');
+                                openDropdownMenu(clicked, event, 'audiomenu');
                             }),
                         );
 

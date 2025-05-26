@@ -1,4 +1,4 @@
-import { openMenu } from '../../utils/menu';
+import { openDropdownMenu } from '../../utils/menu';
 import { bind, Variable } from 'astal';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
@@ -84,7 +84,7 @@ const Clock = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'calendarmenu');
+                                openDropdownMenu(clicked, event, 'calendarmenu');
                             }),
                         );
 
