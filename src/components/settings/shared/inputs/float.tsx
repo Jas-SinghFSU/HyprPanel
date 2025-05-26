@@ -2,7 +2,7 @@ import { bind, Variable } from 'astal';
 import icons from 'src/lib/icons/icons';
 import { Opt } from 'src/lib/options';
 
-export const ObjectInputter = <T extends string | number | boolean | object>({
+export const FloatInputter = <T extends string | number | boolean | object>({
     opt,
     isUnsaved,
     className,
@@ -27,26 +27,26 @@ export const ObjectInputter = <T extends string | number | boolean | object>({
             <entry
                 className={className}
                 onChanged={(self) => {
-                    const currentText = self.text;
-                    const serializedOpt = JSON.stringify(opt.get());
+                    const currentText = parseFloat(self.text);
+                    const serializedOpt = parseFloat(opt.get().toString());
                     isUnsaved.set(currentText !== serializedOpt);
                 }}
                 onActivate={(self) => {
                     try {
-                        const parsedValue = JSON.parse(self.text || '{}');
-                        opt.set(parsedValue);
+                        const parsedValue = parseFloat(self.text);
+                        opt.set(parsedValue as unknown as T);
                         isUnsaved.set(false);
                     } catch (error) {
                         console.error('Invalid JSON input:', error);
                     }
                 }}
                 setup={(self) => {
-                    self.text = JSON.stringify(opt.get());
-                    isUnsaved.set(self.text !== JSON.stringify(opt.get()));
+                    self.text = opt.get().toString();
+                    isUnsaved.set(self.text !== opt.get().toString());
 
                     self.hook(opt, () => {
-                        self.text = JSON.stringify(opt.get());
-                        isUnsaved.set(self.text !== JSON.stringify(opt.get()));
+                        self.text = opt.get().toString();
+                        isUnsaved.set(self.text !== opt.get().toString());
                     });
                 }}
             />
