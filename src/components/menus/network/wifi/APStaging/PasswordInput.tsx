@@ -1,8 +1,8 @@
-import { Gdk, Gtk } from 'astal/gtk3';
+import { Gtk } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { execAsync, Variable } from 'astal';
-import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { Variable } from 'astal';
 import { isPrimaryClick } from 'src/lib/events/mouse';
+import { handlePasswordInput } from './helpers';
 
 export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.Element => {
     const shouldMaskPassword = true;
@@ -16,30 +16,10 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                 visibility={!shouldMaskPassword}
                 placeholderText="Enter Password"
                 onKeyPressEvent={(self, event) => {
-                    const keyPressed = event.get_keyval()[1];
-
-                    if (keyPressed === Gdk.KEY_Return) {
-                        connecting.set(staging.get()?.bssid ?? '');
-
-                        const connectCommand = `nmcli device wifi connect "${staging.get()?.ssid}" password "${self.text}"`;
-
-                        execAsync(connectCommand)
-                            .catch((err) => {
-                                connecting.set('');
-
-                                SystemUtilities.notify({
-                                    summary: 'Network',
-                                    body: err.message,
-                                });
-                            })
-                            .then(() => {
-                                connecting.set('');
-
-                                staging.set({} as AstalNetwork.AccessPoint);
-                            });
-
-                        self.text = '';
-                    }
+                    handlePasswordInput(self, event, staging);
+                }}
+                setup={(self) => {
+                    setTimeout(() => self.grab_focus(), 100);
                 }}
             />
             <button
@@ -48,7 +28,7 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                 onClick={(_, event) => {
                     if (isPrimaryClick(event)) {
                         connecting.set('');
-                        staging.set({} as AstalNetwork.AccessPoint);
+                        staging.set(undefined);
                     }
                 }}
             >

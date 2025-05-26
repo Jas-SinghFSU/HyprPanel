@@ -3,8 +3,7 @@ import { Astal } from 'astal/gtk3';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 import { isPrimaryClick } from 'src/lib/events/mouse';
-import { DEVICE_STATES } from './types';
-import NM from 'gi://NM';
+import { AP_FLAGS, DEVICE_STATES } from './types';
 
 /**
  * WifiManager handles all WiFi-related functionality for staging and connecting to
@@ -221,9 +220,9 @@ export class WifiManager {
             return;
         }
 
-        this.connecting.set(accessPoint.bssid ?? '');
+        if (!accessPoint.flags || accessPoint.flags === AP_FLAGS.NONE) {
+            this.connecting.set(accessPoint.bssid ?? '');
 
-        if (!accessPoint.flags || accessPoint.flags === NM.__80211ApFlags.NONE) {
             execAsync(`nmcli device wifi connect ${accessPoint.bssid}`)
                 .then(() => {
                     this.connecting.set('');
@@ -237,9 +236,37 @@ export class WifiManager {
                     });
                 });
         } else {
-            this.connecting.set('');
             this.staging.set(accessPoint);
         }
+    }
+
+    /**
+     * Connects to a secured access point with a password.
+     *
+     * @param accessPoint - The access point to connect to.
+     * @param password - The password for the network.
+     */
+    public async connectToAPWithPassword(
+        accessPoint: AstalNetwork.AccessPoint,
+        password: string,
+    ): Promise<void> {
+        if (!accessPoint.ssid || !password) {
+            return Promise.reject(new Error('SSID and password are required'));
+        }
+
+        this.connecting.set(accessPoint.bssid || '');
+
+        const connectCommand = `nmcli device wifi connect "${accessPoint.ssid}" password "${password}"`;
+
+        return execAsync(connectCommand)
+            .then(() => {
+                this.connecting.set('');
+                this.staging.set(undefined);
+            })
+            .catch((err: Error) => {
+                this.connecting.set('');
+                throw err;
+            });
     }
 
     /**

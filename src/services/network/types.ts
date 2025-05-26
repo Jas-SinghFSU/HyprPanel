@@ -36,3 +36,8 @@ export const wifiIconMap = new Map<string, WifiIcon>([
     ['network-wireless-signal-weak', '󰤟'],
     ['network-wireless-signal-none', '󰤯'],
 ]);
+
+export const AP_FLAGS = {
+    NONE: 0,
+    PRIVACY: 1,
+} as const;
