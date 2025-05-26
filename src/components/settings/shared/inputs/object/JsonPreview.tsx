@@ -1,26 +1,25 @@
 import { Gtk } from 'astal/gtk3';
-import icons from 'src/lib/icons/icons';
 import { JsonPreviewProps } from './types';
+import { bind } from 'astal';
 
 export const JsonPreview = ({ value, onClick, isExpanded }: JsonPreviewProps): JSX.Element => {
-    const formatPreview = (val: unknown): string => {
-        const str = JSON.stringify(val);
-        return str.length > 30 ? str.substring(0, 30) + '...' : str;
-    };
-
     return (
-        <eventbox className="object-input-row" onClick={onClick}>
-            <box hexpand>
+        <eventbox onClick={onClick}>
+            <box
+                className={bind(isExpanded).as((expanded) => `json-preview ${expanded ? 'expanded' : ''}`)}
+                hexpand
+            >
                 <label
-                    className="json-preview-label"
-                    label={formatPreview(value)}
+                    className="preview-text"
+                    label={value.as((val) => JSON.stringify(val))}
                     halign={Gtk.Align.START}
+                    truncate
                     hexpand
-                    css="color: rgba(255, 255, 255, 0.6); font-family: monospace;"
+                    maxWidthChars={55}
                 />
-                <icon
-                    icon={isExpanded ? 'window-close-symbolic' : icons.ui.settings}
-                    css="margin-left: 8px;"
+                <label
+                    className="preview-icon txt-icon"
+                    label={bind(isExpanded).as((expanded) => (expanded ? '󰅖' : '󰏫'))}
                 />
             </box>
         </eventbox>

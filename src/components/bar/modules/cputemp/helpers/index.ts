@@ -47,7 +47,6 @@ export function getCpuTempTooltip(cpuTempService: CpuTempService): Binding<strin
         const interval = pollingInterval.get();
         lines.push('', `Update interval: ${interval}ms`);
 
-        // Show all available sensors
         const allSensors = CpuTempSensorDiscovery.getAllSensors();
         if (allSensors.length > 1) {
             lines.push('', `Available sensors: ${allSensors.length}`);
@@ -90,7 +89,6 @@ function getChipName(path: string): string | undefined {
     if (!path.includes('/sys/class/hwmon/')) return undefined;
 
     try {
-        // Extract hwmon directory from path
         const match = path.match(/\/sys\/class\/hwmon\/hwmon\d+/);
         if (!match) return undefined;
 
@@ -100,8 +98,10 @@ function getChipName(path: string): string | undefined {
         if (success && bytes) {
             return new TextDecoder('utf-8').decode(bytes).trim();
         }
-    } catch {
-        // Failed to read chip name
+    } catch (error) {
+        if (error instanceof Error) {
+            console.debug(`Failed to get chip name: ${error.message}`);
+        }
     }
 
     return undefined;

@@ -79,7 +79,8 @@ export const Inputter = <T extends string | number | boolean | object>({
     return (
         <box
             className={/export|import/.test(type || '') ? '' : 'inputter-container'}
-            valign={Gtk.Align.CENTER}
+            valign={Gtk.Align.START}
+            halign={Gtk.Align.END}
         >
             <InputField
                 type={type}

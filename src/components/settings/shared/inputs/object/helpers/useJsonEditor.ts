@@ -1,6 +1,6 @@
 import { Variable } from 'astal';
 import { Opt } from 'src/lib/options';
-import { JsonEditorHook } from './types';
+import { JsonEditorHook } from '../types';
 
 /**
  * Custom hook for managing JSON editor state and logic
@@ -50,7 +50,6 @@ export function useJsonEditor<T>(opt: Opt<T>, isUnsaved: Variable<boolean>): Jso
                 isUnsaved.set(false);
                 showEditor.set(false);
             } catch (error) {
-                // This shouldn't happen if validateJson passed
                 console.error('Unexpected error saving JSON:', error);
             }
         }

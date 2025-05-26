@@ -1,4 +1,4 @@
-import { Variable } from 'astal';
+import { Binding, Variable } from 'astal';
 import { Opt } from 'src/lib/options';
 
 export interface ObjectInputterProps<T> {
@@ -21,9 +21,9 @@ export interface JsonEditorHook extends JsonEditorState {
 }
 
 export interface JsonPreviewProps {
-    value: unknown;
+    value: Binding<unknown>;
     onClick: () => void;
-    isExpanded: boolean;
+    isExpanded: Binding<boolean>;
 }
 
 export interface JsonEditorProps {
