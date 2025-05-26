@@ -9,8 +9,7 @@ import { DEFAULT_WEATHER } from './default';
 import { WeatherProvider } from './adapters/types';
 import { TemperatureConverter } from 'src/lib/units/temperature';
 import { SpeedConverter } from 'src/lib/units/speed';
-
-const { unit: unitType } = options.menus.clock.weather;
+import { UnitType } from 'src/lib/units/temperature/types';
 
 export default class WeatherService {
     public static instance: WeatherService;
@@ -21,6 +20,7 @@ export default class WeatherService {
 
     private readonly _intervalFrequency: Opt<number>;
     private _interval: null | AstalIO.Time = null;
+    private _unitType: Variable<UnitType> = Variable('imperial');
 
     private _weatherData: Variable<Weather> = Variable(DEFAULT_WEATHER);
     private _temperature: Variable<string> = Variable(this._getTemperature());
@@ -90,8 +90,12 @@ export default class WeatherService {
         return this._gaugeIcon;
     }
 
-    public convertCelsiusToFahrenheit(celsiusValue: number): number {
-        return (celsiusValue * 9) / 5 + 32;
+    public get unit(): UnitType {
+        return this._unitType.get();
+    }
+
+    public set unit(unitType: UnitType) {
+        this._unitType.set(unitType);
     }
 
     /**
@@ -103,7 +107,7 @@ export default class WeatherService {
         const { temperature } = this.weatherData.get().current;
 
         const tempConverter = TemperatureConverter.fromCelsius(temperature);
-        const isImperial = unitType.get() === 'imperial';
+        const isImperial = this._unitType.get() === 'imperial';
 
         return isImperial ? tempConverter.formatFahrenheit() : tempConverter.formatCelsius();
     }
@@ -169,7 +173,7 @@ export default class WeatherService {
     private _getWindConditions(): string {
         const windConditions = this.weatherData.get().current.wind;
 
-        const isImperial = unitType.get() === 'imperial';
+        const isImperial = this._unitType.get() === 'imperial';
         const windSpeed = windConditions?.speed ?? 0;
         const speedConverter = SpeedConverter.fromKph(windSpeed);
 
@@ -207,7 +211,7 @@ export default class WeatherService {
     }
 
     private _initializeWeatherTracker(): void {
-        Variable.derive([bind(this._weatherData)], () => {
+        Variable.derive([bind(this._weatherData), bind(this._unitType)], () => {
             this._statusIcon.set(this._getWeatherStatusIcon());
             this._temperature.set(this._getTemperature());
             this._rainChance.set(this._getRainChance());

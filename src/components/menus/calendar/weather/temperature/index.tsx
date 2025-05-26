@@ -1,8 +1,12 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
 import WeatherService from 'src/services/weather';
+import options from 'src/configuration';
 
+const { unit } = options.menus.clock.weather;
 const weatherService = WeatherService.getInstance();
+
+unit.subscribe((unitType) => (weatherService.unit = unitType));
 
 const WeatherStatus = (): JSX.Element => {
     return (

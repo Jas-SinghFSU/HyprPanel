@@ -8,11 +8,12 @@ import StorageService from 'src/services/system/storage';
 
 const { terminal } = options;
 const { interval, enabled, enable_gpu } = options.menus.dashboard.stats;
+const { paths } = options.bar.customModules.storage;
 
 export const gpuService = new GpuUsageService();
 export const cpuService = new CpuUsageService();
 export const ramService = new RamUsageService();
-export const storageService = new StorageService();
+export const storageService = new StorageService({ pathsToMonitor: paths });
 
 /**
  * Handles the click event for the dashboard menu.
@@ -34,7 +35,7 @@ const monitorInterval = (): void => {
     interval.subscribe(() => {
         ramService.updateTimer(interval.get());
         cpuService.updateTimer(interval.get());
-        storageService.updateTimer(interval.get());
+        storageService.frequency = interval.get();
     });
 };
 
@@ -84,7 +85,7 @@ const monitorGpuTrackingEnabled = (): void => {
  * This function sets up the initial state for the services and monitoring for interval changes, enabled state changes, and GPU tracking enabled state.
  */
 export const setupDashboardMonitoring = (): void => {
-    storageService.setShouldRound(true);
+    storageService.round = true;
 
     if (enabled.get()) {
         ramService.startPoller();
