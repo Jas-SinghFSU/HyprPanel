@@ -2,6 +2,7 @@ import { bind, Variable } from 'astal';
 import GLib from 'gi://GLib?version=2.0';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { CpuTempServiceCtor } from './types';
+import { CpuTempSensorDiscovery } from './sensorDiscovery';
 
 class CpuTempService {
     private _sensor: Variable<string>;
@@ -9,9 +10,10 @@ class CpuTempService {
     private _tempPoller: FunctionPoller<number, []>;
     private _isInitialized = false;
     private _temperature = Variable(0);
+    private _resolvedSensorPath?: string;
 
     constructor({ sensor, frequency }: CpuTempServiceCtor = {}) {
-        this._sensor = sensor ?? Variable('/sys/class/thermal/thermal_zone0/temp');
+        this._sensor = sensor ?? Variable('auto');
         this._updateFrequency = frequency || Variable(2000);
 
         this._readTemperature = this._readTemperature.bind(this);
@@ -22,29 +24,44 @@ class CpuTempService {
             bind(this._updateFrequency),
             this._readTemperature,
         );
+
+        this._sensor.subscribe(() => this._resolveSensorPath());
+    }
+
+    /**
+     * Resolves the sensor path based on configuration
+     */
+    private _resolveSensorPath(): void {
+        const sensorValue = this._sensor.get();
+
+        if (sensorValue === 'auto' || sensorValue === '') {
+            this._resolvedSensorPath = CpuTempSensorDiscovery.discover();
+            if (!this._resolvedSensorPath) console.error('No CPU temperature sensor found');
+            return;
+        }
+
+        if (CpuTempSensorDiscovery.isValid(sensorValue)) {
+            this._resolvedSensorPath = sensorValue;
+            return;
+        }
+
+        console.error(`Invalid sensor: ${sensorValue}, falling back to auto-discovery`);
+        this._resolvedSensorPath = CpuTempSensorDiscovery.discover();
     }
 
     /**
      * Reads CPU temperature from the sensor file and returns it in Celsius
      */
     private _readTemperature(): number {
-        try {
-            const sensorPath = this._sensor.get();
-            if (sensorPath.length === 0) {
-                return 0;
-            }
+        if (!this._resolvedSensorPath) return 0;
 
-            const [success, tempBytes] = GLib.file_get_contents(sensorPath);
-            if (!success || tempBytes === null) {
-                console.error(`Failed to read temperature from ${sensorPath}`);
-                return 0;
-            }
+        try {
+            const [success, tempBytes] = GLib.file_get_contents(this._resolvedSensorPath);
+            if (!success || !tempBytes) return 0;
 
             const tempInfo = new TextDecoder('utf-8').decode(tempBytes);
             const tempValueMillidegrees = parseInt(tempInfo.trim(), 10);
-            const tempValueDegrees = tempValueMillidegrees / 1000;
-
-            return tempValueDegrees;
+            return tempValueMillidegrees / 1000;
         } catch (error) {
             console.error('Error reading CPU temperature:', error);
             return 0;
@@ -57,6 +74,10 @@ class CpuTempService {
 
     public get sensor(): Variable<string> {
         return this._sensor;
+    }
+
+    public get currentSensorPath(): string | undefined {
+        return this._resolvedSensorPath;
     }
 
     public refresh(): void {
@@ -76,10 +97,11 @@ class CpuTempService {
      * Initializes the CPU temperature monitoring poller
      */
     public initialize(): void {
-        if (!this._isInitialized) {
-            this._tempPoller.initialize();
-            this._isInitialized = true;
-        }
+        if (this._isInitialized) return;
+
+        this._resolveSensorPath();
+        this._tempPoller.initialize();
+        this._isInitialized = true;
     }
 
     public stopPoller(): void {

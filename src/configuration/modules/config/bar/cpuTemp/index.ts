@@ -3,7 +3,7 @@ import { UnitType } from 'src/lib/units/temperature/types';
 
 export default {
     icon: opt(''),
-    sensor: opt(''),
+    sensor: opt('auto'),
     label: opt(true),
     round: opt(true),
     showUnit: opt(true),

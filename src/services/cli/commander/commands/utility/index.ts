@@ -8,6 +8,7 @@ import { idleInhibit } from 'src/lib/window/visibility';
 import { errorHandler } from 'src/core/errors/handler';
 import { clearNotifications } from 'src/lib/shared/notifications';
 import options from 'src/configuration';
+import { listCpuTempSensors } from './listSensors';
 
 const { clearDelay } = options.notifications;
 const notifdService = AstalNotifd.get_default();
@@ -152,6 +153,20 @@ export const utilityCommands: Command[] = [
         handler: (): string => {
             try {
                 return checkDependencies();
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'listCpuSensors',
+        aliases: ['lcs'],
+        description: 'Lists all available CPU temperature sensors and shows the current one.',
+        category: 'Utility',
+        args: [],
+        handler: (): string => {
+            try {
+                return listCpuTempSensors();
             } catch (error) {
                 errorHandler(error);
             }

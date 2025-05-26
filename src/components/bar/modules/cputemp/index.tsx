@@ -6,6 +6,7 @@ import { InputHandlerService } from '../../utils/input/inputHandler';
 import CpuTempService from 'src/services/system/cputemp';
 import options from 'src/configuration';
 import { TemperatureConverter } from 'src/lib/units/temperature';
+import { getCpuTempTooltip } from './helpers';
 
 const inputHandler = InputHandlerService.getInstance();
 
@@ -63,7 +64,7 @@ export const CpuTemp = (): BarBoxChild => {
     const cpuTempModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: 'CPU Temperature',
+        tooltipText: getCpuTempTooltip(cpuTempService),
         boxClass: 'cpu-temp',
         showLabelBinding: bind(label),
         props: {
