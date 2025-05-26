@@ -5,7 +5,7 @@ import { isPrimaryClick } from 'src/lib/events/mouse';
 import { handlePasswordInput } from './helpers';
 
 export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.Element => {
-    const shouldMaskPassword = true;
+    const showPassword = true;
 
     return (
         <box className="network-password-input-container" halign={Gtk.Align.FILL} hexpand>
@@ -13,7 +13,7 @@ export const PasswordInput = ({ connecting, staging }: PasswordInputProps): JSX.
                 className="network-password-input"
                 hexpand
                 halign={Gtk.Align.START}
-                visibility={!shouldMaskPassword}
+                visibility={!showPassword}
                 placeholderText="Enter Password"
                 onKeyPressEvent={(self, event) => {
                     handlePasswordInput(self, event, staging);
