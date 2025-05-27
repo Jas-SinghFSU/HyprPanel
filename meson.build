@@ -12,6 +12,8 @@ datadir = prefix / get_option('datadir') / meson.project_name()
 ags = find_program('ags', required: true)
 find_program('gjs', required: true)
 
+dependency('gtksourceview-3.0', required: true)
+
 custom_target(
   'hyprpanel_bundle',
   input: files('app.ts'),
@@ -41,4 +43,4 @@ configure_file(
 install_subdir('scripts', install_dir: datadir)
 install_subdir('themes', install_dir: datadir)
 install_subdir('assets', install_dir: datadir)
-install_subdir('src/scss', install_dir: datadir / 'src')
+install_subdir('src/style', install_dir: datadir / 'src')

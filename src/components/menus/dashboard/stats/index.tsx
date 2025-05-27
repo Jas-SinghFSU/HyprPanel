@@ -1,22 +1,14 @@
 import { Gtk } from 'astal/gtk3';
 import { CpuStat, GpuStat, RamStat, StorageStat } from './StatBars';
-import { initializePollers } from './helpers';
-import Gpu from 'src/services/Gpu';
-import Ram from 'src/services/Ram';
-import Cpu from 'src/services/Cpu';
-import Storage from 'src/services/Storage';
+import { setupDashboardMonitoring } from './helpers';
+import { JSXElement } from 'src/core/types';
 
-export const ramService = new Ram();
-export const cpuService = new Cpu();
-export const storageService = new Storage();
-export const gpuService = new Gpu();
-
-initializePollers(cpuService, ramService, gpuService, storageService);
-
-export const Stats = ({ isEnabled }: StatsProps): JSX.Element => {
+export const Stats = ({ isEnabled }: StatsProps): JSXElement => {
     if (!isEnabled) {
         return null;
     }
+
+    setupDashboardMonitoring();
 
     return (
         <box

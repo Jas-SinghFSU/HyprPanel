@@ -1,14 +1,14 @@
-import { isMiddleClick, isPrimaryClick, isSecondaryClick, Notify } from '../../../../lib/utils';
-import options from '../../../../options';
 import AstalTray from 'gi://AstalTray?version=0.1';
 import { bind, Gio, Variable } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import options from 'src/configuration';
+import { isPrimaryClick, isSecondaryClick, isMiddleClick } from 'src/lib/events/mouse';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const systemtray = AstalTray.get_default();
 const { ignore, customIcons } = options.bar.systray;
 
-//TODO: Connect to `notify::menu-model` and `notify::action-group` to have up to date menu and action group
 const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | null): Gtk.Menu => {
     const menu = Gtk.Menu.new_from_model(menuModel);
     menu.insert_action_group('dbusmenu', actionGroup);
@@ -31,7 +31,7 @@ const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
     return (
         <icon
             className={'systray-icon'}
-            gIcon={bind(item, 'gicon')}
+            gicon={bind(item, 'gicon')}
             tooltipMarkup={bind(item, 'tooltipMarkup')}
         />
     );
@@ -67,7 +67,7 @@ const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
                 }
 
                 if (isMiddleClick(event)) {
-                    Notify({ summary: 'App Name', body: item.id });
+                    SystemUtilities.notify({ summary: 'App Name', body: item.id });
                 }
             }}
             onDestroy={() => {

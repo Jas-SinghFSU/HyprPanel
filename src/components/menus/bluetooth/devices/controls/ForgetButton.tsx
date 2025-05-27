@@ -1,7 +1,7 @@
 import { ActionButton } from './ActionButton';
-import { isPrimaryClick } from 'src/lib/utils';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { forgetBluetoothDevice } from '../helpers';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const ForgetButton = ({ device }: ForgetButtonProps): JSX.Element => {
     return (

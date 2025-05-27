@@ -1,13 +1,17 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
+import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const { icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } = options.bar.customModules.power;
 
 export const Power = (): BarBoxChild => {
+    let inputHandlerBindings: Variable<void>;
+
     const powerModule = Module({
         tooltipText: 'Power Menu',
         textIcon: bind(icon),
@@ -15,7 +19,7 @@ export const Power = (): BarBoxChild => {
         boxClass: 'powermodule',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -32,6 +36,9 @@ export const Power = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });

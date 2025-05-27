@@ -1,18 +1,25 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal/binding';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { connecting, getFilteredWirelessAPs, isWifiEnabled, staging, wifiAccessPoints } from './helpers';
 import { AccessPoint } from './AccessPoint';
 import { Controls } from './Controls';
 import { Variable } from 'astal';
+import { NetworkService } from 'src/services/network';
+
+const networkService = NetworkService.getInstance();
 
 export const WirelessAPs = (): JSX.Element => {
     const wapBinding = Variable.derive(
-        [bind(staging), bind(connecting), bind(wifiAccessPoints), bind(isWifiEnabled)],
+        [
+            bind(networkService.wifi.staging),
+            bind(networkService.wifi.connecting),
+            bind(networkService.wifi.wifiAccessPoints),
+            bind(networkService.wifi.isWifiEnabled),
+        ],
         () => {
-            const filteredWAPs = getFilteredWirelessAPs();
+            const filteredWAPs = networkService.wifi.getFilteredWirelessAPs();
 
-            if (filteredWAPs.length <= 0 && staging.get() === undefined) {
+            if (filteredWAPs.length <= 0 && networkService.wifi.staging.get() === undefined) {
                 return (
                     <label
                         className={'waps-not-found dim'}
@@ -30,8 +37,11 @@ export const WirelessAPs = (): JSX.Element => {
                         {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
                             return (
                                 <box className={'network-element-item'}>
-                                    <AccessPoint connecting={connecting} accessPoint={ap} />
-                                    <Controls connecting={connecting} accessPoint={ap} />
+                                    <AccessPoint
+                                        connecting={networkService.wifi.connecting}
+                                        accessPoint={ap}
+                                    />
+                                    <Controls connecting={networkService.wifi.connecting} accessPoint={ap} />
                                 </box>
                             );
                         })}

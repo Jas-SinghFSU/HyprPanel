@@ -1,7 +1,7 @@
 import { bind, execAsync, Variable } from 'astal';
 import { App, Gtk, Widget } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
-import options from 'src/options';
+import options from 'src/configuration';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const { left, right } = options.menus.dashboard.directories;
 

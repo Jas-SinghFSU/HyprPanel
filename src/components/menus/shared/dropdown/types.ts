@@ -1,11 +1,17 @@
-import { BarLocation } from 'src/lib/options/options.types';
+import { Astal, Gtk } from 'astal/gtk3';
+import { Binding } from 'astal';
+import { BarLocation } from 'src/lib/options/types';
 
-export type EventBoxPaddingProps = {
-    className: string;
-    windowName: string;
-};
+export interface DropdownMenuProps {
+    name: string;
+    child?: JSX.Element | JSX.Element[] | Binding<JSX.Element | undefined>;
+    layout?: string;
+    transition?: Gtk.RevealerTransitionType | Binding<Gtk.RevealerTransitionType>;
+    exclusivity?: Astal.Exclusivity;
+    fixed?: boolean;
+    onDestroy?: () => void;
+}
 
-export type BarEventMarginsProps = {
-    windowName: string;
-    location?: BarLocation;
+export type LocationMap = {
+    [key in BarLocation]: Astal.WindowAnchor;
 };

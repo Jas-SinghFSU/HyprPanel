@@ -1,8 +1,8 @@
 import { bind, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { getIcon } from '../../utils';
 import AstalWp from 'gi://AstalWp?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const SliderIcon = ({ type, device }: SliderIconProps): JSX.Element => {
     const iconBinding = Variable.derive([bind(device, 'volume'), bind(device, 'mute')], (volume, isMuted) => {

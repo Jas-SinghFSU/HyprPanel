@@ -1,29 +1,32 @@
-import options from 'src/options';
-import { globalWeatherVar } from 'src/shared/weather';
-import { getNextEpoch } from '../helpers';
 import { bind, Variable } from 'astal';
+import options from 'src/configuration';
+import WeatherService from 'src/services/weather';
+import { getTargetHour } from '../helpers';
 
+const weatherService = WeatherService.getInstance();
 const { military } = options.menus.clock.time;
 
 export const HourlyTime = ({ hoursFromNow }: HourlyTimeProps): JSX.Element => {
-    const weatherBinding = Variable.derive([bind(globalWeatherVar), bind(military)], (weather, military) => {
-        if (!Object.keys(weather).length) {
-            return '-';
-        }
+    const weatherBinding = Variable.derive(
+        [bind(weatherService.weatherData), bind(military)],
+        (weather, military) => {
+            if (!Object.keys(weather).length) {
+                return '-';
+            }
 
-        const nextEpoch = getNextEpoch(weather, hoursFromNow);
-        const dateAtEpoch = new Date(nextEpoch * 1000);
+            const targetHour = getTargetHour(new Date(), hoursFromNow);
 
-        let hours = dateAtEpoch.getHours();
+            let hours = targetHour.getHours();
 
-        if (military) {
-            return `${hours}:00`;
-        }
+            if (military) {
+                return `${hours}:00`;
+            }
 
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12;
-        return `${hours}${ampm}`;
-    });
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${hours}${ampm}`;
+        },
+    );
 
     return (
         <label

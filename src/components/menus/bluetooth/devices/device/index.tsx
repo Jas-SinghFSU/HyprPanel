@@ -1,11 +1,11 @@
 import { Gtk } from 'astal/gtk3';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import Spinner from 'src/components/shared/Spinner';
-import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
 import { DeviceIcon } from './DeviceIcon';
 import { DeviceName } from './DeviceName';
 import { DeviceStatus } from './DeviceStatus';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const BluetoothDevice = ({ device, connectedDevices }: BluetoothDeviceProps): JSX.Element => {
     const IsConnectingSpinner = (): JSX.Element => {

@@ -1,12 +1,12 @@
 import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import Brightness from 'src/services/Brightness';
-import options from 'src/options';
+import options from 'src/configuration';
+import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 
 /**
  * Sets up the OSD label for a given widget.
