@@ -16,13 +16,14 @@ export const ColorInputter = <T extends string | number | boolean | object>({
                     self.set_rgba(rgba);
                 });
 
-                self.connect('color-set', ({ rgba: { red, green, blue } }) => {
+                self.connect('color-set', () => {
+                    const rgba = self.get_rgba();
                     const hex = (n: number): string => {
                         const c = Math.floor(255 * n).toString(16);
                         return c.length === 1 ? `0${c}` : c;
                     };
 
-                    opt.set(`#${hex(red)}${hex(green)}${hex(blue)}` as T);
+                    opt.set(`#${hex(rgba.red)}${hex(rgba.green)}${hex(rgba.blue)}` as T);
                 });
             }}
         />
