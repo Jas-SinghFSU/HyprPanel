@@ -5,6 +5,7 @@ import { BarBoxChild } from 'src/components/bar/types';
 import WeatherService from 'src/services/weather';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import options from 'src/configuration';
+import { toTitleCase } from 'src/lib/string/formatters';
 
 const inputHandler = InputHandlerService.getInstance();
 
@@ -27,7 +28,7 @@ export const Weather = (): BarBoxChild => {
     const weatherModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(weatherService.weatherData).as(
-            (wthr) => `Weather Status: ${wthr.current.condition.text}`,
+            (wthr) => `Weather Status: ${toTitleCase(wthr.current.condition.text)}`,
         ),
         boxClass: 'weather-custom',
         label: labelBinding(),

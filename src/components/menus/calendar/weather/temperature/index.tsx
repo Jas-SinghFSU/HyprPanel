@@ -2,6 +2,7 @@ import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
 import WeatherService from 'src/services/weather';
 import options from 'src/configuration';
+import { toTitleCase } from 'src/lib/string/formatters';
 
 const { unit } = options.menus.clock.weather;
 const weatherService = WeatherService.getInstance();
@@ -15,7 +16,9 @@ const WeatherStatus = (): JSX.Element => {
                 className={bind(weatherService.gaugeIcon).as(
                     (gauge) => `calendar-menu-weather today condition label ${gauge.color}`,
                 )}
-                label={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
+                label={bind(weatherService.weatherData).as((weather) =>
+                    toTitleCase(weather.current.condition.text),
+                )}
                 truncate
                 tooltipText={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
             />
