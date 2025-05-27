@@ -13,8 +13,7 @@
     "author": "",
     "license": "MIT",
     "dependencies": {
-        "astal": "/usr/share/astal/gjs",
-        "zod": "^3.25.23"
+        "astal": "/usr/share/astal/gjs"
     },
     "devDependencies": {
         "@types/node": "^22.15.17",
