@@ -1,10 +1,10 @@
+import options from 'src/configuration';
 import DropdownMenu from '../shared/dropdown/index.js';
 import { BluetoothDevices } from './devices/index.js';
 import { Header } from './header/index.js';
-import options from 'src/options.js';
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { RevealerTransitionMap } from 'src/lib/constants/options.js';
+import { RevealerTransitionMap } from 'src/components/settings/constants.js';
 
 export default (): JSX.Element => {
     return (

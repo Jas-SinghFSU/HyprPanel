@@ -1,7 +1,7 @@
 import { bind } from 'astal';
 import { ActionButton } from './ActionButton';
-import { isPrimaryClick } from 'src/lib/utils';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const PairButton = ({ device }: PairButtonProps): JSX.Element => {
     return (

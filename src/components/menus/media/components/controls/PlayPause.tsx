@@ -1,9 +1,9 @@
 import { Astal, Gtk, Widget } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
 import { getPlaybackIcon } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer, canPlay, playbackStatus } from 'src/shared/media';
+import { canPlay, playbackStatus, activePlayer } from 'src/services/media';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const PlayPause = (): JSX.Element => {
     const className = bind(canPlay).as((canPlay) => {

@@ -1,8 +1,9 @@
 import { bind } from 'astal';
 import { Gdk, Gtk } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { capitalizeFirstLetter, isScrollDown, isScrollUp } from 'src/lib/utils';
-import options from 'src/options';
+import options from 'src/configuration';
+import { isScrollUp, isScrollDown } from 'src/lib/events/mouse';
+import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 
 const { raiseMaximumVolume } = options.menus.volume;
 

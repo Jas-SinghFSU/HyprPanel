@@ -1,12 +1,14 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
-import { capitalizeFirstLetter } from 'src/lib/utils';
+import { Module } from '../../shared/module';
 import { getInitialSubmap, isSubmapEnabled } from './helpers';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import options from 'src/configuration';
+import { capitalizeFirstLetter } from 'src/lib/string/formatters';
+import { BarBoxChild } from 'src/components/bar/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const {
@@ -52,6 +54,8 @@ export const Submap = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const submapModule = Module({
         textIcon: submapIcon(),
         tooltipText: submapLabel(),
@@ -60,7 +64,7 @@ export const Submap = (): BarBoxChild => {
         boxClass: 'submap',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -79,6 +83,7 @@ export const Submap = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 submapLabel.drop();
                 submapIcon.drop();
             },

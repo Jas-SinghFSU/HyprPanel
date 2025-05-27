@@ -1,7 +1,7 @@
 import { Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import { isPrimaryClick } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const FirstPageButton = ({ curPage, currentPage }: FirstPageButtonProps): JSX.Element => {
     return (

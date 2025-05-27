@@ -1,406 +1,278 @@
-import { Variable } from 'astal';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { MonitorMap, WorkspaceMonitorMap, WorkspaceRule } from 'src/lib/types/workspace.types';
-import { range } from 'src/lib/utils';
-import options from 'src/options';
+import options from 'src/configuration';
+import { defaultApplicationIconMap } from 'src/components/bar/modules/window_title/helpers/appIcons';
+import { isValidGjsColor } from 'src/lib/validation/colors';
+import { AppIconOptions } from './types';
+import { WorkspaceIconMap } from '../types';
+import { unique } from 'src/lib/array/helpers';
 
 const hyprlandService = AstalHyprland.get_default();
-const { workspaces, reverse_scroll, ignored } = options.bar.workspaces;
+const { monochrome, background } = options.theme.bar.buttons;
+const { background: wsBackground, active } = options.theme.bar.buttons.workspaces;
+
+const { showWsIcons, showAllActive, numbered_active_indicator: wsActiveIndicator } = options.bar.workspaces;
 
 /**
- * A Variable that holds the current map of monitors to the workspace numbers assigned to them.
+ * Determines if a workspace is active on a given monitor.
+ *
+ * This function checks if the workspace with the specified index is currently active on the given monitor.
+ * It uses the `showAllActive` setting and the `hyprlandService` to determine the active workspace on the monitor.
+ *
+ * @param monitor The index of the monitor to check.
+ * @param i The index of the workspace to check.
+ *
+ * @returns True if the workspace is active on the monitor, false otherwise.
  */
-export const workspaceRules = Variable(getWorkspaceMonitorMap());
+const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
+    return showAllActive.get() && hyprlandService.get_monitor(monitor)?.activeWorkspace?.id === i;
+};
 
 /**
- * A Variable used to force UI or other updates when relevant workspace events occur.
+ * Retrieves the icon for a given workspace.
+ *
+ * This function returns the icon associated with a workspace from the provided workspace icon map.
+ * If no icon is found, it returns the workspace index as a string.
+ *
+ * @param wsIconMap The map of workspace icons where keys are workspace indices and values are icons or icon objects.
+ * @param i The index of the workspace for which to retrieve the icon.
+ *
+ * @returns The icon for the workspace as a string. If no icon is found, returns the workspace index as a string.
  */
-export const forceUpdater = Variable(true);
+const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
+    const iconEntry = wsIconMap[i];
+    const defaultIcon = `${i}`;
 
-/**
- * Retrieves the workspace numbers associated with a specific monitor.
- *
- * If only one monitor exists, this will simply return a list of all possible workspaces.
- * Otherwise, it will consult the workspace rules to determine which workspace numbers
- * belong to the specified monitor.
- *
- * @param monitorId - The numeric identifier of the monitor.
- *
- * @returns An array of workspace numbers belonging to the specified monitor.
- */
-export function getWorkspacesForMonitor(monitorId: number): number[] {
-    const allMonitors = hyprlandService.get_monitors();
-
-    if (allMonitors.length === 1) {
-        return Array.from({ length: workspaces.get() }, (_, index) => index + 1);
+    if (iconEntry === undefined) {
+        return defaultIcon;
     }
 
-    const workspaceMonitorRules = getWorkspaceMonitorMap();
-
-    const monitorNameMap: MonitorMap = {};
-    allMonitors.forEach((monitorInstance) => {
-        monitorNameMap[monitorInstance.id] = monitorInstance.name;
-    });
-
-    const currentMonitorName = monitorNameMap[monitorId];
-
-    return workspaceMonitorRules[currentMonitorName];
-}
-
-/**
- * Checks whether a given workspace is valid (assigned) for the specified monitor.
- *
- * This function inspects the workspace rules object to determine if the current workspace belongs
- * to the target monitor. If no workspace rules exist, the function defaults to returning `true`.
- *
- * @param workspaceId - The number representing the current workspace.
- * @param workspaceMonitorRules - The map of monitor names to assigned workspace numbers.
- * @param monitorId - The numeric identifier for the monitor.
- * @param workspaceList - A list of Hyprland workspace objects.
- * @param monitorList - A list of Hyprland monitor objects.
- *
- * @returns `true` if the workspace is assigned to the monitor or if no rules exist. Otherwise, `false`.
- */
-function isWorkspaceValidForMonitor(
-    workspaceId: number,
-    workspaceMonitorRules: WorkspaceMonitorMap,
-    monitorId: number,
-    workspaceList: AstalHyprland.Workspace[],
-    monitorList: AstalHyprland.Monitor[],
-): boolean {
-    const monitorNameMap: MonitorMap = {};
-    const allWorkspaceInstances = workspaceList ?? [];
-
-    const workspaceMonitorReferences = allWorkspaceInstances
-        .filter((workspaceInstance) => workspaceInstance !== null)
-        .map((workspaceInstance) => {
-            return {
-                id: workspaceInstance.monitor?.id,
-                name: workspaceInstance.monitor?.name,
-            };
-        });
-
-    const mergedMonitorInstances = [
-        ...new Map(
-            [...workspaceMonitorReferences, ...monitorList].map((monitorCandidate) => [
-                monitorCandidate.id,
-                monitorCandidate,
-            ]),
-        ).values(),
-    ];
-
-    mergedMonitorInstances.forEach((monitorInstance) => {
-        monitorNameMap[monitorInstance.id] = monitorInstance.name;
-    });
-
-    const currentMonitorName = monitorNameMap[monitorId];
-    const currentMonitorWorkspaceRules = workspaceMonitorRules[currentMonitorName] ?? [];
-    const activeWorkspaceIds = new Set(allWorkspaceInstances.map((ws) => ws.id));
-    const filteredWorkspaceRules = currentMonitorWorkspaceRules.filter((ws) => !activeWorkspaceIds.has(ws));
-
-    if (filteredWorkspaceRules === undefined) {
-        return false;
+    if (typeof iconEntry === 'string' && iconEntry !== '') {
+        return iconEntry;
     }
 
-    return filteredWorkspaceRules.includes(workspaceId);
-}
+    const hasIcon = typeof iconEntry === 'object' && 'icon' in iconEntry && iconEntry.icon !== '';
+
+    if (hasIcon) {
+        return iconEntry.icon;
+    }
+
+    return defaultIcon;
+};
 
 /**
- * Fetches a map of monitors to the workspace numbers that belong to them.
+ * Retrieves the color for a given workspace.
  *
- * This function communicates with the Hyprland service to retrieve workspace rules in JSON format.
- * Those rules are parsed, and a map of monitor names to lists of assigned workspace numbers is constructed.
+ * This function determines the color styling for a workspace based on the provided workspace icon map,
+ * smart highlighting settings, and the monitor index. It returns a CSS string for the color and background.
  *
- * @returns An object where each key is a monitor name, and each value is an array of workspace numbers.
+ * @param wsIconMap The map of workspace icons where keys are workspace indices and values are icon objects.
+ * @param i The index of the workspace for which to retrieve the color.
+ * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
+ * @param monitor The index of the monitor to check for active workspaces.
+ *
+ * @returns A CSS string representing the color and background for the workspace. If no color is found, returns an empty string.
  */
-function getWorkspaceMonitorMap(): WorkspaceMonitorMap {
-    try {
-        const rulesResponse = hyprlandService.message('j/workspacerules');
-        const workspaceMonitorRules: WorkspaceMonitorMap = {};
-        const parsedWorkspaceRules = JSON.parse(rulesResponse);
+export const getWsColor = (
+    wsIconMap: WorkspaceIconMap,
+    i: number,
+    smartHighlight: boolean,
+    monitor: number,
+): string => {
+    const iconEntry = wsIconMap[i];
+    const hasColor =
+        typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
 
-        parsedWorkspaceRules.forEach((rule: WorkspaceRule) => {
-            const workspaceNumber = parseInt(rule.workspaceString, 10);
+    if (iconEntry === undefined) {
+        return '';
+    }
 
-            if (rule.monitor === undefined || isNaN(workspaceNumber)) {
-                return;
+    if (
+        showWsIcons.get() &&
+        smartHighlight &&
+        wsActiveIndicator.get() === 'highlight' &&
+        (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
+    ) {
+        const iconColor = monochrome.get() ? background.get() : wsBackground.get();
+        const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
+        const colorCss = `color: ${iconColor};`;
+        const backgroundCss = `background: ${iconBackground};`;
+
+        return colorCss + backgroundCss;
+    }
+
+    if (hasColor && isValidGjsColor(iconEntry.color)) {
+        return `color: ${iconEntry.color}; border-bottom-color: ${iconEntry.color};`;
+    }
+
+    return '';
+};
+
+/**
+ * Retrieves the application icon for a given workspace.
+ *
+ * This function returns the appropriate application icon for the specified workspace index.
+ * It considers user-defined icons, default icons, and the option to remove duplicate icons.
+ *
+ * @param workspaceIndex The index of the workspace for which to retrieve the application icon.
+ * @param removeDuplicateIcons A boolean indicating whether to remove duplicate icons.
+ * @param options An object containing user-defined icon map, default icon, and empty icon.
+ *
+ * @returns The application icon for the workspace as a string. If no icons are found, returns the default or empty icon.
+ */
+export const getAppIcon = (
+    workspaceIndex: number,
+    removeDuplicateIcons: boolean,
+    { iconMap: userDefinedIconMap, defaultIcon, emptyIcon }: AppIconOptions,
+): string => {
+    const workspaceClients = hyprlandService
+        .get_clients()
+        .filter((client) => client?.workspace?.id === workspaceIndex)
+        .map((client) => [client.class, client.title]);
+
+    if (!workspaceClients.length) {
+        return emptyIcon;
+    }
+
+    const findIconForClient = (clientClass: string, clientTitle: string): string | undefined => {
+        const appIconMap = { ...userDefinedIconMap, ...defaultApplicationIconMap };
+
+        const iconEntry = Object.entries(appIconMap).find(([matcher]) => {
+            if (matcher.startsWith('class:')) {
+                return new RegExp(matcher.substring(6)).test(clientClass);
             }
 
-            const doesMonitorExistInRules = Object.hasOwnProperty.call(workspaceMonitorRules, rule.monitor);
-
-            if (doesMonitorExistInRules) {
-                workspaceMonitorRules[rule.monitor].push(workspaceNumber);
-            } else {
-                workspaceMonitorRules[rule.monitor] = [workspaceNumber];
+            if (matcher.startsWith('title:')) {
+                return new RegExp(matcher.substring(6)).test(clientTitle);
             }
+
+            return new RegExp(matcher, 'i').test(clientClass);
         });
 
-        return workspaceMonitorRules;
-    } catch (error) {
-        console.error(error);
-        return {};
-    }
-}
+        return iconEntry?.[1] ?? defaultIcon;
+    };
 
-/**
- * Checks if a workspace number should be ignored based on a regular expression.
- *
- * @param ignoredWorkspacesVariable - A Variable object containing a string pattern of ignored workspaces.
- * @param workspaceNumber - The numeric representation of the workspace to check.
- *
- * @returns `true` if the workspace should be ignored, otherwise `false`.
- */
-function isWorkspaceIgnored(ignoredWorkspacesVariable: Variable<string>, workspaceNumber: number): boolean {
-    if (ignoredWorkspacesVariable.get() === '') {
-        return false;
-    }
+    let icons = workspaceClients.reduce((iconAccumulator, [clientClass, clientTitle]) => {
+        const icon = findIconForClient(clientClass, clientTitle);
 
-    const ignoredWorkspacesRegex = new RegExp(ignoredWorkspacesVariable.get());
-    return ignoredWorkspacesRegex.test(workspaceNumber.toString());
-}
+        if (icon !== undefined) {
+            iconAccumulator.push(icon);
+        }
 
-/**
- * Changes the active workspace in the specified direction ('next' or 'prev').
- *
- * This function uses the current monitor's set of active or assigned workspaces and
- * cycles through them in the chosen direction. It also respects the list of ignored
- * workspaces, skipping any that match the ignored pattern.
- *
- * @param direction - The direction to navigate ('next' or 'prev').
- * @param currentMonitorWorkspacesVariable - A Variable containing an array of workspace numbers for the current monitor.
- * @param onlyActiveWorkspaces - Whether to only include active (occupied) workspaces when navigating.
- * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
- */
-function navigateWorkspace(direction: 'next' | 'prev', ignoredWorkspacesVariable: Variable<string>): void {
-    const allHyprlandWorkspaces = hyprlandService.get_workspaces() ?? [];
+        return iconAccumulator;
+    }, []);
 
-    const activeWorkspaceIds = allHyprlandWorkspaces
-        .filter((workspaceInstance) => hyprlandService.focusedMonitor.id === workspaceInstance.monitor?.id)
-        .map((workspaceInstance) => workspaceInstance.id);
+    if (icons.length) {
+        if (removeDuplicateIcons) {
+            icons = unique(icons);
+        }
 
-    const assignedOrOccupiedWorkspaces = activeWorkspaceIds.sort((a, b) => a - b);
-
-    if (assignedOrOccupiedWorkspaces.length === 0) {
-        return;
+        return icons.join(' ');
     }
 
-    const workspaceIndex = assignedOrOccupiedWorkspaces.indexOf(hyprlandService.focusedWorkspace?.id);
-    const step = direction === 'next' ? 1 : -1;
-
-    let newIndex =
-        (workspaceIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
-    let attempts = 0;
-
-    while (attempts < assignedOrOccupiedWorkspaces.length) {
-        const targetWorkspaceNumber = assignedOrOccupiedWorkspaces[newIndex];
-        if (!isWorkspaceIgnored(ignoredWorkspacesVariable, targetWorkspaceNumber)) {
-            hyprlandService.dispatch('workspace', targetWorkspaceNumber.toString());
-            return;
-        }
-        newIndex =
-            (newIndex + step + assignedOrOccupiedWorkspaces.length) % assignedOrOccupiedWorkspaces.length;
-        attempts++;
-    }
-}
+    return defaultIcon;
+};
 
 /**
- * Navigates to the next workspace in the current monitor.
+ * Renders the class names for a workspace.
  *
- * @param currentMonitorWorkspacesVariable - A Variable containing workspace numbers for the current monitor.
- * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
- * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
+ * This function generates the appropriate class names for a workspace based on various settings such as
+ * whether to show icons, numbered workspaces, workspace icons, and smart highlighting.
+ *
+ * @param showIcons A boolean indicating whether to show icons.
+ * @param showNumbered A boolean indicating whether to show numbered workspaces.
+ * @param numberedActiveIndicator The indicator for active numbered workspaces.
+ * @param showWsIcons A boolean indicating whether to show workspace icons.
+ * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
+ * @param monitor The index of the monitor to check for active workspaces.
+ * @param i The index of the workspace for which to render class names.
+ *
+ * @returns The class names for the workspace as a string.
  */
-export function goToNextWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
-    navigateWorkspace('next', ignoredWorkspacesVariable);
-}
+export const renderClassnames = (
+    showIcons: boolean,
+    showNumbered: boolean,
+    numberedActiveIndicator: string,
+    showWsIcons: boolean,
+    smartHighlight: boolean,
+    monitor: number,
+    i: number,
+): string => {
+    const isWorkspaceActive =
+        hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
+    const isActive = isWorkspaceActive ? 'active' : '';
 
-/**
- * Navigates to the previous workspace in the current monitor.
- *
- * @param currentMonitorWorkspacesVariable - A Variable containing workspace numbers for the current monitor.
- * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
- * @param ignoredWorkspacesVariable - A Variable that contains the ignored workspaces pattern.
- */
-export function goToPreviousWorkspace(ignoredWorkspacesVariable: Variable<string>): void {
-    navigateWorkspace('prev', ignoredWorkspacesVariable);
-}
-
-/**
- * Limits the execution rate of a given function to prevent it from being called too often.
- *
- * @param func - The function to be throttled.
- * @param limit - The time limit (in milliseconds) during which calls to `func` are disallowed after the first call.
- *
- * @returns The throttled version of the input function.
- */
-export function throttle<T extends (...args: unknown[]) => void>(func: T, limit: number): T {
-    let isThrottleActive: boolean;
-
-    return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-        if (!isThrottleActive) {
-            func.apply(this, args);
-            isThrottleActive = true;
-
-            setTimeout(() => {
-                isThrottleActive = false;
-            }, limit);
-        }
-    } as T;
-}
-
-/**
- * Creates throttled scroll handlers that navigate workspaces upon scrolling, respecting the configured scroll speed.
- *
- * @param scrollSpeed - The factor by which the scroll navigation is throttled.
- * @param onlyActiveWorkspaces - Whether to only navigate among active (occupied) workspaces.
- *
- * @returns An object containing two functions (`throttledScrollUp` and `throttledScrollDown`), both throttled.
- */
-export function initThrottledScrollHandlers(scrollSpeed: number): ThrottledScrollHandlers {
-    const throttledScrollUp = throttle(() => {
-        if (reverse_scroll.get()) {
-            goToPreviousWorkspace(ignored);
-        } else {
-            goToNextWorkspace(ignored);
-        }
-    }, 200 / scrollSpeed);
-
-    const throttledScrollDown = throttle(() => {
-        if (reverse_scroll.get()) {
-            goToNextWorkspace(ignored);
-        } else {
-            goToPreviousWorkspace(ignored);
-        }
-    }, 200 / scrollSpeed);
-
-    return { throttledScrollUp, throttledScrollDown };
-}
-
-/**
- * Computes which workspace numbers should be rendered for a given monitor.
- *
- * This function consolidates both active and all possible workspaces (based on rules),
- * then filters them by the selected monitor if `isMonitorSpecific` is set to `true`.
- *
- * @param totalWorkspaces - The total number of workspaces (a fallback if workspace rules are not enforced).
- * @param workspaceInstances - A list of Hyprland workspace objects.
- * @param workspaceMonitorRules - The map of monitor names to assigned workspace numbers.
- * @param monitorId - The numeric identifier of the monitor.
- * @param isMonitorSpecific - If `true`, only include the workspaces that match this monitor.
- * @param hyprlandMonitorInstances - A list of Hyprland monitor objects.
- *
- * @returns An array of workspace numbers that should be shown.
- */
-export function getWorkspacesToRender(
-    totalWorkspaces: number,
-    workspaceInstances: AstalHyprland.Workspace[],
-    workspaceMonitorRules: WorkspaceMonitorMap,
-    monitorId: number,
-    isMonitorSpecific: boolean,
-    hyprlandMonitorInstances: AstalHyprland.Monitor[],
-): number[] {
-    let allPotentialWorkspaces = range(totalWorkspaces || 8);
-    const allWorkspaceInstances = workspaceInstances ?? [];
-
-    const activeWorkspaceIds = allWorkspaceInstances.map((workspaceInstance) => workspaceInstance.id);
-
-    const monitorReferencesForActiveWorkspaces = allWorkspaceInstances.map((workspaceInstance) => {
-        return {
-            id: workspaceInstance.monitor?.id ?? -1,
-            name: workspaceInstance.monitor?.name ?? '',
-        };
-    });
-
-    const currentMonitorInstance =
-        hyprlandMonitorInstances.find((monitorObj) => monitorObj.id === monitorId) ||
-        monitorReferencesForActiveWorkspaces.find((monitorObj) => monitorObj.id === monitorId);
-
-    const allWorkspacesWithRules = Object.keys(workspaceMonitorRules).reduce(
-        (accumulator: number[], monitorName: string) => {
-            return [...accumulator, ...workspaceMonitorRules[monitorName]];
-        },
-        [],
-    );
-
-    const activeWorkspacesForCurrentMonitor = activeWorkspaceIds.filter((workspaceId) => {
-        const metadataForWorkspace = allWorkspaceInstances.find(
-            (workspaceObj) => workspaceObj.id === workspaceId,
-        );
-
-        if (metadataForWorkspace) {
-            return metadataForWorkspace?.monitor?.id === monitorId;
-        }
-
-        if (
-            currentMonitorInstance &&
-            Object.hasOwnProperty.call(workspaceMonitorRules, currentMonitorInstance.name) &&
-            allWorkspacesWithRules.includes(workspaceId)
-        ) {
-            return workspaceMonitorRules[currentMonitorInstance.name].includes(workspaceId);
-        }
-
-        return false;
-    });
-
-    if (isMonitorSpecific) {
-        const validWorkspaceNumbers = range(totalWorkspaces).filter((workspaceNumber) => {
-            return isWorkspaceValidForMonitor(
-                workspaceNumber,
-                workspaceMonitorRules,
-                monitorId,
-                allWorkspaceInstances,
-                hyprlandMonitorInstances,
-            );
-        });
-
-        allPotentialWorkspaces = [
-            ...new Set([...activeWorkspacesForCurrentMonitor, ...validWorkspaceNumbers]),
-        ];
-    } else {
-        allPotentialWorkspaces = [...new Set([...allPotentialWorkspaces, ...activeWorkspaceIds])];
+    if (showIcons) {
+        return `workspace-icon txt-icon bar ${isActive}`;
     }
 
-    return allPotentialWorkspaces
-        .filter((workspace) => !isWorkspaceIgnored(ignored, workspace))
-        .sort((a, b) => a - b);
-}
+    if (showNumbered || showWsIcons) {
+        const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
+
+        const wsIconClass = showWsIcons ? 'txt-icon' : '';
+        const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
+
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
+
+        return className.trim();
+    }
+
+    return `default ${isActive}`;
+};
 
 /**
- * Subscribes to Hyprland service events related to workspaces to keep the local state updated.
+ * Renders the label for a workspace.
  *
- * When certain events occur (like a configuration reload or a client being moved/added/removed),
- * this function updates the workspace rules or toggles the `forceUpdater` variable to ensure
- * that any dependent UI or logic is re-rendered or re-run.
+ * This function generates the appropriate label for a workspace based on various settings such as
+ * whether to show icons, application icons, workspace icons, and workspace indicators.
+ *
+ * @param showIcons A boolean indicating whether to show icons.
+ * @param availableIndicator The indicator for available workspaces.
+ * @param activeIndicator The indicator for active workspaces.
+ * @param occupiedIndicator The indicator for occupied workspaces.
+ * @param showAppIcons A boolean indicating whether to show application icons.
+ * @param appIcons The application icons as a string.
+ * @param workspaceMask A boolean indicating whether to mask the workspace.
+ * @param showWorkspaceIcons A boolean indicating whether to show workspace icons.
+ * @param wsIconMap The map of workspace icons where keys are workspace indices and values are icons or icon objects.
+ * @param i The index of the workspace for which to render the label.
+ * @param index The index of the workspace in the list.
+ * @param monitor The index of the monitor to check for active workspaces.
+ *
+ * @returns The label for the workspace as a string.
  */
-export function initWorkspaceEvents(): void {
-    hyprlandService.connect('config-reloaded', () => {
-        workspaceRules.set(getWorkspaceMonitorMap());
-    });
+export const renderLabel = (
+    showIcons: boolean,
+    availableIndicator: string,
+    activeIndicator: string,
+    occupiedIndicator: string,
+    showAppIcons: boolean,
+    appIcons: string,
+    workspaceMask: boolean,
+    showWorkspaceIcons: boolean,
+    wsIconMap: WorkspaceIconMap,
+    i: number,
+    index: number,
+    monitor: number,
+): string => {
+    if (showAppIcons) {
+        return appIcons;
+    }
 
-    hyprlandService.connect('client-moved', () => {
-        forceUpdater.set(!forceUpdater.get());
-    });
+    if (showIcons) {
+        if (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i)) {
+            return activeIndicator;
+        }
+        if ((hyprlandService.get_workspace(i)?.get_clients().length || 0) > 0) {
+            return occupiedIndicator;
+        }
+        if (monitor !== -1) {
+            return availableIndicator;
+        }
+    }
 
-    hyprlandService.connect('client-added', () => {
-        forceUpdater.set(!forceUpdater.get());
-    });
+    if (showWorkspaceIcons) {
+        return getWsIcon(wsIconMap, i);
+    }
 
-    hyprlandService.connect('client-removed', () => {
-        forceUpdater.set(!forceUpdater.get());
-    });
-}
-
-/**
- * Throttled scroll handler functions for navigating workspaces.
- */
-type ThrottledScrollHandlers = {
-    /**
-     * Scroll up throttled handler.
-     */
-    throttledScrollUp: () => void;
-
-    /**
-     * Scroll down throttled handler.
-     */
-    throttledScrollDown: () => void;
+    return workspaceMask ? `${index + 1}` : `${i}`;
 };

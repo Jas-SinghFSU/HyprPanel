@@ -1,49 +1,68 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { formatTooltip, inputHandler, renderResourceLabel } from 'src/components/bar/utils/helpers';
-import { computeStorage } from './helpers';
-import { LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
+import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild, ResourceLabelType } from 'src/lib/types/bar.types';
-import { GenericResourceData } from 'src/lib/types/customModules/generic.types';
+import options from 'src/configuration';
+import { renderResourceLabel } from '../../utils/systemResource';
+import { LABEL_TYPES, ResourceLabelType } from 'src/services/system/types';
+import { BarBoxChild } from '../../types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import StorageService from 'src/services/system/storage';
+import { formatStorageTooltip } from './helpers/tooltipFormatters';
 
-const { label, labelType, icon, round, leftClick, rightClick, middleClick, pollingInterval } =
-    options.bar.customModules.storage;
+const inputHandler = InputHandlerService.getInstance();
 
-const defaultStorageData = { total: 0, used: 0, percentage: 0, free: 0 };
-
-const storageUsage = Variable<GenericResourceData>(defaultStorageData);
-
-const storagePoller = new FunctionPoller<GenericResourceData, [Variable<boolean>]>(
-    storageUsage,
-    [bind(round)],
-    bind(pollingInterval),
-    computeStorage,
+const {
+    label,
+    labelType,
+    icon,
     round,
-);
+    leftClick,
+    rightClick,
+    middleClick,
+    pollingInterval,
+    units,
+    tooltipStyle,
+    paths,
+} = options.bar.customModules.storage;
 
-storagePoller.initialize('storage');
+const storageService = new StorageService({ frequency: pollingInterval, round, pathsToMonitor: paths });
 
 export const Storage = (): BarBoxChild => {
+    const tooltipText = Variable('');
+
+    storageService.initialize();
+
     const labelBinding = Variable.derive(
-        [bind(storageUsage), bind(labelType), bind(round)],
-        (storage, lblTyp, round) => {
-            return renderResourceLabel(lblTyp, storage, round);
+        [bind(storageService.storage), bind(labelType), bind(paths), bind(tooltipStyle)],
+        (storage, lblTyp, filePaths) => {
+            const storageUnitToUse = units.get();
+            const sizeUnits = storageUnitToUse !== 'auto' ? storageUnitToUse : undefined;
+
+            const tooltipFormatted = formatStorageTooltip(
+                filePaths,
+                storageService,
+                tooltipStyle.get(),
+                round.get(),
+                sizeUnits,
+            );
+
+            tooltipText.set(tooltipFormatted);
+
+            return renderResourceLabel(lblTyp, storage, round.get(), sizeUnits);
         },
     );
+
+    let inputHandlerBindings: Variable<void>;
+
     const storageModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => {
-            return formatTooltip('Storage', lblTyp);
-        }),
+        tooltipText: bind(tooltipText),
         boxClass: 'storage',
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -75,6 +94,7 @@ export const Storage = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
             },
         },

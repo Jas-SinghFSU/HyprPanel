@@ -1,11 +1,12 @@
-import { runAsyncCommand, throttledScrollHandler } from 'src/components/bar/utils/helpers';
-import options from 'src/options';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { bind, Variable } from 'astal';
 import { clientTitle, getTitle, getWindowMatch, truncateTitle } from './helpers/title';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import options from 'src/configuration';
+import { runAsyncCommand } from '../../utils/input/commandExecutor';
+import { throttledScrollHandler } from '../../utils/input/throttle';
 
 const hyprlandService = AstalHyprland.get_default();
 const { leftClick, rightClick, middleClick, scrollDown, scrollUp } = options.bar.windowtitle;

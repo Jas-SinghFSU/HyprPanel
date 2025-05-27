@@ -1,15 +1,9 @@
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
-import { WINDOW_LAYOUTS } from 'src/shared/window';
+import { POPUP_LAYOUTS } from 'src/components/menus/shared/popup/layouts';
 import { EventBox, Revealer } from 'astal/gtk3/widget';
-import {
-    PaddingProps,
-    PopupRevealerProps,
-    LayoutFunction,
-    PopupWindowProps,
-} from 'src/lib/types/popupwindow.types';
-import { Layouts } from 'src/lib/types/widget.types';
+import { LayoutFunction, Layouts, PaddingProps, PopupRevealerProps, PopupWindowProps } from './types';
 
-export const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
+const Padding = ({ name, opts }: PaddingProps): JSX.Element => (
     <eventbox
         className={opts?.className ?? ''}
         hexpand
@@ -119,7 +113,7 @@ const Layout: LayoutFunction = (name, child, transition) => ({
 });
 
 const isValidLayout = (layout: string): layout is Layouts => {
-    return WINDOW_LAYOUTS.includes(layout);
+    return POPUP_LAYOUTS.includes(layout);
 };
 
 export default ({

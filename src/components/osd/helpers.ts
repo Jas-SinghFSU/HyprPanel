@@ -2,13 +2,13 @@ import { bind, timeout, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import options from 'src/options';
-import Brightness from 'src/services/Brightness';
-import { GdkMonitorMapper } from '../bar/utils/GdkMonitorMapper';
+import options from 'src/configuration';
+import { GdkMonitorService } from 'src/services/display/monitor';
+import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 const hyprlandService = AstalHyprland.get_default();
 
 const { enable, duration, active_monitor, monitor } = options.theme.osd;
@@ -31,7 +31,7 @@ timeout(3000, () => {
  * @param self The Widget.Revealer or Widget.Window instance.
  * @param property The property to check, either 'revealChild' or 'visible'.
  */
-export const handleReveal = (self: Widget.Revealer): void => {
+const handleReveal = (self: Widget.Revealer): void => {
     if (isStartingUp) {
         return;
     }
@@ -60,7 +60,7 @@ export const handleReveal = (self: Widget.Revealer): void => {
  * @returns A Variable<number> representing the monitor index for the OSD.
  */
 export const getOsdMonitor = (): Variable<number> => {
-    const gdkMonitorMapper = new GdkMonitorMapper();
+    const gdkMonitorMapper = new GdkMonitorService();
 
     return Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],

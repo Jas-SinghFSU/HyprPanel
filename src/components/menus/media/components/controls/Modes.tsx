@@ -1,12 +1,10 @@
 import icons from 'src/lib/icons/icons';
 import { Astal, Gtk, Widget } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { bind } from 'astal';
 import { isLoopActive, isShuffleActive, loopIconMap, loopTooltipMap } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import { activePlayer, loopStatus, shuffleStatus } from 'src/shared/media';
-
-export type LoopStatus = 'none' | 'track' | 'playlist';
+import { loopStatus, activePlayer, shuffleStatus } from 'src/services/media';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export const Loop = (): JSX.Element => {
     const className = bind(loopStatus).as((status) => {

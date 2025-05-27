@@ -1,8 +1,8 @@
 import { Widget } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { handleClick, hasCommand } from '../helpers';
-import options from 'src/options';
-import { ShortcutVariable } from 'src/lib/types/dashboard.types';
+import options from 'src/configuration';
+import { isPrimaryClick } from 'src/lib/events/mouse';
+import { ShortcutVariable } from '../types';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 

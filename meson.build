@@ -41,4 +41,4 @@ configure_file(
 install_subdir('scripts', install_dir: datadir)
 install_subdir('themes', install_dir: datadir)
 install_subdir('assets', install_dir: datadir)
-install_subdir('src/scss', install_dir: datadir / 'src')
+install_subdir('src/style', install_dir: datadir / 'src')

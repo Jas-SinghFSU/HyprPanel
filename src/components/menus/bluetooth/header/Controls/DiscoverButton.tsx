@@ -1,8 +1,8 @@
 import { Gtk } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
 import { bind, timeout } from 'astal';
 import { isDiscovering } from './helper';
 import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const bluetoothService = AstalBluetooth.get_default();
 

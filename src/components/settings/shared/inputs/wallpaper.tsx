@@ -1,7 +1,9 @@
 import FileChooserButton from 'src/components/shared/FileChooserButton';
-import Wallpaper from 'src/services/Wallpaper';
-import options from 'src/options';
+import options from 'src/configuration';
 import { Opt } from 'src/lib/options';
+import { WallpaperService } from 'src/services/wallpaper';
+
+const wallpaperService = WallpaperService.getInstance();
 
 export const WallpaperInputter = <T extends string | number | boolean | object>({
     opt,
@@ -22,7 +24,7 @@ export const WallpaperInputter = <T extends string | number | boolean | object>(
                     opt.set(filePath as T);
 
                     if (options.wallpaper.enable.get()) {
-                        Wallpaper.setWallpaper(filePath);
+                        wallpaperService.setWallpaper(filePath);
                     }
                 }}
             />

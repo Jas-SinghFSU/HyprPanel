@@ -1,6 +1,6 @@
 import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
-import options from 'src/options';
+import options from 'src/configuration';
 import { Gtk } from 'astal/gtk3';
 
 export const ClockMenuSettings = (): JSX.Element => {
@@ -16,7 +16,7 @@ export const ClockMenuSettings = (): JSX.Element => {
                 <Option
                     opt={options.menus.clock.weather.location}
                     title="Location"
-                    subtitle="Zip Code, Postal Code, City, etc."
+                    subtitle="<Zip Code>, <Postal Code>, <City>, <lat, long>, etc."
                     type="string"
                 />
                 <Option

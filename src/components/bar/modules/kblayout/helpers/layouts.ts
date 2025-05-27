@@ -1,4 +1,3 @@
-// Create a const object with all layouts
 const layoutMapObj = {
     'Abkhazian (Russia)': 'RU (Ab)',
     Akan: 'GH (Akan)',

@@ -1,64 +1,51 @@
-import { Weather, WeatherIconTitle } from 'src/lib/types/weather.types';
-import { isValidWeatherIconTitle } from 'src/shared/weather';
+import { Weather, WeatherIcon, WeatherStatus } from 'src/services/weather/types';
 
 /**
- * Retrieves the next epoch time for weather data.
+ * Calculates the target hour for weather data lookup
  *
- * This function calculates the next epoch time based on the current weather data and the specified number of hours from now.
- * It ensures that the prediction remains within the current day by rewinding the time if necessary.
- *
- * @param wthr The current weather data.
- * @param hoursFromNow The number of hours from now to calculate the next epoch time.
- *
- * @returns The next epoch time as a number.
+ * @param baseTime - The base time to calculate from
+ * @param hoursFromNow - Number of hours to add
+ * @returns A Date object set to the start of the target hour
  */
-export const getNextEpoch = (wthr: Weather, hoursFromNow: number): number => {
-    const currentEpoch = wthr.location.localtime_epoch;
-    const epochAtHourStart = currentEpoch - (currentEpoch % 3600);
-    let nextEpoch = 3600 * hoursFromNow + epochAtHourStart;
+export const getTargetHour = (baseTime: Date, hoursFromNow: number): Date => {
+    const targetTime = new Date(baseTime);
+    const newHour = targetTime.getHours() + hoursFromNow;
+    targetTime.setHours(newHour);
+    targetTime.setMinutes(0, 0, 0);
 
-    const curHour = new Date(currentEpoch * 1000).getHours();
-
-    /*
-     * NOTE: Since the API is only capable of showing the current day; if
-     * the hours left in the day are less than 4 (aka spilling into the next day),
-     * then rewind to contain the prediction within the current day.
-     */
-    if (curHour > 19) {
-        const hoursToRewind = curHour - 19;
-        nextEpoch = 3600 * hoursFromNow + epochAtHourStart - hoursToRewind * 3600;
+    const currentHour = baseTime.getHours();
+    if (currentHour > 19) {
+        const hoursToRewind = currentHour - 19;
+        targetTime.setHours(targetTime.getHours() - hoursToRewind);
     }
-    return nextEpoch;
+
+    return targetTime;
 };
 
 /**
- * Retrieves the weather icon query for a specific time in the future.
+ * Retrieves the weather icon for a specific hour in the future
  *
- * This function calculates the next epoch time and retrieves the corresponding weather data.
- * It then generates a weather icon query based on the weather condition and time of day.
- *
- * @param weather The current weather data.
- * @param hoursFromNow The number of hours from now to calculate the weather icon query.
- *
- * @returns The weather icon query as a string.
+ * @param weather - The current weather data
+ * @param hoursFromNow - Number of hours from now to get the icon for
+ * @returns The appropriate weather icon
  */
-export const getIconQuery = (weather: Weather, hoursFromNow: number): WeatherIconTitle => {
-    const nextEpoch = getNextEpoch(weather, hoursFromNow);
-    const weatherAtEpoch = weather.forecast.forecastday[0].hour.find((h) => h.time_epoch === nextEpoch);
-
-    if (weatherAtEpoch === undefined) {
-        return 'warning';
+export const getHourlyWeatherIcon = (weather: Weather, hoursFromNow: number): WeatherIcon => {
+    if (!weather?.forecast?.[0]?.hourly) {
+        return WeatherIcon.WARNING;
     }
 
-    let iconQuery = weatherAtEpoch.condition.text.trim().toLowerCase().replaceAll(' ', '_');
+    const targetHour = getTargetHour(weather.lastUpdated, hoursFromNow);
+    const targetTime = targetHour.getTime();
 
-    if (!weatherAtEpoch?.is_day && iconQuery === 'partly_cloudy') {
-        iconQuery = 'partly_cloudy_night';
+    const weatherAtHour = weather.forecast[0].hourly.find((hour) => {
+        const hourTime = hour.time.getTime();
+        return hourTime === targetTime;
+    });
+
+    if (!weatherAtHour) {
+        return WeatherIcon.WARNING;
     }
 
-    if (isValidWeatherIconTitle(iconQuery)) {
-        return iconQuery;
-    } else {
-        return 'warning';
-    }
+    const iconQuery: WeatherStatus = weatherAtHour.condition?.text ?? 'WARNING';
+    return WeatherIcon[iconQuery];
 };

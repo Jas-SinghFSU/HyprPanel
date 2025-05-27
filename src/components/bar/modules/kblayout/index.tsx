@@ -1,12 +1,14 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
+import { Module } from '../../shared/module';
 import { getKeyboardLayout } from './helpers';
-import { bind } from 'astal';
+import { bind, Variable } from 'astal';
 import { useHook } from 'src/lib/shared/hookHandler';
 import { Astal } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
 const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
@@ -22,6 +24,8 @@ function setLabel(self: Astal.Label): void {
 }
 
 export const KbInput = (): BarBoxChild => {
+    let inputHandlerBindings: Variable<void>;
+
     const keyboardModule = Module({
         textIcon: bind(icon),
         tooltipText: '',
@@ -43,7 +47,7 @@ export const KbInput = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -60,6 +64,9 @@ export const KbInput = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
             },
         },
     });
