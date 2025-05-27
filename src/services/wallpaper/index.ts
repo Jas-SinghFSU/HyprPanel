@@ -1,9 +1,9 @@
 import GObject, { GLib, property, register, signal } from 'astal/gobject';
-import { execAsync } from 'astal/process';
 import { monitorFile } from 'astal/file';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import options from 'src/configuration';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { SwwwDaemon } from './SwwwDaemon';
 
 const hyprlandService = AstalHyprland.get_default();
 const WP = `${GLib.get_home_dir()}/.config/background`;
@@ -13,52 +13,44 @@ const WP = `${GLib.get_home_dir()}/.config/background`;
  */
 @register({ GTypeName: 'Wallpaper' })
 export class WallpaperService extends GObject.Object {
+    @property(String)
+    declare public wallpaper: string;
+
+    @signal(Boolean)
+    declare public changed: (event: boolean) => void;
+
     private static _instance: WallpaperService;
     private _blockMonitor = false;
-    private _isRunning = false;
+    private _daemon = new SwwwDaemon();
 
     constructor() {
         super();
 
         this.wallpaper = WP;
 
-        options.wallpaper.enable.subscribe(() => {
-            if (options.wallpaper.enable.get()) {
-                this._isRunning = true;
-                execAsync('swww-daemon')
-                    .then(() => {
-                        this._wallpaper();
-                    })
-                    .catch((err) => {
-                        console.error('Failed to start swww-daemon:', err);
-                    });
-            } else {
-                this._isRunning = false;
-
-                execAsync('pkill swww-daemon')
-                    .then(() => {
-                        console.log('swww-daemon stopped.');
-                    })
-                    .catch((err) => {
-                        console.error('Failed to stop swww-daemon:', err);
-                    });
+        monitorFile(WP, () => {
+            if (!this._blockMonitor && this._daemon.isRunning) {
+                this._wallpaper();
             }
         });
 
-        if (options.wallpaper.enable.get() && SystemUtilities.checkDependencies('swww')) {
-            this._isRunning = true;
-
-            monitorFile(WP, () => {
-                if (!this._blockMonitor) this._wallpaper();
-            });
-
-            execAsync('swww-daemon')
-                .then(() => {
+        options.wallpaper.enable.subscribe(async (isWallpaperEnabled) => {
+            if (isWallpaperEnabled) {
+                const started = await this._daemon.start();
+                if (started) {
                     this._wallpaper();
-                })
-                .catch((err) => {
-                    console.error('Failed to start swww-daemon:', err);
-                });
+                }
+            } else {
+                await this._daemon.stop();
+            }
+        });
+
+        if (options.wallpaper.enable.get()) {
+            this._daemon.start().then((started) => {
+                if (started) {
+                    this._wallpaper();
+                }
+            });
         }
     }
 
@@ -76,10 +68,31 @@ export class WallpaperService extends GObject.Object {
     }
 
     /**
+     * Sets a new wallpaper from the specified file path
+     *
+     * @param path - Path to the wallpaper image file
+     */
+    public setWallpaper(path: string): void {
+        this._setWallpaper(path);
+    }
+
+    /**
+     * Checks if the wallpaper service is currently running
+     *
+     * @returns Whether swww daemon is active
+     */
+    public isRunning(): boolean {
+        return this._daemon.isRunning;
+    }
+
+    /**
      * Applies the wallpaper using swww with a transition effect from cursor position
      */
     private _wallpaper(): void {
-        if (!SystemUtilities.checkDependencies('swww')) return;
+        if (!this._daemon.isRunning) {
+            console.warn('Cannot set wallpaper: swww-daemon is not running');
+            return;
+        }
 
         try {
             const cursorPosition = hyprlandService.message('cursorpos');
@@ -128,28 +141,4 @@ export class WallpaperService extends GObject.Object {
             this._blockMonitor = false;
         }
     }
-
-    /**
-     * Sets a new wallpaper from the specified file path
-     *
-     * @param path - Path to the wallpaper image file
-     */
-    public setWallpaper(path: string): void {
-        this._setWallpaper(path);
-    }
-
-    /**
-     * Checks if the wallpaper service is currently running
-     *
-     * @returns Whether swww daemon is active
-     */
-    public isRunning(): boolean {
-        return this._isRunning;
-    }
-
-    @property(String)
-    declare public wallpaper: string;
-
-    @signal(Boolean)
-    declare public changed: (event: boolean) => void;
 }

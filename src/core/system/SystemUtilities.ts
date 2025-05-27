@@ -38,7 +38,7 @@ export class SystemUtilities {
                 exec(`which ${bin}`);
                 return false;
             } catch (e) {
-                console.error(e);
+                console.debug(e);
                 return true;
             }
         });
