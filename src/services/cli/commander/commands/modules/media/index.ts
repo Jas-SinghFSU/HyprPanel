@@ -6,7 +6,7 @@ const mediaPlayerService = MediaPlayerService.getInstance();
 
 export const mediaCommands: Command[] = [
     {
-        name: 'Play/Pause active media player',
+        name: 'playPause',
         aliases: ['pp'],
         description: 'Plays or Pauses the active media player.',
         category: 'Media',

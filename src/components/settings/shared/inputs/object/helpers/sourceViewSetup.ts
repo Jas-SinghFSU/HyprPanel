@@ -46,7 +46,7 @@ function setupTheme(buffer: GtkSource.Buffer): void {
     const styleManager = GtkSource.StyleSchemeManager.get_default();
 
     const currentSearchPath = styleManager.get_search_path();
-    const assetsPath = `${SRC}/assets`;
+    const assetsPath = `${SRC_DIR}/assets`;
     styleManager.set_search_path([assetsPath, ...currentSearchPath]);
 
     const tokyoNight = styleManager.get_scheme('tokyo-night');
