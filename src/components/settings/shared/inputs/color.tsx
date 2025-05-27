@@ -8,11 +8,12 @@ export const ColorInputter = <T extends string | number | boolean | object>({
 }: ColorInputterProps<T>): JSX.Element => {
     return (
         <ColorButton
+            useAlpha={false}
             setup={(self) => {
                 useHook(self, opt, () => {
                     const rgba = new Gdk.RGBA();
                     rgba.parse(opt.get() as string);
-                    self.rgba = rgba;
+                    self.set_rgba(rgba);
                 });
 
                 self.connect('color-set', ({ rgba: { red, green, blue } }) => {

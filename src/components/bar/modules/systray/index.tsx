@@ -31,7 +31,7 @@ const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
     return (
         <icon
             className={'systray-icon'}
-            gIcon={bind(item, 'gicon')}
+            gicon={bind(item, 'gicon')}
             tooltipMarkup={bind(item, 'tooltipMarkup')}
         />
     );
