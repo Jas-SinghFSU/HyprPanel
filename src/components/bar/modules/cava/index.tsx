@@ -1,11 +1,13 @@
 import { Variable, bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { Module } from '../../shared/Module';
-import { inputHandler } from '../../utils/helpers';
-import options from 'src/options';
+import { Module } from '../../shared/module';
 import { initSettingsTracker, initVisibilityTracker } from './helpers';
 import AstalCava from 'gi://AstalCava?version=0.1';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import options from 'src/configuration';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     icon,
@@ -45,6 +47,8 @@ export const Cava = (): BarBoxChild => {
         );
     }
 
+    let inputHandlerBindings: Variable<void>;
+
     return Module({
         isVis: bind(isVis),
         label: labelBinding(),
@@ -53,7 +57,7 @@ export const Cava = (): BarBoxChild => {
         boxClass: 'cava',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -72,9 +76,10 @@ export const Cava = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
+                settingsTracker?.drop();
                 labelBinding.drop();
                 visTracker.drop();
-                settingsTracker?.drop();
             },
         },
     });

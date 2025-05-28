@@ -1,5 +1,5 @@
 import { Opt } from 'src/lib/options';
-import options from 'src/options';
+import options from 'src/configuration';
 
 const { show_numbered, show_icons, showWsIcons, showApplicationIcons } = options.bar.workspaces;
 const { monochrome: monoBar } = options.theme.bar.buttons;

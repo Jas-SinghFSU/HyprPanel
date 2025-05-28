@@ -1,4 +1,4 @@
-import { BatteryIconKeys, BatteryIcons } from 'src/lib/types/battery.types';
+import { BatteryIcons, BatteryIconKeys } from './types';
 
 const batteryIcons: BatteryIcons = {
     0: '󰂎',

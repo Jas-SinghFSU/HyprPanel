@@ -1,0 +1,57 @@
+* {
+    all: unset;
+    font-family: $font-name;
+    font-style: $font-style;
+    font-size: $font-size;
+    font-weight: $font-weight;
+}
+
+//general
+@import 'scss/common/common.scss';
+@import 'scss/common/floating-widget.scss';
+@import 'scss/common/widget-button.scss';
+@import 'scss/common/popover_menu.scss';
+
+//general scsss
+@import 'scss/common/general';
+
+//modules - bar
+@import 'scss/bar/bar';
+@import 'scss/bar/menu';
+@import 'scss/bar/audio';
+@import 'scss/bar/media';
+@import 'scss/bar/network';
+@import 'scss/bar/bluetooth';
+@import 'scss/bar/clock';
+@import 'scss/bar/workspace';
+@import 'scss/bar/window_title';
+@import 'scss/bar/systray';
+@import 'scss/bar/notifications';
+@import 'scss/bar/battery';
+@import 'scss/bar/style';
+
+//notifications
+@import 'scss/notifications/popups';
+
+//modules - menus
+@import 'scss/menus/menu';
+@import 'scss/menus/power';
+@import 'scss/menus/powerdropdown';
+@import 'scss/menus/audiomenu';
+@import 'scss/menus/network';
+@import 'scss/menus/bluetooth';
+@import 'scss/menus/media';
+@import 'scss/menus/notifications';
+@import 'scss/menus/calendar';
+@import 'scss/menus/energy';
+@import 'scss/menus/dashboard';
+
+//osd
+@import 'scss/osd/index';
+
+//settings dialog
+@import 'scss/settings/dialog';
+@import 'scss/settings/json-editor';
+
+//bar separator
+@import 'scss/bar/module-separator';

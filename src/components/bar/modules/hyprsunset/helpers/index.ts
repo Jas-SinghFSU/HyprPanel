@@ -1,5 +1,5 @@
 import { execAsync, Variable } from 'astal';
-import options from 'src/options';
+import options from 'src/configuration';
 
 const { temperature } = options.bar.customModules.hyprsunset;
 
@@ -9,7 +9,7 @@ const { temperature } = options.bar.customModules.hyprsunset;
  * This command checks if the hyprsunset process is currently running by using the `pgrep` command.
  * It returns 'yes' if the process is found and 'no' otherwise.
  */
-export const isActiveCommand = "bash -c \"pgrep -x 'hyprsunset' > /dev/null && echo 'yes' || echo 'no'\"";
+const isActiveCommand = "bash -c \"pgrep -x 'hyprsunset' > /dev/null && echo 'yes' || echo 'no'\"";
 
 /**
  * A variable to track the active state of the hyprsunset process.

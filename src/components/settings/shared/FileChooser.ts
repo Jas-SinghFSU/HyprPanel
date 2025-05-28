@@ -1,11 +1,11 @@
-import options from '../../../options';
 import Gtk from 'gi://Gtk?version=3.0';
 import Gio from 'gi://Gio';
-import { bash, Notify } from '../../../lib/utils';
 import icons from '../../../lib/icons/icons';
-import { Config } from '../../../lib/types/filechooser.types';
-import { hexColorPattern } from '../../../shared/useTheme';
-import { isHexColor } from '../../../shared/variables';
+import { hexColorPattern } from '../../../lib/theme/useTheme';
+import options from 'src/configuration';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { isHexColor } from 'src/lib/validation/colors';
+import { Config } from './types';
 
 const { restartCommand } = options.hyprpanel;
 const whiteListedThemeProp = ['theme.bar.buttons.style'];
@@ -62,28 +62,6 @@ export const filterConfigForThemeOnly = (config: Config): Config => {
         if (typeof value === 'string' && hexColorPattern.test(value)) {
             filteredConfig[key] = config[key];
         } else if (whiteListedThemeProp.includes(key)) {
-            filteredConfig[key] = config[key];
-        }
-    }
-    return filteredConfig;
-};
-
-/**
- * Filters the given configuration object to exclude theme-related properties.
- * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
- *
- * @param config - The configuration object to be filtered.
- * @returns A new configuration object excluding theme-related properties.
- */
-export const filterConfigForNonTheme = (config: Config): Config => {
-    const filteredConfig: Config = {};
-    for (const key in config) {
-        if (whiteListedThemeProp.includes(key)) {
-            continue;
-        }
-
-        const value = config[key];
-        if (!(typeof value === 'string' && hexColorPattern.test(value))) {
             filteredConfig[key] = config[key];
         }
     }
@@ -199,7 +177,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
 
                 dataOutputStream.close(null);
 
-                Notify({
+                SystemUtilities.notify({
                     summary: 'File Saved Successfully',
                     body: `At ${finalFilePath}.`,
                     iconName: icons.ui.info,
@@ -216,7 +194,7 @@ export const saveFileDialog = (filePath: string, themeOnly: boolean): void => {
         const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
-        Notify({
+        SystemUtilities.notify({
             summary: `${themeOnly ? 'Theme' : 'Config'} Export Failed`,
             body: errorMessage ?? 'An unknown error occurred.',
             iconName: icons.ui.warning,
@@ -253,7 +231,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
             const filePath: string | null = dialog.get_filename();
 
             if (filePath === null) {
-                Notify({
+                SystemUtilities.notify({
                     summary: 'Failed to import',
                     body: 'No file selected.',
                     iconName: icons.ui.warning,
@@ -268,7 +246,7 @@ export const importFiles = (themeOnly: boolean = false): void => {
                 return;
             }
 
-            Notify({
+            SystemUtilities.notify({
                 summary: `Importing ${themeOnly ? 'Theme' : 'Config'}`,
                 body: `Importing: ${filePath}`,
                 iconName: icons.ui.info,
@@ -294,15 +272,37 @@ export const importFiles = (themeOnly: boolean = false): void => {
             saveConfigToFile(optionsConfig, CONFIG_FILE);
         }
         dialog.destroy();
-        bash(restartCommand.get());
+        SystemUtilities.bash(restartCommand.get());
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         dialog.destroy();
 
-        Notify({
+        SystemUtilities.notify({
             summary: `${themeOnly ? 'Theme' : 'Config'} Import Failed`,
             body: errorMessage ?? 'An unknown error occurred.',
             iconName: icons.ui.warning,
         });
     }
 };
+
+/**
+ * Filters the given configuration object to exclude theme-related properties.
+ * Theme-related properties are identified by their keys matching a hex color pattern or being in the whitelist.
+ *
+ * @param config - The configuration object to be filtered.
+ * @returns A new configuration object excluding theme-related properties.
+ */
+function filterConfigForNonTheme(config: Config): Config {
+    const filteredConfig: Config = {};
+    for (const key in config) {
+        if (whiteListedThemeProp.includes(key)) {
+            continue;
+        }
+
+        const value = config[key];
+        if (!(typeof value === 'string' && hexColorPattern.test(value))) {
+            filteredConfig[key] = config[key];
+        }
+    }
+    return filteredConfig;
+}

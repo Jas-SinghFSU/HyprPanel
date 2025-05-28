@@ -1,5 +1,5 @@
 import { NumberInputter } from './inputs/number';
-import { ObjectInputter } from './inputs/object';
+import { FloatInputter } from './inputs/float';
 import { StringInputter } from './inputs/string';
 import { BooleanInputter } from './inputs/boolean';
 import { ImageInputter } from './inputs/image';
@@ -10,7 +10,8 @@ import { EnumInputter } from './inputs/enum';
 import { FontInputter } from './inputs/font';
 import { Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { RowProps } from 'src/lib/options/options.types';
+import { RowProps } from 'src/lib/options/types';
+import { ObjectInputter } from './inputs/object';
 
 const InputField = <T extends string | number | boolean | object>({
     opt,
@@ -33,6 +34,7 @@ const InputField = <T extends string | number | boolean | object>({
                 <NumberInputter opt={opt} min={min} max={max} increment={increment} isUnsaved={isUnsaved} />
             );
         case 'float':
+            return <FloatInputter opt={opt} isUnsaved={isUnsaved} className={className} />;
         case 'object':
             return <ObjectInputter opt={opt} isUnsaved={isUnsaved} className={className} />;
         case 'string':
@@ -77,7 +79,8 @@ export const Inputter = <T extends string | number | boolean | object>({
     return (
         <box
             className={/export|import/.test(type || '') ? '' : 'inputter-container'}
-            valign={Gtk.Align.CENTER}
+            valign={Gtk.Align.START}
+            halign={Gtk.Align.END}
         >
             <InputField
                 type={type}

@@ -1,18 +1,20 @@
-import { runAsyncCommand, throttledScrollHandler } from '../../utils/helpers.js';
-import options from '../../../../options.js';
-import { openMenu } from '../../utils/menu.js';
-import { getDistroIcon } from '../../../../lib/utils.js';
 import { Variable, bind } from 'astal';
-import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers.js';
+import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types.js';
+import { BarBoxChild } from 'src/components/bar/types.js';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import options from 'src/configuration';
+import { runAsyncCommand } from '../../utils/input/commandExecutor';
+import { throttledScrollHandler } from '../../utils/input/throttle';
+import { openDropdownMenu } from '../../utils/menu';
 
 const { rightClick, middleClick, scrollUp, scrollDown, autoDetectIcon, icon } = options.bar.launcher;
 
 const Menu = (): BarBoxChild => {
     const iconBinding = Variable.derive(
         [autoDetectIcon, icon],
-        (autoDetect: boolean, iconValue: string): string => (autoDetect ? getDistroIcon() : iconValue),
+        (autoDetect: boolean, iconValue: string): string =>
+            autoDetect ? SystemUtilities.getDistroIcon() : iconValue,
     );
 
     const componentClassName = bind(options.theme.bar.buttons.style).as((style: string) => {
@@ -60,7 +62,7 @@ const Menu = (): BarBoxChild => {
 
                         disconnectFunctions.push(
                             onPrimaryClick(self, (clicked, event) => {
-                                openMenu(clicked, event, 'dashboardmenu');
+                                openDropdownMenu(clicked, event, 'dashboardmenu');
                             }),
                         );
 

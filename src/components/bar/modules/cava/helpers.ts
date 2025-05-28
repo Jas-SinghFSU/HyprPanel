@@ -1,9 +1,8 @@
 import { bind, Variable } from 'astal';
 import AstalCava from 'gi://AstalCava?version=0.1';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
-import options from 'src/options';
+import options from 'src/configuration';
 
-const mprisService = AstalMpris.get_default();
 const {
     showActiveOnly,
     bars,
@@ -24,6 +23,7 @@ const {
  */
 export function initVisibilityTracker(isVis: Variable<boolean>): Variable<void> {
     const cavaService = AstalCava.get_default();
+    const mprisService = AstalMpris.get_default();
 
     return Variable.derive([bind(showActiveOnly), bind(mprisService, 'players')], (showActive, players) => {
         isVis.set(cavaService !== null && (!showActive || players?.length > 0));

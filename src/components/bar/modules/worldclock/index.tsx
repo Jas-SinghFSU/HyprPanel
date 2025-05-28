@@ -1,11 +1,13 @@
-import options from 'src/options';
-import { inputHandler } from 'src/components/bar/utils/helpers.js';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { systemTime } from 'src/shared/time';
+import { systemTime } from 'src/lib/units/time';
 import { GLib } from 'astal';
-import { Module } from '../../shared/Module';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { Module } from '../../shared/module';
+import { BarBoxChild } from 'src/components/bar/types';
+import options from 'src/configuration';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     format,
@@ -51,13 +53,15 @@ export const WorldClock = (): BarBoxChild => {
                 .join(timeDivider),
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const microphoneModule = Module({
         textIcon: iconBinding(),
         label: timeBinding(),
         boxClass: 'worldclock',
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -74,6 +78,11 @@ export const WorldClock = (): BarBoxChild => {
                         cmd: scrollDown,
                     },
                 });
+            },
+            onDestroy: () => {
+                inputHandlerBindings.drop();
+                timeBinding.drop();
+                iconBinding.drop();
             },
         },
     });

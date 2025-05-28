@@ -1,11 +1,10 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { isPrimaryClick } from 'src/lib/utils';
-import options from 'src/options';
-import { handleClick } from './helpers';
+import { cpuService, gpuService, handleClick, ramService, storageService } from './helpers';
 import { Binding } from 'astal';
-import { cpuService, gpuService, ramService, storageService } from '.';
-import { renderResourceLabel } from 'src/components/bar/utils/helpers';
+import { renderResourceLabel } from 'src/components/bar/utils/systemResource';
+import options from 'src/configuration';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 const { enable_gpu } = options.menus.dashboard.stats;
 
@@ -41,12 +40,14 @@ export const GpuStat = (): JSX.Element => {
                     return <box />;
                 }
 
+                gpuService.initialize();
+
                 return (
                     <StatBar
                         icon={'󰢮'}
                         stat={'gpu'}
-                        value={bind(gpuService.gpuUsage)}
-                        label={bind(gpuService.gpuUsage).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
+                        value={bind(gpuService.gpu)}
+                        label={bind(gpuService.gpu).as((gpuUsage) => `${Math.floor(gpuUsage * 100)}%`)}
                     />
                 );
             })}
@@ -55,6 +56,8 @@ export const GpuStat = (): JSX.Element => {
 };
 
 export const CpuStat = (): JSX.Element => {
+    cpuService.initialize();
+
     return (
         <StatBar
             icon={''}
@@ -66,6 +69,8 @@ export const CpuStat = (): JSX.Element => {
 };
 
 export const RamStat = (): JSX.Element => {
+    ramService.initialize();
+
     return (
         <StatBar
             icon={''}
@@ -79,6 +84,8 @@ export const RamStat = (): JSX.Element => {
 };
 
 export const StorageStat = (): JSX.Element => {
+    storageService.initialize();
+
     return (
         <StatBar
             icon={'󰋊'}

@@ -1,11 +1,13 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from '../../utils/helpers';
+import { Module } from '../../shared/module';
 import Variable from 'astal/variable';
 import { bind } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { idleInhibit } from 'src/shared/utilities';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { idleInhibit } from 'src/lib/window/visibility';
+import { BarBoxChild } from 'src/components/bar/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const { label, onIcon, offIcon, onLabel, offLabel, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.hypridle;
@@ -29,6 +31,8 @@ export const Hypridle = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const hypridleModule = Module({
         textIcon: iconBinding(),
         tooltipText: bind(idleInhibit).as(
@@ -39,7 +43,7 @@ export const Hypridle = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             toggleInhibit();
@@ -60,6 +64,7 @@ export const Hypridle = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 labelBinding.drop();
             },

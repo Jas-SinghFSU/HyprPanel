@@ -1,0 +1,86 @@
+.object-input-container {
+    min-width: 35em;
+    .unsaved-icon-container {
+        .unsaved-icon {
+            margin-right: 1em;
+            font-size: 1em;
+        }
+    }
+
+    .json-editor-wrapper {
+        margin-top: 1em;
+        padding: 1em;
+        background-color: transparentize($bar-menus-cards, 0.97);
+        border: 0.1em solid transparentize($bar-menus-border-color, 0.9);
+        border-radius: $bar-menus-border-radius;
+
+        .json-editor-scrollable-container {
+            padding: 1em;
+            min-height: 20em;
+            background-color: #1a1b26;
+
+            > widget,
+            > textview,
+            .json-editor-sourceview {
+                font-size: 0.95em;
+                font-weight: 500;
+            }
+        }
+
+        .editor-controls {
+            margin-top: 0.75em;
+
+            .error-message {
+                color: #f7768e;
+                font-size: 0.9em;
+                margin: 0.3em 0;
+            }
+
+            .controls-row {
+                .hint-text {
+                    color: transparentize($bar-menus-text, 0.5);
+                    font-size: 0.85em;
+                }
+            }
+
+            .save-button {
+                background-color: $bar-menus-buttons-default;
+                color: $bar-menus-buttons-text;
+                padding: 0.3em 0.75em;
+                border-radius: $bar-menus-buttons-radius * 0.5;
+                font-weight: 500;
+
+                &:hover {
+                    background-color: transparentize($bar-menus-buttons-default, 0.2);
+                }
+
+                &:active {
+                    background-color: $bar-menus-buttons-active;
+                }
+
+                &:disabled {
+                    background-color: $bar-menus-buttons-disabled;
+                    color: transparentize($bar-menus-buttons-text, 0.5);
+                }
+            }
+        }
+    }
+
+    .json-preview {
+        padding: 0.25em 0.75em;
+        background-color: transparentize($bar-menus-background, 0.3);
+        border-radius: $bar-menus-border-radius * 0.4;
+        transition: all 200ms ease;
+
+        .preview-text {
+            color: transparentize($bar-menus-text, 0.4);
+            font-size: 0.9em;
+        }
+
+        .preview-icon {
+            margin-left: 0.5em;
+            font-size: 1em;
+            color: $bar-menus-text;
+        }
+    }
+}

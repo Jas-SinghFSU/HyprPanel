@@ -1,8 +1,8 @@
 import { bind } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import Brightness from 'src/services/Brightness';
+import BrightnessService from 'src/services/system/brightness';
 
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 
 export const BrightnessPercentage = (): JSX.Element => {
     return (

@@ -1,6 +1,6 @@
-import { isPrimaryClick } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 import { handleClick } from './helpers';
-import { PowerOptions } from 'src/lib/options/options.types';
+import { PowerOptions } from 'src/lib/options/types';
 
 const PowerActionButton = (icon: string, tooltip: string, action: PowerOptions): JSX.Element => {
     return (

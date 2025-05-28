@@ -1,6 +1,6 @@
 import icons from 'src/lib/icons/icons';
 import { bind } from 'astal';
-import { isPrimaryClick } from 'src/lib/utils';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 import { Opt } from 'src/lib/options';
 
 export const EnumInputter = <T extends string | number | boolean | object>({

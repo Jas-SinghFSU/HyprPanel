@@ -1,7 +1,7 @@
 import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
-import options from 'src/options';
 import { Gtk } from 'astal/gtk3';
+import options from 'src/configuration';
 
 export const CustomModuleSettings = (): JSX.Element => {
     return (
@@ -177,6 +177,12 @@ export const CustomModuleSettings = (): JSX.Element => {
                 {/* Storage Section */}
                 <Header title="Storage" />
                 <Option
+                    opt={options.bar.customModules.storage.paths}
+                    title="Paths to Monitor"
+                    subtitle="Paths must be absolute paths"
+                    type="object"
+                />
+                <Option
                     opt={options.theme.bar.buttons.modules.storage.enableBorder}
                     title="Button Border"
                     type="boolean"
@@ -193,6 +199,19 @@ export const CustomModuleSettings = (): JSX.Element => {
                     title="Label Type"
                     type="enum"
                     enums={['used/total', 'used', 'free', 'percentage']}
+                />
+                <Option
+                    opt={options.bar.customModules.storage.units}
+                    title="Unit of measurement"
+                    type="enum"
+                    enums={['auto', 'bytes', 'kibibytes', 'mebibytes', 'gibibytes', 'tebibytes']}
+                />
+                <Option
+                    opt={options.bar.customModules.storage.tooltipStyle}
+                    title="Tooltip Style"
+                    subtitle="Choose how drive information is displayed in the tooltip"
+                    type="enum"
+                    enums={['percentage-bar', 'tree', 'simple']}
                 />
                 <Option opt={options.bar.customModules.storage.round} title="Round" type="boolean" />
                 <Option

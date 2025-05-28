@@ -36,6 +36,8 @@ dart-sass
 wl-clipboard
 upower
 gvfs
+gtksourceview3
+libsoup3
 ```
 
 **NOTE: HyprPanel will not run without the required dependencies.**
@@ -83,16 +85,8 @@ swww
 
 ### Arch
 
-pacman:
-
 ```bash
- sudo pacman -S --needed wireplumber libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib power-profiles-daemon gvfs
-```
-
-AUR:
-
-```bash
-yay -S --needed aylurs-gtk-shell-git grimblast-git wf-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git
+yay -S --needed aylurs-gtk-shell-git wireplumber libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib power-profiles-daemon gvfs gtksourceview3 libsoup3 grimblast-git wf-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git
 ```
 
 ### Fedora
@@ -155,28 +149,40 @@ If you install the fonts after installing HyperPanel, you will need to restart H
 ### NixOS & Home-Manager
 
 Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS using the provided Nix Flake. First, add the repository to your Flake's inputs, and enable the overlay.
+You can now also just use wrapper as the package directly and ignore this section almost entirely (expect for adding inputs), it's recommended to avoid overlays.
 
 ```nix
 # flake.nix
 
 {
-  inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-  # ...
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    hyprpanel = {
+      url = "github:Jas-SinghFSU/HyprPanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-  outputs = { self, nixpkgs, ... }@inputs:
-  let
-    # ...
- system = "x86_64-linux"; # change to whatever your system should be.
-    pkgs = import nixpkgs {
-   inherit system;
-   # ...
-   overlays = [
+  outputs =
+    { self, nixpkgs, ... }@inputs:
+    let
+      overlays = [
         inputs.hyprpanel.overlay
-   ];
- };
-  in {
-    # ...
-  }
+      ];
+    in
+    {
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./configuration.nix
+            { nixpkgs.overlays = [ overlays ]; }
+          ];
+        };
+      };
+    };
 }
 ```
 
@@ -188,6 +194,7 @@ Once you've set up the overlay, you can reference HyprPanel with `pkgs.hyprpanel
 # install it as a system package
 environment.systemPackages = with pkgs; [
   # ...
+  inputs.hyprpanel.packages.${pkgs.system}.wrapper # this one if you want to avoid overlays/didn't enable them
   hyprpanel
   # ...
 ];
@@ -195,6 +202,7 @@ environment.systemPackages = with pkgs; [
 # or install it as a user package
 users.users.<username>.packages = with pkgs; [
   # ...
+  inputs.hyprpanel.packages.${pkgs.system}.wrapper # this one if you want to avoid overlays/didn't enable them
   hyprpanel
   # ...
 ];
@@ -205,6 +213,7 @@ users.users.<username>.packages = with pkgs; [
 # install it as a user package with home-manager
 home.packages = with pkgs; [
   # ...
+  inputs.hyprpanel.packages.${pkgs.system}.wrapper # this one if you want to avoid overlays/didn't enable them
   hyprpanel
   # ...
 ];
@@ -212,6 +221,7 @@ home.packages = with pkgs; [
 # or reference it directly in your Hyprland configuration
 wayland.windowManager.hyprland.settings.exec-once = [
   "${pkgs.hyprpanel}/bin/hyprpanel"
+  "${inputs.hyprpanel.packages.${pkgs.system}.wrapper}/bin/hyprpanel" # this one if you want to avoid overlays/didn't enable them
 ];
 
 ```

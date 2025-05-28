@@ -1,91 +1,87 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
-import { computeNetwork } from './helpers';
-import { NETWORK_LABEL_TYPES } from 'src/lib/types/defaults/bar.types';
-import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
+import { Module } from '../../shared/module';
+import NetworkUsageService from 'src/services/system/networkUsage';
 import { bind, Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { Astal } from 'astal/gtk3';
-import { RateUnit, BarBoxChild, NetstatLabelType } from 'src/lib/types/bar.types';
-import { NetworkResourceData } from 'src/lib/types/customModules/network.types';
-import { getDefaultNetstatData } from 'src/lib/types/defaults/netstat.types';
+import { BarBoxChild } from '../../types';
+import { NetstatLabelType } from 'src/services/system/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+import { cycleArray, setupNetworkServiceBindings } from './helpers';
 
-const networkService = AstalNetwork.get_default();
+const inputHandler = InputHandlerService.getInstance();
+const astalNetworkService = AstalNetwork.get_default();
+
+const NETWORK_LABEL_TYPES: NetstatLabelType[] = ['full', 'in', 'out'];
+
 const {
     label,
     labelType,
-    networkInterface,
-    rateUnit,
     dynamicIcon,
     icon,
     networkInLabel,
     networkOutLabel,
-    round,
     leftClick,
     rightClick,
     middleClick,
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-export const networkUsage = Variable<NetworkResourceData>(getDefaultNetstatData(rateUnit.get()));
+setupNetworkServiceBindings();
 
-const netstatPoller = new FunctionPoller<
-    NetworkResourceData,
-    [round: Variable<boolean>, interfaceNameVar: Variable<string>, dataType: Variable<RateUnit>]
->(
-    networkUsage,
-    [bind(rateUnit), bind(networkInterface), bind(round)],
-    bind(pollingInterval),
-    computeNetwork,
-    round,
-    networkInterface,
-    rateUnit,
-);
-
-netstatPoller.initialize('netstat');
+const networkService = new NetworkUsageService({ frequency: pollingInterval });
 
 export const Netstat = (): BarBoxChild => {
-    const renderNetworkLabel = (lblType: NetstatLabelType, networkService: NetworkResourceData): string => {
+    networkService.initialize();
+
+    const renderNetworkLabel = (
+        lblType: NetstatLabelType,
+        networkData: { in: string; out: string },
+    ): string => {
         switch (lblType) {
             case 'in':
-                return `${networkInLabel.get()} ${networkService.in}`;
+                return `${networkInLabel.get()} ${networkData.in}`;
             case 'out':
-                return `${networkOutLabel.get()} ${networkService.out}`;
+                return `${networkOutLabel.get()} ${networkData.out}`;
             default:
-                return `${networkInLabel.get()} ${networkService.in} ${networkOutLabel.get()} ${networkService.out}`;
+                return `${networkInLabel.get()} ${networkData.in} ${networkOutLabel.get()} ${networkData.out}`;
         }
     };
 
     const iconBinding = Variable.derive(
-        [bind(networkService, 'primary'), bind(networkService, 'wifi'), bind(networkService, 'wired')],
-        (pmry, wfi, wrd) => {
-            if (pmry === AstalNetwork.Primary.WIRED) {
-                return wrd?.icon_name;
+        [
+            bind(astalNetworkService, 'primary'),
+            bind(astalNetworkService, 'wifi'),
+            bind(astalNetworkService, 'wired'),
+        ],
+        (primary, wifi, wired) => {
+            if (primary === AstalNetwork.Primary.WIRED) {
+                return wired?.icon_name;
             }
-            return wfi?.icon_name;
+            return wifi?.icon_name;
         },
     );
 
     const labelBinding = Variable.derive(
-        [bind(networkUsage), bind(labelType)],
-        (networkService: NetworkResourceData, lblTyp: NetstatLabelType) =>
-            renderNetworkLabel(lblTyp, networkService),
+        [bind(networkService.network), bind(labelType)],
+        (networkData, lblType: NetstatLabelType) => renderNetworkLabel(lblType, networkData),
     );
+
+    let inputHandlerBindings: Variable<void>;
 
     const netstatModule = Module({
         useTextIcon: bind(dynamicIcon).as((useDynamicIcon) => !useDynamicIcon),
         icon: iconBinding(),
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => {
-            return lblTyp === 'full' ? 'Ingress / Egress' : lblTyp === 'in' ? 'Ingress' : 'Egress';
+        tooltipText: bind(labelType).as((lblType) => {
+            return lblType === 'full' ? 'Ingress / Egress' : lblType === 'in' ? 'Ingress' : 'Egress';
         }),
         boxClass: 'netstat',
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -97,31 +93,23 @@ export const Netstat = (): BarBoxChild => {
                     },
                     onScrollUp: {
                         fn: () => {
-                            labelType.set(
-                                NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) + 1) %
-                                        NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType,
-                            );
+                            const nextLabelType = cycleArray(NETWORK_LABEL_TYPES, labelType.get(), 'next');
+                            labelType.set(nextLabelType);
                         },
                     },
                     onScrollDown: {
                         fn: () => {
-                            labelType.set(
-                                NETWORK_LABEL_TYPES[
-                                    (NETWORK_LABEL_TYPES.indexOf(labelType.get()) -
-                                        1 +
-                                        NETWORK_LABEL_TYPES.length) %
-                                        NETWORK_LABEL_TYPES.length
-                                ] as NetstatLabelType,
-                            );
+                            const prevLabelType = cycleArray(NETWORK_LABEL_TYPES, labelType.get(), 'prev');
+                            labelType.set(prevLabelType);
                         },
                     },
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 labelBinding.drop();
                 iconBinding.drop();
+                networkService.destroy();
             },
         },
     });

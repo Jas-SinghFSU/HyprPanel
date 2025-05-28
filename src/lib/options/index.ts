@@ -1,7 +1,7 @@
-import { ConfigManager } from './ConfigManager';
-import { Opt, OptProps } from './Opt';
-import { OptionRegistry } from './OptionRegistry';
-import { MkOptionsResult, OptionsObject } from './options.types';
+import { ConfigManager } from './configManager';
+import { Opt, OptProps } from './opt';
+import { OptionRegistry } from './optionRegistry';
+import { MkOptionsResult, OptionsObject } from './types';
 
 const CONFIG_PATH = CONFIG_FILE;
 
@@ -19,7 +19,8 @@ export function opt<T>(initial: T, props?: OptProps): Opt<T> {
  */
 export function mkOptions<T extends OptionsObject>(optionsObj: T): T & MkOptionsResult {
     const registry = new OptionRegistry(optionsObj, configManager);
+
     return registry.createEnhancedOptions();
 }
 
-export { Opt, OptProps, ConfigManager, OptionRegistry };
+export { Opt };

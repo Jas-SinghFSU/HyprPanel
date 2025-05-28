@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Tokyo Night color scheme for GtkSourceView
+ Ported for HyprPanel
+-->
+
+<style-scheme id="tokyo-night" name="Tokyo Night" version="1.0">
+  <author>HyprPanel - Jas Singh</author>
+  <description>Tokyo Night color scheme for GtkSourceView</description>
+
+  <!-- Global Settings -->
+  <style name="text"                        foreground="#c0caf5" background="#1a1b26"/>
+  <style name="selection"                   foreground="#c0caf5" background="#283457"/>
+  <style name="cursor"                      foreground="#c0caf5"/>
+  <style name="secondary-cursor"            foreground="#c0caf5"/>
+  <style name="current-line"                background="#292e42"/>
+  <style name="line-numbers"                foreground="#565f89" background="#16161e"/>
+  <style name="draw-spaces"                 foreground="#565f89"/>
+  <style name="background-pattern"          background="#292e42"/>
+  <style name="bracket-match"               foreground="#c0caf5" background="#3d59a1" bold="true"/>
+  <style name="bracket-mismatch"            foreground="#1a1b26" background="#f7768e" bold="true"/>
+  <style name="right-margin"                foreground="#565f89" background="#16161e"/>
+  <style name="search-match"                foreground="#1a1b26" background="#ff9e64"/>
+
+  <!-- Syntax Highlighting -->
+  <!-- Comments -->
+  <style name="def:comment"                 foreground="#565f89" italic="true"/>
+  <style name="def:shebang"                 foreground="#565f89" bold="true"/>
+  <style name="def:doc-comment-element"     foreground="#565f89" italic="true"/>
+
+  <!-- Constants -->
+  <style name="def:constant"                foreground="#ff9e64"/>
+  <style name="def:string"                  foreground="#9ece6a"/>
+  <style name="def:special-char"            foreground="#7dcfff"/>
+  <style name="def:special-constant"        foreground="#bb9af7"/>
+  <style name="def:number"                  foreground="#ff9e64"/>
+  <style name="def:floating-point"          foreground="#ff9e64"/>
+  <style name="def:decimal"                 foreground="#ff9e64"/>
+  <style name="def:base-n-integer"          foreground="#ff9e64"/>
+  <style name="def:boolean"                 foreground="#bb9af7"/>
+  <style name="def:character"               foreground="#9ece6a"/>
+
+  <!-- Identifiers -->
+  <style name="def:identifier"              foreground="#c0caf5"/>
+  <style name="def:function"                foreground="#7aa2f7"/>
+  <style name="def:builtin"                 foreground="#7dcfff"/>
+
+  <!-- Statements -->
+  <style name="def:statement"               foreground="#bb9af7"/>
+  <style name="def:operator"                foreground="#89ddff"/>
+  <style name="def:keyword"                 foreground="#bb9af7" bold="true"/>
+  <style name="def:type"                    foreground="#7dcfff"/>
+  <style name="def:reserved"                foreground="#bb9af7"/>
+
+  <!-- Types -->
+  <style name="def:type"                    foreground="#7dcfff"/>
+
+  <!-- Others -->
+  <style name="def:preprocessor"            foreground="#bb9af7"/>
+  <style name="def:error"                   foreground="#f7768e" underline="error"/>
+  <style name="def:warning"                 foreground="#e0af68" underline="error"/>
+  <style name="def:note"                    foreground="#7aa2f7" underline="error"/>
+  <style name="def:net-address-in-comment"  foreground="#7dcfff" underline="true"/>
+  <style name="def:underlined"              underline="single"/>
+
+  <!-- Language specific -->
+  <!-- XML & HTML -->
+  <style name="xml:attribute-name"          foreground="#7aa2f7"/>
+  <style name="xml:element-name"            foreground="#f7768e"/>
+  <style name="xml:entity"                  foreground="#bb9af7"/>
+  <style name="xml:namespace"               foreground="#f7768e" underline="true"/>
+  <style name="xml:tag"                     foreground="#f7768e"/>
+  <style name="xml:doctype"                 foreground="#bb9af7"/>
+  <style name="xml:cdata-delim"             foreground="#8c8c8c" bold="true"/>
+  <style name="html:dtd"                    foreground="#bb9af7"/>
+  <style name="html:tag"                    foreground="#f7768e"/>
+
+  <!-- CSS -->
+  <style name="css:keyword"                 foreground="#7aa2f7"/>
+  <style name="css:at-rules"                foreground="#bb9af7"/>
+  <style name="css:color"                   foreground="#ff9e64"/>
+  <style name="css:string"                  foreground="#9ece6a"/>
+
+  <!-- Diff -->
+  <style name="diff:added-line"             foreground="#9ece6a"/>
+  <style name="diff:removed-line"           foreground="#f7768e"/>
+  <style name="diff:changed-line"           foreground="#e0af68"/>
+  <style name="diff:special-case"           foreground="#bb9af7"/>
+  <style name="diff:location"               foreground="#7aa2f7" bold="true"/>
+  <style name="diff:diff-file"              foreground="#e0af68" bold="true"/>
+
+  <!-- JSON specific -->
+  <style name="json:keyname"                foreground="#7aa2f7"/>
+  <style name="json:special-char"           foreground="#89ddff"/>
+  <style name="json:string"                 foreground="#9ece6a"/>
+  <style name="json:boolean"                foreground="#ff9e64"/>
+  <style name="json:null-value"             foreground="#bb9af7"/>
+  <style name="json:float"                  foreground="#ff9e64"/>
+  <style name="json:decimal"                foreground="#ff9e64"/>
+  <style name="json:error"                  foreground="#f7768e" underline="error"/>
+
+  <!-- JavaScript -->
+  <style name="js:function"                 foreground="#7aa2f7"/>
+  <style name="js:string"                   foreground="#9ece6a"/>
+  <style name="js:regex"                    foreground="#7dcfff"/>
+
+  <!-- Python -->
+  <style name="python:builtin-constant"     foreground="#bb9af7"/>
+  <style name="python:builtin-function"     foreground="#7aa2f7"/>
+  <style name="python:module-handler"       foreground="#bb9af7"/>
+  <style name="python:special-variable"     foreground="#bb9af7"/>
+  <style name="python:string-conversion"    foreground="#7dcfff"/>
+  <style name="python:format"               foreground="#7dcfff"/>
+  <style name="python:decorator"            foreground="#bb9af7"/>
+
+  <!-- C/C++ -->
+  <style name="c:preprocessor"              foreground="#bb9af7"/>
+  <style name="c:common-defines"            foreground="#bb9af7"/>
+  <style name="c:included-file"             foreground="#9ece6a"/>
+  <style name="c:char"                      foreground="#9ece6a"/>
+
+  <!-- Markdown -->
+  <style name="markdown:header"             foreground="#f7768e" bold="true"/>
+  <style name="markdown:list-marker"        foreground="#ff9e64" bold="true"/>
+  <style name="markdown:code"               foreground="#9ece6a"/>
+  <style name="markdown:emphasis"           foreground="#e0af68" italic="true"/>
+  <style name="markdown:strong-emphasis"    foreground="#e0af68" bold="true"/>
+  <style name="markdown:url"                foreground="#7aa2f7" underline="true"/>
+  <style name="markdown:link-text"          foreground="#bb9af7"/>
+  <style name="markdown:backslash-escape"   foreground="#ff9e64"/>
+  <style name="markdown:line-break"         foreground="#565f89"/>
+
+  <!-- Others -->
+  <style name="def:variable"                foreground="#c0caf5"/>
+  <style name="def:class"                   foreground="#7aa2f7" bold="true"/>
+  <style name="def:interface"               foreground="#7aa2f7" italic="true"/>
+  <style name="def:method"                  foreground="#7aa2f7"/>
+  <style name="def:namespace"               foreground="#bb9af7" underline="true"/>
+</style-scheme>
