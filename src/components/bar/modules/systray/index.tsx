@@ -16,12 +16,12 @@ const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | nul
     return menu;
 };
 
-const MenuCustomIcon = ({ iconLabel, iconColor, item }: MenuCustomIconProps): JSX.Element => {
+const MenuCustomIcon = ({ iconLabel, iconColor, item, iconSize }: MenuCustomIconProps): JSX.Element => {
     return (
         <label
             className={'systray-icon txt-icon'}
             label={iconLabel}
-            css={iconColor ? `color: ${iconColor}` : ''}
+            css={iconColor ? `color: ${iconColor}; font-size: ${iconSize}` : ''}
             tooltipMarkup={bind(item, 'tooltipMarkup')}
         />
     );
@@ -98,10 +98,11 @@ const SysTray = (): BarBoxChild => {
                 if (matchedCustomIcon !== undefined) {
                     const iconLabel = custIcons[matchedCustomIcon].icon || '󰠫';
                     const iconColor = custIcons[matchedCustomIcon].color;
+                    const iconSize = custIcons[matchedCustomIcon].size || 16;
 
                     return (
                         <MenuEntry item={item}>
-                            <MenuCustomIcon iconLabel={iconLabel} iconColor={iconColor} item={item} />
+                            <MenuCustomIcon iconLabel={iconLabel} iconColor={iconColor} item={item} iconSize={iconSize} />
                         </MenuEntry>
                     );
                 }
@@ -140,6 +141,7 @@ interface MenuCustomIconProps {
     iconLabel: string;
     iconColor: string;
     item: AstalTray.TrayItem;
+    iconSize?: number;
 }
 
 interface MenuEntryProps {
@@ -148,3 +150,4 @@ interface MenuEntryProps {
 }
 
 export { SysTray };
+
