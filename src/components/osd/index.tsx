@@ -8,9 +8,10 @@ import { OsdRevealer } from './revealer';
 const { location } = options.theme.osd;
 
 export default (): JSX.Element => {
+    const osdMonitorBinding = getOsdMonitor();
     return (
         <window
-            monitor={getOsdMonitor()()}
+            monitor={osdMonitorBinding()}
             name={'indicator'}
             namespace={'indicator'}
             className={'indicator'}
@@ -18,9 +19,12 @@ export default (): JSX.Element => {
             layer={bind(options.tear).as((tear) => (tear ? Astal.Layer.TOP : Astal.Layer.OVERLAY))}
             anchor={bind(location).as((anchorPoint) => getPosition(anchorPoint))}
             setup={(self) => {
-                getOsdMonitor().subscribe(() => {
+                osdMonitorBinding().subscribe(() => {
                     self.set_click_through(true);
                 });
+            }}
+            onDestroy={() => {
+                osdMonitorBinding.drop();
             }}
             clickThrough
         >

@@ -27,9 +27,13 @@ export const NotificationCard = ({
     showActions,
     ...props
 }: NotificationCardProps): JSX.Element => {
-    const actionBox: IActionBox | null = notification.get_actions().length ? (
-        <Actions notification={notification} showActions={showActions} />
-    ) : null;
+    let actionBox: ActionBox | null;
+
+    if (notification.get_actions().length) {
+        actionBox = <Actions notification={notification} showActions={showActions} />;
+    } else {
+        actionBox = null;
+    }
 
     return (
         <eventbox
@@ -63,11 +67,11 @@ interface NotificationCardProps extends Widget.BoxProps {
     showActions: boolean;
 }
 
-interface IActionBox extends Gtk.Widget {
+interface ActionBox extends Gtk.Widget {
     revealChild?: boolean;
 }
 
 interface NotificationContentProps {
-    actionBox: IActionBox | null;
+    actionBox: ActionBox | null;
     notification: AstalNotifd.Notification;
 }

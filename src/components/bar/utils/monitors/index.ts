@@ -1,6 +1,8 @@
 import { Gdk } from 'astal/gtk3';
-import { range } from 'src/lib/array/helpers';
 import { BarLayout, BarLayouts } from 'src/lib/options/types';
+import { GdkMonitorService } from 'src/services/display/monitor';
+import { MonitorMapping } from './types';
+import { JSXElement } from 'src/core/types';
 
 /**
  * Returns the bar layout configuration for a specific monitor
@@ -43,17 +45,25 @@ export const isLayoutEmpty = (layout: BarLayout): boolean => {
 };
 
 /**
- * Generates an array of JSX elements for each monitor.
+ * Creates widgets for all available monitors with proper GDK to Hyprland monitor mapping.
  *
- * This function creates an array of JSX elements by calling the provided widget function for each monitor.
- * It uses the number of monitors available in the default Gdk display.
- *
- * @param widget A function that takes a monitor index and returns a JSX element.
- *
- * @returns An array of JSX elements, one for each monitor.
+ * @param widget - Function that creates a widget for a given monitor index
+ * @returns Array of created widgets for all available monitors
  */
-export async function forMonitors(widget: (monitor: number) => Promise<JSX.Element>): Promise<JSX.Element[]> {
-    const n = Gdk.Display.get_default()?.get_n_monitors() ?? 1;
+export async function forMonitors(
+    widget: (monitor: number, hyprlandMonitor?: number) => Promise<JSXElement>,
+): Promise<JSXElement[]> {
+    const monitorCount = Gdk.Display.get_default()?.get_n_monitors() ?? 1;
+    const gdkMonitorService = GdkMonitorService.getInstance();
+    const monitorMappings: MonitorMapping[] = [];
 
-    return Promise.all(range(n, 0).map(widget));
+    for (let gdkMonitorIndex = 0; gdkMonitorIndex < monitorCount; gdkMonitorIndex++) {
+        const hyprlandId = gdkMonitorService.mapGdkToHyprland(gdkMonitorIndex);
+        monitorMappings.push({
+            gdkIndex: gdkMonitorIndex,
+            hyprlandId,
+        });
+    }
+
+    return Promise.all(monitorMappings.map(({ gdkIndex, hyprlandId }) => widget(gdkIndex, hyprlandId)));
 }

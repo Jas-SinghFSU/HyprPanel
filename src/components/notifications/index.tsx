@@ -20,15 +20,13 @@ trackPopupNotifications(popupNotifications);
 trackAutoTimeout();
 
 export default (): JSX.Element => {
-    const gdkMonitorMapper = new GdkMonitorService();
+    const gdkMonitorMapper = GdkMonitorService.getInstance();
 
     const windowLayer = bind(tear).as((tear) => (tear ? Astal.Layer.TOP : Astal.Layer.OVERLAY));
     const windowAnchor = bind(position).as(getPosition);
     const windowMonitor = Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (focusedMonitor, monitor, activeMonitor) => {
-            gdkMonitorMapper.reset();
-
             if (activeMonitor === true) {
                 const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(focusedMonitor.id);
                 return gdkMonitor;

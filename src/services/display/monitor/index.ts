@@ -4,24 +4,37 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 const hyprlandService = AstalHyprland.get_default();
 
 /**
- * The MonitorMapper class encapsulates the conversion logic between GDK and Hyprland monitor IDs.
- * It maintains internal state for monitors that have already been used so that duplicate assignments are avoided.
+ * Singleton service that manages the conversion between GDK and Hyprland monitor IDs.
+ * Maintains persistent state to ensure consistent monitor mappings across the application lifecycle.
  */
 export class GdkMonitorService {
-    private _usedGdkMonitors: Set<number>;
-    private _usedHyprlandMonitors: Set<number>;
+    private static _instance: GdkMonitorService | null = null;
+    private _usedHyprlandIds: Set<number>;
 
-    constructor() {
-        this._usedGdkMonitors = new Set();
-        this._usedHyprlandMonitors = new Set();
+    private constructor() {
+        this._usedHyprlandIds = new Set();
     }
 
     /**
-     * Resets the internal state for both GDK and Hyprland monitor mappings.
+     * Gets the singleton instance of GdkMonitorService.
+     * Creates the instance on first access and reuses it for all subsequent calls.
+     *
+     * @returns The singleton GdkMonitorService instance
+     */
+    public static getInstance(): GdkMonitorService {
+        if (!GdkMonitorService._instance) {
+            GdkMonitorService._instance = new GdkMonitorService();
+        }
+        return GdkMonitorService._instance;
+    }
+
+    /**
+     * Resets the internal state for monitor mappings.
+     * Note: With singleton pattern, this should only be called when monitor
+     * configuration actually changes.
      */
     public reset(): void {
-        this._usedGdkMonitors.clear();
-        this._usedHyprlandMonitors.clear();
+        this._usedHyprlandIds.clear();
     }
 
     /**
@@ -38,16 +51,31 @@ export class GdkMonitorService {
         }
 
         const gdkMonitor = gdkMonitors[monitor];
+        if (!gdkMonitor) {
+            return monitor;
+        }
+
         const hyprlandMonitors = hyprlandService.get_monitors();
 
-        return this._matchMonitor(
-            hyprlandMonitors,
+        // Filter out monitors with null models first
+        const validMonitors = hyprlandMonitors.filter((m) => m.model && m.model !== 'null');
+
+        // Create a temporary set for this mapping operation
+        const tempUsedIds = new Set<number>();
+
+        // Use valid monitors if available, otherwise fall back to all monitors
+        const monitorsToUse = validMonitors.length > 0 ? validMonitors : hyprlandMonitors;
+
+        const result = this._matchMonitor(
+            monitorsToUse,
             gdkMonitor,
             monitor,
-            this._usedHyprlandMonitors,
             (mon) => mon.id,
             (mon, gdkMon) => this._matchMonitorKey(mon, gdkMon),
+            tempUsedIds,
         );
+
+        return result;
     }
 
     /**
@@ -71,79 +99,69 @@ export class GdkMonitorService {
         const foundHyprlandMonitor =
             hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
 
+        // Create a temporary set for this mapping operation
+        const tempUsedIds = new Set<number>();
+
         return this._matchMonitor(
             gdkCandidates,
             foundHyprlandMonitor,
             monitor,
-            this._usedGdkMonitors,
             (candidate) => candidate.id,
             (candidate, hyprlandMonitor) => this._matchMonitorKey(hyprlandMonitor, candidate.monitor),
+            tempUsedIds,
         );
     }
 
     /**
      * Generic helper that finds the best matching candidate monitor based on:
-     *  1. A direct match (candidate matches the source and has the same id as the target).
-     *  2. A relaxed match (candidate matches the source, regardless of id).
-     *  3. A fallback match (first candidate that hasn’t been used).
+     *  1. A direct match (candidate matches the source and has the same id as the target, and hasn't been used).
+     *  2. A relaxed match (candidate matches the source, regardless of id, and hasn't been used).
+     *  3. No fallback - return target to preserve intended mapping.
      *
      * @param candidates - Array of candidate monitors.
      * @param source - The source monitor object to match against.
      * @param target - The desired monitor id.
-     * @param usedMonitors - A Set of already used candidate ids.
      * @param getId - Function to extract the id from a candidate.
      * @param compare - Function that determines if a candidate matches the source.
+     * @param usedIds - Set of already used IDs for this mapping batch.
      * @returns The chosen monitor id.
      */
     private _matchMonitor<T, U>(
         candidates: T[],
         source: U,
         target: number,
-        usedMonitors: Set<number>,
         getId: (candidate: T) => number,
         compare: (candidate: T, source: U) => boolean,
+        usedIds: Set<number>,
     ): number {
         // Direct match: candidate matches the source and has the same id as the target.
-        const directMatch = candidates.find(
-            (candidate) =>
-                compare(candidate, source) &&
-                !usedMonitors.has(getId(candidate)) &&
-                getId(candidate) === target,
-        );
+        const directMatch = candidates.find((candidate) => {
+            const matches = compare(candidate, source);
+            const id = getId(candidate);
+            const isUsed = usedIds.has(id);
+            return matches && id === target && !isUsed;
+        });
 
         if (directMatch !== undefined) {
-            usedMonitors.add(getId(directMatch));
-            return getId(directMatch);
+            const result = getId(directMatch);
+            usedIds.add(result);
+            return result;
         }
 
-        // Relaxed match: candidate matches the source regardless of id.
-        const relaxedMatch = candidates.find(
-            (candidate) => compare(candidate, source) && !usedMonitors.has(getId(candidate)),
-        );
+        // Relaxed match: candidate matches the source regardless of id, but hasn't been used.
+        const relaxedMatch = candidates.find((candidate) => {
+            const matches = compare(candidate, source);
+            const id = getId(candidate);
+            const isUsed = usedIds.has(id);
+            return matches && !isUsed;
+        });
 
         if (relaxedMatch !== undefined) {
-            usedMonitors.add(getId(relaxedMatch));
-            return getId(relaxedMatch);
+            const result = getId(relaxedMatch);
+            usedIds.add(result);
+            return result;
         }
 
-        // Fallback: use the first candidate that hasn't been used.
-        const fallback = candidates.find((candidate) => !usedMonitors.has(getId(candidate)));
-
-        if (fallback !== undefined) {
-            usedMonitors.add(getId(fallback));
-            return getId(fallback);
-        }
-
-        // As a last resort, iterate over candidates.
-        for (const candidate of candidates) {
-            const candidateId = getId(candidate);
-            if (!usedMonitors.has(candidateId)) {
-                usedMonitors.add(candidateId);
-                return candidateId;
-            }
-        }
-
-        console.warn(`Returning original monitor index as a last resort: ${target}`);
         return target;
     }
 
@@ -155,6 +173,10 @@ export class GdkMonitorService {
      * @returns boolean indicating if the monitors match
      */
     private _matchMonitorKey(hyprlandMonitor: AstalHyprland.Monitor, gdkMonitor: GdkMonitor): boolean {
+        if (!hyprlandMonitor.model || hyprlandMonitor.model === 'null') {
+            return false;
+        }
+
         const isRotated90 = hyprlandMonitor.transform % 2 !== 0;
         const gdkScaleFactor = Math.ceil(hyprlandMonitor.scale);
 
@@ -169,16 +191,6 @@ export class GdkMonitorService {
         const hyprlandScaleFactorKey = `${hyprlandMonitor.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
 
         const keyMatch = gdkMonitor.key === gdkScaleFactorKey || gdkMonitor.key === hyprlandScaleFactorKey;
-
-        this._logMonitorInfo(
-            gdkMonitor,
-            hyprlandMonitor,
-            isRotated90,
-            gdkScaleFactor,
-            gdkScaleFactorKey,
-            hyprlandScaleFactorKey,
-            keyMatch,
-        );
 
         return keyMatch;
     }
@@ -205,55 +217,22 @@ export class GdkMonitorService {
                 continue;
             }
 
-            const model = curMonitor.get_model() ?? '';
-            const geometry = curMonitor.get_geometry();
-            const scaleFactor = curMonitor.get_scale_factor();
+            try {
+                const model = curMonitor.get_model() ?? '';
+                const geometry = curMonitor.get_geometry();
+                const scaleFactor = curMonitor.get_scale_factor();
 
-            // GDK3 only supports integer scale factors
-            const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
-            gdkMonitors[i] = { key, model, used: false };
+                // GDK3 only supports integer scale factors
+                const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
+                gdkMonitors[i] = { key, model, used: false };
+            } catch (error) {
+                console.warn(`Failed to get properties for monitor ${i}:`, error);
+                // Create a fallback entry
+                gdkMonitors[i] = { key: `monitor_${i}`, model: 'Unknown', used: false };
+            }
         }
 
         return gdkMonitors;
-    }
-
-    /**
-     * Logs detailed monitor information for debugging purposes
-     * @param gdkMonitor - GDK monitor object
-     * @param hyprlandMonitor - Hyprland monitor information
-     * @param isRotated90 - Whether the monitor is rotated 90 degrees
-     * @param gdkScaleFactor - The GDK monitor's scale factor
-     * @param gdkScaleFactorKey - Key used for scale factor matching
-     * @param hyprlandScaleFactorKey - Key used for general scale matching
-     * @param keyMatch - Whether the monitor keys match
-     */
-    private _logMonitorInfo(
-        gdkMonitor: GdkMonitor,
-        hyprlandMonitor: AstalHyprland.Monitor,
-        isRotated90: boolean,
-        gdkScaleFactor: number,
-        gdkScaleFactorKey: string,
-        hyprlandScaleFactorKey: string,
-        keyMatch: boolean,
-    ): void {
-        console.debug('=== Monitor Matching Debug Info ===');
-        console.debug('GDK Monitor');
-        console.debug(`  Key: ${gdkMonitor.key}`);
-        console.debug('Hyprland Monitor');
-        console.debug(`  ID: ${hyprlandMonitor.id}`);
-        console.debug(`  Model: ${hyprlandMonitor.model}`);
-        console.debug(`  Resolution: ${hyprlandMonitor.width}x${hyprlandMonitor.height}`);
-        console.debug(`  Scale: ${hyprlandMonitor.scale}`);
-        console.debug(`  Transform: ${hyprlandMonitor.transform}`);
-        console.debug('Calculated Values');
-        console.debug(`  Rotation: ${isRotated90 ? '90°' : '0°'}`);
-        console.debug(`  GDK Scale Factor: ${gdkScaleFactor}`);
-        console.debug('Calculated Keys');
-        console.debug(`  GDK Scale Factor Key: ${gdkScaleFactorKey}`);
-        console.debug(`  Hyprland Scale Factor Key: ${hyprlandScaleFactorKey}`);
-        console.debug('Match Result');
-        console.debug(`  ${keyMatch ? '✅ Monitors Match' : '❌ No Match'}`);
-        console.debug('===============================\n');
     }
 }
 
