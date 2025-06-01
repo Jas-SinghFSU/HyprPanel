@@ -1,6 +1,6 @@
 import options from 'src/configuration';
 import { bind } from 'astal';
-import { Astal } from 'astal/gtk3';
+import { App, Astal } from 'astal/gtk3';
 import { getOsdMonitor } from './helpers';
 import { getPosition } from 'src/lib/window/positioning';
 import { OsdRevealer } from './revealer';
@@ -13,6 +13,7 @@ export default (): JSX.Element => {
         <window
             monitor={osdMonitorBinding()}
             name={'indicator'}
+            application={App}
             namespace={'indicator'}
             className={'indicator'}
             visible={true}

@@ -56,7 +56,7 @@ export class BarAutoHideService {
                 if (hideMode === 'never') {
                     this._showAllBars();
                 } else if (hideMode === 'single-window') {
-                    this._updateBarVisibilityByWindowCount();
+                    this._handleSingleWindowAutoHide();
                 }
             },
         );
@@ -64,7 +64,7 @@ export class BarAutoHideService {
         this._subscriptions.client = Variable.derive(
             [bind(this._hyprlandService, 'focusedClient')],
             (currentClient) => {
-                this._handleFullscreenClientVisibility(currentClient);
+                this._handleFullscreenAutoHide(currentClient);
             },
         );
 
@@ -91,8 +91,17 @@ export class BarAutoHideService {
     private _setBarVisibility(monitorId: number, isVisible: boolean): void {
         const barName = `bar-${monitorId}`;
 
-        if (BarVisibility.get(barName)) {
-            App.get_window(barName)?.set_visible(isVisible);
+        if (!BarVisibility.get(barName)) {
+            return;
+        }
+
+        const window = App.get_window(barName);
+        if (window && !window.get_window()?.is_destroyed()) {
+            try {
+                window.set_visible(isVisible);
+            } catch (error) {
+                console.warn(`[BarAutoHide] Failed to set visibility for ${barName}:`, error);
+            }
         }
     }
 
@@ -101,7 +110,7 @@ export class BarAutoHideService {
      *
      * @param client - The Hyprland client whose fullscreen state to monitor
      */
-    private _handleFullscreenClientVisibility(client: AstalHyprland.Client): void {
+    private _handleFullscreenAutoHide(client: AstalHyprland.Client): void {
         if (client === null) {
             return;
         }
@@ -116,6 +125,19 @@ export class BarAutoHideService {
     }
 
     /**
+     * Updates bar visibility based on workspace window count
+     */
+    private _handleSingleWindowAutoHide(): void {
+        const monitors = this._hyprlandService.get_monitors();
+        const activeWorkspaces = monitors.map((monitor) => monitor.active_workspace);
+
+        activeWorkspaces.forEach((workspace) => {
+            const hasOneClient = workspace.get_clients().length !== 1;
+            this._setBarVisibility(workspace.monitor.id, hasOneClient);
+        });
+    }
+
+    /**
      * Shows bars on all monitors
      */
     private _showAllBars(): void {
@@ -125,19 +147,6 @@ export class BarAutoHideService {
             if (BarVisibility.get(`bar-${monitor.id}`)) {
                 this._setBarVisibility(monitor.id, true);
             }
-        });
-    }
-
-    /**
-     * Updates bar visibility based on workspace window count
-     */
-    private _updateBarVisibilityByWindowCount(): void {
-        const monitors = this._hyprlandService.get_monitors();
-        const activeWorkspaces = monitors.map((monitor) => monitor.active_workspace);
-
-        activeWorkspaces.forEach((workspace) => {
-            const hasOneClient = workspace.get_clients().length !== 1;
-            this._setBarVisibility(workspace.monitor.id, hasOneClient);
         });
     }
 

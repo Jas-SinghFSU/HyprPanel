@@ -53,17 +53,40 @@ export const isLayoutEmpty = (layout: BarLayout): boolean => {
 export async function forMonitors(
     widget: (monitor: number, hyprlandMonitor?: number) => Promise<JSXElement>,
 ): Promise<JSXElement[]> {
-    const monitorCount = Gdk.Display.get_default()?.get_n_monitors() ?? 1;
+    const display = Gdk.Display.get_default();
+    if (display === null) {
+        console.error('[forMonitors] No display available');
+        return [];
+    }
+
+    const monitorCount = display.get_n_monitors();
     const gdkMonitorService = GdkMonitorService.getInstance();
     const monitorMappings: MonitorMapping[] = [];
 
     for (let gdkMonitorIndex = 0; gdkMonitorIndex < monitorCount; gdkMonitorIndex++) {
+        const monitor = display.get_monitor(gdkMonitorIndex);
+        if (monitor === null) {
+            console.warn(`[forMonitors] Skipping invalid monitor at index ${gdkMonitorIndex}`);
+            continue;
+        }
+
         const hyprlandId = gdkMonitorService.mapGdkToHyprland(gdkMonitorIndex);
+
         monitorMappings.push({
             gdkIndex: gdkMonitorIndex,
             hyprlandId,
         });
     }
 
-    return Promise.all(monitorMappings.map(({ gdkIndex, hyprlandId }) => widget(gdkIndex, hyprlandId)));
+    const monitorPromises = monitorMappings.map(async ({ gdkIndex, hyprlandId }) => {
+        try {
+            return await widget(gdkIndex, hyprlandId);
+        } catch (error) {
+            console.error(`[forMonitors] Failed to create widget for monitor ${gdkIndex}:`, error);
+            return null;
+        }
+    });
+    const widgets = await Promise.all(monitorPromises);
+
+    return widgets.filter((w): w is JSXElement => w !== null);
 }

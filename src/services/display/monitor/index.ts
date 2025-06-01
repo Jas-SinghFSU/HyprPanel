@@ -8,7 +8,7 @@ const hyprlandService = AstalHyprland.get_default();
  * Maintains persistent state to ensure consistent monitor mappings across the application lifecycle.
  */
 export class GdkMonitorService {
-    private static _instance: GdkMonitorService | null = null;
+    private static _instance: GdkMonitorService;
     private _usedHyprlandIds: Set<number>;
 
     private constructor() {

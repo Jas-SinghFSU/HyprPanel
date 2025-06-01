@@ -7,6 +7,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { GdkMonitorService } from 'src/services/display/monitor/index.js';
 import { getPosition } from 'src/lib/window/positioning.js';
 import { NotificationCard } from './Notification';
+import { App } from 'astal/gtk3';
 
 const hyprlandService = AstalHyprland.get_default();
 const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;
@@ -53,6 +54,7 @@ export default (): JSX.Element => {
             name={'notifications-window'}
             namespace={'notifications-window'}
             className={'notifications-window'}
+            application={App}
             layer={windowLayer}
             anchor={windowAnchor}
             exclusivity={Astal.Exclusivity.NORMAL}

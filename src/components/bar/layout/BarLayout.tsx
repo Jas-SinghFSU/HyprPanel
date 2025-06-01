@@ -50,12 +50,21 @@ export class BarLayout {
     public render(): JSXElement {
         const display = Gdk.Display.get_default();
         if (!display) {
-            console.error('No display available for bar creation');
+            console.error('[BarLayout] No display available for bar creation');
             return null;
         }
 
-        if (this._gdkMonitor < 0 || this._gdkMonitor >= display.get_n_monitors()) {
-            console.error(`Invalid monitor index: ${this._gdkMonitor}`);
+        const monitorCount = display.get_n_monitors();
+        if (this._gdkMonitor < 0 || this._gdkMonitor >= monitorCount) {
+            console.error(
+                `[BarLayout] Invalid monitor index: ${this._gdkMonitor} (total monitors: ${monitorCount})`,
+            );
+            return null;
+        }
+
+        const monitor = display.get_monitor(this._gdkMonitor);
+        if (monitor === null) {
+            console.error(`[BarLayout] Monitor at index ${this._gdkMonitor} no longer exists`);
             return null;
         }
 

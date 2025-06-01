@@ -1,4 +1,4 @@
-import { App, Gtk } from 'astal/gtk3';
+import { App } from 'astal/gtk3';
 import { Bar } from 'src/components/bar';
 import { forMonitors } from 'src/components/bar/utils/monitors';
 import { GdkMonitorService } from 'src/services/display/monitor';
@@ -57,16 +57,15 @@ export class BarRefreshManager {
         this._refreshInProgress = true;
 
         try {
-            const windows = App.get_windows();
-
-            this._destroyBars(windows);
-            this._destroyNotificationWindow(windows);
-            this._destroyOsdWindow(windows);
+            this._destroyBars();
+            this._destroyNotificationWindow();
+            this._destroyOsdWindow();
 
             const gdkMonitorService = GdkMonitorService.getInstance();
             gdkMonitorService.reset();
 
             await forMonitors(Bar);
+
             Notifications();
             OSD();
         } catch (error) {
@@ -81,36 +80,22 @@ export class BarRefreshManager {
         }
     }
 
-    private _destroyBars(windows: Gtk.Window[]): void {
-        const barWindows = windows.filter((w) => w.name?.startsWith('bar-'));
-        for (const window of barWindows) {
-            try {
-                window?.destroy();
-            } catch (error) {
-                console.warn(`[MonitorRefresh] Failed to destroy bar window ${window.name}:`, error);
-            }
+    private _destroyBars(): void {
+        const barWindows = App.get_windows().filter((window) => window.name.startsWith('bar-'));
+        barWindows.forEach((window) => window?.destroy());
+    }
+
+    private _destroyNotificationWindow(): void {
+        const notificationsWindow = App.get_window('notifications-window');
+        if (notificationsWindow !== null) {
+            notificationsWindow.destroy();
         }
     }
 
-    private _destroyNotificationWindow(windows: Gtk.Window[]): void {
-        const notificationWindows = windows.filter((w) => w.name === 'notifications-window');
-        for (const window of notificationWindows) {
-            try {
-                window?.destroy();
-            } catch (error) {
-                console.warn(`[MonitorRefresh] Failed to destroy notification window ${window.name}:`, error);
-            }
-        }
-    }
-
-    private _destroyOsdWindow(windows: Gtk.Window[]): void {
-        const osdWindows = windows.filter((w) => w.name === 'indicator');
-        for (const window of osdWindows) {
-            try {
-                window?.destroy();
-            } catch (error) {
-                console.warn(`[MonitorRefresh] Failed to destroy OSD window ${window.name}:`, error);
-            }
+    private _destroyOsdWindow(): void {
+        const osdWindow = App.get_window('indicator');
+        if (osdWindow !== null) {
+            osdWindow.destroy();
         }
     }
 }

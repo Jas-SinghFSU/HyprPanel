@@ -66,6 +66,7 @@ export class OsdRevealerController {
             if (revealer !== undefined) {
                 revealer.set_reveal_child(false);
             }
+
             this._autoHideTimeout = undefined;
         });
     }

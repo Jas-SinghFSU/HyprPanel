@@ -56,7 +56,6 @@ export const getOsdMonitor = (): Variable<number> => {
  * @param self The Widget.Revealer instance to set up.
  */
 export const revealerSetup = (self: Widget.Revealer): void => {
-    // Set this as the active revealer
     osdController.setRevealer(self);
 
     const handleReveal = (): void => {
