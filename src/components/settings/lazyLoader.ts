@@ -23,10 +23,18 @@ export class SettingsDialogLoader {
     }
 
     /**
+     * Preloads the settings dialog
+     */
+    public static async preload(): Promise<void> {
+        const instance = SettingsDialogLoader.getInstance();
+        await instance._getDialog();
+    }
+
+    /**
      * Loads and returns the settings dialog, creating it if necessary.
      * Multiple concurrent calls will share the same loading promise.
      */
-    public async getDialog(): Promise<JSX.Element> {
+    private async _getDialog(): Promise<JSX.Element> {
         if (this._settingsDialog) {
             return this._settingsDialog;
         }
@@ -49,7 +57,10 @@ export class SettingsDialogLoader {
      * Performs the actual loading of the settings dialog module
      */
     private async _loadSettingsDialog(): Promise<JSX.Element> {
-        const timer = new Timer('Lazy loading settings dialog');
+        const { default: options } = await import('src/configuration');
+        const isLazyLoading = options.hyprpanel.useLazyLoading.get();
+        const timerLabel = isLazyLoading ? 'Lazy loading settings dialog' : 'Preloading settings dialog';
+        const timer = new Timer(timerLabel);
 
         try {
             const { default: SettingsDialog } = await import('./index');
@@ -66,7 +77,7 @@ export class SettingsDialogLoader {
      * Toggles the settings dialog visibility, loading it if necessary
      */
     public async toggle(): Promise<void> {
-        await this.getDialog();
+        await this._getDialog();
         App.toggle_window('settings-dialog');
     }
 }

@@ -11,6 +11,8 @@ import { BarRefreshManager } from 'src/services/display/bar/refreshManager';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { Timer } from 'src/lib/performance/timer';
 import { JSXElement } from 'src/core/types';
+import { SettingsDialogLoader } from 'src/components/settings/lazyLoader';
+import options from 'src/configuration';
 
 /**
  * Manages the complete initialization sequence for HyprPanel.
@@ -38,6 +40,10 @@ export class InitializationService {
             Timer.measureSync('Menus', () => this._initializeMenus());
             Timer.measureSync('System behaviors', () => initializeSystemBehaviors());
             Timer.measureSync('Monitor handlers', () => this._setupMonitorHandlers());
+
+            if (!options.hyprpanel.useLazyLoading.get()) {
+                await Timer.measureAsync('Settings dialog preload', () => SettingsDialogLoader.preload());
+            }
 
             overallTimer.end();
         } catch (error) {
