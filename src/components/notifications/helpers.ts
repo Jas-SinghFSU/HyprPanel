@@ -3,6 +3,7 @@ import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import options from 'src/configuration';
 import { isNotificationIgnored } from 'src/lib/shared/notifications';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import GLib from 'gi://GLib';
 
 const notifdService = AstalNotifd.get_default();
 const hyprlandService = AstalHyprland.get_default();
@@ -99,4 +100,14 @@ export const trackAutoTimeout = (): void => {
     autoDismiss.subscribe((shouldAutoDismiss) => {
         notifdService.set_ignore_timeout(!shouldAutoDismiss);
     });
+};
+
+/**
+ * Escapes text for safe use in Pango markup
+ * Converts special XML characters to their entity representations
+ *
+ * @param text - The text to escape
+ */
+export const escapeMarkup = (text: string): string => {
+    return GLib.markup_escape_text(text, -1);
 };
