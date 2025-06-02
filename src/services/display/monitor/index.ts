@@ -198,7 +198,6 @@ export class GdkMonitorService {
             try {
                 const model = curMonitor.get_model() ?? '';
                 const geometry = curMonitor.get_geometry();
-                const scaleFactor = curMonitor.get_scale_factor();
 
                 const key = `${model}_${geometry.x}x${geometry.y}`;
                 gdkMonitors[i] = { key, model, used: false };
