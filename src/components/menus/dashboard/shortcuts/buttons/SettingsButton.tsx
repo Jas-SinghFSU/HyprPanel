@@ -1,4 +1,5 @@
 import { App, Gdk } from 'astal/gtk3';
+import { SettingsDialogLoader } from 'src/components/settings/lazyLoader';
 
 export const SettingsButton = (): JSX.Element => {
     return (
@@ -6,7 +7,7 @@ export const SettingsButton = (): JSX.Element => {
             className={'dashboard-button'}
             tooltipText={'HyprPanel Configuration'}
             vexpand
-            onButtonPressEvent={(_, event) => {
+            onButtonPressEvent={async (_, event) => {
                 const buttonClicked = event.get_button()[1];
 
                 if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
@@ -14,7 +15,8 @@ export const SettingsButton = (): JSX.Element => {
                 }
 
                 App.get_window('dashboardmenu')?.set_visible(false);
-                App.toggle_window('settings-dialog');
+                const loader = SettingsDialogLoader.getInstance();
+                await loader.toggle();
             }}
         >
             <label className={'button-label txt-icon'} label={'󰒓'} />
