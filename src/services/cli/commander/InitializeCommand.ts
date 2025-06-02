@@ -2,7 +2,7 @@ import { CommandRegistry } from './Registry';
 import { Command } from './types';
 import { createExplainCommand } from './helpers';
 import { appearanceCommands } from './commands/appearance';
-import { utilityCommands } from './commands/system';
+import { utilityCommands } from './commands/system/utility';
 import { windowManagementCommands } from './commands/windowManagement';
 import { mediaCommands } from './commands/modules/media';
 

@@ -32,7 +32,9 @@ export const OsdRevealer = (): JSX.Element => {
         <revealer
             transitionType={Gtk.RevealerTransitionType.CROSSFADE}
             revealChild={false}
-            setup={revealerSetup}
+            setup={(self) => {
+                revealerSetup(self);
+            }}
         >
             <box className={'osd-container'} vertical={osdOrientation}>
                 {bind(orientation).as((currentOrientation) => {

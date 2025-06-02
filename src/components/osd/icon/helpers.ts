@@ -7,11 +7,6 @@ const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
 const brightnessService = BrightnessService.getInstance();
 
-type OSDIcon = {
-    micVariable: Variable<unknown>;
-    speakerVariable: Variable<unknown>;
-};
-
 /**
  * Sets up the OSD icon for a given widget.
  *
@@ -22,7 +17,7 @@ type OSDIcon = {
  *
  * @returns An object containing the micVariable and speakerVariable, which are derived variables for microphone and speaker status.
  */
-export const setupOsdIcon = (self: Widget.Label): OSDIcon => {
+export const setupOsdIcon = (self: Widget.Label): void => {
     self.hook(brightnessService, 'notify::screen', () => {
         self.label = '󱍖';
     });
@@ -45,8 +40,8 @@ export const setupOsdIcon = (self: Widget.Label): OSDIcon => {
         },
     );
 
-    return {
-        micVariable,
-        speakerVariable,
-    };
+    self.connect('destroy', () => {
+        micVariable.drop();
+        speakerVariable.drop();
+    });
 };

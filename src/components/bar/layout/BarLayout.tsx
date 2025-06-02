@@ -1,10 +1,11 @@
-import { App, Gtk } from 'astal/gtk3';
+import { App, Gdk, Gtk } from 'astal/gtk3';
 import Astal from 'gi://Astal?version=3.0';
 import { bind, Binding, Variable } from 'astal';
 import { idleInhibit } from 'src/lib/window/visibility';
 import { WidgetRegistry } from './WidgetRegistry';
 import { getLayoutForMonitor, isLayoutEmpty } from '../utils/monitors';
 import options from 'src/configuration';
+import { JSXElement } from 'src/core/types';
 
 /**
  * Responsible for the bar UI layout and positioning
@@ -46,7 +47,27 @@ export class BarLayout {
         this._initializeReactiveVariables();
     }
 
-    public render(): JSX.Element {
+    public render(): JSXElement {
+        const display = Gdk.Display.get_default();
+        if (!display) {
+            console.error('[BarLayout] No display available for bar creation');
+            return null;
+        }
+
+        const monitorCount = display.get_n_monitors();
+        if (this._gdkMonitor < 0 || this._gdkMonitor >= monitorCount) {
+            console.error(
+                `[BarLayout] Invalid monitor index: ${this._gdkMonitor} (total monitors: ${monitorCount})`,
+            );
+            return null;
+        }
+
+        const monitor = display.get_monitor(this._gdkMonitor);
+        if (monitor === null) {
+            console.error(`[BarLayout] Monitor at index ${this._gdkMonitor} no longer exists`);
+            return null;
+        }
+
         return (
             <window
                 inhibit={bind(idleInhibit)}
