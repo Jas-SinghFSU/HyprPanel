@@ -1,7 +1,6 @@
 import { execAsync } from 'astal';
 import { Bar } from 'src/components/bar';
 import Notifications from 'src/components/notifications';
-import SettingsDialog from 'src/components/settings/index';
 import OSD from 'src/components/osd/index';
 import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers';
 import { isDropdownMenu } from 'src/components/settings/constants.js';
@@ -36,7 +35,6 @@ export class InitializationService {
                 return bars;
             });
 
-            Timer.measureSync('Settings dialog', () => SettingsDialog());
             Timer.measureSync('Menus', () => this._initializeMenus());
             Timer.measureSync('System behaviors', () => initializeSystemBehaviors());
             Timer.measureSync('Monitor handlers', () => this._setupMonitorHandlers());
