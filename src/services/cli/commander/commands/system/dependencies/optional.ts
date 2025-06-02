@@ -1,0 +1,88 @@
+import { Dependency } from './types';
+
+export const optionalDependencies: Dependency[] = [
+    {
+        package: 'python',
+        required: false,
+        type: 'executable',
+        check: ['python', 'python3'],
+        description: 'GPU usage tracking (NVidia only)',
+    },
+    {
+        package: 'python-gpustat',
+        required: false,
+        type: 'executable',
+        check: ['gpustat'],
+        description: 'GPU usage tracking (NVidia only)',
+    },
+    {
+        package: 'pywal',
+        required: false,
+        type: 'executable',
+        check: ['wal'],
+        description: 'Pywal hook for wallpapers',
+    },
+    {
+        package: 'pacman-contrib',
+        required: false,
+        type: 'executable',
+        check: ['paccache', 'rankmirrors'],
+        description: 'Checking for pacman updates',
+    },
+    {
+        package: 'power-profiles-daemon',
+        required: false,
+        type: 'service',
+        check: ['power-profiles-daemon.service'],
+        description: 'Switch power profiles',
+    },
+    {
+        package: 'swww',
+        required: false,
+        type: 'executable',
+        check: ['swww'],
+        description: 'Setting wallpapers',
+    },
+    {
+        package: 'grimblast',
+        required: false,
+        type: 'executable',
+        check: ['grimblast'],
+        description: 'For the snapshot shortcut',
+    },
+    {
+        package: 'brightnessctl',
+        required: false,
+        type: 'executable',
+        check: ['brightnessctl'],
+        description: 'To control keyboard and screen brightness',
+    },
+    {
+        package: 'btop',
+        required: false,
+        type: 'executable',
+        check: ['btop'],
+        description: 'To view system resource usage',
+    },
+    {
+        package: 'wf-recorder',
+        required: false,
+        type: 'executable',
+        check: ['wf-recorder'],
+        description: 'To use the built-in screen recorder',
+    },
+    {
+        package: 'hyprpicker',
+        required: false,
+        type: 'executable',
+        check: ['hyprpicker'],
+        description: 'To use the preset color picker shortcut',
+    },
+    {
+        package: 'matugen',
+        required: false,
+        type: 'executable',
+        check: ['matugen'],
+        description: 'To use wallpaper-based color schemes',
+    },
+];

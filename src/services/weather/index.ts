@@ -2,14 +2,14 @@ import { AstalIO, bind, interval, Variable } from 'astal';
 import { getWeatherProvider } from 'src/services/weather/adapters/registry';
 import { WeatherApiKeyManager } from './keyManager';
 import options from 'src/configuration';
-import { Opt } from 'src/lib/options';
 import { httpClient } from 'src/lib/httpClient';
 import { GaugeIcon, Percentage, Weather, WeatherIcon } from './types';
 import { DEFAULT_WEATHER } from './default';
 import { WeatherProvider } from './adapters/types';
 import { TemperatureConverter } from 'src/lib/units/temperature';
 import { SpeedConverter } from 'src/lib/units/speed';
-import { UnitType } from 'src/lib/units/temperature/types';
+
+const { interval: weatherInterval, location, unit } = options.menus.clock.weather;
 
 /**
  * Service for fetching and managing weather data from various providers
@@ -19,11 +19,11 @@ export default class WeatherService {
 
     private _currentProvider = 'weatherapi';
 
-    private readonly _location: Opt<string>;
+    private readonly _location = location;
+    private readonly _intervalFrequency = weatherInterval;
+    private readonly _unitType = unit;
 
-    private readonly _intervalFrequency: Opt<number>;
     private _interval: null | AstalIO.Time = null;
-    private _unitType: Variable<UnitType> = Variable('imperial');
 
     private _weatherData: Variable<Weather> = Variable(DEFAULT_WEATHER);
     private _temperature: Variable<string> = Variable(this._getTemperature());
@@ -33,11 +33,6 @@ export default class WeatherService {
     private _gaugeIcon: Variable<GaugeIcon> = Variable(this._getGaugeIcon());
 
     private constructor() {
-        const { interval, location } = options.menus.clock.weather;
-
-        this._intervalFrequency = interval;
-        this._location = location;
-
         this._initializeConfigTracker();
         this._initializeWeatherTracker();
     }
@@ -126,24 +121,6 @@ export default class WeatherService {
      */
     public get gaugeIcon(): Variable<GaugeIcon> {
         return this._gaugeIcon;
-    }
-
-    /**
-     * Gets the current temperature unit type
-     *
-     * @returns Current unit type ('imperial' or 'metric')
-     */
-    public get unit(): UnitType {
-        return this._unitType.get();
-    }
-
-    /**
-     * Sets the temperature unit type
-     *
-     * @param unitType - New unit type ('imperial' or 'metric')
-     */
-    public set unit(unitType: UnitType) {
-        this._unitType.set(unitType);
     }
 
     /**

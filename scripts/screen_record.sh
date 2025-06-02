@@ -39,8 +39,8 @@ startRecording() {
 
     # Ensure output directory exists
     if [ ! -d "$outputDir" ]; then
-        echo "Error: Output directory '$outputDir' does not exist."
-        exit 1
+        mkdir -p "$outputDir"
+        echo "Created output directory: $outputDir"
     fi
 
     # Generate output filename and path
