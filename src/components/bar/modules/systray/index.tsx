@@ -98,7 +98,7 @@ const SysTray = (): BarBoxChild => {
                 if (matchedCustomIcon !== undefined) {
                     const iconLabel = custIcons[matchedCustomIcon].icon || '󰠫';
                     const iconColor = custIcons[matchedCustomIcon].color;
-                    const iconSize = custIcons[matchedCustomIcon].size || '1rem';
+                    const iconSize = custIcons[matchedCustomIcon].size || '1.3rem';
 
                     return (
                         <MenuEntry item={item}>
