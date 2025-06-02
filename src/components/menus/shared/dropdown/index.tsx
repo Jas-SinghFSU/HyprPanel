@@ -32,7 +32,7 @@ export default ({
                     self.visible = false;
                 }
             }}
-            onFocusOutEvent={(self, _) => {
+            onFocusOutEvent={(self) => {
                 self.visible = false;
             }}
             onButtonPressEvent={(self, event) => {
