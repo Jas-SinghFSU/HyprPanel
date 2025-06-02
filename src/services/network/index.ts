@@ -36,19 +36,6 @@ export class NetworkService {
     }
 
     /**
-     * Sets up bindings to monitor network service changes
-     */
-    private _setupBindings(): void {
-        Variable.derive([bind(this._astalNetwork, 'wifi')], () => {
-            this.wifi.onWifiServiceChanged();
-        });
-
-        Variable.derive([bind(this._astalNetwork, 'wired')], () => {
-            this.ethernet.onWiredServiceChanged();
-        });
-    }
-
-    /**
      * Retrieves the appropriate WiFi icon based on the provided icon name.
      *
      * @param iconName - The name of the icon to look up. If not provided, a default icon is returned.
@@ -66,5 +53,18 @@ export class NetworkService {
         }
 
         return '󰤨';
+    }
+
+    /**
+     * Sets up bindings to monitor network service changes
+     */
+    private _setupBindings(): void {
+        Variable.derive([bind(this._astalNetwork, 'wifi')], () => {
+            this.wifi.onWifiServiceChanged();
+        });
+
+        Variable.derive([bind(this._astalNetwork, 'wired')], () => {
+            this.ethernet.onWiredServiceChanged();
+        });
     }
 }

@@ -7,6 +7,7 @@ import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { GdkMonitorService } from 'src/services/display/monitor/index.js';
 import { getPosition } from 'src/lib/window/positioning.js';
 import { NotificationCard } from './Notification';
+import { App } from 'astal/gtk3';
 
 const hyprlandService = AstalHyprland.get_default();
 const { position, monitor, active_monitor, showActionsOnHover, displayedTotal } = options.notifications;
@@ -20,15 +21,13 @@ trackPopupNotifications(popupNotifications);
 trackAutoTimeout();
 
 export default (): JSX.Element => {
-    const gdkMonitorMapper = new GdkMonitorService();
+    const gdkMonitorMapper = GdkMonitorService.getInstance();
 
     const windowLayer = bind(tear).as((tear) => (tear ? Astal.Layer.TOP : Astal.Layer.OVERLAY));
     const windowAnchor = bind(position).as(getPosition);
     const windowMonitor = Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (focusedMonitor, monitor, activeMonitor) => {
-            gdkMonitorMapper.reset();
-
             if (activeMonitor === true) {
                 const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(focusedMonitor.id);
                 return gdkMonitor;
@@ -55,6 +54,7 @@ export default (): JSX.Element => {
             name={'notifications-window'}
             namespace={'notifications-window'}
             className={'notifications-window'}
+            application={App}
             layer={windowLayer}
             anchor={windowAnchor}
             exclusivity={Astal.Exclusivity.NORMAL}

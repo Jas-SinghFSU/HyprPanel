@@ -1,14 +1,14 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import { Command } from '../../types';
+import { Command } from '../../../types';
 import { execAsync, Gio, GLib } from 'astal';
-import { checkDependencies } from './checkDependencies';
+import { checkDependencies } from '../dependencies';
 import { getSystrayItems } from 'src/services/cli/helpers/systray';
 import { idleInhibit } from 'src/lib/window/visibility';
 import { errorHandler } from 'src/core/errors/handler';
 import { clearNotifications } from 'src/lib/shared/notifications';
 import options from 'src/configuration';
-import { listCpuTempSensors } from './listSensors';
+import { listCpuTempSensors } from '../sensors';
 
 const { clearDelay } = options.notifications;
 const notifdService = AstalNotifd.get_default();

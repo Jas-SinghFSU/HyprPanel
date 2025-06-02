@@ -381,6 +381,7 @@ export const BarSettings = (): JSX.Element => {
                     title="Truncation Size"
                     type="number"
                     min={10}
+                    max={300}
                 />
                 <Option
                     opt={options.theme.bar.buttons.windowtitle.spacing}

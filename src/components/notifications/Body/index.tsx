@@ -1,6 +1,6 @@
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import { Gtk } from 'astal/gtk3';
-import { notifHasImg } from '../helpers';
+import { notifHasImg, escapeMarkup } from '../helpers';
 
 export const Body = ({ notification }: BodyProps): JSX.Element => {
     return (
@@ -8,7 +8,7 @@ export const Body = ({ notification }: BodyProps): JSX.Element => {
             <label
                 className={'notification-card-body-label'}
                 halign={Gtk.Align.START}
-                label={notification.body}
+                label={escapeMarkup(notification.body)}
                 maxWidthChars={!notifHasImg(notification) ? 35 : 28}
                 lines={2}
                 truncate
@@ -16,7 +16,7 @@ export const Body = ({ notification }: BodyProps): JSX.Element => {
                 justify={Gtk.Justification.LEFT}
                 hexpand
                 useMarkup
-                onRealize={(self) => self.set_markup(notification.body)}
+                onRealize={(self) => self.set_markup(escapeMarkup(notification.body))}
             />
         </box>
     );
