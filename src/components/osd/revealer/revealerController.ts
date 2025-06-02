@@ -23,6 +23,9 @@ export class OsdRevealerController {
         });
     }
 
+    /**
+     * Gets the singleton instance of the OSD revealer controller
+     */
     public static getInstance(): OsdRevealerController {
         if (this._instance === undefined) {
             this._instance = new OsdRevealerController();
@@ -32,7 +35,10 @@ export class OsdRevealerController {
     }
 
     /**
-     * Sets the active revealer
+     * Registers a revealer widget as the active OSD display component
+     * Ensures proper cleanup of previous revealers before setting a new one
+     *
+     * @param revealer - The revealer widget to manage
      */
     public setRevealer(revealer: Widget.Revealer): void {
         if (this._currentRevealer && this._currentRevealer !== revealer) {
@@ -44,7 +50,8 @@ export class OsdRevealerController {
     }
 
     /**
-     * Shows the OSD
+     * Reveals the OSD temporarily and sets up auto-hide behavior
+     * Respects enable state and startup delay before allowing reveal
      */
     public show(): void {
         const enableRevealer = enable.get();
@@ -72,7 +79,7 @@ export class OsdRevealerController {
     }
 
     /**
-     * Cleans up the current state
+     * Cancels any active auto-hide timeout to prevent stale callbacks
      */
     private _cleanup(): void {
         if (this._autoHideTimeout) {
@@ -82,7 +89,10 @@ export class OsdRevealerController {
     }
 
     /**
-     * Handles revealer destruction
+     * Handles cleanup when a revealer widget is destroyed
+     * Ensures the controller doesn't hold references to destroyed widgets
+     *
+     * @param revealer - The revealer being destroyed
      */
     public onRevealerDestroy(revealer: Widget.Revealer): void {
         if (this._currentRevealer === revealer) {
@@ -92,7 +102,8 @@ export class OsdRevealerController {
     }
 
     /**
-     * Destroys the controller
+     * Performs complete cleanup of the controller instance
+     * Cancels all active timeouts and clears widget references
      */
     public destroy(): void {
         this._cleanup();

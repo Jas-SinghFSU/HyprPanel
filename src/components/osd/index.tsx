@@ -9,6 +9,7 @@ const { location } = options.theme.osd;
 
 export default (): JSX.Element => {
     const osdMonitorBinding = getOsdMonitor();
+
     return (
         <window
             monitor={osdMonitorBinding()}

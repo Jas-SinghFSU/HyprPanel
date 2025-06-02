@@ -13,7 +13,8 @@ export class Timer {
     }
 
     /**
-     * Ends the timer and logs the elapsed time
+     * Stops the timer and logs the elapsed time with the configured label
+     * Returns the elapsed time in milliseconds for further processing
      */
     public end(): number {
         const elapsed = (GLib.get_monotonic_time() - this._startTime) / 1000;
@@ -22,14 +23,19 @@ export class Timer {
     }
 
     /**
-     * Gets elapsed time without ending the timer
+     * Retrieves the current elapsed time without stopping the timer
+     * Useful for intermediate measurements during long-running operations
      */
     public elapsed(): number {
         return (GLib.get_monotonic_time() - this._startTime) / 1000;
     }
 
     /**
-     * Measures the execution time of an async function
+     * Wraps an async function with automatic performance timing
+     * Logs execution time regardless of success or failure
+     *
+     * @param label - Description of the operation being measured
+     * @param fn - Async function to measure
      */
     public static async measureAsync<T>(label: string, fn: () => Promise<T>): Promise<T> {
         const timer = new Timer(label);
@@ -44,7 +50,11 @@ export class Timer {
     }
 
     /**
-     * Measures the execution time of a synchronous function
+     * Wraps a synchronous function with automatic performance timing
+     * Logs execution time regardless of success or failure
+     *
+     * @param label - Description of the operation being measured
+     * @param fn - Synchronous function to measure
      */
     public static measureSync<T>(label: string, fn: () => T): T {
         const timer = new Timer(label);

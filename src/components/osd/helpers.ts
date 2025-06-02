@@ -29,16 +29,17 @@ export const getOsdMonitor = (): Variable<number> => {
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (currentMonitor, defaultMonitor, followMonitor) => {
             try {
-                if (followMonitor === true) {
-                    if (!currentMonitor || currentMonitor.id === undefined || currentMonitor.id === null) {
-                        console.warn('OSD: No focused monitor available, defaulting to monitor 0');
-                        return 0;
-                    }
-                    const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(currentMonitor.id);
+                if (followMonitor === false) {
+                    const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(defaultMonitor);
                     return gdkMonitor;
                 }
 
-                const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(defaultMonitor);
+                if (!currentMonitor || currentMonitor.id === undefined || currentMonitor.id === null) {
+                    console.warn('OSD: No focused monitor available, defaulting to monitor 0');
+                    return 0;
+                }
+
+                const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(currentMonitor.id);
                 return gdkMonitor;
             } catch (error) {
                 console.error('OSD: Failed to map monitor, defaulting to 0:', error);

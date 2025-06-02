@@ -56,14 +56,8 @@ export class GdkMonitorService {
         }
 
         const hyprlandMonitors = hyprlandService.get_monitors();
-
-        // Filter out monitors with null models first
         const validMonitors = hyprlandMonitors.filter((m) => m.model && m.model !== 'null');
-
-        // Create a temporary set for this mapping operation
         const tempUsedIds = new Set<number>();
-
-        // Use valid monitors if available, otherwise fall back to all monitors
         const monitorsToUse = validMonitors.length > 0 ? validMonitors : hyprlandMonitors;
 
         const result = this._matchMonitor(
@@ -99,7 +93,6 @@ export class GdkMonitorService {
         const foundHyprlandMonitor =
             hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
 
-        // Create a temporary set for this mapping operation
         const tempUsedIds = new Set<number>();
 
         return this._matchMonitor(
@@ -134,7 +127,6 @@ export class GdkMonitorService {
         compare: (candidate: T, source: U) => boolean,
         usedIds: Set<number>,
     ): number {
-        // Direct match: candidate matches the source and has the same id as the target.
         const directMatch = candidates.find((candidate) => {
             const matches = compare(candidate, source);
             const id = getId(candidate);
@@ -148,7 +140,6 @@ export class GdkMonitorService {
             return result;
         }
 
-        // Relaxed match: candidate matches the source regardless of id, but hasn't been used.
         const relaxedMatch = candidates.find((candidate) => {
             const matches = compare(candidate, source);
             const id = getId(candidate);
@@ -222,12 +213,10 @@ export class GdkMonitorService {
                 const geometry = curMonitor.get_geometry();
                 const scaleFactor = curMonitor.get_scale_factor();
 
-                // GDK3 only supports integer scale factors
                 const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
                 gdkMonitors[i] = { key, model, used: false };
             } catch (error) {
                 console.warn(`Failed to get properties for monitor ${i}:`, error);
-                // Create a fallback entry
                 gdkMonitors[i] = { key: `monitor_${i}`, model: 'Unknown', used: false };
             }
         }

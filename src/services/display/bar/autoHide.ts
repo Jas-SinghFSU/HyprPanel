@@ -118,8 +118,8 @@ export class BarAutoHideService {
         const fullscreenBinding = bind(client, 'fullscreen');
 
         Variable.derive([bind(fullscreenBinding)], (isFullScreen) => {
-            if (this._autoHide.get() === 'fullscreen') {
-                this._setBarVisibility(client.monitor.id, !Boolean(isFullScreen));
+            if (this._autoHide.get() === 'fullscreen' && client.monitor?.id !== undefined) {
+                this._setBarVisibility(client.monitor?.id, !Boolean(isFullScreen));
             }
         });
     }
