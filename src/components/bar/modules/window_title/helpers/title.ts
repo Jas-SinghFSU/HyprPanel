@@ -92,13 +92,21 @@ export const getTitle = (
  * If the title exceeds the maximum size, it appends an ellipsis ('...') to the truncated title.
  *
  * @param title The title string to truncate.
- * @param max_size The maximum size of the truncated title.
+ * @param maxSize The maximum size of the truncated title.
  *
  * @returns The truncated title as a string. If the title is within the maximum size, returns the original title.
  */
-export const truncateTitle = (title: string, max_size: number): string => {
-    if (max_size > 0 && title.length > max_size) {
-        return title.substring(0, max_size).trim() + '...';
+export const truncateTitle = (title: string | null, maxSize: number): string => {
+    if (title === null) {
+        return '--';
     }
-    return title;
+
+    const MAX_LABEL_SIZE = 300;
+    const effectiveSize = maxSize <= 0 ? MAX_LABEL_SIZE : Math.min(maxSize, MAX_LABEL_SIZE);
+
+    if (title.length <= effectiveSize) {
+        return title;
+    }
+
+    return title.substring(0, effectiveSize).trim() + '...';
 };
