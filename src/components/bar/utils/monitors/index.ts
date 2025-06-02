@@ -19,7 +19,7 @@ const emptyBar = {
  * @returns BarLayout configuration for the specified monitor, falling back to default if not found
  */
 export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLayout => {
-    const [rootKey, rootLayout] = _getResolveLayoutCopy(monitor, layouts);
+    const [rootKey, rootLayout] = _getResolveLayoutForMonitor(monitor, layouts);
 
     let left = rootLayout.left;
     let middle = rootLayout.middle;
@@ -64,7 +64,7 @@ export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLa
     };
 };
 
-const _getResolveLayoutCopy = (monitor: number, layouts: BarLayouts): [string, BarLayout] => {
+const _getResolveLayoutForMonitor = (monitor: number, layouts: BarLayouts): [string, BarLayout] => {
     const hyprlandService = AstalHyprland.get_default();
     const monitorConn = hyprlandService.get_monitor(monitor).get_name();
 
