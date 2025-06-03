@@ -44,7 +44,7 @@ const buildOptions = {
   tsconfig: './tsconfig.json', // Use tsconfig for type checking and other settings
   keepNames: true, // Keep function names for better debugging
   sourcemap: false, // Generate sourcemaps in development mode
-  minify: true, // Minify in production mode
+  minify: !isDevelopment, // Minify in production mode
   treeShaking: true,
   metafile: isDevelopment, // Generate metafile only in development mode
   splitting: false, // Disable code splitting for simplicity
