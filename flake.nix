@@ -102,13 +102,13 @@
               # Exporting glib-networking modules
               export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules"
               if [ "''${PWD##*/}" = "HyprPanel" ]; then
-                echo "do you want to initialise stuff in order for tsserver to work? (y/anything_else)"
+                echo "Initialise dependencies required in order for tsserver to work? (y/anything_else)"
                 read consent
                 if [ "$consent" = "y" ]; then
                   ags types -d .; mkdir node_modules; ln -s ${astal.packages.${system}.gjs}/share/astal/gjs ./node_modules/astal
                 fi
               else
-                echo "you're not in HyprPanel root dir, no initialisation for you"
+                echo "You're not in the HyprPanel root directory, initialisation failed"
               fi
             '';
           };
