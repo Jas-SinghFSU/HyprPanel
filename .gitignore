@@ -3,5 +3,7 @@ node_modules
 prepare
 
 @girs
+@types
+dist
 
 **/.claude/settings.local.json

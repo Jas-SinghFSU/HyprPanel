@@ -18,6 +18,15 @@
         "types": [],
         "experimentalDecorators": true,
         "jsx": "react-jsx",
-        "jsxImportSource": "astal/gtk3"
-    }
+        "jsxImportSource": "astal/gtk3",
+        "declaration": false
+    },
+    "include": [
+        "app.ts",
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
