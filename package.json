@@ -3,7 +3,17 @@
     "version": "1.0.0",
     "description": "A customizable panel built for Hyprland.",
     "main": "app.ts",
+    "type": "module",
     "scripts": {
+        "build": "meson setup build --wipe --prefix \"/usr/\" \nmeson install -C build",
+        "build:fast": "node esbuild.config.js",
+        "start": "gjs -m /usr/share/hyprpanel/hyprpanel.js",
+
+        "build:beta": "sudo node esbuild.config.js",
+        "dev": "gjs -m ./dist/share/hyprpanel/hyprpanel.js",
+        "build:watch": "node esbuild.config.js -dev --watch",
+        "dev:watch": "find dist/share/hyprpanel -name '*.js' | entr -r gjs -m dist/share/hyprpanel/hyprpanel.js",
+
         "lint": "eslint --config .eslintrc.json .",
         "lint:fix": "eslint --config .eslintrc.json . --fix",
         "format": "prettier --write 'modules/**/*.ts'",
@@ -19,6 +29,7 @@
         "@types/node": "^22.15.17",
         "@typescript-eslint/eslint-plugin": "^8.5.0",
         "@typescript-eslint/parser": "^8.5.0",
+        "esbuild": "^0.25.5",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-import": "^2.30.0",
