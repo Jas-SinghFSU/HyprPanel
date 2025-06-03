@@ -149,7 +149,7 @@ async function build() {
   }
 };
 
-// Función para watch mode
+// Function for watch mode
 async function watch() {
   try {
     console.log('👀 Starting watch mode...');
@@ -163,7 +163,7 @@ async function watch() {
     await ctx.watch();
     console.log('👀 Watching for changes... (Press Ctrl+C to stop)');
 
-    // Mantener el proceso vivo
+    // Keeping the process alive
     process.on('SIGINT', async () => {
       console.log('\n🛑 Stopping watch mode...');
       await ctx.dispose();
