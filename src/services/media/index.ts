@@ -57,7 +57,7 @@ export class MediaPlayerService {
 
         this.mediaTitle.set(noMediaText.get());
 
-        for (const player of this._mprisService.players) {
+        for (const player of this._mprisService.get_players()) {
             this._handlePlayerAdded(player);
         }
 
