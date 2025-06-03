@@ -67,15 +67,10 @@ async function copyLauncherScript() {
   const destFile = path.join(destDir, 'hyprpanel');
 
   try {
-    // Check if source file exists
     await fs.access(sourceFile);
-    // Read the template file
     const templateContent = await fs.readFile(sourceFile, 'utf8');
-    // Replace @DATADIR@ with the actual data directory path
     const processedContent = templateContent.replace(/@DATADIR@/g, hyprpanelDir);
-    // Create destination directory if it doesn't exist
     await fs.mkdir(destDir, { recursive: true });
-    // Write the processed file
     await fs.writeFile(destFile, processedContent, { mode: 0o755 }); // Make it executable
     console.log(`✅ Launcher script copied to ${hyprpanelDir}`);
   } catch (error) {
@@ -126,13 +121,10 @@ async function shouldCopyDirectory(sourceDir, destDir) {
       fs.stat(destDir).catch(() => null)
     ]);
 
-    // If destination does not exist, we need to copy
     if (!destStat) return true;
 
-    // If source is newer than destination, we need to copy
     return sourceStat.mtime > destStat.mtime;
   } catch {
-    // If we can't access the source directory, assume we need to copy
     return true;
   }
 };
