@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "build": "meson setup build --wipe --prefix \"/usr/\" \nmeson install -C build",
-        "build:fast": "node esbuild.config.js",
+        "build:fast": "sudo node esbuild.config.js",
         "start": "gjs -m /usr/share/hyprpanel/hyprpanel.js",
 
         "build:dev": "sudo node esbuild.config.js -dev",
