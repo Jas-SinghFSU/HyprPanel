@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,12 +12,7 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      astal,
-      ags,
-    }:
+    { self, nixpkgs, astal, ags, ... }:
     let
       systems = [
         "x86_64-linux"
@@ -76,7 +70,6 @@
           swww
           pywal
         ]);
-
     in
     {
       devShells = forEachSystem (
@@ -118,41 +111,30 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = ags.lib.bundle {
+          hyprpanel-unwrapped = ags.lib.bundle {
             inherit pkgs;
             src = ./.;
-            name = "hyprpanel"; # name of executable
+            name = "hyprpanel";
             entry = "app.ts";
-
             extraPackages = packages system pkgs;
-              
           };
-          # Make a wrapper package to avoid overlay
-          wrapper = pkgs.writeShellScriptBin "hyprpanel" ''
-            # Exporting glib-networking modules
-            export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules"
-            if [ "$#" -eq 0 ]; then
-                exec ${self.packages.${pkgs.stdenv.system}.default}/bin/hyprpanel
-            else
-                exec ${ags.packages.${pkgs.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
-            fi
+          hyprpanel = pkgs.runCommand "hyprpanel"
+            {
+              nativeBuildInputs = [ pkgs.makeWrapper ];
+            } ''
+            mkdir -p $out/bin
+            cp ${hyprpanel-unwrapped}/bin/hyprpanel $out/bin/hyprpanel
+            wrapProgram $out/bin/hyprpanel \
+              --set GIO_EXTRA_MODULES "${pkgs.glib-networking}/lib/gio/modules"
           '';
+        in
+        {
+          default = hyprpanel;
         }
       );
-
-      # Define .overlay to expose the package as pkgs.hyprpanel based on the system
       overlay = final: prev: {
-        hyprpanel = prev.writeShellScriptBin "hyprpanel" ''
-          if [ "$#" -eq 0 ]; then
-              exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
-          else
-              exec ${ags.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
-          fi
-        '';
+        hyprpanel = self.packages.${final.stdenv.system}.default;
       };
-
       homeManagerModules.hyprpanel = import ./nix/module.nix self;
     };
 }
