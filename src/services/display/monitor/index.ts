@@ -60,7 +60,7 @@ export class GdkMonitorService {
         const tempUsedIds = new Set<number>();
         const monitorsToUse = validMonitors.length > 0 ? validMonitors : hyprlandMonitors;
 
-        const result = this._matchMonitor(
+        return this._matchMonitor(
             monitorsToUse,
             gdkMonitor,
             monitor,
@@ -68,8 +68,6 @@ export class GdkMonitorService {
             (mon, gdkMon) => this._matchMonitorKey(mon, gdkMon),
             tempUsedIds,
         );
-
-        return result;
     }
 
     /**
