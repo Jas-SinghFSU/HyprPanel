@@ -57,6 +57,10 @@ export class MediaPlayerService {
 
         this.mediaTitle.set(noMediaText.get());
 
+        for (const player of this._mprisService.get_players()) {
+            this._handlePlayerAdded(player);
+        }
+
         this._mprisService.connect('player-closed', (_, closedPlayer) =>
             this._handlePlayerClosed(closedPlayer),
         );
@@ -366,7 +370,7 @@ export class MediaPlayerService {
         );
 
         const initialTitle = player.title;
-        this.mediaTitle.set(initialTitle.length > 0 ? this._normalizeLabel(initialTitle) : '-----');
+        this.mediaTitle.set(initialTitle?.length > 0 ? this._normalizeLabel(initialTitle) : '-----');
     }
 
     /**

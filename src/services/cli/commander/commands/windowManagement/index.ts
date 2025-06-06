@@ -3,6 +3,7 @@ import { App } from 'astal/gtk3';
 import { isWindowVisible } from 'src/lib/window/visibility';
 import { BarVisibility } from 'src/services/display/bar';
 import { errorHandler } from 'src/core/errors/handler';
+import { SettingsDialogLoader } from 'src/components/settings/lazyLoader';
 
 export const windowManagementCommands: Command[] = [
     {
@@ -35,9 +36,21 @@ export const windowManagementCommands: Command[] = [
                 required: true,
             },
         ],
-        handler: (args: Record<string, unknown>): string => {
+        handler: async (args: Record<string, unknown>): Promise<string> => {
             try {
                 const windowName = args['window'] as string;
+
+                if (windowName === 'settings-dialog') {
+                    const loader = SettingsDialogLoader.getInstance();
+                    await loader.toggle();
+                    const foundWindow = App.get_window(windowName);
+                    const windowStatus = foundWindow?.visible ? 'visible' : 'hidden';
+
+                    BarVisibility.set(windowName, windowStatus === 'visible');
+
+                    return windowStatus;
+                }
+
                 const foundWindow = App.get_window(windowName);
 
                 if (!foundWindow) {

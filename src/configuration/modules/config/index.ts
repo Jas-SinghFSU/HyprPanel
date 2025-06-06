@@ -16,6 +16,7 @@ export default {
     hyprpanel: {
         restartAgs: opt(true),
         restartCommand: opt('hyprpanel -q; hyprpanel'),
+        useLazyLoading: opt(true),
     },
     dummy: opt(true),
     bar,

@@ -49,6 +49,15 @@ export const BarGeneral = (): JSX.Element => {
                     type="string"
                 />
                 <Option
+                    opt={options.hyprpanel.useLazyLoading}
+                    title="Lazy Load Settings Dialog"
+                    subtitle={
+                        'Only loads the settings dialog when first opened, rather than at startup. (Requires restart)\n' +
+                        'Improves launch speed and reduces memory usage until the dialog is accessed.'
+                    }
+                    type="boolean"
+                />
+                <Option
                     opt={options.terminal}
                     title="Terminal"
                     subtitle="For tools like 'btop'"
