@@ -51,6 +51,33 @@ export class GdkMonitorService {
                 return monitorMapping.hyprlandId;
             }
         }
+
+        const gdkMonitors = this._getGdkMonitors();
+
+        if (Object.keys(gdkMonitors).length === 0) {
+            return monitor;
+        }
+
+        const gdkMonitor = gdkMonitors[monitor];
+        if (!gdkMonitor) {
+            return monitor;
+        }
+
+        const hyprlandMonitors = hyprlandService.get_monitors();
+        const validMonitors = hyprlandMonitors.filter((m) => m.model && m.model !== 'null');
+        const tempUsedIds = new Set<number>();
+        const monitorsToUse = validMonitors.length > 0 ? validMonitors : hyprlandMonitors;
+
+        const result = this._matchMonitor(
+            monitorsToUse,
+            gdkMonitor,
+            monitor,
+            (mon) => mon.id,
+            (mon, gdkMon) => this._matchMonitorKey(mon, gdkMon),
+            tempUsedIds,
+        );
+
+        return result;
     }
 
     /**
@@ -67,11 +94,37 @@ export class GdkMonitorService {
                 return monitorMapping.gdkIndex;
             }
         }
+
+        const gdkMonitors = this._getGdkMonitors();
+        const gdkCandidates = Object.entries(gdkMonitors).map(([monitorId, monitorMetadata]) => ({
+            id: Number(monitorId),
+            monitor: monitorMetadata,
+        }));
+
+        if (gdkCandidates.length === 0) {
+            return monitor;
+        }
+
+        const hyprlandMonitors = hyprlandService.get_monitors();
+        const foundHyprlandMonitor =
+            hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
+
+        const tempUsedIds = new Set<number>();
+
+        return this._matchMonitor(
+            gdkCandidates,
+            foundHyprlandMonitor,
+            monitor,
+            (candidate) => candidate.id,
+            (candidate, hyprlandMonitor) => this._matchMonitorKey(hyprlandMonitor, candidate.monitor),
+            tempUsedIds,
+        );
     }
 
     public getMonitorMappings(): MonitorMapping[] {
         const display = Gdk.Display.get_default();
         const monitorCount = display.get_n_monitors();
+
 
         const x : IHash = {};
 
