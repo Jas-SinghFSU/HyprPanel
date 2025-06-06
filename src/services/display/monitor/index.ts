@@ -44,32 +44,13 @@ export class GdkMonitorService {
      * @returns The corresponding Hyprland monitor id.
      */
     public mapGdkToHyprland(monitor: number): number {
-        const gdkMonitors = this._getGdkMonitors();
+        const monitorMappings = this.getMonitorMappings();
 
-        if (Object.keys(gdkMonitors).length === 0) {
-            return monitor;
+        for (const monitorMapping of monitorMappings) {
+            if (monitorMapping.gdkIndex === monitor) {
+                return monitorMapping.hyprlandId;
+            }
         }
-
-        const gdkMonitor = gdkMonitors[monitor];
-        if (!gdkMonitor) {
-            return monitor;
-        }
-
-        const hyprlandMonitors = hyprlandService.get_monitors();
-        const validMonitors = hyprlandMonitors.filter((m) => m.model && m.model !== 'null');
-        const tempUsedIds = new Set<number>();
-        const monitorsToUse = validMonitors.length > 0 ? validMonitors : hyprlandMonitors;
-
-        const result = this._matchMonitor(
-            monitorsToUse,
-            gdkMonitor,
-            monitor,
-            (mon) => mon.id,
-            (mon, gdkMon) => this._matchMonitorKey(mon, gdkMon),
-            tempUsedIds,
-        );
-
-        return result;
     }
 
     /**
@@ -79,30 +60,44 @@ export class GdkMonitorService {
      * @returns The corresponding GDK monitor id.
      */
     public mapHyprlandToGdk(monitor: number): number {
-        const gdkMonitors = this._getGdkMonitors();
-        const gdkCandidates = Object.entries(gdkMonitors).map(([monitorId, monitorMetadata]) => ({
-            id: Number(monitorId),
-            monitor: monitorMetadata,
-        }));
+        const monitorMappings = this.getMonitorMappings();
 
-        if (gdkCandidates.length === 0) {
-            return monitor;
+        for (var monitorMapping of monitorMappings) {
+            if (monitorMapping.hyprlandId === monitor) {
+                return monitorMapping.gdkIndex;
+            }
+        }
+    }
+
+    public getMonitorMappings(): MonitorMapping[] {
+        const display = Gdk.Display.get_default();
+        const monitorCount = display.get_n_monitors();
+
+        const x : IHash = {};
+
+        for (let gdkMonitorIndex = 0; gdkMonitorIndex < monitorCount; gdkMonitorIndex++) {
+            const monitor = display.get_monitor(gdkMonitorIndex);
+            if (monitor === null) {
+                console.warn(`[forMonitors] Skipping invalid monitor at index ${gdkMonitorIndex}`);
+                continue;
+            }
+            x[monitor] = gdkMonitorIndex;
         }
 
+        const monitorMappings: MonitorMapping[] = [];
+
         const hyprlandMonitors = hyprlandService.get_monitors();
-        const foundHyprlandMonitor =
-            hyprlandMonitors.find((mon) => mon.id === monitor) || hyprlandMonitors[0];
+        for (let i = 0; i < monitorCount; i++) {
+            const gdkMonitor = display.get_monitor_at_point(hyprlandMonitors[i].x, hyprlandMonitors[i].y);
+            monitorMappings.push({
+                gdkIndex: x[gdkMonitor],
+                hyprlandId: hyprlandMonitors[i].id,
+            });
+        }
 
-        const tempUsedIds = new Set<number>();
+        // console.log("monitorMappings ", monitorMappings);
 
-        return this._matchMonitor(
-            gdkCandidates,
-            foundHyprlandMonitor,
-            monitor,
-            (candidate) => candidate.id,
-            (candidate, hyprlandMonitor) => this._matchMonitorKey(hyprlandMonitor, candidate.monitor),
-            tempUsedIds,
-        );
+        return monitorMappings;
     }
 
     /**
