@@ -547,8 +547,11 @@ in
     let
 
       theme =
-        if cfg.settings.theme.name != "" then
-          builtins.fromJSON (builtins.readFile ../themes/${cfg.settings.theme.name}.json)
+        if cfg.settings ? theme.name then
+          if cfg.settings.theme.name != "" then
+            builtins.fromJSON (builtins.readFile ../themes/${cfg.settings.theme.name}.json)
+          else
+            { }
         else
           { };
 
