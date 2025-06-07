@@ -370,7 +370,7 @@ export class MediaPlayerService {
         );
 
         const initialTitle = player.title;
-        this.mediaTitle.set(initialTitle.length > 0 ? this._normalizeLabel(initialTitle) : '-----');
+        this.mediaTitle.set(initialTitle?.length > 0 ? this._normalizeLabel(initialTitle) : '-----');
     }
 
     /**

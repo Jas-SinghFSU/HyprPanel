@@ -79,7 +79,9 @@ export class BarLayout {
                 visible={this._visibilityVar()}
                 anchor={this._anchorVar()}
                 layer={this._layerVar()}
-                exclusivity={Astal.Exclusivity.EXCLUSIVE}
+                exclusivity={bind(this._visibilityVar).as((visible) =>
+                    visible ? Astal.Exclusivity.EXCLUSIVE : Astal.Exclusivity.NORMAL,
+                )}
                 onDestroy={() => this._cleanup()}
             >
                 <box className="bar-panel-container">
@@ -117,11 +119,6 @@ export class BarLayout {
 
     private _initializeVisibilityVariables(): void {
         const { layouts } = options.bar;
-
-        this._visibilityVar = Variable.derive([bind(layouts)], (currentLayouts) => {
-            const foundLayout = getLayoutForMonitor(this._hyprlandMonitor, currentLayouts);
-            return !isLayoutEmpty(foundLayout);
-        });
 
         this._classNameVar = Variable.derive([bind(layouts)], (currentLayouts) => {
             const foundLayout = getLayoutForMonitor(this._hyprlandMonitor, currentLayouts);
@@ -180,6 +177,17 @@ export class BarLayout {
             middle: this._createSectionBinding('middle'),
             right: this._createSectionBinding('right'),
         };
+
+        this._visibilityVar = Variable.derive(
+            [
+                bind(this._barSectionsVar.left),
+                bind(this._barSectionsVar.middle),
+                bind(this._barSectionsVar.right),
+            ],
+            (left, middle, right) => {
+                return left.length > 0 || middle.length > 0 || right.length > 0;
+            },
+        );
     }
 
     private _createSectionBinding(section: 'left' | 'middle' | 'right'): Variable<JSX.Element[]> {
