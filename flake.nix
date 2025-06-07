@@ -130,6 +130,7 @@
         in
         {
           default = hyprpanel;
+          wrapper = hyprpanel;
         }
       );
       overlay = final: prev: {
