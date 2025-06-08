@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -127,7 +126,6 @@
             entry = "app.ts";
 
             extraPackages = packages system pkgs;
-              
           };
           # Make a wrapper package to avoid overlay
           wrapper = pkgs.writeShellScriptBin "hyprpanel" ''
@@ -143,15 +141,21 @@
       );
 
       # Define .overlay to expose the package as pkgs.hyprpanel based on the system
-      overlay = final: prev: {
-        hyprpanel = prev.writeShellScriptBin "hyprpanel" ''
-          if [ "$#" -eq 0 ]; then
-              exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
-          else
-              exec ${ags.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
-          fi
-        '';
-      };
+      overlay =
+        final: prev:
+        let
+          pkgs = final;
+        in
+        {
+          hyprpanel = pkgs.writeShellScriptBin "hyprpanel" ''
+            export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules"
+            if [ "$#" -eq 0 ]; then
+              exec ${self.packages.${final.system}.default}/bin/hyprpanel
+            else
+              exec ${ags.packages.${final.system}.io}/bin/astal -i hyprpanel "$@"
+            fi
+          '';
+        };
 
       homeManagerModules.hyprpanel = import ./nix/module.nix self;
     };
