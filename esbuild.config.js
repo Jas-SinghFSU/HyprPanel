@@ -35,7 +35,7 @@ const buildOptions = {
   outdir: hyprpanelDir,
   bundle: true,
   format: 'esm',
-  platform: 'node',
+  platform: 'neutral',
   external: [
     'gi://*',
     'system',
