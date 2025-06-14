@@ -26,7 +26,7 @@ export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLa
     let right = rootLayout.right;
 
     let layout = rootLayout;
-    const visited = new Array([rootKey]);
+    const visited = [rootKey];
     while (
         layout.extends !== undefined &&
         (left === undefined || middle === undefined || right.length === undefined)
