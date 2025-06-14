@@ -15,7 +15,7 @@ install_arch_updates() {
     fi
     if command -v flatpak &> /dev/null; then
         echo "Updating Flatpak packages..."
-	flatpak update -y
+	      flatpak update -y
     fi
     echo "Done with Arch & AUR updates."
 }
