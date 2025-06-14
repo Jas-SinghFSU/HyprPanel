@@ -46,7 +46,7 @@ export type BarLayout = {
     left: BarModule[];
     middle: BarModule[];
     right: BarModule[];
-    extends: string?;
+    extends?: string;
 };
 export type BarLayouts = {
     [key: string]: BarLayout;
