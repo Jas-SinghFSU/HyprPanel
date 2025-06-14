@@ -12,8 +12,6 @@ datadir = prefix / get_option('datadir') / meson.project_name()
 ags = find_program('ags', required: true)
 find_program('gjs', required: true)
 
-dependency('gtksourceview-3.0', required: true)
-
 custom_target(
   'hyprpanel_bundle',
   input: files('app.ts'),
