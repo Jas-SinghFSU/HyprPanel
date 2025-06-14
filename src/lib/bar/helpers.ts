@@ -16,9 +16,9 @@ export function getLayoutItems(): BarModule[] {
     const itemsInLayout: BarModule[] = [];
 
     Object.keys(layouts.get()).forEach((monitor) => {
-        const leftItems = layouts.get()[monitor].left;
-        const rightItems = layouts.get()[monitor].right;
-        const middleItems = layouts.get()[monitor].middle;
+        const leftItems = layouts.get()[monitor].left ?? [];
+        const rightItems = layouts.get()[monitor].right ?? [];
+        const middleItems = layouts.get()[monitor].middle ?? [];
 
         itemsInLayout.push(...leftItems);
         itemsInLayout.push(...middleItems);
