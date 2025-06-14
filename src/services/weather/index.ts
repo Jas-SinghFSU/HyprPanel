@@ -293,7 +293,8 @@ export default class WeatherService {
             `${provider.baseUrl}?location=${formattedLocation}&key=${weatherKey}`;
 
         try {
-            const response = await httpClient.get(url);
+            const WEATHER_FETCH_TIMEOUT_MS = 10000;
+            const response = await httpClient.get(url, { timeout: WEATHER_FETCH_TIMEOUT_MS });
 
             if (response.data && provider.adapter) {
                 const transformedData = provider.adapter.toStandardFormat(response.data);
