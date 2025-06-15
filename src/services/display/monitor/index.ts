@@ -164,7 +164,11 @@ export class GdkMonitorService {
      * @returns boolean indicating if the monitors match
      */
     private _matchMonitorKey(hyprlandMonitor: AstalHyprland.Monitor, gdkMonitor: GdkMonitor): boolean {
-        if (!hyprlandMonitor.model || hyprlandMonitor.model === 'null') {
+        if (
+            !hyprlandMonitor?.model ||
+            hyprlandMonitor.model === null ||
+            hyprlandMonitor.model === undefined
+        ) {
             return false;
         }
 
