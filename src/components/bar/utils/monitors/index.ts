@@ -29,7 +29,7 @@ export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLa
     const visited = [rootKey];
     while (
         layout.extends !== undefined &&
-        (left === undefined || middle === undefined || right.length === undefined)
+        (left === undefined || middle === undefined || right === undefined)
     ) {
         if (visited.includes(layout.extends)) {
             console.error(`found circular reference in layout extensions: ${visited.join(' -> ')}`);
