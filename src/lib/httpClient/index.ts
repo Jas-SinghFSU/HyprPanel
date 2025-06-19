@@ -161,16 +161,30 @@ class HttpClient {
      * @param message - Prepared Soup message to send
      * @param options - Request configuration options
      */
-    private _sendRequest(
+    private async _sendRequest(
         resolve: (value: RestResponse | PromiseLike<RestResponse>) => void,
         reject: (reason?: unknown) => void,
         message: Soup.Message,
         options: RequestOptions,
-    ): void {
+    ): Promise<void> {
         const cancellable = options.signal ?? null;
 
         try {
-            const bytes = this._session.send_and_read(message, cancellable);
+            const bytes = await new Promise<GLib.Bytes | null>((resolveAsync, rejectAsync) => {
+                this._session.send_and_read_async(
+                    message,
+                    GLib.PRIORITY_DEFAULT,
+                    cancellable,
+                    (_, result) => {
+                        try {
+                            const bytes = this._session.send_and_read_finish(result);
+                            resolveAsync(bytes);
+                        } catch (error) {
+                            rejectAsync(error);
+                        }
+                    },
+                );
+            });
 
             const {
                 response: responseText,
