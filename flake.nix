@@ -119,7 +119,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          default = ags.lib.bundle {
+          unwrapped = ags.lib.bundle {
             inherit pkgs;
             src = ./.;
             name = "hyprpanel"; # name of executable
@@ -127,12 +127,15 @@
 
             extraPackages = packages system pkgs;
           };
+
+          default = self.packages.${pkgs.stdenv.system}.wrapper;
+
           # Make a wrapper package to avoid overlay
           wrapper = pkgs.writeShellScriptBin "hyprpanel" ''
             # Exporting glib-networking modules
             export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules"
             if [ "$#" -eq 0 ]; then
-                exec ${self.packages.${pkgs.stdenv.system}.default}/bin/hyprpanel
+                exec ${self.packages.${pkgs.stdenv.system}.unwrapped}/bin/hyprpanel
             else
                 exec ${ags.packages.${pkgs.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
             fi
@@ -147,14 +150,7 @@
           pkgs = final;
         in
         {
-          hyprpanel = pkgs.writeShellScriptBin "hyprpanel" ''
-            export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules"
-            if [ "$#" -eq 0 ]; then
-              exec ${self.packages.${final.system}.default}/bin/hyprpanel
-            else
-              exec ${ags.packages.${final.system}.io}/bin/astal -i hyprpanel "$@"
-            fi
-          '';
+          hyprpanel = self.packages.${pkgs.stdenv.system}.wrapper;
         };
 
       homeManagerModules.hyprpanel = import ./nix/module.nix self;
