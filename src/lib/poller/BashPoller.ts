@@ -57,7 +57,7 @@ export class BashPoller<Value, Parameters extends unknown[]> {
      */
     public execute = async (): Promise<void> => {
         try {
-            const res = await execAsync(`bash -c "${this._updateCommand}"`);
+            const res = await execAsync(['bash', '-c', this._updateCommand]);
             this._targetVariable.set(await this._pollingFunction(res, ...this._params));
         } catch (error) {
             console.error(`Error executing bash command "${this._updateCommand}":`, error);
