@@ -32,9 +32,6 @@ export default ({
                     self.visible = false;
                 }
             }}
-            onFocusOutEvent={(self) => {
-                self.visible = false;
-            }}
             onButtonPressEvent={(self, event) => {
                 const buttonClicked = event.get_button()[1];
 
