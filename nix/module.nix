@@ -605,7 +605,7 @@ in
       theme.font.size = mkStrOption "1.2rem";
       theme.font.weight = mkIntOption 600;
       theme.matugen = mkBoolOption false;
-      theme.matugen_settings.contrast = mkIntOption 0;
+      theme.matugen_settings.contrast = mkFloatOption 0.0;
       theme.matugen_settings.mode = mkStrOption "dark";
       theme.matugen_settings.scheme_type = mkStrOption "tonal-spot";
       theme.matugen_settings.variation = mkStrOption "standard_1";
