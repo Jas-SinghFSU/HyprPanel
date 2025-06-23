@@ -4,6 +4,6 @@ export default {
     label: opt(true),
     rightClick: opt(''),
     middleClick: opt(''),
-    scrollUp: opt('hyprpanel vol +5'),
-    scrollDown: opt('hyprpanel vol -5'),
+    scrollUp: opt('hyprpanel volup 5'),
+    scrollDown: opt('hyprpanel voldown 5'),
 };

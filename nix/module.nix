@@ -325,8 +325,8 @@ in
       bar.volume.label = mkBoolOption true;
       bar.volume.middleClick = mkStrOption "";
       bar.volume.rightClick = mkStrOption "";
-      bar.volume.scrollDown = mkStrOption "${package}/bin/hyprpanel 'vol -5'";
-      bar.volume.scrollUp = mkStrOption "${package}/bin/hyprpanel 'vol +5'";
+      bar.volume.scrollDown = mkStrOption "${package}/bin/hyprpanel 'voldown 5'";
+      bar.volume.scrollUp = mkStrOption "${package}/bin/hyprpanel 'volup 5'";
       bar.windowtitle.class_name = mkBoolOption true;
       bar.windowtitle.custom_title = mkBoolOption true;
       bar.windowtitle.icon = mkBoolOption true;
