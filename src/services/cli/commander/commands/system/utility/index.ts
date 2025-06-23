@@ -126,7 +126,7 @@ export const utilityCommands: Command[] = [
                     speaker.set_volume(Math.min(speaker.volume - volumeInput, 1));
                 }
 
-                return Math.round((speaker.volume + volumeInput) * 100);
+                return Math.round((speaker.volume - volumeInput) * 100);
             } catch (error) {
                 errorHandler(error);
             }
