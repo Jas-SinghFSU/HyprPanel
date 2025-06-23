@@ -63,14 +63,14 @@ export const utilityCommands: Command[] = [
         },
     },
     {
-        name: 'adjustVolume',
-        aliases: ['vol'],
-        description: 'Adjusts the volume of the default audio output device.',
+        name: 'adjustVolumeUp',
+        aliases: ['volup'],
+        description: 'Increases the volume of the default audio output device.',
         category: 'System',
         args: [
             {
                 name: 'volume',
-                description: 'A positive or negative number to adjust the volume by.',
+                description: 'A number to increase the volume by.',
                 type: 'number',
                 required: true,
             },
@@ -92,6 +92,41 @@ export const utilityCommands: Command[] = [
                 }
 
                 return Math.round((speaker.volume + volumeInput) * 100);
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
+    {
+        name: 'adjustVolumeDown',
+        aliases: ['voldown'],
+        description: 'Decreases the volume of the default audio output device.',
+        category: 'System',
+        args: [
+            {
+                name: 'volume',
+                description: 'A number to decrease the volume by.',
+                type: 'number',
+                required: true,
+            },
+        ],
+        handler: (args: Record<string, unknown>): number => {
+            try {
+                const speaker = audio?.defaultSpeaker;
+
+                if (speaker === undefined) {
+                    throw new Error('A default speaker was not found.');
+                }
+
+                const volumeInput = Number(args['volume']) / 100;
+
+                if (options.menus.volume.raiseMaximumVolume.get()) {
+                    speaker.set_volume(Math.min(speaker.volume - volumeInput, 1.5));
+                } else {
+                    speaker.set_volume(Math.min(speaker.volume - volumeInput, 1));
+                }
+
+                return Math.round((speaker.volume - volumeInput) * 100);
             } catch (error) {
                 errorHandler(error);
             }
