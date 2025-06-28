@@ -18,6 +18,7 @@ custom_target(
   command: [
     ags,
     'bundle',
+    '--gtk', '3',
     '--define', 'DATADIR="' + datadir + '"',
     '--root', meson.project_source_root(),
     meson.project_source_root() / 'app.ts',
