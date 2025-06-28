@@ -137,7 +137,7 @@
             if [ "$#" -eq 0 ]; then
                 exec ${self.packages.${pkgs.stdenv.system}.unwrapped}/bin/hyprpanel
             else
-                exec ${ags.packages.${pkgs.stdenv.system}.io}/bin/astal -i hyprpanel "$@"
+                exec ${ags.packages.${pkgs.stdenv.system}.io}/bin/astal -i hyprpanel "$*"
             fi
           '';
         }

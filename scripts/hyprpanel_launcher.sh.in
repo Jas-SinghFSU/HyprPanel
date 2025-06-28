@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$#" -eq 0 ]; then
-    exec gjs -m "@DATADIR@/hyprpanel.js"
+    exec "@DATADIR@/hyprpanel-app"
 else
     exec astal -i hyprpanel "$*"
 fi
