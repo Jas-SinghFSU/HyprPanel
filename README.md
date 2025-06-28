@@ -1,7 +1,3 @@
-> ⚠️ **Seeking NixOS Maintainer** ⚠️
->
-> HyprPanel is currently looking for a NixOS maintainer to help stabilize and maintain the NixOS integration. If you have experience with Nix and would like to contribute, please reach out to me via the HyprPanel discord.
-
 # HyprPanel 🚀
 
 A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
