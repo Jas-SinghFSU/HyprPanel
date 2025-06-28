@@ -24,7 +24,7 @@ custom_target(
     meson.project_source_root() / 'app.ts',
     '@OUTPUT@',
   ],
-  output: meson.project_name() + '.js',
+  output: meson.project_name(),
   install: true,
   install_dir: datadir,
   build_always_stale: true,
