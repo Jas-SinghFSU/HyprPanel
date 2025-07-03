@@ -29,6 +29,12 @@ export const BarSettings = (): JSX.Element => {
                     type="enum"
                     enums={['top', 'bottom']}
                 />
+                <Option
+                    opt={options.theme.bar.exclusive}
+                    title="Exclusivity"
+                    type="boolean"
+                    subtitle="An exclusive bar will have a reserved space on your display"
+                />
 
                 <Option
                     opt={options.bar.autoHide}
