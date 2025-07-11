@@ -17,9 +17,12 @@ export const PlaybackDevices = (): JSX.Element => {
                         return <NotFoundButton type={'playback'} />;
                     }
 
-                    return devices.map((device) => {
-                        return <AudioDevice device={device} type={'playback'} icon={''} />;
-                    });
+                    return devices
+                        .slice()
+                        .sort((a, b) => a.description.localeCompare(b.description))
+                        .map((device) => {
+                            return <AudioDevice device={device} type={'playback'} icon={''} />;
+                        });
                 })}
             </box>
         </box>
