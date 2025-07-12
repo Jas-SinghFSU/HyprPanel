@@ -11,6 +11,7 @@ export default {
     layer: opt<WindowLayer>('top'),
     margin_top: opt('0.5em'),
     opacity: opt(100),
+    exclusive: opt(true),
     enableShadow: opt(false),
     shadow: opt('0px 1px 2px 1px #16161e'),
     shadowMargins: opt('0px 0px 4px 0px'),

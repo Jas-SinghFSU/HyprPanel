@@ -16,6 +16,7 @@ export class BarLayout {
     private _widgetRegistry: WidgetRegistry;
 
     private _visibilityVar: Variable<boolean>;
+    private _exclusivityVar: Variable<Astal.Exclusivity>;
     private _classNameVar: Variable<string>;
     private _anchorVar: Variable<Astal.WindowAnchor>;
     private _layerVar: Variable<Astal.Layer>;
@@ -32,6 +33,7 @@ export class BarLayout {
         this._widgetRegistry = widgetRegistry;
 
         this._visibilityVar = Variable(true);
+        this._exclusivityVar = Variable(Astal.Exclusivity.EXCLUSIVE);
         this._classNameVar = Variable('bar');
         this._anchorVar = Variable(
             Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT,
@@ -79,9 +81,7 @@ export class BarLayout {
                 visible={this._visibilityVar()}
                 anchor={this._anchorVar()}
                 layer={this._layerVar()}
-                exclusivity={bind(this._visibilityVar).as((visible) =>
-                    visible ? Astal.Exclusivity.EXCLUSIVE : Astal.Exclusivity.NORMAL,
-                )}
+                exclusivity={this._exclusivityVar()}
                 onDestroy={() => this._cleanup()}
             >
                 <box className="bar-panel-container">
@@ -130,13 +130,16 @@ export class BarLayout {
      * Initialize variables related to bar positioning
      */
     private _initializePositionVariables(): void {
-        const { location } = options.theme.bar;
+        const { location, exclusive } = options.theme.bar;
 
         this._anchorVar = Variable.derive([bind(location)], (loc) => {
             if (loc === 'bottom') {
                 return Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
             }
             return Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT;
+        });
+        this._exclusivityVar = Variable.derive([bind(exclusive)], (isExclusive: boolean) => {
+            return isExclusive ? Astal.Exclusivity.EXCLUSIVE : Astal.Exclusivity.NORMAL;
         });
     }
 
