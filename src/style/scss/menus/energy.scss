@@ -3,9 +3,12 @@
 }
 
 .menu-items.energy {
-  background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-battery-background-color);
+  background: if(
+    $bar-menus-monochrome, 
+    rgba($bar-menus-background, $bar-menus-opacity * 0.01), 
+    rgba($bar-menus-menu-battery-background-color, $bar-menus-opacity * 0.01)
+  );
   border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-battery-border-color);
-  opacity: $bar-menus-opacity * 0.01;
   font-size: $font-size * $bar-menus-menu-battery-scaling * 0.01;
 }
 

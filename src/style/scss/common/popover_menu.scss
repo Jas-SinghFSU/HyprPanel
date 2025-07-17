@@ -3,12 +3,14 @@
 $popoverScaling: $bar-menus-popover-scaling * 0.01;
 
 window.popup {
-    opacity: $bar-menus-opacity * $popoverScaling;
-
     menu {
         border-radius: $bar-menus-popover-radius;
         border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-popover-border);
-        background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-popover-background);
+        background: if(
+            $bar-menus-monochrome, 
+            rgba($bar-menus-background, $bar-menus-opacity * 0.01), 
+            rgba($bar-menus-popover-background, $bar-menus-opacity * 0.01)
+        );
     }
 
     menuitem {
