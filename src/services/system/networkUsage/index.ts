@@ -72,7 +72,7 @@ class NetworkUsageService {
                 return DEFAULT_NETSTAT_DATA;
             }
 
-            const timeDiff = Math.max((currentTime - this._previousNetUsage.time) / 1000, 1);
+            const timeDiff = Math.max((currentTime - this._previousNetUsage.time) / 1000, 0.001);
             const rxRate = (rx - this._previousNetUsage.rx) / timeDiff;
             const txRate = (tx - this._previousNetUsage.tx) / timeDiff;
 
