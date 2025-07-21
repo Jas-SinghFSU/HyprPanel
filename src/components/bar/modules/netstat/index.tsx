@@ -27,9 +27,9 @@ const {
     pollingInterval,
 } = options.bar.customModules.netstat;
 
-setupNetworkServiceBindings();
-
 const networkService = new NetworkUsageService({ frequency: pollingInterval });
+
+setupNetworkServiceBindings(networkService);
 
 export const Netstat = (): BarBoxChild => {
     networkService.initialize();
