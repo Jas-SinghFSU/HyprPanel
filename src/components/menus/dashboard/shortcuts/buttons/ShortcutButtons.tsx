@@ -1,8 +1,9 @@
-import { Widget } from 'astal/gtk3';
+import { Widget, Gtk } from 'astal/gtk3';
 import { handleClick, hasCommand } from '../helpers';
 import options from 'src/configuration';
 import { isPrimaryClick } from 'src/lib/events/mouse';
 import { ShortcutVariable } from '../types';
+import { MonitorListDropdown } from './RecordingButton';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 
@@ -13,7 +14,12 @@ const ShortcutButton = ({ shortcut, ...props }: ShortcutButtonProps): JSX.Elemen
             tooltipText={shortcut.tooltip.get()}
             onClick={(_, event) => {
                 if (isPrimaryClick(event)) {
-                    handleClick(shortcut.command.get());
+                    if (shortcut.command.get() === 'INTERNAL_RECORDING_START') {
+                        const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
+                        monitorDropdownList.popup_at_pointer(event);
+                    } else {
+                        handleClick(shortcut.command.get());
+                    }
                 }
             }}
             {...props}
@@ -73,12 +79,28 @@ export const RightShortcut1 = (): JSX.Element => {
     return <ShortcutButton shortcut={right.shortcut1} className={'dashboard-button top-button paired'} />;
 };
 
+export const RightShortcut2 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut2)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut2} className={'dashboard-button'} />;
+};
+
 export const RightShortcut3 = (): JSX.Element => {
     if (!hasCommand(right.shortcut3)) {
         return <box />;
     }
 
     return <ShortcutButton shortcut={right.shortcut3} className={'dashboard-button top-button paired'} />;
+};
+
+export const RightShortcut4 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut4)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut4} className={'dashboard-button '} />;
 };
 
 interface ShortcutButtonProps extends Widget.ButtonProps {
