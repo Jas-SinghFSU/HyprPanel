@@ -12,4 +12,5 @@ export default {
     autoDismiss: opt(false),
     cache_actions: opt(true),
     clearDelay: opt(100),
+    dndOnScreencast: opt(false),
 };
