@@ -4,9 +4,7 @@ import options from 'src/configuration';
 
 const { networkInterface, rateUnit, round, pollingInterval } = options.bar.customModules.netstat;
 
-export const setupNetworkServiceBindings = (): void => {
-    const networkService = new NetworkUsageService();
-
+export const setupNetworkServiceBindings = (networkService: NetworkUsageService): void => {
     Variable.derive([bind(pollingInterval)], (interval) => {
         networkService.updateTimer(interval);
     })();
