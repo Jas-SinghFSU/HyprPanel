@@ -1,7 +1,7 @@
-import options from 'src/options';
 import { bind, GLib, Variable } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import { systemTime } from 'src/shared/time';
+import options from 'src/configuration';
+import { systemTime } from 'src/lib/units/time';
 
 const { military, hideSeconds } = options.menus.clock.time;
 

@@ -6,10 +6,11 @@ import {
     PlaybackButton,
     WifiButton,
 } from './ControlButtons';
+import { JSXElement } from 'src/core/types';
 
-export const Controls = ({ isEnabled }: ControlsProps): JSX.Element => {
+export const Controls = ({ isEnabled }: ControlsProps): JSXElement => {
     if (!isEnabled) {
-        return <box />;
+        return null;
     }
 
     return (

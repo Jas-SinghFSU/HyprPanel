@@ -1,5 +1,5 @@
 import { Header } from 'src/components/settings/shared/Header';
-import options from 'src/options';
+import options from 'src/configuration';
 import { Gtk } from 'astal/gtk3';
 import { Option } from 'src/components/settings/shared/Option';
 
@@ -381,6 +381,7 @@ export const BarSettings = (): JSX.Element => {
                     title="Truncation Size"
                     type="number"
                     min={10}
+                    max={300}
                 />
                 <Option
                     opt={options.theme.bar.buttons.windowtitle.spacing}

@@ -1,6 +1,6 @@
 import { Gtk } from 'astal/gtk3';
 import { bind } from 'astal';
-import { mediaTitle } from 'src/shared/media';
+import { mediaTitle } from 'src/services/media';
 
 export const SongName = (): JSX.Element => {
     return (

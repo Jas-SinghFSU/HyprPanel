@@ -1,44 +1,108 @@
-import { Variable } from 'astal';
+import { bind, Binding } from 'astal';
+import CpuTempService from 'src/services/system/cputemp';
+import { TemperatureConverter } from 'src/lib/units/temperature';
+import { CpuTempSensorDiscovery } from 'src/services/system/cputemp/sensorDiscovery';
+import options from 'src/configuration';
 import GLib from 'gi://GLib?version=2.0';
-import { convertCelsiusToFahrenheit } from 'src/shared/weather';
-import options from 'src/options';
-import { UnitType } from 'src/lib/types/weather.types';
-const { sensor } = options.bar.customModules.cpuTemp;
+
+const { pollingInterval, sensor } = options.bar.customModules.cpuTemp;
 
 /**
- * Retrieves the current CPU temperature.
- *
- * This function reads the CPU temperature from the specified sensor file and converts it to the desired unit (Celsius or Fahrenheit).
- * It also handles rounding the temperature value based on the provided `round` variable.
- *
- * @param round A Variable<boolean> indicating whether to round the temperature value.
- * @param unit A Variable<UnitType> indicating the desired unit for the temperature (Celsius or Fahrenheit).
- *
- * @returns The current CPU temperature as a number. Returns 0 if an error occurs or the sensor file is empty.
+ * Creates a tooltip for the CPU temperature module showing sensor details
  */
-export const getCPUTemperature = (round: Variable<boolean>, unit: Variable<UnitType>): number => {
-    try {
-        if (sensor.get().length === 0) {
-            return 0;
+export function getCpuTempTooltip(cpuTempService: CpuTempService): Binding<string> {
+    return bind(cpuTempService.temperature).as((temp) => {
+        const currentPath = cpuTempService.currentSensorPath;
+        const configuredSensor = sensor.get();
+        const isAuto = configuredSensor === 'auto' || configuredSensor === '';
+
+        const tempC = TemperatureConverter.fromCelsius(temp).formatCelsius();
+        const tempF = TemperatureConverter.fromCelsius(temp).formatFahrenheit();
+
+        const lines = [
+            'CPU Temperature',
+            '─────────────────────────',
+            `Current: ${tempC} (${tempF})`,
+            '',
+            'Sensor Information',
+            '─────────────────────────',
+        ];
+
+        if (currentPath) {
+            const sensorType = getSensorType(currentPath);
+            const sensorName = getSensorName(currentPath);
+            const chipName = getChipName(currentPath);
+
+            lines.push(`Mode: ${isAuto ? 'Auto-discovered' : 'User-configured'}`, `Type: ${sensorType}`);
+
+            if (chipName) {
+                lines.push(`Chip: ${chipName}`);
+            }
+
+            lines.push(`Device: ${sensorName}`, `Path: ${currentPath}`);
+        } else {
+            lines.push('Status: No sensor found', 'Try setting a manual sensor path');
         }
 
-        const [success, tempInfoBytes] = GLib.file_get_contents(sensor.get());
-        const tempInfo = new TextDecoder('utf-8').decode(tempInfoBytes);
+        const interval = pollingInterval.get();
+        lines.push('', `Update interval: ${interval}ms`);
 
-        if (!success || tempInfoBytes === null) {
-            console.error(`Failed to read ${sensor.get()} or file content is null.`);
-            return 0;
+        const allSensors = CpuTempSensorDiscovery.getAllSensors();
+        if (allSensors.length > 1) {
+            lines.push('', `Available sensors: ${allSensors.length}`);
         }
 
-        let decimalTemp = parseInt(tempInfo, 10) / 1000;
+        return lines.join('\n');
+    });
+}
 
-        if (unit.get() === 'imperial') {
-            decimalTemp = convertCelsiusToFahrenheit(decimalTemp);
-        }
+/**
+ * Determines sensor type from path
+ */
+function getSensorType(path: string): string {
+    if (path.includes('/sys/class/hwmon/')) return 'Hardware Monitor';
+    if (path.includes('/sys/class/thermal/')) return 'Thermal Zone';
+    return 'Unknown';
+}
 
-        return round.get() ? Math.round(decimalTemp) : parseFloat(decimalTemp.toFixed(2));
-    } catch (error) {
-        console.error('Error calculating CPU Temp:', error);
-        return 0;
+/**
+ * Extracts sensor name from path
+ */
+function getSensorName(path: string): string {
+    if (path.includes('/sys/class/hwmon/')) {
+        const match = path.match(/hwmon(\d+)/);
+        return match ? `hwmon${match[1]}` : 'Unknown';
     }
-};
+
+    if (path.includes('/sys/class/thermal/')) {
+        const match = path.match(/thermal_zone(\d+)/);
+        return match ? `thermal_zone${match[1]}` : 'Unknown';
+    }
+
+    return 'Unknown';
+}
+
+/**
+ * Gets the actual chip name for hwmon sensors
+ */
+function getChipName(path: string): string | undefined {
+    if (!path.includes('/sys/class/hwmon/')) return undefined;
+
+    try {
+        const match = path.match(/\/sys\/class\/hwmon\/hwmon\d+/);
+        if (!match) return undefined;
+
+        const nameFile = `${match[0]}/name`;
+        const [success, bytes] = GLib.file_get_contents(nameFile);
+
+        if (success && bytes) {
+            return new TextDecoder('utf-8').decode(bytes).trim();
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.debug(`Failed to get chip name: ${error.message}`);
+        }
+    }
+
+    return undefined;
+}

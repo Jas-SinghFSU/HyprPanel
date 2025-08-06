@@ -1,8 +1,8 @@
-import options from 'src/options';
-import { capitalizeFirstLetter } from 'src/lib/utils';
-import { defaultWindowTitleMap } from 'src/lib/constants/appIcons';
+import { defaultWindowTitleMap } from 'src/components/bar/modules/window_title/helpers/appIcons';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import { bind, Variable } from 'astal';
+import options from 'src/configuration';
+import { capitalizeFirstLetter } from 'src/lib/string/formatters';
 
 const { title_map: userDefinedTitles } = options.bar.windowtitle;
 
@@ -92,13 +92,21 @@ export const getTitle = (
  * If the title exceeds the maximum size, it appends an ellipsis ('...') to the truncated title.
  *
  * @param title The title string to truncate.
- * @param max_size The maximum size of the truncated title.
+ * @param maxSize The maximum size of the truncated title.
  *
  * @returns The truncated title as a string. If the title is within the maximum size, returns the original title.
  */
-export const truncateTitle = (title: string, max_size: number): string => {
-    if (max_size > 0 && title.length > max_size) {
-        return title.substring(0, max_size).trim() + '...';
+export const truncateTitle = (title: string | null, maxSize: number): string => {
+    if (title === null) {
+        return '--';
     }
-    return title;
+
+    const MAX_LABEL_SIZE = 300;
+    const effectiveSize = maxSize <= 0 ? MAX_LABEL_SIZE : Math.min(maxSize, MAX_LABEL_SIZE);
+
+    if (title.length <= effectiveSize) {
+        return title;
+    }
+
+    return title.substring(0, effectiveSize).trim() + '...';
 };

@@ -1,6 +1,6 @@
 import { Option } from 'src/components/settings/shared/Option';
 import { Header } from 'src/components/settings/shared/Header';
-import options from 'src/options';
+import options from 'src/configuration';
 import { Gtk } from 'astal/gtk3';
 
 export const BarGeneral = (): JSX.Element => {
@@ -47,6 +47,15 @@ export const BarGeneral = (): JSX.Element => {
                     title="Restart Command"
                     subtitle="Command executed when restarting. Use '-b busName' flag if needed."
                     type="string"
+                />
+                <Option
+                    opt={options.hyprpanel.useLazyLoading}
+                    title="Lazy Load Settings Dialog"
+                    subtitle={
+                        'Only loads the settings dialog when first opened, rather than at startup. (Requires restart)\n' +
+                        'Improves launch speed and reduces memory usage until the dialog is accessed.'
+                    }
+                    type="boolean"
                 />
                 <Option
                     opt={options.terminal}

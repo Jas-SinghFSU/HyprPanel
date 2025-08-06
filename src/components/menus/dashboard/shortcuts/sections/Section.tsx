@@ -1,5 +1,4 @@
 import { bind, Variable } from 'astal';
-import options from 'src/options';
 import { hasCommand, isRecording, leftCardHidden } from '../helpers';
 import {
     LeftShortcut1,
@@ -12,7 +11,6 @@ import {
     RightShortcut4
 } from '../buttons/ShortcutButtons';
 import { LeftColumn, RightColumn } from './Column';
-
 const { left, right } = options.menus.dashboard.shortcuts;
 
 const leftBindings = [

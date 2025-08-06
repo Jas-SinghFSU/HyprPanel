@@ -1,13 +1,13 @@
 import { bind, Variable } from 'astal';
 import AstalWp from 'gi://AstalWp?version=0.1';
 import LevelBar from 'src/components/shared/LevelBar';
-import Brightness from 'src/services/Brightness';
-import options from 'src/options';
+import options from 'src/configuration';
+import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
 
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 
 /**
  * Sets up the OSD bar for a LevelBar instance.
@@ -29,7 +29,7 @@ export const setupOsdBar = (self: LevelBar): void => {
         self.value = brightnessService.kbd;
     });
 
-    Variable.derive([bind(audioService.defaultMicrophone, 'volume')], () => {
+    const micVolumeBinding = Variable.derive([bind(audioService.defaultMicrophone, 'volume')], () => {
         self.toggleClassName('overflow', audioService.defaultMicrophone.volume > 1);
         self.value =
             audioService.defaultMicrophone.volume <= 1
@@ -37,7 +37,7 @@ export const setupOsdBar = (self: LevelBar): void => {
                 : audioService.defaultMicrophone.volume - 1;
     });
 
-    Variable.derive([bind(audioService.defaultMicrophone, 'mute')], () => {
+    const micMuteBinding = Variable.derive([bind(audioService.defaultMicrophone, 'mute')], () => {
         self.toggleClassName(
             'overflow',
             audioService.defaultMicrophone.volume > 1 &&
@@ -51,7 +51,7 @@ export const setupOsdBar = (self: LevelBar): void => {
                   : audioService.defaultMicrophone.volume - 1;
     });
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'volume')], () => {
+    const speakerVolumeBinding = Variable.derive([bind(audioService.defaultSpeaker, 'volume')], () => {
         self.toggleClassName('overflow', audioService.defaultSpeaker.volume > 1);
         self.value =
             audioService.defaultSpeaker.volume <= 1
@@ -59,7 +59,7 @@ export const setupOsdBar = (self: LevelBar): void => {
                 : audioService.defaultSpeaker.volume - 1;
     });
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'mute')], () => {
+    const speakerMuteBinding = Variable.derive([bind(audioService.defaultSpeaker, 'mute')], () => {
         self.toggleClassName(
             'overflow',
             audioService.defaultSpeaker.volume > 1 &&
@@ -71,5 +71,12 @@ export const setupOsdBar = (self: LevelBar): void => {
                 : audioService.defaultSpeaker.volume <= 1
                   ? audioService.defaultSpeaker.volume
                   : audioService.defaultSpeaker.volume - 1;
+    });
+
+    self.connect('destroy', () => {
+        micVolumeBinding.drop();
+        micMuteBinding.drop();
+        speakerVolumeBinding.drop();
+        speakerMuteBinding.drop();
     });
 };

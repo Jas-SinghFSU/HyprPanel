@@ -1,12 +1,12 @@
 import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import Brightness from 'src/services/Brightness';
-import options from 'src/options';
+import options from 'src/configuration';
+import BrightnessService from 'src/services/system/brightness';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 
 /**
  * Sets up the OSD label for a given widget.
@@ -27,12 +27,12 @@ export const setupOsdLabel = (self: Widget.Label): void => {
         self.label = `${Math.round(brightnessService.kbd * 100)}`;
     });
 
-    Variable.derive([bind(audioService.defaultMicrophone, 'volume')], () => {
+    const micVolumeBinding = Variable.derive([bind(audioService.defaultMicrophone, 'volume')], () => {
         self.toggleClassName('overflow', audioService.defaultMicrophone.volume > 1);
         self.label = `${Math.round(audioService.defaultMicrophone.volume * 100)}`;
     });
 
-    Variable.derive([bind(audioService.defaultMicrophone, 'mute')], () => {
+    const micMuteBinding = Variable.derive([bind(audioService.defaultMicrophone, 'mute')], () => {
         self.toggleClassName(
             'overflow',
             audioService.defaultMicrophone.volume > 1 &&
@@ -45,12 +45,12 @@ export const setupOsdLabel = (self: Widget.Label): void => {
         self.label = `${inputVolume}`;
     });
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'volume')], () => {
+    const speakerVolumeBinding = Variable.derive([bind(audioService.defaultSpeaker, 'volume')], () => {
         self.toggleClassName('overflow', audioService.defaultSpeaker.volume > 1);
         self.label = `${Math.round(audioService.defaultSpeaker.volume * 100)}`;
     });
 
-    Variable.derive([bind(audioService.defaultSpeaker, 'mute')], () => {
+    const speakerMuteBinding = Variable.derive([bind(audioService.defaultSpeaker, 'mute')], () => {
         self.toggleClassName(
             'overflow',
             audioService.defaultSpeaker.volume > 1 &&
@@ -61,5 +61,12 @@ export const setupOsdLabel = (self: Widget.Label): void => {
                 ? 0
                 : Math.round(audioService.defaultSpeaker.volume * 100);
         self.label = `${speakerVolume}`;
+    });
+
+    self.connect('destroy', () => {
+        micVolumeBinding.drop();
+        micMuteBinding.drop();
+        speakerVolumeBinding.drop();
+        speakerMuteBinding.drop();
     });
 };

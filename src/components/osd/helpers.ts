@@ -1,79 +1,50 @@
-import { bind, timeout, Variable } from 'astal';
+import { bind, Variable } from 'astal';
 import { Widget } from 'astal/gtk3';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
 import AstalWp from 'gi://AstalWp?version=0.1';
-import options from 'src/options';
-import Brightness from 'src/services/Brightness';
-import { GdkMonitorMapper } from '../bar/utils/GdkMonitorMapper';
+import options from 'src/configuration';
+import { GdkMonitorService } from 'src/services/display/monitor';
+import BrightnessService from 'src/services/system/brightness';
+import { OsdRevealerController } from './revealer/revealerController';
 
 const wireplumber = AstalWp.get_default() as AstalWp.Wp;
 const audioService = wireplumber.audio;
-const brightnessService = Brightness.get_default();
+const brightnessService = BrightnessService.getInstance();
 const hyprlandService = AstalHyprland.get_default();
 
-const { enable, duration, active_monitor, monitor } = options.theme.osd;
+const { enable, active_monitor, monitor } = options.theme.osd;
 
-let count = 0;
-
-/*
- * So the OSD doesn't show on startup for no reason
- */
-let isStartingUp = true;
-timeout(3000, () => {
-    isStartingUp = false;
-});
+const osdController = OsdRevealerController.getInstance();
 
 /**
- * Handles the reveal state of a Widget.Revealer or Widget.Window.
+ * Determines which monitor the OSD should appear on based on user configuration.
+ * Safely handles null monitors and DPMS events to prevent crashes.
  *
- * This function delegates the reveal handling to either `handleRevealRevealer` or `handleRevealWindow` based on the type of the widget.
- *
- * @param self The Widget.Revealer or Widget.Window instance.
- * @param property The property to check, either 'revealChild' or 'visible'.
- */
-export const handleReveal = (self: Widget.Revealer): void => {
-    if (isStartingUp) {
-        return;
-    }
-
-    if (!enable.get()) {
-        return;
-    }
-
-    self.reveal_child = true;
-
-    count++;
-    timeout(duration.get(), () => {
-        count--;
-
-        if (count === 0) {
-            self.reveal_child = false;
-        }
-    });
-};
-
-/**
- * Retrieves the monitor index for the OSD.
- *
- * This function derives the monitor index for the OSD based on the focused monitor, default monitor, and active monitor settings.
- *
- * @returns A Variable<number> representing the monitor index for the OSD.
+ * @returns Variable containing the GDK monitor index where OSD should be displayed (defaults to 0 if no valid monitor)
  */
 export const getOsdMonitor = (): Variable<number> => {
-    const gdkMonitorMapper = new GdkMonitorMapper();
+    const gdkMonitorMapper = GdkMonitorService.getInstance();
 
     return Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (currentMonitor, defaultMonitor, followMonitor) => {
-            gdkMonitorMapper.reset();
+            try {
+                if (followMonitor === false) {
+                    const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(defaultMonitor);
+                    return gdkMonitor;
+                }
 
-            if (followMonitor === true) {
+                if (!currentMonitor || currentMonitor.id === undefined || currentMonitor.id === null) {
+                    console.warn('OSD: No focused monitor available, defaulting to monitor 0');
+                    return 0;
+                }
+
                 const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(currentMonitor.id);
                 return gdkMonitor;
+            } catch (error) {
+                console.error('OSD: Failed to map monitor, defaulting to 0:', error);
+                return 0;
             }
-
-            const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(defaultMonitor);
-            return gdkMonitor;
         },
     );
 };
@@ -86,29 +57,29 @@ export const getOsdMonitor = (): Variable<number> => {
  * @param self The Widget.Revealer instance to set up.
  */
 export const revealerSetup = (self: Widget.Revealer): void => {
-    self.hook(enable, () => {
-        handleReveal(self);
-    });
+    osdController.setRevealer(self);
 
-    self.hook(brightnessService, 'notify::screen', () => {
-        handleReveal(self);
-    });
+    const handleReveal = (): void => {
+        osdController.show();
+    };
 
-    self.hook(brightnessService, 'notify::kbd', () => {
-        handleReveal(self);
-    });
+    self.hook(enable, handleReveal);
+    self.hook(brightnessService, 'notify::screen', handleReveal);
+    self.hook(brightnessService, 'notify::kbd', handleReveal);
 
-    Variable.derive(
+    const microphoneBinding = Variable.derive(
         [bind(audioService.defaultMicrophone, 'volume'), bind(audioService.defaultMicrophone, 'mute')],
-        () => {
-            handleReveal(self);
-        },
+        handleReveal,
     );
 
-    Variable.derive(
+    const speakerBinding = Variable.derive(
         [bind(audioService.defaultSpeaker, 'volume'), bind(audioService.defaultSpeaker, 'mute')],
-        () => {
-            handleReveal(self);
-        },
+        handleReveal,
     );
+
+    self.connect('destroy', () => {
+        microphoneBinding.drop();
+        speakerBinding.drop();
+        osdController.onRevealerDestroy(self);
+    });
 };

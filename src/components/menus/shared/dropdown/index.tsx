@@ -1,11 +1,10 @@
-import options from 'src/options';
-import { BarEventMargins } from './eventBoxes/index';
-import { globalEventBoxes } from 'src/shared/dropdown';
+import options from 'src/configuration';
+import { BarEventMargins } from './helpers/eventBoxes';
+import { globalEventBoxes } from 'src/lib/events/dropdown';
 import { bind } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { Revealer } from 'astal/gtk3/widget';
-import { locationMap } from 'src/lib/types/defaults/bar.types';
-import { DropdownMenuProps } from 'src/lib/types/dropdownmenu.types';
+import { DropdownMenuProps, LocationMap } from './types';
 
 const { location } = options.theme.bar;
 
@@ -16,16 +15,28 @@ export default ({
     exclusivity = Astal.Exclusivity.IGNORE,
     ...props
 }: DropdownMenuProps): JSX.Element => {
+    const locationMap: LocationMap = {
+        top: Astal.WindowAnchor.TOP,
+        bottom: Astal.WindowAnchor.BOTTOM,
+    };
+
     return (
         <window
             name={name}
             namespace={name}
             className={`${name} dropdown-menu`}
-            onKeyPressEvent={(_, event) => {
+            onKeyPressEvent={(self, event) => {
                 const key = event.get_keyval()[1];
 
                 if (key === Gdk.KEY_Escape) {
-                    App.get_window(name)?.set_visible(false);
+                    self.visible = false;
+                }
+            }}
+            onButtonPressEvent={(self, event) => {
+                const buttonClicked = event.get_button()[1];
+
+                if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
+                    self.visible = false;
                 }
             }}
             visible={false}
@@ -44,67 +55,53 @@ export default ({
             })}
             {...props}
         >
-            <eventbox
-                className="parent-event"
-                onButtonPressEvent={(_, event) => {
-                    const buttonClicked = event.get_button()[1];
-
-                    if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
-                        App.get_window(name)?.set_visible(false);
+            <box vertical>
+                {bind(location).as((lcn) => {
+                    if (locationMap[lcn] === Astal.WindowAnchor.TOP) {
+                        return <BarEventMargins windowName={name} />;
                     }
-                }}
-            >
-                <box className="top-eb" vertical>
-                    {bind(location).as((lcn) => {
-                        if (locationMap[lcn] === Astal.WindowAnchor.TOP) {
-                            return <BarEventMargins windowName={name} />;
-                        }
-                        return <box />;
-                    })}
-                    <eventbox
-                        className="in-eb menu-event-box"
-                        onButtonPressEvent={(_, event) => {
-                            const buttonClicked = event.get_button()[1];
+                    return <box />;
+                })}
+                <eventbox
+                    className="in-eb menu-event-box"
+                    onButtonPressEvent={(_, event) => {
+                        const buttonClicked = event.get_button()[1];
 
-                            if (
-                                buttonClicked === Gdk.BUTTON_PRIMARY ||
-                                buttonClicked === Gdk.BUTTON_SECONDARY
-                            ) {
-                                return true;
-                            }
-                        }}
-                        setup={(self) => {
-                            globalEventBoxes.set({
-                                ...globalEventBoxes.get(),
-                                [name]: self,
-                            });
-                        }}
-                    >
-                        <box className="dropdown-menu-container" css="padding: 1px; margin: -1px;">
-                            <revealer
-                                revealChild={false}
-                                setup={(self: Revealer) => {
-                                    App.connect('window-toggled', (_, window) => {
-                                        self.set_reveal_child(window.visible);
-                                    });
-                                }}
-                                transitionType={transition}
-                                transitionDuration={bind(options.menus.transitionTime)}
-                            >
-                                <box className="dropdown-content" halign={Gtk.Align.CENTER} expand canFocus>
-                                    {child}
-                                </box>
-                            </revealer>
-                        </box>
-                    </eventbox>
-                    {bind(location).as((lcn) => {
-                        if (locationMap[lcn] === Astal.WindowAnchor.BOTTOM) {
-                            return <BarEventMargins windowName={name} />;
+                        if (buttonClicked === Gdk.BUTTON_PRIMARY || buttonClicked === Gdk.BUTTON_SECONDARY) {
+                            return true;
                         }
-                        return <box />;
-                    })}
-                </box>
-            </eventbox>
+                    }}
+                    setup={(self) => {
+                        globalEventBoxes.set({
+                            ...globalEventBoxes.get(),
+                            [name]: self,
+                        });
+                    }}
+                >
+                    <box className="dropdown-menu-container" css="padding: 1px; margin: -1px;">
+                        <revealer
+                            revealChild={false}
+                            setup={(self: Revealer) => {
+                                App.connect('window-toggled', (_, window) => {
+                                    self.set_reveal_child(window.visible);
+                                });
+                            }}
+                            transitionType={transition}
+                            transitionDuration={bind(options.menus.transitionTime)}
+                        >
+                            <box className="dropdown-content" halign={Gtk.Align.CENTER} expand canFocus>
+                                {child}
+                            </box>
+                        </revealer>
+                    </box>
+                </eventbox>
+                {bind(location).as((lcn) => {
+                    if (locationMap[lcn] === Astal.WindowAnchor.BOTTOM) {
+                        return <BarEventMargins windowName={name} />;
+                    }
+                    return <box />;
+                })}
+            </box>
         </window>
     );
 };

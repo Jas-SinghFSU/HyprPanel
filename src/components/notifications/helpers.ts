@@ -1,8 +1,9 @@
 import { bind, timeout, Variable } from 'astal';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
-import options from 'src/options';
+import options from 'src/configuration';
 import { isNotificationIgnored } from 'src/lib/shared/notifications';
 import AstalHyprland from 'gi://AstalHyprland?version=0.1';
+import GLib from 'gi://GLib';
 
 const notifdService = AstalNotifd.get_default();
 const hyprlandService = AstalHyprland.get_default();
@@ -23,14 +24,18 @@ export const notifHasImg = (notification: AstalNotifd.Notification): boolean => 
 };
 
 /**
- * Tracks the active monitor and updates the provided variable.
+ * Tracks the currently focused monitor and updates the provided variable with its ID.
+ * Includes null safety to prevent crashes when monitors are disconnected or during DPMS events.
  *
- * This function sets up a derived variable that updates the `curMonitor` variable with the ID of the focused monitor.
- *
- * @param curMonitor The variable to update with the active monitor ID.
+ * @param curMonitor - Variable that will be updated with the current monitor ID (defaults to 0 if no monitor is focused)
  */
 export const trackActiveMonitor = (curMonitor: Variable<number>): void => {
     Variable.derive([bind(hyprlandService, 'focusedMonitor')], (monitor) => {
+        if (monitor?.id === undefined) {
+            console.warn('No focused monitor available, defaulting to monitor 0');
+            curMonitor.set(0);
+            return;
+        }
         curMonitor.set(monitor.id);
     });
 };
@@ -95,4 +100,14 @@ export const trackAutoTimeout = (): void => {
     autoDismiss.subscribe((shouldAutoDismiss) => {
         notifdService.set_ignore_timeout(!shouldAutoDismiss);
     });
+};
+
+/**
+ * Escapes text for safe use in Pango markup
+ * Converts special XML characters to their entity representations
+ *
+ * @param text - The text to escape
+ */
+export const escapeMarkup = (text: string): string => {
+    return GLib.markup_escape_text(text, -1);
 };

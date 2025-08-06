@@ -1,37 +1,41 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler } from 'src/components/bar/utils/helpers';
-import { getWeatherStatusTextIcon, globalWeatherVar } from 'src/shared/weather';
+import { Module } from '../../shared/module';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import WeatherService from 'src/services/weather';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+import { toTitleCase } from 'src/lib/string/formatters';
+
+const inputHandler = InputHandlerService.getInstance();
+
+const weatherService = WeatherService.getInstance();
 
 const { label, unit, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
     options.bar.customModules.weather;
 
 export const Weather = (): BarBoxChild => {
-    const iconBinding = Variable.derive([bind(globalWeatherVar)], (wthr) => {
-        const weatherStatusIcon = getWeatherStatusTextIcon(wthr);
-        return weatherStatusIcon;
+    const iconBinding = Variable.derive([bind(weatherService.statusIcon)], (icon) => {
+        return icon;
     });
 
-    const labelBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], (wthr, unt) => {
-        if (unt === 'imperial') {
-            return `${Math.ceil(wthr.current.temp_f)}° F`;
-        } else {
-            return `${Math.ceil(wthr.current.temp_c)}° C`;
-        }
+    const labelBinding = Variable.derive([bind(weatherService.temperature), bind(unit)], (temp) => {
+        return temp;
     });
+
+    let inputHandlerBindings: Variable<void>;
 
     const weatherModule = Module({
         textIcon: iconBinding(),
-        tooltipText: bind(globalWeatherVar).as((v) => `Weather Status: ${v.current.condition.text}`),
+        tooltipText: bind(weatherService.weatherData).as(
+            (wthr) => `Weather Status: ${toTitleCase(wthr.current.condition.text)}`,
+        ),
         boxClass: 'weather-custom',
         label: labelBinding(),
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         cmd: leftClick,
                     },
@@ -50,6 +54,7 @@ export const Weather = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 labelBinding.drop();
             },

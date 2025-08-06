@@ -1,7 +1,8 @@
 import { bind, GLib } from 'astal';
 import { Gtk } from 'astal/gtk3';
-import options from 'src/options.js';
-import { normalizePath, isAnImage } from 'src/lib/utils.js';
+import options from 'src/configuration';
+import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
+import { isAnImage } from 'src/lib/validation/images';
 
 const { image, name } = options.menus.dashboard.powermenu.avatar;
 
@@ -12,7 +13,7 @@ const ProfilePicture = (): JSX.Element => {
             halign={Gtk.Align.CENTER}
             css={bind(image).as((img) => {
                 if (isAnImage(img)) {
-                    return `background-image: url("${normalizePath(img)}")`;
+                    return `background-image: url("${normalizeToAbsolutePath(img)}")`;
                 }
 
                 return `background-image: url("${SRC_DIR}/assets/hyprpanel.png")`;

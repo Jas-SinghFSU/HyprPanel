@@ -1,19 +1,19 @@
 import { Variable } from 'astal';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
-import { getWifiIcon } from '../../utils';
-import { connectToAP, getWifiStatus, isDisconnecting, isApEnabled, isApActive } from './helpers';
+import { NetworkService } from 'src/services/network';
 import { Gtk } from 'astal/gtk3';
 import Spinner from 'src/components/shared/Spinner';
 
-const networkService = AstalNetwork.get_default();
+const networkService = NetworkService.getInstance();
+const astalNetwork = AstalNetwork.get_default();
 
 export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.Element => {
     const ConnectionIcon = (): JSX.Element => {
         return (
             <label
                 valign={Gtk.Align.START}
-                className={`network-icon wifi ${isApActive(accessPoint) ? 'active' : ''} txt-icon`}
-                label={getWifiIcon(accessPoint.iconName)}
+                className={`network-icon wifi ${networkService.wifi.isApActive(accessPoint) ? 'active' : ''} txt-icon`}
+                label={networkService.getWifiIcon(accessPoint.iconName)}
             />
         );
     };
@@ -28,11 +28,16 @@ export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.
                     wrap
                     label={accessPoint.ssid ?? ''}
                 />
-                <revealer revealChild={isApActive(accessPoint) && isApEnabled(networkService.wifi?.state)}>
+                <revealer
+                    revealChild={
+                        networkService.wifi.isApActive(accessPoint) &&
+                        networkService.wifi.isApEnabled(astalNetwork.wifi?.state)
+                    }
+                >
                     <label
                         className="connection-status dim"
                         halign={Gtk.Align.START}
-                        label={getWifiStatus()}
+                        label={networkService.wifi.getWifiStatus()}
                     />
                 </revealer>
             </box>
@@ -44,7 +49,9 @@ export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.
             <revealer
                 halign={Gtk.Align.END}
                 valign={Gtk.Align.CENTER}
-                revealChild={accessPoint.bssid === connecting.get() || isDisconnecting(accessPoint)}
+                revealChild={
+                    accessPoint.bssid === connecting.get() || networkService.wifi.isDisconnecting(accessPoint)
+                }
             >
                 <Spinner
                     className="spinner wap"
@@ -62,7 +69,7 @@ export const AccessPoint = ({ connecting, accessPoint }: AccessPointProps): JSX.
         <button
             className="network-element-item"
             onClick={(_, event) => {
-                connectToAP(accessPoint, event);
+                networkService.wifi.connectToAP(accessPoint, event);
             }}
         >
             <box hexpand>

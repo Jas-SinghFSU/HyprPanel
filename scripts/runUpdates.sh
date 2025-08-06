@@ -13,8 +13,10 @@ install_arch_updates() {
     else
         echo "Missing AUR Helper. Try installing yay or paru"
     fi
-    echo "Updating Flatpak packages..."
-    flatpak update -y
+    if command -v flatpak &> /dev/null; then
+        echo "Updating Flatpak packages..."
+	      flatpak update -y
+    fi
     echo "Done with Arch & AUR updates."
 }
 

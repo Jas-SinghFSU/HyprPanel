@@ -2,7 +2,7 @@ import { Gtk } from 'astal/gtk3';
 import { ActiveDevices } from './devices/index.js';
 import { ActivePlaybacks } from './playbacks/index.js';
 import { bind, Variable } from 'astal';
-import { isPrimaryClick } from 'src/lib/utils.js';
+import { isPrimaryClick } from 'src/lib/events/mouse';
 
 export enum ActiveDeviceMenu {
     DEVICES = 'devices',

@@ -1,91 +1,75 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-
-    ags = {
-      url = "github:aylur/ags";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ags,
-  }: let
-    systems = ["x86_64-linux" "aarch64-linux"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
-  in {
-    packages = forEachSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = ags.lib.bundle {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (
+      system:
+      let
+        inherit (self) outputs;
+        inherit (pkgs) lib;
+
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ (import ./nix/overlay.nix) ];
+        };
+      in
+      {
         inherit pkgs;
-        src = ./.;
-        name = "hyprpanel"; # name of executable
-        entry = "app.ts";
 
-        extraPackages =
-          (with ags.packages.${system}; [
-            tray
-            hyprland
-            apps
-            battery
-            bluetooth
-            mpris
-            cava
-            network
-            notifd
-            powerprofiles
-            wireplumber
-          ])
-          ++ (with pkgs; [
-            fish
-            typescript
-            libnotify
-            dart-sass
-            fd
-            btop
-            bluez
-            libgtop
-            gobject-introspection
-            glib
-            bluez-tools
-            grimblast
-            brightnessctl
-            gnome-bluetooth
-            (python3.withPackages (ps:
-              with ps; [
-                gpustat
-                dbus-python
-                pygobject3
-              ]))
-            matugen
-            hyprpicker
-            hyprsunset
-            hypridle
-            wireplumber
-            networkmanager
-            wf-recorder
-            upower
-            gvfs
-            swww
-            pywal
-          ]);
-      };
-    });
+        packages = {
+          default = pkgs.hyprpanel;
+          hyprpanel = self.packages.${system}.default;
+        };
 
-    # Define .overlay to expose the package as pkgs.hyprpanel based on the system
-    overlay = final: prev: {
-      hyprpanel = prev.writeShellScriptBin "hyprpanel" ''
-        if [ "$#" -eq 0 ]; then
-            exec ${self.packages.${final.stdenv.system}.default}/bin/hyprpanel
-        else
-            exec ${ags.packages.${final.stdenv.system}.io}/bin/astal -i hyprpanel "$*"
-        fi
-      '';
+        devShell = pkgs.mkShell {
+          inputsFrom = [ self.packages.${system}.default ];
+          packages = with pkgs; [
+            ags
+            astal.astal3
+            astal.io
+            gjs
+            meson
+            pkg-config
+            ninja
+          ];
+          shellHook = ''
+            if [ "''${PWD##*/}" = "HyprPanel" ]; then
+              echo "Initialise dependencies required in order for tsserver to work? (y/anything_else)"
+              read consent
+              if [ "$consent" = "y" ]; then
+                ags types -d .; mkdir node_modules; ln -s ${pkgs.astal.gjs}/share/astal/gjs ./node_modules/astal
+              fi
+            else
+              echo "You're not in the HyprPanel root directory, initialisation failed"
+            fi
+          '';
+          GIO_EXTRA_MODULES = "${pkgs.glib-networking}/lib/gio/modules";
+        };
+      }
+    )
+    // {
+      overlay = builtins.warn ''
+        Overlay has been removed, because hyprpanel is now packaged in
+        nixpkgs. Update your system and remove the usage of this overlay.
+      '' (_: _: { });
+
+      homeManagerModules.hyprpanel = builtins.warn ''
+        Home manager module has been removed, because hyprpanel now lives
+        in downstream home-manager. Update your system and remove the usage
+        of this module.
+      '' { };
     };
-
-    homeManagerModules.hyprpanel = import ./nix/module.nix self;
-  };
 }

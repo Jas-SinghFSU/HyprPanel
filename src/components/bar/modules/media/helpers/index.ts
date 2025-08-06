@@ -1,7 +1,7 @@
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { Variable } from 'astal';
-import { MediaTags } from 'src/lib/types/audio.types';
 import { Opt } from 'src/lib/options';
+import { MediaTags } from './types';
 
 /**
  * Retrieves the icon for a given media player.
@@ -106,7 +106,10 @@ export const generateMediaLabel = (
             if (!isValidMediaTag(p1)) {
                 return '';
             }
-            const value = p1 !== undefined ? mediaTags[p1] : '';
+            let value = p1 !== undefined ? mediaTags[p1] : '';
+
+            value = value?.replace(/\r?\n/g, ' ') ?? '';
+
             const suffix = p2 !== undefined && p2.length > 0 ? p2.slice(1) : '';
             return value ? value + suffix : '';
         },

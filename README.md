@@ -1,7 +1,3 @@
-> ⚠️ **Seeking NixOS Maintainer** ⚠️
->
-> HyprPanel is currently looking for a NixOS maintainer to help stabilize and maintain the NixOS integration. If you have experience with Nix and would like to contribute, please reach out to me via the HyprPanel discord.
-
 # HyprPanel 🚀
 
 A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
@@ -30,6 +26,8 @@ dart-sass
 wl-clipboard
 upower
 gvfs
+gtksourceview3
+libsoup3
 ```
 
 **NOTE: HyprPanel will not run without the required dependencies.**
@@ -77,16 +75,8 @@ swww
 
 ### Arch
 
-pacman:
-
 ```bash
- sudo pacman -S --needed wireplumber libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib power-profiles-daemon gvfs
-```
-
-AUR:
-
-```bash
-yay -S --needed aylurs-gtk-shell-git grimblast-git wf-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git
+yay -S --needed aylurs-gtk-shell-git wireplumber libgtop bluez bluez-utils btop networkmanager dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib power-profiles-daemon gvfs gtksourceview3 libsoup3 grimblast-git wf-recorder-git hyprpicker matugen-bin python-gpustat hyprsunset-git
 ```
 
 ### Fedora
@@ -148,69 +138,7 @@ If you install the fonts after installing HyperPanel, you will need to restart H
 
 ### NixOS & Home-Manager
 
-Alternatively, if you're using NixOS and/or Home-Manager, you can setup AGS using the provided Nix Flake. First, add the repository to your Flake's inputs, and enable the overlay.
-
-```nix
-# flake.nix
-
-{
-  inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-  # ...
-
-  outputs = { self, nixpkgs, ... }@inputs:
-  let
-    # ...
- system = "x86_64-linux"; # change to whatever your system should be.
-    pkgs = import nixpkgs {
-   inherit system;
-   # ...
-   overlays = [
-        inputs.hyprpanel.overlay
-   ];
- };
-  in {
-    # ...
-  }
-}
-```
-
-Once you've set up the overlay, you can reference HyprPanel with `pkgs.hyprpanel` as if it were any other Nix package. This means you can reference it as a NixOS system/user package, a Home-Manager user package, or as a direct reference in your Hyprland configuration (if your configuration is managed by Home-Manager). The first three methods will add it to your `$PATH` (first globally, second two user-only), however the final will not.
-
-```nix
-# configuration.nix
-
-# install it as a system package
-environment.systemPackages = with pkgs; [
-  # ...
-  hyprpanel
-  # ...
-];
-
-# or install it as a user package
-users.users.<username>.packages = with pkgs; [
-  # ...
-  hyprpanel
-  # ...
-];
-
-
-# home.nix
-
-# install it as a user package with home-manager
-home.packages = with pkgs; [
-  # ...
-  hyprpanel
-  # ...
-];
-
-# or reference it directly in your Hyprland configuration
-wayland.windowManager.hyprland.settings.exec-once = [
-  "${pkgs.hyprpanel}/bin/hyprpanel"
-];
-
-```
-
-For information on the Home Manager module, click [here](https://hyprpanel.com/getting_started/installation.html#nixos-home-manager).
+Please see https://hyprpanel.com/getting_started/installation.html#nixos.
 
 ### Launch the panel
 

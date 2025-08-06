@@ -18,12 +18,13 @@ custom_target(
   command: [
     ags,
     'bundle',
+    '--gtk', '3',
     '--define', 'DATADIR="' + datadir + '"',
     '--root', meson.project_source_root(),
     meson.project_source_root() / 'app.ts',
     '@OUTPUT@',
   ],
-  output: meson.project_name() + '.js',
+  output: 'hyprpanel-app',
   install: true,
   install_dir: datadir,
   build_always_stale: true,
@@ -41,4 +42,4 @@ configure_file(
 install_subdir('scripts', install_dir: datadir)
 install_subdir('themes', install_dir: datadir)
 install_subdir('assets', install_dir: datadir)
-install_subdir('src/scss', install_dir: datadir / 'src')
+install_subdir('src/style', install_dir: datadir / 'src')

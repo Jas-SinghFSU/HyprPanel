@@ -1,6 +1,6 @@
-import options from 'src/options';
 import { bind } from 'astal';
-import { timeStamp } from 'src/shared/media';
+import options from 'src/configuration';
+import { timeStamp } from 'src/services/media';
 
 const { displayTime } = options.menus.media;
 

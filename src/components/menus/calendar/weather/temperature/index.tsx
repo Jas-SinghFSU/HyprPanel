@@ -1,43 +1,44 @@
-import options from 'src/options';
-import { globalWeatherVar } from 'src/shared/weather';
-import { getTemperature, getWeatherIcon } from 'src/shared/weather';
 import { Gtk } from 'astal/gtk3';
-import { bind, Variable } from 'astal';
-const { unit } = options.menus.clock.weather;
+import { bind } from 'astal';
+import WeatherService from 'src/services/weather';
+import { toTitleCase } from 'src/lib/string/formatters';
+
+const weatherService = WeatherService.getInstance();
 
 const WeatherStatus = (): JSX.Element => {
     return (
         <box halign={Gtk.Align.CENTER}>
             <label
-                className={bind(globalWeatherVar).as(
-                    (weather) =>
-                        `calendar-menu-weather today condition label ${getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
+                className={bind(weatherService.gaugeIcon).as(
+                    (gauge) => `calendar-menu-weather today condition label ${gauge.color}`,
                 )}
-                label={bind(globalWeatherVar).as((weather) => weather.current.condition.text)}
+                label={bind(weatherService.weatherData).as((weather) =>
+                    toTitleCase(weather.current.condition.text),
+                )}
                 truncate
-                tooltipText={bind(globalWeatherVar).as((weather) => weather.current.condition.text)}
+                tooltipText={bind(weatherService.weatherData).as((weather) => weather.current.condition.text)}
             />
         </box>
     );
 };
 
 const Temperature = (): JSX.Element => {
-    const labelBinding = Variable.derive([bind(globalWeatherVar), bind(unit)], getTemperature);
-
     const TemperatureLabel = (): JSX.Element => {
-        return <label className={'calendar-menu-weather today temp label'} label={labelBinding()} />;
+        return (
+            <label
+                className={'calendar-menu-weather today temp label'}
+                label={bind(weatherService.temperature)}
+            />
+        );
     };
 
     const ThermometerIcon = (): JSX.Element => {
         return (
             <label
-                className={bind(globalWeatherVar).as(
-                    (weather) =>
-                        `calendar-menu-weather today temp label icon txt-icon ${getWeatherIcon(Math.ceil(weather.current.temp_f)).color}`,
+                className={bind(weatherService.gaugeIcon).as(
+                    (gauge) => `calendar-menu-weather today temp label icon txt-icon ${gauge.color}`,
                 )}
-                label={bind(globalWeatherVar).as(
-                    (weather) => getWeatherIcon(Math.ceil(weather.current.temp_f)).icon,
-                )}
+                label={bind(weatherService.gaugeIcon).as((gauge) => gauge.icon)}
             />
         );
     };
@@ -47,9 +48,6 @@ const Temperature = (): JSX.Element => {
             className={'calendar-menu-weather today temp container'}
             valign={Gtk.Align.CENTER}
             vertical={false}
-            onDestroy={() => {
-                labelBinding.drop();
-            }}
             hexpand
         >
             <box halign={Gtk.Align.CENTER} hexpand>

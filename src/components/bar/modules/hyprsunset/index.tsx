@@ -1,11 +1,14 @@
-import options from 'src/options';
-import { Module } from '../../shared/Module';
-import { inputHandler, throttleInput } from 'src/components/bar/utils/helpers';
+import { Module } from '../../shared/module';
 import { checkSunsetStatus, isActive, toggleSunset } from './helpers';
 import { FunctionPoller } from 'src/lib/poller/FunctionPoller';
 import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
-import { BarBoxChild } from 'src/lib/types/bar.types';
+import { BarBoxChild } from 'src/components/bar/types';
+import { InputHandlerService } from '../../utils/input/inputHandler';
+import options from 'src/configuration';
+import { throttleInput } from '../../utils/input/throttle';
+
+const inputHandler = InputHandlerService.getInstance();
 
 const {
     label,
@@ -55,6 +58,8 @@ export const Hyprsunset = (): BarBoxChild => {
         },
     );
 
+    let inputHandlerBindings: Variable<void>;
+
     const hyprsunsetModule = Module({
         textIcon: iconBinding(),
         tooltipText: tooltipBinding(),
@@ -63,7 +68,7 @@ export const Hyprsunset = (): BarBoxChild => {
         showLabelBinding: bind(label),
         props: {
             setup: (self: Astal.Button) => {
-                inputHandler(self, {
+                inputHandlerBindings = inputHandler.attachHandlers(self, {
                     onPrimaryClick: {
                         fn: () => {
                             throttledToggleSunset();
@@ -84,6 +89,7 @@ export const Hyprsunset = (): BarBoxChild => {
                 });
             },
             onDestroy: () => {
+                inputHandlerBindings.drop();
                 iconBinding.drop();
                 tooltipBinding.drop();
                 labelBinding.drop();
