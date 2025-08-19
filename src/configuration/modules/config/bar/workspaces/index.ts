@@ -11,6 +11,7 @@ export default {
     showAllActive: opt(true),
     ignored: opt(''),
     show_numbered: opt(false),
+    show_names: opt(false),
     showWsIcons: opt(false),
     showApplicationIcons: opt(false),
     applicationIconOncePerWorkspace: opt(true),

@@ -21,6 +21,7 @@ const {
     show_icons,
     show_numbered,
     numbered_active_indicator,
+    show_names,
     workspaceIconMap,
     showWsIcons,
     showApplicationIcons,
@@ -48,6 +49,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(occupied),
             bind(show_numbered),
             bind(numbered_active_indicator),
+            bind(show_names),
             bind(spacing),
             bind(workspaceIconMap),
             bind(showWsIcons),
@@ -78,6 +80,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             occupiedStatus: string,
             displayNumbered: boolean,
             numberedActiveIndicator: string,
+            displayName: boolean,
             spacingValue: number,
             workspaceIconMapping: WorkspaceIconMap,
             displayWorkspaceIcons: boolean,
@@ -109,6 +112,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                           emptyIcon: applicationIconEmptyWorkspace,
                       })
                     : '';
+                const wsName = hyprlandService.get_workspace(wsId).get_name();
 
                 return (
                     <button
@@ -129,6 +133,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 displayIcons,
                                 displayNumbered,
                                 numberedActiveIndicator,
+                                displayName,
                                 displayWorkspaceIcons,
                                 smartHighlightEnabled,
                                 monitor,
@@ -147,6 +152,9 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 wsId,
                                 index,
                                 monitor,
+                                displayNumbered,
+                                displayName,
+                                wsName,
                             )}
                             setup={(self) => {
                                 const currentWsClients = clients.filter(

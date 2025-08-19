@@ -1,7 +1,7 @@
 import { Opt } from 'src/lib/options';
 import options from 'src/configuration';
 
-const { show_numbered, show_icons, showWsIcons, showApplicationIcons } = options.bar.workspaces;
+const { show_numbered, show_icons, showWsIcons, showApplicationIcons, show_names } = options.bar.workspaces;
 const { monochrome: monoBar } = options.theme.bar.buttons;
 const { monochrome: monoMenu } = options.theme.bar.menus;
 const { matugen } = options.theme;
@@ -37,10 +37,10 @@ const turnOffOptionVars = (
 /* ================================================== */
 /*               WORKSPACE SIDE EFFECTS               */
 /* ================================================== */
-const workspaceOptsToDisable = [show_numbered, show_icons, showWsIcons, showApplicationIcons];
+const workspaceOptsToDisable = [show_numbered, show_icons, showWsIcons, showApplicationIcons, show_names];
 
 show_numbered.subscribe(() => {
-    turnOffOptionVars(show_numbered, workspaceOptsToDisable);
+    turnOffOptionVars(show_numbered, workspaceOptsToDisable, [show_names]);
 });
 
 show_icons.subscribe(() => {
@@ -57,6 +57,10 @@ showApplicationIcons.subscribe(() => {
     if (showApplicationIcons.get()) {
         showWsIcons.set(true);
     }
+});
+
+show_names.subscribe(() => {
+    turnOffOptionVars(show_names, workspaceOptsToDisable, [show_numbered]);
 });
 
 /* ================================================== */
