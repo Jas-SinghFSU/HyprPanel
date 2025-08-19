@@ -61,6 +61,7 @@ export const defaultWindowTitleMap = [
     ['telegram-desktop', '', 'Telegram'],
     ['org.telegram.desktop', '', 'Telegram'],
     ['whatsapp', '󰖣', 'WhatsApp'],
+    ['teamspeak', '', 'TeamSpeak'],
     ['teams', '󰊻', 'Microsoft Teams'],
     ['skype', '󰒯', 'Skype'],
     ['thunderbird', '', 'Thunderbird'],
