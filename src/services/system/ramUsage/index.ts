@@ -63,8 +63,22 @@ class RamUsageService {
                 throw new Error('Failed to parse /proc/meminfo for memory values.');
             }
 
+            // Get ZFS ARC size, if nonzero
+            let arcSize = 0;
+            const [arcSuccess, arcstatsBytes] = GLib.file_get_contents('/proc/spl/kstat/zfs/arcstats');
+
+            if (arcSuccess && arcstatsBytes !== undefined) {
+                const arcstats = new TextDecoder('utf-8').decode(arcstatsBytes);
+
+                const arcSizeMatch = arcstats.match(/size\s+\d\s+(\d+)/);
+
+                if (arcSizeMatch) {
+                    arcSize = parseInt(arcSizeMatch[1], 10);
+                }
+            }
+
             const totalRamInBytes = parseInt(totalMatch[1], 10) * 1024;
-            const availableRamInBytes = parseInt(availableMatch[1], 10) * 1024;
+            const availableRamInBytes = parseInt(availableMatch[1], 10) * 1024 + arcSize;
 
             let usedRam = totalRamInBytes - availableRamInBytes;
             usedRam = isNaN(usedRam) || usedRam < 0 ? 0 : usedRam;
