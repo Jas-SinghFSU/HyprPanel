@@ -17,15 +17,8 @@ export type OptionsObject = Record<string, unknown>;
 export type BarLocation = 'top' | 'bottom';
 export type AutoHide = 'never' | 'fullscreen' | 'single-window';
 export type BarModule =
-    | 'battery'
     | 'dashboard'
-    | 'workspaces'
-    | 'windowtitle'
-    | 'media'
-    | 'notifications'
     | 'volume'
-    | 'network'
-    | 'bluetooth'
     | 'clock'
     | 'ram'
     | 'cpu'
@@ -37,7 +30,6 @@ export type BarModule =
     | 'submap'
     | 'weather'
     | 'power'
-    | 'systray'
     | 'hypridle'
     | 'hyprsunset'
     | 'cava';
