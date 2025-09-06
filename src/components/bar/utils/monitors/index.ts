@@ -67,7 +67,7 @@ export const getLayoutForMonitor = (monitor: number, layouts: BarLayouts): BarLa
 const _getResolveLayoutForMonitor = (monitor: number, layouts: BarLayouts): [string, BarLayout] => {
     const hyprlandService = AstalHyprland.get_default();
     const mon = hyprlandService.get_monitor(monitor);
-    if (mon == undefined) {
+    if (!mon) {
       return [
           'default',
           {
