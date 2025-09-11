@@ -68,14 +68,14 @@ const _getResolveLayoutForMonitor = (monitor: number, layouts: BarLayouts): [str
     const hyprlandService = AstalHyprland.get_default();
     const mon = hyprlandService.get_monitor(monitor);
     if (!mon) {
-      return [
-          'default',
-          {
-              left: ['dashboard', 'workspaces', 'windowtitle'],
-              middle: ['media'],
-              right: ['volume', 'network', 'bluetooth', 'battery', 'systray', 'clock', 'notifications'],
-          },
-      ];
+        return [
+            'default',
+            {
+                left: ['dashboard', 'workspaces', 'windowtitle'],
+                middle: ['media'],
+                right: ['volume', 'network', 'bluetooth', 'battery', 'systray', 'clock', 'notifications'],
+            },
+        ];
     }
 
     const monitorConn = mon.get_name();

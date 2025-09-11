@@ -28,7 +28,7 @@ export default (): JSX.Element => {
     const windowMonitor = Variable.derive(
         [bind(hyprlandService, 'focusedMonitor'), bind(monitor), bind(active_monitor)],
         (focusedMonitor, monitor, activeMonitor) => {
-            if ((activeMonitor === true) && (focusedMonitor)) {
+            if (activeMonitor === true && focusedMonitor) {
                 const gdkMonitor = gdkMonitorMapper.mapHyprlandToGdk(focusedMonitor.id);
                 return gdkMonitor;
             }
