@@ -4,7 +4,7 @@ import {
     WorkspaceIconsColored,
 } from 'src/components/bar/modules/workspaces/types';
 import { opt } from 'src/lib/options';
-import { ActiveWsIndicator } from 'src/lib/options/types';
+import { ActiveWsHighlightKind, ActiveWsIndicator } from 'src/lib/options/types';
 
 export default {
     show_icons: opt(false),
@@ -18,6 +18,7 @@ export default {
     applicationIconFallback: opt('󰣆'),
     applicationIconEmptyWorkspace: opt(''),
     numbered_active_indicator: opt<ActiveWsIndicator>('underline'),
+    activeIndicatorKind: opt<ActiveWsHighlightKind>('both'),
     icons: {
         available: opt(''),
         active: opt(''),
