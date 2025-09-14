@@ -197,26 +197,28 @@ export const renderClassnames = (
     monitor: number,
     i: number,
 ): string => {
-    const isWorkspaceActive =
-        hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
-    const isActive = isWorkspaceActive ? 'active' : '';
+    const isActive = isWorkspaceActiveOnMonitor(monitor, i);
+    const isActiveClass = isActive ? 'active' : 'inactive';
+    const isFocused = hyprlandService.focusedWorkspace?.id === i;
+    const isFocusedClass = isFocused ? 'focused' : '';
+    const activeOnAnyWs = isWorkspaceActiveOnAnyMonitor(i);
+    const activeOnAnyWsClass = activeOnAnyWs ? 'active-on-any' : '';
 
     if (showIcons) {
-        return `workspace-icon txt-icon bar ${isActive}`;
+        return `workspace-icon txt-icon bar ${isActiveClass}`;
     }
 
     if (showNumbered || showWsIcons) {
-        const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
+        const numActiveInd = isActive ? numberedActiveIndicator : '';
 
         const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
-
-        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActiveClass} ${isFocusedClass} ${activeOnAnyWsClass}`;
 
         return className.trim();
     }
 
-    return `default ${isActive}`;
+    return `default ${isActiveClass}`;
 };
 
 /**
