@@ -67,11 +67,7 @@ export default {
             shortcut4: {
                 icon: opt('󰑊'),
                 tooltip: opt('Record Screen'),
-                command: opt(
-                    isRecording.get() === true
-                        ? `${SRC_DIR}/scripts/screen_record.sh stop "${getRecordingPath().replace(/"/g, '\\"')}"`
-                        : 'INTERNAL_RECORDING_START',
-                ),
+                command: opt('hyprpanel_record'),
             },
         },
     },

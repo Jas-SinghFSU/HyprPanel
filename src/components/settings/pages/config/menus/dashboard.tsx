@@ -160,6 +160,22 @@ export const DashboardMenuSettings = (): JSX.Element => {
                 />
 
                 <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.icon}
+                    title="Right - Shortcut 2 (Icon)"
+                    type="string"
+                />
+                <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.command}
+                    title="Right - Shortcut 2 (Command)"
+                    type="string"
+                />
+                <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.tooltip}
+                    title="Right - Shortcut 2 (Tooltip)"
+                    type="string"
+                />
+
+                <Option
                     opt={options.menus.dashboard.shortcuts.right.shortcut3.icon}
                     title="Right - Shortcut 3 (Icon)"
                     type="string"
@@ -172,6 +188,22 @@ export const DashboardMenuSettings = (): JSX.Element => {
                 <Option
                     opt={options.menus.dashboard.shortcuts.right.shortcut3.tooltip}
                     title="Right - Shortcut 3 (Tooltip)"
+                    type="string"
+                />
+
+                <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.icon}
+                    title="Right - Shortcut 2 (Icon)"
+                    type="string"
+                />
+                <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.command}
+                    title="Right - Shortcut 2 (Command)"
+                    type="string"
+                />
+                <Option
+                    opt={options.menus.dashboard.shortcuts.right.shortcut2.tooltip}
+                    title="Right - Shortcut 2 (Tooltip)"
                     type="string"
                 />
 

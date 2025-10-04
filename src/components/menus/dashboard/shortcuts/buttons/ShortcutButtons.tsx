@@ -8,21 +8,41 @@ import { MonitorListDropdown } from './RecordingButton';
 const { left, right } = options.menus.dashboard.shortcuts;
 
 const ShortcutButton = ({ shortcut, ...props }: ShortcutButtonProps): JSX.Element => {
+    const isRecordingButton = shortcut.command.get() === 'hyprpanel_record';
+
     return (
         <button
             vexpand
             tooltipText={shortcut.tooltip.get()}
-            onClick={(_, event) => {
-                if (isPrimaryClick(event)) {
-                    if (shortcut.command.get() === 'INTERNAL_RECORDING_START') {
-                        const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
-                        monitorDropdownList.popup_at_pointer(event);
-                    } else {
-                        handleClick(shortcut.command.get());
-                    }
+            className={
+                isRecordingButton
+                    ? bind(isRecording).as((rec) => `${props.className || ''} ${rec ? 'active' : ''}`.trim())
+                    : props.className
+            }
+            onButtonPressEvent={(_, event) => {
+                const buttonClicked = event.get_button()[1];
+
+                if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
+                    return;
                 }
+
+                if (!isRecordingButton) {
+                    handleClick(shortcut.command.get());
+                    return;
+                }
+
+                const sanitizedPath = getRecordingPath().replace(/"/g, '\\"');
+
+                if (isRecording.get() === true) {
+                    App.get_window('dashboardmenu')?.set_visible(false);
+                    const command = `${SRC_DIR}/scripts/screen_record.sh stop "${sanitizedPath}"`;
+                    executeCommand(command);
+                    return;
+                }
+
+                const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
+                monitorDropdownList.popup_at_pointer(event);
             }}
-            {...props}
         >
             <label className={'button-label txt-icon'} label={shortcut.icon.get()} />
         </button>
