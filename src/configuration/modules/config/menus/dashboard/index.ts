@@ -1,4 +1,3 @@
-import { getRecordingPath, isRecording } from 'src/components/menus/dashboard/shortcuts/helpers';
 import { opt } from 'src/lib/options';
 
 export default {

@@ -1,7 +1,6 @@
 import { Widget, Gtk } from 'astal/gtk3';
 import { handleClick, hasCommand } from '../helpers';
 import options from 'src/configuration';
-import { isPrimaryClick } from 'src/lib/events/mouse';
 import { ShortcutVariable } from '../types';
 import { MonitorListDropdown } from './RecordingButton';
 
