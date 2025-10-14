@@ -1,4 +1,4 @@
-import { Dependency } from './types';
+import { Dependency } from './types'
 
 export const requiredDependencies: Dependency[] = [
     {
@@ -12,18 +12,6 @@ export const requiredDependencies: Dependency[] = [
         required: true,
         type: 'library',
         check: ['gtop-2.0'],
-    },
-    {
-        package: 'bluez',
-        required: true,
-        type: 'service',
-        check: ['bluetooth.service'],
-    },
-    {
-        package: 'bluez-utils',
-        required: true,
-        type: 'executable',
-        check: ['bluetoothctl'],
     },
     {
         package: 'networkmanager',

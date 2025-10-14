@@ -1,18 +1,19 @@
-import { execAsync } from 'astal';
-import { Bar } from 'src/components/bar';
-import Notifications from 'src/components/notifications';
-import OSD from 'src/components/osd/index';
-import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers';
-import { isDropdownMenu } from 'src/components/settings/constants.js';
-import { initializeSystemBehaviors } from 'src/core/behaviors';
-import { DropdownMenus, StandardWindows } from 'src/components/menus';
-import { forMonitors } from 'src/components/bar/utils/monitors';
-import { BarRefreshManager } from 'src/services/display/bar/refreshManager';
-import AstalHyprland from 'gi://AstalHyprland?version=0.1';
-import { Timer } from 'src/lib/performance/timer';
-import { JSXElement } from 'src/core/types';
-import { SettingsDialogLoader } from 'src/components/settings/lazyLoader';
-import options from 'src/configuration';
+import { execAsync } from 'astal'
+import AstalHyprland from 'gi://AstalHyprland?version=0.1'
+import { Bar } from 'src/components/bar'
+import { forMonitors } from 'src/components/bar/utils/monitors'
+import { DropdownMenus, StandardWindows } from 'src/components/menus'
+import { handleRealization } from 'src/components/menus/shared/dropdown/helpers/helpers'
+import Notifications from 'src/components/notifications'
+import OSD from 'src/components/osd/index'
+import { isDropdownMenu } from 'src/components/settings/constants.js'
+import { SettingsDialogLoader } from 'src/components/settings/lazyLoader'
+import options from 'src/configuration'
+import { initializeSystemBehaviors } from 'src/core/behaviors'
+import { SystemUtilities } from 'src/core/system/SystemUtilities'
+import { JSXElement } from 'src/core/types'
+import { Timer } from 'src/lib/performance/timer'
+import { BarRefreshManager } from 'src/services/display/bar/refreshManager'
 
 /**
  * Manages the complete initialization sequence for HyprPanel.
@@ -56,11 +57,22 @@ export class InitializationService {
      */
     private static async _initializeStartupScripts(): Promise<void> {
         try {
-            execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) =>
-                console.error('Failed to initialize bluetooth script:', err),
-            );
+            const bluetoothStatus = SystemUtilities.checkServiceStatus(['bluetooth.service']);
+
+            if (bluetoothStatus === 'DISABLED') {
+                console.warn(
+                    'Bluetooth service is disabled. Skipping bluetooth script initialization. If you wish to use the bluetooth component, please enable the bluetooth service.',
+                );
+                return;
+            } else if (bluetoothStatus === 'ACTIVE') {
+                execAsync(`python3 ${SRC_DIR}/scripts/bluetooth.py`).catch((err) =>
+                    console.error('Failed to initialize bluetooth script:', err),
+                );
+            } else {
+                console.warn('Bluetooth script skipped: bluez dependency is not available.');
+            }
         } catch (error) {
-            console.error('Failed to initialize bluetooth script:', error);
+            console.error('Failed to initialize startup scripts:', error);
         }
     }
 
