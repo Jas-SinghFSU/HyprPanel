@@ -1,4 +1,4 @@
-import { Gtk } from 'astal/gtk3';
+import { Gtk } from 'astal/gtk3'
 
 export const NoBluetoothDevices = (): JSX.Element => {
     return (

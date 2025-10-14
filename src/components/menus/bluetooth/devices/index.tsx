@@ -1,11 +1,14 @@
-import { bind, Variable } from 'astal';
-import { getAvailableBluetoothDevices, getConnectedBluetoothDevices } from './helpers.js';
-import { NoBluetoothDevices } from './NoBluetoothDevices.js';
-import { BluetoothDisabled } from './BluetoothDisabled.js';
-import { DeviceListItem } from './DeviceListItem.js';
-import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import { bind, Variable } from 'astal'
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1'
+import { SystemUtilities } from 'src/core/system/SystemUtilities.js'
+import { BluetoothDisabled } from './BluetoothDisabled.js'
+import { BluetoothUnavailable } from './BluetoothUnavailable.js'
+import { DeviceListItem } from './DeviceListItem.js'
+import { getAvailableBluetoothDevices, getConnectedBluetoothDevices } from './helpers.js'
+import { NoBluetoothDevices } from './NoBluetoothDevices.js'
 
 const bluetoothService = AstalBluetooth.get_default();
+const btStatus = SystemUtilities.checkServiceStatus(['bluetooth.service']);
 
 export const BluetoothDevices = (): JSX.Element => {
     const deviceListBinding = Variable.derive(
@@ -13,6 +16,10 @@ export const BluetoothDevices = (): JSX.Element => {
         () => {
             const availableDevices = getAvailableBluetoothDevices();
             const connectedDevices = getConnectedBluetoothDevices();
+
+            if (btStatus === 'MISSING') {
+                return <BluetoothUnavailable />;
+            }
 
             if (availableDevices.length === 0) {
                 return <NoBluetoothDevices />;
