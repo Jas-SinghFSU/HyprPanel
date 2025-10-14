@@ -1,13 +1,13 @@
-import { exec, GObject, monitorFile, property, readFileAsync, register } from 'astal'
-import { SystemUtilities } from 'src/core/system/SystemUtilities'
-import { optionalDependencies } from 'src/services/cli/commander/commands/system/dependencies/optional'
+import { exec, GObject, monitorFile, property, readFileAsync, register } from 'astal';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
-const brightnessDependency = optionalDependencies.find(dep => dep.package === 'brightnessctl');
-const isBrightnessAvailable = brightnessDependency && brightnessDependency.check.every(cmd => SystemUtilities.checkExecutable([cmd]));
+const isBrightnessAvailable = SystemUtilities.checkExecutable(['brightnessctl']);
 
-const get = (args: string): number => isBrightnessAvailable ? Number(exec(`brightnessctl ${args}`)) : 0;
+const get = (args: string): number => (isBrightnessAvailable ? Number(exec(`brightnessctl ${args}`)) : 0);
 const screen = isBrightnessAvailable ? exec('bash -c "ls -w1 /sys/class/backlight | head -1"') : '';
-const kbd = isBrightnessAvailable ? exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"') : '';
+const kbd = isBrightnessAvailable
+    ? exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"')
+    : '';
 
 /**
  * Service for managing screen and keyboard backlight brightness
@@ -18,7 +18,6 @@ export default class BrightnessService extends GObject.Object {
 
     constructor() {
         super();
-
 
         const screenPath = `/sys/class/backlight/${screen}/brightness`;
         const kbdPath = `/sys/class/leds/${kbd}/brightness`;

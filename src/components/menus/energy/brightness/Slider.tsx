@@ -1,6 +1,6 @@
-import { bind } from 'astal'
-import { Gtk } from 'astal/gtk3'
-import BrightnessService from 'src/services/system/brightness'
+import { bind } from 'astal';
+import { Gtk } from 'astal/gtk3';
+import BrightnessService from 'src/services/system/brightness';
 
 const brightnessService = BrightnessService.getInstance();
 

@@ -1,4 +1,4 @@
-import { Gtk } from 'astal/gtk3'
+import { Gtk } from 'astal/gtk3';
 
 export const BluetoothUnavailable = (): JSX.Element => {
     return (
@@ -10,7 +10,11 @@ export const BluetoothUnavailable = (): JSX.Element => {
             halign={Gtk.Align.CENTER}
         >
             <label className={'no-bluetooth-devices dim'} hexpand label={'Bluetooth service unavailable'} />
-            <label className={'no-bluetooth-devices dim'} hexpand label={'Please install bluez and bluez-utils'} />
+            <label
+                className={'no-bluetooth-devices dim'}
+                hexpand
+                label={'Please install bluez and bluez-utils'}
+            />
         </box>
     );
 };

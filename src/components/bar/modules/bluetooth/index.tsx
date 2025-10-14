@@ -1,13 +1,13 @@
-import { Variable, bind } from 'astal'
-import { Astal } from 'astal/gtk3'
-import AstalBluetooth from 'gi://AstalBluetooth?version=0.1'
-import { BarBoxChild } from 'src/components/bar/types.js'
-import options from 'src/configuration'
-import { SystemUtilities } from 'src/core/system/SystemUtilities'
-import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers'
-import { runAsyncCommand } from '../../utils/input/commandExecutor'
-import { throttledScrollHandler } from '../../utils/input/throttle'
-import { openDropdownMenu } from '../../utils/menu'
+import { Variable, bind } from 'astal';
+import { Astal } from 'astal/gtk3';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import { BarBoxChild } from 'src/components/bar/types.js';
+import options from 'src/configuration';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
+import { runAsyncCommand } from '../../utils/input/commandExecutor';
+import { throttledScrollHandler } from '../../utils/input/throttle';
+import { openDropdownMenu } from '../../utils/menu';
 
 const bluetoothService = AstalBluetooth.get_default();
 const btStatus = SystemUtilities.checkServiceStatus(['bluetooth.service']);
@@ -138,5 +138,4 @@ interface BluetoothLabelProps {
     devices: AstalBluetooth.Device[];
 }
 
-export { Bluetooth }
-
+export { Bluetooth };

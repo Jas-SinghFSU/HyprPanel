@@ -1,11 +1,11 @@
-import { bind, Variable } from 'astal'
-import AstalBluetooth from 'gi://AstalBluetooth?version=0.1'
-import { SystemUtilities } from 'src/core/system/SystemUtilities.js'
-import { BluetoothDisabled } from './BluetoothDisabled.js'
-import { BluetoothUnavailable } from './BluetoothUnavailable.js'
-import { DeviceListItem } from './DeviceListItem.js'
-import { getAvailableBluetoothDevices, getConnectedBluetoothDevices } from './helpers.js'
-import { NoBluetoothDevices } from './NoBluetoothDevices.js'
+import { bind, Variable } from 'astal';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
+import { SystemUtilities } from 'src/core/system/SystemUtilities.js';
+import { BluetoothDisabled } from './BluetoothDisabled.js';
+import { BluetoothUnavailable } from './BluetoothUnavailable.js';
+import { DeviceListItem } from './DeviceListItem.js';
+import { getAvailableBluetoothDevices, getConnectedBluetoothDevices } from './helpers.js';
+import { NoBluetoothDevices } from './NoBluetoothDevices.js';
 
 const bluetoothService = AstalBluetooth.get_default();
 const btStatus = SystemUtilities.checkServiceStatus(['bluetooth.service']);

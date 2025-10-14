@@ -1,9 +1,9 @@
-import { Gtk } from 'astal/gtk3'
-import { SystemUtilities } from 'src/core/system/SystemUtilities'
-import { BrightnessHeader } from './Header'
-import { BrightnessIcon } from './Icon'
-import { BrightnessPercentage } from './Percentage'
-import { BrightnessSlider } from './Slider'
+import { Gtk } from 'astal/gtk3';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { BrightnessHeader } from './Header';
+import { BrightnessIcon } from './Icon';
+import { BrightnessPercentage } from './Percentage';
+import { BrightnessSlider } from './Slider';
 
 const canAdjustBrightness = SystemUtilities.checkExecutable(['brightnessctl']);
 
@@ -33,5 +33,4 @@ const Brightness = (): JSX.Element => {
     );
 };
 
-export { Brightness }
-
+export { Brightness };

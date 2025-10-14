@@ -1,4 +1,4 @@
-import { Dependency } from './types'
+import { Dependency } from './types';
 
 export const requiredDependencies: Dependency[] = [
     {

@@ -1,4 +1,4 @@
-import { Dependency } from './types'
+import { Dependency } from './types';
 
 export const optionalDependencies: Dependency[] = [
     {
@@ -98,5 +98,5 @@ export const optionalDependencies: Dependency[] = [
         type: 'executable',
         check: ['bt-device', 'bt-adapter', 'bt-network', 'bt-obex'],
         description: 'Bluetooth status and controls',
-    }
+    },
 ];
