@@ -19,6 +19,7 @@ export default class BrightnessService extends GObject.Object {
     constructor() {
         super();
 
+
         const screenPath = `/sys/class/backlight/${screen}/brightness`;
         const kbdPath = `/sys/class/leds/${kbd}/brightness`;
 
