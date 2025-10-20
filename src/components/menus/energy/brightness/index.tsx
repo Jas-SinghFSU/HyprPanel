@@ -13,7 +13,7 @@ const Brightness = (): JSX.Element => {
             <box className={'menu-section-container brightness unavailable'} vertical>
                 <BrightnessHeader />
                 <box className={'menu-items-section'} valign={Gtk.Align.FILL} vexpand vertical>
-                    <label className={'dim'} hexpand label={'Brighnessctl is missing'} />
+                    <label className={'dim'} hexpand label={'Brightnessctl is missing'} />
                 </box>
             </box>
         );
