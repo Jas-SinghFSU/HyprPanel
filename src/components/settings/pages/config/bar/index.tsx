@@ -478,6 +478,11 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
+                    opt={options.bar.battery.hideModuleWhenNoBatteryFound}
+                    title="Hide When No Battery Found"
+                    type="boolean"
+                />
+                <Option
                     opt={options.theme.bar.buttons.battery.spacing}
                     title="Inner Spacing"
                     subtitle="Spacing between icon and label."
