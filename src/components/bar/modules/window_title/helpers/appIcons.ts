@@ -50,6 +50,8 @@ export const defaultWindowTitleMap = [
 
     // Communication Tools
     ['discord', '', 'Discord'],
+    ['legcord', '', 'Legcord'],
+    ['webcord', '', 'WebCord'],
     ['org.telegram.desktop', '', 'Telegram'],
     ['skype', '󰒯', 'Skype'],
     ['slack', '󰒱', 'Slack'],
