@@ -104,9 +104,7 @@ export const defaultWindowTitleMap = [
     ['dropbox', '󰇣', 'Dropbox'],
 ];
 
-const overrides = {
-    kitty: '',
-};
+const overrides = {};
 
 /**
  * Generates a mapping of application names to their corresponding icons.
