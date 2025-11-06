@@ -31,6 +31,7 @@ export const defaultWindowTitleMap = [
     ['xterm', '', 'XTerm'],
 
     // Development Tools
+    ['DBeaver', '', 'DBeaver'],
     ['android-studio', '󰀴', 'Android Studio'],
     ['atom', '', 'Atom'],
     ['code', '󰨞', 'Visual Studio Code'],
