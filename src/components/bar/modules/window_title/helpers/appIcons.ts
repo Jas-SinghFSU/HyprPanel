@@ -99,8 +99,18 @@ export const defaultWindowTitleMap = [
 
     // Office and Productivity
     ['evernote', '', 'Evernote'],
+    ['libreoffice-base', '', 'LibreOffice Base'],
+    ['libreoffice-calc', '', 'LibreOffice Calc'],
+    ['libreoffice-draw', '', 'LibreOffice Draw'],
+    ['libreoffice-impress', '', 'LibreOffice Impress'],
+    ['libreoffice-math', '', 'LibreOffice Math'],
+    ['libreoffice-writer', '', 'LibreOffice Writer'],
     ['obsidian', '󱓧', 'Obsidian'],
     ['sioyek', '', 'Sioyek'],
+    // putting these at the bottom, as they are defaults
+    ['libreoffice', '', 'LibreOffice Default'],
+    ['title:LibreOffice', '', 'LibreOffice Dialogs'],
+    ['soffice', '', 'LibreOffice Base Selector'],
 
     // Cloud Services and Sync
     ['dropbox', '󰇣', 'Dropbox'],
