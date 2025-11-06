@@ -1,16 +1,5 @@
 export const defaultWindowTitleMap = [
     // Misc
-    ['kitty', '󰄛', 'Kitty Terminal'],
-    ['firefox', '󰈹', 'Firefox'],
-    ['microsoft-edge', '󰇩', 'Edge'],
-    ['discord', '', 'Discord'],
-    ['vesktop', '', 'Vesktop'],
-    ['org.kde.dolphin', '', 'Dolphin'],
-    ['plex', '󰚺', 'Plex'],
-    ['steam', '', 'Steam'],
-    ['spotify', '󰓇', 'Spotify'],
-    ['ristretto', '󰋩', 'Ristretto'],
-    ['obsidian', '󱓧', 'Obsidian'],
     ['rofi', '', 'Rofi'],
     ['qBittorrent$', '', 'QBittorrent'],
 
@@ -25,8 +14,11 @@ export const defaultWindowTitleMap = [
     ['tor-browser', '', 'Tor Browser'],
     ['floorp', '󰈹', 'Floorp'],
     ['zen', '', 'Zen Browser'],
+    ['firefox', '󰈹', 'Firefox'],
+    ['microsoft-edge', '󰇩', 'Edge'],
 
     // Terminals
+    ['kitty', '󰄛', 'Kitty Terminal'],
     ['gnome-terminal', '', 'GNOME Terminal'],
     ['konsole', '', 'Konsole'],
     ['alacritty', '', 'Alacritty'],
@@ -65,8 +57,11 @@ export const defaultWindowTitleMap = [
     ['teams', '󰊻', 'Microsoft Teams'],
     ['skype', '󰒯', 'Skype'],
     ['thunderbird', '', 'Thunderbird'],
+    ['discord', '', 'Discord'],
+    ['vesktop', '', 'Vesktop'],
 
     // File Managers
+    ['org.kde.dolphin', '', 'Dolphin'],
     ['nautilus', '󰝰', 'Files (Nautilus)'],
     ['thunar', '󰝰', 'Thunar'],
     ['pcmanfm', '󰝰', 'PCManFM'],
@@ -79,6 +74,9 @@ export const defaultWindowTitleMap = [
     ['vlc', '󰕼', 'VLC Media Player'],
     ['mpv', '', 'MPV'],
     ['rhythmbox', '󰓃', 'Rhythmbox'],
+    ['spotify', '󰓇', 'Spotify'],
+    ['ristretto', '󰋩', 'Ristretto'],
+    ['plex', '󰚺', 'Plex'],
 
     // Graphics Tools
     ['gimp', '', 'GIMP'],
@@ -90,6 +88,7 @@ export const defaultWindowTitleMap = [
     ['kdenlive', '', 'Kdenlive'],
 
     // Games and Gaming Platforms
+    ['steam', '', 'Steam'],
     ['lutris', '󰺵', 'Lutris'],
     ['heroic', '󰺵', 'Heroic Games Launcher'],
     ['minecraft', '󰍳', 'Minecraft'],
@@ -97,6 +96,7 @@ export const defaultWindowTitleMap = [
     ['dota2', '󰺵', 'Dota 2'],
 
     // Office and Productivity
+    ['obsidian', '󱓧', 'Obsidian'],
     ['evernote', '', 'Evernote'],
     ['sioyek', '', 'Sioyek'],
 
