@@ -19,6 +19,7 @@ const {
     scrollUp,
     scrollDown,
     hideLabelWhenFull,
+    hideModuleWhenNoBatteryFound,
 } = options.bar.battery;
 
 const BatteryLabel = (): BarBoxChild => {
@@ -164,4 +165,24 @@ const BatteryLabel = (): BarBoxChild => {
     };
 };
 
-export { BatteryLabel };
+const BatteryWidgetContainer = (child: BarBoxChild): JSX.Element => {
+    const isVisible = Variable.derive(
+        [bind(batteryService, 'device-type'), bind(hideModuleWhenNoBatteryFound)],
+        (deviceType: number, hideModuleWhenNoBatteryFound: boolean) => {
+            const isBattery = deviceType === AstalBattery.Type.ASTAL_BATTERY_TYPE_BATTERY;
+            return !hideModuleWhenNoBatteryFound || isBattery;
+        },
+    );
+    return (
+        <box
+            visible={bind(isVisible)}
+            onDestroy={() => {
+                isVisible.drop();
+            }}
+        >
+            {child}
+        </box>
+    );
+};
+
+export { BatteryLabel, BatteryWidgetContainer };
