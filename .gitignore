@@ -5,3 +5,5 @@ prepare
 @girs
 
 **/.claude/settings.local.json
+
+.direnv/
