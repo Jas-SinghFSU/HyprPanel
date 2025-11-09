@@ -11,12 +11,6 @@ A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
 
 The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for configuring and installing the panel and all of its dependencies. The instructions below are just the general instructions for installing the panel.
 
-## Arch
-
-```bash
-yay -S ags-hyprpanel-git
-```
-
 ## From Source
 
 ### Required
