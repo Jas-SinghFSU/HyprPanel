@@ -8,4 +8,4 @@ prepare
 
 .direnv/
 
-.pnpm-lock.yaml
+pnpm-lock.yaml
