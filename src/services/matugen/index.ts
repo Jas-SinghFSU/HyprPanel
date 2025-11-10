@@ -219,38 +219,13 @@ export class MatugenService {
             // This is then returned as MatugenColors type
             let colors = parsedResult.colors;
 
+            // Extract hex values from mode-based color objects
+            // Matugen always returns objects with {dark, default, light} structure where values are hex strings
             const processedColors: Record<string, string> = {};
             for (const [key, value] of Object.entries(colors)) {
-                if (typeof value === 'string') {
-                    // Already a string, use it directly
-                    processedColors[key] = value;
-                } else if (typeof value === 'object' && value !== null) {
-                    // Extract hex from mode-based color object
-                    const obj = value as Record<string, unknown>;
-
-                    // Check for mode-based colors (dark, default, light)
-                    if (typeof obj[mode] === 'string') {
-                        processedColors[key] = obj[mode] as string;
-                    } else if (typeof obj.default === 'string') {
-                        processedColors[key] = obj.default as string;
-                    } else if (typeof obj.hex === 'string') {
-                        processedColors[key] = obj.hex;
-                    } else if (
-                        typeof obj.r === 'number' &&
-                        typeof obj.g === 'number' &&
-                        typeof obj.b === 'number'
-                    ) {
-                        // Convert RGB to hex
-                        const hex = `#${[obj.r, obj.g, obj.b].map((x) => Math.round(x).toString(16).padStart(2, '0')).join('')}`;
-                        processedColors[key] = hex;
-                    } else {
-                        console.error(`[Matugen] Cannot extract hex from color object for ${key}:`, obj);
-                        throw new Error(`Cannot extract hex color from object for ${key}`);
-                    }
-                } else {
-                    console.error(`[Matugen] Unexpected color value type for ${key}: ${typeof value}`);
-                    throw new Error(`Unexpected color value type for ${key}`);
-                }
+                const obj = value as Record<string, string>;
+                // Extract hex from mode-based color object {dark, default, light}
+                processedColors[key] = obj[mode] ?? obj.default;
             }
             colors = processedColors;
 
