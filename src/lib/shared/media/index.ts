@@ -14,34 +14,12 @@ const normalizeName = (name: string): string => name.toLowerCase().replace(/\s+/
  */
 const getDesktopEntry = (player: AstalMpris.Player): string => {
     try {
-        // Desktop entry is usually the app name (e.g., "tidal-hifi", "zaap", "brave")
         return player.entry || '';
     } catch {
         return '';
     }
 };
 
-/**
- * Extracts the process name from an MPRIS bus name.
- *
- * Examples:
- * - "org.mpris.MediaPlayer2.spotify" -> "spotify"
- * - "org.mpris.MediaPlayer2.firefox.instance1234" -> "firefox"
- *
- * @param busName The MPRIS bus name.
- *
- * @returns The extracted process name.
- */
-const extractProcessName = (busName: string): string => {
-    const parts = busName.split('.');
-    if (parts.length >= 4 && parts[0] === 'org' && parts[1] === 'mpris' && parts[2] === 'MediaPlayer2') {
-        // Get the part after org.mpris.MediaPlayer2
-        const processName = parts[3];
-        // Remove instance suffixes if present
-        return processName.split('.')[0];
-    }
-    return busName;
-};
 
 /**
  * Checks if a media player should be ignored based on the filter list.
@@ -64,7 +42,6 @@ export const isPlayerIgnored = (
 
     const playerFilters = new Set(filter.map(normalizeName));
 
-    // Use identity as the primary identifier
     const identity = player.identity || '';
     const normalizedIdentity = normalizeName(identity);
     
