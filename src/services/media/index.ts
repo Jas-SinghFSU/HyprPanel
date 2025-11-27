@@ -3,6 +3,7 @@ import { bind, Variable } from 'astal';
 import { getTimeStamp } from 'src/components/menus/media/components/timebar/helpers';
 import { CurrentPlayer, MediaSubscriptionNames, MediaSubscriptions } from './types';
 import options from 'src/configuration';
+import { filterPlayers, isPlayerIgnored } from 'src/lib/shared/media';
 
 /**
  * MediaManager handles media player state management across the application
@@ -53,12 +54,27 @@ export class MediaPlayerService {
 
     private constructor() {
         this._mprisService = AstalMpris.get_default();
-        const { noMediaText } = options.menus.media;
+        const { noMediaText, ignore, preferredPlayer } = options.menus.media;
 
         this.mediaTitle.set(noMediaText.get());
 
-        for (const player of this._mprisService.get_players()) {
-            this._handlePlayerAdded(player);
+        const allPlayers = this._mprisService.get_players();
+        const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+
+        const preferred = preferredPlayer.get();
+        if (preferred) {
+            const preferredPlayerMatch = filteredPlayers.find(
+                player => player.identity?.toLowerCase().includes(preferred.toLowerCase())
+            );
+            if (preferredPlayerMatch) {
+                this.activePlayer.set(preferredPlayerMatch);
+            }
+        }
+
+        if (this.activePlayer.get() === undefined) {
+            for (const player of filteredPlayers) {
+                this._handlePlayerAdded(player);
+            }
         }
 
         this._mprisService.connect('player-closed', (_, closedPlayer) =>
@@ -83,12 +99,22 @@ export class MediaPlayerService {
     /**
      * Handles a new player being added
      *
-     * Sets the new player as active if no player is currently active.
+     * Sets the new player as active if no player is currently active
+     * and the player is not in the ignore list. Prioritizes the preferred player if set
      *
      * @param addedPlayer The player that was added
      */
     private _handlePlayerAdded(addedPlayer: AstalMpris.Player): void {
-        if (this.activePlayer.get() === undefined) {
+        const { ignore, preferredPlayer } = options.menus.media;
+
+        if (isPlayerIgnored(addedPlayer, ignore.get())) {
+            return;
+        }
+
+        const preferred = preferredPlayer.get();
+        const isPreferred = preferred && addedPlayer.identity?.toLowerCase().includes(preferred.toLowerCase());
+
+        if (this.activePlayer.get() === undefined || isPreferred) {
             this.activePlayer.set(addedPlayer);
         }
     }
@@ -97,21 +123,24 @@ export class MediaPlayerService {
      * Handles a player being closed
      *
      * Switches to another player if available or clears the active player
-     * when the current player is closed.
+     * when the current player is closed. Only considers non-ignored players
      *
      * @param closedPlayer The player that was closed
      */
     private _handlePlayerClosed(closedPlayer: AstalMpris.Player): void {
+        const { ignore } = options.menus.media;
+        const allPlayers = this._mprisService.get_players();
+        const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+
         if (
-            this._mprisService.get_players().length === 1 &&
-            closedPlayer.busName === this._mprisService.get_players()[0]?.busName
+            filteredPlayers.length === 1 &&
+            closedPlayer.busName === filteredPlayers[0]?.busName
         ) {
             return this.activePlayer.set(undefined);
         }
 
         if (closedPlayer.busName === this.activePlayer.get()?.busName) {
-            const nextPlayer = this._mprisService
-                .get_players()
+            const nextPlayer = filteredPlayers
                 .find((player) => player.busName !== closedPlayer.busName);
             this.activePlayer.set(nextPlayer);
         }
