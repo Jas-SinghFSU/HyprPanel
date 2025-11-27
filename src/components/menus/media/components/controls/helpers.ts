@@ -2,6 +2,8 @@ import AstalMpris from 'gi://AstalMpris?version=0.1';
 import icons2 from 'src/lib/icons/icons';
 import { activePlayer } from 'src/services/media';
 import { PlaybackIconMap } from './types';
+import options from 'src/configuration';
+import { filterPlayers } from 'src/lib/shared/media';
 
 const mprisService = AstalMpris.get_default();
 
@@ -75,7 +77,7 @@ export const isShuffleActive = (status: AstalMpris.Shuffle): string => {
 /**
  * Sets the next active player.
  *
- * This function sets the next player in the `mprisService.players` array as the active player.
+ * This function sets the next player in the filtered players array as the active player.
  * If there is only one player, it sets that player as the active player.
  *
  * @returns void
@@ -87,22 +89,25 @@ export const getNextPlayer = (): void => {
         return;
     }
 
-    const currentPlayerIndex = mprisService
-        .get_players()
+    const { ignore } = options.menus.media;
+    const allPlayers = mprisService.get_players();
+    const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+
+    const currentPlayerIndex = filteredPlayers
         .findIndex((player) => player.busName === currentPlayer.busName);
-    const totalPlayers = mprisService.get_players().length;
+    const totalPlayers = filteredPlayers.length;
 
     if (totalPlayers === 1) {
-        return activePlayer.set(mprisService.get_players()[0]);
+        return activePlayer.set(filteredPlayers[0]);
     }
 
-    return activePlayer.set(mprisService.get_players()[(currentPlayerIndex + 1) % totalPlayers]);
+    return activePlayer.set(filteredPlayers[(currentPlayerIndex + 1) % totalPlayers]);
 };
 
 /**
  * Sets the previous active player.
  *
- * This function sets the previous player in the `mprisService.players` array as the active player.
+ * This function sets the previous player in the filtered players array as the active player.
  * If there is only one player, it sets that player as the active player.
  *
  * @returns void
@@ -114,16 +119,19 @@ export const getPreviousPlayer = (): void => {
         return;
     }
 
-    const currentPlayerIndex = mprisService
-        .get_players()
+    const { ignore } = options.menus.media;
+    const allPlayers = mprisService.get_players();
+    const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+
+    const currentPlayerIndex = filteredPlayers
         .findIndex((player) => player.busName === currentPlayer.busName);
-    const totalPlayers = mprisService.get_players().length;
+    const totalPlayers = filteredPlayers.length;
 
     if (totalPlayers === 1) {
-        return activePlayer.set(mprisService.get_players()[0]);
+        return activePlayer.set(filteredPlayers[0]);
     }
 
     return activePlayer.set(
-        mprisService.get_players()[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers],
+        filteredPlayers[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers],
     );
 };
