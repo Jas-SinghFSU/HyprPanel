@@ -45,6 +45,9 @@ libsoup3
 python
 python-gpustat
 
+## Used for Tracking GPU Usage in your Dashboard (Amd only)
+amdgpu_top
+
 ## To control screen/keyboard brightness
 brightnessctl
 
