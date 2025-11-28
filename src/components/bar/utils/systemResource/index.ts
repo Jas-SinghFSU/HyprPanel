@@ -64,7 +64,8 @@ export const renderResourceLabel = (
         return SizeConverter.fromBytes(free).formatAuto(precision);
     }
 
-    return `${percentage}%`;
+    const roundedPercentage = round ? Math.round(percentage) : percentage.toFixed(2);
+    return `${roundedPercentage}%`;
 };
 
 /**

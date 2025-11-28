@@ -101,6 +101,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.bar.customModules.cpu.label} title="Show Label" type="boolean" />
                 <Option opt={options.theme.bar.buttons.modules.cpu.spacing} title="Spacing" type="string" />
                 <Option opt={options.bar.customModules.cpu.round} title="Round" type="boolean" />
+                <Option opt={options.bar.customModules.cpu.showPerCoreUsage} title="Show Tooltip Per-Core Usage" type="boolean" />
                 <Option
                     opt={options.bar.customModules.cpu.pollingInterval}
                     title="Polling Interval"

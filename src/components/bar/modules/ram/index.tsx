@@ -29,12 +29,19 @@ export const Ram = (): BarBoxChild => {
 
     let inputHandlerBindings: Variable<void>;
 
+    const tooltipBinding = Variable.derive(
+        [bind(ramService.ram), bind(round)],
+        (rmUsg: GenericResourceData, round: boolean) => {
+            const usedLabel = renderResourceLabel('used', rmUsg, round);
+            const totalLabel = renderResourceLabel('used', { ...rmUsg, used: rmUsg.total }, round);
+            return `RAM: ${usedLabel} / ${totalLabel}`;
+        },
+    );
+
     const ramModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => {
-            return formatTooltip('RAM', lblTyp);
-        }),
+        tooltipText: tooltipBinding(),
         boxClass: 'ram',
         showLabelBinding: bind(label),
         props: {
@@ -73,6 +80,7 @@ export const Ram = (): BarBoxChild => {
             onDestroy: () => {
                 inputHandlerBindings.drop();
                 labelBinding.drop();
+                tooltipBinding.drop();
                 ramService.destroy();
             },
         },
