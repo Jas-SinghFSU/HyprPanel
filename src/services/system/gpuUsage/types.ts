@@ -19,3 +19,24 @@ export type GPUStat = {
     'memory.total': number;
     processes: Process[];
 };
+
+export type AMDGpuStat = {
+    DeviceName: string;
+    PCI: string;
+    gpu_activity: {
+        GFX: {
+            unit: string;
+            value: number;
+        };
+        MediaEngine?: {
+            unit: string;
+            value: number;
+        };
+        Memory?: {
+            unit: string;
+            value: number | null;
+        };
+    };
+};
+
+export type GpuVendor = 'nvidia' | 'amd' | 'unknown';
