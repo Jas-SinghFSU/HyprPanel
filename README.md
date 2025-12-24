@@ -25,8 +25,6 @@ yay -S ags-hyprpanel-git
 aylurs-gtk-shell-git
 wireplumber
 libgtop
-bluez
-bluez-utils
 networkmanager
 dart-sass
 wl-clipboard
@@ -47,6 +45,10 @@ python-gpustat
 
 ## To control screen/keyboard brightness
 brightnessctl
+
+## For bluetooth support
+bluez
+bluez-utils
 
 ## Only if a pywal hook from wallpaper changes applied through settings is desired
 pywal
