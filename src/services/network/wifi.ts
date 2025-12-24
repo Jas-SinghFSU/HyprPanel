@@ -256,9 +256,14 @@ export class WifiManager {
 
         this.connecting.set(accessPoint.bssid || '');
 
+        const deleteCommand = `nmcli connection delete "${accessPoint.ssid}"`;
         const connectCommand = `nmcli device wifi connect "${accessPoint.ssid}" password "${password}"`;
 
         return execAsync(connectCommand)
+            .catch(() => {
+                // Delete the connection and retry connecting.
+                return execAsync(deleteCommand).then(() => execAsync(connectCommand));
+            })
             .then(() => {
                 this.connecting.set('');
                 this.staging.set(undefined);
