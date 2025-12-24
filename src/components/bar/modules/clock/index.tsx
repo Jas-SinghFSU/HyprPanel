@@ -11,7 +11,7 @@ import { throttledScrollHandler } from '../../utils/input/throttle';
 const { format, icon, showIcon, showTime, rightClick, middleClick, scrollUp, scrollDown } = options.bar.clock;
 const { style } = options.theme.bar.buttons;
 
-const time = Variable.derive([systemTime, format], (c, f) => c.format(f) ?? '');
+const time = Variable.derive([systemTime, format], (c, f) => c.format(f.replace(/\\n/g, '\n')) ?? '');
 
 const Clock = (): BarBoxChild => {
     const ClockTime = (): JSX.Element => (
