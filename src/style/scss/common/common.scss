@@ -8,6 +8,10 @@ menu {
     border-radius: 12px;
     border: 1px solid $secondary_bg;
 
+    .dim {
+        opacity: 0.5;
+    }
+
     menuitem {
         transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
         min-height: 20px;

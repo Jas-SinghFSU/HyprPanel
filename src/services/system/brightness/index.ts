@@ -1,9 +1,13 @@
 import { exec, GObject, monitorFile, property, readFileAsync, register } from 'astal';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
-const get = (args: string): number => Number(exec(`brightnessctl ${args}`));
-const screen = exec('bash -c "ls -w1 /sys/class/backlight | head -1"');
-const kbd = exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"');
+const isBrightnessAvailable = SystemUtilities.checkExecutable(['brightnessctl']);
+
+const get = (args: string): number => (isBrightnessAvailable ? Number(exec(`brightnessctl ${args}`)) : 0);
+const screen = isBrightnessAvailable ? exec('bash -c "ls -w1 /sys/class/backlight | head -1"') : '';
+const kbd = isBrightnessAvailable
+    ? exec('bash -c "ls -w1 /sys/class/leds | grep \'::kbd_backlight$\' | head -1"')
+    : '';
 
 /**
  * Service for managing screen and keyboard backlight brightness
