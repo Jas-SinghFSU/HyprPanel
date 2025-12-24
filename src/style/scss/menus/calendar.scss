@@ -6,11 +6,14 @@
     margin-top: 0em;
     min-width: 27em;
     min-height: 6em;
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-clock-background-color);
+    background: if(
+        $bar-menus-monochrome, 
+        rgba($bar-menus-background, $bar-menus-opacity * 0.01), 
+        rgba($bar-menus-menu-clock-background-color, $bar-menus-opacity * 0.01)
+    );
     border: $bar-menus-border-size solid
         if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-clock-border-color);
     border-radius: $bar-menus-border-radius;
-    opacity: $bar-menus-opacity * 0.01;
 }
 
 .calendar-menu-item-container {

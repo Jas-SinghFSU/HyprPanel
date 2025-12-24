@@ -1,7 +1,10 @@
 .menu-items.audio {
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-volume-background-color);
+    background: if(
+        $bar-menus-monochrome, 
+        rgba($bar-menus-background, $bar-menus-opacity * 0.01), 
+        rgba($bar-menus-menu-volume-background-color, $bar-menus-opacity * 0.01)
+    );
     border-color: if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-volume-border-color);
-    opacity: $bar-menus-opacity * 0.01;
 }
 
 .menu-items-container.audio {
