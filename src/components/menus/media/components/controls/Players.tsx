@@ -1,24 +1,34 @@
-import { bind } from 'astal';
+import { bind, Variable } from 'astal';
 import { Astal, Gtk, Widget } from 'astal/gtk3';
 import { getNextPlayer, getPreviousPlayer } from './helpers';
 import AstalMpris from 'gi://AstalMpris?version=0.1';
 import { isPrimaryClick } from 'src/lib/events/mouse';
+import options from 'src/configuration';
+import { filterPlayers } from 'src/lib/shared/media';
 
 const mprisService = AstalMpris.get_default();
 
 export const PreviousPlayer = (): JSX.Element => {
-    const className = bind(mprisService, 'players').as((players) => {
-        const isDisabled = players.length <= 1 ? 'disabled' : 'enabled';
+    const { ignore } = options.menus.media;
 
-        return `media-indicator-control-button ${isDisabled}`;
-    });
+    const className = Variable.derive(
+        [bind(mprisService, 'players'), bind(ignore)],
+        (players: AstalMpris.Player[], ignoredApps: string[]) => {
+            const filteredPlayers = filterPlayers(players, ignoredApps);
+            const isDisabled = filteredPlayers.length <= 1 ? 'disabled' : 'enabled';
+
+            return `media-indicator-control-button ${isDisabled}`;
+        },
+    );
 
     const onClick = (_: Widget.Button, event: Astal.ClickEvent): void => {
         if (!isPrimaryClick(event)) {
             return;
         }
 
-        const isDisabled = mprisService.get_players().length <= 1;
+        const allPlayers = mprisService.get_players();
+        const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+        const isDisabled = filteredPlayers.length <= 1;
 
         if (!isDisabled) {
             getPreviousPlayer();
@@ -27,11 +37,14 @@ export const PreviousPlayer = (): JSX.Element => {
 
     return (
         <button
-            className={className}
+            className={className()}
             halign={Gtk.Align.CENTER}
             hasTooltip
             tooltipText={'Previous Player'}
             onClick={onClick}
+            onDestroy={() => {
+                className.drop();
+            }}
         >
             <label label={'󰅁'} />
         </button>
@@ -39,16 +52,24 @@ export const PreviousPlayer = (): JSX.Element => {
 };
 
 export const NextPlayer = (): JSX.Element => {
-    const className = bind(mprisService, 'players').as((players) => {
-        const isDisabled = players.length <= 1 ? 'disabled' : 'enabled';
-        return `media-indicator-control-button ${isDisabled}`;
-    });
+    const { ignore } = options.menus.media;
+
+    const className = Variable.derive(
+        [bind(mprisService, 'players'), bind(ignore)],
+        (players: AstalMpris.Player[], ignoredApps: string[]) => {
+            const filteredPlayers = filterPlayers(players, ignoredApps);
+            const isDisabled = filteredPlayers.length <= 1 ? 'disabled' : 'enabled';
+            return `media-indicator-control-button ${isDisabled}`;
+        },
+    );
     const onClick = (_: Widget.Button, event: Astal.ClickEvent): void => {
         if (!isPrimaryClick(event)) {
             return;
         }
 
-        const isDisabled = mprisService.get_players().length <= 1;
+        const allPlayers = mprisService.get_players();
+        const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+        const isDisabled = filteredPlayers.length <= 1;
 
         if (!isDisabled) {
             getNextPlayer();
@@ -56,11 +77,14 @@ export const NextPlayer = (): JSX.Element => {
     };
     return (
         <button
-            className={className}
+            className={className()}
             halign={Gtk.Align.CENTER}
             hasTooltip
             tooltipText={'Next Player'}
             onClick={onClick}
+            onDestroy={() => {
+                className.drop();
+            }}
         >
             <label label={'󰅂'} />
         </button>
