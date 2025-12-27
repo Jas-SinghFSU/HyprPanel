@@ -231,6 +231,13 @@ export const BarSettings = (): JSX.Element => {
                     enums={['underline', 'highlight', 'color']}
                 />
                 <Option
+                    opt={options.bar.workspaces.activeIndicatorKind}
+                    title="Active Workspace Highlight Kind"
+                    subtitle="For multi-monitor setups, determines weather to highlight active and/or focused workspaces"
+                    type="enum"
+                    enums={['active', 'focused', 'both']}
+                />
+                <Option
                     opt={options.theme.bar.buttons.workspaces.smartHighlight}
                     title="Smart Highlight"
                     subtitle="Automatically determines highlight color for mapped icons."
