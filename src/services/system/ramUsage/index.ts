@@ -63,19 +63,7 @@ class RamUsageService {
                 throw new Error('Failed to parse /proc/meminfo for memory values.');
             }
 
-            // Get ZFS ARC size, if nonzero
-            let arcSize = 0;
-            const [arcSuccess, arcstatsBytes] = GLib.file_get_contents('/proc/spl/kstat/zfs/arcstats');
-
-            if (arcSuccess && arcstatsBytes !== undefined) {
-                const arcstats = new TextDecoder('utf-8').decode(arcstatsBytes);
-
-                const arcSizeMatch = arcstats.match(/size\s+\d\s+(\d+)/);
-
-                if (arcSizeMatch) {
-                    arcSize = parseInt(arcSizeMatch[1], 10);
-                }
-            }
+            let arcSize = this._getZfsArcSize();
 
             const totalRamInBytes = parseInt(totalMatch[1], 10) * 1024;
             const availableRamInBytes = parseInt(availableMatch[1], 10) * 1024 + arcSize;
@@ -93,6 +81,24 @@ class RamUsageService {
             console.error('Error calculating RAM usage:', error);
             return { total: 0, used: 0, percentage: 0, free: 0 };
         }
+    }
+
+    // Get ZFS ARC size, if nonzero
+    private _getZfsArcSize(): number {
+        const arcstatsPath = '/proc/spl/kstat/zfs/arcstats';
+
+        if (!GLib.file_test(arcstatsPath, GLib.FileTest.EXISTS)) {
+            return 0;
+        }
+
+        const [arcSuccess, arcstatsBytes] = GLib.file_get_contents(arcstatsPath);
+        if (!arcSuccess || arcstatsBytes === undefined) {
+            return 0;
+        }
+
+        const arcstats = new TextDecoder('utf-8').decode(arcstatsBytes);
+        const arcSizeMatch = arcstats.match(/size\s+\d\s+(\d+)/);
+        return arcSizeMatch ? parseInt(arcSizeMatch[1], 10) : 0;
     }
 
     /**
