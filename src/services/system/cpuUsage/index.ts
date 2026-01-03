@@ -108,8 +108,10 @@ class CpuUsageService {
 
         const totalDiff = currentCpuData.total - this._previousCpuData.total;
         const idleDiff = currentCpuData.idle - this._previousCpuData.idle;
+        const iowaitDiff = currentCpuData.iowait - this._previousCpuData.iowait;
 
-        const cpuUsagePercentage = totalDiff > 0 ? ((totalDiff - idleDiff) / totalDiff) * 100 : 0;
+        const inactiveTime = idleDiff + iowaitDiff;
+        const cpuUsagePercentage = totalDiff > 0 ? ((totalDiff - inactiveTime) / totalDiff) * 100 : 0;
 
         this._calculatePerCoreUsage();
         
