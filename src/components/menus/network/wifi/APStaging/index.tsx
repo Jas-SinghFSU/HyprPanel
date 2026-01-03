@@ -7,12 +7,14 @@ import { NetworkService } from 'src/services/network';
 
 const networkService = NetworkService.getInstance();
 const astalNetwork = AstalNetwork.get_default();
+const isConnectingWithPassword = Variable(false);
 
 export const APStaging = (): JSX.Element => {
     const stagingBinding = Variable.derive(
         [bind(astalNetwork, 'wifi'), bind(networkService.wifi.staging)],
         () => {
             if (networkService.wifi.staging.get()?.ssid === undefined) {
+                isConnectingWithPassword.set(false);
                 return <box />;
             }
 
@@ -25,6 +27,7 @@ export const APStaging = (): JSX.Element => {
                     <PasswordInput
                         connecting={networkService.wifi.connecting}
                         staging={networkService.wifi.staging}
+                        isConnectingWithPassword={isConnectingWithPassword}
                     />
                 </box>
             );
