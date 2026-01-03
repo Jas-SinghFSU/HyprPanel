@@ -14,18 +14,6 @@ export const requiredDependencies: Dependency[] = [
         check: ['gtop-2.0'],
     },
     {
-        package: 'bluez',
-        required: true,
-        type: 'service',
-        check: ['bluetooth.service'],
-    },
-    {
-        package: 'bluez-utils',
-        required: true,
-        type: 'executable',
-        check: ['bluetoothctl'],
-    },
-    {
         package: 'networkmanager',
         required: true,
         type: 'service',
