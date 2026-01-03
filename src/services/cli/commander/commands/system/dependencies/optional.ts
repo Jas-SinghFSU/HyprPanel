@@ -85,4 +85,18 @@ export const optionalDependencies: Dependency[] = [
         check: ['matugen'],
         description: 'To use wallpaper-based color schemes',
     },
+    {
+        package: 'bluez',
+        required: false,
+        type: 'service',
+        check: ['bluetooth.service'],
+        description: 'Bluetooth status and controls',
+    },
+    {
+        package: 'bluez-utils',
+        required: false,
+        type: 'executable',
+        check: ['bt-device', 'bt-adapter', 'bt-network', 'bt-obex'],
+        description: 'Bluetooth status and controls',
+    },
 ];

@@ -1,14 +1,16 @@
 import { Variable, bind } from 'astal';
-import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { Astal } from 'astal/gtk3';
+import AstalBluetooth from 'gi://AstalBluetooth?version=0.1';
 import { BarBoxChild } from 'src/components/bar/types.js';
 import options from 'src/configuration';
+import { SystemUtilities } from 'src/core/system/SystemUtilities';
+import { onMiddleClick, onPrimaryClick, onScroll, onSecondaryClick } from 'src/lib/shared/eventHandlers';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { openDropdownMenu } from '../../utils/menu';
-import { onPrimaryClick, onSecondaryClick, onMiddleClick, onScroll } from 'src/lib/shared/eventHandlers';
 
 const bluetoothService = AstalBluetooth.get_default();
+const btStatus = SystemUtilities.checkServiceStatus(['bluetooth.service']);
 
 const { rightClick, middleClick, scrollDown, scrollUp } = options.bar.bluetooth;
 
@@ -20,12 +22,18 @@ const Bluetooth = (): BarBoxChild => {
     const BluetoothLabel = ({ isPowered, devices }: BluetoothLabelProps): JSX.Element => {
         const connectDevices = devices.filter((device) => device.connected);
 
-        const label =
-            isPowered && connectDevices.length
-                ? ` Connected (${connectDevices.length})`
-                : isPowered
-                  ? 'On'
-                  : 'Off';
+        let label = '';
+
+        if (btStatus === 'MISSING') {
+            label = 'Unavailable';
+        } else {
+            label =
+                isPowered && connectDevices.length
+                    ? ` Connected (${connectDevices.length})`
+                    : isPowered
+                      ? 'On'
+                      : 'Off';
+        }
 
         return <label label={label} className={'bar-button-label bluetooth'} />;
     };
