@@ -9,57 +9,65 @@ import { NetworkService } from 'src/services/network';
 const networkService = NetworkService.getInstance();
 
 export const WirelessAPs = (): JSX.Element => {
-    const wapBinding = Variable.derive(
+    const filteredWAPs = Variable.derive(
         [
             bind(networkService.wifi.staging),
             bind(networkService.wifi.connecting),
             bind(networkService.wifi.wifiAccessPoints),
             bind(networkService.wifi.isWifiEnabled),
         ],
-        () => {
-            const filteredWAPs = networkService.wifi.getFilteredWirelessAPs();
+        () => networkService.wifi.getFilteredWirelessAPs(),
+    );
 
-            if (filteredWAPs.length <= 0 && networkService.wifi.staging.get() === undefined) {
-                return (
-                    <label
-                        className={'waps-not-found dim'}
-                        expand
-                        halign={Gtk.Align.CENTER}
-                        valign={Gtk.Align.CENTER}
-                        label={'No Wi-Fi Networks Found'}
-                    />
-                );
-            }
+    const hasNetworks = Variable.derive(
+        [bind(filteredWAPs), bind(networkService.wifi.staging)],
+        (aps, staging) => {
+            return aps.length > 0 || staging !== undefined;
+        },
+    );
 
-            return (
+    let isDestroying = false;
+
+    return (
+        <box
+            className={'available-waps'}
+            vertical
+            setup={(self: { connect: (arg0: string, arg1: () => void) => void }) => {
+                self.connect('unrealize', () => {
+                    if (!isDestroying) {
+                        isDestroying = true;
+                        filteredWAPs.drop();
+                        hasNetworks.drop();
+                    }
+                });
+            }}
+        >
+            <revealer revealChild={bind(hasNetworks).as((v) => !v)}>
+                <label
+                    className={'waps-not-found dim'}
+                    expand
+                    halign={Gtk.Align.CENTER}
+                    valign={Gtk.Align.CENTER}
+                    label={'No Wi-Fi Networks Found'}
+                />
+            </revealer>
+            <revealer revealChild={bind(hasNetworks)}>
                 <scrollable className={'menu-scroller wap'}>
                     <box className={'available-waps-list'} vertical>
-                        {filteredWAPs.map((ap: AstalNetwork.AccessPoint) => {
-                            return (
-                                <box className={'network-element-item'}>
+                        {bind(filteredWAPs).as((aps) =>
+                            aps.map((ap: AstalNetwork.AccessPoint) => (
+                                <box className={'network-element-item'} key={ap.bssid}>
                                     <AccessPoint
                                         connecting={networkService.wifi.connecting}
                                         accessPoint={ap}
                                     />
                                     <Controls connecting={networkService.wifi.connecting} accessPoint={ap} />
                                 </box>
-                            );
-                        })}
+                            )),
+                        )}
                     </box>
                 </scrollable>
-            );
-        },
-    );
-
-    return (
-        <box
-            className={'available-waps'}
-            vertical
-            onDestroy={() => {
-                wapBinding.drop();
-            }}
-        >
-            {wapBinding()}
+            </revealer>
         </box>
     );
 };
