@@ -18,7 +18,7 @@ const getBluetoothIcon = (iconName: string): string => {
         ['^bluetooth*', '󰂯'],
         ['^camera*', '󰄀'],
         ['^computer*', '󰟀'],
-        ['^input-gaming*', '󰍬'],
+        ['^input-gaming*', '󰊖'],
         ['^input-keyboard*', '󰌌'],
         ['^input-mouse*', '󰍽'],
         ['^input-tablet*', '󰓶'],
