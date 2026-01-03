@@ -63,7 +63,7 @@ class RamUsageService {
                 throw new Error('Failed to parse /proc/meminfo for memory values.');
             }
 
-            let arcSize = this._getZfsArcSize();
+            const arcSize = this._getZfsArcSize();
 
             const totalRamInBytes = parseInt(totalMatch[1], 10) * 1024;
             const availableRamInBytes = parseInt(availableMatch[1], 10) * 1024 + arcSize;
