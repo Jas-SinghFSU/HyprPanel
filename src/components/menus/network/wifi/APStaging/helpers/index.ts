@@ -3,7 +3,6 @@ import { Gdk } from 'astal/gtk3';
 import { Entry } from 'astal/gtk3/widget';
 import AstalNetwork from 'gi://AstalNetwork?version=0.1';
 import { NetworkService } from 'src/services/network';
-import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 const networkService = NetworkService.getInstance();
 
@@ -11,6 +10,7 @@ export function handlePasswordInput(
     self: Entry,
     event: Gdk.Event,
     staging: Variable<AstalNetwork.AccessPoint | undefined>,
+    isConnectingWithPassword: Variable<boolean>,
 ): void {
     const keyPressed = event.get_keyval()[1];
     const accessPoint = staging.get();
@@ -20,16 +20,21 @@ export function handlePasswordInput(
         return;
     }
 
-    networkService.wifi.connectToAPWithPassword(accessPoint, password).catch((err) => {
-        if (self.is_visible() && self.get_realized()) {
-            self.grab_focus();
-        }
+    isConnectingWithPassword.set(true);
 
-        SystemUtilities.notify({
-            summary: 'Network',
-            body: err.message,
+    networkService.wifi
+        .connectToAPWithPassword(accessPoint, password)
+        .then(() => {
+            isConnectingWithPassword.set(false);
+        })
+        .catch(() => {
+            // Error notification is already handled by WifiManager._handleConnectionError
+            isConnectingWithPassword.set(false);
+
+            if (self.is_visible() && self.get_realized()) {
+                self.grab_focus();
+            }
+
+            self.text = '';
         });
-
-        self.text = '';
-    });
 }
