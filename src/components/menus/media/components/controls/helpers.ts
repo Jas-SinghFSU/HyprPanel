@@ -93,8 +93,9 @@ export const getNextPlayer = (): void => {
     const allPlayers = mprisService.get_players();
     const filteredPlayers = filterPlayers(allPlayers, ignore.get());
 
-    const currentPlayerIndex = filteredPlayers
-        .findIndex((player) => player.busName === currentPlayer.busName);
+    const currentPlayerIndex = filteredPlayers.findIndex(
+        (player) => player.busName === currentPlayer.busName,
+    );
     const totalPlayers = filteredPlayers.length;
 
     if (totalPlayers === 1) {
@@ -123,15 +124,14 @@ export const getPreviousPlayer = (): void => {
     const allPlayers = mprisService.get_players();
     const filteredPlayers = filterPlayers(allPlayers, ignore.get());
 
-    const currentPlayerIndex = filteredPlayers
-        .findIndex((player) => player.busName === currentPlayer.busName);
+    const currentPlayerIndex = filteredPlayers.findIndex(
+        (player) => player.busName === currentPlayer.busName,
+    );
     const totalPlayers = filteredPlayers.length;
 
     if (totalPlayers === 1) {
         return activePlayer.set(filteredPlayers[0]);
     }
 
-    return activePlayer.set(
-        filteredPlayers[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers],
-    );
+    return activePlayer.set(filteredPlayers[(currentPlayerIndex - 1 + totalPlayers) % totalPlayers]);
 };
