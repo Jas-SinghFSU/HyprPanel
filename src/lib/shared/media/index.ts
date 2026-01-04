@@ -3,25 +3,6 @@ import AstalMpris from 'gi://AstalMpris?version=0.1';
 const normalizeName = (name: string): string => name.toLowerCase().replace(/\s+/g, '_');
 
 /**
- * Gets the desktop entry name from an MPRIS player.
- *
- * The desktop entry typically contains the actual application name,
- * which is more reliable than the bus name for Electron apps.
- *
- * @param player The MPRIS player.
- *
- * @returns The desktop entry name or empty string.
- */
-const getDesktopEntry = (player: AstalMpris.Player): string => {
-    try {
-        return player.entry || '';
-    } catch {
-        return '';
-    }
-};
-
-
-/**
  * Checks if a media player should be ignored based on the filter list.
  *
  * This function determines whether the provided MPRIS player should be filtered out
@@ -32,10 +13,7 @@ const getDesktopEntry = (player: AstalMpris.Player): string => {
  *
  * @returns True if the player should be ignored, false otherwise.
  */
-export const isPlayerIgnored = (
-    player: AstalMpris.Player | null | undefined,
-    filter: string[],
-): boolean => {
+export const isPlayerIgnored = (player: AstalMpris.Player | null | undefined, filter: string[]): boolean => {
     if (!player) {
         return false;
     }
@@ -44,7 +22,7 @@ export const isPlayerIgnored = (
 
     const identity = player.identity || '';
     const normalizedIdentity = normalizeName(identity);
-    
+
     return playerFilters.has(normalizedIdentity);
 };
 
@@ -58,10 +36,7 @@ export const isPlayerIgnored = (
  *
  * @returns Filtered array of players.
  */
-export const filterPlayers = (
-    players: AstalMpris.Player[],
-    filter: string[],
-): AstalMpris.Player[] => {
+export const filterPlayers = (players: AstalMpris.Player[], filter: string[]): AstalMpris.Player[] => {
     const filteredPlayers = players.filter((player: AstalMpris.Player) => {
         return !isPlayerIgnored(player, filter);
     });

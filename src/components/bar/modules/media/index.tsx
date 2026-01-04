@@ -27,10 +27,13 @@ const { ignore } = options.menus.media;
 
 const isVis = Variable(!show_active_only.get());
 
-Variable.derive([bind(show_active_only), bind(mprisService, 'players'), bind(ignore)], (showActive, players, ignoredApps) => {
-    const filteredPlayers = filterPlayers(players, ignoredApps);
-    isVis.set(!showActive || filteredPlayers?.length > 0);
-});
+Variable.derive(
+    [bind(show_active_only), bind(mprisService, 'players'), bind(ignore)],
+    (showActive, players, ignoredApps) => {
+        const filteredPlayers = filterPlayers(players, ignoredApps);
+        isVis.set(!showActive || filteredPlayers?.length > 0);
+    },
+);
 
 const Media = (): BarBoxChild => {
     const allPlayers = mprisService.get_players();

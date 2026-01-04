@@ -63,8 +63,8 @@ export class MediaPlayerService {
 
         const preferred = preferredPlayer.get();
         if (preferred) {
-            const preferredPlayerMatch = filteredPlayers.find(
-                player => player.identity?.toLowerCase().includes(preferred.toLowerCase())
+            const preferredPlayerMatch = filteredPlayers.find((player) =>
+                player.identity?.toLowerCase().includes(preferred.toLowerCase()),
             );
             if (preferredPlayerMatch) {
                 this.activePlayer.set(preferredPlayerMatch);
@@ -112,7 +112,8 @@ export class MediaPlayerService {
         }
 
         const preferred = preferredPlayer.get();
-        const isPreferred = preferred && addedPlayer.identity?.toLowerCase().includes(preferred.toLowerCase());
+        const isPreferred =
+            preferred && addedPlayer.identity?.toLowerCase().includes(preferred.toLowerCase());
 
         if (this.activePlayer.get() === undefined || isPreferred) {
             this.activePlayer.set(addedPlayer);
@@ -132,16 +133,12 @@ export class MediaPlayerService {
         const allPlayers = this._mprisService.get_players();
         const filteredPlayers = filterPlayers(allPlayers, ignore.get());
 
-        if (
-            filteredPlayers.length === 1 &&
-            closedPlayer.busName === filteredPlayers[0]?.busName
-        ) {
+        if (filteredPlayers.length === 1 && closedPlayer.busName === filteredPlayers[0]?.busName) {
             return this.activePlayer.set(undefined);
         }
 
         if (closedPlayer.busName === this.activePlayer.get()?.busName) {
-            const nextPlayer = filteredPlayers
-                .find((player) => player.busName !== closedPlayer.busName);
+            const nextPlayer = filteredPlayers.find((player) => player.busName !== closedPlayer.busName);
             this.activePlayer.set(nextPlayer);
         }
     }
