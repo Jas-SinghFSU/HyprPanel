@@ -43,19 +43,16 @@ class GpuUsageService {
     }
 
     /**
-     * Detects the GPU vendor (NVIDIA or AMD) by checking available commands
-     */
-    /**
      * Detects the GPU vendor by checking available commands.
      * Easily extendable for new vendors/tools.
      */
     private _detectGpuVendor(): void {
-        const vendorDetectionMap: Record<string, { cmd: string; }> = {
+        const vendorDetectionMap: Record<string, { cmd: string }> = {
             nvidia: {
-                cmd: 'gpustat --json'
+                cmd: 'gpustat --json',
             },
             amd: {
-                cmd: 'amdgpu_top --json --dump'
+                cmd: 'amdgpu_top --json --dump',
             },
             // Add more vendors/tools here as needed
             // Maybe someone can add here the part for intel GPUs
@@ -68,7 +65,7 @@ class GpuUsageService {
                     this._gpuVendor = vendor as GpuVendor;
                     return;
                 }
-            } catch (error) {
+            } catch {
                 continue;
             }
         }
