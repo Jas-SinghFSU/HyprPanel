@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
-import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
+import { renderResourceLabel } from '../../utils/systemResource';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import { GenericResourceData, ResourceLabelType, LABEL_TYPES } from 'src/services/system/types';
 import RamUsageService from 'src/services/system/ramUsage';
