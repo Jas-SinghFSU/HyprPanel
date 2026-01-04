@@ -8,8 +8,18 @@ import CpuUsageService from 'src/services/system/cpuUsage';
 
 const inputHandler = InputHandlerService.getInstance();
 
-const { label, round, showPerCoreUsage, leftClick, rightClick, middleClick, scrollUp, scrollDown, pollingInterval, icon } =
-    options.bar.customModules.cpu;
+const {
+    label,
+    round,
+    showPerCoreUsage,
+    leftClick,
+    rightClick,
+    middleClick,
+    scrollUp,
+    scrollDown,
+    pollingInterval,
+    icon,
+} = options.bar.customModules.cpu;
 
 const cpuService = new CpuUsageService({ frequency: pollingInterval });
 
@@ -30,15 +40,17 @@ export const Cpu = (): BarBoxChild => {
                 const displayUsage = round ? Math.round(cpuUsg) : cpuUsg.toFixed(2);
                 return `CPU: ${displayUsage}%`;
             }
-            
+
             if (perCoreUsage.length === 0) return 'CPU';
-            
-            const coreLines = perCoreUsage.map((usage, index) => {
-                const displayUsage = round ? Math.round(usage) : usage.toFixed(2);
-                return `Core ${index}: ${displayUsage}%`;
-            }).join('\n');
-            
-            return `${coreLines}`;
+
+            const coreLines = perCoreUsage
+                .map((usage, index) => {
+                    const displayUsage = round ? Math.round(usage) : usage.toFixed(2);
+                    return `Core ${index}: ${displayUsage}%`;
+                })
+                .join('\n');
+
+            return coreLines;
         },
     );
 

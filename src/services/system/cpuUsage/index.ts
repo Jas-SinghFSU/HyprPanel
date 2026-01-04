@@ -114,7 +114,7 @@ class CpuUsageService {
         const cpuUsagePercentage = totalDiff > 0 ? ((totalDiff - inactiveTime) / totalDiff) * 100 : 0;
 
         this._calculatePerCoreUsage();
-        
+
         this._previousCpuData = currentCpuData;
 
         return cpuUsagePercentage;
