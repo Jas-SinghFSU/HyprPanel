@@ -22,6 +22,7 @@ export type BarModuleProps = {
     label?: string | Binding<string>;
     truncationSize?: Binding<number>;
     labelHook?: LabelHook;
+    textIconHook?: LabelHook;
     boundLabel?: string;
     tooltipText?: string | Binding<string>;
     boxClass: string;

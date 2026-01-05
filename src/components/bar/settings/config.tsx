@@ -102,6 +102,21 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option opt={options.theme.bar.buttons.modules.cpu.spacing} title="Spacing" type="string" />
                 <Option opt={options.bar.customModules.cpu.round} title="Round" type="boolean" />
                 <Option
+                    opt={options.bar.customModules.cpu.colorLow}
+                    title="Low Usage Color (<70%)"
+                    type="color"
+                />
+                <Option
+                    opt={options.bar.customModules.cpu.colorMedium}
+                    title="Medium Usage Color (<90%)"
+                    type="color"
+                />
+                <Option
+                    opt={options.bar.customModules.cpu.colorHigh}
+                    title="High Usage Color (>=90%)"
+                    type="color"
+                />
+                <Option
                     opt={options.bar.customModules.cpu.pollingInterval}
                     title="Polling Interval"
                     type="number"
