@@ -4,11 +4,14 @@
 
 .dashboard-content-items {
     min-width: 28.5em;
-    background: if($bar-menus-monochrome, $bar-menus-background, $bar-menus-menu-dashboard-background-color);
+    background: if(
+        $bar-menus-monochrome, 
+        rgba($bar-menus-background, $bar-menus-opacity * 0.01), 
+        rgba($bar-menus-menu-dashboard-background-color, $bar-menus-opacity * 0.01)
+    );
     border: $bar-menus-border-size solid
         if($bar-menus-monochrome, $bar-menus-border-color, $bar-menus-menu-dashboard-border-color);
     border-radius: $bar-menus-border-radius;
-    opacity: $bar-menus-opacity * 0.01;
 
     button {
         border-radius: $bar-menus-buttons-radius;
