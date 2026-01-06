@@ -93,7 +93,45 @@ startRecording() {
 
         wf-recorder $WF_RECORDER_OPTS $rotation_filter --geometry "${x},${y} ${scaled_width}x${scaled_height}" --file "$outputPath" &
     elif [ "$target" == "region" ]; then
-        wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$outputPath" &
+        rotation_filter=""
+        geometry=$(slurp)
+        read sel_x sel_y sel_w sel_h <<< $($geometry || echo "0")
+        sel_center_x=$((sel_x + sel_w/2))
+        sel_center_y=$((sel_y + sel_h/2))
+
+        # Get transform value
+        transform=$(hyprctl monitors -j | jq --argjson x "$sel_center_x" --argjson y "$sel_center_y" '
+        map({
+            name: .name,
+            transform: .transform,
+            bounds: (
+            if .transform == 1 then   # 90°
+                {x: .x, y: .y, w: .height, h: .width}
+            elif .transform == 3 then # 270°
+                {x: .x, y: .y, w: .height, h: .width}
+            elif .transform == 2 then # 180°
+                {x: .x - .width, y: .y - .height, w: .width, h: .height}
+            else                     # 0° or flipped
+                {x: .x, y: .y, w: .width, h: .height}
+            end
+            )
+        }) |
+        .[] |
+        select($x >= .bounds.x and $x < .bounds.x + .bounds.w and
+                $y >= .bounds.y and $y < .bounds.y + .bounds.h) |
+        .transform
+        ')
+
+        case "$transform" in
+        1)
+            rotation_filter="-F transpose=1 -t 1"
+            ;;
+        3)
+            rotation_filter="-F transpose=2 -t 3"
+            ;;
+        esac
+
+        wf-recorder $rotation_filter $WF_RECORDER_OPTS --geometry "${geometry}" --file "$outputPath" &
     fi
 
     disown "$(jobs -p | tail -n 1)"
