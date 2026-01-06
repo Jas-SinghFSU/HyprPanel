@@ -81,6 +81,12 @@ export const NotificationSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
+                    opt={options.notifications.dndOnScreencast}
+                    title="Do Not Disturb On Screenshare"
+                    subtitle="Automatically enables do-not-disturb when a screenshare is started and disables it when one ends."
+                    type="boolean"
+                />
+                <Option
                     opt={options.notifications.cache_actions}
                     title="Preserve Actions"
                     subtitle="Persist action buttons after reboot."
