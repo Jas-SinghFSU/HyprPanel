@@ -1,4 +1,5 @@
 export type KbLabelType = 'layout' | 'code';
+export type KeyboardLayoutShorteningRules = Record<string, string>;
 
 export type HyprctlKeyboard = {
     address: string;

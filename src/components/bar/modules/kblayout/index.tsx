@@ -11,13 +11,22 @@ import options from 'src/configuration';
 const inputHandler = InputHandlerService.getInstance();
 
 const hyprlandService = AstalHyprland.get_default();
-const { label, labelType, icon, leftClick, rightClick, middleClick, scrollUp, scrollDown } =
-    options.bar.customModules.kbLayout;
+const {
+    label,
+    labelType,
+    icon,
+    leftClick,
+    rightClick,
+    middleClick,
+    scrollUp,
+    scrollDown,
+    shorteningRules,
+} = options.bar.customModules.kbLayout;
 
 function setLabel(self: Astal.Label): void {
     try {
         const devices = hyprlandService.message('j/devices');
-        self.label = getKeyboardLayout(devices, labelType.get());
+        self.label = getKeyboardLayout(devices, labelType.get(), shorteningRules.get());
     } catch (error) {
         console.error(error);
     }
@@ -40,6 +49,10 @@ export const KbInput = (): BarBoxChild => {
             );
 
             useHook(self, labelType, () => {
+                setLabel(self);
+            });
+
+            useHook(self, shorteningRules, () => {
                 setLabel(self);
             });
         },
