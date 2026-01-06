@@ -73,12 +73,28 @@ export const RightShortcut1 = (): JSX.Element => {
     return <ShortcutButton shortcut={right.shortcut1} className={'dashboard-button top-button paired'} />;
 };
 
+export const RightShortcut2 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut2)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut2} className={'dashboard-button'} />;
+};
+
 export const RightShortcut3 = (): JSX.Element => {
     if (!hasCommand(right.shortcut3)) {
         return <box />;
     }
 
     return <ShortcutButton shortcut={right.shortcut3} className={'dashboard-button top-button paired'} />;
+};
+
+export const RightShortcut4 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut4)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut4} className={'dashboard-button'} />;
 };
 
 interface ShortcutButtonProps extends Widget.ButtonProps {
