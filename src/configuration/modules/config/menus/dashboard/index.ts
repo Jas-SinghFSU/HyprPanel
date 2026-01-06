@@ -53,10 +53,20 @@ export default {
                 tooltip: opt('Color Picker'),
                 command: opt('sleep 0.5 && hyprpicker -a'),
             },
+            shortcut2: {
+                icon: opt('󰒓'),
+                tooltip: opt('HyprPanel Configuration'),
+                command: opt('hyprpanel toggleWindow settings-dialog'),
+            },
             shortcut3: {
                 icon: opt('󰄀'),
                 tooltip: opt('Screenshot'),
                 command: opt(`bash -c "${SRC_DIR}/scripts/snapshot.sh"`),
+            },
+            shortcut4: {
+                icon: opt('󰑊'),
+                tooltip: opt('Record Screen'),
+                command: opt('hyprpanel_record'),
             },
         },
     },
