@@ -166,22 +166,9 @@ export class GdkMonitorService {
             return false;
         }
 
-        const isRotated90 = hyprlandMonitor.transform % 2 !== 0;
-        const gdkScaleFactor = Math.ceil(hyprlandMonitor.scale);
+        const hyprlandKey = `${hyprlandMonitor.model}_${hyprlandMonitor.x}x${hyprlandMonitor.y}`;
 
-        const scaleFactorWidth = Math.trunc(hyprlandMonitor.width / gdkScaleFactor);
-        const scaleFactorHeight = Math.trunc(hyprlandMonitor.height / gdkScaleFactor);
-        const gdkScaleFactorKey = `${hyprlandMonitor.model}_${scaleFactorWidth}x${scaleFactorHeight}_${gdkScaleFactor}`;
-
-        const transWidth = isRotated90 ? hyprlandMonitor.height : hyprlandMonitor.width;
-        const transHeight = isRotated90 ? hyprlandMonitor.width : hyprlandMonitor.height;
-        const scaleWidth = Math.trunc(transWidth / hyprlandMonitor.scale);
-        const scaleHeight = Math.trunc(transHeight / hyprlandMonitor.scale);
-        const hyprlandScaleFactorKey = `${hyprlandMonitor.model}_${scaleWidth}x${scaleHeight}_${gdkScaleFactor}`;
-
-        const keyMatch = gdkMonitor.key === gdkScaleFactorKey || gdkMonitor.key === hyprlandScaleFactorKey;
-
-        return keyMatch;
+        return gdkMonitor.key === hyprlandKey;
     }
 
     /**
@@ -209,9 +196,8 @@ export class GdkMonitorService {
             try {
                 const model = curMonitor.get_model() ?? '';
                 const geometry = curMonitor.get_geometry();
-                const scaleFactor = curMonitor.get_scale_factor();
 
-                const key = `${model}_${geometry.width}x${geometry.height}_${scaleFactor}`;
+                const key = `${model}_${geometry.x}x${geometry.y}`;
                 gdkMonitors[i] = { key, model, used: false };
             } catch (error) {
                 console.warn(`Failed to get properties for monitor ${i}:`, error);
