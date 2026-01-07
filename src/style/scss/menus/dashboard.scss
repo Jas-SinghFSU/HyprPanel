@@ -633,3 +633,11 @@
     margin-top: 1.3em;
     margin-bottom: 1.3em;
 }
+
+.menu-scroller.dashboard {
+    min-height: 40em;
+    min-width: 28.7em;
+    scrollbar contents trough slider {
+        background: $bar-menus-menu-dashboard-scroller-color;
+    }
+}
