@@ -1,4 +1,3 @@
-import GObject from 'astal/gobject';
 import options from 'src/configuration';
 import { normalizeToAbsolutePath } from 'src/lib/path/helpers';
 import icons from '../lib/icons/icons';
@@ -28,7 +27,7 @@ export const initializeTrackers = (resetCssFunc: () => void): void => {
         ensureMatugenWallpaper();
     });
 
-    (wallpaperService as GObject.Object).connect('changed', () => {
+    wallpaperService.connect('changed', () => {
         console.info('Wallpaper changed, regenerating Matugen colors...');
         if (options.theme.matugen.get()) {
             resetCssFunc();
