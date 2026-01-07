@@ -1,6 +1,16 @@
-# HyprPanel 🚀
+# HyprPanel
 
 A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
+
+## Project Status
+
+HyprPanel is in maintenance mode. Bugs will still be fixed and PRs are welcome, but new features won't be added.
+
+Through building and maintaining this panel, I've learned a lot from your feedback. There have been some recurring pain points since the start: configurability, installation headaches, too many dependencies, and breaking changes from dependencies HyprPanel relies on. There are also gaps between what I want this panel to be and what the tools/frameworks HyprPanel relies on offer - though this is not to take away from those frameworks. It's more-so that with the vision I have for building a more cohesive shell, I need more control over system services (NetworkManager, Bluetooth, etc.) rather than relying on hacky dbus scripts to bridge the gap. Additionally, this should be obvious but GJS (even with TypeScript) just isn't a good systems language.
+
+To address all of this, I've started working on [Wayle](https://github.com/Jas-SinghFSU/wayle/) - a compositor-agnostic successor built entirely in Rust. I'm building my own services, CLI, and tooling from scratch. The goals: much easier installation, TOML config instead of the JSON mess, better theming with proper Pywal/Matugen/Wallust integration, a real design system, and native system service management out of the box.
+
+If you like HyprPanel, Wayle is meant to have a lot of feature parity with all these improvements. And if you switch to a different compositor/window-manager, you can take your config/shell along with you (assuming the compositor implement the layer shell protocol).
 
 ![HyprPanel1](./assets/hp1.png)
 ![HyprPanel2](./assets/hp2.png)
@@ -146,7 +156,7 @@ If you install the fonts after installing HyperPanel, you will need to restart H
 
 ### NixOS & Home-Manager
 
-Please see https://hyprpanel.com/getting_started/installation.html#nixos.
+Please see <https://hyprpanel.com/getting_started/installation.html#nixos>.
 
 ### Launch the panel
 
