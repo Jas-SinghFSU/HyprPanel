@@ -7,3 +7,5 @@ prepare
 **/.claude/settings.local.json
 
 .direnv/
+
+pnpm-lock.yaml
