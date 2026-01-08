@@ -27,7 +27,9 @@ export const isActive = Variable(false);
 export const toggleSunset = (isActive: Variable<boolean>): void => {
     execAsync(isActiveCommand).then((res) => {
         if (res === 'no') {
-            execAsync(`bash -c "nohup hyprsunset -t ${temperature.get()} > /dev/null 2>&1 &"`).then(() => {
+            const curTemperature = temperature.get();
+            const parameter = curTemperature === 'none' ? '' : `-t ${curTemperature}`;
+            execAsync(`bash -c "nohup hyprsunset ${parameter} > /dev/null 2>&1 &"`).then(() => {
                 execAsync(isActiveCommand).then((res) => {
                     isActive.set(res === 'yes');
                 });
