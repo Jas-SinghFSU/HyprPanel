@@ -117,6 +117,8 @@ export type WindowLayer = 'top' | 'bottom' | 'overlay' | 'background';
 
 export type ActiveWsIndicator = 'underline' | 'highlight' | 'color';
 
+export type ActiveWsHighlightKind = 'active' | 'focused' | 'both';
+
 export type MatugenColors = {
     background: HexColor;
     error: HexColor;

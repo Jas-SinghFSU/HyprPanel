@@ -21,6 +21,7 @@ const {
     show_icons,
     show_numbered,
     numbered_active_indicator,
+    activeIndicatorKind,
     workspaceIconMap,
     showWsIcons,
     showApplicationIcons,
@@ -48,6 +49,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             bind(occupied),
             bind(show_numbered),
             bind(numbered_active_indicator),
+            bind(activeIndicatorKind),
             bind(spacing),
             bind(workspaceIconMap),
             bind(showWsIcons),
@@ -78,6 +80,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             occupiedStatus: string,
             displayNumbered: boolean,
             numberedActiveIndicator: string,
+            activeIndicatorKind: string,
             spacingValue: number,
             workspaceIconMapping: WorkspaceIconMap,
             displayWorkspaceIcons: boolean,
@@ -123,7 +126,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                             valign={Gtk.Align.CENTER}
                             css={
                                 `margin: 0rem ${0.375 * spacingValue}rem;` +
-                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
+                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor, activeIndicatorKind) : ''}`
                             }
                             className={renderClassnames(
                                 displayIcons,

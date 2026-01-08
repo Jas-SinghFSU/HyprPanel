@@ -28,6 +28,20 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
 };
 
 /**
+ * Determines if a workspace is active on any monitor.
+ *
+ * This function checks if the workspace with the specified index is currently active on any monitor.
+ * It uses the `hyprlandService` to iterate through all monitors and check their active workspaces.
+ *
+ * @param i The index of the workspace to check.
+ * @returns True if the workspace is active on any monitor, false otherwise.
+ */
+
+const isWorkspaceActiveOnAnyMonitor = (i: number): boolean => {
+    return hyprlandService.get_monitors().some((monitor) => monitor?.activeWorkspace?.id === i);
+};
+
+/**
  * Retrieves the icon for a given workspace.
  *
  * This function returns the icon associated with a workspace from the provided workspace icon map.
@@ -69,6 +83,7 @@ const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
  * @param i The index of the workspace for which to retrieve the color.
  * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
  * @param monitor The index of the monitor to check for active workspaces.
+ * @param highlightKind Which kind of workspaces to highlight: 'active', 'focused', or 'both'.
  *
  * @returns A CSS string representing the color and background for the workspace. If no color is found, returns an empty string.
  */
@@ -77,6 +92,7 @@ export const getWsColor = (
     i: number,
     smartHighlight: boolean,
     monitor: number,
+    highlightKind: string,
 ): string => {
     const iconEntry = wsIconMap[i];
     const hasColor =
@@ -90,7 +106,7 @@ export const getWsColor = (
         showWsIcons.get() &&
         smartHighlight &&
         wsActiveIndicator.get() === 'highlight' &&
-        (hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i))
+        getHighlightWs(highlightKind, monitor, i)
     ) {
         const iconColor = monochrome.get() ? background.get() : wsBackground.get();
         const iconBackground = hasColor && isValidGjsColor(iconEntry.color) ? iconEntry.color : active.get();
@@ -173,6 +189,29 @@ export const getAppIcon = (
 };
 
 /**
+ * Determines if a workspace is active based on the highlight kind.
+ *
+ * This function checks if the workspace with the specified index is considered active based on the
+ * provided highlight kind ('active', 'focused', or 'both'). It uses the `hyprlandService` to determine
+ * the focused workspace and whether the workspace is active on the given monitor.
+ *
+ * @param highlightKind Which kind of workspaces to highlight: 'active', 'focused', or 'both'.
+ * @param monitor The index of the monitor to check for active workspaces.
+ * @param i The index of the workspace for which to check activity.
+ *
+ * @returns True if the workspace is considered active based on the highlight kind, false otherwise.
+ */
+export const getHighlightWs = (highlightKind: string, monitor: number, i: number): boolean => {
+    const isWorkspaceFocused = hyprlandService.focusedWorkspace?.id === i;
+    const isWorkspaceActive = isWorkspaceActiveOnMonitor(monitor, i);
+    return (
+        (highlightKind == 'both' && (isWorkspaceActive || isWorkspaceFocused)) ||
+        (highlightKind == 'active' && isWorkspaceActive) ||
+        (highlightKind == 'focused' && isWorkspaceFocused)
+    );
+};
+
+/**
  * Renders the class names for a workspace.
  *
  * This function generates the appropriate class names for a workspace based on various settings such as
@@ -197,26 +236,28 @@ export const renderClassnames = (
     monitor: number,
     i: number,
 ): string => {
-    const isWorkspaceActive =
-        hyprlandService.focusedWorkspace?.id === i || isWorkspaceActiveOnMonitor(monitor, i);
-    const isActive = isWorkspaceActive ? 'active' : '';
+    const isActive = isWorkspaceActiveOnMonitor(monitor, i);
+    const isActiveClass = isActive ? 'active' : 'inactive';
+    const isFocused = hyprlandService.focusedWorkspace?.id === i;
+    const isFocusedClass = isFocused ? 'focused' : '';
+    const activeOnAnyWs = isWorkspaceActiveOnAnyMonitor(i);
+    const activeOnAnyWsClass = activeOnAnyWs ? 'active-on-any' : '';
 
     if (showIcons) {
-        return `workspace-icon txt-icon bar ${isActive}`;
+        return `workspace-icon txt-icon bar ${isActiveClass}`;
     }
 
     if (showNumbered || showWsIcons) {
-        const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
+        const numActiveInd = isActive ? numberedActiveIndicator : '';
 
         const wsIconClass = showWsIcons ? 'txt-icon' : '';
         const smartHighlightClass = smartHighlight ? 'smart-highlight' : '';
-
-        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActive}`;
+        const className = `workspace-number can_${numberedActiveIndicator} ${numActiveInd} ${wsIconClass} ${smartHighlightClass} ${isActiveClass} ${isFocusedClass} ${activeOnAnyWsClass}`;
 
         return className.trim();
     }
 
-    return `default ${isActive}`;
+    return `default ${isActiveClass}`;
 };
 
 /**
