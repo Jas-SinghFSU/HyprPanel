@@ -44,6 +44,14 @@ export class GdkMonitorService {
      * @returns The corresponding Hyprland monitor id.
      */
     public mapGdkToHyprland(monitor: number): number {
+        const monitorMappings = this.getMonitorMappings();
+
+        for (const monitorMapping of monitorMappings) {
+            if (monitorMapping.gdkIndex === monitor) {
+                return monitorMapping.hyprlandId;
+            }
+        }
+
         const gdkMonitors = this._getGdkMonitors();
 
         if (Object.keys(gdkMonitors).length === 0) {
@@ -77,6 +85,14 @@ export class GdkMonitorService {
      * @returns The corresponding GDK monitor id.
      */
     public mapHyprlandToGdk(monitor: number): number {
+        const monitorMappings = this.getMonitorMappings();
+
+        for (var monitorMapping of monitorMappings) {
+            if (monitorMapping.hyprlandId === monitor) {
+                return monitorMapping.gdkIndex;
+            }
+        }
+
         const gdkMonitors = this._getGdkMonitors();
         const gdkCandidates = Object.entries(gdkMonitors).map(([monitorId, monitorMetadata]) => ({
             id: Number(monitorId),
@@ -101,6 +117,38 @@ export class GdkMonitorService {
             (candidate, hyprlandMonitor) => this._matchMonitorKey(hyprlandMonitor, candidate.monitor),
             tempUsedIds,
         );
+    }
+
+    public getMonitorMappings(): MonitorMapping[] {
+        const display = Gdk.Display.get_default();
+        const monitorCount = display.get_n_monitors();
+
+
+        const x : IHash = {};
+
+        for (let gdkMonitorIndex = 0; gdkMonitorIndex < monitorCount; gdkMonitorIndex++) {
+            const monitor = display.get_monitor(gdkMonitorIndex);
+            if (monitor === null) {
+                console.warn(`[forMonitors] Skipping invalid monitor at index ${gdkMonitorIndex}`);
+                continue;
+            }
+            x[monitor] = gdkMonitorIndex;
+        }
+
+        const monitorMappings: MonitorMapping[] = [];
+
+        const hyprlandMonitors = hyprlandService.get_monitors();
+        for (let i = 0; i < monitorCount; i++) {
+            const gdkMonitor = display.get_monitor_at_point(hyprlandMonitors[i].x, hyprlandMonitors[i].y);
+            monitorMappings.push({
+                gdkIndex: x[gdkMonitor],
+                hyprlandId: hyprlandMonitors[i].id,
+            });
+        }
+
+        // console.log("monitorMappings ", monitorMappings);
+
+        return monitorMappings;
     }
 
     /**

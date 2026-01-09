@@ -134,24 +134,9 @@ export async function forMonitors(
         return [];
     }
 
-    const monitorCount = display.get_n_monitors();
     const gdkMonitorService = GdkMonitorService.getInstance();
-    const monitorMappings: MonitorMapping[] = [];
+    const monitorMappings: MonitorMapping[] = gdkMonitorService.getMonitorMappings();
 
-    for (let gdkMonitorIndex = 0; gdkMonitorIndex < monitorCount; gdkMonitorIndex++) {
-        const monitor = display.get_monitor(gdkMonitorIndex);
-        if (monitor === null) {
-            console.warn(`[forMonitors] Skipping invalid monitor at index ${gdkMonitorIndex}`);
-            continue;
-        }
-
-        const hyprlandId = gdkMonitorService.mapGdkToHyprland(gdkMonitorIndex);
-
-        monitorMappings.push({
-            gdkIndex: gdkMonitorIndex,
-            hyprlandId,
-        });
-    }
 
     const monitorPromises = monitorMappings.map(async ({ gdkIndex, hyprlandId }) => {
         try {
