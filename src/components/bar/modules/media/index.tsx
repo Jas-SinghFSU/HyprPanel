@@ -9,6 +9,7 @@ import options from 'src/configuration';
 import { runAsyncCommand } from '../../utils/input/commandExecutor';
 import { throttledScrollHandler } from '../../utils/input/throttle';
 import { openDropdownMenu } from '../../utils/menu';
+import { filterPlayers } from 'src/lib/shared/media';
 
 const mprisService = AstalMpris.get_default();
 const {
@@ -22,15 +23,22 @@ const {
     scrollDown,
     format,
 } = options.bar.media;
+const { ignore } = options.menus.media;
 
 const isVis = Variable(!show_active_only.get());
 
-Variable.derive([bind(show_active_only), bind(mprisService, 'players')], (showActive, players) => {
-    isVis.set(!showActive || players?.length > 0);
-});
+Variable.derive(
+    [bind(show_active_only), bind(mprisService, 'players'), bind(ignore)],
+    (showActive, players, ignoredApps) => {
+        const filteredPlayers = filterPlayers(players, ignoredApps);
+        isVis.set(!showActive || filteredPlayers?.length > 0);
+    },
+);
 
 const Media = (): BarBoxChild => {
-    activePlayer.set(mprisService.get_players()[0]);
+    const allPlayers = mprisService.get_players();
+    const filteredPlayers = filterPlayers(allPlayers, ignore.get());
+    activePlayer.set(filteredPlayers[0]);
 
     const songIcon = Variable('');
 

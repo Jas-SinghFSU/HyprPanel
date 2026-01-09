@@ -120,4 +120,32 @@ export const mediaCommands: Command[] = [
             }
         },
     },
+    {
+        name: 'mprisPlayers',
+        aliases: ['mpl'],
+        description: 'Lists all detected MPRIS players with their identity names.',
+        category: 'Media',
+        args: [],
+        handler: (): string => {
+            try {
+                const players = mprisService.get_players();
+
+                if (players.length === 0) {
+                    return 'No MPRIS players detected';
+                }
+
+                const playerList = players
+                    .map((player, index) => {
+                        const identity = player.identity || 'Unknown';
+                        const busName = player.busName || 'Unknown';
+                        return `${index + 1}. ${identity}\n   Bus: ${busName}`;
+                    })
+                    .join('\n\n');
+
+                return `Detected MPRIS Players:\n\n${playerList}\n\nUse the identity names in the ignore list (Settings > Media Menu > Ignored Applications)`;
+            } catch (error) {
+                errorHandler(error);
+            }
+        },
+    },
 ];
