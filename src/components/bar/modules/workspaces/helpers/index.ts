@@ -180,7 +180,8 @@ export const getAppIcon = (
  *
  * @param showIcons A boolean indicating whether to show icons.
  * @param showNumbered A boolean indicating whether to show numbered workspaces.
- * @param numberedActiveIndicator The indicator for active numbered workspaces.
+ * @param numberedActiveIndicator The indicator for active numbered/named workspaces.
+ * @param showNames A boolean indicating whether to show workspace names.
  * @param showWsIcons A boolean indicating whether to show workspace icons.
  * @param smartHighlight A boolean indicating whether smart highlighting is enabled.
  * @param monitor The index of the monitor to check for active workspaces.
@@ -192,6 +193,7 @@ export const renderClassnames = (
     showIcons: boolean,
     showNumbered: boolean,
     numberedActiveIndicator: string,
+    showNames: boolean,
     showWsIcons: boolean,
     smartHighlight: boolean,
     monitor: number,
@@ -205,7 +207,7 @@ export const renderClassnames = (
         return `workspace-icon txt-icon bar ${isActive}`;
     }
 
-    if (showNumbered || showWsIcons) {
+    if (showNumbered || showWsIcons || showNames) {
         const numActiveInd = isWorkspaceActive ? numberedActiveIndicator : '';
 
         const wsIconClass = showWsIcons ? 'txt-icon' : '';
@@ -237,6 +239,9 @@ export const renderClassnames = (
  * @param i The index of the workspace for which to render the label.
  * @param index The index of the workspace in the list.
  * @param monitor The index of the monitor to check for active workspaces.
+ * @param showNumbered A boolean indicating whether to show numbers.
+ * @param showNames A boolean indicating whether to show names.
+ * @param The workspace name.
  *
  * @returns The label for the workspace as a string.
  */
@@ -253,6 +258,9 @@ export const renderLabel = (
     i: number,
     index: number,
     monitor: number,
+    showNumbered: boolean,
+    showNames: boolean,
+    wsName: string,
 ): string => {
     if (showAppIcons) {
         return appIcons;
@@ -272,6 +280,25 @@ export const renderLabel = (
 
     if (showWorkspaceIcons) {
         return getWsIcon(wsIconMap, i);
+    }
+
+    if (showNames && !showNumbered) {
+        if (workspaceMask) {
+            if (workspaceMask && wsName == i.toString()) {
+                return `${index + 1}`;
+            }
+        }
+        return wsName;
+    }
+
+    if (showNames && showNumbered) {
+        // this is to avoid writing the number twice for unnamed workspaces, or output a second number with mask
+        // compare to i because unnamed workspace take their id as name
+        if (workspaceMask) {
+            return wsName == i.toString() ? `${index + 1}` : `${index + 1} ${wsName}`;
+        }
+
+        return wsName == i.toString() ? `${i}` : `${i} ${wsName}`;
     }
 
     return workspaceMask ? `${index + 1}` : `${i}`;
