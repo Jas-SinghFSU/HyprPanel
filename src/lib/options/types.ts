@@ -254,6 +254,8 @@ export type MatugenVariations =
     | 'vivid_2'
     | 'vivid_3';
 
+export type MatugenSourceColorIndex = '0' | '1' | '2' | '3';
+
 export type ColorMapKey = keyof typeof defaultColorMap;
 
 export type ScalingPriority = 'gdk' | 'hyprland' | 'both';

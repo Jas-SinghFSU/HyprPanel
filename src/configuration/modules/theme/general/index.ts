@@ -1,6 +1,11 @@
 import { FontStyle } from 'src/components/settings/shared/inputs/font/utils';
 import { opt } from 'src/lib/options';
-import { MatugenTheme, MatugenScheme, MatugenVariations } from 'src/lib/options/types';
+import {
+    MatugenTheme,
+    MatugenScheme,
+    MatugenVariations,
+    MatugenSourceColorIndex,
+} from 'src/lib/options/types';
 
 export default {
     tooltip: {
@@ -12,6 +17,7 @@ export default {
         scheme_type: opt<MatugenScheme>('tonal-spot'),
         variation: opt<MatugenVariations>('standard_1'),
         contrast: opt(0.0),
+        source_color_index: opt<MatugenSourceColorIndex>('0'),
     },
     font: {
         size: opt('1.2rem'),
