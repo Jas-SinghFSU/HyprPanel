@@ -29,7 +29,7 @@ export const NotificationCard = ({
 }: NotificationCardProps): JSX.Element => {
     let actionBox: ActionBox | null;
 
-    if (notification.get_actions().length) {
+    if (notification.get_actions().filter((a) => a.id !== '').length) {
         actionBox = <Actions notification={notification} showActions={showActions} />;
     } else {
         actionBox = null;

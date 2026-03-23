@@ -46,7 +46,7 @@ export const Actions = ({ notification, showActions }: ActionProps): JSX.Element
         >
             <eventbox>
                 <box className={'notification-card-actions'} hexpand valign={Gtk.Align.END}>
-                    {notification.get_actions().map((action) => {
+                    {notification.get_actions().filter((a) => a.id !== '').map((action) => {
                         return <ActionButton notification={notification} action={action} />;
                     })}
                 </box>
