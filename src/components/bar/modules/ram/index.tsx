@@ -3,7 +3,7 @@ import { bind, Variable } from 'astal';
 import { Astal } from 'astal/gtk3';
 import { BarBoxChild } from 'src/components/bar/types';
 import options from 'src/configuration';
-import { renderResourceLabel, formatTooltip } from '../../utils/systemResource';
+import { renderResourceLabel } from '../../utils/systemResource';
 import { InputHandlerService } from '../../utils/input/inputHandler';
 import { GenericResourceData, ResourceLabelType, LABEL_TYPES } from 'src/services/system/types';
 import RamUsageService from 'src/services/system/ramUsage';
@@ -29,12 +29,19 @@ export const Ram = (): BarBoxChild => {
 
     let inputHandlerBindings: Variable<void>;
 
+    const tooltipBinding = Variable.derive(
+        [bind(ramService.ram), bind(round)],
+        (rmUsg: GenericResourceData, round: boolean) => {
+            const usedLabel = renderResourceLabel('used', rmUsg, round);
+            const totalLabel = renderResourceLabel('used', { ...rmUsg, used: rmUsg.total }, round);
+            return `RAM: ${usedLabel} / ${totalLabel}`;
+        },
+    );
+
     const ramModule = Module({
         textIcon: bind(icon),
         label: labelBinding(),
-        tooltipText: bind(labelType).as((lblTyp) => {
-            return formatTooltip('RAM', lblTyp);
-        }),
+        tooltipText: tooltipBinding(),
         boxClass: 'ram',
         showLabelBinding: bind(label),
         props: {
@@ -73,6 +80,7 @@ export const Ram = (): BarBoxChild => {
             onDestroy: () => {
                 inputHandlerBindings.drop();
                 labelBinding.drop();
+                tooltipBinding.drop();
                 ramService.destroy();
             },
         },
