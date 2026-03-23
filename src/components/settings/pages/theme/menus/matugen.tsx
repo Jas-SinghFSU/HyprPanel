@@ -60,6 +60,12 @@ export const Matugen = (): JSX.Element => {
                     ]}
                 />
                 <Option
+                    opt={options.theme.matugen_settings.source_color_index}
+                    title="Matugen Source color index"
+                    type="enum"
+                    enums={['0', '1', '2', '3']}
+                />
+                <Option
                     opt={options.theme.matugen_settings.contrast}
                     title="Contrast"
                     subtitle="Range: -1 to 1 (Default: 0)"

@@ -89,8 +89,9 @@ export class MatugenService {
             const normalizedContrast = this._normalizeContrast(MATUGEN_SETTINGS.contrast.get());
             const schemeType = MATUGEN_SETTINGS.scheme_type.get();
             const mode = MATUGEN_SETTINGS.mode.get();
+            const sourceIndex = MATUGEN_SETTINGS.source_color_index.get();
 
-            const baseCommand = `matugen image -q "${normalizedPath}" -t scheme-${schemeType} --mode ${mode} --contrast ${normalizedContrast}`;
+            const baseCommand = `matugen image -q "${normalizedPath}" -t scheme-${schemeType} --mode ${mode} --contrast ${normalizedContrast} --source-color-index ${sourceIndex}`;
 
             const jsonResult = await SystemUtilities.bash(`${baseCommand} --dry-run --json hex`);
 
@@ -116,7 +117,15 @@ export class MatugenService {
                     processedColors[key] = value;
                 } else {
                     const obj = value as Record<string, string>;
-                    processedColors[key] = obj[mode] ?? obj.default;
+                    // processedColors[key] = obj[mode] ?? obj.default;
+                    const modeValue = obj[mode] ?? obj.default;
+                    if (typeof modeValue === 'string') {
+                        processedColors[key] = modeValue;
+                    } else if (modeValue && typeof modeValue === 'object' && 'color' in modeValue) {
+                        processedColors[key] = (modeValue as { color: string }).color;
+                    } else {
+                        processedColors[key] = obj.default;
+                    }
                 }
             }
             colors = processedColors;
