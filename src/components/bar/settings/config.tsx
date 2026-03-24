@@ -512,7 +512,7 @@ export const CustomModuleSettings = (): JSX.Element => {
                 <Option
                     opt={options.bar.customModules.hyprsunset.temperature}
                     title="Temperature"
-                    subtitle="Ex: 1000k, 2000k, 5000k, etc."
+                    subtitle="Ex: 1000k, 2000k, 5000k, etc., or 'none' for default"
                     type="string"
                 />
                 <Option
