@@ -21,12 +21,6 @@ If you like HyprPanel, Wayle is meant to have a lot of feature parity with all t
 
 The [HyprPanel Wiki](https://hyprpanel.com/getting_started/installation.html) contains in depth instructions for configuring and installing the panel and all of its dependencies. The instructions below are just the general instructions for installing the panel.
 
-## Arch
-
-```bash
-yay -S ags-hyprpanel-git
-```
-
 ## From Source
 
 ### Required
