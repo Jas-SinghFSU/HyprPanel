@@ -14,6 +14,7 @@ const hyprlandService = AstalHyprland.get_default();
 const {
     label,
     showSubmapName,
+    hideOnDefault,  
     enabledIcon,
     disabledIcon,
     enabledText,
@@ -53,6 +54,15 @@ export const Submap = (): BarBoxChild => {
             return isSubmapEnabled(status, enabled, disabled);
         },
     );
+    const visibility = Variable.derive(
+      [bind(hideOnDefault), bind(submapStatus)],
+      (hideOnDefault, status) => {
+        if(status === "default" && hideOnDefault)
+          return false
+
+        return true
+      }
+    )
 
     let inputHandlerBindings: Variable<void>;
 
@@ -82,6 +92,7 @@ export const Submap = (): BarBoxChild => {
                     },
                 });
             },
+            isVis: visibility(),
             onDestroy: () => {
                 inputHandlerBindings.drop();
                 submapLabel.drop();
