@@ -1,4 +1,4 @@
-import { BatteryLabel } from '../modules/battery';
+import { BatteryLabel, BatteryWidgetContainer } from '../modules/battery';
 import { Bluetooth } from '../modules/bluetooth';
 import { Cava } from '../modules/cava';
 import { Clock } from '../modules/clock';
@@ -30,7 +30,7 @@ import { WidgetFactory } from './WidgetRegistry';
 
 export function getCoreWidgets(): Record<string, WidgetFactory> {
     return {
-        battery: () => WidgetContainer(BatteryLabel()),
+        battery: () => BatteryWidgetContainer(WidgetContainer(BatteryLabel())),
         dashboard: () => WidgetContainer(Menu()),
         workspaces: (monitor: number) => WidgetContainer(Workspaces(monitor)),
         windowtitle: () => WidgetContainer(ClientTitle()),
