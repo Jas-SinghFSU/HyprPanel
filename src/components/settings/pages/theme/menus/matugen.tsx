@@ -20,7 +20,7 @@ export const Matugen = (): JSX.Element => {
                     opt={options.theme.matugen}
                     title="Enable Matugen"
                     type="boolean"
-                    dependencies={['matugen', 'swww']}
+                    dependencies={['matugen', 'awww']}
                 />
                 <Option
                     opt={options.theme.matugen_settings.mode}

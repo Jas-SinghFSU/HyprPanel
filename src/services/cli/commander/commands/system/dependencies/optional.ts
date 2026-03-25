@@ -37,10 +37,10 @@ export const optionalDependencies: Dependency[] = [
         description: 'Switch power profiles',
     },
     {
-        package: 'swww',
+        package: 'awww',
         required: false,
         type: 'executable',
-        check: ['swww'],
+        check: ['awww'],
         description: 'Setting wallpapers',
     },
     {
