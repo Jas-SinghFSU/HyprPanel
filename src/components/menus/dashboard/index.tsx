@@ -16,15 +16,17 @@ export default (): JSX.Element => {
         [bind(controls.enabled), bind(shortcuts.enabled), bind(stats.enabled), bind(directories.enabled)],
         (isControlsEnabled, isShortcutsEnabled, isStatsEnabled, isDirectoriesEnabled) => {
             return [
-                <box className={'dashboard-content-container'} vertical>
-                    <box className={'dashboard-content-items'} vertical>
-                        <Profile />
-                        <Shortcuts isEnabled={isShortcutsEnabled} />
-                        <Controls isEnabled={isControlsEnabled} />
-                        <Directories isEnabled={isDirectoriesEnabled} />
-                        <Stats isEnabled={isStatsEnabled} />
+                <scrollable className={'menu-scroller dashboard'}>
+                    <box className={'dashboard-content-container'} vertical>
+                        <box className={'dashboard-content-items'} vertical>
+                            <Profile />
+                            <Shortcuts isEnabled={isShortcutsEnabled} />
+                            <Controls isEnabled={isControlsEnabled} />
+                            <Directories isEnabled={isDirectoriesEnabled} />
+                            <Stats isEnabled={isStatsEnabled} />
+                        </box>
                     </box>
-                </box>,
+                </scrollable>,
             ];
         },
     );

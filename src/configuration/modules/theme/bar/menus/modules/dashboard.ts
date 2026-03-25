@@ -15,6 +15,10 @@ export default {
     border: {
         color: opt(primaryColors.surface0),
     },
+    scroller: {
+        color: opt(primaryColors.pink),
+    },
+
     profile: {
         name: opt(primaryColors.pink),
         size: opt('8.5em'),

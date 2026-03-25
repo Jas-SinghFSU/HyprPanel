@@ -34,6 +34,14 @@ export const DashboardMenuTheme = (): JSX.Element => {
                     type="color"
                 />
 
+                {/* Scroller Section */}
+                <Header title="Scroller" />
+                <Option
+                    opt={options.theme.bar.menus.menu.dashboard.scroller.color}
+                    title="Scroller"
+                    type="color"
+                />
+
                 {/* Profile Section */}
                 <Header title="Profile" />
                 <Option
