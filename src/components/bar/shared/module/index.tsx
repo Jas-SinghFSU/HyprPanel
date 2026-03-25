@@ -19,6 +19,7 @@ export const Module = ({
     showIconBinding = bind(Variable(true)),
     showLabel = true,
     labelHook,
+    textIconHook,
     hook,
 }: BarModuleProps): BarBoxChild => {
     const getIconWidget = (useTxtIcn: boolean): JSX.Element | undefined => {
@@ -31,7 +32,7 @@ export const Module = ({
 
         const textIcn = typeof textIcon === 'string' ? textIcon : textIcon?.get();
         if (textIcn !== undefined && textIcn.length > 0) {
-            return <label className={className} label={textIcon} />;
+            return <label className={className} label={textIcon} setup={textIconHook} />;
         }
     };
 
