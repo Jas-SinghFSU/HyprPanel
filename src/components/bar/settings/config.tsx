@@ -326,6 +326,12 @@ export const CustomModuleSettings = (): JSX.Element => {
                     enums={['layout', 'code']}
                 />
                 <Option
+                    opt={options.bar.customModules.kbLayout.shorteningRules}
+                    title="Shortening Rules"
+                    subtitle="JSON map of layout -> shorthand label. Matches before HyprPanel defaults."
+                    type="object"
+                />
+                <Option
                     opt={options.theme.bar.buttons.modules.kbLayout.spacing}
                     title="Spacing"
                     type="string"

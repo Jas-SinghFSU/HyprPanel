@@ -1,5 +1,10 @@
 import { LayoutKeys, layoutMap, LayoutValues } from './layouts';
-import { KbLabelType, HyprctlDeviceLayout, HyprctlKeyboard } from './types';
+import {
+    KbLabelType,
+    HyprctlDeviceLayout,
+    HyprctlKeyboard,
+    KeyboardLayoutShorteningRules,
+} from './types';
 
 /**
  * Retrieves the keyboard layout from a given JSON string and format.
@@ -12,7 +17,11 @@ import { KbLabelType, HyprctlDeviceLayout, HyprctlKeyboard } from './types';
  *
  * @returns The keyboard layout in the specified format. If no keyboards are found, returns 'Unknown' or 'Unknown Layout'.
  */
-export const getKeyboardLayout = (layoutData: string, format: KbLabelType): LayoutKeys | LayoutValues => {
+export const getKeyboardLayout = (
+    layoutData: string,
+    format: KbLabelType,
+    shorteningRules?: KeyboardLayoutShorteningRules,
+): string => {
     const hyprctlDevices: HyprctlDeviceLayout = JSON.parse(layoutData);
     const keyboards = hyprctlDevices['keyboards'];
 
@@ -33,8 +42,9 @@ export const getKeyboardLayout = (layoutData: string, format: KbLabelType): Layo
     const layout: LayoutKeys = mainKb.active_keymap;
 
     const foundLayout: LayoutValues = layoutMap[layout];
+    const formattedLayout: string = format === 'code' ? (foundLayout ?? layout) : layout;
 
-    return format === 'code' ? (foundLayout ?? layout) : layout;
+    return applyShorteningRules(formattedLayout, layout, shorteningRules);
 };
 
 function isValidLayout(kbLayout: string): kbLayout is LayoutKeys {
@@ -43,4 +53,16 @@ function isValidLayout(kbLayout: string): kbLayout is LayoutKeys {
     }
 
     return true;
+}
+
+function applyShorteningRules(
+    formattedLayout: string,
+    layoutKey: string,
+    rules?: KeyboardLayoutShorteningRules,
+): string {
+    if (!rules) {
+        return formattedLayout;
+    }
+
+    return rules[formattedLayout] ?? rules[layoutKey] ?? formattedLayout;
 }
