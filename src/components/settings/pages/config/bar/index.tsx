@@ -201,6 +201,12 @@ export const BarSettings = (): JSX.Element => {
                     type="boolean"
                 />
                 <Option
+                    opt={options.bar.workspaces.show_names}
+                    title="Show Workspace Names"
+                    subtitle="Set in hyprland config."
+                    type="boolean"
+                />
+                <Option
                     opt={options.bar.workspaces.showWsIcons}
                     title="Map Workspaces to Icons"
                     subtitle="https://hyprpanel.com/configuration/panel.html#show-workspace-icons"
@@ -225,8 +231,8 @@ export const BarSettings = (): JSX.Element => {
                 />
                 <Option
                     opt={options.bar.workspaces.numbered_active_indicator}
-                    title="Numbered Workspace Identifier"
-                    subtitle="Only applicable if Workspace Numbers are enabled"
+                    title="Numbered/Names Workspace Identifier"
+                    subtitle="Only applicable if Workspace Numbers or Names are enabled."
                     type="enum"
                     enums={['underline', 'highlight', 'color']}
                 />
