@@ -1,22 +1,47 @@
-import { Widget } from 'astal/gtk3';
+import { Widget, Gtk } from 'astal/gtk3';
 import { handleClick, hasCommand } from '../helpers';
 import options from 'src/configuration';
-import { isPrimaryClick } from 'src/lib/events/mouse';
 import { ShortcutVariable } from '../types';
+import { MonitorListDropdown } from './RecordingButton';
 
 const { left, right } = options.menus.dashboard.shortcuts;
 
 const ShortcutButton = ({ shortcut, ...props }: ShortcutButtonProps): JSX.Element => {
+    const isRecordingButton = shortcut.command.get() === 'hyprpanel_record';
+
     return (
         <button
             vexpand
             tooltipText={shortcut.tooltip.get()}
-            onClick={(_, event) => {
-                if (isPrimaryClick(event)) {
-                    handleClick(shortcut.command.get());
+            className={
+                isRecordingButton
+                    ? bind(isRecording).as((rec) => `${props.className || ''} ${rec ? 'active' : ''}`.trim())
+                    : props.className
+            }
+            onButtonPressEvent={(_, event) => {
+                const buttonClicked = event.get_button()[1];
+
+                if (buttonClicked !== Gdk.BUTTON_PRIMARY) {
+                    return;
                 }
+
+                if (!isRecordingButton) {
+                    handleClick(shortcut.command.get());
+                    return;
+                }
+
+                const sanitizedPath = getRecordingPath().replace(/"/g, '\\"');
+
+                if (isRecording.get() === true) {
+                    App.get_window('dashboardmenu')?.set_visible(false);
+                    const command = `${SRC_DIR}/scripts/screen_record.sh stop "${sanitizedPath}"`;
+                    executeCommand(command);
+                    return;
+                }
+
+                const monitorDropdownList = MonitorListDropdown() as Gtk.Menu;
+                monitorDropdownList.popup_at_pointer(event);
             }}
-            {...props}
         >
             <label className={'button-label txt-icon'} label={shortcut.icon.get()} />
         </button>
@@ -73,12 +98,28 @@ export const RightShortcut1 = (): JSX.Element => {
     return <ShortcutButton shortcut={right.shortcut1} className={'dashboard-button top-button paired'} />;
 };
 
+export const RightShortcut2 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut2)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut2} className={'dashboard-button'} />;
+};
+
 export const RightShortcut3 = (): JSX.Element => {
     if (!hasCommand(right.shortcut3)) {
         return <box />;
     }
 
     return <ShortcutButton shortcut={right.shortcut3} className={'dashboard-button top-button paired'} />;
+};
+
+export const RightShortcut4 = (): JSX.Element => {
+    if (!hasCommand(right.shortcut4)) {
+        return <box />;
+    }
+
+    return <ShortcutButton shortcut={right.shortcut4} className={'dashboard-button '} />;
 };
 
 interface ShortcutButtonProps extends Widget.ButtonProps {
