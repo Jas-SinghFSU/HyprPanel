@@ -2,9 +2,9 @@ import { execAsync } from 'astal/process';
 import { SystemUtilities } from 'src/core/system/SystemUtilities';
 
 /**
- * Manages the lifecycle of the swww daemon process
+ * Manages the lifecycle of the awww daemon process
  */
-export class SwwwDaemon {
+export class AwwwDaemon {
     private _isRunning = false;
 
     /**
@@ -15,24 +15,24 @@ export class SwwwDaemon {
     }
 
     /**
-     * Checks if swww is installed on the system
+     * Checks if awww is installed on the system
      */
     public isInstalled(): boolean {
-        return SystemUtilities.checkDependencies('swww');
+        return SystemUtilities.checkDependencies('awww');
     }
 
     /**
-     * Starts the swww daemon if not already running
+     * Starts the awww daemon if not already running
      */
     public async start(): Promise<boolean> {
         if (!this.isInstalled()) {
-            console.warn('swww is not installed, cannot start daemon');
+            console.warn('awww is not installed, cannot start daemon');
             return false;
         }
 
         const isAlreadyRunning = await this._checkIfRunning();
         if (isAlreadyRunning) {
-            console.debug('swww-daemon is already running...');
+            console.debug('awww-daemon is already running...');
             this._isRunning = true;
             return true;
         }
@@ -41,11 +41,11 @@ export class SwwwDaemon {
     }
 
     /**
-     * Stops the swww daemon
+     * Stops the awww daemon
      */
     public async stop(): Promise<void> {
         try {
-            await execAsync('swww kill');
+            await execAsync('awww kill');
             this._isRunning = false;
         } catch (err) {
             await this._handleStopError(err);
@@ -53,11 +53,11 @@ export class SwwwDaemon {
     }
 
     /**
-     * Checks if the swww daemon is currently running
+     * Checks if the awww daemon is currently running
      */
     private async _checkIfRunning(): Promise<boolean> {
         try {
-            await execAsync('swww query');
+            await execAsync('awww query');
             return true;
         } catch {
             return false;
@@ -65,11 +65,11 @@ export class SwwwDaemon {
     }
 
     /**
-     * Starts a new swww daemon instance
+     * Starts a new awww daemon instance
      */
     private async _startNewDaemon(): Promise<boolean> {
         try {
-            await execAsync('swww-daemon');
+            await execAsync('awww-daemon');
 
             const ready = await this._waitForReady();
             this._isRunning = ready;
@@ -81,7 +81,7 @@ export class SwwwDaemon {
 
             return ready;
         } catch (err) {
-            console.error('Failed to start swww-daemon:', err);
+            console.error('Failed to start awww-daemon:', err);
             this._isRunning = false;
             return false;
         }
@@ -92,9 +92,9 @@ export class SwwwDaemon {
      */
     private async _cleanupFailedDaemon(): Promise<void> {
         try {
-            await execAsync('swww kill');
+            await execAsync('awww kill');
         } catch {}
-        console.error('swww-daemon failed to become ready');
+        console.error('awww-daemon failed to become ready');
     }
 
     /**
@@ -104,16 +104,16 @@ export class SwwwDaemon {
         const wasRunning = await this._checkIfRunning();
 
         if (wasRunning) {
-            console.error('[SwwwDaemon] Failed to stop swww-daemon:', err);
+            console.error('[AwwwDaemon] Failed to stop awww-daemon:', err);
         } else {
-            console.debug('[SwwwDaemon] swww-daemon was not running');
+            console.debug('[AwwwDaemon] awww-daemon was not running');
         }
 
         this._isRunning = false;
     }
 
     /**
-     * Waits for swww daemon to be ready using exponential backoff
+     * Waits for awww daemon to be ready using exponential backoff
      */
     private async _waitForReady(): Promise<boolean> {
         const maxAttempts = 10;
@@ -121,7 +121,7 @@ export class SwwwDaemon {
 
         for (let i = 0; i < maxAttempts; i++) {
             try {
-                await execAsync('swww query');
+                await execAsync('awww query');
                 return true;
             } catch {
                 if (i < maxAttempts - 1) {
