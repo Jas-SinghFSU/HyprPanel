@@ -38,8 +38,8 @@ const isWorkspaceActiveOnMonitor = (monitor: number, i: number): boolean => {
  *
  * @returns The icon for the workspace as a string. If no icon is found, returns the workspace index as a string.
  */
-const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number): string => {
-    const iconEntry = wsIconMap[i];
+const getWsIcon = (wsIconMap: WorkspaceIconMap, i: number, wsName?: string): string => {
+    const iconEntry = (wsName !== undefined ? wsIconMap[wsName] : undefined) ?? wsIconMap[i];
     const defaultIcon = `${i}`;
 
     if (iconEntry === undefined) {
@@ -77,8 +77,9 @@ export const getWsColor = (
     i: number,
     smartHighlight: boolean,
     monitor: number,
+    wsName?: string,
 ): string => {
-    const iconEntry = wsIconMap[i];
+    const iconEntry = (wsName !== undefined ? wsIconMap[wsName] : undefined) ?? wsIconMap[i];
     const hasColor =
         typeof iconEntry === 'object' && 'color' in iconEntry && isValidGjsColor(iconEntry.color);
 
@@ -253,6 +254,7 @@ export const renderLabel = (
     i: number,
     index: number,
     monitor: number,
+    wsName?: string,
 ): string => {
     if (showAppIcons) {
         return appIcons;
@@ -271,7 +273,7 @@ export const renderLabel = (
     }
 
     if (showWorkspaceIcons) {
-        return getWsIcon(wsIconMap, i);
+        return getWsIcon(wsIconMap, i, wsName);
     }
 
     return workspaceMask ? `${index + 1}` : `${i}`;

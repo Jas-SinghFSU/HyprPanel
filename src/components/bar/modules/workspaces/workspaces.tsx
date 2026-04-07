@@ -102,6 +102,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
             );
 
             return workspacesToRender.map((wsId, index) => {
+                const wsName = workspaceList.find((ws) => ws.id === wsId)?.name;
                 const appIcons = displayApplicationIcons
                     ? getAppIcon(wsId, appIconOncePerWorkspace, {
                           iconMap: applicationIconMapping,
@@ -123,7 +124,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                             valign={Gtk.Align.CENTER}
                             css={
                                 `margin: 0rem ${0.375 * spacingValue}rem;` +
-                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor) : ''}`
+                                `${displayWorkspaceIcons && !matugenEnabled ? getWsColor(workspaceIconMapping, wsId, smartHighlightEnabled, monitor, wsName) : ''}`
                             }
                             className={renderClassnames(
                                 displayIcons,
@@ -147,6 +148,7 @@ export const WorkspaceModule = ({ monitor }: WorkspaceModuleProps): JSX.Element 
                                 wsId,
                                 index,
                                 monitor,
+                                wsName,
                             )}
                             setup={(self) => {
                                 const currentWsClients = clients.filter(
