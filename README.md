@@ -1,3 +1,10 @@
+> [!WARNING]
+> **Soon To Be Archived - no longer maintained.**
+>
+> Active development has moved to [Wayle](https://github.com/wayle-rs/wayle).
+>
+> See [archive notice](https://github.com/Jas-SinghFSU/HyprPanel/issues/1193).
+
 # HyprPanel
 
 A panel built for Hyprland with [Astal](https://github.com/Aylur/astal)
